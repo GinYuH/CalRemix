@@ -16,6 +16,7 @@ using CalamityMod.CalPlayer;
 using CalRemix.Core.Subworlds;
 using CalamityMod.Sounds;
 using CalamityMod.World;
+using CalRemix.Content.Projectiles.Hostile;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -89,6 +90,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         int dir = NPC.DirectionTo(Papa.Center).X.DirectionalSign();
                         int dist = dir == 1 ? 280 : 200;
                         CalamityUtils.SmoothMovement(NPC, 10, SkeletronOmega.TentCenter - NPC.Center + NPC.DirectionTo(Target.Center) * dist, 10, 0.6f, true);
+                        int reticle = CalamityUtils.FindFirstProjectile(ModContent.ProjectileType<OmegaReticle>());
+                        if (reticle > -1)
+                        {
+                            NPC.rotation = NPC.DirectionTo(Main.projectile[reticle].Center).ToRotation();
+                        }
                         break;
                     }
                 case SkeletronOmega.PhaseType.SlamSlamSlam:

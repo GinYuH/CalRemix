@@ -19,6 +19,10 @@ using CalamityMod.InverseKinematics;
 using CalRemix.Content.Projectiles.Weapons;
 using Steamworks;
 using Terraria.DataStructures;
+using CalamityMod.Projectiles.Typeless;
+using System.Security.Cryptography.X509Certificates;
+using CalRemix.Content.Projectiles.Hostile;
+using CalamityMod.Sounds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -230,12 +234,46 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case PhaseType.GunShots:
                     {
-                        Timer++;
                         CalamityUtils.SmoothMovement(NPC, 10, TentCenter - NPC.Center - NPC.DirectionTo(Target.Center) * 40, 10, 0.6f, true);
-                        if (Timer > 200)
+
+                        float singleDuration = 200;
+                        float cooldown = 60;
+                        float localTime = Timer % (singleDuration + cooldown);
+                        int spawnRetic = 30;
+                        int fireShot = (int)singleDuration - 30;
+
+                        if (localTime == spawnRetic)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center, Vector2.Zero, ModContent.ProjectileType<OmegaReticle>(), 0, 0, ai0: Target.whoAmI);
+                            }
+                        }
+                        if (localTime == fireShot)
+                        {
+                            int reticle = CalamityUtils.FindFirstProjectile(ModContent.ProjectileType<OmegaReticle>());
+                            if (reticle > -1)
+                            {
+                                SoundEngine.PlaySound(CommonCalamitySounds.LargeWeaponFireSound, NPC.Center);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Vector2 pos = Main.npc[GunIndex].Center;
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(Main.projectile[reticle].Center) * 20, ProjectileID.BulletHighVelocity, CalRemixHelper.ProjectileDamage(380, 480), 1);
+                                    Main.projectile[p].friendly = false; 
+                                    Main.projectile[p].hostile = true;
+                                    Main.projectile[p].DamageType = DamageClass.Default;
+                                    Main.projectile[reticle].Kill();
+                                }
+                                Main.npc[GunIndex].Center = Main.npc[GunIndex].Center - Main.npc[GunIndex].Center.DirectionTo(Target.Center) * 10;
+                            }
+                        }
+
+                        if (Timer > (singleDuration + cooldown) * 4)
                         {
                             ChangePhase(PhaseType.SlamSlamSlam);
+                            NPC.velocity = Vector2.Zero;
                         }
+                        Timer++;
                         break;
                     }
                 case PhaseType.Fireballs:
@@ -293,7 +331,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         float localTime = Timer % (singleDuration + travelTime);
                         float totalDur = singleDuration + travelTime;
                         int rounds = 4;
-                        if (localTime == 0)
+                        if (localTime == 1)
                         {
                             float curDist = 300;
                             Vector2 targetPos = Vector2.Zero;
@@ -312,7 +350,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             SavePosition = targetPos;
                             OldPosition = NPC.Center;
                         }
-                        else if (SavePosition != Vector2.Zero && localTime <= travelTime)
+                        else if (SavePosition != Vector2.Zero && localTime <= travelTime && localTime > 0)
                         {
                             NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(0, travelTime, localTime, true), 1));
                         }
@@ -357,11 +395,20 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             NPC.velocity.X *= -1;
                             ExtraVar = 20;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 1000, 0, Target.whoAmI, NPC.whoAmI);
+                            }
                         }
                         if ((pos.Y > TentBottom || pos.Y < TentTop) && ExtraVar2 <= 0)
                         {
                             NPC.velocity.Y *= -1;
                             ExtraVar2 = 20;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 1000, 0, Target.whoAmI, NPC.whoAmI);
+                            }
+
                         }
                         if (Timer > windUp + 30 && Timer % 5 == 0)
                         {
