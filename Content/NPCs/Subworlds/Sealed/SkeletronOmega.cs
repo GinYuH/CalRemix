@@ -67,15 +67,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             set => NPC.Calamity().newAI[0] = value.ToInt();
         }
 
-        public static Vector2 TentCenter => new(SealedSubworldData.tentPos.X, SealedSubworldData.tentPos.Y - 300);
+        public static Vector2 TentCenter => SealedSubworldData.TentCenter;
 
-        public static float TentRight => SealedSubworldData.tentPos.X + 50 * 16;
+        public static float TentRight => SealedSubworldData.TentRight;
 
-        public static float TentLeft => SealedSubworldData.tentPos.X - 74 * 16;
+        public static float TentLeft => SealedSubworldData.TentLeft;
 
-        public static float TentTop => SealedSubworldData.tentPos.Y - 44 * 16;
+        public static float TentTop => SealedSubworldData.TentTop;
 
-        public static float TentBottom => SealedSubworldData.tentPos.Y + 4 * 16;
+        public static float TentBottom => SealedSubworldData.TentBottom;
 
         public static float SlamTravelTime => 30f;
         public static float SlamDuration => 120f;
@@ -135,7 +135,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             AIType = -1;
             NPC.knockBackResist = 0f;
-            NPC.value = Item.buyPrice(0, 40, 0, 0);
+            NPC.value = Item.buyPrice(0, 20, 0, 0);
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToWater = true;
@@ -529,6 +529,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return State == (int)PhaseType.Desperation;
+        }
+
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ItemID.SuperHealingPotion;
         }
     }
 }

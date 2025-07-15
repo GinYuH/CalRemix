@@ -151,6 +151,16 @@ namespace CalRemix.Core.Subworlds
         public static Vector2 tentPos = Vector2.Zero;
         public static Vector2 horizonPos = Vector2.Zero;
         public static Vector2 warriorPos = Vector2.Zero;
+
+        public static float TentRight => SealedSubworldData.tentPos.X + 50 * 16;
+
+        public static float TentLeft => SealedSubworldData.tentPos.X - 74 * 16;
+
+        public static float TentTop => SealedSubworldData.tentPos.Y - 44 * 16;
+
+        public static float TentBottom => SealedSubworldData.tentPos.Y + 4 * 16;
+        public static Vector2 TentCenter => new(SealedSubworldData.tentPos.X, SealedSubworldData.tentPos.Y - 300);
+
         public override void SaveWorldData(TagCompound tag)
         {
             tag["brightShrinePosition"] = brightShrinePos;

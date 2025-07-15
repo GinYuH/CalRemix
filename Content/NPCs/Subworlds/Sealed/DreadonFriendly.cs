@@ -63,7 +63,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             if (Main.LocalPlayer.controlUseItem)
             {
-                State = 1;
+                State = 2;
             }
             if (State == 1)
             {
@@ -87,6 +87,23 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 else if (Timer == 290)
                 {
                     NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y - 600, ModContent.NPCType<SkeletronOmega>());
+                }
+                else if (Timer > 300 && !NPC.AnyNPCs(ModContent.NPCType<SkeletronOmega>()))
+                {
+                    State = 2;
+                    Timer = 0;
+                }
+            }
+            else if (State == 2)
+            {
+                Timer++;
+                if (Timer == 1)
+                {
+                    TargetLocation = SealedSubworldData.tentPos - Vector2.UnitY * 200;
+                }
+                else if (Timer == 120)
+                {
+                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.TentLeft - 300, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<Godraycaster>());
                 }
             }
 
