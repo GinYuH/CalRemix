@@ -50,7 +50,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.HitSound = AuricOre.MineSound;
             NPC.DeathSound = BetterSoundID.ItemElectricFizzleExplosion;
             NPC.noTileCollide = true;
-            NPC.boss = true;
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.DR_NERD(0.05f);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
@@ -129,7 +128,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                     for (int i = 0; i < projCount; i++)
                                     {
                                         float halfAngle = MathHelper.ToRadians(30);
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-halfAngle, halfAngle, i / (float)(projCount - 1))).RotatedByRandom(MathHelper.ToRadians(randomness)) * 20, ProjectileID.ImpFireball, CalRemixHelper.ProjectileDamage(280, 380), 1);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-halfAngle, halfAngle, i / (float)(projCount - 1))).RotatedByRandom(MathHelper.ToRadians(randomness)) * 20, ProjectileID.Missile, CalRemixHelper.ProjectileDamage(280, 380), 1);
                                     }
                                 }
                             }
@@ -152,6 +151,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool CheckActive()
         {
             return !NPC.AnyNPCs(ModContent.NPCType<SkeletronOmega>());
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
         }
     }
 }

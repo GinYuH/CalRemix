@@ -23,6 +23,7 @@ using CalamityMod.Projectiles.Typeless;
 using System.Security.Cryptography.X509Certificates;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Sounds;
+using CalamityMod.NPCs.ExoMechs;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -162,6 +163,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
             }
             NPC.TargetClosest();
+            if (!NPC.HasPlayerTarget || Target.dead)
+            {
+                NPC.active = false;
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (n.type == ModContent.NPCType<DreadonFriendly>())
+                    {
+                        n.active = false;
+                    }
+                }
+            }
             switch ((PhaseType)State)
             {
                 case PhaseType.SpawnAnim:
@@ -236,17 +248,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     {
                         CalamityUtils.SmoothMovement(NPC, 10, TentCenter - NPC.Center - NPC.DirectionTo(Target.Center) * 40, 10, 0.6f, true);
 
-                        float singleDuration = 200;
-                        float cooldown = 60;
+                        float singleDuration = 160;
+                        float cooldown = 0;
                         float localTime = Timer % (singleDuration + cooldown);
                         int spawnRetic = 30;
-                        int fireShot = (int)singleDuration - 30;
+                        int fireShot = (int)singleDuration - 20;
 
                         if (localTime == spawnRetic)
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center, Vector2.Zero, ModContent.ProjectileType<OmegaReticle>(), 0, 0, ai0: Target.whoAmI);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center, Vector2.Zero, ModContent.ProjectileType<OmegaReticle>(), 0, 0, ai0: Target.whoAmI, ai2: Main.rand.Next(0, 2222));
                             }
                         }
                         if (localTime == fireShot)
@@ -414,7 +426,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedByRandom(MathHelper.ToRadians(30)) * Main.rand.NextFloat(6, 10), ProjectileID.BrainScramblerBolt, CalRemixHelper.ProjectileDamage(200, 300), 1); 
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedByRandom(MathHelper.ToRadians(30)) * Main.rand.NextFloat(6, 10), ModContent.ProjectileType<OmegaPlumLaser>(), CalRemixHelper.ProjectileDamage(200, 300), 1); 
                             }
                         }
                         NPC.rotation += 1f;
@@ -512,6 +524,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
             }
             return !alive;
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return State == (int)PhaseType.Desperation;
         }
     }
 }

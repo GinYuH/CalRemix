@@ -16,6 +16,8 @@ using CalamityMod.CalPlayer;
 using CalRemix.Core.Subworlds;
 using Ionic.Zip;
 using CalamityMod.Particles;
+using CalRemix.Content.Projectiles.Hostile;
+using CalamityMod.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -49,7 +51,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.HitSound = AuricOre.MineSound;
             NPC.DeathSound = BetterSoundID.ItemElectricFizzleExplosion;
             NPC.noTileCollide = true;
-            NPC.boss = true;
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.DR_NERD(0.05f);
             double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
@@ -145,6 +146,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 SoundEngine.PlaySound(BetterSoundID.ItemExplosion, NPC.Center);
                                 Main.LocalPlayer.Calamity().GeneralScreenShakePower += 2;
                                 GeneralParticleHandler.SpawnParticle(new PulseRing(NPC.Center, Vector2.Zero, Color.Red * 0.4f, 0.1f, 22f, 30));
+
+                                int projCount = CalamityWorld.revenge ? 5 : 3;
+                                for (int i = 0; i < projCount; i++)
+                                {
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X, SkeletronOmega.TentBottom), -Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(60)) * Main.rand.NextFloat(20f, 28f), ModContent.ProjectileType<TentDebris>(), CalRemixHelper.ProjectileDamage(120, 250), 1);
+                                    }
+                                }
                             }
                         }
                         break;
@@ -172,6 +182,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool CheckActive()
         {
             return !NPC.AnyNPCs(ModContent.NPCType<SkeletronOmega>());
+        }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return State == (int)SkeletronOmega.PhaseType.SlamSlamSlam || State == (int)SkeletronOmega.PhaseType.Judgement;
         }
     }
 }

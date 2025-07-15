@@ -3,6 +3,7 @@ using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -52,7 +53,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             }
             else if (Projectile.ai[1] < 100)
             {
-                Projectile.Center = Vector2.Lerp(Projectile.Center, p.Center + p.velocity * 5, 0.3f) + Vector2.UnitY.RotatedBy(Projectile.ai[1] * 0.1f + Main.GameUpdateCount * 0.05f) * 20;
+                Projectile.Center = Vector2.Lerp(Projectile.Center, p.Center + p.velocity * 5, 0.2f) + Vector2.UnitY.RotatedBy(Projectile.ai[1] * 0.1f + Projectile.ai[2]) * MathHelper.Lerp(20, 30, Utils.GetLerpValue(0, 100, Projectile.ai[1], true) * MathF.Sin(Projectile.ai[1] * 0.2f)) * MathHelper.Max(p.velocity.Length(), 15) * 0.1f;
             }
 
             Projectile.ai[1]++;
