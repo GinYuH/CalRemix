@@ -163,7 +163,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             }
                             else
                             {
-                                ChangePhase(PhaseType.ProjectileShotsOne);
+                                ChangePhase(IsSecondEye ? PhaseType.ProjectileShotsTwo : PhaseType.ProjectileShotsOne);
                             }
                         }
                         else if (ExtraVar2 == 3)
@@ -175,12 +175,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 ExtraVar++;
                                 if (ExtraVar > 90)
                                 {
-                                    ChangePhase(PhaseType.ProjectileShotsOne);
+                                    ChangePhase(IsSecondEye ? PhaseType.ProjectileShotsTwo : PhaseType.ProjectileShotsOne);
                                 }
                             }
                             else
                             {
-                                ChangePhase(PhaseType.ProjectileShotsOne);
+                                ChangePhase(IsSecondEye ? PhaseType.ProjectileShotsTwo : PhaseType.ProjectileShotsOne);
                             }
                         }
                         else if (ExtraVar2 == 0)
@@ -204,7 +204,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 ExtraVar++;
                                 if (ExtraVar > 90)
                                 {
-                                    ChangePhase(PhaseType.ProjectileShotsOne);
+                                    ChangePhase(IsSecondEye ? PhaseType.ProjectileShotsTwo : PhaseType.ProjectileShotsOne);
                                 }
                             }
                             else
@@ -229,14 +229,32 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                             if (Timer > 30 && Timer % 20 == 0)
                             {
+                                SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     int projCount = 3;
                                     for (int i = 0; i < projCount; i++)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(SealedSubworldData.TentCenter).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / ((float)projCount - 1))) * 30, ProjectileID.MartianTurretBolt, CalRemixHelper.ProjectileDamage(240, 350), 1);
-                                        Main.projectile[p].tileCollide = false;
+                                        for (int j = -1; j < 2; j += 2)
+                                        {
+                                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(SealedSubworldData.TentCenter).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / ((float)projCount - 1))) * 10, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(240, 350), 1, ai0: j * 0.5f);
+                                            Main.projectile[p].tileCollide = false;
+                                        }
                                     }
+                                }
+
+                                int dustID = 133;
+                                int dustRadius = 12;
+                                float dustRandomness = 11f;
+                                int dustDiameter = 2 * dustRadius;
+                                Vector2 dustCorner = NPC.Center - Vector2.One * dustRadius;
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    Vector2 dustVel = NPC.DirectionTo(SealedSubworldData.TentCenter) * 30 + Main.rand.NextVector2Circular(dustRandomness, dustRandomness);
+                                    Dust d = Dust.NewDustDirect(dustCorner, dustDiameter, dustDiameter, dustID, dustVel.X, dustVel.Y);
+                                    d.velocity *= 0.18f;
+                                    d.noGravity = true;
+                                    d.scale = 0.6f;
                                 }
                             }
                         }
@@ -252,7 +270,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         float coolTime = 60;
                         float dashLength = 30;
                         float localTimer = Timer % (coolTime + dashLength);
-                        int laserTimer = 5;
+                        int laserTimer = CalamityWorld.revenge? 5 : Main.expertMode ? 7 : 10;
                         if (localTimer < coolTime)
                         {
                             NPC.velocity *= 0.95f;
@@ -273,16 +291,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         Timer++;
                         if (Timer > (coolTime + dashLength) * 5)
                         {
-                            ChangePhase(PhaseType.ProjectileShotsOne);
+                            ChangePhase(IsSecondEye ? PhaseType.ProjectileShotsTwo : PhaseType.ProjectileShotsOne);
                         }
                         if (localTimer > coolTime + laserTimer)
                         {
                             if (localTimer % laserTimer == 0)
                             {
+                                SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.PiOver2) * 20, ProjectileID.MartianTurretBolt, CalRemixHelper.ProjectileDamage(160, 240), 1);
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(-MathHelper.PiOver2) * 20, ProjectileID.MartianTurretBolt, CalRemixHelper.ProjectileDamage(160, 240), 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.PiOver2) * 10, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(160, 240), 1, ai0: 0.5f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(-MathHelper.PiOver2) * 10, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(160, 240), 1, ai0: -0.5f);
                                 }
                             }
                         }
@@ -290,6 +309,63 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case PhaseType.ProjectileShotsTwo:
                     {
+                        float travelTime = 40f;
+                        float attackTime = 150f;
+                        float fullTime = travelTime + attackTime;
+                        float localTimer = Timer % fullTime;
+                        int laserTimer = CalamityWorld.revenge ? 10 : Main.expertMode ? 15 : 20;
+                        if (ExtraVar == 0)
+                        {
+                            if (localTimer <= 1)
+                            {
+                                OldPosition = NPC.Center;
+                                float whY = ExtraVar2 == 1 ? SealedSubworldData.TentBottom : SealedSubworldData.TentTop;
+                                SavePosition = NPC.Center.X > SealedSubworldData.TentCenter.X ? new Vector2(SealedSubworldData.TentRight, whY) : new Vector2(SealedSubworldData.TentLeft, whY);
+                            }
+                            else
+                            {
+                                NPC.velocity = Vector2.Lerp(OldPosition, SavePosition, Utils.GetLerpValue(0, travelTime, localTimer, true)) - NPC.Center;
+                                NPC.rotation = NPC.DirectionTo(SavePosition).ToRotation();
+                            }
+                            if (localTimer == travelTime - 1)
+                            {
+                                ExtraVar = 1;
+                            }
+                        }
+                        else if (ExtraVar == 1)
+                        {
+                            if (localTimer <= travelTime + 1)
+                            {
+                                OldPosition = NPC.Center;
+                                SavePosition = NPC.Center.X > SealedSubworldData.TentCenter.X ? new Vector2(SealedSubworldData.TentLeft, NPC.Center.Y) : new Vector2(SealedSubworldData.TentRight, NPC.Center.Y);
+                            }
+                            else
+                            {
+                                NPC.velocity = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(travelTime, fullTime - 1, localTimer, true), 1)) - NPC.Center;
+                            }
+                            int direction = (NPC.Center.Y < SealedSubworldData.TentCenter.Y).ToDirectionInt();
+                            if (localTimer % laserTimer == 0)
+                            {
+                                SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * Vector2.UnitY * 7, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(140, 250), 1, ai0: -0.5f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * Vector2.UnitY * 7, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(140, 250), 1, ai0: 0.5f);
+                                }
+                            }
+                            NPC.rotation = MathHelper.PiOver2 * direction;
+                            if (localTimer == fullTime - 1)
+                            {
+                                ExtraVar = 0;
+                                ExtraVar2 = (ExtraVar2 == 1 ? 0 : 1);
+                            }
+                        }
+
+                        if (Timer > fullTime * 2)
+                        {
+                            ChangePhase(PhaseType.Dashes);
+                        }
+                        Timer++;
                         break;
                     }
                 case PhaseType.Stunned:
@@ -351,7 +427,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 300, 1, ai0: NPC.whoAmI);
                                         Projectile.NewProjectile(NPC.GetSource_FromThis(), OtherEye.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 300, 1, ai0: OtherEyeIndex);
                                     }
-                                    ChangePhase(Main.rand.NextBool() ? PhaseType.ProjectileShotsOne : PhaseType.Dashes);
+                                    ChangePhase(Main.rand.NextBool() ? (IsSecondEye ? PhaseType.ProjectileShotsTwo : PhaseType.ProjectileShotsOne) : PhaseType.Dashes);
                                 }
                             }
                         }
@@ -384,6 +460,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return State == (int)PhaseType.Stunned || State == (int)PhaseType.Dashes;
+        }
+
+        public override void ModifyTypeName(ref string typeName)
+        {
+            if (IsSecondEye)
+            {
+                typeName = CalRemixHelper.LocalText("NPCs.Godraytracer").Value;
+            }
         }
 
         public override bool CheckActive()
