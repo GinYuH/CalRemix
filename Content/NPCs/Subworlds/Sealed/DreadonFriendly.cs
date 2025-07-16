@@ -105,6 +105,19 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 {
                     NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.TentLeft - 300, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<Godraycaster>());
                 }
+                else if (Timer == 600)
+                {
+                    int oldEye = NPC.FindFirstNPC(ModContent.NPCType<Godraycaster>());
+                    if (oldEye != -1)
+                    {
+                        int newEye = NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.TentLeft - 300, (int)Main.npc[oldEye].Center.Y, ModContent.NPCType<Godraycaster>());
+                        Main.npc[newEye].ModNPC<Godraycaster>().IsSecondEye = true;
+                        Main.npc[newEye].localAI[3] = oldEye + 1;
+                        Main.npc[newEye].netUpdate = true;
+                        Main.npc[oldEye].localAI[3] = newEye + 1;
+                        Main.npc[oldEye].netUpdate = true;
+                    }
+                }
             }
 
 

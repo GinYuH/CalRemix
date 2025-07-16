@@ -242,43 +242,41 @@ namespace CalRemix.Core.Subworlds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
 
             progress.Message = "Erosion";
-            GenerateBase();
+            GenerateBase(ref progress);
             progress.Message = "Swamping";
-            progress.Value = 0.1f;
+            progress.Value = 0.25f;
             GenerateDarnwood();
             progress.Message = "Making the world more barren";
-            progress.Value = 0.15f;
+            progress.Value = 0.3f;
             GenerateBarrens();
             progress.Message = "Cragging things up";
-            progress.Value = 0.25f;
+            progress.Value = 0.4f;
             GenerateCrags();
             progress.Message = "Growing turnips";
-            progress.Value = 0.35f;
+            progress.Value = 0.5f;
             GenerateTurnips();
             progress.Message = "Erupting a volcano";
-            progress.Value = 0.45f;
+            progress.Value = 0.6f;
             GenerateVolcano();
             progress.Message = "Building a village";
-            progress.Value = 0.55f;
+            progress.Value = 0.7f;
             GenerateVillage();
             progress.Message = "Making things more red";
-            progress.Value = 0.75f;
+            progress.Value = 0.8f;
             GenerateCarnelian();
             progress.Message = "Void";
-            progress.Value = 0.85f;
+            progress.Value = 0.9f;
             GenerateVoid();
             progress.Message = "Laying out the bottom";
             progress.Value = 0.95f;
             GenerateBedrock();
-            progress.Value = 1f;
-
-            
+            progress.Value = 1f;            
 
             Main.spawnTileY = surfaceTile;
             Main.spawnTileX = fieldPosition + (int)(Main.maxTilesX * fieldWidth * 0.3f);
         }
 
-        public static void GenerateBase()
+        public static void GenerateBase(ref GenerationProgress prog)
         {
             ushort stone = (ushort)ModContent.TileType<SealedStonePlaced>();
             ushort dirt = (ushort)ModContent.TileType<SealedDirtPlaced>();
@@ -293,6 +291,7 @@ namespace CalRemix.Core.Subworlds
             Rectangle caveRect = new Rectangle(leftOceanStop, surface - stretch + variance, Main.maxTilesX - leftOceanStop * 2, Main.maxTilesY - surface + stretch - variance);
             for (int i = 0; i < Main.maxTilesX; i++)
             {
+                prog.Value = MathHelper.Lerp(0f, 0.05f, Utils.GetLerpValue(0, Main.maxTilesX, i, true));
                 for (int j = surface - variance; j < Main.maxTilesY; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
@@ -304,12 +303,20 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
+            prog.Value = 0.05f;
+
             CalRemixHelper.PerlinGeneration(caveRect, noiseStrength: 0.45f, noiseThreshold: 0.8f, tileType: stone, wallType: stoneWall, ease: CalRemixHelper.PerlinEase.EaseInOut, topStop: 0.05f, bottomStop: 0.9f);
+
+            prog.Value = 0.1f;
+            
             CalRemixHelper.PerlinSurface(new Rectangle(leftOceanStop, surface - stretch, Main.maxTilesX - leftOceanStop * 2, variance + 1), dirt, variance: (int)(variance * 0.8f));
+
+            prog.Value = 0.15f;
 
             bool placeGrass = true;
             for (int i = leftOceanStop; i <= rightOceanStop; i++)
             {
+                prog.Value = MathHelper.Lerp(0.15f, 0.2f, Utils.GetLerpValue(leftOceanStop, rightOceanStop, i, true));
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
@@ -329,6 +336,8 @@ namespace CalRemix.Core.Subworlds
                 }
                 placeGrass = true;
             }
+
+            prog.Value = 0.2f;
         }
 
         public static void GenerateDarnwood()
