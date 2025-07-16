@@ -102,6 +102,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToElectricity = true;
             NPC.Calamity().VulnerableToCold = true;
+            SpawnModBiomes = new[] { ModContent.GetInstance<SealedFieldsBiome>().Type }; 
         }
         public override void AI()
         {
@@ -488,10 +489,30 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             return !alive;
         }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
+            });
+        }
 
         public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
+        }
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Electric, hit.HitDirection, -1f, 0, default, 1f);
+            }
+            if (NPC.life <= 0)
+            {
+                for (int k = 0; k < 20; k++)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Electric, hit.HitDirection, -1f, 0, default, 1f);
+                }
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

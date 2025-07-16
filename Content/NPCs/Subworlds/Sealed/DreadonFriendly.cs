@@ -63,10 +63,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             if (Main.LocalPlayer.controlUseItem)
             {
-                State = 2;
+                State = 1;
             }
             if (State == 1)
             {
+                NPC.boss = true;
                 IsGroovin = false;
                 Timer++;
                 if (Timer == 1)
@@ -118,8 +119,40 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         Main.npc[oldEye].netUpdate = true;
                     }
                 }
+                else if (Timer > 126 && !NPC.AnyNPCs(ModContent.NPCType<Godraycaster>()))
+                {
+                    State = 3;
+                    Timer = 0;
+                }
+            }
+            else if (State == 3)
+            {
+                Timer++;
+                if (Timer == 1)
+                {
+                    TargetLocation = SealedSubworldData.tentPos - Vector2.UnitY * 50;
+                }
+                else if (Timer == 120)
+                {
+                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.TentLeft - 300, (int)SealedSubworldData.tentPos.Y + 100, ModContent.NPCType<ObliteratorHead>());
+                    Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
+                }
+                else if (Timer > 620 && !NPC.AnyNPCs(ModContent.NPCType<ObliteratorHead>()))
+                {
+                    State = 0;
+                    Timer = 0;
+                    IsFlying = false;
+                    NPC.boss = false;
+                    NPC.noTileCollide = false;
+                    NPC.noGravity = false;
+                    NPC.velocity.X = 0;
+                    NPC.Calamity().ShouldCloseHPBar = true;
+                    NPC.life = NPC.lifeMax;
+                    NPC.dontTakeDamage = false;
+                }
             }
 
+            NPC.Calamity().ShouldCloseHPBar = true;
 
             NPC.TargetClosest();
             NPC.spriteDirection = NPC.direction;
@@ -131,6 +164,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (IsFlying)
             {
                 CalamityUtils.SmoothMovement(NPC, 10, TargetLocation - NPC.Center, 20, 0.8f, true);
+            }
+
+            if (NPC.life < (int)(NPC.lifeMax * 0.2f))
+            {
+                NPC.life = NPC.lifeMax;
+                NPC.dontTakeDamage = true;
             }
         }
 
@@ -203,6 +242,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool NeedSaving()
         {
             return true;
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
+            });
         }
     }
 }
