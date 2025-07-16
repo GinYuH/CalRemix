@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Terraria.DataStructures;
 using CalamityMod.Sounds;
 using Newtonsoft.Json.Serialization;
+using CalamityMod.Projectiles.Typeless;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -99,6 +100,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void AI()
         {
             NPC.TargetClosest();
+            if (NPC.CountNPCS(Type) == 1)
+            {
+                NPC.localAI[3] = 0;
+            }
             if (!NPC.HasPlayerTarget || Target.dead)
             {
                 NPC.active = false;
@@ -139,20 +144,41 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             Vector2 newPos = Vector2.Lerp(OldPosition, OtherEye.Center, Utils.GetLerpValue(0, 15, ExtraVar, true));
                             NPC.velocity = newPos - NPC.Center;
                             ExtraVar++;
-                            if (NPC.Distance(OtherEye.Center) < 40)
+                            if (OtherEyeIndex != -1)
                             {
-                                ExtraVar2 = 3;
-                                ExtraVar = 0;
-                                OtherEye.ModNPC<Godraycaster>().ChangePhase(PhaseType.Stunned);
-                                OtherEye.velocity = NPC.velocity.SafeNormalize(Vector2.UnitY) * 40;
-                                SoundEngine.PlaySound(CalamityPlayer.DefenseDamageSound, NPC.Center);
+                                if (NPC.Distance(OtherEye.Center) < 40)
+                                {
+                                    ExtraVar2 = 3;
+                                    ExtraVar = 0;
+                                    OtherEye.ModNPC<Godraycaster>().ChangePhase(PhaseType.Stunned);
+                                    OtherEye.ModNPC<Godraycaster>().ExtraVar2 = 1;
+                                    OtherEye.velocity = (NPC.position - NPC.oldPosition).SafeNormalize(Vector2.UnitY) * 40;
+                                    SoundEngine.PlaySound(CalamityPlayer.DefenseDamageSound, NPC.Center);
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 300, 1, ai0: NPC.whoAmI);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), OtherEye.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 300, 1, ai0: OtherEyeIndex);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                ChangePhase(PhaseType.ProjectileShotsOne);
                             }
                         }
                         else if (ExtraVar2 == 3)
                         {
-                            NPC.velocity *= 0.98f;
-                            ExtraVar++;
-                            if (ExtraVar > 90)
+                            if (OtherEyeIndex != -1)
+                            {
+                                NPC.rotation = NPC.DirectionTo(OtherEye.Center).ToRotation();
+                                NPC.velocity *= 0;
+                                ExtraVar++;
+                                if (ExtraVar > 90)
+                                {
+                                    ChangePhase(PhaseType.ProjectileShotsOne);
+                                }
+                            }
+                            else
                             {
                                 ChangePhase(PhaseType.ProjectileShotsOne);
                             }
@@ -170,18 +196,21 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             }
                         }
 
-                        if (NPC.Center.X > SealedSubworldData.TentCenter.X)
+                        if (ExtraVar2 != 3)
                         {
-                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Target.Center).ToRotation(), 0.05f);
-                            ExtraVar++;
-                            if (ExtraVar > 90)
+                            if (NPC.Center.X > SealedSubworldData.TentCenter.X)
                             {
-                                ChangePhase(PhaseType.ProjectileShotsOne);
+                                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(Target.Center).ToRotation(), 0.05f);
+                                ExtraVar++;
+                                if (ExtraVar > 90)
+                                {
+                                    ChangePhase(PhaseType.ProjectileShotsOne);
+                                }
                             }
-                        }
-                        else
-                        {
-                            NPC.rotation = NPC.velocity.ToRotation();
+                            else
+                            {
+                                NPC.rotation = NPC.velocity.ToRotation();
+                            }
                         }
                         Timer++;
                         break;
@@ -223,6 +252,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         float coolTime = 60;
                         float dashLength = 30;
                         float localTimer = Timer % (coolTime + dashLength);
+                        int laserTimer = 5;
                         if (localTimer < coolTime)
                         {
                             NPC.velocity *= 0.95f;
@@ -245,6 +275,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             ChangePhase(PhaseType.ProjectileShotsOne);
                         }
+                        if (localTimer > coolTime + laserTimer)
+                        {
+                            if (localTimer % laserTimer == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.PiOver2) * 20, ProjectileID.MartianTurretBolt, CalRemixHelper.ProjectileDamage(160, 240), 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(-MathHelper.PiOver2) * 20, ProjectileID.MartianTurretBolt, CalRemixHelper.ProjectileDamage(160, 240), 1);
+                                }
+                            }
+                        }
                         break;
                     }
                 case PhaseType.ProjectileShotsTwo:
@@ -253,49 +294,70 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                 case PhaseType.Stunned:
                     {
-                        if (Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && ExtraVar2 == 0)
+                        if (ExtraVar2 == 0)
+                        {
+                            NPC.velocity *= 0.93f;
+                        }
+                        if (Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && ExtraVar2 == 1)
                         {
                             NPC.velocity = Vector2.Zero;
                             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
                             SoundEngine.PlaySound(CommonCalamitySounds.ExoHitSound, NPC.Center);
-                            ExtraVar2 = 1;
-                        }    
-                        if (ExtraVar2 == 1)
-                        {
-                            Timer++;
-                            if (OtherEyeIndex != -1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                if (Timer > 300)
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 500, 1, ai0: NPC.whoAmI);
+                            }
+                            ExtraVar2 = 2;
+                        }
+                        if (OtherEyeIndex != -1)
+                        {
+                            if (ExtraVar2 == 2)
+                            {
+                                Timer++;
+                                if (OtherEyeIndex != -1)
                                 {
-                                    if (!Collision.SolidTiles(OtherEye.Center - Vector2.One * 40, NPC.width + 80, NPC.height + 80))
+                                    if (Timer > 300)
                                     {
-                                        ExtraVar2 = 3;
-                                        OldPosition = NPC.Center;
+                                        if (!Collision.SolidTiles(OtherEye.Center - Vector2.One * 40, NPC.width + 80, NPC.height + 80))
+                                        {
+                                            ExtraVar2 = 3;
+                                            OldPosition = NPC.Center;
+                                            OtherEye.ModNPC<Godraycaster>().ChangePhase(PhaseType.Stunned);
+                                        }
+                                    }
+                                    if (Timer > 200)
+                                    {
+                                        NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(OtherEye.Center).ToRotation(), 0.4f);
                                     }
                                 }
-                                if (Timer > 200)
+                            }
+                            else if (ExtraVar2 == 3)
+                            {
+                                ExtraVar++;
+                                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(OtherEye.Center).ToRotation(), 0.4f);
+                                Vector2 newPos = Vector2.Lerp(OldPosition, OtherEye.Center, Utils.GetLerpValue(0, 15, ExtraVar, true));
+                                NPC.velocity = newPos - NPC.Center;
+                                for (int i = 0; i < NPC.oldRot.Length; i++)
                                 {
-                                    NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(OtherEye.Center).ToRotation(), 0.4f);
+                                    NPC.oldRot[i] = NPC.rotation;
+                                }
+                                if (NPC.Distance(OtherEye.Center) < 40)
+                                {
+                                    OtherEye.ModNPC<Godraycaster>().ExtraVar2 = 1;
+                                    OtherEye.velocity = (NPC.position - NPC.oldPosition).SafeNormalize(Vector2.UnitY) * 40;
+                                    SoundEngine.PlaySound(CalamityPlayer.DefenseDamageSound, NPC.Center);
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 300, 1, ai0: NPC.whoAmI);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), OtherEye.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), 300, 1, ai0: OtherEyeIndex);
+                                    }
+                                    ChangePhase(Main.rand.NextBool() ? PhaseType.ProjectileShotsOne : PhaseType.Dashes);
                                 }
                             }
                         }
-                        else if (ExtraVar2 == 3)
+                        else
                         {
-                            ExtraVar++;
-                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(OtherEye.Center).ToRotation(), 0.4f);
-                            Vector2 newPos = Vector2.Lerp(OldPosition, OtherEye.Center, Utils.GetLerpValue(0, 15, ExtraVar, true));
-                            NPC.velocity = newPos - NPC.Center;
-                            for (int i = 0; i < NPC.oldRot.Length; i++)
-                            {
-                                NPC.oldRot[i] = NPC.rotation;
-                            }
-                            if (NPC.Distance(OtherEye.Center) < 40)
-                            {
-                                OtherEye.ModNPC<Godraycaster>().ChangePhase(PhaseType.Stunned);
-                                OtherEye.velocity = NPC.velocity.SafeNormalize(Vector2.UnitY) * 40;
-                                SoundEngine.PlaySound(CalamityPlayer.DefenseDamageSound, NPC.Center);
-                                ChangePhase(PhaseType.Dashes);
-                            }                            
+                            ChangePhase(PhaseType.Dashes);
                         }
                         break;
                     }
@@ -348,7 +410,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPCID.Sets.TrailCacheLength[NPC.type] = 60;
             GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
 
-            if (!(State == (int)PhaseType.Stunned && ExtraVar2 != 3))
+            if (!(State == (int)PhaseType.Stunned && ExtraVar2 != 3 && ExtraVar2 != 0))
             {
                 float correctedRotation = NPC.rotation + MathHelper.PiOver2;
 
