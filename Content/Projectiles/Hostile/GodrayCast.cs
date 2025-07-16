@@ -100,7 +100,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<HolyFlames>(), 180);
 
-        public override Color? GetAlpha(Color lightColor) => new Color(222, 166, 44, 0);
+        public override Color? GetAlpha(Color lightColor) => Projectile.ai[2] == 0 ? Color.CadetBlue : new Color(222, 166, 44, 0);
 
         public override bool PreDraw(ref Color lightColor) => Projectile.DrawBeam(LaserLength, 2f, lightColor, curve: true);
 

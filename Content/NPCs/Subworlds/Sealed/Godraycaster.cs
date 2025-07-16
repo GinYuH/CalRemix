@@ -71,6 +71,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Stunned = 4
         }
 
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.TrailingMode[NPC.type] = 3;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 60;
+        }
+
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -300,8 +306,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.PiOver2) * 10, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(160, 240), 1, ai0: 0.5f);
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(-MathHelper.PiOver2) * 10, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(160, 240), 1, ai0: -0.5f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.PiOver2) * 10, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(160, 240), 1, ai0: 0.5f, ai2: IsSecondEye.ToInt());
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(-MathHelper.PiOver2) * 10, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(160, 240), 1, ai0: -0.5f, ai2: IsSecondEye.ToInt());
                                 }
                             }
                         }
@@ -349,8 +355,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * Vector2.UnitY * 7, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(140, 250), 1, ai0: -0.5f);
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * Vector2.UnitY * 7, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(140, 250), 1, ai0: 0.5f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * Vector2.UnitY * 7, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(140, 250), 1, ai0: -0.5f, ai2: 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * Vector2.UnitY * 7, ModContent.ProjectileType<GodrayCast>(), CalRemixHelper.ProjectileDamage(140, 250), 1, ai0: 0.5f, ai2: 1);
                                 }
                             }
                             NPC.rotation = MathHelper.PiOver2 * direction;
@@ -490,8 +496,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            NPCID.Sets.TrailingMode[NPC.type] = 3;
-            NPCID.Sets.TrailCacheLength[NPC.type] = 60;
             GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
 
             if (!(State == (int)PhaseType.Stunned && ExtraVar2 != 3 && ExtraVar2 != 0))

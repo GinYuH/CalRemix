@@ -644,7 +644,17 @@ StonePriest.DisplayName: Stone Priest
 DisilUnit.DisplayName: Disil Unit
 BrightMind.DisplayName: Bright Mind
 WinterWitch.DisplayName: Winter Witch
-DreadonFriendly.DisplayName: Draedon
+
+DreadonFriendly: {
+	DisplayName: Draedon
+
+	BossChecklistIntegration: {
+		EntryName: Draedon
+		SpawnInfo: Found within the Sealed Dimension's tent.
+		DespawnMessage: "[c/cbd179:An imperfection just like me? What a shame.]"
+	}
+}
+
 SkeletronOmega.DisplayName: Skeletron Omega
 OmegaFist.DisplayName: Omega Fist
 OmegaSoothingSunlightBlaster.DisplayName: Omega Soothing Sunlight Blaster
