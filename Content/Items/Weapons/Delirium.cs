@@ -41,8 +41,8 @@ namespace CalRemix.Content.Items.Weapons
         {
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<NauseatingPowder>(), 4).
+                AddIngredient(ModContent.ItemType<VoidSingularity>(), 1).
                 AddIngredient(ModContent.ItemType<VoidInfusedStone>(), 12).
-                //AddIngredient(ModContent.ItemType<SealedToken>(), 1).
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }

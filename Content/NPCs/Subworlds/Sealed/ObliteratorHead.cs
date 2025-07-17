@@ -183,6 +183,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<HeavenReaper>());
+            npcLoot.Add(ModContent.ItemType<NauseatingPowder>(), 1, 8, 15);
         }
 
         public override bool CheckActive()

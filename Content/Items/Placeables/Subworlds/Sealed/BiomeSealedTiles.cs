@@ -5,6 +5,7 @@ using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalamityMod.Items;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 {
@@ -96,9 +97,11 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 
         public override void AddRecipes()
         {
-            CreateRecipe().
-                AddIngredient(ModContent.ItemType<Brightstone>(), 2).
+            CreateRecipe(50).
+                AddIngredient(ModContent.ItemType<Brightstone>(), 50).
+                AddIngredient(ModContent.ItemType<GildedShard>()).
                 AddTile(TileID.Anvils).
+                DisableDecraft().
                 Register();
         }
     }

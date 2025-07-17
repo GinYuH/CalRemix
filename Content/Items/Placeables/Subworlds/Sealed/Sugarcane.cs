@@ -97,6 +97,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
                 .AddIngredient(ModContent.ItemType<LightColumn>())
                 .AddIngredient(ModContent.ItemType<PeatSpire>())
                 .AddIngredient(ModContent.ItemType<CookieTower>())
+                .AddIngredient(ModContent.ItemType<VoidSingularity>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

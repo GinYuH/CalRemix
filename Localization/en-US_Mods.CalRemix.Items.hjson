@@ -5261,3 +5261,68 @@ HeavenReaper: {
 		Hitting a probe with another weapon's projectile causes the probe to detonate into a massive explosion
 		'''
 }
+
+Astrogel: {
+	DisplayName: Astral Gel
+	Tooltip: ""
+}
+
+Gastrogel: {
+	DisplayName: Gastrogel
+	Tooltip: ""
+}
+
+GastropodEye: {
+	DisplayName: Gastropod Eye
+	Tooltip: ""
+}
+
+GastropodHide: {
+	DisplayName: Gastropod Hide
+	Tooltip: ""
+}
+
+GildedShard: {
+	DisplayName: Gilded Shard
+	Tooltip: ""
+}
+
+MercuryCoatedSubcinium: {
+	DisplayName: Mercury Coated Subcinium
+	Tooltip: "'Smells like pancake batter'"
+}
+
+VoidSingularity: {
+	DisplayName: Void Singularity
+	Tooltip: ""
+}
+
+AstrogelBlock: {
+	DisplayName: Astral Gel Block
+	Tooltip: ""
+}
+
+GastrogelBlock: {
+	DisplayName: Gastrogel Block
+	Tooltip: ""
+}
+
+GildedHardlightBlock: {
+	DisplayName: Gilded Hardlight Block
+	Tooltip: ""
+}
+
+VoidInfusedTurnipFruit: {
+	DisplayName: Void Infused Turnip Fruit
+	Tooltip: ""
+}
+
+CornSquare: {
+	DisplayName: Corn Square
+	Tooltip: ""
+}
+
+GroundFleshBlock: {
+	DisplayName: Ground Flesh Block
+	Tooltip: ""
+}

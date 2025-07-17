@@ -76,6 +76,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<ArcticRapier>())
+                .AddIngredient(ModContent.ItemType<GildedShard>(), 3)
                 .AddIngredient(ModContent.ItemType<RefinedCarnelianite>(), 10)
                 .Register();
         }
