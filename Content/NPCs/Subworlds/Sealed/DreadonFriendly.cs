@@ -63,7 +63,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             if (Main.LocalPlayer.controlUseItem)
             {
-                State = 1;
+                //State = 1;
             }
             if (State == 1)
             {

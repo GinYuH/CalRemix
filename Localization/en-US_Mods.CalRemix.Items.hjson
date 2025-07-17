@@ -5252,3 +5252,12 @@ ArcticRapier: {
 		<right> to freeze nearby enemies
 		'''
 }
+
+HeavenReaper: {
+	DisplayName: Heaven Reaper
+	Tooltip:
+		'''
+		Flings out a spread of auric probes which slow down to a stop
+		Hitting a probe with another weapon's projectile causes the probe to detonate into a massive explosion
+		'''
+}

@@ -738,17 +738,35 @@ namespace CalRemix
 
         public static void DustExplosionOutward(Vector2 position, int dustID, float speed, int amount = 50, Color color = default, int alpha = 0, float scaleMin = 1, float scaleMax = 1.001f)
         {
-            DustExplosionOutward(position, dustID, speed, amount, color, alpha, Main.rand.NextFloat(scaleMin, scaleMax));
+            for (int i = 0; i < amount; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(position, dustID, Vector2.Zero, alpha, color, Main.rand.NextFloat(scaleMin, scaleMax));
+                dust.noGravity = true;
+                dust.position += Main.rand.NextVector2Square(-5, 5);
+                dust.velocity = position.DirectionTo(dust.position) * speed;
+            }
         }
 
         public static void DustExplosionOutward(Vector2 position, int dustID, float speedMin, float speedMax, int amount = 50, Color color = default, int alpha = 0, float scaleMin = 1, float scaleMax = 1.001f)
         {
-            DustExplosionOutward(position, dustID, Main.rand.NextFloat(speedMin, speedMax), amount, color, alpha, Main.rand.NextFloat(scaleMin, scaleMax));
+            for (int i = 0; i < amount; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(position, dustID, Vector2.Zero, alpha, color, Main.rand.NextFloat(scaleMin, scaleMax));
+                dust.noGravity = true;
+                dust.position += Main.rand.NextVector2Square(-5, 5);
+                dust.velocity = position.DirectionTo(dust.position) * Main.rand.NextFloat(speedMin, speedMax);
+            }
         }
 
         public static void DustExplosionOutward(Vector2 position, int dustID, float speedMin, float speedMax, int amount = 50, Color color = default, int alpha = 0, float scale = 1)
         {
-            DustExplosionOutward(position, dustID, Main.rand.NextFloat(speedMin, speedMax), amount, color, alpha, scale);
+            for (int i = 0; i < amount; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(position, dustID, Vector2.Zero, alpha, color, scale);
+                dust.noGravity = true;
+                dust.position += Main.rand.NextVector2Square(-5, 5);
+                dust.velocity = position.DirectionTo(dust.position) * Main.rand.NextFloat(speedMin, speedMax);
+            }
         }
 
         public static void DustExplosionOutward(Vector2 position, int dustID, float speed, int amount = 50, Color color = default, int alpha = 0, float scale = 1)

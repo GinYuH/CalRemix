@@ -15,6 +15,7 @@ using CalRemix.Content.Items.Materials;
 using CalamityMod.Tiles.Ores;
 using CalRemix.Core.Subworlds;
 using CalamityMod.Projectiles.Typeless;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -181,8 +182,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemID.Leather, 1, 3, 7);
-            npcLoot.Add(ModContent.ItemType<CoyoteVenom>(), 1, 1, 3);
+            npcLoot.Add(ModContent.ItemType<HeavenReaper>());
         }
 
         public override bool CheckActive()
