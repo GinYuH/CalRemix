@@ -320,6 +320,9 @@ namespace CalRemix.Core.Subworlds
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
+                    Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                    Tile top = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
                     if (placeGrass && t.HasTile)
                     {
                         t.TileType = grass;
@@ -329,7 +332,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         t.TileType = dirt;
                     }
-                    if (!placeGrass && t.TileType != grass)
+                    if (!placeGrass && t.TileType != grass && ((left.HasTile && right.HasTile && top.HasTile) || (j > surfaceTile + variance)))
                     {
                         t.WallType = (j > caveTile) ? stoneWall : dirtWall;
                     }
