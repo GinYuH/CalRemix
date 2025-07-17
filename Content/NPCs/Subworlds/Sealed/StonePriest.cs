@@ -10,6 +10,7 @@ using System;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -90,6 +91,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ModContent.ItemType<Pebble>());
         }
     }
 }

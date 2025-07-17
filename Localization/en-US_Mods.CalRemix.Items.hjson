@@ -5326,3 +5326,53 @@ GroundFleshBlock: {
 	DisplayName: Ground Flesh Block
 	Tooltip: ""
 }
+
+Pebble: {
+	DisplayName: Pebble
+	Tooltip: ""
+}
+
+PebbleAstral: {
+	DisplayName: Astral Pebble
+	Tooltip: ""
+}
+
+PebbleBrimstone: {
+	DisplayName: Brimstone Pebble
+	Tooltip: ""
+}
+
+PebbleCarnelian: {
+	DisplayName: Carnelian Pebble
+	Tooltip: ""
+}
+
+PebbleFlake: {
+	DisplayName: Pebble Flake
+	Tooltip: ""
+}
+
+PebbleSealed: {
+	DisplayName: Sealed Pebble
+	Tooltip: ""
+}
+
+PebbleShardAstral: {
+	DisplayName: Astral Pebble Flake
+	Tooltip: ""
+}
+
+PebbleShardBrimstone: {
+	DisplayName: Brimstone Pebble Flake
+	Tooltip: ""
+}
+
+PebbleShardCarnelian: {
+	DisplayName: Carnelian Pebble Flake
+	Tooltip: ""
+}
+
+PebbleShardSealed: {
+	DisplayName: Sealed Pebble Flake
+	Tooltip: ""
+}
