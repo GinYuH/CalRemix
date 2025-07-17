@@ -36,8 +36,9 @@ namespace CalRemix.Content.Projectiles.Weapons
                 {
                     for (int i = 0; i < 20; i++)
                     {
-                        Dust d = Dust.NewDustPerfect(Projectile.Center + Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 20f)), (int)CalamityDusts.ProfanedFire, Scale: 0.4f);
+                        Dust d = Dust.NewDustPerfect(Projectile.Center + Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 20f)) * 5, (int)CalamityDusts.ProfanedFire, Scale: 0.4f);
                         d.noGravity = true;
+                        d.velocity = Vector2.Zero;
                     }
                     Projectile.ai[0] = 1;
                 }
@@ -50,7 +51,6 @@ namespace CalRemix.Content.Projectiles.Weapons
                     if (p.getRect().Intersects(Projectile.getRect()))
                     {
                         p.penetrate--;
-                        Projectile.damage *= 5;
                         Projectile.Kill();
                         Projectile.ExpandHitboxBy(600);
                         Projectile.maxPenetrate = -1;
@@ -84,6 +84,11 @@ namespace CalRemix.Content.Projectiles.Weapons
                 Main.EntitySpriteDraw(tex, Projectile.Center + new Vector2(0, Projectile.gfxOffY) - Main.screenPosition + Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 8f)) * 4, null, Color.CornflowerBlue * 0.6f, 0, tex.Size() / 2, Projectile.scale, 0);
             }
             Main.EntitySpriteDraw(tex, Projectile.Center + new Vector2(0, Projectile.gfxOffY) - Main.screenPosition, null, lightColor, 0, tex.Size() / 2, Projectile.scale, 0);
+            return false;
+        }
+
+        public override bool? CanHitNPC(NPC target)
+        {
             return false;
         }
     }

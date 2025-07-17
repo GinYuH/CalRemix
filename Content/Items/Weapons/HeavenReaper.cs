@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void SetDefaults()
         {
             Item.width = 70;
-            Item.damage = 1035;
+            Item.damage = 4035;
             Item.DamageType = DamageClass.Melee;
             Item.useAnimation = 78;
             Item.useStyle = ItemUseStyleID.Swing;
