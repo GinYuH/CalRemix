@@ -399,17 +399,17 @@ namespace CalRemix.Core.Subworlds
                     Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
                     if (!above.HasTile && t.TileType == dwood && t.HasTile)
                     {
-                        if (Main.rand.NextBool(7))
+                        if (WorldGen.genRand.NextBool(7))
                         {
-                            CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 20));
+                            CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(10, 20));
                         }
-                        else if (Main.rand.NextBool(5))
+                        else if (WorldGen.genRand.NextBool(5))
                         {
-                            int peatAmt = Main.rand.Next(2, 12);
+                            int peatAmt = WorldGen.genRand.Next(2, 12);
                             for (int k = j - 1; k > j - peatAmt; k--)
                             {
                                 if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
-                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, Main.rand.Next(0, 3));
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, WorldGen.genRand.Next(0, 3));
                             }
                         }
                     }
@@ -423,17 +423,17 @@ namespace CalRemix.Core.Subworlds
                     Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
                     if (!above.HasTile && t.TileType == dwood && t.HasTile)
                     {
-                        if (Main.rand.NextBool(7))
+                        if (WorldGen.genRand.NextBool(7))
                         {
-                            CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 20));
+                            CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(10, 20));
                         }
-                        else if (Main.rand.NextBool(5))
+                        else if (WorldGen.genRand.NextBool(5))
                         {
-                            int peatAmt = Main.rand.Next(2, 12);
+                            int peatAmt = WorldGen.genRand.Next(2, 12);
                             for (int k = j - 1; k > j - peatAmt; k--)
                             {
                                 if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
-                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, Main.rand.Next(0, 3));
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<PeatSpirePlaced>(), true, WorldGen.genRand.Next(0, 3));
                             }
                         }
                     }
@@ -466,7 +466,7 @@ namespace CalRemix.Core.Subworlds
                             t.ResetToType(tType);
                         if (!top)
                         {
-                            if (blobCooldown <= 0 && Main.rand.NextBool(30) && t.TileType == tType)
+                            if (blobCooldown <= 0 && WorldGen.genRand.NextBool(30) && t.TileType == tType)
                             {
                                 int size = blobSize.Get();
 
@@ -530,7 +530,7 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == tType)
                     {
-                        if (Main.rand.NextBool(14) && spikeCooldown <= 0)
+                        if (WorldGen.genRand.NextBool(14) && spikeCooldown <= 0)
                         {
                             int cd = 20;
                             if (spikeCount == 6)
@@ -544,12 +544,12 @@ namespace CalRemix.Core.Subworlds
                             {
                                 int itMin = 4;
                                 int itMax = 7;
-                                int iterations = Main.rand.Next(itMin, itMax + 1);
+                                int iterations = WorldGen.genRand.Next(itMin, itMax + 1);
                                 int curHeight = 0;
                                 for (int m = 0; m < iterations; m++)
                                 {
-                                    int spikeWidth = (int)(Main.rand.Next(1, 5) * MathHelper.Lerp(1, 0.2f, Utils.GetLerpValue(itMin, itMax, m, true)));
-                                    int spikeHeight = (int)(spikeWidth * Main.rand.NextFloat(0.8f, 1.5f));
+                                    int spikeWidth = (int)(WorldGen.genRand.Next(1, 5) * MathHelper.Lerp(1, 0.2f, Utils.GetLerpValue(itMin, itMax, m, true)));
+                                    int spikeHeight = (int)(spikeWidth * WorldGen.genRand.NextFloat(0.8f, 1.5f));
                                     curHeight += (int)(spikeHeight * 1.6f);
                                     Point spikeOrigin = new Point(i, j - curHeight);
                                     for (int k = spikeOrigin.X - spikeWidth * 2; k < spikeOrigin.X + spikeWidth * 2; k++)
@@ -606,7 +606,7 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == tType)
                     {
-                        if (Main.rand.NextBool(10) && turnipCooldown <= 0)
+                        if (WorldGen.genRand.NextBool(10) && turnipCooldown <= 0)
                         {
                             bool _ = false;
                             string chem = turnipsPlaced == 5 ? "Sealed Citadel" : "Turnip";
@@ -659,7 +659,7 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == tType)
                     {
-                        if (Main.rand.NextBool(10) && volcanoCooldown <= 0)
+                        if (WorldGen.genRand.NextBool(10) && volcanoCooldown <= 0)
                         {
                             bool _ = false;
                             SchematicManager.PlaceSchematic<Action<Chest>>("Plumestone", new Point(i, j + 4), SchematicAnchor.BottomCenter, ref _);
@@ -702,7 +702,7 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == tType)
                     {
-                        if (Main.rand.NextBool(10) && hausCooldown <= 0)
+                        if (WorldGen.genRand.NextBool(10) && hausCooldown <= 0)
                         {
                             string houseType = houseTypes.Get();
                             // Guarantee a church on the fifth house if one hasn't generated yet
@@ -716,13 +716,13 @@ namespace CalRemix.Core.Subworlds
                             hausCooldown = (int)(RemixSchematics.TileMaps[prefix + "Library"].GetLength(0));
                             housesGenerated++;
                         }
-                        else if (Main.rand.NextBool(25))
+                        else if (WorldGen.genRand.NextBool(25))
                         {
-                            int peatAmt = Main.rand.Next(3, 8);
+                            int peatAmt = WorldGen.genRand.Next(3, 8);
                             for (int k = j - 1; k > j - peatAmt; k--)
                             {
                                 if (!CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
-                                    WorldGen.PlaceObject(i, k, ModContent.TileType<NeoncanePlaced>(), true, Main.rand.Next(0, 3));
+                                    WorldGen.PlaceObject(i, k, ModContent.TileType<NeoncanePlaced>(), true, WorldGen.genRand.Next(0, 3));
                             }
                         }
                         break;
@@ -781,11 +781,11 @@ namespace CalRemix.Core.Subworlds
                         }
                         if (t.TileType == grass && t.HasTile)
                         {
-                            if (Main.rand.NextBool(5))
+                            if (WorldGen.genRand.NextBool(5))
                             {
                                 CalRemixHelper.ForceGrowTree(i, j);
                             }
-                            else if (Main.rand.NextBool(15))
+                            else if (WorldGen.genRand.NextBool(15))
                             {
                                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CarnelianRosePlaced>(), true);
                                 roseAttempts++;
@@ -829,9 +829,9 @@ namespace CalRemix.Core.Subworlds
                     Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
                     if (!above.HasTile && t.TileType == tType && t.HasTile)
                     {
-                        if (Main.rand.NextBool(5))
+                        if (WorldGen.genRand.NextBool(5))
                         {
-                            CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 40));
+                            CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(10, 40));
                         }
                     }
                 }
@@ -850,9 +850,9 @@ namespace CalRemix.Core.Subworlds
                     Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
                     if (!above.HasTile && t.TileType == tType && t.HasTile)
                     {
-                        if (Main.rand.NextBool(5))
+                        if (WorldGen.genRand.NextBool(5))
                         {
-                            bool tree = CalRemixHelper.ForceGrowTree(i, j, Main.rand.Next(10, 40));
+                            bool tree = CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(10, 40));
                             if (tree && treesPlaecd > 5 && !placedShrine)
                             {
                                 placedShrine = true;
@@ -883,9 +883,28 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     if (t.TileType == grass)
                     {
-                        if (Main.rand.NextBool(5))
+                        if (WorldGen.genRand.NextBool(5))
                         {
                             CalRemixHelper.ForceGrowTree(i, j);
+
+                            for (int k = i - 1; k < i + 2; k++)
+                            {
+                                for (int l = j; l > j - 20; l--)
+                                {
+                                    if (!WorldGen.genRand.NextBool(10))
+                                        continue;
+                                    Tile treeTileB = CalamityUtils.ParanoidTileRetrieval(k, l + 1);
+                                    Tile treeTileL = CalamityUtils.ParanoidTileRetrieval(k - 1, l);
+                                    Tile treeTileR = CalamityUtils.ParanoidTileRetrieval(k + 1, l);
+                                    if (!treeTileB.HasTile)
+                                    {
+                                        if (treeTileL.TileType == TileID.Trees || treeTileR.TileType == TileID.Trees)
+                                        {
+                                            WorldGen.PlaceTile(k, l, ModContent.TileType<LargeSealedFruitPlaced>(), mute: true, forced: true);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -896,7 +915,7 @@ namespace CalRemix.Core.Subworlds
             CalamityUtils.SpawnOre(ModContent.TileType<CarnelianiteOrePlaced>(), 12E-06, 0.35f, 0.95f, 1, 4, ModContent.TileType<SealedStonePlaced>());
             CalamityUtils.SpawnOre(ModContent.TileType<CarnelianiteOrePlaced>(), 12E-04, 0.35f, 0.95f, 5, 10, ModContent.TileType<CarnelianStonePlaced>());
             CalamityUtils.SpawnOre(ModContent.TileType<PeatOrePlaced>(), 12E-05, 0.25f, 0.85f, 10, 20, ModContent.TileType<SealedStonePlaced>());
-            int iron = Main.rand.NextBool() ? TileID.Iron : TileID.Lead;
+            int iron = WorldGen.genRand.NextBool() ? TileID.Iron : TileID.Lead;
             CalamityUtils.SpawnOre(iron, 12E-05, 0.25f, 0.85f, 8, 12, ModContent.TileType<SealedStonePlaced>());
         }
     }

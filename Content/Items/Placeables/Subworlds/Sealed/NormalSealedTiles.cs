@@ -6,6 +6,7 @@ using CalamityMod.Items;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Potions;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 {
@@ -143,6 +144,25 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
         {
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<SealedWoodWall>(), 4).
+                AddTile(TileID.WorkBenches).
+                Register();
+        }
+    }
+    public class LargeSealedFruit : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 100;
+        }
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<LargeSealedFruitPlaced>());
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<SealedFruit>(), 8).
                 AddTile(TileID.WorkBenches).
                 Register();
         }

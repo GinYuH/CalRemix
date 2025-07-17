@@ -5376,3 +5376,8 @@ PebbleShardSealed: {
 	DisplayName: Sealed Pebble Flake
 	Tooltip: ""
 }
+
+LargeSealedFruit: {
+	DisplayName: Large Sealed Fruit
+	Tooltip: ""
+}

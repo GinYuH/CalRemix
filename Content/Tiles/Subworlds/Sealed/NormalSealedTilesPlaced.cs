@@ -6,6 +6,7 @@ using CalRemix.Content.Tiles.PlaguedJungle;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -137,6 +138,24 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             Main.tileBlockLight[Type] = true;
             AddMapEntry(new Color(156, 82, 138));
             DustType = DustID.PurpleCrystalShard;
+        }
+    }
+    public class LargeSealedFruitPlaced : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = false;
+            CalamityUtils.SetMerge(Type, ModContent.TileType<SealedDirtPlaced>());
+            TileID.Sets.BlockMergesWithMergeAllBlock[Type] = true;
+            Main.tileBlendAll[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            AddMapEntry(new Color(117, 50, 113));
+            DustType = DustID.ShadowbeamStaff;
+        }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<SealedFruit>(), Main.rand.Next(2, 6));
         }
     }
     public class FrozenSealedTearOrePlaced : ModTile
