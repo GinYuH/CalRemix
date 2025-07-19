@@ -38,6 +38,7 @@ using System.Reflection;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -748,6 +749,7 @@ namespace CalRemix.Core.Subworlds
             ushort dirt = (ushort)ModContent.TileType<CarnelianDirtPlaced>();
             ushort grass = (ushort)ModContent.TileType<CarnelianGrassPlaced>();
             ushort stoneWall = (ushort)ModContent.WallType<UnsafeCarnelianStoneWallPlaced>();
+            ushort vine = (ushort)ModContent.TileType<CarnelianVines>();
 
             Point origin = new Point(lavaPosition + (int)(Main.maxTilesX * 0.5f * lavaWidth), surfaceTile + caveTile);
 
@@ -765,7 +767,8 @@ namespace CalRemix.Core.Subworlds
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
-                    bool growOverride = above.WallType == stoneWall && t.TileType != dirt && t.TileType != stone && t.TileType != TileID.Trees;
+                    Tile below = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
+                    bool growOverride = above.WallType == stoneWall && t.TileType != dirt && t.TileType != stone && t.TileType != TileID.Trees && t.TileType != vine;
                     if (!above.HasTile || growOverride)
                     {
                         int dirtDist = 3;
@@ -773,7 +776,7 @@ namespace CalRemix.Core.Subworlds
                         for (int k = oj; k < oj + dirtDist; k++)
                         {
                             Tile t2 = CalamityUtils.ParanoidTileRetrieval(i, k);
-                            if (t2.HasTile && (t2.TileType == stone || growOverride) && t2.TileType != TileID.Trees)
+                            if (t2.HasTile && (t2.TileType == stone || growOverride) && t2.TileType != TileID.Trees && t2.TileType != vine)
                             {
                                 t2.TileType = dirt;
                             }
@@ -796,6 +799,55 @@ namespace CalRemix.Core.Subworlds
                                 if (roseAttempts == 15)
                                 {
                                     SealedSubworldData.warriorPos = new Vector2(i, j - 1) * 16;
+                                }
+                            }
+                        }
+                    }
+                    if (WorldGen.genRand.NextBool(60))
+                    {
+                        int xRange = WorldGen.genRand.Next(3, 7);
+                        int yCheck = 5;
+
+                        for (int l = i; l < i + xRange; l++)
+                        {
+                            for (int m = j - yCheck; m < j + yCheck; m++)
+                            {
+                                Tile baseTile = CalamityUtils.ParanoidTileRetrieval(l, m);
+                                Tile aboveVine = CalamityUtils.ParanoidTileRetrieval(l, m - 1);
+                                if (aboveVine.HasTile && Main.tileSolid[aboveVine.TileType] && !baseTile.HasTile && !WorldGen.genRand.NextBool(5) && (aboveVine.TileType == dirt || aboveVine.TileType == stone))
+                                {
+                                    int vineCheck = 5;
+                                    bool enoughRoom = true;
+                                    for (int k = m; k < m + vineCheck; k++)
+                                    {
+                                        Tile vineCheckTile = CalamityUtils.ParanoidTileRetrieval(i, k);
+                                        if (vineCheckTile.HasTile)
+                                        {
+                                            enoughRoom = false;
+                                            break;
+                                        }
+                                    }
+                                    if (enoughRoom)
+                                    {
+                                        int vineHeight = WorldGen.genRand.Next(3, 11);
+
+                                        for (int k = m; k < m + vineHeight; k++)
+                                        {
+                                            Tile vineCheckTile = CalamityUtils.ParanoidTileRetrieval(l, k);
+                                            if (!vineCheckTile.HasTile)
+                                            {
+                                                WorldGen.PlaceTile(l, k, vine, true);
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    continue;
                                 }
                             }
                         }
@@ -878,6 +930,9 @@ namespace CalRemix.Core.Subworlds
             CalRemixHelper.PerlinSurface(new Rectangle(0, baseHeight, Main.maxTilesX, height), ModContent.TileType<DarkstonePlaced>(), 3);
 
             ushort grass = (ushort)ModContent.TileType<SealedGrassPlaced>();
+            ushort stone = (ushort)ModContent.TileType<SealedStonePlaced>();
+            ushort dirt = (ushort)ModContent.TileType<SealedDirtPlaced>();
+            ushort manure = (ushort)ModContent.TileType<PorswineManurePlaced>();
 
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -904,6 +959,52 @@ namespace CalRemix.Core.Subworlds
                                         if (treeTileL.TileType == TileID.Trees || treeTileR.TileType == TileID.Trees)
                                         {
                                             WorldGen.PlaceTile(k, l, ModContent.TileType<LargeSealedFruitPlaced>(), mute: true, forced: true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (WorldGen.genRand.NextBool(200))
+                    {
+                        int xRange = WorldGen.genRand.Next(3, 7);
+                        int yCheck = 5;
+
+                        for (int l = i; l < i + xRange; l++)
+                        {
+                            for (int m = j - yCheck; m < j + yCheck; m++)
+                            {
+                                Tile baseTile = CalamityUtils.ParanoidTileRetrieval(l, m);
+                                Tile aboveVine = CalamityUtils.ParanoidTileRetrieval(l, m - 1);
+                                if (aboveVine.HasTile && Main.tileSolid[aboveVine.TileType] && !baseTile.HasTile && !WorldGen.genRand.NextBool(3) && (aboveVine.TileType == dirt || aboveVine.TileType == stone || aboveVine.TileType == manure))
+                                {
+                                    int vineCheck = 5;
+                                    bool enoughRoom = true;
+                                    for (int k = m; k < m + vineCheck; k++)
+                                    {
+                                        Tile vineCheckTile = CalamityUtils.ParanoidTileRetrieval(i, k);
+                                        if (vineCheckTile.HasTile)
+                                        {
+                                            enoughRoom = false;
+                                            break;
+                                        }
+                                    }
+                                    if (enoughRoom)
+                                    {
+                                        int vineHeight = WorldGen.genRand.Next(3, 11);
+
+                                        for (int k = m; k < m + vineHeight; k++)
+                                        {
+                                            Tile vineCheckTile = CalamityUtils.ParanoidTileRetrieval(l, k);
+                                            if (!vineCheckTile.HasTile)
+                                            {
+                                                WorldGen.PlaceTile(l, k, ModContent.TileType<SealedVines>(), true);
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
                                         }
                                     }
                                 }
