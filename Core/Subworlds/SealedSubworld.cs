@@ -750,6 +750,7 @@ namespace CalRemix.Core.Subworlds
             ushort grass = (ushort)ModContent.TileType<CarnelianGrassPlaced>();
             ushort stoneWall = (ushort)ModContent.WallType<UnsafeCarnelianStoneWallPlaced>();
             ushort vine = (ushort)ModContent.TileType<CarnelianVines>();
+            ushort cVine = (ushort)ModContent.TileType<CookieVines>();
 
             Point origin = new Point(lavaPosition + (int)(Main.maxTilesX * 0.5f * lavaWidth), surfaceTile + caveTile);
 
@@ -768,7 +769,7 @@ namespace CalRemix.Core.Subworlds
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                     Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
                     Tile below = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
-                    bool growOverride = above.WallType == stoneWall && t.TileType != dirt && t.TileType != stone && t.TileType != TileID.Trees && t.TileType != vine;
+                    bool growOverride = above.WallType == stoneWall && t.TileType != dirt && t.TileType != stone && t.TileType != TileID.Trees && t.TileType != vine && t.TileType != cVine;
                     if (!above.HasTile || growOverride)
                     {
                         int dirtDist = 3;
@@ -776,7 +777,7 @@ namespace CalRemix.Core.Subworlds
                         for (int k = oj; k < oj + dirtDist; k++)
                         {
                             Tile t2 = CalamityUtils.ParanoidTileRetrieval(i, k);
-                            if (t2.HasTile && (t2.TileType == stone || growOverride) && t2.TileType != TileID.Trees && t2.TileType != vine)
+                            if (t2.HasTile && (t2.TileType == stone || growOverride) && t2.TileType != TileID.Trees && t2.TileType != vine && t2.TileType != cVine)
                             {
                                 t2.TileType = dirt;
                             }
@@ -836,7 +837,8 @@ namespace CalRemix.Core.Subworlds
                                             Tile vineCheckTile = CalamityUtils.ParanoidTileRetrieval(l, k);
                                             if (!vineCheckTile.HasTile)
                                             {
-                                                WorldGen.PlaceTile(l, k, vine, true);
+                                                ushort vineType = WorldGen.genRand.NextBool(50) ? cVine : vine;
+                                                WorldGen.PlaceTile(l, k, vineType, true);
                                             }
                                             else
                                             {
