@@ -179,7 +179,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             {
                 if (Main.tile[i, j + 1].HasTile)
                 {
-                    if (Main.tile[i, j + 1].TileType == ModContent.TileType<CarnelianVines>())
+                    if (Main.tile[i, j + 1].TileType == ModContent.TileType<CarnelianVines>() || Main.tile[i, j + 1].TileType == ModContent.TileType<CookieVines>())
                     {
                         WorldGen.KillTile(i, j + 1, false, false, false);
                         if (!Main.tile[i, j + 1].HasTile && Main.netMode != NetmodeID.SinglePlayer)
@@ -292,7 +292,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             {
                 if (Main.tile[i, j + 1].HasTile)
                 {
-                    if (Main.tile[i, j + 1].TileType == ModContent.TileType<CookieVines>())
+                    if (Main.tile[i, j + 1].TileType == ModContent.TileType<CookieVines>() || Main.tile[i, j + 1].TileType == ModContent.TileType<CarnelianVines>())
                     {
                         WorldGen.KillTile(i, j + 1, false, false, false);
                         if (!Main.tile[i, j + 1].HasTile && Main.netMode != NetmodeID.SinglePlayer)
