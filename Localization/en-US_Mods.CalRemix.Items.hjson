@@ -5381,3 +5381,13 @@ LargeSealedFruit: {
 	DisplayName: Large Sealed Fruit
 	Tooltip: ""
 }
+
+SepulcherBodyAltTrophy: {
+	DisplayName: Sepulcher Alternate Body Trophy
+	Tooltip: ""
+}
+
+SepulcherHandTrophy: {
+	DisplayName: Sepulcher Arm Trophy
+	Tooltip: ""
+}

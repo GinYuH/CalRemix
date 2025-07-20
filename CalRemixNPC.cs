@@ -303,7 +303,7 @@ namespace CalRemix
             {
                 npc.active = false;
             }
-            if (npc.type == NPCType<SepulcherHead>() || npc.type == NPCType<SepulcherBody>() || npc.type == NPCType<SepulcherBodyEnergyBall>() || npc.type == NPCType<SepulcherTail>())
+            if (npc.type == NPCType<SepulcherHead>() || npc.type == NPCType<SepulcherBody>() || npc.type == NPCType<SepulcherBodyEnergyBall>() || npc.type == NPCType<SepulcherTail>() || npc.type == NPCType<SepulcherArm>())
             {
                 bool sepulcherDead = (!NPC.AnyNPCs(ModContent.NPCType<BrimstoneHeart>()) && !Main.zenithWorld) || CalamityGlobalNPC.SCal < 0 || !Main.npc[CalamityGlobalNPC.SCal].active;
                 if (npc.type == NPCType<SepulcherHead>())
@@ -323,11 +323,25 @@ namespace CalRemix
                 {
                     if (sepulcherDead)
                     {
+                        bool notalt = npc.localAI[3] / 2f % 2f == 0f;
                         if (Main.rand.NextBool(10))
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherBodyTrophy>());
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), notalt ? ItemType<SepulcherBodyTrophy>() : ItemType<SepulcherBodyAltTrophy>());
+                            }
+                        }
+                    }
+                }
+                if (npc.type == NPCType<SepulcherArm>())
+                {
+                    if (sepulcherDead)
+                    {
+                        if (Main.rand.NextBool(10))
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherHandTrophy>());
                             }
                         }
                     }

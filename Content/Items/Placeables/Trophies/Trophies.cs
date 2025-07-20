@@ -192,6 +192,22 @@ public class SepulcherBodyTrophy : RemixTrophy
         Item.createTile = TileType<SepulcherBodyTrophyPlaced>();
     }
 }
+public class SepulcherHandTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherHandTrophyPlaced>();
+    }
+}
+public class SepulcherBodyAltTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherBodyAltTrophyPlaced>();
+    }
+}
 public class SepulcherTailTrophy : RemixTrophy
 {
     public override void SetDefaults()

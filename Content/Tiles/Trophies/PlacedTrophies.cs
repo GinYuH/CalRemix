@@ -87,6 +87,8 @@ public class PyrogenTrophyPlaced : PlacedRemixTrophy;
 public class RedTrophyPlaced : PlacedRemixTrophy;
 public class SepulcherTrophyPlaced : PlacedRemixTrophy;
 public class SepulcherBodyTrophyPlaced : PlacedRemixTrophy;
+public class SepulcherHandTrophyPlaced : PlacedRemixTrophy;
+public class SepulcherBodyAltTrophyPlaced : PlacedRemixTrophy;
 public class SepulcherTailTrophyPlaced : PlacedRemixTrophy;
 public class SepulcherOrbTrophyPlaced : PlacedRemixTrophy
 {
