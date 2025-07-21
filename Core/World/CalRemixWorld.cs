@@ -654,7 +654,26 @@ namespace CalRemix.Core.World
         {
             /*if (Main.LocalPlayer.controlUseItem)
             {
-                RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<GrandSeaDoor>());
+                bool oneGenerated = false;
+                int half = (int)(Main.maxTilesX * 0.5f);
+                for (int i = 200; i < Main.maxTilesX - 200; i++)
+                {
+                    for (int j = 0; j < Main.worldSurface + 200; j++)
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile tA = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                        if (t.HasTile && Main.tileSolid[t.TileType] && !tA.HasTile && tA.LiquidAmount <= 0)
+                        {
+                            if (WorldGen.genRand.NextBool(200) || (i == half && !oneGenerated))
+                            {
+                                t.Slope = 0;
+                                WorldGen.PlaceTile(i, j - 1, TileID.Switches);
+                                Main.LocalPlayer.position = new Vector2(i, j) * 16;
+                            }
+                            break;
+                        }
+                    }
+                }
             }*/
             if (worldLoadCounter < 180)
                 worldLoadCounter++;
@@ -1374,6 +1393,29 @@ namespace CalRemix.Core.World
                     }
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Paying Respects to Legends Lost Too Soon", (progress, config) => { HallOfLegends.GenerateHallOfLegends(); }));
+                tasks.Insert(FinalIndex, new PassLegacy("Switching things up", (progress, config) => {
+                    bool oneGenerated = false;
+                    int half = (int)(Main.maxTilesX * 0.5f);
+                    for (int i = 200; i < Main.maxTilesX - 200; i++)
+                    {
+                        for (int j = 0; j < Main.worldSurface + 200; j++)
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            Tile tA = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                            if (t.HasTile && Main.tileSolid[t.TileType] && !tA.HasTile)
+                            {
+                                if ((WorldGen.genRand.NextBool(200) || (i == half && !oneGenerated)) && tA.LiquidAmount <= 0)
+                                {
+                                    WorldGen.SlopeTile(i, j, noEffects: true);
+                                    WorldGen.PlaceTile(i, j - 1, TileID.Switches);
+                                    Main.spawnTileX = i;
+                                    Main.spawnTileY = j - 3;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }));
             }
             // Secret Banished Baron seed
             if (WorldGen.currentWorldSeed.ToLower() == "banishedbaron")
