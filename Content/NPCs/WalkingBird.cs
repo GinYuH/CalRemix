@@ -33,8 +33,8 @@ namespace CalRemix.Content.NPCs
             NPC.lavaImmune = false;
             NPC.noGravity = false;
             NPC.noTileCollide = false;
-            NPC.HitSound = SoundID.NPCHit51 with { Pitch = 1 };
-            NPC.DeathSound = SoundID.NPCDeath46 with { Pitch = 1 };
+            NPC.HitSound = SoundID.NPCHit51 with { Pitch = 0.4f };
+            NPC.DeathSound = SoundID.NPCDeath46 with { Pitch = 0.4f };
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToCold = true;
