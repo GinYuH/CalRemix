@@ -5391,3 +5391,8 @@ SepulcherHandTrophy: {
 	DisplayName: Sepulcher Arm Trophy
 	Tooltip: ""
 }
+
+WalkingBirdBanner: {
+	DisplayName: Bumper Banner
+	Tooltip: ""
+}

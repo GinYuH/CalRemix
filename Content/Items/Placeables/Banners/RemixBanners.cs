@@ -74,4 +74,9 @@ namespace CalRemix.Content.Items.Placeables.Banners
     {
         public override int TileType => ModContent.TileType<WaterloggedEffigyBannerPlaced>();
     }
+
+    public class WalkingBirdBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<WalkingBirdBannerPlaced>();
+    }
 }

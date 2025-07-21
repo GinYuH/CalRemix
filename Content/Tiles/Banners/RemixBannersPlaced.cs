@@ -29,4 +29,8 @@ namespace CalRemix.Content.Tiles.Banners
     public class WaterloggedEffigyBannerPlaced : ModBannerTile
     {
     }
+
+    public class WalkingBirdBannerPlaced : ModBannerTile
+    {
+    }
 }

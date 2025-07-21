@@ -39,6 +39,7 @@ using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Terraria.GameContent.Generation;
 
 namespace CalRemix.Core.Subworlds
 {
