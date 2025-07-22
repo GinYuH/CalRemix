@@ -161,6 +161,7 @@ namespace CalRemix.Core.World
         public static bool weaponReworks = true;
         public static bool musicPitch = true;
         public static bool bossAdditions = true;
+        public static bool accReworks = true;
 
 
         public static int ionQuestLevel = -1;
@@ -306,6 +307,7 @@ namespace CalRemix.Core.World
             weaponReworks = true;
             musicPitch = true;
             bossAdditions = true;
+            accReworks = true;
 
             AutoloadedLegendPortrait.OpenPicture = null;
             savedAPicture = false;
@@ -386,6 +388,7 @@ namespace CalRemix.Core.World
             tag["109weaponReworks"] = weaponReworks;
             tag["109musicPitch"] = musicPitch;
             tag["109bossAdditions"] = bossAdditions;
+            tag["109accReworks"] = accReworks;
 
             tag["ionQuest"] = ionQuestLevel;
             tag["wizardToggle"] = wizardDisabled;
@@ -460,6 +463,7 @@ namespace CalRemix.Core.World
             GetData(ref weaponReworks, "109weaponReworks", tag);
             GetData(ref musicPitch, "109musicPitch", tag);
             GetData(ref bossAdditions, "109bossAdditions", tag);
+            GetData(ref accReworks, "109accReworks", tag);
 
             meldCountdown = tag.Get<int>("meld");
             roachDuration = tag.Get<int>("roachDuration");
@@ -552,6 +556,7 @@ namespace CalRemix.Core.World
             writer.Write(weaponReworks);
             writer.Write(musicPitch);
             writer.Write(bossAdditions);
+            writer.Write(accReworks);
 
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
@@ -632,6 +637,7 @@ namespace CalRemix.Core.World
             weaponReworks = reader.ReadBoolean();
             musicPitch = reader.ReadBoolean();
             bossAdditions = reader.ReadBoolean();
+            accReworks = reader.ReadBoolean();
 
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();

@@ -962,6 +962,8 @@ namespace CalRemix
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
+            if (!CalRemixWorld.accReworks)
+                return;
             CalamityPlayer calplayer = player.GetModPlayer<CalamityPlayer>();
             CalRemixPlayer modplayer = player.GetModPlayer<CalRemixPlayer>();
             if (item.type == ItemType<GrandGelatin>())

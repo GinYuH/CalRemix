@@ -7,6 +7,7 @@ using CalamityMod.Items.Armor.PlagueReaper;
 using CalamityMod.Items.Armor.Statigel;
 using CalamityMod.Items.Armor.Victide;
 using CalamityMod.Items.DraedonMisc;
+using CalamityMod.Items.Fishing.AstralCatches;
 using CalamityMod.Items.Fishing.FishingRods;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Mounts;
@@ -42,6 +43,7 @@ namespace CalRemix
         public static List<(int, int, int)> venomCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> shimmerEssenceCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> deliciousMeatCrafts = new List<(int, int, int)> { };
+        public static List<(int, int, int)> accessoryCrafts = new List<(int, int, int)> { };
 
         public override void Load()
         {
@@ -209,6 +211,47 @@ namespace CalRemix
             deliciousMeatCrafts.Add((ItemType<TyrantShield>(), ItemType<DeliciousMeat>(), 349));
             deliciousMeatCrafts.Add((ItemType<ZenPotion>(), ItemType<DeliciousMeat>(), 256));
             deliciousMeatCrafts.Add((ItemType<ZergPotion>(), ItemType<DeliciousMeat>(), 256));
+            #endregion
+
+            #region Accessory Additions
+            accessoryCrafts.Add((ItemType<GrandGelatin>(), ItemType<MirageJellyItem>(), 1));
+            accessoryCrafts.Add((ItemType<GrandGelatin>(), ItemType<IrateJelly>(), 1));
+            accessoryCrafts.Add((ItemType<GrandGelatin>(), ItemType<ElasticJelly>(), 1));
+            accessoryCrafts.Add((ItemType<GrandGelatin>(), ItemType<InvigoratingJelly>(), 1));
+            accessoryCrafts.Add((ItemType<TheAbsorber>(), ItemType<Regenator>(), 1));
+            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<TheAbsorber>(), 1));
+            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<AquaticHeart>(), 1));
+            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<FlameLickedShell>(), 1));
+            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<TrinketofChi>(), 1));
+            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<AmidiasSpark>(), 1));
+            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<UrsaSergeant>(), 1));
+            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<PermafrostsConcoction>(), 1));
+            accessoryCrafts.Add((ItemType<RampartofDeities>(), ItemType<RustyMedallion>(), 1));
+            accessoryCrafts.Add((ItemType<RampartofDeities>(), ItemType<AmidiasPendant>(), 1));
+            accessoryCrafts.Add((ItemType<TracersElysian>(), ItemType<GravistarSabaton>(), 1));
+            accessoryCrafts.Add((ItemType<AmbrosialAmpoule>(), ItemType<HoneyDew>(), 1));
+            accessoryCrafts.Add((ItemType<AmbrosialAmpoule>(), ItemType<ArchaicPowder>(), 1));
+            accessoryCrafts.Add((ItemType<AbyssalDivingGear>(), ItemType<OceanCrest>(), 1));
+            accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<AquaticEmblem>(), 1));
+            accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<SpelunkersAmulet>(), 1));
+            accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<AlluringBait>(), 1));
+            accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<LumenousAmulet>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<GiantPearl>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<ManaPolarizer>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<FrostFlare>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<CorrosiveSpine>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<VoidofExtinction>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<LeviathanAmbergris>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemID.SporeSac, 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<TheCamper>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<AlchemicalFlask>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<ToxicHeart>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<DynamoStemCells>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<BlazingCore>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<TheEvolution>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<Affliction>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<OldDukeScales>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<FungiStone>(), 1));
             #endregion
         }
     }
