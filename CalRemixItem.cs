@@ -1006,12 +1006,42 @@ namespace CalRemix
             {
                 GetModItem(ItemType<ArchaicPowder>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<HoneyDew>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<CorruptFlask>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<CrimsonFlask>()).UpdateAccessory(player, hideVisual);
+            }
+            if (item.type == ItemType<AsgardsValor>() || item.type == ItemType<AsgardianAegis>() || item.type == ItemType<TheVerbotenOne>())
+            {
+                GetModItem(ItemType<ShieldoftheHighRuler>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<ShieldoftheOcean>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<FrostBarrier>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<MarniteRepulsionShield>()).UpdateAccessory(player, hideVisual);
+            }
+            if (item.type == ItemType<Nanotech>() || item.type == ItemType<TheVerbotenOne>())
+            {
+                GetModItem(ItemType<VampiricTalisman>()).UpdateAccessory(player, hideVisual);
+                player.luck += 0.22f;
+            }
+            if (item.type == ItemType<VoidofExtinction>())
+            {
+                GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<SlagsplitterPauldron>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<TheBee>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<NecklaceofVexation>()).UpdateAccessory(player, hideVisual);
+            }
+            if (item.type == ItemType<ChaliceOfTheBloodGod>() || item.type == ItemType<TheVerbotenOne>())
+            {
+                GetModItem(ItemType<BloodflareCore>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<FleshTotem>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<BloodyWormScarf>()).UpdateAccessory(player, hideVisual);
             }
             if (item.type == ItemType<AbyssalDivingSuit>() || item.type == ItemType<TheGodfather>() || item.type == ItemType<TheVerbotenOne>())
             {
                 GetModItem(ItemType<LumenousAmulet>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AquaticEmblem>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<AlluringBait>()).UpdateAccessory(player, hideVisual);
+                if (!hideVisual)
+                    GetModItem(ItemType<AlluringBait>()).UpdateAccessory(player, hideVisual);
+                if (!hideVisual)
+                    GetModItem(ItemType<EnchantedPearl>()).UpdateAccessory(player, hideVisual);
                 if (!hideVisual)
                 GetModItem(ItemType<SpelunkersAmulet>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<OceanCrest>()).UpdateAccessory(player, hideVisual);
@@ -1029,6 +1059,9 @@ namespace CalRemix
                 GetModItem(ItemType<FrostFlare>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<VoidofExtinction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<SlagsplitterPauldron>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<TheBee>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<NecklaceofVexation>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<ToxicHeart>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AlchemicalFlask>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<TheEvolution>()).UpdateAccessory(player, hideVisual);
@@ -1238,45 +1271,68 @@ namespace CalRemix
                 var line = new TooltipLine(Mod, "PhantomicSoulArtifact", CalRemixHelper.LocalText($"{key}PhantomicSoulArtifact").Value);
                 tooltips.Add(line);
             }
-            if (item.type == ItemType<GrandGelatin>())
+            if (CalRemixWorld.accReworks)
             {
-                var line = new TooltipLine(Mod, "GrandGelatinRemix", CalRemixHelper.LocalText($"{key}GrandGelatinRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheAbsorber>())
-            {
-                var line = new TooltipLine(Mod, "AbsorberRemix", CalRemixHelper.LocalText($"{key}AbsorberRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheSponge>())
-            {
-                var line = new TooltipLine(Mod, "SpongeRemix", CalRemixHelper.LocalText($"{key}SpongeRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AmbrosialAmpoule>())
-            {
-                var line = new TooltipLine(Mod, "AmbrosiaRemix", CalRemixHelper.LocalText($"{key}AmbrosiaRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AbyssalDivingGear>())
-            {
-                var line = new TooltipLine(Mod, "DivingGearRemix", CalRemixHelper.LocalText($"{key}DivingGearRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AbyssalDivingSuit>())
-            {
-                var line = new TooltipLine(Mod, "DivingSuitRemix", CalRemixHelper.LocalText($"{key}DivingSuitRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheAmalgam>())
-            {
-                var line = new TooltipLine(Mod, "AmalgamRemix", CalRemixHelper.LocalText($"{key}AmalgamRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<DesertMedallion>())
-            {
-                var line = new TooltipLine(Mod, "MedallionRemix", CalRemixHelper.LocalText($"{key}MedallionRemix").Value);
-                tooltips.Add(line);
+                if (item.type == ItemType<Nanotech>())
+                {
+                    var line = new TooltipLine(Mod, "NanotechRemix", CalRemixHelper.LocalText($"{key}NanotechRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<ChaliceOfTheBloodGod>())
+                {
+                    var line = new TooltipLine(Mod, "CotbgRemix", CalRemixHelper.LocalText($"{key}CotbgRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<VoidofExtinction>())
+                {
+                    var line = new TooltipLine(Mod, "VoidExtinctRemix", CalRemixHelper.LocalText($"{key}VoidExtinctRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<GrandGelatin>())
+                {
+                    var line = new TooltipLine(Mod, "GrandGelatinRemix", CalRemixHelper.LocalText($"{key}GrandGelatinRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<TheAbsorber>())
+                {
+                    var line = new TooltipLine(Mod, "AbsorberRemix", CalRemixHelper.LocalText($"{key}AbsorberRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<TheSponge>())
+                {
+                    var line = new TooltipLine(Mod, "SpongeRemix", CalRemixHelper.LocalText($"{key}SpongeRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<AmbrosialAmpoule>())
+                {
+                    var line = new TooltipLine(Mod, "AmbrosiaRemix", CalRemixHelper.LocalText($"{key}AmbrosiaRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<AbyssalDivingGear>())
+                {
+                    var line = new TooltipLine(Mod, "DivingGearRemix", CalRemixHelper.LocalText($"{key}DivingGearRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<AbyssalDivingSuit>())
+                {
+                    var line = new TooltipLine(Mod, "DivingSuitRemix", CalRemixHelper.LocalText($"{key}DivingSuitRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<TheAmalgam>())
+                {
+                    var line = new TooltipLine(Mod, "AmalgamRemix", CalRemixHelper.LocalText($"{key}AmalgamRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<DesertMedallion>())
+                {
+                    var line = new TooltipLine(Mod, "MedallionRemix", CalRemixHelper.LocalText($"{key}MedallionRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<AsgardsValor>())
+                {
+                    var line = new TooltipLine(Mod, "AsgardnRemix", CalRemixHelper.LocalText($"{key}AsgardRemix").Value);
+                    tooltips.Add(line);
+                }
             }
             if (item.type == ItemType<HadalStew>())
             {

@@ -601,10 +601,21 @@ namespace CalRemix
                     recipe.AddIngredient<UrsaSergeant>();
                     recipe.AddIngredient<PermafrostsConcoction>();
                 }
+                if (recipe.HasResult(ItemType<AsgardsValor>()))
+                {
+                    recipe.AddIngredient<ShieldoftheOcean>();
+                    recipe.AddIngredient<MarniteRepulsionShield>();
+                    recipe.AddIngredient<ShieldoftheHighRuler>();
+                    recipe.AddIngredient<FrostBarrier>();
+                }
                 if (recipe.HasResult(ItemType<RampartofDeities>()))
                 {
                     recipe.AddIngredient<RustyMedallion>();
                     recipe.AddIngredient<AmidiasPendant>();
+                }
+                if (recipe.HasResult(ItemType<StatisVoidSash>()))
+                {
+                    recipe.AddIngredient<EvasionScarf>();
                 }
                 if (recipe.HasResult(ItemType<TracersElysian>()))
                 {
@@ -615,6 +626,12 @@ namespace CalRemix
                 {
                     recipe.AddIngredient<ArchaicPowder>();
                     recipe.AddIngredient<HoneyDew>();
+                    recipe.AddRecipeGroup(new RecipeGroup(() => "Any Evil Flask", ModContent.ItemType<CorruptFlask>(), ModContent.ItemType<CrimsonFlask>()));
+                }
+                if (recipe.HasResult(ItemType<Nanotech>()))
+                {
+                    recipe.AddIngredient<VampiricTalisman>();
+                    recipe.AddIngredient<OldDie>();
                 }
                 if (recipe.HasResult(ItemType<AbyssalDivingGear>()))
                 {
@@ -626,6 +643,20 @@ namespace CalRemix
                     recipe.AddIngredient<SpelunkersAmulet>();
                     recipe.AddIngredient<AlluringBait>();
                     recipe.AddIngredient<LumenousAmulet>();
+                    recipe.AddIngredient<EnchantedPearl>();
+                }
+                if (recipe.HasResult(ItemType<ChaliceOfTheBloodGod>()))
+                {
+                    recipe.AddIngredient<BloodyWormScarf>();
+                    recipe.AddIngredient<BloodflareCore>();
+                    recipe.AddIngredient<FleshTotem>();
+                }
+                if (recipe.HasResult(ItemType<VoidofExtinction>()))
+                {
+                    recipe.AddIngredient<VoidofCalamity>();
+                    recipe.AddIngredient<SlagsplitterPauldron>();
+                    recipe.AddIngredient<NecklaceofVexation>();
+                    recipe.AddIngredient<TheBee>();
                 }
                 if (recipe.HasResult(ItemType<TheAmalgam>()))
                 {

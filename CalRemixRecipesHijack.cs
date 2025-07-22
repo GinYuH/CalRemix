@@ -236,6 +236,7 @@ namespace CalRemix
             accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<SpelunkersAmulet>(), 1));
             accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<AlluringBait>(), 1));
             accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<LumenousAmulet>(), 1));
+            accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<EnchantedPearl>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<GiantPearl>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<ManaPolarizer>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<FrostFlare>(), 1));
@@ -252,6 +253,19 @@ namespace CalRemix
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<Affliction>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<OldDukeScales>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<FungiStone>(), 1));
+            accessoryCrafts.Add((ItemType<ChaliceOfTheBloodGod>(), ItemType<BloodyWormScarf>(), 1));
+            accessoryCrafts.Add((ItemType<ChaliceOfTheBloodGod>(), ItemType<BloodflareCore>(), 1));
+            accessoryCrafts.Add((ItemType<ChaliceOfTheBloodGod>(), ItemType<FleshTotem>(), 1));
+            accessoryCrafts.Add((ItemType<VoidofExtinction>(), ItemType<VoidofCalamity>(), 1));
+            accessoryCrafts.Add((ItemType<VoidofExtinction>(), ItemType<SlagsplitterPauldron>(), 1));
+            accessoryCrafts.Add((ItemType<VoidofExtinction>(), ItemType<TheBee>(), 1));
+            accessoryCrafts.Add((ItemType<VoidofExtinction>(), ItemType<NecklaceofVexation>(), 1));
+            accessoryCrafts.Add((ItemType<StatisVoidSash>(), ItemType<EvasionScarf>(), 1));
+            accessoryCrafts.Add((ItemType<Nanotech>(), ItemType<VampiricTalisman>(), 1));
+            accessoryCrafts.Add((ItemType<Nanotech>(), ItemType<OldDie>(), 1));
+            accessoryCrafts.Add((ItemType<AsgardsValor>(), ItemType<ShieldoftheHighRuler>(), 1));
+            accessoryCrafts.Add((ItemType<AsgardsValor>(), ItemType<ShieldoftheOcean>(), 1));
+            accessoryCrafts.Add((ItemType<AsgardsValor>(), ItemType<MarniteRepulsionShield>(), 1));
             #endregion
         }
     }

@@ -30,6 +30,8 @@ HolyMantle: {
 	DisplayName: Holy Mantle
 	Tooltip:
 		'''
+		Effects of Ascendant Insignia
+		Effects of Wulfrum Acrobatics Pack while visible
 		Delirious thoughts...
 		Horizontal speed: 14
 		Acceleration multiplier: 3.2
@@ -3853,11 +3855,12 @@ Tooltips: {
 		Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi
 		Your health is capped at 50% while the accessory is visable
 		'''
-	AmbrosiaRemix: Effects of Honew Dew, and increased mining speed and defense while underground
+	AmbrosiaRemix: Effects of Honew Dew, Corrupt and Crimson Flasks, and increased mining speed and defense while underground
 	DivingGearRemix: Pacifies all normal ocean enemies
 	DivingSuitRemix:
 		'''
-		Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem
+		Effects of Lumenous Amulet and Aquatic Emblem
+		Effects of Alluring Bait and Enchanted pearl while the accessory is visible
 		Reveals treasure while the accessory is visible
 		'''
 	AmalgamRemix:
@@ -3867,6 +3870,17 @@ Tooltips: {
 		Attacks inflict Mushy
 		Mana Overloader effect while the accessory is visible
 		'''
+	CotbgRemix: Effects of Bloody Worm Scarf, Flesh Totem, and Bloodflare Core
+	NanotechRemix:
+		'''
+		Effects of Vampiric Talisman
+		22% increased luck
+		'''
+	AsgardRemix:
+		'''
+		Effects of Shield of the Ocean, Frost Barrier, and Marnite Repulsion Shield
+		'''
+	VoidExtinctRemix: Effects of The Bee, Void of Calamity, Slagsplitter Pauldron, and Necklace of Vexation
 	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
 	HadalStewRemix: Grants a handful of combat buffs
 	SoulofCryogenRemix: Boosts Cold damage

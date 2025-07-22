@@ -64,8 +64,6 @@ namespace CalRemix.Content.Items.Accessories
             caPlayer.sandWaifu = true;
             caPlayer.sandBoobWaifu = true;
             caPlayer.cloudWaifu = true;
-            caPlayer.MutatedTruffleBool = true;
-            caPlayer.miniOldDuke = true;
             caPlayer.allWaifus = true;
             caPlayer.elementalHeart = true;
             caPlayer.virili = true;
@@ -139,12 +137,6 @@ namespace CalRemix.Content.Items.Accessories
                 if (player.ownedProjectileCounts[ProjectileType<HowlsHeartTurnipHead>()] < 1)
                 {
                     Projectile.NewProjectile(source, player.Center, -Vector2.UnitY, ProjectileType<HowlsHeartTurnipHead>(), 0, 0f, player.whoAmI, 0f, 0f);
-                }
-                if (player.ownedProjectileCounts[ProjectileType<MutatedTruffleMinion>()] < 1)
-                {
-                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(290);
-                    Projectile dud = Projectile.NewProjectileDirect(source, player.Center, -Vector2.UnitY, ProjectileType<MutatedTruffleMinion>(), damage, 1f, player.whoAmI, 0f, 1f);
-                    dud.originalDamage = damage;
                 }
             }
         }

@@ -192,6 +192,8 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient<TheCommunity>().
                 AddIngredient<CalamitousSoulArtifact>().
                 AddIngredient<AmbrosialAmpoule>().
+                AddIngredient<Radiance>().
+                AddIngredient<SupremeBaitTackleBoxFishingStation>().
                 AddIngredient(ItemID.CelestialShell).
                 AddIngredient<ShadowspecBar>(50).
                 AddTile<DraedonsForge>().
@@ -221,6 +223,8 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient<ShatteredCommunity>().
                 AddIngredient<CalamitousSoulArtifact>().
                 AddIngredient<AmbrosialAmpoule>().
+                AddIngredient<Radiance>().
+                AddIngredient<SupremeBaitTackleBoxFishingStation>().
                 AddIngredient(ItemID.CelestialShell).
                 AddIngredient<ShadowspecBar>(50).
                 AddTile<DraedonsForge>().

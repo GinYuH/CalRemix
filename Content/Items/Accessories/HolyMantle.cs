@@ -8,6 +8,7 @@ using CalamityMod.Items;
 using CalamityMod;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using Terraria.ModLoader;
+using CalamityMod.Items.Accessories;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -41,6 +42,12 @@ namespace CalRemix.Content.Items.Accessories
                 player.wingTime = 500;
             }
             player.noFallDmg = true;
+            if (!hideVisual)
+                { 
+                player.GetModPlayer<WulfrumPackPlayer>().WulfrumPackEquipped = true;
+                player.GetModPlayer<WulfrumPackPlayer>().PackItem = Item;
+            }
+            player.Calamity().ascendantInsignia = true;
             player.Calamity().infiniteFlight = true;
         }
 
@@ -58,6 +65,8 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient<WingsofRebirth>(1).
                 AddIngredient(ItemID.EmpressFlightBooster).
                 AddIngredient<MOAB>(1).
+                AddIngredient<AscendantInsignia>(1).
+                AddIngredient<WulfrumAcrobaticsPack>(1).
                 AddIngredient(ItemID.SoulofFlight, 20).
                 AddIngredient<AshesofAnnihilation>(5).
                 AddTile<CosmicAnvil>().
