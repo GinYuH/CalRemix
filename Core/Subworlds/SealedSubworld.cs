@@ -40,6 +40,7 @@ using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Terraria.GameContent.Generation;
+using XPT.Core.Audio.MP3Sharp.IO;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -48,9 +49,10 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            list.Add(item: (ModContent.NPCType<StonePriest>(), 0.2f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()));
-            list.Add(item: (ModContent.NPCType<DisilUnit>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()));
+            list.Add(item: (ModContent.NPCType<StonePriest>(), 0.2f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()&& Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
+            list.Add(item: (ModContent.NPCType<DisilUnit>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
             list.Add(item: (ModContent.NPCType<WinterWitch>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<CarnelianForestBiome>() && !NPC.AnyNPCs(ModContent.NPCType<WinterWitch>())));
+            list.Add(item: (ModContent.NPCType<TheBealed>(), 0.1f, (NPCSpawnInfo n) => (n.Player.InModBiome<BadlandsBiome>() || n.Player.InModBiome<TurnipBiome>() || n.Player.InModBiome<SealedFieldsBiome>() || n.Player.InModBiome<DarnwoodSwampBiome>() || n.Player.InModBiome<BarrensBiome>()) && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
             return list;
         }
 
@@ -240,8 +242,8 @@ namespace CalRemix.Core.Subworlds
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Generating terrain"; // Sets the text displayed for this pass
-            Main.worldSurface = Main.maxTilesY - 42; // Hides the underground layer just out of bounds
-            Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
+            Main.worldSurface = surfaceTile + 40; 
+            Main.rockLayer = caveTile;
 
             progress.Message = "Erosion";
             GenerateBase(ref progress);

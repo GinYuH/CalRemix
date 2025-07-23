@@ -3876,10 +3876,7 @@ Tooltips: {
 		Effects of Vampiric Talisman
 		22% increased luck
 		'''
-	AsgardRemix:
-		'''
-		Effects of Shield of the Ocean, Frost Barrier, and Marnite Repulsion Shield
-		'''
+	AsgardRemix: Effects of Shield of the Ocean, Frost Barrier, and Marnite Repulsion Shield
 	VoidExtinctRemix: Effects of The Bee, Void of Calamity, Slagsplitter Pauldron, and Necklace of Vexation
 	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
 	HadalStewRemix: Grants a handful of combat buffs
@@ -5408,5 +5405,10 @@ SepulcherHandTrophy: {
 
 WalkingBirdBanner: {
 	DisplayName: Bumper Banner
+	Tooltip: ""
+}
+
+TheBealed: {
+	DisplayName: Baligulas
 	Tooltip: ""
 }
