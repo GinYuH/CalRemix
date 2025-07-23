@@ -25,6 +25,7 @@ using CalamityMod.NPCs.DevourerofGods;
 using Terraria.DataStructures;
 using CalRemix.Content.Items.Placeables;
 using System.IO;
+using CalRemix.Content.Projectiles.Hostile;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -177,6 +178,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 {
                     rot = v.DirectionTo(finalPoints[i + 1]).ToRotation() + MathHelper.Pi;
                 }
+
+                if (!NPC.IsABestiaryIconDummy && Main.rand.NextBool(120) && Main.hasFocus)
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), v + Main.rand.NextVector2Circular(100, 100) + screenPos + NPC.velocity, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<DoUSmoke>(), 0, 0);
+
 
                 spriteBatch.Draw(texture, v, null, Color.White, rot + NPC.rotation + MathHelper.PiOver2, origin, NPC.scale, SpriteEffects.None, 0f);
                 if (i == (finalPoints.Count / 2))

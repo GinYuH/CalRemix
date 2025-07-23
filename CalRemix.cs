@@ -265,6 +265,9 @@ namespace CalRemix
 
             // all for the eight seconds its all worth it
             cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/Bleeding", (NPC npc) => npc.HasBuff(BuffID.Bleeding));
+
+
+            CalRemixPlayer.LoadDyeStats();
         }
         private static void MenuStuff(ModMenu menu)
         {

@@ -389,9 +389,7 @@ namespace CalRemix
         public Dictionary<string, int> stocks = new Dictionary<string, int>();
 
         public override void Load()
-        {
-            LoadDyeStats();
-            
+        {            
             On_PlayerDrawLayers.DrawPlayer_03_PortableStool += StretchStool;
         }
 

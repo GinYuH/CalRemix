@@ -2,9 +2,14 @@
 using System.Linq;
 using CalamityMod;
 using CalamityMod.Graphics.Metaballs;
+using CalamityMod.Particles;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
+using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Core.Subworlds;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,8 +19,10 @@ public class DoUMetaball : Metaball
 {
     public static List<StreamGougeMetaball.CosmicParticle> Particles { get; private set; } = new List<StreamGougeMetaball.CosmicParticle>();
 
+    public int Variant = 0;
 
-    public override bool AnythingToDraw => true;
+
+    public override bool AnythingToDraw => SubworldSystem.IsActive<SealedSubworld>();
 
     public override IEnumerable<Texture2D> Layers
     {
@@ -54,12 +61,21 @@ public class DoUMetaball : Metaball
     public override void DrawInstances()
     {
         Texture2D value = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/BasicCircle").Value;
+        Texture2D smok = ModContent.Request<Texture2D>("CalRemix/Content/Particles/RemixSmoke").Value;
         foreach (StreamGougeMetaball.CosmicParticle particle in Particles)
         {
             Vector2 position = particle.Center - Main.screenPosition;
             Vector2 origin = value.Size() * 0.5f;
             Vector2 scale = Vector2.One * particle.Size / value.Size();
             Main.spriteBatch.Draw(value, position, null, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+        }
+
+        foreach (Projectile p in Main.ActiveProjectiles)
+        {
+            if (p.type == ModContent.ProjectileType<DoUSmoke>())
+            {
+                Main.spriteBatch.Draw(smok, p.Center - Main.screenPosition, smok.Frame(1, 6, 0, p.frame), Color.White, p.rotation, new Vector2(smok.Width / 2, smok.Height / 12), p.scale, SpriteEffects.None, 0f);
+            }
         }
 
         foreach (NPC n in Main.ActiveNPCs)
