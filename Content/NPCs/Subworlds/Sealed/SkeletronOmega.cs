@@ -24,6 +24,7 @@ using System.Security.Cryptography.X509Certificates;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Sounds;
 using CalamityMod.NPCs.ExoMechs;
+using System.IO;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -142,6 +143,25 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToElectricity = true;
             NPC.Calamity().VulnerableToCold = true;
             SpawnModBiomes = new[] { ModContent.GetInstance<SealedFieldsBiome>().Type };
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.Calamity().newAI[0] = reader.ReadSingle();
+            NPC.Calamity().newAI[1] = reader.ReadSingle();
+            NPC.Calamity().newAI[2] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
+            NPC.localAI[2] = reader.ReadSingle();
+            NPC.localAI[3] = reader.ReadSingle();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.Calamity().newAI[0]);
+            writer.Write(NPC.Calamity().newAI[1]);
+            writer.Write(NPC.Calamity().newAI[2]);
+            writer.Write(NPC.localAI[1]);
+            writer.Write(NPC.localAI[2]);
+            writer.Write(NPC.localAI[3]);
         }
         public override void AI()
         {
@@ -464,6 +484,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SavePosition = Vector2.Zero;
             OldPosition = Vector2.Zero;
             State = (int)newPhase;
+            NPC.netUpdate = true;
         }
 
         public override void FindFrame(int frameHeight)

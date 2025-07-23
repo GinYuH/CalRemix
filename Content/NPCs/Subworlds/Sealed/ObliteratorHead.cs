@@ -16,6 +16,7 @@ using CalamityMod.Tiles.Ores;
 using CalRemix.Core.Subworlds;
 using CalamityMod.Projectiles.Typeless;
 using CalRemix.Content.Items.Weapons;
+using System.IO;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -56,6 +57,23 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToCold = true;
             NPC.dontTakeDamage = true;
             SpawnModBiomes = new[] { ModContent.GetInstance<SealedFieldsBiome>().Type };
+        }
+
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.Calamity().newAI[1] = reader.ReadSingle();
+            NPC.Calamity().newAI[2] = reader.ReadSingle();
+            NPC.Calamity().newAI[3] = reader.ReadSingle();
+            NPC.Calamity().newAI[0] = reader.ReadSingle();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.Calamity().newAI[1]);
+            writer.Write(NPC.Calamity().newAI[2]);
+            writer.Write(NPC.Calamity().newAI[3]);
+            writer.Write(NPC.Calamity().newAI[0]);
         }
 
         public override void AI()
@@ -115,6 +133,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             if (n.type == Type)
                             {
                                 n.Calamity().newAI[0] = 1;
+                                NPC.netUpdate = true;
+                                n.netUpdate = true;
                             }
                         }
                     }

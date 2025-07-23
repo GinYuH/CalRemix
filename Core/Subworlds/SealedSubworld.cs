@@ -51,6 +51,7 @@ namespace CalRemix.Core.Subworlds
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
             list.Add(item: (ModContent.NPCType<StonePriest>(), 0.2f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()&& Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
             list.Add(item: (ModContent.NPCType<DisilUnit>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
+            list.Add(item: (ModContent.NPCType<DoUHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile && !NPC.AnyNPCs(ModContent.NPCType<DoUHead>())));
             list.Add(item: (ModContent.NPCType<WinterWitch>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<CarnelianForestBiome>() && !NPC.AnyNPCs(ModContent.NPCType<WinterWitch>())));
             list.Add(item: (ModContent.NPCType<TheBealed>(), 0.1f, (NPCSpawnInfo n) => (n.Player.InModBiome<BadlandsBiome>() || n.Player.InModBiome<TurnipBiome>() || n.Player.InModBiome<SealedFieldsBiome>() || n.Player.InModBiome<DarnwoodSwampBiome>() || n.Player.InModBiome<BarrensBiome>()) && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
             return list;

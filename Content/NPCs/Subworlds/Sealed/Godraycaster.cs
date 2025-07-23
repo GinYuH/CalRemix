@@ -25,6 +25,7 @@ using Terraria.DataStructures;
 using CalamityMod.Sounds;
 using Newtonsoft.Json.Serialization;
 using CalamityMod.Projectiles.Typeless;
+using System.IO;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -104,6 +105,25 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToCold = true;
             SpawnModBiomes = new[] { ModContent.GetInstance<SealedFieldsBiome>().Type }; 
         }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.Calamity().newAI[1] = reader.ReadSingle();
+            NPC.Calamity().newAI[2] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
+            NPC.localAI[2] = reader.ReadSingle();
+            NPC.localAI[3] = reader.ReadSingle();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.Calamity().newAI[1]);
+            writer.Write(NPC.Calamity().newAI[2]);
+            writer.Write(NPC.localAI[1]);
+            writer.Write(NPC.localAI[2]);
+            writer.Write(NPC.localAI[3]);
+        }
+
         public override void AI()
         {
             NPC.TargetClosest();
@@ -463,6 +483,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SavePosition = Vector2.Zero;
             OldPosition = Vector2.Zero;
             State = (int)newPhase;
+            NPC.netUpdate = true;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {

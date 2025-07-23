@@ -22,13 +22,15 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.Origen;
 using CalamityMod.Sounds;
 using CalamityMod.NPCs.DevourerofGods;
+using Terraria.DataStructures;
+using CalRemix.Content.Items.Placeables;
+using System.IO;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
     public class DoUHead : ModNPC
     {
         public List<Vector2> controlPoints = new();
-        public List<Vector2> lashPoints = new();
 
         public Player Target => Main.player[NPC.target];
 
@@ -49,6 +51,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SpawnModBiomes = new int[1] { ModContent.GetInstance<BadlandsBiome>().Type };
         }
 
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.Calamity().newAI[0] = reader.ReadSingle();
+            NPC.Calamity().newAI[1] = reader.ReadSingle();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.Calamity().newAI[0]);
+            writer.Write(NPC.Calamity().newAI[1]);
+        }
+
         public override void AI()
         {
             InitializeSegments();
@@ -56,27 +70,45 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().newAI[0]++;
 
             NPC.TargetClosest();
-            
-            NPC.velocity.X = NPC.DirectionTo(Target.Center).X * 5;
-            
-            if (NPC.collideX)
-            {
-                NPC.velocity.Y = -10;
-            }
 
-            if (NPC.Distance(Target.Center) < 600 && Target.Center.Y > NPC.Center.Y)
+            if (NPC.ai[0] == 1)
             {
-                NPC.Calamity().newAI[1] = 1;
+                NPC.velocity.X = NPC.DirectionTo(Target.Center).X * 5;
+
+                if (NPC.collideX)
+                {
+                    NPC.velocity.Y = -10;
+                }
+                if (NPC.Distance(Target.Center) < 600 && Target.Center.Y > NPC.Center.Y && Target.Center.Y > NPC.Bottom.Y + 20)
+                {
+                    NPC.Calamity().newAI[1] = 1;
+                    if (NPC.Calamity().newAI[0] % 30 == 15)
+                    {
+                        NPC.netUpdate = true;
+                        Target.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, NPC.direction);
+                    }
+                }
+                else
+                {
+                    NPC.Calamity().newAI[1] = 0;
+                }
             }
             else
             {
                 NPC.Calamity().newAI[1] = 0;
             }
+
+            if (NPC.justHit)
+            {
+                NPC.ai[0] = 1;
+                NPC.netUpdate = true;
+            }
+
         }
 
         public void InitializeSegments()
         {
-            if (controlPoints.Count <= 1 || Main.LocalPlayer.controlUseItem)
+            if (controlPoints.Count <= 1)
             {
                 controlPoints.Clear();
                 controlPoints.Add(new(-340, -500));
@@ -84,15 +116,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 controlPoints.Add(new(-70, 260));
                 controlPoints.Add(new(160, -120));
                 controlPoints.Add(new(620, 0));
-            }
-            if (lashPoints.Count <= 1 || Main.LocalPlayer.controlUseItem)
-            {
-                lashPoints.Clear();
-                lashPoints.Add(new(-840, 0));
-                lashPoints.Add(new(-500, 0));
-                lashPoints.Add(new(-170, 0));
-                lashPoints.Add(new(210, 0));
-                lashPoints.Add(new(700, 0));
             }
         }
 
@@ -168,6 +191,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             DrawDoT(spriteBatch, screenPos);
             return false;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.AddIf(() => !NPC.downedMoonlord, ModContent.ItemType<CosmiliteSlag>());
+            npcLoot.AddIf(() => NPC.downedMoonlord, ModContent.ItemType<CosmiliteSlag>(), 1, 54, 86);
         }
     }
 }
