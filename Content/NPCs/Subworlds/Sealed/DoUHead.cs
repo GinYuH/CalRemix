@@ -18,6 +18,10 @@ using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using CalamityMod.Graphics.Metaballs;
 using CalRemix.Content.Particles;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.NPCs.Bosses.Origen;
+using CalamityMod.Sounds;
+using CalamityMod.NPCs.DevourerofGods;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -26,29 +30,48 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public List<Vector2> controlPoints = new();
         public List<Vector2> lashPoints = new();
 
+        public Player Target => Main.player[NPC.target];
+
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.damage = 0;
-            NPC.width = 28;
-            NPC.height = 28;
+            NPC.damage = 200;
+            NPC.width = 100;
+            NPC.height = 200;
             NPC.defense = 600;
-            NPC.lifeMax = 22;
-            NPC.knockBackResist = 0f;
-            NPC.value = 0;
-            NPC.noGravity = true;
+            NPC.lifeMax = 10000;
+            NPC.value = Item.buyPrice(gold: 2);
+            NPC.noGravity = false;
             NPC.noTileCollide = false;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
-            NPC.rarity = 4;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<SealedFieldsBiome>().Type };
+            NPC.HitSound = CommonCalamitySounds.OtherwordlyHitSound;
+            NPC.DeathSound = DevourerofGodsHead.DeathAnimationSound;
+            NPC.rarity = 1;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<BadlandsBiome>().Type };
         }
 
         public override void AI()
         {
             InitializeSegments();
 
-            //NPC.Calamity().newAI[0]++;
+            NPC.Calamity().newAI[0]++;
+
+            NPC.TargetClosest();
+            
+            NPC.velocity.X = NPC.DirectionTo(Target.Center).X * 5;
+            
+            if (NPC.collideX)
+            {
+                NPC.velocity.Y = -10;
+            }
+
+            if (NPC.Distance(Target.Center) < 600 && Target.Center.Y > NPC.Center.Y)
+            {
+                NPC.Calamity().newAI[1] = 1;
+            }
+            else
+            {
+                NPC.Calamity().newAI[1] = 0;
+            }
         }
 
         public void InitializeSegments()
@@ -80,10 +103,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             });
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public void DrawDoT(SpriteBatch spriteBatch, Vector2 screenPos)
         {
             if (NPC.IsABestiaryIconDummy)
-                return true;
+                return;
 
             if (NPC.IsABestiaryIconDummy)
             {
@@ -94,18 +117,26 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             int half = cycle / 2;
             float localTimer = NPC.Calamity().newAI[0] % cycle;
 
+            bool walking = (NPC.Calamity().newAI[1] == 0 && Math.Abs(NPC.velocity.X) > 0);
+
+            float mult = walking ? 0.25f : NPC.Calamity().newAI[1] == 1 ? 1f : 0;
 
             List<Vector2> correctedPoints = new();
             for (int i = 0; i < controlPoints.Count; i++)
             {
                 Vector2 v = controlPoints[i];
-                Vector2 fPos = Vector2.Lerp(v, lashPoints[i], localTimer > half ? Utils.GetLerpValue(cycle, half, localTimer, true) : Utils.GetLerpValue(0, half, localTimer, true));
-                correctedPoints.Add(NPC.Center + fPos - screenPos);
+                if (NPC.direction == 1)
+                {
+                    v.X *= -1;
+                }
+                bool flip = v.X <= 0;
+                Vector2 fPos = Vector2.Lerp(v, v.Length() * -Vector2.UnitX * flip.ToDirectionInt(), mult * (localTimer > half ? Utils.GetLerpValue(cycle, half, localTimer, true) : Utils.GetLerpValue(0, half, localTimer, true)));
+                correctedPoints.Add(NPC.Bottom + fPos - screenPos);
             }
 
             BezierCurve curve = new BezierCurve(correctedPoints.ToArray());
 
-            List<Vector2> finalPoints = curve.GetPoints(30);
+            List<Vector2> finalPoints = curve.GetPoints(40);
 
             for (int i = finalPoints.Count - 1; i >= 0; i--)
             {
@@ -124,10 +155,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     rot = v.DirectionTo(finalPoints[i + 1]).ToRotation() + MathHelper.Pi;
                 }
 
-                Main.spriteBatch.Draw(texture, v, null, Color.White, rot + NPC.rotation + MathHelper.PiOver2, origin, NPC.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture, v, null, Color.White, rot + NPC.rotation + MathHelper.PiOver2, origin, NPC.scale, SpriteEffects.None, 0f);
+                if (i == (finalPoints.Count / 2))
+                {
+                    Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/Light").Value;
+                    spriteBatch.Draw(bloom, v, null, Color.Magenta, 0, bloom.Size() / 2, NPC.scale + MathF.Sin(Main.GlobalTimeWrappedHourly * 22) * 0.2f, SpriteEffects.None, 0f);
+                }
             }
+        }
 
-
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            DrawDoT(spriteBatch, screenPos);
             return false;
         }
     }

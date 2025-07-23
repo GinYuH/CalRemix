@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CalamityMod;
 using CalamityMod.Graphics.Metaballs;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
@@ -65,7 +66,7 @@ public class DoUMetaball : Metaball
         {
             if (n.type == ModContent.NPCType<DoUHead>())
             {
-                NPCLoader.PreDraw(n, Main.spriteBatch, Main.screenPosition, Color.White);
+                n.ModNPC<DoUHead>().DrawDoT(Main.spriteBatch, Main.screenPosition);
             }
         }
     }
