@@ -54,7 +54,7 @@ namespace CalRemix.Content.NPCs
             NPC.lifeMax = 5;
             NPC.value = 0;
             NPC.lavaImmune = true;
-            NPC.noTileCollide = false;
+            NPC.noTileCollide = true;
             NPC.knockBackResist = 0;
             NPC.HitSound = SoundID.NPCHit9 with { Pitch = 0.4f };
             NPC.DeathSound = SoundID.NPCDeath12 with { Pitch = -0.8f };

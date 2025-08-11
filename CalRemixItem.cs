@@ -479,11 +479,12 @@ namespace CalRemix
             if (item.type == ItemID.IceMirror || item.type == ItemID.MagicMirror || item.type == ItemID.CellPhone || item.type == ItemID.Shellphone
                 || item.type == ItemID.MagicConch || item.type == ItemID.DemonConch || item.type == ItemID.ShellphoneSpawn || item.type == ItemID.ShellphoneOcean || item.type == ItemID.ShellphoneHell || item.type == ItemID.ShellphoneDummy)
             {
-                if (player.Distance(new Vector2(player.SpawnX, player.SpawnY) * 16) > 2000)
+                if (player.Distance(16 * (new Vector2((player.SpawnX == -1 ? Main.spawnTileX : player.SpawnX), (player.SpawnY == -1 ? Main.spawnTileY : player.SpawnY)))) > 2000)
                 {
-                    if (Main.rand.NextBool(50))
+                    if (Main.rand.NextBool(50 /* ContentSamples.ItemsByType[item.type].useAnimation*/))
                     if (!NPC.AnyNPCs(ModContent.NPCType<CarrierHead>()))
                     {
+                        SoundEngine.PlaySound(SoundID.Zombie83 with { Pitch = -0.5f, Volume = 3f });
                         Vector2 spawnPos = player.Center + new Vector2(Main.rand.NextBool().ToDirectionInt() * Main.rand.Next(2000, 3000), Main.rand.Next(-300, 300));
                         NPC.NewNPC(player.GetSource_FromThis(), (int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<CarrierHead>(), ai0: player.whoAmI);
                     }
