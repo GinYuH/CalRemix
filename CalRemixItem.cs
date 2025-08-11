@@ -451,7 +451,7 @@ namespace CalRemix
 
         public override bool? UseItem(Item item, Player player)
         {
-            if (item.Calamity().AppliedEnchantment != null) 
+            if (item.Calamity().AppliedEnchantment != null)
             {
                 if (player.ItemAnimationJustStarted && player.Calamity().dischargingItemEnchant && item.Calamity().AppliedEnchantment.Value.Name != CalamityUtils.GetText("UI.Ephemeral.DisplayName"))
                     item.Calamity().DischargeEnchantExhaustion--;
@@ -474,6 +474,19 @@ namespace CalRemix
                 if (playSound)
                 {
                     SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/EvilAnimatronicShort") with { Volume = 0.4f }, player.Center);
+                }
+            }
+            if (item.type == ItemID.IceMirror || item.type == ItemID.MagicMirror || item.type == ItemID.CellPhone || item.type == ItemID.Shellphone
+                || item.type == ItemID.MagicConch || item.type == ItemID.DemonConch || item.type == ItemID.ShellphoneSpawn || item.type == ItemID.ShellphoneOcean || item.type == ItemID.ShellphoneHell || item.type == ItemID.ShellphoneDummy)
+            {
+                if (player.Distance(new Vector2(player.SpawnX, player.SpawnY) * 16) > 2000)
+                {
+                    if (Main.rand.NextBool(50))
+                    if (!NPC.AnyNPCs(ModContent.NPCType<CarrierHead>()))
+                    {
+                        Vector2 spawnPos = player.Center + new Vector2(Main.rand.NextBool().ToDirectionInt() * Main.rand.Next(2000, 3000), Main.rand.Next(-300, 300));
+                        NPC.NewNPC(player.GetSource_FromThis(), (int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<CarrierHead>(), ai0: player.whoAmI);
+                    }
                 }
             }
             return null;
