@@ -3882,6 +3882,7 @@ Tooltips: {
 	HadalStewRemix: Grants a handful of combat buffs
 	SoulofCryogenRemix: Boosts Cold damage
 	MetalMonstrosityRemix: \'Just looking at it makes you feel ill...\'
+	WormholePotionRemix: "[c/B87333:Requires a fee of 5 copper!]"
 }
 
 DyeStats: {

@@ -87,7 +87,7 @@ namespace CalRemix.Content.NPCs
                             {
                                 Vector2 dist = Main.player[NPC.target].position - NPC.position;
                                 dist.Normalize();
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X + 20 * NPC.direction, NPC.Center.Y), dist * 15, ModContent.ProjectileType<PlagueSpit>(), NPC.damage, 0, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X + 20 * NPC.direction, NPC.Center.Y), dist * 15, ModContent.ProjectileType<PlagueSpit>(), CalRemixHelper.ProjectileDamage(110, 220), 0, Main.myPlayer);
                                 SoundEngine.PlaySound(SoundID.Item17, NPC.Center);
                             }
                             NPC.direction = NPC.position.X > Main.player[NPC.target].position.X ? -1 : 1;

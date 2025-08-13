@@ -442,6 +442,13 @@ namespace CalRemix
 
         public override bool CanUseItem(Item item, Player player)
         {
+            if (item.type == ItemID.WormholePotion)
+            {
+                if (!player.BuyItem(5))
+                {
+                    return false;
+                }
+            }
             if (SubworldSystem.IsActive<PiggySubworld>() && item.type != ModContent.ItemType<Slingshot>())
             {
                 return false;
@@ -1280,13 +1287,18 @@ namespace CalRemix
                 line.OverrideColor = Color.OrangeRed;
                 tooltips.Add(line);
             }
-            if (item.type == ItemType<PhantomicArtifact>())
+            if (item.type == ItemID.WormholePotion)
             {
-                var line = new TooltipLine(Mod, "PhantomicSoulArtifact", CalRemixHelper.LocalText($"{key}PhantomicSoulArtifact").Value);
+                var line = new TooltipLine(Mod, "WormholePotionRemix", CalRemixHelper.LocalText($"{key}WormholePotionRemix").Value);
                 tooltips.Add(line);
             }
             if (CalRemixWorld.accReworks)
             {
+                if (item.type == ItemType<PhantomicArtifact>())
+                {
+                    var line = new TooltipLine(Mod, "PhantomicSoulArtifact", CalRemixHelper.LocalText($"{key}PhantomicSoulArtifact").Value);
+                    tooltips.Add(line);
+                }
                 if (item.type == ItemType<Nanotech>())
                 {
                     var line = new TooltipLine(Mod, "NanotechRemix", CalRemixHelper.LocalText($"{key}NanotechRemix").Value);
