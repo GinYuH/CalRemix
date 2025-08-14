@@ -256,6 +256,18 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             npcLoot.Add(ItemID.ConfettiGun, 1, 3, 8);
         }
 
+        public override void OnKill()
+        {
+            int blimps = Main.rand.Next(2, 5);
+            for (int i = 0; i < blimps; i++)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X + Main.rand.Next(-20, 20), (int)NPC.Center.Y + Main.rand.Next(-20, 20), ModContent.NPCType<Blimpaa>());
+                }
+            }
+        }
+
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
