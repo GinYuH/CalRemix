@@ -5413,3 +5413,43 @@ TheBealed: {
 	DisplayName: Baligulas
 	Tooltip: ""
 }
+
+BalimbaaBanner: {
+	DisplayName: Balimbaa Banner
+	Tooltip: ""
+}
+
+BlimpaaBanner: {
+	DisplayName: Blimpaa Banner
+	Tooltip: ""
+}
+
+BoneDogBanner: {
+	DisplayName: Bone Dog Banner
+	Tooltip: ""
+}
+
+ChronodileBanner: {
+	DisplayName: Chronodile Banner
+	Tooltip: ""
+}
+
+CyclopsBanner: {
+	DisplayName: Cyclops Banner
+	Tooltip: ""
+}
+
+KoboldBanner: {
+	DisplayName: Kobold Banner
+	Tooltip: ""
+}
+
+PenguinCommanderBanner: {
+	DisplayName: Penguin Commander Banner
+	Tooltip: ""
+}
+
+SuccubusBanner: {
+	DisplayName: Succubus Banner
+	Tooltip: ""
+}

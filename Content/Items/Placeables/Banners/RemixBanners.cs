@@ -79,4 +79,44 @@ namespace CalRemix.Content.Items.Placeables.Banners
     {
         public override int TileType => ModContent.TileType<WalkingBirdBannerPlaced>();
     }
+
+    public class KoboldBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<KoboldBannerPlaced>();
+    }
+
+    public class PenguinCommanderBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<PenguinCommanderBannerPlaced>();
+    }
+
+    public class CyclopsBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<CyclopsBannerPlaced>();
+    }
+
+    public class ChronodileBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<ChronodileBannerPlaced>();
+    }
+
+    public class BoneDogBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<BoneDogBannerPlaced>();
+    }
+
+    public class SuccubusBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<SuccubusBannerPlaced>();
+    }
+
+    public class BlimpaaBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<BlimpaaBannerPlaced>();
+    }
+
+    public class BalimbaaBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<BalimbaaBannerPlaced>();
+    }
 }

@@ -33,4 +33,28 @@ namespace CalRemix.Content.Tiles.Banners
     public class WalkingBirdBannerPlaced : ModBannerTile
     {
     }
+    public class KoboldBannerPlaced : ModBannerTile
+    {
+    }
+    public class ChronodileBannerPlaced : ModBannerTile
+    {
+    }
+    public class BlimpaaBannerPlaced : ModBannerTile
+    {
+    }
+    public class BalimbaaBannerPlaced : ModBannerTile
+    {
+    }
+    public class SuccubusBannerPlaced : ModBannerTile
+    {
+    }
+    public class PenguinCommanderBannerPlaced : ModBannerTile
+    {
+    }
+    public class CyclopsBannerPlaced : ModBannerTile
+    {
+    }
+    public class BoneDogBannerPlaced : ModBannerTile
+    {
+    }
 }

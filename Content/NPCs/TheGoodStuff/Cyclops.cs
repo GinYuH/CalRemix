@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using CalamityMod.BiomeManagers;
 using System;
 using CalRemix.Content.Items.Potions;
+using CalRemix.Content.Items.Placeables.Banners;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs.TheGoodStuff
@@ -38,6 +39,8 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             NPC.Calamity().VulnerableToHeat = false;
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToCold = true;
+            Banner = Type;
+            BannerItem = ModContent.ItemType<CyclopsBanner>();
         }
 
         public override void SetBestiary(Terraria.GameContent.Bestiary.BestiaryDatabase database, Terraria.GameContent.Bestiary.BestiaryEntry bestiaryEntry)

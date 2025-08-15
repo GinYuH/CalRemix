@@ -26,6 +26,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Animations;
 using Terraria.GameContent;
 using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs.TheGoodStuff
 {
@@ -54,6 +55,8 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToElectricity = true;
+            Banner = Type;
+            BannerItem = ModContent.ItemType<BlimpaaBanner>();
         }
 
         public override void AI()

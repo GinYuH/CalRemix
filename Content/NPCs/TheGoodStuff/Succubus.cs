@@ -19,6 +19,7 @@ using Terraria.WorldBuilding;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Items.Materials;
 using System;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs.TheGoodStuff
 {
@@ -45,6 +46,8 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             NPC.Calamity().VulnerableToHeat = false;
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToCold = true;
+            Banner = ModContent.NPCType<Succubus>();
+            BannerItem = ModContent.ItemType<SuccubusBanner>();
         }
 
         public override void AI()

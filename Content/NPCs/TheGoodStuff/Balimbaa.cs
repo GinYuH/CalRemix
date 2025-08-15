@@ -21,6 +21,7 @@ using CalamityMod.Items.Materials;
 using System;
 using Terraria.GameContent.Events;
 using System.Collections.Generic;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs.TheGoodStuff
 {
@@ -47,6 +48,8 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToElectricity = true;
+            Banner = Type;
+            BannerItem = ModContent.ItemType<BalimbaaBanner>();
         }
 
         public override void AI()

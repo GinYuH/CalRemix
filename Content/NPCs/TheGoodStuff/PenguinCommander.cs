@@ -9,6 +9,7 @@ using static Terraria.ModLoader.ModContent;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using CalamityMod.BiomeManagers;
+using CalRemix.Content.Items.Placeables.Banners;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs.TheGoodStuff
@@ -36,6 +37,8 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToWater = false;
             NPC.Calamity().VulnerableToCold = false;
+            Banner = Type;
+            BannerItem = ModContent.ItemType<PenguinCommanderBanner>();
         }
 
         public override void SetBestiary(Terraria.GameContent.Bestiary.BestiaryDatabase database, Terraria.GameContent.Bestiary.BestiaryEntry bestiaryEntry)
