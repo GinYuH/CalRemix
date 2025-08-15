@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using CalamityMod.BiomeManagers;
 using System;
+using CalRemix.Content.Items.Potions;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs.TheGoodStuff
@@ -30,8 +31,8 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             NPC.lavaImmune = false;
             AIType = NPCID.GoblinScout;
             NPC.aiStyle = NPCAIStyleID.Fighter;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.HitSound = SoundID.DD2_OgreHurt;
+            NPC.DeathSound = SoundID.DD2_OgreDeath;
             NPC.lifeMax = 800;
             NPC.chaseable = true;
             NPC.Calamity().VulnerableToHeat = false;
@@ -69,12 +70,12 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            float cord = (spawnInfo.Player.position.X) / (float)Main.maxTilesX;
+            float cord = (spawnInfo.Player.position.X / 16f) / (float)Main.maxTilesX;
             if (spawnInfo.PlayerSafe || spawnInfo.Player.InModBiome<AstralInfectionBiome>() || spawnInfo.Player.Calamity().ZoneAbyss ||
                 spawnInfo.Player.Calamity().ZoneSunkenSea || !NPC.downedBoss3)
                 return 0;
             if (cord < 0.16f || cord > 0.84f)
-                return Terraria.ModLoader.Utilities.SpawnCondition.OverworldDaySnowCritter.Chance * 0.2f;
+                return Terraria.ModLoader.Utilities.SpawnCondition.OverworldDay.Chance * 0.05f;
             return 0;
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -97,6 +98,11 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
                     Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.Find<ModGore>("Cyclops4").Type, NPC.scale);
                 }
             }
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemID.Mace, 10);
+            npcLoot.Add(ModContent.ItemType<DisgustingMeat>(), 3);
         }
     }
 }
