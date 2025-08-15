@@ -22,11 +22,15 @@ using System;
 using Terraria.GameContent.Events;
 using System.Collections.Generic;
 using CalRemix.Content.Items.Placeables.Banners;
+using CalamityMod.DataStructures;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace CalRemix.Content.NPCs.TheGoodStuff
 {
     public class Balimbaa : ModNPC
     {
+        public List<VerletSimulatedSegment> segments = new();
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
@@ -54,6 +58,12 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
 
         public override void AI()
         {
+            CalRemixHelper.CreateVerletChain(ref segments, 10, NPC.Bottom, [0]);
+
+            segments[0].oldPosition = segments[^1].position;
+            segments[0].position = NPC.Bottom;
+
+            segments = VerletSimulatedSegment.SimpleSimulation(segments, 10, loops: 10, gravity: 0.9f);
             NPC.noGravity = true;
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = false;
@@ -232,6 +242,27 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             {
                 NPC.frame.Y = 0;
             }
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            for (int i = 0; i < segments.Count; i++)
+            {
+                VerletSimulatedSegment seg = segments[i];
+                float rot = 0f;
+                int dist = 4;
+                if (i > 0)
+                {
+                    rot = seg.position.DirectionTo(segments[i - 1].position).ToRotation() + MathHelper.PiOver2;
+                    dist = (int)seg.position.Distance(segments[i - 1].position) + 2;
+                }
+                else
+                {
+                    rot = NPC.rotation;
+                }
+                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, 2, dist), Color.White.MultiplyRGBA(Lighting.GetColor(seg.position.ToTileCoordinates())), rot, new Rectangle(0, 0, 4, dist).Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+            }
+            return true;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

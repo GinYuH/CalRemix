@@ -83,8 +83,8 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            float pos = (spawnInfo.Player.position.X / 16) / (float)Main.maxTilesX;
-            float fifth = pos / 5f;
+            float pos = (spawnInfo.Player.position.X / 16);
+            float fifth = Main.maxTilesX / 5f;
             if (spawnInfo.PlayerSafe || spawnInfo.Player.InModBiome<AstralInfectionBiome>() || spawnInfo.Player.Calamity().ZoneAbyss ||
                 spawnInfo.Player.Calamity().ZoneSunkenSea || !NPC.downedSlimeKing)
             {

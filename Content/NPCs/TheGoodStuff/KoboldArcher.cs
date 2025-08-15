@@ -58,7 +58,7 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             if (Collision.CanHitLine(NPC.Center, 1, 1, Main.player[NPC.target].Center, 1, 1) && NPC.Distance(Main.player[NPC.target].Center) < 920)
             {
                 NPC.Calamity().newAI[0]++;
-                if (NPC.Calamity().newAI[0] % 40 == 0)
+                if (NPC.Calamity().newAI[0] % 80 == 0)
                 {
                         SoundEngine.PlaySound(BetterSoundID.ItemBow, NPC.Center);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -97,8 +97,8 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            float pos = (spawnInfo.Player.position.X / 16) / (float)Main.maxTilesX;
-            float fifth = pos / 5f;
+            float pos = (spawnInfo.Player.position.X / 16);
+            float fifth = Main.maxTilesX / 5f;
             if (spawnInfo.PlayerSafe || spawnInfo.Player.InModBiome<AstralInfectionBiome>() || spawnInfo.Player.Calamity().ZoneAbyss ||
                 spawnInfo.Player.Calamity().ZoneSunkenSea || !NPC.downedSlimeKing)
             {
