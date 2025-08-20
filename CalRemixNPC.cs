@@ -1556,7 +1556,7 @@ namespace CalRemix
             }
             else if (npc.type == NPCID.CultistBoss)
             {
-
+                npcLoot.Add(ModContent.ItemType<CloseToYou>());
             }
             else if (npc.type == NPCType<AstrumDeusHead>())
             {

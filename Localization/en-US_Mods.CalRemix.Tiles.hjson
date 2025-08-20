@@ -58,5 +58,6 @@ BigFruitTile.MapEntry: ""
 MoonstoneTile.MapEntry: ""
 FreddyCheckersBoardTile.MapEntry: ""
 Ant.MapEntry: Ant
-SlingshotPlaced.MapEntry: Slingshot Placed
-GreenFabricPlaced.MapEntry: Green Fabric Placed
+SlingshotPlaced.MapEntry: Slingshot
+GreenFabricPlaced.MapEntry: Green Fabric
+CloseToYouPlaced.MapEntry: Close To You

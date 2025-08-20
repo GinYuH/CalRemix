@@ -5453,3 +5453,12 @@ SuccubusBanner: {
 	DisplayName: Succubus Banner
 	Tooltip: ""
 }
+
+CloseToYou: {
+	DisplayName: Close To You
+	Tooltip:
+		'''
+		'You're never too far from me.'
+		'J. T.'
+		'''
+}
