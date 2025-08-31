@@ -5462,3 +5462,13 @@ CloseToYou: {
 		'J. T.'
 		'''
 }
+
+Mincer: {
+	DisplayName: Mincer
+	Tooltip: "Can be used to grind items into other items"
+}
+
+TrubblingItem: {
+	DisplayName: Trubbling
+	Tooltip: ""
+}
