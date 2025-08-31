@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 
 namespace CalRemix.Content.Items.Placeables
 {
@@ -28,6 +29,16 @@ namespace CalRemix.Content.Items.Placeables
             CreateRecipe()
                 .AddRecipeGroup(RecipeGroupID.IronBar, 2)
                 .AddIngredient(ItemID.StoneBlock, 50)
+                .AddTile(TileID.Sawmill)
+                .Register();
+            CreateRecipe()
+                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
+                .AddIngredient(ModContent.ItemType<SealedStone>(), 50)
+                .AddTile(TileID.Sawmill)
+                .Register();
+            CreateRecipe()
+                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
+                .AddIngredient(ModContent.ItemType<CarnelianStone>(), 50)
                 .AddTile(TileID.Sawmill)
                 .Register();
         }

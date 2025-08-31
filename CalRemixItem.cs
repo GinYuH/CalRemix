@@ -1287,6 +1287,12 @@ namespace CalRemix
                 line.OverrideColor = Color.OrangeRed;
                 tooltips.Add(line);
             }
+            if (MincerTE.minceables.ContainsKey(item.type))
+            {
+                var line = new TooltipLine(Mod, "Minceable", CalRemixHelper.LocalText($"{key}Minceable").Value);
+                line.OverrideColor = Color.IndianRed;
+                tooltips.Add(line);
+            }
             if (item.type == ItemID.WormholePotion)
             {
                 var line = new TooltipLine(Mod, "WormholePotionRemix", CalRemixHelper.LocalText($"{key}WormholePotionRemix").Value);

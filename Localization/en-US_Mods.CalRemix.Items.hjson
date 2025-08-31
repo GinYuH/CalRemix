@@ -3841,6 +3841,7 @@ Tooltips: {
 	AbombinationOld: the Jungle
 	AbombinationNew: the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]
 	TorchRemix: Can be used as ammo for the Driftorcher
+	Minceable: Can be minced at the Mincer
 	PhantomicSoulArtifact: Judgement
 	GrandGelatinRemix:
 		'''
@@ -5465,7 +5466,7 @@ CloseToYou: {
 
 Mincer: {
 	DisplayName: Mincer
-	Tooltip: "Can be used to grind items into other items"
+	Tooltip: Can be used to grind items into other items
 }
 
 TrubblingItem: {
