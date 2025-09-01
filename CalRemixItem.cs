@@ -219,12 +219,12 @@ namespace CalRemix
             {
                 item.createTile = TileType<SeaPrismSafe>();
             }
-            if (item.type == ItemType<TheBurningSky>())
-            {
-                item.DamageType = DamageClass.SummonMeleeSpeed;
-            }
             if (CalRemixWorld.weaponReworks)
             {
+                if (item.type == ItemType<TheBurningSky>())
+                {
+                    item.DamageType = DamageClass.SummonMeleeSpeed;
+                }
                 if (item.type == ItemType<ScourgeoftheDesert>())
                 {
                     item.shoot = ProjectileType<ScourgeDesert>();
@@ -328,6 +328,13 @@ namespace CalRemix
             if (item.type == ItemID.Frog)
             {
                 item.ammo = ItemID.Frog;
+            }
+            if (CalRemixWorld.itemChanges)
+            {
+                if (item.type == ModContent.ItemType<DeathWhistle>())
+                {
+                    item.UseSound = new SoundStyle("CalRemix/Assets/Sounds/DeathWhistle") { Volume = 0.6f };
+                }
             }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
