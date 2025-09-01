@@ -65,6 +65,7 @@ using CalRemix.Content.Buffs.Tainted;
 using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Pets;
@@ -1011,6 +1012,7 @@ namespace CalRemix
             if (shop.NpcType == NPCID.Merchant)
             {
                 shop.Add(new NPCShop.Entry(ItemType<LesserStealthPotion>()));
+                shop.Add(new NPCShop.Entry(ItemType<WoodBag>()));
             }
             if (shop.NpcType == NPCType<THIEF>())
             {

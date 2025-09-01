@@ -5482,3 +5482,17 @@ Grakit: {
 		While curving, the bolts deal 5x damage
 		'''
 }
+
+WoodenEmblem: {
+	DisplayName: Wooden Emblem
+	Tooltip:
+		'''
+		Increases the damage of white, blue, green, and orange weapons by 25%
+		Does not ignore modifiers
+		'''
+}
+
+WoodBag: {
+	DisplayName: Wood Bag
+	Tooltip: Right Click to open
+}

@@ -349,6 +349,13 @@ namespace CalRemix
                     }
                 }
             }
+            if (player.Remix().woodEmblem)
+            {
+                if (item.rare <= ItemRarityID.Orange)
+                {
+                    damage *= 1.25f;
+                }
+            }
         }
 
         public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

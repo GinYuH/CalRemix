@@ -459,6 +459,10 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ItemType<Grakit>());
                 }
+                if (recipe.HasResult(ItemID.AvengerEmblem))
+                {
+                    recipe.AddIngredient(ItemType<WoodenEmblem>());
+                }
                 #endregion
                 #region Remove
                 if (recipe.HasResult(ItemType<DefiledGreatsword>()))

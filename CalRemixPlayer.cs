@@ -187,6 +187,7 @@ namespace CalRemix
         public bool calamityRing;
         public bool fungiStone;
         public bool fungiStone2;
+        public bool woodEmblem;
 
         public bool miragel;
         public bool elastigel;
@@ -1392,6 +1393,7 @@ namespace CalRemix
             fungiStone = false;
             fungiStone2 = false;
             cultacean = false;
+            woodEmblem = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {
