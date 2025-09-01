@@ -5473,3 +5473,12 @@ TrubblingItem: {
 	DisplayName: Trubbling
 	Tooltip: ""
 }
+
+Grakit: {
+	DisplayName: Grakit
+	Tooltip:
+		'''
+		Fires granite energy bolts which curve around the cursor
+		While curving, the bolts deal 5x damage
+		'''
+}

@@ -455,6 +455,10 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ItemType<EssenceofRend>(), 5);
                 }
+                if (recipe.HasResult(ItemType<AethersWhisper>()))
+                {
+                    recipe.AddIngredient(ItemType<Grakit>());
+                }
                 #endregion
                 #region Remove
                 if (recipe.HasResult(ItemType<DefiledGreatsword>()))
