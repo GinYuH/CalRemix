@@ -78,5 +78,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
             }
         }
+
+        public override bool CanBeHitByNPC(NPC attacker)
+        {
+            return SealedPuppet.infighting.Contains(attacker.type) && attacker.type != Type;
+        }
     }
 }
