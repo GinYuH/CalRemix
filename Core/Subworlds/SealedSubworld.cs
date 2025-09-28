@@ -42,6 +42,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Terraria.GameContent.Generation;
 using XPT.Core.Audio.MP3Sharp.IO;
 using CalRemix.Content.NPCs;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -56,7 +57,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<DoUHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile && !NPC.AnyNPCs(ModContent.NPCType<DoUHead>())));
             list.Add(item: (ModContent.NPCType<WinterWitch>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<CarnelianForestBiome>() && !NPC.AnyNPCs(ModContent.NPCType<WinterWitch>())));
             list.Add(item: (ModContent.NPCType<TheBealed>(), 0.1f, (NPCSpawnInfo n) => (n.Player.InModBiome<BadlandsBiome>() || n.Player.InModBiome<TurnipBiome>() || n.Player.InModBiome<SealedFieldsBiome>() || n.Player.InModBiome<DarnwoodSwampBiome>() || n.Player.InModBiome<BarrensBiome>()) && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
-            list.Add(item: (ModContent.NPCType<EvilSealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
+            list.Add(item: (ModContent.NPCType<EvilSealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile && Main.tile[n.SpawnTileX, n.SpawnTileY].TileType == ModContent.TileType<BadrockPlaced>()));
             list.Add(item: (ModContent.NPCType<SealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<SealedFieldsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
             list.Add(item: (ModContent.NPCType<SealedCitizen>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<TurnipBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
             return list;

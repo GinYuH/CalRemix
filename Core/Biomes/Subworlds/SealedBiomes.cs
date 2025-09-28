@@ -26,7 +26,7 @@ namespace CalRemix.Core.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return SubworldSystem.IsActive<SealedSubworld>() && CalRemixWorld.sealedTiles > 200 && (CalRemixWorld.barrenTiles + CalRemixWorld.carnelianTiles + CalRemixWorld.darnwoodTiles + CalRemixWorld.badTiles + CalRemixWorld.turnipTiles + CalRemixWorld.plumestoneTiles) < 50;
+            return SubworldSystem.IsActive<SealedSubworld>() && CalRemixWorld.sealedTiles > 200;
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeLow;

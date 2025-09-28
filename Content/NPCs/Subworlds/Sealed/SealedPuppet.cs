@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.npcSlots = 1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
-            NPC.lifeMax = 5000;
+            NPC.lifeMax = 1000;
             NPC.defense = 10;
             NPC.damage = 40;
             NPC.Calamity().VulnerableToHeat = true;
@@ -97,7 +97,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             if (NPC.velocity.X != 0)
             {
-                NPC.frameCounter += 0.1f;
+                NPC.frameCounter += 0.125f;
                 NPC.frameCounter %= Main.npcFrameCount[NPC.type];
                 int frame = (int)NPC.frameCounter;
                 NPC.frame.Y = frame * frameHeight;
@@ -142,7 +142,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.SourceDamage *= 50;
+            if (NPC.type != ModContent.NPCType<EvilSealedPuppet>())
+                modifiers.SourceDamage *= 3;
         }
     }
 
@@ -168,7 +169,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void SetDefaults()
         {
             base.SetDefaults();
-            NPC.lifeMax = 7000;
+            NPC.lifeMax = 1400;
             NPC.defense = 20;
             NPC.damage = 100;
             SpawnModBiomes = [GetInstance<BadlandsBiome>().Type];
