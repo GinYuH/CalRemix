@@ -703,7 +703,8 @@ namespace CalRemix.Core.Subworlds
 
             WeightedRandom<string> houseTypes = new();
             string prefix = "Sealed House ";
-            houseTypes.Add(prefix + "Small", 1);
+            houseTypes.Add(prefix + "Small", 0.65f);
+            houseTypes.Add(prefix + "SmallBaby", 0.65f);
             houseTypes.Add(prefix + "Large", 0.6f);
             houseTypes.Add(prefix + "Library", 0.4f);
             houseTypes.Add(prefix + "Church", 0.2f);

@@ -3,7 +3,10 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.NPCs.Crags;
 using CalamityMod.Particles;
 using CalRemix.Content.Items.Critters;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
+using CalRemix.Content.Items.Potions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -158,6 +161,11 @@ namespace CalRemix.Content.Tiles
         {
             { ModContent.ItemType<TrubblingItem>(), new (new List<Item>() {
                 new (ItemID.GlowingMushroom, 6)
+            }, new SoundStyle("CalRemix/Assets/Sounds/Funguscream") { Pitch = 0.5f, Volume = 0.8f }) },
+            { ModContent.ItemType<BabySealedPuppet>(), new (new List<Item>() {
+                new (ModContent.ItemType<RottedTendril>(), 1),
+                new (ModContent.ItemType<Neoncane>(), 3),
+                new (ModContent.ItemType<SealedFruit>(), 1),
             }, new SoundStyle("CalRemix/Assets/Sounds/Funguscream") { Pitch = 0.5f, Volume = 0.8f }) }
         };
 

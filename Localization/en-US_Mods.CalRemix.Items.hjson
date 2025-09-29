@@ -5516,3 +5516,8 @@ PinkSlab: {
 	DisplayName: Pink Slab
 	Tooltip: Increases mining speed when consumed
 }
+
+BabySealedPuppet: {
+	DisplayName: Baby Sealed Puppet
+	Tooltip: ""
+}
