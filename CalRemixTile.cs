@@ -11,6 +11,7 @@ using CalamityMod.Tiles.DraedonSummoner;
 using CalamityMod.Tiles.Furniture;
 using CalamityMod.Tiles.Ores;
 using CalamityMod.Tiles.SunkenSea;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
@@ -292,16 +293,30 @@ namespace CalRemix
                     }
                 }
             }
-            if (Main.rand.NextBool(500))
+            //if (Main.rand.NextBool(500))
             {
                 if (SubworldSystem.IsActive<SealedSubworld>())
                 {
                     if (tile.TileType == TileID.Beds || TileID.Sets.CanBeSleptIn[tile.TileType])
                     {
-                        Tile above = Main.tile[i, j - 1];
-                        if (!above.HasTile && tile2.HasTile)
+                        bool conveyor = false;
+                        for (int l = i - 5; l < i + 5; l++)
                         {
-                            WorldGen.PlaceTile(i, j - 1, ModContent.TileType<BabySealedPuppetPlaced>(), true);
+                            if (TileID.Sets.ConveyorDirection[Main.tile[l, j + 1].TileType] != 0)
+                            {
+                                int p = Item.NewItem(new EntitySource_TileUpdate(i, j), new Vector2(l, j) * 16, ModContent.ItemType<BabySealedPuppet>());
+                                Main.item[p].velocity = Vector2.Zero;
+                                conveyor = true;
+                                break;
+                            }
+                        }
+                        if (!conveyor)
+                        {
+                            Tile above = Main.tile[i, j - 1];
+                            if (!above.HasTile && tile2.HasTile)
+                            {
+                                WorldGen.PlaceTile(i, j - 1, ModContent.TileType<BabySealedPuppetPlaced>(), true);
+                            }
                         }
                     }
                 }

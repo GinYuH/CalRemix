@@ -213,6 +213,22 @@ namespace CalRemix.Content.Tiles
                     SoundEngine.PlaySound(DespairStone.ChainsawEndSound, Position.ToWorldCoordinates());
                 }
             }
+            else
+            {
+                foreach (Item i in Main.ActiveItems)
+                {
+                    if (minceables.ContainsKey(i.type))
+                    {
+                        if (i.Distance(Position.ToWorldCoordinates()) < 32)
+                        {
+                            i.active = false;
+                            mincingTimer = 300;
+                            itemID = i.type;
+                            break;
+                        }
+                    }
+                }
+            }
         }
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
