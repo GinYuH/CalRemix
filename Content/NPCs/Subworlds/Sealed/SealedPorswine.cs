@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.Content.Items.Potions;
 using CalRemix.Core.Biomes;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -16,6 +17,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Main.npcFrameCount[NPC.type] = 6;
             Main.npcCatchable[NPC.type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
         }
 
         public override void SetDefaults()
@@ -82,6 +84,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool CanBeHitByNPC(NPC attacker)
         {
             return SealedPuppet.infighting.Contains(attacker.type) && attacker.type != Type;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemType<MysteriousGraySlab>(), 2);
         }
     }
 }

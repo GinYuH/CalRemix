@@ -1,10 +1,13 @@
 ﻿using CalamityMod;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Steamworks;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -86,6 +89,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         NPC.velocity.Y = -5f;
                     }
                 }
+
+                if (Main.rand.NextBool(120) && NPC.Distance(target.Center) > 300)
+                {
+                    SoundEngine.PlaySound(BetterSoundID.ItemBow with { Volume = 2f }, NPC.Center);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.SafeDirectionTo(target.Center, Vector2.UnitY) * 20, ProjectileType<SealTokenProj>(), CalRemixHelper.ProjectileDamage(60, 100), 1f, ai1: NPC.whoAmI);
+                    }
+                }
             }
             else
             {
@@ -142,8 +154,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (NPC.type != ModContent.NPCType<EvilSealedPuppet>())
+            if (NPC.type != NPCType<EvilSealedPuppet>())
                 modifiers.SourceDamage *= 3;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemType<SealToken>(), 1, 1, 3);
         }
     }
 
@@ -162,6 +179,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             Texture2D hat = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/SealedCitizen").Value;
             spriteBatch.Draw(hat, NPC.Top - screenPos + Vector2.UnitY * NPC.gfxOffY, null, NPC.GetAlpha(drawColor), NPC.rotation, hat.Size() / 2, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemType<SealToken>(), 1, 1, 2);
         }
     }
     public class EvilSealedPuppet : SealedPuppet
@@ -187,6 +208,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection, -1f, 0, default, 1f);
                 }
             }
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemType<SealToken>(), 1, 3, 5);
         }
     }
 }

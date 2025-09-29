@@ -37,6 +37,12 @@ namespace CalRemix.Content.Items.Materials
                 AddIngredient(ModContent.ItemType<AerialiteBar>()).
                 AddTile(TileID.Furnaces).
                 Register();
+
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<SealloyBar>(), 30).
+                AddTile(TileID.AdamantiteForge).
+                DisableDecraft().
+                Register();
         }
     }
 }

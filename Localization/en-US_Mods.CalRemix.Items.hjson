@@ -5496,3 +5496,23 @@ WoodBag: {
 	DisplayName: Wood Bag
 	Tooltip: Right Click to open
 }
+
+SealToken: {
+	DisplayName: Seal Token
+	Tooltip: "'Probably not worth much as currency'"
+}
+
+SealloyBar: {
+	DisplayName: Sealloy Bar
+	Tooltip: ""
+}
+
+MysteriousGraySlab: {
+	DisplayName: Mysterious Gray Slab
+	Tooltip: Does not reduce mining speed when consumed
+}
+
+PinkSlab: {
+	DisplayName: Pink Slab
+	Tooltip: Increases mining speed when consumed
+}

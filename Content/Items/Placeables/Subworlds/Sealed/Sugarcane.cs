@@ -39,6 +39,13 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<NeoncanePlaced>());
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<SealToken>(), 4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
     }
     public class CookieTower : ModItem
     {
@@ -92,7 +99,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<RottedTendril>())
+                .AddIngredient(ModContent.ItemType<SealToken>())
                 .AddIngredient(ModContent.ItemType<Neoncane>())
                 .AddIngredient(ModContent.ItemType<LightColumn>())
                 .AddIngredient(ModContent.ItemType<PeatSpire>())
