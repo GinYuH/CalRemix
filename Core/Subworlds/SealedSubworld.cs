@@ -406,6 +406,7 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
+            int elemTries = 0;
             for (int i = leftDarnwood.X; i < leftDarnwood.X + leftDarnwood.Width + 1 - padding; i++)
             {
                 for (int j = leftDarnwood.Y; j < leftDarnwood.Y + leftDarnwood.Height + 1; j++)
@@ -415,8 +416,13 @@ namespace CalRemix.Core.Subworlds
                     if (!above.HasTile && t.TileType == dwood && t.HasTile)
                     {
                         if (WorldGen.genRand.NextBool(7))
-                        {
-                            CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(10, 20));
+                        {                                
+                            if (CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(10, 20)))
+                            {
+                                if (WorldGen.genRand.NextBool(30) || elemTries == 7)
+                                    t.ResetToType((ushort)ModContent.TileType<ElementalWoodPlaced>());
+                                elemTries++;
+                            }
                         }
                         else if (WorldGen.genRand.NextBool(5))
                         {
@@ -430,6 +436,7 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
             }
+            elemTries = 0;
             for (int i = rightDarnwood.X + padding; i < rightDarnwood.X + rightDarnwood.Width + 1; i++)
             {
                 for (int j = leftDarnwood.Y; j < leftDarnwood.Y + leftDarnwood.Height + 1; j++)
@@ -440,7 +447,12 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (WorldGen.genRand.NextBool(7))
                         {
-                            CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(10, 20));
+                            if (CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(10, 20)))
+                            {
+                                if (WorldGen.genRand.NextBool(30) || elemTries == 7)
+                                    t.ResetToType((ushort)ModContent.TileType<ElementalWoodPlaced>());
+                                elemTries++;
+                            }
                         }
                         else if (WorldGen.genRand.NextBool(5))
                         {

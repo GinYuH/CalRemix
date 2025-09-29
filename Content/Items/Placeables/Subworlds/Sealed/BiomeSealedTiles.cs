@@ -190,6 +190,25 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
                 Register();
         }
     }
+    public class ElementalWood : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 100;
+        }
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<ElementalWoodPlaced>());
+        }
+
+        public override void AddRecipes()
+        {
+           /* CreateRecipe().
+                AddIngredient(ModContent.ItemType<DarnwoodWall>(), 4).
+                AddTile(TileID.WorkBenches).
+                Register();*/
+        }
+    }
     public class VoidInfusedStone: ModItem
     {
         public override void SetStaticDefaults()

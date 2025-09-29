@@ -5521,3 +5521,13 @@ BabySealedPuppet: {
 	DisplayName: Baby Sealed Puppet
 	Tooltip: ""
 }
+
+ElementalWood: {
+	DisplayName: Elemental Wood
+	Tooltip: ""
+}
+
+FireApple: {
+	DisplayName: Fire Apple
+	Tooltip: Provides fire immunity when consumed
+}
