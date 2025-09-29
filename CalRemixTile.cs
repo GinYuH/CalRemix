@@ -293,7 +293,7 @@ namespace CalRemix
                     }
                 }
             }
-            //if (Main.rand.NextBool(500))
+            if (Main.rand.NextBool(500))
             {
                 if (SubworldSystem.IsActive<SealedSubworld>())
                 {
