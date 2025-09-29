@@ -221,7 +221,10 @@ namespace CalRemix.Content.Tiles
                     {
                         if (i.Distance(Position.ToWorldCoordinates()) < 32)
                         {
-                            i.active = false;
+                            if (i.stack > 1)
+                                i.stack--;
+                            else
+                                i.active = false;
                             mincingTimer = 300;
                             itemID = i.type;
                             break;
