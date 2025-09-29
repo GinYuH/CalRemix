@@ -397,6 +397,11 @@ ButterflyStaff: {
 		'''
 }
 
+Butter: {
+	DisplayName: Butter
+	Tooltip: ""
+}
+
 ChainSaw: {
 	DisplayName: Chain-Saw
 	Tooltip:
@@ -5529,5 +5534,10 @@ ElementalWood: {
 
 FireApple: {
 	DisplayName: Fire Apple
+	Tooltip: Provides fire immunity when consumed
+}
+
+BurntButter: {
+	DisplayName: Burnt Butter
 	Tooltip: Provides fire immunity when consumed
 }
