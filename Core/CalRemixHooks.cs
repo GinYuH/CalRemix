@@ -44,6 +44,7 @@ using System.Diagnostics;
 using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Light;
 using SubworldLibrary;
+using CalRemix.Content.Tiles;
 
 namespace CalRemix.Core
 {
@@ -75,6 +76,12 @@ namespace CalRemix.Core
             byte effects);
 
         public static FieldInfo localField = typeof(LocalizationLoader).GetField("changedMods", BindingFlags.Static | BindingFlags.NonPublic);
+
+        public static MethodInfo schematicEntityMethod = typeof(CalamityMod.Schematics.SchematicManager).GetMethod("TryToPlaceTileEntities", BindingFlags.Static | BindingFlags.NonPublic);
+        public static Hook schematicEntityHook;
+        public delegate void orig_TryToPlaceTileEntities(int x, int y, Tile t);
+
+
         public override void Load()
         {
             //IL_Player.ItemCheck_UseBossSpawners += HookDerellectSpawn;
@@ -104,8 +111,10 @@ namespace CalRemix.Core
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
+            
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
+            schematicEntityHook = new Hook(schematicEntityMethod, RemixSchematicEntities);
             //drawHook = new Hook(drawMethod, DrawRotated);
             
         }
@@ -114,6 +123,20 @@ namespace CalRemix.Core
         {
             loadStoneHook = null;
             drawHook = null;
+        }
+
+        public static void RemixSchematicEntities(orig_TryToPlaceTileEntities orig, int x, int y, Tile t)
+        {
+            orig(x, y, t);
+            if (!t.HasTile)
+                return;
+
+            if (t.TileFrameX != 0 || t.TileFrameY != 0)
+                return;
+
+            int tileType = t.TileType;
+            if (tileType == TileType<MincerPlaced>())
+                TileEntity.PlaceEntityNet(x, y, TileEntityType<MincerTE>());
         }
 
         public static bool DisableOceanSubworld(On_WorldGen.orig_oceanDepths orig, int x, int y)

@@ -84,6 +84,7 @@ namespace CalRemix.Core.Subworlds
         {
             SubworldUpdateMethods.UpdateLiquids();
             SubworldUpdateMethods.UpdateTiles();
+            SubworldUpdateMethods.UpdateTileEntities();
 
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:Sealed", true);
             SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
