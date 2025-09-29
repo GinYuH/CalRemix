@@ -292,6 +292,20 @@ namespace CalRemix
                     }
                 }
             }
+            if (Main.rand.NextBool(500))
+            {
+                if (SubworldSystem.IsActive<SealedSubworld>())
+                {
+                    if (tile.TileType == TileID.Beds || TileID.Sets.CanBeSleptIn[tile.TileType])
+                    {
+                        Tile above = Main.tile[i, j - 1];
+                        if (!above.HasTile && tile2.HasTile)
+                        {
+                            WorldGen.PlaceTile(i, j - 1, ModContent.TileType<BabySealedPuppetPlaced>(), true);
+                        }
+                    }
+                }
+            }
         }
 
         public override void NearbyEffects(int i, int j, int type, bool closer)
