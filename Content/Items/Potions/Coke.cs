@@ -1,5 +1,6 @@
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Buffs;
+using CalRemix.Content.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,6 +51,14 @@ namespace CalRemix.Content.Items.Potions
                 AddIngredient<DemonicBoneAsh>(2).
                 AddIngredient(ItemID.Gel, 20).
                 AddTile(TileID.AlchemyTable).
+                Register();
+
+            CreateRecipe().
+                AddIngredient<SealToken>().
+                AddIngredient<NeonDust>().
+                AddIngredient(ItemID.BottledWater).
+                AddTile(TileID.AlchemyTable).
+                DisableDecraft().
                 Register();
         }
     }
