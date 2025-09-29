@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.Potions;
+using CalRemix.Core.Biomes;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,6 +37,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToCold = false;
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToHeat = true;
+            SpawnModBiomes = [GetInstance<CarnelianForestBiome>().Type];
         }
 
         public override void AI()

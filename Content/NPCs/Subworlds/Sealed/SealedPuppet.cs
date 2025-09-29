@@ -25,7 +25,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPCType<SealedPuppet>(),
             NPCType<SealedCitizen>(),
             NPCType<EvilSealedPuppet>(),
-            NPCType<SealedPorswine>()
+            NPCType<SealedPorswine>(),
+            NPCType<DoUHead>()
         };
 
         public override void SetStaticDefaults()
