@@ -68,7 +68,7 @@ namespace CalRemix.Core.Subworlds
 
         bool ICustomSpawnSubworld.OverrideVanilla { get => false; }
 
-        public override int Height => 1000;
+        public override int Height => 900;
         public override int Width => 3000;
         public override List<GenPass> Tasks =>
         [

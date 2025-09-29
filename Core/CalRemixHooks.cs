@@ -153,7 +153,10 @@ namespace CalRemix.Core
 
         public static void FixSubworldDrawBlack(On_Main.orig_DrawBlack orig, Main self, bool force = false)
         {
-            if (SubworldSystem.AnyActive() && SubworldSystem.Current is IFixDrawBlack)
+            // TODO:
+            // This broke fsr
+            // Fix it and remove the false
+            if (SubworldSystem.AnyActive() && SubworldSystem.Current is IFixDrawBlack && false)
             {
                 if (Main.shimmerAlpha == 1f)
                 {
