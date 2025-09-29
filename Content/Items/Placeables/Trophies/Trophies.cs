@@ -14,7 +14,7 @@ public abstract class RemixTrophy : ModItem
         Item.useAnimation = 15;
         Item.useTime = 10;
         Item.autoReuse = true;
-        Item.maxStack = 99;
+        Item.maxStack = 9999;
         Item.consumable = true;
         Item.width = 12;
         Item.height = 12;
