@@ -977,6 +977,14 @@ namespace CalRemix
                         Player.HeldItem.TurnToAir();
                     }
                 }
+                else if (Player.HeldItem.type == ItemType<Doubler>())
+                {
+                    Player.moveSpeed *= 2;
+                }
+                else if (Player.HeldItem.type == ItemType<Drabbler>())
+                {
+                    Player.moveSpeed *= 3;
+                }
             }
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (cart)

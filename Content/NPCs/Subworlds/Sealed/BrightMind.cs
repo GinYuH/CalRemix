@@ -10,6 +10,7 @@ using System;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
+using CalRemix.Content.Projectiles.Weapons;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -30,13 +31,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.aiStyle = -1;
             NPC.width = 54;
             NPC.height = 80;
-            NPC.lifeMax = 20000;
+            NPC.lifeMax = 2000;
             NPC.damage = 0;
             NPC.defense = 8;
             NPC.friendly = true;
             NPC.noGravity = false;
             NPC.HitSound = hitSound;
             NPC.DeathSound = deathSound;
+            NPC.knockBackResist = 0f;
             NPC.noTileCollide = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<BadlandsBiome>().Type };
         }
@@ -83,6 +85,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool NeedSaving()
         {
             return true;
+        }
+
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            if (projectile.type == ModContent.ProjectileType<RustedShardProjectile>())
+                return true;
+            return false;
         }
     }
 }

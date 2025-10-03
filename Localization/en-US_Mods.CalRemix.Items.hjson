@@ -5541,3 +5541,27 @@ BurntButter: {
 	DisplayName: Burnt Butter
 	Tooltip: Provides fire immunity when consumed
 }
+
+Doubler: {
+	DisplayName: Doubler
+	Tooltip: "Doubles movement speed while held"
+}
+
+Drabbler: {
+	DisplayName: Drabbler
+	Tooltip: 
+		'''
+		Triples movement speed while held
+		Heals 10 life on enemy hits
+		'''
+}
+
+RustedShard: {
+	DisplayName: Rusted Shard
+	Tooltip: "Can deal damage to certain otherwise invincible quest NPCs"
+}
+
+SkullKarrver: {
+	DisplayName: Skull Karrver
+	Tooltip: "Heals 10 life on enemy hits"
+}

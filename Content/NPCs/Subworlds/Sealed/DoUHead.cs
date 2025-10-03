@@ -202,6 +202,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             npcLoot.AddIf(() => !NPC.downedMoonlord, ModContent.ItemType<CosmiliteSlag>());
             npcLoot.AddIf(() => NPC.downedMoonlord, ModContent.ItemType<CosmiliteSlag>(), 1, 54, 86);
+            npcLoot.Add(ModContent.ItemType<Doubler>());
         }
     }
 }
