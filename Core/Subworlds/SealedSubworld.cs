@@ -665,8 +665,8 @@ namespace CalRemix.Core.Subworlds
             List<(int, int, int)> lootfr = new()
             {
                 { (ModContent.ItemType<ExtremelyStrangePuppet>(), 1, 1) },
+                { (ModContent.ItemType<StrangePuppet>(), 3, 9) },
                 { (ModContent.ItemType<FrozenSealedTear>(), 1, 4) },
-                { (ModContent.ItemType<RottedTendril>(), 3, 5) },
                 { (ModContent.ItemType<SealToken>(), 6, 14) },
             };
             (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
@@ -827,6 +827,11 @@ namespace CalRemix.Core.Subworlds
             List<(int, int, int)> lootfr = new()
             {
                 { (ModContent.ItemType<SealToken>(), 7, 18) },
+                { (ModContent.ItemType<SealedFruit>(), 4, 10) },
+                { (ModContent.ItemType<Coke>(), 1, 5) },
+                { (ModContent.ItemType<CarnelianRose>(), 1, 3) },
+                { (ModContent.ItemType<CarnelianiteOre>(), 1, 2) },
+                { (ModContent.ItemType<CarnelianWood>(), 20, 40) },
             };
             (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
             for (int i = 0; i < loot.Length; i++)
@@ -840,6 +845,8 @@ namespace CalRemix.Core.Subworlds
         {
             List<(int, int, int)> lootfr = new()
             {
+                { (ModContent.ItemType<SealloyBar>(), 1, 4) },
+                { (ModContent.ItemType<SealedFruit>(), 4, 8) },
                 { (ModContent.ItemType<SealToken>(), 2, 6) },
                 { (ModContent.ItemType<MysteriousGraySlab>(), 3, 7) },
             };
@@ -855,9 +862,13 @@ namespace CalRemix.Core.Subworlds
         {
             List<(int, int, int)> lootfr = new()
             {
+                { (ModContent.ItemType<Veinroot>(), 20, 40) },
+                { (ModContent.ItemType<NauseatingPowder>(), 5, 10) },
                 { (ModContent.ItemType<RotPearl>(), 7, 14) },
                 { (ModContent.ItemType<RottedTendril>(), 3, 9) },
                 { (ModContent.ItemType<SealToken>(), 10, 15) },
+                { (ModContent.ItemType<FrozenSealedTear>(), 3, 8) },
+                { (ModContent.ItemType<AbnormalEye>(), 1, 1) },
             };
             (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
             for (int i = 0; i < loot.Length; i++)
