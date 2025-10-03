@@ -29,6 +29,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPCType<DoUHead>()
         };
 
+        public static SoundStyle SealedSound = new SoundStyle("CalRemix/Assets/Sounds/SealedIdle") { PitchVariance = 1f, MaxInstances = 0 };
+
         public override void SetStaticDefaults()
         {
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -44,8 +46,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             //AIType = NPCID.Squirrel;
             NPC.friendly = false;
             NPC.npcSlots = 1;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.HitSound = new SoundStyle("CalRemix/Assets/Sounds/SealedHurt");
+            NPC.DeathSound = new SoundStyle("CalRemix/Assets/Sounds/SealedDeath");
             NPC.lifeMax = 1000;
             NPC.defense = 10;
             NPC.damage = 40;
@@ -103,6 +105,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             else
             {
                 NPC.aiStyle = NPCAIStyleID.Passive;
+            }
+            if (Main.rand.NextBool(1200))
+            {
+                SoundEngine.PlaySound(SealedSound, NPC.Center);
             }
             NPC.spriteDirection = NPC.direction;
         }
