@@ -36,7 +36,7 @@ namespace CalRemix.Content.Items.Weapons
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<Mikado>()).
                 AddIngredient(ModContent.ItemType<VoidSingularity>()).
-                //AddIngredient(ModContent.ItemType<RotPearl>()).
+                AddIngredient(ModContent.ItemType<RotPearl>()).
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }

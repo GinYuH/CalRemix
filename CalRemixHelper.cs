@@ -577,12 +577,12 @@ namespace CalRemix
                             if (tileType != -1)
                             {
                                 t.ResetToType((ushort)tileType);
-                                WorldGen.SquareTileFrame(area.X + i, area.Y + j);
+                                //WorldGen.SquareTileFrame(area.X + i, area.Y + j);
                             }
                             if (wallType != 0)
                             {
                                 t.WallType = (ushort)wallType;
-                                WorldGen.SquareWallFrame(area.X + i, area.Y + j);
+                                //WorldGen.SquareWallFrame(area.X + i, area.Y + j);
                             }
                             map[i, j] = true;
                         }

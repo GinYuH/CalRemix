@@ -5573,5 +5573,29 @@ Mikado: {
 
 Umbren: {
 	DisplayName: Umbren
-	Tooltip: "Can destroy Watchers"
+	Tooltip: Can destroy Watchers
+}
+
+AbnormalEye: {
+	DisplayName: Abnormal Eye
+	Tooltip: "'The eye of a temporal beast'"
+}
+
+RotPearl: {
+	DisplayName: Rot Pearl
+	Tooltip: ""
+}
+
+ExtremelyStrangePuppet: {
+	DisplayName: Extremely Strange Puppet
+	Tooltip:
+		'''
+		Summons Faux Surrogate of Eight Cold Panels
+		'The bad time'
+		'''
+}
+
+StrangePuppet: {
+	DisplayName: Strange Puppet
+	Tooltip: "Summons a Sealed Puppet"
 }
