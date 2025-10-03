@@ -5544,12 +5544,12 @@ BurntButter: {
 
 Doubler: {
 	DisplayName: Doubler
-	Tooltip: "Doubles movement speed while held"
+	Tooltip: Doubles movement speed while held
 }
 
 Drabbler: {
 	DisplayName: Drabbler
-	Tooltip: 
+	Tooltip:
 		'''
 		Triples movement speed while held
 		Heals 10 life on enemy hits
@@ -5558,10 +5558,10 @@ Drabbler: {
 
 RustedShard: {
 	DisplayName: Rusted Shard
-	Tooltip: "Can deal damage to certain otherwise invincible quest NPCs"
+	Tooltip: Can deal damage to certain otherwise invincible quest NPCs
 }
 
 SkullKarrver: {
 	DisplayName: Skull Karrver
-	Tooltip: "Heals 10 life on enemy hits"
+	Tooltip: Heals 10 life on enemy hits
 }

@@ -61,6 +61,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<EvilSealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile && Main.tile[n.SpawnTileX, n.SpawnTileY].TileType == ModContent.TileType<BadrockPlaced>()));
             list.Add(item: (ModContent.NPCType<SealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<SealedFieldsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
             list.Add(item: (ModContent.NPCType<SealedCitizen>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<TurnipBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
+            list.Add(item: (ModContent.NPCType<WinterWitch>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<BarrensBiome>() && !NPC.AnyNPCs(ModContent.NPCType<YellowEcho>())));
             return list;
         }
 
