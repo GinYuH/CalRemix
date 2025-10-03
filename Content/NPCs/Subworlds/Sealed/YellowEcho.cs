@@ -13,6 +13,7 @@ using CalamityMod.World;
 using System;
 using CalamityMod.Particles;
 using Terraria.Audio;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -137,7 +138,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<LightResidue>(), 1, 15, 35);
-            npcLoot.Add(ModContent.ItemType<SealedIce>(), 1, 32, 100);
+            npcLoot.Add(ModContent.ItemType<Mikado>());
         }
     }
 }
