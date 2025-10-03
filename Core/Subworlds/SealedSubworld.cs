@@ -808,6 +808,7 @@ namespace CalRemix.Core.Subworlds
         {
             List<(int, int, int)> lootfr = new()
             {
+                { (ModContent.ItemType<NullOrb>(), 1, 1) },
                 { (ModContent.ItemType<BabySealedPuppet>(), 10, 15) },
                 { (ModContent.ItemType<RotPearl>(), 3, 6) },
                 { (ModContent.ItemType<SealToken>(), 3, 7) },
