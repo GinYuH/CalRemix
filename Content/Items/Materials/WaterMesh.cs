@@ -1,4 +1,5 @@
-﻿using CalRemix.Content.Items.Potions;
+﻿using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Potions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,6 +24,15 @@ namespace CalRemix.Content.Items.Materials
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<FireApple>()).
                 AddIngredient(ModContent.ItemType<WaterSeeds>(), 5).
+                AddTile(TileID.MythrilAnvil).
+                DisableDecraft().
+                Register();
+
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<Astrogel>()).
+                AddIngredient(ModContent.ItemType<CosmiliteSlag>(), 5).
+                AddIngredient(ItemID.WaterBucket).
+                AddIngredient(ItemID.Bottle, 3).
                 AddTile(TileID.MythrilAnvil).
                 DisableDecraft().
                 Register();

@@ -6,7 +6,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CalRemix.Content.Items.Materials
+namespace CalRemix.Content.Items.Tools
 {
     public class AbnormalRecord : ModItem
     {

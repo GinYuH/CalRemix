@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Tools;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
 using Microsoft.Xna.Framework;

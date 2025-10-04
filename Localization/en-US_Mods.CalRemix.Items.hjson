@@ -5629,3 +5629,18 @@ WaterSeeds: {
 	DisplayName: Water Seeds
 	Tooltip: "'Not actually plantable'"
 }
+
+AbnormalRecord: {
+	DisplayName: Abnormal Record
+	Tooltip: Plays the abomination's music on the go
+}
+
+HataqausLashes: {
+	DisplayName: Hataqaus Lashes
+	Tooltip: Unleashes 3 lashes imbued with ancient water particles
+}
+
+SealedLashes: {
+	DisplayName: Sealed Lashes
+	Tooltip: Unleashes 3 rotted tentacles
+}
