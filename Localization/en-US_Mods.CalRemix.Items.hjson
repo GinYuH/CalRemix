@@ -5597,5 +5597,35 @@ ExtremelyStrangePuppet: {
 
 StrangePuppet: {
 	DisplayName: Strange Puppet
-	Tooltip: "Summons a Sealed Puppet"
+	Tooltip: Summons a Sealed Puppet
+}
+
+AbnormalSample: {
+	DisplayName: Abnormal Sample
+	Tooltip: ""
+}
+
+NullHolder: {
+	DisplayName: Null Holder
+	Tooltip: ""
+}
+
+NullOrb: {
+	DisplayName: Null Orb
+	Tooltip: ""
+}
+
+NullPedestal: {
+	DisplayName: Null Pedestal
+	Tooltip: ""
+}
+
+WaterMesh: {
+	DisplayName: Water Mesh
+	Tooltip: ""
+}
+
+WaterSeeds: {
+	DisplayName: Water Seeds
+	Tooltip: "'Not actually plantable'"
 }

@@ -6,6 +6,7 @@ using CalamityMod.Items;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Potions;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 {
@@ -203,10 +204,11 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 
         public override void AddRecipes()
         {
-           /* CreateRecipe().
-                AddIngredient(ModContent.ItemType<DarnwoodWall>(), 4).
-                AddTile(TileID.WorkBenches).
-                Register();*/
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<FireApple>()).
+                AddIngredient(ModContent.ItemType<WaterSeeds>(), 5).
+                AddTile(TileID.MythrilAnvil).
+                Register();
         }
     }
     public class VoidInfusedStone: ModItem

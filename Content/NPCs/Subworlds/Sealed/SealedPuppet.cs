@@ -26,6 +26,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPCType<SealedCitizen>(),
             NPCType<EvilSealedPuppet>(),
             NPCType<SealedPorswine>(),
+            NPCType<TemporalAbomination>(),
             NPCType<DoUHead>()
         };
 
@@ -43,7 +44,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.CloneDefaults(NPCID.Squirrel);
             NPC.width = 30;
             NPC.height = 54;
-            //AIType = NPCID.Squirrel;
             NPC.friendly = false;
             NPC.npcSlots = 1;
             NPC.HitSound = new SoundStyle("CalRemix/Assets/Sounds/SealedHurt");
@@ -60,7 +60,46 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void AI()
         {
             NPCUtils.TargetSearchResults results = NPCUtils.SearchForTarget(NPC, NPCUtils.TargetSearchFlag.NPCs, npcFilter: (NPC n) => Collision.CanHitLine(NPC.Top, 1, 1, n.Center, 1, 1) && NPC.Distance(n.Center) < 920 && infighting.Contains(n.type) && n.type != Type);
-            if (results.NearestNPCIndex != -1)
+            NPC.TargetClosest();
+            if (NPC.type == NPCType<TemporalAbomination>() && Main.player[NPC.target].Distance(NPC.Center) < 2000)
+            {
+                NPC.aiStyle = -1;
+                Player target = Main.player[NPC.target];
+                int direction = NPC.Center.X < target.Center.X ? 1 : -1;
+
+                float acc = 0.3f;
+                float speed = 5.5f;
+
+                if (direction == 1 && NPC.velocity.X < speed)
+                {
+                    NPC.velocity.X += acc;
+                }
+                else if (direction == -1 && NPC.velocity.X > -speed)
+                {
+                    NPC.velocity.X -= acc;
+                }
+                NPC.direction = direction;
+
+                Vector2 frontTilePos = NPC.Bottom + new Vector2(NPC.direction * NPC.width / 2 + 1, -4);
+                Point tileCoords = frontTilePos.ToTileCoordinates();
+
+                Tile tile = Framing.GetTileSafely(tileCoords.X, tileCoords.Y);
+                Tile above = Framing.GetTileSafely(tileCoords.X, tileCoords.Y - 1);
+                if (Main.rand.NextBool(200))
+                {
+                    int spawnType = Main.rand.NextBool() ? NPCID.WanderingEye : NPCID.DesertScorpionWalk;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, spawnType);
+                    }
+                }
+
+                if ((tile.HasTile && Main.tileSolid[tile.TileType] || Main.rand.NextBool(50)) && NPC.velocity.Y == 0)
+                {
+                    NPC.velocity.Y = -5f;
+                }
+            }
+            else if (results.NearestNPCIndex != -1)
             {
                 NPC target = Main.npc[results.NearestNPCIndex];
                 NPC.aiStyle = -1;
@@ -87,10 +126,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                 if ((tile.HasTile && Main.tileSolid[tile.TileType] || Main.rand.NextBool(50)) && NPC.velocity.Y == 0)
                 {
-                    //if (!above.HasTile || !Main.tileSolid[above.TileType])
-                    {
-                        NPC.velocity.Y = -5f;
-                    }
+                    NPC.velocity.Y = -5f;
                 }
 
                 if (Main.rand.NextBool(120) && NPC.Distance(target.Center) > 300)
@@ -108,7 +144,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             if (Main.rand.NextBool(1200))
             {
-                SoundEngine.PlaySound(SealedSound, NPC.Center);
+                SoundStyle top = NPC.type == ModContent.NPCType<TemporalAbomination>() ? TemporalAbomination.musiq : SealedSound;
+                SoundEngine.PlaySound(top, NPC.Center);
             }
             NPC.spriteDirection = NPC.direction;
         }
@@ -219,6 +256,26 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemType<SealToken>(), 1, 3, 5);
+        }
+    }
+    public class TemporalAbomination : SealedPuppet
+    {
+        public static SoundStyle musiq = new SoundStyle("CalRemix/Assets/Music/Misc/Menu2") { MaxInstances = 22, PitchVariance = 1f };
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            NPC.damage = 200;
+            NPC.lifeMax = 20000;
+            SpawnModBiomes = [GetInstance<TurnipBiome>().Type];
+            Music = CalRemixMusic.Menu2;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemType<AbnormalSample>());
+            npcLoot.Add(ItemType<AbnormalEye>());
+            npcLoot.Add(ItemType<AbnormalRecord>(), 10);
+            npcLoot.Add(ItemType<SealToken>(), 1, 30, 60);
         }
     }
 }

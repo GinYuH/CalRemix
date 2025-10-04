@@ -1,4 +1,5 @@
 ﻿using CalRemix.Content.Items.Materials;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -25,8 +26,8 @@ namespace CalRemix.Content.Items.SummonItems
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                SoundEngine.PlaySound(SoundID.Roar, player.position);
-                //CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<TemporalAbnormality>());
+                SoundEngine.PlaySound(TemporalAbomination.musiq, player.position);
+                CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<TemporalAbomination>());
             }
             return true;
         }

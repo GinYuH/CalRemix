@@ -655,22 +655,18 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             }
             else if (Main.rand.NextBool(7))
             {
-                createLeaves = true;
                 Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, ItemID.Acorn, randAmt);
             }
             else if (Main.rand.NextBool(35) && Main.halloween)
             {
-                createLeaves = true;
                 Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, ItemID.RottenEgg, randAmt);
             }
             else if (Main.rand.NextBool(12))
             {
-                createLeaves = true;
                 Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, DropWood(), Main.rand.Next(1, 4));
             }
             else if (Main.rand.NextBool(20))
             {
-                createLeaves = true;
                 int coin = ItemID.CopperCoin;
                 int amount = Main.rand.Next(50, 100);
                 if (Main.rand.NextBool(30))
@@ -696,20 +692,13 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
 
                 Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, coin, amount);
             }
-            /*else if (Main.rand.NextBool(20))
-            {
-                createLeaves = true;
-                int type = ModContent.NPCType<CarnelianFruit>();
-                if (Main.raining)
-                    type = NPCID.EnchantedNightcrawler;
-                CalRemixHelper.SpawnNewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, type);
-            }*/
             else if (Main.rand.NextBool(15))
             {
-                createLeaves = true;
                 int type = ModContent.ItemType<FireApple>();
                 Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), new Vector2(x, y) * 16, type, randAmt);
-            }
+        }
+            createLeaves = true;
+            Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), new Vector2(x, y) * 16, ModContent.ItemType<WaterSeeds>(), Main.rand.Next(12, 34));
             return false;
         }
     }
