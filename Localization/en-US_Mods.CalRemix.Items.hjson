@@ -2713,6 +2713,26 @@ Weapons: {
 				'It's rogue because it deviates from other rogue weapons!'
 				'''
 		}
+
+		GildedGauntlet: {
+			DisplayName: Gilded Gauntlet
+			Tooltip:
+				'''
+				Fires rocket powered fists which explode on contact
+				Doubles movement speed and maximum jump height while held
+				Stealth strikes home
+				'''
+		}
+
+		RubiconGauntlet: {
+			DisplayName: Rubicon Gauntlet
+			Tooltip:
+				'''
+				Fires rocket powered fists which explode on contact
+				Triples movement speed and maximum jump height and increases flight time by 20% while held
+				Stealth strikes home
+				'''
+		}
 	}
 }
 
@@ -5643,4 +5663,19 @@ HataqausLashes: {
 SealedLashes: {
 	DisplayName: Sealed Lashes
 	Tooltip: Unleashes 3 rotted tentacles
+}
+
+ElementalChestplate: {
+	DisplayName: Elemental Chestplate
+	Tooltip: "25% increased damage"
+}
+
+ElementalHelmet: {
+	DisplayName: Elemental Helmet
+	Tooltip: "25% increased critical strike chance"
+}
+
+ElementalLeggings: {
+	DisplayName: Elemental Leggings
+	Tooltip: "14% increased movement speed"
 }

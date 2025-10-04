@@ -985,6 +985,17 @@ namespace CalRemix
                 {
                     Player.moveSpeed *= 3;
                 }
+                else if (Player.HeldItem.type == ItemType<RubiconGauntlet>())
+                {
+                    Player.moveSpeed *= 3;
+                    Player.jumpHeight *= 3;
+                    Player.wingTimeMax = (int)(Player.wingTimeMax * 1.2f);
+                }
+                else if (Player.HeldItem.type == ItemType<GildedGauntlet>())
+                {
+                    Player.moveSpeed *= 2;
+                    Player.jumpHeight *= 2;
+                }
             }
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (cart)

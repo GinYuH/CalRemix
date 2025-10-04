@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.Potions;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
@@ -104,6 +105,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             npcLoot.AddIf(() => NPC.buffTime[0] == 0, ItemType<Butter>());
             npcLoot.AddIf(() => NPC.buffTime[0] > 0, ItemType<BurntButter>());
+            npcLoot.Add(ItemType<GildedGauntlet>(), 10);
         }
     }
 }
