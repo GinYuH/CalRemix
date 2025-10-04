@@ -1686,6 +1686,19 @@ namespace CalRemix
                         }
                     }
                 }
+                if (p.Remix().sealedArmor)
+                {
+                    if (p.Remix().sealedCooldown <= 0)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int proj = Projectile.NewProjectile(p.GetSource_FromThis(), npc.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * 14, ProjectileType<SealedLashesProj>(), (int)(hit.Damage * 0.5f), 0, p.whoAmI);
+                            Main.projectile[proj].DamageType = DamageClass.Generic;
+                            Main.projectile[proj].ownerHitCheck = false;
+                        }
+                        p.Remix().sealedCooldown = 20;
+                    }
+                }
                 if (npc.type == NPCID.Wizard && npc.life <= 0 && CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
                 {
                     CalRemixWorld.wizardDisabled = true;

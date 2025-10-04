@@ -30,6 +30,11 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.WhipSettings.RangeMultiplier = 0.6f;
         }
 
+        public override bool ShouldUpdatePosition()
+        {
+            return Projectile.DamageType != DamageClass.Generic;
+        }
+
         private float Timer
         {
             get => Projectile.ai[0];
@@ -40,11 +45,13 @@ namespace CalRemix.Content.Projectiles.Weapons
         // If you remove this, also remove Item.channel = true from the item's SetDefaults.
         public override bool PreAI()
         {
+            bool armor = Projectile.DamageType == DamageClass.Generic;
             Player player = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation() + (float)Math.PI / 2f;
             Projectile.ai[0] += 1f;
             Projectile.GetWhipSettings(Projectile, out var timeToFlyOut, out var _, out var _);
-            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + Projectile.velocity * (Projectile.ai[0] - 1f);
+            if (!armor)
+                Projectile.Center = Main.GetPlayerArmPosition(Projectile) + Projectile.velocity * (Projectile.ai[0] - 1f);
             Projectile.spriteDirection = ((!(Vector2.Dot(Projectile.velocity, Vector2.UnitX) < 0f)) ? 1 : (-1));
             timeToFlyOut = 60;
             if (Projectile.ai[0] >= timeToFlyOut)
@@ -68,6 +75,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public static void FillWhipControlPoints(Projectile proj, List<Vector2> controlPoints)
         {
+            bool armor = proj.DamageType == DamageClass.Generic;
             Projectile.GetWhipSettings(proj, out var timeToFlyOut, out var segments, out var rangeMultiplier);
             timeToFlyOut = 60;
             float num = proj.ai[0] / timeToFlyOut;
@@ -84,10 +92,10 @@ namespace CalRemix.Content.Projectiles.Weapons
             float num15 = proj.ai[0] - 1f;
             Player player = Main.player[proj.owner];
             Item heldItem = Main.player[proj.owner].HeldItem;
-            num15 = (float)(player.HeldItem.useTime * 2) * num * player.whipRangeMultiplier;
+            num15 = armor ? 30 : ((float)(player.HeldItem.useTime * 2) * num * player.whipRangeMultiplier);
             float num16 = proj.velocity.Length() * num15 * num13 * rangeMultiplier / (float)segments;
             float num17 = 1f;
-            Vector2 playerArmPosition = Main.GetPlayerArmPosition(proj);
+            Vector2 playerArmPosition = armor ? proj.Center : Main.GetPlayerArmPosition(proj);
             Vector2 vector = playerArmPosition;
             float num2 = -(float)Math.PI / 2f;
             Vector2 vector2 = vector;
@@ -122,7 +130,10 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
+            if (Projectile.DamageType != DamageClass.Generic)
+            {
+                Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
+            }
             Projectile.damage = (int)(Projectile.damage * 0.5f); // Multihit penalty. Decrease the damage the more enemies the whip hits.
         }
 

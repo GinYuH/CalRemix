@@ -254,6 +254,8 @@ namespace CalRemix
         public bool salvageSuit;
         public bool springlocked;
         public bool carnelian;
+        public bool sealedArmor;
+        public int sealedCooldown = 0;
 
         // Minions
         public bool soldier;
@@ -658,6 +660,9 @@ namespace CalRemix
 
             if (calamitizedHitCooldown > 0)
                 calamitizedHitCooldown--;
+
+            if (sealedCooldown > 0)
+                sealedCooldown--;
 
             if (jumpscareTimer > 0)
                 jumpscareTimer--;
@@ -1334,6 +1339,8 @@ namespace CalRemix
             salvageSuit = false;
             springlocked = false;
             carnelian = false;
+            sealedArmor = false;
+            sealedCooldown = 0;
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
@@ -1578,6 +1585,17 @@ namespace CalRemix
             if (salvageSuit && info.Damage >= 100)
             {
                 Player.AddBuff(BuffType<Springlocked>(), CalamityUtils.SecondsToFrames(60));
+            }
+            if (sealedArmor)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        int proj = Projectile.NewProjectile(Player.GetSource_FromThis(), Player.MountedCenter, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * 14, ProjectileType<SealedLashesProj>(), 120, 0, Player.whoAmI);
+                        Main.projectile[proj].DamageType = DamageClass.Generic;
+                    }
+                }
             }
         }
 

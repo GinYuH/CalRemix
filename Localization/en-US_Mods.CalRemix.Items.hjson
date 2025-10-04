@@ -5667,15 +5667,30 @@ SealedLashes: {
 
 ElementalChestplate: {
 	DisplayName: Elemental Chestplate
-	Tooltip: "25% increased damage"
+	Tooltip: 25% increased damage
 }
 
 ElementalHelmet: {
 	DisplayName: Elemental Helmet
-	Tooltip: "25% increased critical strike chance"
+	Tooltip: 25% increased critical strike chance
 }
 
 ElementalLeggings: {
 	DisplayName: Elemental Leggings
-	Tooltip: "14% increased movement speed"
+	Tooltip: 14% increased movement speed
+}
+
+SealedChestplate: {
+	DisplayName: Sealed Chestplate
+	Tooltip: 24% increased damage
+}
+
+SealedHelmet: {
+	DisplayName: Sealed Helmet
+	Tooltip: 10% increased critical strike chance
+}
+
+SealedLeggings: {
+	DisplayName: Sealed Leggings
+	Tooltip: 20% increased movement speed
 }
