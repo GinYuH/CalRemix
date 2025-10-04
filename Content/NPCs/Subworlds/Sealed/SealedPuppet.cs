@@ -87,7 +87,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 Tile above = Framing.GetTileSafely(tileCoords.X, tileCoords.Y - 1);
                 if (Main.rand.NextBool(200))
                 {
-                    int spawnType = Main.rand.NextBool() ? NPCID.WanderingEye : NPCID.DesertScorpionWalk;
+                    int spawnType = Main.rand.NextBool() ? NPCID.GiantFlyingFox : NPCID.DesertScorpionWalk;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, spawnType);
@@ -260,7 +260,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
     }
     public class TemporalAbomination : SealedPuppet
     {
-        public static SoundStyle musiq = new SoundStyle("CalRemix/Assets/Music/Misc/Menu2") { MaxInstances = 22, PitchVariance = 1f };
+        public static SoundStyle musiq = new SoundStyle("CalRemix/Assets/Music/Misc/Menu2") { MaxInstances = 22, PitchVariance = 1f, PauseBehavior = PauseBehavior.StopWhenGamePaused };
         public override void SetDefaults()
         {
             base.SetDefaults();
