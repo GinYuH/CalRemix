@@ -5698,8 +5698,8 @@ SealedLeggings: {
 Gastrosequence: {
 	DisplayName: Gastrosequence
 	Tooltip:
-	'''
-		Summons the Ascended Monorian Gastropod
-		Must be used in the Void Forest
-	'''
+		'''
+			Summons the Ascended Monorian Gastropod
+			Must be used in the Void Forest
+		'''
 }
