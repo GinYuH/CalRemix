@@ -5694,3 +5694,12 @@ SealedLeggings: {
 	DisplayName: Sealed Leggings
 	Tooltip: 20% increased movement speed
 }
+
+Gastrosequence: {
+	DisplayName: Gastrosequence
+	Tooltip:
+	'''
+		Summons the Ascended Monorian Gastropod
+		Must be used in the Void Forest
+	'''
+}
