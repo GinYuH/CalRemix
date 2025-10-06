@@ -862,8 +862,166 @@ namespace CalRemix
                     SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<ChlorinePaladin>());
                 }
             }
+            /*if (npc.type == NPCID.Deerclops)
+            {
+                npc.noGravity = true;
+                npc.noTileCollide = true;
+                npc.TargetClosest();
+                Player p = Main.player[npc.target];
+                switch (npc.ai[0])
+                {
+                    case 0:
+                        {
+                            Vector2 dest = p.Center + Vector2.UnitX * 300 * (npc.Center.X - p.Center.X).DirectionalSign();
+                            if (npc.Distance(dest) < 60)
+                            {
+                                npc.velocity *= 0.9f;
+                                if (npc.velocity.Length() < 1)
+                                {
+                                    npc.ai[1] = 0;
+                                    npc.ai[0] = Main.rand.NextBool() ? 1 : 0;
+                                    if (npc.ai[0] == 0)
+                                    {
+                                        npc.ai[2]++;
+                                    }
+                                    else
+                                    {
+                                        npc.ai[2] = 0;
+                                    }
+                                    if (npc.ai[2] > 3)
+                                    {
+                                        npc.ai[0] = 1;
+                                        npc.ai[2] = 0;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                FlyTo(npc, dest, 8);
+                            }
+                            npc.ai[1]++;
+                        }
+                        break;
+                    case 1:
+                        {
+                            if (npc.ai[1] == 20)
+                            {
+                                SoundEngine.PlaySound(SoundID.DeerclopsScream);
+                                npc.velocity = npc.DirectionTo(p.Center) * 20;
+                            }
+                            if (npc.ai[1] > 30)
+                            {
+                                npc.velocity *= 0.94f;
+                                if (npc.velocity.Length() < 1)
+                                {
+                                    npc.ai[1] = 0;
+                                    npc.ai[0] = Main.rand.NextBool() ? 2 : 1;
+                                    if (npc.ai[0] == 1)
+                                    {
+                                        npc.ai[2]++;
+                                    }
+                                    else
+                                    {
+                                        npc.ai[2] = 0;
+                                    }
+                                    if (npc.ai[2] > 3)
+                                    {
+                                        npc.ai[0] = 2;
+                                        npc.ai[2] = 0;
+                                    }
+                                }
+                            }
+                            npc.ai[1]++;
+                        }
+                        break;
+                    case 2:
+                        {
+                            int cycleLength = 70;
+                            float mod = npc.ai[1] % cycleLength;
+                            int tellTime = 40;
+                            if (npc.ai[2] == 0)
+                            {
+                                if (mod < tellTime)
+                                {
+                                    FlyTo(npc, p.Center - Vector2.UnitY * 400, 14);
+                                    npc.ai[1]++;
+                                }
+                                else if (mod == tellTime)
+                                {
+                                    SoundEngine.PlaySound(SoundID.DeerclopsScream);
+                                    npc.velocity = npc.DirectionTo(p.Center) * 20;
+                                    npc.ai[1]++;
+                                }
+                                else
+                                {
+                                    foreach (NPC n in Main.ActiveNPCs)
+                                    {
+                                        if (n.type == ModContent.NPCType<PrimalAspid>())
+                                        {
+                                            if (n.Hitbox.Intersects(npc.Hitbox))
+                                            {
+                                                n.StrikeInstantKill();
+                                            }
+                                        }
+                                    }
+                                    if ((npc.Center.Y > p.Center.Y && Collision.SolidCollision(npc.position, npc.width, npc.height)) || npc.Center.Y > p.Center.Y + 200)
+                                    {
+                                        SoundEngine.PlaySound(SoundID.DeerclopsStep);
+                                        npc.velocity.Y *= -1;
+                                        npc.ai[2] = 1;
+                                    }
+                                }
+                            }
+                            else if (npc.ai[2] == 1)
+                            {
+                                npc.velocity *= 0.95f;
+                                npc.ai[1]++;
+                                if (mod >= cycleLength - 1)
+                                {
+                                    npc.ai[2] = 0;
+                                }
+                            }
+                            //Main.NewText(npc.ai[1] + " " + npc.ai[2] + " " + mod);
+                            if (npc.ai[1] > cycleLength * 3)
+                            {
+                                npc.ai[1] = 0;
+                                npc.ai[2] = 0;
+                                npc.ai[0] = 3;
+                            }
+                        }
+                        break;
+                    case 3:
+                        {
+                            npc.velocity *= 0.8f;
+                            npc.ai[1]++;
+                            if (npc.ai[1] == 20)
+                            {
+                                SoundEngine.PlaySound(SoundID.DeerclopsScream);
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X + Main.rand.Next(-120, 120), (int)npc.Center.Y + Main.rand.Next(-120, 120), ModContent.NPCType<PrimalAspid>());
+                                }
+                            }
+                            if (npc.ai[1] > 50)
+                            {
+                                npc.ai[1] = 0;
+                                npc.ai[0] = 0;
+                            }
+                        }
+                        break;
+                }
+                npc.rotation = npc.velocity.ToRotation();
+                npc.spriteDirection = npc.direction = npc.velocity.X.DirectionalSign();
+                return false;
+            }*/
             return true;
         }
+
+        public static void FlyTo(NPC n, Vector2 pos, float speed)
+        {
+            n.SimpleFlyMovement(pos - n.Center, speed);
+        }
+
         public override void AI(NPC npc)
         {
             CalRemixPlayer modPlayer = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
