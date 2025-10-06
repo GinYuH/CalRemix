@@ -151,7 +151,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y - 1000, ModContent.NPCType<Stelladon>());
+                                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y - 1000, ModContent.NPCType<Juggular>());
                             }
                         }
 

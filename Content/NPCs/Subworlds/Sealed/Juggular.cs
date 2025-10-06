@@ -51,9 +51,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
         }
 
+        public int TelegraphTimer = 0;
+
+        public int TelegraphMaxTime = 0;
+
+        public const int TelegraphTime = 30;
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 4;
+            NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
 
         public override void SetDefaults()
@@ -94,8 +101,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     {
                         if (ExtraOne == 0)
                         {
+                            TelegraphMaxTime = 40;
+                            if (TelegraphTimer <= 0)
+                            {
+                                TelegraphTimer = TelegraphMaxTime;
+                                SoundEngine.PlaySound(BetterSoundID.ItemLaserMachinegun with { Pitch = 1 }, Target.Center);
+                            }
                             if (Timer == 40)
                             {
+                                TelegraphTimer = 0;
+                                TelegraphMaxTime = 0;
                                 ExtraOne = 1;
                                 NPC.alpha = 0;
                             }
@@ -103,8 +118,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (ExtraOne == 1)
                         {
-                            if (NPC.velocity.Y < 22f)
-                                NPC.velocity.Y += 0.1f;
+                            if (NPC.velocity.Y < 52f)
+                                NPC.velocity.Y += 0.5f;
                             if (NPC.Bottom.Y >= Target.Bottom.Y && (Collision.SolidCollision(NPC.position, NPC.width, NPC.height) || NPC.Top.Y >= Target.Bottom.Y + 400))
                             {
                                 Timer = 0;
@@ -128,7 +143,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         int jumpSquash = 20;
                         int jumpActual = jumpSquash + 20;
                         int invisTime = jumpActual + 20;
-                        int telegraphTime = invisTime + 10;
+                        int telegraphTime = invisTime + 60;
                         int waitTime = 90;
                         if (ExtraOne == 0)
                         {
@@ -147,12 +162,20 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             }
                             else if (Timer < invisTime)
                             {
-                                NPC.Center = new Vector2(Target.Center.X, Target.Center.Y - 2000);
+                                NPC.Center = new Vector2(Target.Center.X, Target.Center.Y - 1000);
                                 Squish = Vector2.One;
                             }
                             else if (Timer < telegraphTime)
                             {
                                 NPC.velocity = Vector2.Zero;
+                                if (Timer == invisTime)
+                                {
+                                    SoundEngine.PlaySound(BetterSoundID.ItemLaserMachinegun with { Pitch = 1 }, Target.Center);
+                                    TelegraphMaxTime = telegraphTime - invisTime;
+                                    if (TelegraphTimer <= 0)
+                                        TelegraphTimer = TelegraphMaxTime;
+                                }
+                                NPC.Center = new Vector2(NPC.Center.X, Target.Center.Y - 1000);
                             }
                             else
                             {
@@ -203,7 +226,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (Timer > teleportWait && Timer < endStars)
                         {
-                            if (Timer % starRate == 0)
+                            float localTimer = Timer % starRate;
+                            if (localTimer == 0)
                             {
                                 int projAmt = 22;
                                 for (int i = 0; i < projAmt; i++)
@@ -219,6 +243,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                     }
                                 }
                             }
+                            if (localTimer < starRate * 0.5f)
+                            {
+                                Squish = Vector2.Lerp(Squish, squash, 0.1f);
+                            }
+                            else
+                            {
+                                Squish = Vector2.Lerp(Squish, stretch, 0.1f);
+                            }
+                        }
+                        else if (Timer < endAttack)
+                        {
+                            Squish = Vector2.Lerp(Squish, Vector2.One, 0.1f);
                         }
                         else if (Timer >= endAttack)
                         {
@@ -228,6 +264,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
             }
             Timer++;
+            TelegraphTimer--;
         }
 
         public void Teleport(Vector2 to)
@@ -264,9 +301,40 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), NPC.frame, drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / Main.npcFrameCount[Type] / 2), NPC.scale * Squish, 0, 0f);
+            Texture2D line = ModContent.Request<Texture2D>("CalamityMod/Particles/DrainLineBloom").Value;
+
+            spriteBatch.EnterShaderRegion(BlendState.Additive);
+            if (TelegraphTimer > 0)
+            {
+                float lineHeight = 3000;
+                float lineDist = 60 + MathF.Cos(Main.GlobalTimeWrappedHourly * 10) * 5;
+                float opacity = 1;
+                int teleFadeIn = (int)(TelegraphMaxTime * 0.7f);
+                int teleFadeOut = (int)(TelegraphMaxTime * 0.2f);
+                if (TelegraphTimer >= teleFadeIn)
+                {
+                    opacity = Utils.GetLerpValue(TelegraphMaxTime, teleFadeIn, TelegraphTimer, true);
+                }
+                else if (TelegraphTimer <= teleFadeOut)
+                {
+                    opacity = Utils.GetLerpValue(0, teleFadeOut, TelegraphTimer, true);
+                }
+                opacity += MathF.Sin(Main.GlobalTimeWrappedHourly * 22) * 0.2f;
+                for (int i = -1; i < 2; i += 2)
+                {
+                    spriteBatch.Draw(line, NPC.Center + Vector2.UnitX * lineDist * i - screenPos, null, Color.Orange * opacity, 0, new Vector2(line.Width / 2, 0), new Vector2(1, lineHeight / (float)line.Height), 0, 0);
+                }
+                Texture2D pixel = TextureAssets.MagicPixel.Value;
+                Rectangle pixelRect = new Rectangle(0, 0, (int)lineDist * 2, (int)lineHeight);
+                spriteBatch.Draw(pixel, NPC.Center - screenPos, pixelRect, Color.Orange * opacity * 0.3f, 0, new Vector2(pixelRect.Width / 2, 0), 1, 0, 0);
+            }
+            spriteBatch.ExitShaderRegion();
+
+            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(texture.Width / 2, texture.Height / Main.npcFrameCount[Type] / 2), NPC.scale * Squish, 0, 0f);
+
             return false;
         }
+
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
