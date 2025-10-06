@@ -14,6 +14,7 @@ using CalRemix.Core.World;
 using CalamityMod.Projectiles.Typeless;
 using Terraria.DataStructures;
 using CalRemix.Content.Items.Tools;
+using static CalRemix.Content.NPCs.Eclipse.CrimsonKaiju;
 
 namespace CalRemix.Content.NPCs.PandemicPanic
 {
@@ -380,55 +381,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             if (npc.type != ModContent.NPCType<DendtritiatorArm>() && PandemicPanic.DefenderNPCs.Contains(npc.type))
             {
                 npc.chaseable = !PandemicPanic.DefendersWinning;
-                foreach (NPC n in PandemicPanic.ActiveNPCs)
-                {
-                    if (n == null)
-                        continue;
-                    if (!n.active)
-                        continue;
-                    if (n.life <= 0)
-                        continue;
-                    if (!PandemicPanic.InvaderNPCs.Contains(n.type))
-                        continue;
-                    if (!n.getRect().Intersects(npc.getRect()))
-                        continue;
-                    int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.33f) : n.damage;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(n.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), dam, 0, Main.myPlayer, npc.whoAmI);
-                    hitCooldown = 20;
-                    if (npc.life <= 0 && n.type == ModContent.NPCType<Malignant>()/* && NPC.CountNPCS(ModContent.NPCType<Malignant>()) < 22*/)
-                    {
-                        CalRemixHelper.SpawnNewNPC(npc.GetSource_Death(), npc.Center, ModContent.NPCType<Malignant>(), npcTasks: (NPC np) =>
-                        {
-                            np.npcSlots = 0;
-                            np.lifeMax = np.life = (int)MathHelper.Max(1, n.lifeMax / 2);
-                            np.damage = (int)MathHelper.Max(1, n.damage * 0.75f);
-                            np.scale = MathHelper.Max(0.2f, n.scale * 0.8f);
-                        });
-                    }
-                    break;
-                }
-                if (hitCooldown > 0)
-                {
-                    return true;
-                }
-                foreach (Projectile n in PandemicPanic.ActiveProjectiles)
-                {
-                    if (n == null)
-                        continue;
-                    if (!n.active)
-                        continue;
-                    if (!PandemicPanic.InvaderProjectiles.Contains(n.type))
-                        continue;
-                    if (!n.getRect().Intersects(npc.getRect()))
-                        continue;
-                    int dam = npc.type == ModContent.NPCType<Platelet>() ? (int)(n.damage * 0.1f) : n.damage;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(n.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), dam * (Main.expertMode ? 2 : 4), 0, Main.myPlayer, npc.whoAmI);
-                    n.penetrate--;
-                    hitCooldown = 20;
-                    break;
-                }
             }
             if (PandemicPanic.InvaderNPCs.Contains(npc.type))
             {
@@ -468,47 +420,130 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     hitCooldown = armhit && npc.type != ModContent.NPCType<Pathogen>() ? 1 : 20;
                     break;
                 }
-                if (hitCooldown > 0)
-                {
-                    return true;
-                }
-                foreach (Projectile n in PandemicPanic.ActiveProjectiles)
-                {
-                    if (n == null)
-                        continue;
-                    if (!n.active)
-                        continue;
-                    if (!PandemicPanic.DefenderProjectiles.Contains(n.type))
-                        continue;
-                    if (!n.getRect().Intersects(npc.getRect()))
-                        continue;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(n.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), n.damage * (Main.expertMode ? 2 : 4), 0, Main.myPlayer, npc.whoAmI);
-                    n.penetrate--;
-                    hitCooldown = 20;
-                    if (npc.life <= 0 && !npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
-                    {
-                        int killCount = PandemicPanic.InvadersKilled + 1;
-                        if (npc.type == ModContent.NPCType<MaserPhage>())
-                        {
-                            killCount += 4;
-                        }
-                        if (Main.netMode != NetmodeID.Server)
-                        {
-                            PandemicPanic.InvadersKilled = killCount;
-                        }
-                        else
-                        {
-                            ModPacket packet = Mod.GetPacket();
-                            packet.Write((byte)RemixMessageType.KillInvader);
-                            packet.Write(killCount);
-                            packet.Send();
-                        }
-                    }
-                    break;
-                }
             }
             return true;
+        }
+
+        public override void OnKill(NPC npc)
+        {
+            if (PandemicPanic.InvaderNPCs.Contains(npc.type))
+            {
+                if (!npc.boss && npc.type != ModContent.NPCType<BasiliusBody>())
+                {
+                    int killCount = PandemicPanic.InvadersKilled + 1;
+                    if (npc.type == ModContent.NPCType<MaserPhage>())
+                    {
+                        killCount += 4;
+                    }
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        PandemicPanic.InvadersKilled = killCount;
+                    }
+                    else
+                    {
+                        ModPacket packet = Mod.GetPacket();
+                        packet.Write((byte)RemixMessageType.KillInvader);
+                        packet.Write(killCount);
+                        packet.Send();
+                    }
+                }
+            }
+            if (PandemicPanic.DefenderNPCs.Contains(npc.type))
+            {
+                if (!npc.boss && npc.type != ModContent.NPCType<DendtritiatorArm>())
+                {
+                    int killCount = PandemicPanic.DefendersKilled + 1;
+                    if (npc.type == ModContent.NPCType<Dendritiator>())
+                    {
+                        killCount += 4;
+                    }
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        PandemicPanic.DefendersKilled = killCount;
+                    }
+                    else
+                    {
+                        ModPacket packet = Mod.GetPacket();
+                        packet.Write((byte)RemixMessageType.KillDefender);
+                        packet.Write(killCount);
+                        packet.Send();
+                    }
+                }
+            }
+        }
+
+        public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (PandemicPanic.DefenderNPCs.Contains(target.type))
+            {
+                if (target.life <= 0 && npc.type == ModContent.NPCType<Malignant>()/* && NPC.CountNPCS(ModContent.NPCType<Malignant>()) < 22*/)
+                {
+                    CalRemixHelper.SpawnNewNPC(target.GetSource_Death(), target.Center, ModContent.NPCType<Malignant>(), npcTasks: (NPC np) =>
+                    {
+                        np.npcSlots = 0;
+                        np.lifeMax = np.life = (int)MathHelper.Max(1, npc.lifeMax / 2);
+                        np.damage = (int)MathHelper.Max(1, npc.damage * 0.75f);
+                        np.scale = MathHelper.Max(0.2f, npc.scale * 0.8f);
+                    });
+                }
+            }
+        }
+
+        public override bool CanHitNPC(NPC npc, NPC target)
+        {
+            if (PandemicPanic.InvaderNPCs.Contains(npc.type))
+            {
+                if (PandemicPanic.DefenderNPCs.Contains(target.type))
+                    return true;
+                else
+                    return false;
+            }
+            if (PandemicPanic.DefenderNPCs.Contains(npc.type))
+            {
+                if (PandemicPanic.InvaderNPCs.Contains(target.type))
+                    return true;
+                else
+                    return false;
+            }
+            return true;
+        }
+
+        public override bool CanBeHitByNPC(NPC npc, NPC attacker)
+        {
+            if (PandemicPanic.InvaderNPCs.Contains(npc.type))
+            {
+                if (PandemicPanic.DefenderNPCs.Contains(attacker.type))
+                    return true;
+                else
+                    return false;
+            }
+            if (PandemicPanic.DefenderNPCs.Contains(npc.type))
+            {
+                if (PandemicPanic.InvaderNPCs.Contains(attacker.type))
+                    return true;
+                else
+                    return false;
+            }
+            return true;
+        }
+
+        public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile)
+        {
+            if (PandemicPanic.InvaderNPCs.Contains(npc.type))
+            {
+                if (PandemicPanic.DefenderProjectiles.Contains(projectile.type))
+                    return true;
+                else
+                    return null;
+            }
+            if (PandemicPanic.DefenderNPCs.Contains(npc.type))
+            {
+                if (PandemicPanic.InvaderProjectiles.Contains(projectile.type))
+                    return true;
+                else
+                    return null;
+            }
+            return null;
         }
 
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)

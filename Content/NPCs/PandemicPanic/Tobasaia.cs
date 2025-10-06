@@ -18,7 +18,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Tobasaia");
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
             Main.npcFrameCount[NPC.type] = 6;
         }
 

@@ -24,6 +24,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
             Main.npcFrameCount[NPC.type] = 5;
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
         }
 
         public override void SetDefaults()

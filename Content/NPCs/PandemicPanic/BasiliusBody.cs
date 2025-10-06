@@ -18,6 +18,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         {
             // DisplayName.SetDefault("Basilius");
             this.HideFromBestiary();
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
         }
 
         public override void SetDefaults()

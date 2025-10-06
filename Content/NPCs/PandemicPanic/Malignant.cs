@@ -16,7 +16,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Malignant");
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
             Main.npcFrameCount[NPC.type] = 4;
         }
 
