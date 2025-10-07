@@ -420,15 +420,18 @@ namespace CalRemix.UI
 
         public override void OnInitialize()
         {
-            //TODO: rn this and the translation matrix use duped values. centralize them
-            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle", AssetRequestMode.ImmediateLoad).Value;
-            QueenOfClubs = new QueenOfClubsCard();
-            QueenOfClubs.Width.Pixels = testSprite.Width;
-            QueenOfClubs.Height.Pixels = testSprite.Height;
-            QueenOfClubs.Top.Pixels = 100 - (testSprite.Height / 2);
-            QueenOfClubs.Left.Pixels = -175 - (testSprite.Width / 2);
-            QueenOfClubs.Left.Percent = 1;
-            Append(QueenOfClubs);
+            if (!Main.dedServ)
+            {
+                //TODO: rn this and the translation matrix use duped values. centralize them
+                Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle", AssetRequestMode.ImmediateLoad).Value;
+                QueenOfClubs = new QueenOfClubsCard();
+                QueenOfClubs.Width.Pixels = testSprite.Width;
+                QueenOfClubs.Height.Pixels = testSprite.Height;
+                QueenOfClubs.Top.Pixels = 100 - (testSprite.Height / 2);
+                QueenOfClubs.Left.Pixels = -175 - (testSprite.Width / 2);
+                QueenOfClubs.Left.Percent = 1;
+                Append(QueenOfClubs);
+            }
         }
     }
 
@@ -539,50 +542,53 @@ namespace CalRemix.UI
 
         public override void Load()
         {
-            #region Load Assets
-            Heart = Request<Texture2D>(FilePath + "Heart");
-            Heart2 = Request<Texture2D>(FilePath + "Heart2");
-            Heart_OG = TextureAssets.Heart;
-            Heart2_OG = TextureAssets.Heart2;
+            if (!Main.dedServ)
+            {
+                #region Load Assets
+                Heart = Request<Texture2D>(FilePath + "Heart");
+                Heart2 = Request<Texture2D>(FilePath + "Heart2");
+                Heart_OG = TextureAssets.Heart;
+                Heart2_OG = TextureAssets.Heart2;
 
-            //TODO: automate this
-            string fancyClassic = "FancyClassic/";
-            Heart_Left = Request<Texture2D>(FilePath + fancyClassic + "Heart_Left");
-            Heart_Middle = Request<Texture2D>(FilePath + fancyClassic + "Heart_Middle");
-            Heart_Right = Request<Texture2D>(FilePath + fancyClassic + "Heart_Right");
-            Heart_Right_Fancy = Request<Texture2D>(FilePath + fancyClassic + "Heart_Right_Fancy");
-            Heart_Fill = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill");
-            Heart_Fill_B = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill");
-            Heart_Single_Fancy = Request<Texture2D>(FilePath + fancyClassic + "Heart_Single_Fancy");
-            FancyClassic_Heart_Left = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartLeft", BindingFlags.NonPublic | BindingFlags.Instance);
-            FancyClassic_Heart_Middle = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartMiddle", BindingFlags.NonPublic | BindingFlags.Instance);
-            FancyClassic_Heart_Right = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartRight", BindingFlags.NonPublic | BindingFlags.Instance);
-            FancyClassic_Heart_Right_Fancy = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartRightFancy", BindingFlags.NonPublic | BindingFlags.Instance);
-            FancyClassic_Heart_Fill = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartFill", BindingFlags.NonPublic | BindingFlags.Instance);
-            FancyClassic_Heart_Fill_B = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartFillHoney", BindingFlags.NonPublic | BindingFlags.Instance);
-            FancyClassic_Heart_Single_Fancy = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartSingleFancy", BindingFlags.NonPublic | BindingFlags.Instance);
-            Heart_Left_OG = (Asset<Texture2D>)FancyClassic_Heart_Left.GetValue(_sets["New"]);
-            Heart_Middle_OG = (Asset<Texture2D>)FancyClassic_Heart_Middle.GetValue(_sets["New"]);
-            Heart_Right_OG = (Asset<Texture2D>)FancyClassic_Heart_Right.GetValue(_sets["New"]);
-            Heart_Right_Fancy_OG = (Asset<Texture2D>)FancyClassic_Heart_Right_Fancy.GetValue(_sets["New"]);
-            Heart_Fill_OG = (Asset<Texture2D>)FancyClassic_Heart_Fill.GetValue(_sets["New"]);
-            Heart_Fill_B_OG = (Asset<Texture2D>)FancyClassic_Heart_Fill_B.GetValue(_sets["New"]);
-            Heart_Single_Fancy_OG = (Asset<Texture2D>)FancyClassic_Heart_Single_Fancy.GetValue(_sets["New"]);
+                //TODO: automate this
+                string fancyClassic = "FancyClassic/";
+                Heart_Left = Request<Texture2D>(FilePath + fancyClassic + "Heart_Left");
+                Heart_Middle = Request<Texture2D>(FilePath + fancyClassic + "Heart_Middle");
+                Heart_Right = Request<Texture2D>(FilePath + fancyClassic + "Heart_Right");
+                Heart_Right_Fancy = Request<Texture2D>(FilePath + fancyClassic + "Heart_Right_Fancy");
+                Heart_Fill = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill");
+                Heart_Fill_B = Request<Texture2D>(FilePath + fancyClassic + "Heart_Fill");
+                Heart_Single_Fancy = Request<Texture2D>(FilePath + fancyClassic + "Heart_Single_Fancy");
+                FancyClassic_Heart_Left = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartLeft", BindingFlags.NonPublic | BindingFlags.Instance);
+                FancyClassic_Heart_Middle = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartMiddle", BindingFlags.NonPublic | BindingFlags.Instance);
+                FancyClassic_Heart_Right = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartRight", BindingFlags.NonPublic | BindingFlags.Instance);
+                FancyClassic_Heart_Right_Fancy = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartRightFancy", BindingFlags.NonPublic | BindingFlags.Instance);
+                FancyClassic_Heart_Fill = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartFill", BindingFlags.NonPublic | BindingFlags.Instance);
+                FancyClassic_Heart_Fill_B = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartFillHoney", BindingFlags.NonPublic | BindingFlags.Instance);
+                FancyClassic_Heart_Single_Fancy = typeof(FancyClassicPlayerResourcesDisplaySet).GetField("_heartSingleFancy", BindingFlags.NonPublic | BindingFlags.Instance);
+                Heart_Left_OG = (Asset<Texture2D>)FancyClassic_Heart_Left.GetValue(_sets["New"]);
+                Heart_Middle_OG = (Asset<Texture2D>)FancyClassic_Heart_Middle.GetValue(_sets["New"]);
+                Heart_Right_OG = (Asset<Texture2D>)FancyClassic_Heart_Right.GetValue(_sets["New"]);
+                Heart_Right_Fancy_OG = (Asset<Texture2D>)FancyClassic_Heart_Right_Fancy.GetValue(_sets["New"]);
+                Heart_Fill_OG = (Asset<Texture2D>)FancyClassic_Heart_Fill.GetValue(_sets["New"]);
+                Heart_Fill_B_OG = (Asset<Texture2D>)FancyClassic_Heart_Fill_B.GetValue(_sets["New"]);
+                Heart_Single_Fancy_OG = (Asset<Texture2D>)FancyClassic_Heart_Single_Fancy.GetValue(_sets["New"]);
 
-            string horizontalBars = "HorizontalBars/";
-            HP_Fill = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill");
-            HP_Fill_Honey = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill");
-            HP_Panel_Middle = Request<Texture2D>(FilePath + horizontalBars + "HP_Panel_Middle");
-            HP_Panel_Right = Request<Texture2D>(FilePath + horizontalBars + "HP_Panel_Right");
-            HorizontalBars_HP_Fill = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_hpFill", BindingFlags.NonPublic | BindingFlags.Instance);
-            HorizontalBars_HP_Fill_Honey = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_hpFillHoney", BindingFlags.NonPublic | BindingFlags.Instance);
-            HorizontalBars_HP_Panel_Middle = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelMiddleHP", BindingFlags.NonPublic | BindingFlags.Instance);
-            HorizontalBars_HP_Panel_Right = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelRightHP", BindingFlags.NonPublic | BindingFlags.Instance);
-            HP_Fill_OG = (Asset<Texture2D>)HorizontalBars_HP_Fill.GetValue(_sets["HorizontalBarsWithFullText"]);
-            HP_Fill_Honey_OG = (Asset<Texture2D>)HorizontalBars_HP_Fill_Honey.GetValue(_sets["HorizontalBarsWithFullText"]);
-            HP_Panel_Middle_OG = (Asset<Texture2D>)HorizontalBars_HP_Panel_Middle.GetValue(_sets["HorizontalBarsWithFullText"]);
-            HP_Panel_Right_OG = (Asset<Texture2D>)HorizontalBars_HP_Panel_Right.GetValue(_sets["HorizontalBarsWithFullText"]);
-            #endregion
+                string horizontalBars = "HorizontalBars/";
+                HP_Fill = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill");
+                HP_Fill_Honey = Request<Texture2D>(FilePath + horizontalBars + "HP_Fill");
+                HP_Panel_Middle = Request<Texture2D>(FilePath + horizontalBars + "HP_Panel_Middle");
+                HP_Panel_Right = Request<Texture2D>(FilePath + horizontalBars + "HP_Panel_Right");
+                HorizontalBars_HP_Fill = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_hpFill", BindingFlags.NonPublic | BindingFlags.Instance);
+                HorizontalBars_HP_Fill_Honey = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_hpFillHoney", BindingFlags.NonPublic | BindingFlags.Instance);
+                HorizontalBars_HP_Panel_Middle = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelMiddleHP", BindingFlags.NonPublic | BindingFlags.Instance);
+                HorizontalBars_HP_Panel_Right = typeof(HorizontalBarsPlayerResourcesDisplaySet).GetField("_panelRightHP", BindingFlags.NonPublic | BindingFlags.Instance);
+                HP_Fill_OG = (Asset<Texture2D>)HorizontalBars_HP_Fill.GetValue(_sets["HorizontalBarsWithFullText"]);
+                HP_Fill_Honey_OG = (Asset<Texture2D>)HorizontalBars_HP_Fill_Honey.GetValue(_sets["HorizontalBarsWithFullText"]);
+                HP_Panel_Middle_OG = (Asset<Texture2D>)HorizontalBars_HP_Panel_Middle.GetValue(_sets["HorizontalBarsWithFullText"]);
+                HP_Panel_Right_OG = (Asset<Texture2D>)HorizontalBars_HP_Panel_Right.GetValue(_sets["HorizontalBarsWithFullText"]);
+                #endregion
+            }
 
             #region Hooks
             On_FancyClassicPlayerResourcesDisplaySet.DrawLifeBarText += RedrawText_FancyClassic;
