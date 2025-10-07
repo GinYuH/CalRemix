@@ -171,6 +171,7 @@ namespace CalRemix
                         PandemicPanic.IsActive = true;
                         PandemicPanic.DefendersKilled = 0;
                         PandemicPanic.InvadersKilled = 0;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
                 case RemixMessageType.EndPandemicPanic:
@@ -180,18 +181,21 @@ namespace CalRemix
                         PandemicPanic.InvadersKilled = 0;
                         PandemicPanic.LockedFinalSide = 0;
                         PandemicPanic.SummonedPathogen = false;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
                 case RemixMessageType.KillDefender:
                     {
-                        int killCount = reader.ReadByte();
+                        int killCount = reader.ReadInt32();
                         PandemicPanic.DefendersKilled = killCount;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
                 case RemixMessageType.KillInvader:
                     {
-                        int killCount = reader.ReadByte();
+                        int killCount = reader.ReadInt32();
                         PandemicPanic.InvadersKilled = killCount;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
             }
