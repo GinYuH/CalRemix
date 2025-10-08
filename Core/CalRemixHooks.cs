@@ -45,6 +45,7 @@ using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Light;
 using SubworldLibrary;
 using CalRemix.Content.Tiles;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CalRemix.Core
 {
@@ -115,7 +116,7 @@ namespace CalRemix.Core
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
             schematicEntityHook = new Hook(schematicEntityMethod, RemixSchematicEntities);
-            //drawHook = new Hook(drawMethod, DrawRotated);
+            drawHook = new Hook(drawMethod, DrawRotated);
             
         }
 
@@ -317,7 +318,10 @@ namespace CalRemix.Core
             float depth,
             byte effects)
         {
-            orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW * (1.22f + MathF.Cos(Main.GlobalTimeWrappedHourly * 2)), destinationH * (1.22f + MathF.Sin(Main.GlobalTimeWrappedHourly * 2)), color, originX, originY, rotationSin, rotationCos, depth, effects);
+            if (Main.LocalPlayer.name == "Dinnerbone" || Main.LocalPlayer.name == "Grumm")
+                orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, (byte)SpriteEffects.FlipVertically);
+            else
+                orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, effects);
         }
 
         public static void ResizeArraysWithRocks(orig_ResizeArrays orig, bool unloading)
