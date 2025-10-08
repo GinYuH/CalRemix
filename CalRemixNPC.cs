@@ -481,6 +481,7 @@ namespace CalRemix
                 }
             }
 
+            #region Slime accessories
             bool assortgel = player.assortegel;
             bool amalgam = player.amalgel;
             bool godfather = player.godfather;
@@ -638,6 +639,7 @@ namespace CalRemix
                     }
                 }
             }
+            #endregion
             if (taintedInvis)
                 return false;
             #region Quotes
