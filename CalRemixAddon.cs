@@ -39,6 +39,7 @@ using System.Reflection;
 using CalRemix.Content.NPCs.Eclipse;
 using Terraria.ModLoader.Core;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 
 namespace CalRemix
 {
@@ -210,6 +211,16 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
             });
+            Action<SpriteBatch, Rectangle, Color> gasPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/MonorianGastropodAscended_BC").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 1f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "AscendedGastropod", 17.8, () => RemixDowned.downedGastropod, NPCType<MonorianGastropodAscended>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<Gastrosequence>(),
+                ["customPortrait"] = gasPortrait
+            });
             Action<SpriteBatch, Rectangle, Color> lvPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/Livyatan_BC").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2) * 0.3f, rect.Center.Y - (texture.Height / 2) * 0.3f);
@@ -307,6 +318,7 @@ namespace CalRemix
             MakeCard(NPCType<Phytogen>(), (horz, anim) => Color.Lerp(Color.Lime, Color.Yellow, anim), "Phytogen", SoundID.Grass, SoundID.NPCDeath1);
             MakeCard(NPCType<Oxygen>(), (horz, anim) => Color.Lerp(Color.LightBlue, Color.SeaGreen, anim), "Oxygen", Oxygen.HitSound, SoundID.Shatter);
             MakeCard(NPCType<Pathogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pathogen", PerforatorHeadLarge.HitSound, PerforatorHeadSmall.HitSound);
+            MakeCard(NPCType<MonorianGastropodAscended>(), (horz, anim) => Color.Lerp(Color.Pink, Color.Goldenrod, anim), "MonorianGastropodAscended", SoundID.NPCHit1, SoundID.NPCDeath1);
             MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", BetterSoundID.ItemInfernoFork, BetterSoundID.ItemInfernoExplosion);
             MakeCard(() => NPC.FindFirstNPC(NPCType<Hydrogen>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] < 300, (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Hydrogen", SoundID.Item14, CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);
             MakeCard(NPCType<WulfwyrmHead>(), (horz, anim) => Color.Lerp(Color.LightGreen, Color.LightBlue, horz), "WulfrumExcavator", SoundID.NPCHit4, BetterSoundID.ItemThisStupidFuckingLaser);

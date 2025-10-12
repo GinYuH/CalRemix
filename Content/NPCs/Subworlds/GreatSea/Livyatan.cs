@@ -725,7 +725,6 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
         public override void OnKill()
         {
             RemixDowned.downedLivyatan = true;
-            RemixDowned.subDownedLivyatan = true;
             CalamityNetcode.SyncWorld();
         }
     }

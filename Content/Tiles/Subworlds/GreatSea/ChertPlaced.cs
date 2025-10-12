@@ -14,7 +14,7 @@ namespace CalRemix.Content.Tiles.Subworlds.GreatSea
             Main.tileBlockLight[Type] = true;
             AddMapEntry(new Color(22, 23, 22)); // not intentional 22's
             HitSound = SoundID.Tink;
-            DustType = TileID.GrayStucco;
+            DustType = DustID.Stone;
             Main.tileBlendAll[Type] = true;
         }
     }

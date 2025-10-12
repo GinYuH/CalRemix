@@ -19,9 +19,11 @@ using CalamityMod.Sounds;
 using CalamityMod.Particles;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
+using System.IO;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
+    [AutoloadBossHead]
     public class Juggular : ModNPC
     {
         public Player Target => Main.player[NPC.target];
@@ -87,6 +89,26 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.alpha = 255;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.WriteVector2(portalLocation);
+            writer.WriteVector2(portalLocation2);
+            writer.Write(TelegraphTimer);
+            writer.Write(TelegraphMaxTime);
+            writer.WriteVector2(Anchor);
+            writer.WriteVector2(Squish);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            portalLocation = reader.ReadVector2();
+            portalLocation2 = reader.ReadVector2();
+            TelegraphTimer = reader.ReadInt32();
+            TelegraphMaxTime = reader.ReadInt32();
+            Anchor = reader.ReadVector2();
+            Squish = reader.ReadVector2();
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -402,6 +424,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             ExtraOne = 0;
             ExtraTwo = 0;
             NPC.rotation = 0;
+            NPC.netUpdate = true;
         }
 
         public override void FindFrame(int frameHeight)

@@ -691,5 +691,15 @@ ParadiseCreeper.DisplayName: Paradise Creeper
 YellowEcho.DisplayName: Yellow Echo
 TemporalAbomination.DisplayName: Faux Surrogate of Eight Cold Panels
 MonorianGastropod.DisplayName: Monorian Gastropod
-MonorianGastropodAscended.DisplayName: Ascended Monorian Gastropod
+
+MonorianGastropodAscended: {
+	DisplayName: Ascended Monorian Gastropod
+
+	BossChecklistIntegration: {
+		EntryName: Ascended Monorian Gastropod
+		SpawnInfo: Use a [i:CalRemix/Gastrosequence] in the Void Forest in the Sealed subworld.
+		DespawnMessage: "[c/de9bc2:The slug goes back to The Warrior.]"
+	}
+}
+
 Juggular.DisplayName: Juggular

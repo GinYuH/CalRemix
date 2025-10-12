@@ -17,9 +17,15 @@ using CalamityMod.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Sounds;
 using CalamityMod.Particles;
+using CalRemix.UI;
+using System.Linq;
+using System.IO;
+using CalamityMod.NPCs.NormalNPCs;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
+    [AutoloadBossHead]
     public class MonorianGastropodAscended : ModNPC
     {
         public Player Target => Main.player[NPC.target];
@@ -44,13 +50,23 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             NPCID.Sets.ImmuneToAllBuffs[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
+            if (Main.dedServ)
+                return;
+            HelperMessage.New("Gastropod",
+                "The slug lives? And on top of that it seems invincible? Well that's inconvenient! Maybe try waiting things out and seeing if something happens?",
+                "FannyIdle",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == Type));
+            HelperMessage.New("Gastropod2",
+                "That slime right there! Try leading the gastropod into it and its projectiles, he seems sludgephobic!",
+                "FannyAwooga",
+                (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Juggular>() && n.ai[0] > 0));
         }
 
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
             NPC.width = NPC.height = 40;
-            NPC.lifeMax = 30000;
+            NPC.lifeMax = 60;
             NPC.damage = 200;
             NPC.defense = 26;
             NPC.knockBackResist = 0f;
@@ -64,6 +80,19 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
         }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.WriteVector2(Anchor);
+            writer.Write(SlimeTimer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Anchor = reader.ReadVector2();
+            SlimeTimer = reader.ReadInt32();
+        }
+
         public override void AI()
         {
             if (Tentacles.Count <= 0)
@@ -108,11 +137,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             Timer = 0;
                             State = 2;
+                            NPC.netUpdate = true;
                         }
                         else if (Timer == (SlimeTimer > 2 ? 120 : 60))
                         {
                             Timer = 0;
                             State = 1;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
@@ -151,6 +182,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             State = 0;
                             Timer = 0;
                             SlimeTimer++;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
@@ -170,6 +202,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             State = 0;
                             Timer = 0;
+                            NPC.netUpdate = true;
                         }
                     }
                     break;
@@ -242,6 +275,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             return attacker.type == ModContent.NPCType<Juggular>() && attacker.velocity != Vector2.Zero;
         }
 
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            modifiers.SetMaxDamage(1);
+            modifiers.DisableCrit();
+            GeneralParticleHandler.SpawnParticle(new DetailedExplosion(NPC.Center, Vector2.Zero, Color.Orange * 0.8f, Vector2.One, Main.rand.NextFloat(), 0.01f, 0.4f, 20));
+        }
+
         public override void OnKill()
         {
             int jug = NPC.FindFirstNPC(ModContent.NPCType<Juggular>());
@@ -249,6 +289,20 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             {
                 Main.npc[jug].StrikeInstantKill();
             }
+            RemixDowned.downedGastropod = true;
+            CalRemixWorld.UpdateWorldBool();
+        }
+
+        public override void UpdateLifeRegen(ref int damage)
+        {
+            NPC.lifeRegen = 0;
+            NPC.friendlyRegen = 0;
+            damage = 0;
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = 60;
         }
     }
 }
