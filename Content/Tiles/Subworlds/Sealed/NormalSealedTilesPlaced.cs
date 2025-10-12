@@ -153,6 +153,14 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             DustType = DustID.ShadowbeamStaff;
         }
 
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (CalamityUtils.ParanoidTileRetrieval(i + 1, j).TileType != TileID.Trees && CalamityUtils.ParanoidTileRetrieval(i - 1, j).TileType != TileID.Trees)
+            {
+                WorldGen.KillTile(i, j);
+            }
+        }
+
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
             yield return new Item(ModContent.ItemType<SealedFruit>(), Main.rand.Next(2, 6));
