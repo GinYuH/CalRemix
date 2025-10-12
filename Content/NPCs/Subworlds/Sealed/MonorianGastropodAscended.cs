@@ -304,5 +304,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             NPC.lifeMax = 60;
         }
+
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
+        }
     }
 }
