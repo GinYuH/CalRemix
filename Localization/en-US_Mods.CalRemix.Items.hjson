@@ -5245,7 +5245,7 @@ MonorianGemShards: {
 
 MonorianGem: {
 	DisplayName: Monorian Gem
-	Tooltip: Fires monorian gem stones at extremely fast speeds
+	Tooltip: Fires monorian gemstones at extremely fast speeds
 }
 
 NauseatingPowder: {
@@ -5702,4 +5702,9 @@ Gastrosequence: {
 			Summons the Ascended Monorian Gastropod
 			Must be used in the Void Forest
 		'''
+}
+
+AwokenGastropodEye: {
+	DisplayName: Awoken Gastropod Eye
+	Tooltip: "Fires gastropod eyes at extremely fast speeds which set enemies ablaze"
 }
