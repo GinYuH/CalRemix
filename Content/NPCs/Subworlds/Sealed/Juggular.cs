@@ -18,6 +18,7 @@ using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Sounds;
 using CalamityMod.Particles;
 using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -56,6 +57,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public int TelegraphMaxTime = 0;
 
         public const int TelegraphTime = 30;
+
+        public Vector2 portalLocation = new();
+        public Vector2 portalLocation2 = new();
 
         public override void SetStaticDefaults()
         {
@@ -126,6 +130,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 NPC.velocity.Y = 0;
                                 ExtraOne = 2;
                                 Squish = squash;
+                                SoundEngine.PlaySound(BetterSoundID.ItemInfernoExplosion, Target.Center);
+                                Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
                             }
                         }
                         else if (ExtraOne == 2)
@@ -140,6 +146,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case 1:
                     {
+                        NPC.alpha = 0;
                         int jumpSquash = 20;
                         int jumpActual = jumpSquash + 20;
                         int invisTime = jumpActual + 20;
@@ -196,7 +203,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                         for (int i = 0; i < projAmt; i++)
                                         {
                                             Vector2 spawnLoc = new Vector2(NPC.Center.X + MathHelper.Lerp(-2000, 2000, (i + 1) / (float)projAmt), NPC.Center.Y - 1000);
-                                            Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnLoc, spawnLoc.DirectionTo(Target.Center) * 20, ProjectileID.FallingStar, CalRemixHelper.ProjectileDamage(240, 340), 1);
+                                            Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnLoc, spawnLoc.DirectionTo(Target.Center) * 20, ModContent.ProjectileType<Juggustar>(), CalRemixHelper.ProjectileDamage(240, 340), 1);
                                         }
                                     }
                                 }
@@ -215,9 +222,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case 2:
                     {
-                        int teleportWait = 40;
+                        int teleportWait = 60;
                         int starRounds = 5;
-                        int starRate = 50;
+                        int starRate = 60;
                         int endStars = starRounds * starRate + teleportWait;
                         int endAttack = endStars + 60;
                         if (Timer == 1)
@@ -229,17 +236,19 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             float localTimer = Timer % starRate;
                             if (localTimer == 0)
                             {
-                                int projAmt = 22;
+                                int projAmt = 34;
                                 for (int i = 0; i < projAmt; i++)
                                 {
                                     if (i % 5 == Main.rand.Next(0, 4))
                                     {
                                         continue;
                                     }
+                                    SoundEngine.PlaySound(BetterSoundID.ItemStarWrath with { Pitch = 0.5f }, NPC.Center);
+                                    float offset = Main.rand.NextFloat(MathHelper.TwoPi);
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Vector2 spawnLoc = NPC.Center + Vector2.UnitX.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)projAmt)) * 1800;
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnLoc, spawnLoc.DirectionTo(NPC.Center) * 30, ProjectileID.FallingStar, CalRemixHelper.ProjectileDamage(200, 300), 1);
+                                        Vector2 spawnLoc = NPC.Center + Vector2.UnitX.RotatedBy(offset + MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)projAmt)) * 1200;
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnLoc, Vector2.Zero, ModContent.ProjectileType<Juggustar>(), CalRemixHelper.ProjectileDamage(200, 300), 1, ai0: 1);
                                     }
                                 }
                             }
@@ -258,7 +267,117 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (Timer >= endAttack)
                         {
-                            ChangePhase(2);
+                            ChangePhase(3);
+                        }
+                    }
+                    break;
+                case 3:
+                    {
+                        if (ExtraOne == 0)
+                        {
+                            if (Timer == 1)
+                            {
+                                NPC.velocity = Vector2.Zero;
+                            }
+                            else if (Timer == 20)
+                            {
+                                NPC.alpha = 255;
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<JuggularPortal>(), 0, 0, ai0: 1, ai1: 40);
+                            }
+                            else if (Timer == 50)
+                            {
+                                Timer = 0;
+                                ExtraOne = 1;
+                            }
+                        }
+                        else if (ExtraOne == 1)
+                        {
+                            int portalTelTime = 50;
+                            int dashTime = portalTelTime + 4;
+                            int stopTime = dashTime + 3;
+                            int nextTime = stopTime + 40;
+                            int tpAmount = 4;
+                            int totalLength = tpAmount * nextTime;
+                            float localTimer = Timer % nextTime;
+                            bool notFinalCycle = Timer < nextTime * (tpAmount - 1);
+                            if (localTimer == 1)
+                            {
+                                NPC.Center = Target.Center + Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.Next(300, 600);
+                                portalLocation = NPC.Center;
+                                portalLocation2 = Target.Center + NPC.DirectionTo(Target.Center) * NPC.Distance(Target.Center);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), portalLocation, Vector2.Zero, ModContent.ProjectileType<JuggularPortal>(), 0, 0, ai1: 80);
+                                SoundEngine.PlaySound(BetterSoundID.ItemNebulaArcanum with { Pitch = -0.4f}, Target.Center);
+                            }
+                            else if (localTimer == portalTelTime)
+                            {
+                                Squish = stretch;
+                                NPC.alpha = 0;
+                                NPC.velocity = NPC.DirectionTo(Target.Center) * 40;
+                                if (notFinalCycle)
+                                    SoundEngine.PlaySound(BetterSoundID.ItemRainbowGun with { Pitch = 0.5f }, Target.Center);
+                            }
+                            else if (localTimer < stopTime)
+                            {
+                                float completion = Utils.GetLerpValue(portalTelTime, stopTime, localTimer, true);
+                                Vector2 newPos = Vector2.Lerp(portalLocation, portalLocation2, completion);
+
+                                if (completion > 0.3f && ExtraTwo == 0)
+                                {
+                                    if (Main.netMode != NetmodeID.MultiplayerClient && notFinalCycle)
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), portalLocation2, Vector2.Zero, ModContent.ProjectileType<JuggularPortal>(), 0, 0, ai0: 1, ai1: 60);
+                                    ExtraTwo = 1;
+                                }
+
+                                NPC.velocity = newPos - NPC.Center;
+                                NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
+                            }
+                            else if (localTimer > stopTime && localTimer < nextTime - 1)
+                            {
+                                if (localTimer == stopTime + 1 && notFinalCycle)
+                                {
+                                    /*int projCount = 3;
+                                    float spread = MathHelper.PiOver4;
+                                    float halfSpread = spread * 0.5f;
+                                    for (int i = 0; i < projCount; i++)
+                                    {
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, portalLocation2.DirectionTo(portalLocation).RotatedBy(MathHelper.Lerp(-halfSpread, halfSpread, i / (float)(projCount - 1))) * 20, ModContent.ProjectileType<Juggustar>(), CalRemixHelper.ProjectileDamage(140, 250), 1);
+                                            Main.projectile[p].extraUpdates = 2;
+                                        }
+                                    }*/
+                                }
+                                portalLocation = Vector2.Zero;
+                                if (notFinalCycle)
+                                    NPC.alpha = 255;
+                                else
+                                {
+                                    NPC.rotation = 0;
+                                    Squish = Vector2.One;
+                                }
+                                NPC.velocity = Vector2.Zero;
+                            }
+                            else if (localTimer >= nextTime - 1)
+                            {
+                                portalLocation2 = Vector2.Zero;
+                                ExtraTwo = 0;
+                            }
+                            if (Timer > totalLength - 2)
+                            {
+                                ExtraOne = 2;
+                                NPC.alpha = 0;
+                                NPC.velocity = Vector2.Zero;
+                                Squish = Vector2.One;
+                                Timer = 0;
+                                NPC.rotation = 0;
+                            }
+                        } 
+                        else
+                        {
+                            if (Timer > 60)
+                                ChangePhase(3);
                         }
                     }
                     break;
@@ -269,8 +388,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public void Teleport(Vector2 to)
         {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<JuggularPortal>(), 0, 0, ai0: 1, ai1: 40);
             NPC.Center = to;
-            // Add some vfx
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<JuggularPortal>(), 0, 0, ai0: 0, ai1: 40);
         }
 
         public void ChangePhase(int phase)
@@ -279,6 +401,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Timer = 0;
             ExtraOne = 0;
             ExtraTwo = 0;
+            NPC.rotation = 0;
         }
 
         public override void FindFrame(int frameHeight)
@@ -304,6 +427,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Texture2D line = ModContent.Request<Texture2D>("CalamityMod/Particles/DrainLineBloom").Value;
 
             spriteBatch.EnterShaderRegion(BlendState.Additive);
+
             if (TelegraphTimer > 0)
             {
                 float lineHeight = 3000;
