@@ -49,6 +49,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             npcLoot.Add(ModContent.ItemType<ObserverMask>(), 5);
             npcLoot.Add(ModContent.ItemType<ObserverEye>(), 1, 3, 6);
+            npcLoot.Add(ItemID.CopperPickaxe, 10);
         }
     }
 }
