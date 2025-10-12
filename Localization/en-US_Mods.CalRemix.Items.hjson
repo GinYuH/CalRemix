@@ -5593,7 +5593,7 @@ Mikado: {
 
 Umbren: {
 	DisplayName: Umbren
-	Tooltip: Can destroy Watchers
+	Tooltip: Can destroy _s
 }
 
 AbnormalEye: {
@@ -5706,5 +5706,15 @@ Gastrosequence: {
 
 AwokenGastropodEye: {
 	DisplayName: Awoken Gastropod Eye
-	Tooltip: "Fires gastropod eyes at extremely fast speeds which set enemies ablaze"
+	Tooltip: Fires gastropod eyes at extremely fast speeds which set enemies ablaze
+}
+
+ObserverMask: {
+	DisplayName: Observer Mask
+	Tooltip: "Provides immunity to most fire debuffs"
+}
+
+ObserverEye: {
+	DisplayName: Observer Eye
+	Tooltip: ""
 }
