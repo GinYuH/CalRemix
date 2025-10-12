@@ -377,7 +377,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         else
                         {
                             if (Timer > 60)
-                                ChangePhase(3);
+                                ChangePhase(1);
                         }
                     }
                     break;
