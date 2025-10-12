@@ -467,5 +467,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
+
+        public override bool CheckActive()
+        {
+            return !NPC.AnyNPCs(ModContent.NPCType<MonorianGastropodAscended>());
+        }
     }
 }

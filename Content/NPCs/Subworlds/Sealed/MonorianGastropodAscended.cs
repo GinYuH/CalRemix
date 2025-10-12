@@ -43,6 +43,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void SetStaticDefaults()
         {
             NPCID.Sets.ImmuneToAllBuffs[Type] = true;
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
         }
 
         public override void SetDefaults()
@@ -86,6 +87,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     NPC.netSpam = 0;
                 }
             NPC.TargetClosest();
+            if (!Target.active)
+            {
+                NPC.active = false;
+                int jug = NPC.FindFirstNPC(ModContent.NPCType<Juggular>());
+                if (jug != -1)
+                {
+                    Main.npc[jug].active = false;
+                }
+                return;
+            }
             switch (State)
             {
                 case 0:
@@ -219,11 +230,25 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
-            if (projectile.type == ProjectileID.FallingStar)
+            if (projectile.type == ModContent.ProjectileType<Juggustar>())
             {
                 return true;
             }
             return false;
+        }
+
+        public override bool CanBeHitByNPC(NPC attacker)
+        {
+            return attacker.type == ModContent.NPCType<Juggular>() && attacker.velocity != Vector2.Zero;
+        }
+
+        public override void OnKill()
+        {
+            int jug = NPC.FindFirstNPC(ModContent.NPCType<Juggular>());
+            if (jug != -1)
+            {
+                Main.npc[jug].StrikeInstantKill();
+            }
         }
     }
 }
