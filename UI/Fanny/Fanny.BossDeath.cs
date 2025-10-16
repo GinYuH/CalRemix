@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Placeables.Ores;
+using CalRemix.Core.World;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -36,6 +37,9 @@ namespace CalRemix.UI
 
             HelperMessage.New("Golem", "Why is everything green?",
                "FannySob", (ScreenHelperSceneMetrics scene) => NPC.downedGolemBoss);
+
+            HelperMessage.New("CheeseBorgar", "So does a cheese burger only have cheese?",
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => RemixDowned.downedPlagueEmperor);
         }
     }
 }
