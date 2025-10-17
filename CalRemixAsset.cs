@@ -37,6 +37,7 @@ namespace CalRemix
                 Filters.Scene["CalRemix:PandemicPanic"] = new Filter(new PandemicPanicScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
                 Filters.Scene["CalRemix:Slenderman"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
                 Filters.Scene["CalRemix:NormalDraw"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/NormalDraw"), "NormalDrawPass"), EffectPriority.VeryHigh);
+                Filters.Scene["CalRemix:VoidColors"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/VoidColors"), "VoidPass"), EffectPriority.VeryHigh);
 
                 Filters.Scene["CalRemix:PlagueBiome"] = new Filter(new PlagueSkyData("FilterMiniTower").UseColor(Color.Green).UseOpacity(0.15f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:PlagueBiome"] = new PlagueSky();

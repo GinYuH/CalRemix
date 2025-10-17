@@ -26,6 +26,16 @@ namespace CalRemix
         public static CalRemixNPC Remix(this NPC npc) => npc.GetGlobalNPC<CalRemixNPC>();
         public static CalRemixPlayer Remix(this Player player) => player.GetModPlayer<CalRemixPlayer>();
         public static CalRemixProjectile Remix(this Projectile projectile) => projectile.GetGlobalProjectile<CalRemixProjectile>();
+
+        public static Player Target(this NPC n)
+        {
+            if (n.target == -1)
+            {
+                n.TargetClosest(false);
+            }
+            return Main.player[n.target];
+        }
+
         /// <summary>
         /// Checks if the player has a stack of an item.
         /// </summary>

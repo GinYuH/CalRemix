@@ -5718,3 +5718,8 @@ ObserverEye: {
 	DisplayName: Observer Eye
 	Tooltip: ""
 }
+
+NullBeacon: {
+	DisplayName: Null Beacon
+	Tooltip: "Summons Void"
+}

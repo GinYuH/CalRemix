@@ -24,6 +24,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
 
         public static Color ChooseSealedColor(Player p)
         {
+            if (Filters.Scene["CalRemix:VoidColors"].IsActive())
+                return Color.Black;
             if (p.InModBiome<UnsealedSeaBiome>())
             {
                 return Color.Gray;
