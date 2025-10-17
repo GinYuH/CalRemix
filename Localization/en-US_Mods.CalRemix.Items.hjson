@@ -5721,5 +5721,5 @@ ObserverEye: {
 
 NullBeacon: {
 	DisplayName: Null Beacon
-	Tooltip: "Summons Void"
+	Tooltip: Summons Void
 }

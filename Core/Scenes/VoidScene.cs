@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Core.Backgrounds;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -16,10 +17,10 @@ namespace CalRemix.Core.Scenes
 
         public override bool IsSceneEffectActive(Player player)
         {
-            /* if (NPC.AnyNPCs(ModContent.NPCType<VoidBoss>()))
+             if (NPC.AnyNPCs(ModContent.NPCType<VoidBoss>()))
              {
                 return true;
-             }*/
+             }
             if (Filters.Scene["CalRemix:VoidColors"].IsActive())
                 Filters.Scene["CalRemix:VoidColors"].Deactivate();
             return false;

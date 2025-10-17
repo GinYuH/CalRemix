@@ -27,8 +27,7 @@ namespace CalRemix.Content.Items.SummonItems
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                SoundEngine.PlaySound(SoundID.Roar, player.position);
-                CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<SealedPuppet>());
+                CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<VoidBoss>());
             }
             return true;
         }

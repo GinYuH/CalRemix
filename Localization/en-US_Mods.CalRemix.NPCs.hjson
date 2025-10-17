@@ -704,3 +704,13 @@ MonorianGastropodAscended: {
 
 Juggular.DisplayName: Juggular
 Observer.DisplayName: Observer
+
+VoidBoss: {
+	DisplayName: Void
+
+	BossChecklistIntegration: {
+		EntryName: Void
+		SpawnInfo: Use a [i:CalRemix/NullBeacon].
+		DespawnMessage: "[c/ff0ff:The Void seeps away.]"
+	}
+}
