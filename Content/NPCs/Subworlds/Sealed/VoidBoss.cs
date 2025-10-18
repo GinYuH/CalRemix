@@ -12,18 +12,54 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Core.World;
+using Terraria.DataStructures;
+using CalamityMod.Items.Placeables.FurnitureVoid;
+using Terraria.Audio;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
     //[AutoloadBossHead]
     public class VoidBoss : ModNPC
     {
+        public ref float Phase => ref NPC.ai[0];
+
+        public ref float Timer => ref NPC.ai[1];
+
+        public ref float ExtraOne => ref NPC.ai[2];
+
+        public ref float ExtraTwo => ref NPC.ai[3];
+
+        public enum PhaseType
+        {
+            SpawnAnimation = 0,
+            Idle = 1,
+            AttackOne = 2,
+            AttackTwo = 3,
+            AttackThree = 4,
+            AttackFour = 5
+        }
+
+        public PhaseType CurrentPhase
+        {
+            get => (PhaseType)Phase;
+            set => Phase = (int)value;
+        }
+
+        public static int VoidIDX = -1;
+
+        public static float CinematicTime => 360;
+
         public override void SetStaticDefaults()
         {
             NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
 
         public static Vector2 texOffset = new Vector2();
+
+        public override void Load()
+        {
+            On_Main.DoDraw += DrawVoidIntro;
+        }
 
         public override void SetDefaults()
         {
@@ -41,18 +77,83 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.value = Item.buyPrice(gold: 20);
             NPC.boss = true;
             NPC.alpha = 255;
+            NPC.dontTakeDamage = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
         }
 
         public override void AI()
         {
-            //NPC.velocity = Main.MouseWorld - NPC.Center;
-            if (NPC.velocity.Length() > 1)
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() + MathHelper.PiOver2, 0.2f);
-            else
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.2f);
+            NPC.TargetClosest();
+            Player target = Main.player[NPC.target];
+            if (target == null || !target.active || target.dead)
+            {
+                NPC.active = false;
+                return;
+            }
+            switch (CurrentPhase)
+            {
+                case PhaseType.SpawnAnimation:
+                    {
+                        NPC.Center = target.Center - Vector2.UnitY * 300;
+                        if (Timer > CinematicTime + 20)
+                        {
+                            for (int i = 0; i < 110; i++)
+                            {
+                                VoidMetaball.SpawnParticle(NPC.Center, Main.rand.NextVector2Circular(1f, 1f) * Main.rand.NextFloat(16, 26), Main.rand.NextFloat(50, 130));
+                            }
+                            NPC.alpha = 0;
+                            NPC.dontTakeDamage = false;
+                            ChangePhase(PhaseType.Idle);
+                        }
+                    }
+                    break;
+                case PhaseType.Idle:
+                    {
 
+                    }
+                    break;
+                case PhaseType.AttackOne:
+                    {
+
+                    }
+                    break;
+                case PhaseType.AttackTwo:
+                    {
+
+                    }
+                    break;
+                case PhaseType.AttackThree:
+                    {
+
+                    }
+                    break;
+                case PhaseType.AttackFour:
+                    {
+
+                    }
+                    break;
+            }
+            PassiveStuff();
+            if (CurrentPhase != PhaseType.SpawnAnimation)
+                SpawnParticles();
+
+            NPC.localAI[0]++;
+            if (NPC.localAI[0] > 90)
+            Timer++;
+        }
+
+        public void ChangePhase(PhaseType phase)
+        {
+            CurrentPhase = phase;
+            Timer = 0;
+            ExtraOne = 0;
+            ExtraTwo = 0;
+            NPC.netUpdate = true;
+        }
+
+        public void SpawnParticles()
+        {
             int iterationAmt = 5;
             for (int i = 0; i < iterationAmt; i++)
             {
@@ -64,6 +165,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     VoidMetaball.SpawnParticle(NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * MathHelper.Lerp(0, 180, comp) + Main.rand.NextVector2Circular(40, 40), Main.rand.NextVector2Circular(8, 8), Main.rand.NextFloat(10, 30), NPC.whoAmI);
                 }
             }
+        }
+
+        public void PassiveStuff()
+        {
+            VoidIDX = NPC.whoAmI;
+            if (NPC.velocity.Length() > 1)
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() + MathHelper.PiOver2, 0.2f);
+            else
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.2f);
 
             if (NPC.frameCounter++ % 8 == 0)
             {
@@ -80,15 +190,118 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D tex = TextureAssets.Npc[Type].Value;
+
             Vector2 offset = Vector2.Zero;
-            spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, Color.Red, 0, tex.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, Color.Red * NPC.Opacity, 0, tex.Size() / 2, NPC.scale, 0, 0);
+
             return false;
+        }
+
+        private static void DrawVoidIntro(On_Main.orig_DoDraw orig, Main self, GameTime gameTime)
+        {
+            orig(self, gameTime);
+            Texture2D drainLine = ModContent.Request<Texture2D>("CalamityMod/Particles/TitaniumRailgunShellGlow").Value;
+            if (!Main.gameMenu)
+            {
+                if (VoidIDX != -1)
+                {
+                    NPC voi = Main.npc[VoidIDX];
+                    if (voi.type == ModContent.NPCType<VoidBoss>())
+                    {
+                        if (voi.active && voi.life > 0 && voi.ModNPC != null)
+                        {
+                            VoidBoss voidboss = voi.ModNPC as VoidBoss;
+                            if (voidboss.CurrentPhase == PhaseType.SpawnAnimation && voidboss.Timer <= CinematicTime && voidboss.Timer >= 1)
+                            {
+                                Main.spriteBatch.Begin();
+
+                                string text = "You feel a dark presence...";
+                                float boxOpacity = 0;
+
+                                float fullDuration = CinematicTime;
+                                float currentTime = voidboss.Timer;
+                                float shutterLength = fullDuration * 0.07f;
+                                float shutterDelay = fullDuration * 0.03f;
+                                float fullDelay = (shutterLength + shutterDelay) * 2 + fullDuration * 0.05f;
+                                float fadeIn = fullDelay + fullDuration * 0.05f;
+
+                                float shutterOpacity = 0.8f;
+                                float mainOpacity = 0.6f;
+
+                                float shutterLocalTimer = currentTime % (shutterLength + shutterDelay);
+
+                                float screenOpacity = 0;
+
+                                if (currentTime < (shutterLength + shutterDelay) * 2)
+                                {
+                                    screenOpacity = shutterOpacity * Utils.GetLerpValue(shutterLength, 0, shutterLocalTimer, true);
+                                    text = "";
+                                }
+                                else if (currentTime > fullDelay && currentTime < fadeIn)
+                                {
+                                    screenOpacity = mainOpacity * Utils.GetLerpValue(fullDelay, fadeIn, currentTime, true);
+                                    boxOpacity = mainOpacity * Utils.GetLerpValue(fullDelay, fadeIn, currentTime, true);
+                                }
+                                else if (currentTime >= fadeIn && currentTime < CinematicTime - fullDuration * 0.05f)
+                                {
+                                    screenOpacity = mainOpacity;
+                                    boxOpacity = mainOpacity;
+                                }
+                                else if (currentTime >= CinematicTime - fullDuration * 0.05f)
+                                {
+                                    screenOpacity = mainOpacity * Utils.GetLerpValue(CinematicTime, CinematicTime - fullDuration * 0.05f, currentTime, true);
+                                    boxOpacity = mainOpacity * Utils.GetLerpValue(CinematicTime, CinematicTime - fullDuration * 0.05f, currentTime, true);
+                                }
+                                if (currentTime >= fadeIn + 30 && currentTime < fadeIn + 90)
+                                {
+                                    text = text.Remove((int)MathHelper.Lerp(0, text.Length - 1, Utils.GetLerpValue(fadeIn + 30, fadeIn + 90, currentTime, true)));
+                                }
+                                else if (currentTime >= fadeIn + 30)
+                                {
+
+                                }
+                                else
+                                {
+                                    text = "";
+                                }
+
+                                if (currentTime == fadeIn - 30)
+                                {
+                                    SoundEngine.PlaySound(BetterSoundID.ItemShadowflameHexDoll with { Pitch = -2f, Volume = 2f });
+                                }
+
+                                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.screenWidth, (int)Main.screenHeight), Color.Black * screenOpacity);
+
+                                int boxHeight = (int)(Main.screenHeight * 0.2f);
+                                Main.spriteBatch.Draw(drainLine, new Vector2(Main.screenWidth / 2, Main.screenHeight / 2 - boxHeight), null, Color.Black * boxOpacity * 1.6f, MathHelper.PiOver2, new Vector2(drainLine.Width / 2, drainLine.Height / 2), new Vector2(boxHeight / (float)drainLine.Width, Main.screenWidth  * 4 / (float)drainLine.Height), 0, 0);
+                                
+                                Utils.DrawBorderStringBig(Main.spriteBatch, text, Main.ScreenSize.ToVector2() / 2 - Vector2.UnitY * boxHeight, Color.Red * boxOpacity, 1, 0.5f, 0.5f);
+
+                                Main.spriteBatch.End();
+                            }
+                        }
+                        else
+                        {
+                            VoidIDX = -1;
+                        }
+                    }
+                    else
+                    {
+                        VoidIDX = -1;
+                    }
+                }
+            }
         }
 
         public override void OnKill()
         {
             RemixDowned.downedVoid = true;
             CalRemixWorld.UpdateWorldBool();
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
         }
     }
 }

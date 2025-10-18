@@ -125,7 +125,7 @@ namespace CalRemix.Content.Particles
             {
                 if (n.type == voidType)
                 {
-                    Main.spriteBatch.Draw(tex, n.Center - Main.screenPosition, null, Color.White, 0f, tex.Size() / 2, 2, 0, 0);
+                    Main.spriteBatch.Draw(tex, n.Center - Main.screenPosition, null, Color.White * n.Opacity, 0f, tex.Size() / 2, 2, 0, 0);
                 }
             }
         }

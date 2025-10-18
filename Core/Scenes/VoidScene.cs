@@ -17,9 +17,16 @@ namespace CalRemix.Core.Scenes
 
         public override bool IsSceneEffectActive(Player player)
         {
-             if (NPC.AnyNPCs(ModContent.NPCType<VoidBoss>()))
+             if (VoidBoss.VoidIDX != -1)
              {
-                return true;
+                if (Main.npc[VoidBoss.VoidIDX].ModNPC != null)
+                {
+                    if (Main.npc[VoidBoss.VoidIDX].ModNPC is VoidBoss v)
+                    {
+                        if (v.CurrentPhase != VoidBoss.PhaseType.SpawnAnimation)
+                            return true;
+                    }
+                }
              }
             if (Filters.Scene["CalRemix:VoidColors"].IsActive())
                 Filters.Scene["CalRemix:VoidColors"].Deactivate();
