@@ -5,7 +5,6 @@ using Terraria.Enums;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using CalamityMod;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.NPCs.PlaguebringerGoliath;
 using Terraria.Audio;

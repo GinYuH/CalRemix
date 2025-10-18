@@ -1,13 +1,6 @@
-﻿using CalamityMod.NPCs.Providence;
-using CalamityMod.Particles;
-using CalRemix.Content.NPCs.Bosses.Oxygen;
-using CalRemix.Content.Particles;
-using Microsoft.Xna.Framework;
-using System;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Enums;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Weapons

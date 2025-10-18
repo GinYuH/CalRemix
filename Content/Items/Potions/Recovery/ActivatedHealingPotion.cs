@@ -1,6 +1,4 @@
-using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.Items.Materials;
 using Terraria;
 using Terraria.ID;

@@ -1,8 +1,3 @@
-using CalamityMod;
-using CalamityMod.NPCs.DevourerofGods;
-using Terraria;
-using Terraria.ModLoader;
-
 namespace CalRemix.Core.Scenes
 {
     /*

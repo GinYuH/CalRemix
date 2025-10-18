@@ -1,19 +1,7 @@
-﻿using CalamityMod.Items.Placeables.FurnitureStatigel;
-using Microsoft.Xna.Framework;
-using ReLogic.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using static Terraria.WorldGen;
 
 namespace CalRemix.Core.Subworlds
 {

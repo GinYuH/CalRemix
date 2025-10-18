@@ -1,12 +1,8 @@
-﻿using CalRemix.Content.Tiles.Subworlds.ClownWorld;
-using CalRemix.Content.Tiles.Subworlds.MoonGraveyard;
+﻿using CalRemix.Content.Tiles.Subworlds.MoonGraveyard;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent;

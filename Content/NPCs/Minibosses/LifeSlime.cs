@@ -1,5 +1,4 @@
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Projectiles.Hostile;

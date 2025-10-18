@@ -1,6 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Graphics.Primitives;
-using CalRemix.Content.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

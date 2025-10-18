@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.NPCs.PandemicPanic;
-using CalRemix.Core.World;
+﻿using CalRemix.Core.World;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;

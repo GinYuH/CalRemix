@@ -38,14 +38,11 @@ using MonoMod.RuntimeDetour;
 using CalRemix.Content.Items.ZAccessories;
 using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Content.Items.Weapons;
-using Terraria.GameContent.UI.ResourceSets;
-using Microsoft.CodeAnalysis.Operations;
 using System.Diagnostics;
 using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Light;
 using SubworldLibrary;
 using CalRemix.Content.Tiles;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CalRemix.Core
 {

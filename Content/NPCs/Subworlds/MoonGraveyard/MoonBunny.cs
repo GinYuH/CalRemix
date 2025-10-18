@@ -1,10 +1,8 @@
-﻿using CalamityMod;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Content.NPCs.Subworlds.MoonGraveyard
 {

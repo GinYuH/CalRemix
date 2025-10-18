@@ -3,10 +3,8 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.CalPlayer;
 using CalamityMod.Events;
-using CalamityMod.Items.Accessories.Vanity;
 using CalamityMod.Items.Dyes;
 using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.NormalNPCs;
@@ -69,7 +67,6 @@ using Terraria.GameContent;
 using static CalRemix.CalRemixHelper;
 using CalRemix.Core.Retheme;
 using CalRemix.Content.NPCs.Eclipse;
-using System.Reflection;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.UI.Anomaly109;
 

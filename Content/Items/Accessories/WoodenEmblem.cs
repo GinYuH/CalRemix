@@ -1,8 +1,4 @@
-﻿using CalamityMod.CalPlayer;
-using CalamityMod.Items.Materials;
-using CalamityMod;
-using CalamityMod.Rarities;
-using CalamityMod.Items;
+﻿using CalamityMod.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

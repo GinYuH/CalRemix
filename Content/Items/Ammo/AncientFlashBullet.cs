@@ -1,6 +1,4 @@
 ﻿using CalamityMod.Items.Ammo;
-using CalamityMod.Projectiles.Ranged;
-using CalRemix;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria.ID;
 using Terraria.ModLoader;

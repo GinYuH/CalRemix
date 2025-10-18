@@ -1,12 +1,8 @@
-﻿using CalamityMod;
-using CalamityMod.Projectiles.Rogue;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Weapons

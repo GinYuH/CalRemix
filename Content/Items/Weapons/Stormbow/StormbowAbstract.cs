@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using CalamityMod.Items;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Rarities;
 using CalRemix.Content.DamageClasses;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
-using Mono.Cecil;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {

@@ -9,7 +9,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using static Terraria.ModLoader.ModContent;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs

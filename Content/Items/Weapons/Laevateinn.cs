@@ -1,6 +1,4 @@
 ﻿using CalamityMod.Items;
-using CalamityMod.Items.Placeables;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Rarities;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;

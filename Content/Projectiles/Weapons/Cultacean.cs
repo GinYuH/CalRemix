@@ -1,11 +1,9 @@
-﻿using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod;
+﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Buffs;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using System;
 

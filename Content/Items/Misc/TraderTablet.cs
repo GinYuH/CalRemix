@@ -1,16 +1,7 @@
-﻿using CalamityMod.Items;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.CalPlayer;
-using CalamityMod.NPCs.SlimeGod;
-using CalamityMod.Items.Materials;
-using CalRemix.Content.Projectiles.Accessories;
-using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
-using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader;
 using CalRemix.Core;
-using Terraria.DataStructures;
 
 namespace CalRemix.Content.Items.Misc
 {

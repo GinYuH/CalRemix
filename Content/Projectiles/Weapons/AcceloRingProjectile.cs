@@ -1,5 +1,4 @@
-﻿using CalamityMod.Items.Accessories;
-using CalRemix.Content.Items.Weapons;
+﻿using CalRemix.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using SubworldLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Terraria.ModLoader;
 

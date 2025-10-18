@@ -1,7 +1,4 @@
-﻿using CalRemix.Content.NPCs.Bosses.Pyrogen;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Buffs

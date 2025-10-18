@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
@@ -11,10 +10,8 @@ using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Sounds;
 using CalamityMod.Particles;
 

@@ -1,6 +1,4 @@
 ﻿using CalamityMod.Items;
-using CalamityMod.Items.Placeables.FurnitureAuric;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;

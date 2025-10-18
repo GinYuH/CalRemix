@@ -1,8 +1,5 @@
 ﻿using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;

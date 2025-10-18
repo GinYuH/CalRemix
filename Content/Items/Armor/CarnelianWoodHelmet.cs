@@ -1,15 +1,7 @@
-﻿using CalRemix.Content.Cooldowns;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using CalamityMod.Items;
-using CalRemix.Content.DamageClasses;
-using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 
 namespace CalRemix.Content.Items.Armor

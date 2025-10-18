@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.Audio;
-using System;
 using CalamityMod.Items.Accessories;
 using CalRemix.Core.Biomes;
 

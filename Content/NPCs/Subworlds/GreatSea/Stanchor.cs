@@ -6,14 +6,8 @@ using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using System.Collections.Generic;
-using CalamityMod.DataStructures;
-using Terraria.GameContent.Animations;
-using CalRemix.Core.World;
-using CalamityMod.Projectiles.Boss;
 using Terraria.Audio;
 using System;
-using CalamityMod.Graphics.Primitives;
 using CalRemix.Core.Biomes;
 using CalamityMod.Sounds;
 

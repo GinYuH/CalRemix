@@ -2,30 +2,18 @@
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Content.Items.Placeables;
 using CalRemix.Core.Biomes;
-using CalamityMod.BiomeManagers;
 using CalRemix.Content.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using CalRemix.Content.NPCs.Bosses.Origen;
-using Newtonsoft.Json.Linq;
 using Terraria.Audio;
 using Terraria.GameContent;
 using System;
-using CalamityMod.Particles;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Terraria.DataStructures;
 using System.Collections.Generic;
-using CalamityMod.DataStructures;
-using Terraria.GameContent.Animations;
-using rail;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Weapons;
-using CalamityMod.Cooldowns;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {

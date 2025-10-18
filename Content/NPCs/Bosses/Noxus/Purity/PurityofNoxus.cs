@@ -6,7 +6,6 @@ using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using static Terraria.Utils;
-using CalRemix.Content.Items;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Particles;
 using CalRemix.Core.Graphics;
@@ -28,8 +27,6 @@ using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalamityMod.DataStructures;
-using Terraria.GameContent.Animations;
-using Terraria.Graphics;
 
 namespace CalRemix.Content.NPCs.Bosses.Noxus.Purity
 {

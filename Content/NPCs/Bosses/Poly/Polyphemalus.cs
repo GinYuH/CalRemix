@@ -8,7 +8,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.Events;
-using CalRemix.Content.Buffs;
 using CalRemix.Content.NPCs.Bosses.Acideye;
 
 namespace CalRemix.Content.NPCs.Bosses.Poly

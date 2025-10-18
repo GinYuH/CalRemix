@@ -1,17 +1,9 @@
-﻿using CalamityMod.Tiles.FurnitureExo;
-using CalamityMod.Tiles.Ores;
-using CalRemix.Content.Tiles;
-using CalRemix.Core.World;
-using CalRemix.Core.World.Subworld;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using SubworldLibrary;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Generation;
-using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using static CalRemix.Core.Subworlds.SubworldHelpers;

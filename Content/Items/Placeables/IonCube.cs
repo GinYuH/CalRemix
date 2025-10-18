@@ -5,7 +5,6 @@ using CalRemix.Content.Tiles;
 using CalamityMod.Items.Placeables.Plates;
 using CalamityMod.Items.Materials;
 using Terraria.DataStructures;
-using System.Linq;
 
 namespace CalRemix.Content.Items.Placeables
 {

@@ -1,18 +1,11 @@
-﻿using CalamityMod;
-using CalRemix.Content.Projectiles;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,7 +13,6 @@ using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static CalRemix.Content.Items.Weapons.Stormbow.StructureHelpers;
 using static Terraria.WorldGen;
-using static tModPorter.ProgressUpdate;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {

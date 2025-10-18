@@ -4,7 +4,6 @@ using CalRemix.Core.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.MathF;
 using static Terraria.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
 using CalRemix.Content.Items.Tools;

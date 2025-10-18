@@ -4,16 +4,11 @@ using SubworldLibrary;
 using Terraria.WorldBuilding;
 using Terraria.IO;
 using Terraria.ModLoader;
-using CalamityMod.Tiles.FurnitureExo;
-using System;
-using CalamityMod.Tiles.Ores;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.ID;
 using CalRemix.Core.World;
 using CalRemix.Content.Tiles;
-using Terraria.Graphics.Effects;
-using CalamityMod;
 using CalamityMod.Tiles.FurnitureAshen;
 
 namespace CalRemix.Core.Subworlds

@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using CalamityMod.Items;
 using CalamityMod.Items.Critters;
 using CalRemix.Content.Tiles.Subworlds.Piggy;
 

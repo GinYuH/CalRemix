@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Projectiles.Summon;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

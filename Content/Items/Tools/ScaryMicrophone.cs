@@ -1,9 +1,7 @@
 ﻿using CalamityMod.Items.Materials;
-using CalamityMod.NPCs.Yharon;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.UI;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

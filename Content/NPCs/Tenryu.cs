@@ -3,7 +3,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;

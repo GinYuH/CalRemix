@@ -1,12 +1,9 @@
-﻿using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
+﻿using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Hostile

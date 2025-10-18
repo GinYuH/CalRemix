@@ -1,5 +1,4 @@
 ﻿using CalamityMod.Projectiles.Rogue;
-using CalRemix.Content.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

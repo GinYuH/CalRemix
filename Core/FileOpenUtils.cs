@@ -1,17 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using ReLogic.OS;
-using Terraria.ModLoader;
-using System.Windows.Forms;
-using Microsoft.Win32;
+﻿using System.Windows.Forms;
 using Terraria.Utilities.FileBrowser;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System;
-using Terraria.UI;
 using Terraria;
-using System.Threading;
-using static System.Net.Mime.MediaTypeNames;
-using CalRemix.Core.World;
 
 namespace CalRemix
 {

@@ -1,12 +1,6 @@
-﻿using System.Collections.Generic;
-using CalamityMod.Items;
+﻿using CalamityMod.Items;
 using CalamityMod.Rarities;
-using Microsoft.Xna.Framework;
-using CalRemix.Content.NPCs.Bosses.Noxus;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Minibosses;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Projectiles;
 

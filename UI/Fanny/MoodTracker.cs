@@ -1,7 +1,6 @@
 ﻿using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.OldDuke;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Acideye;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
@@ -14,7 +13,6 @@ using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

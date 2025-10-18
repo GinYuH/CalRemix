@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Graphics.Primitives;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;

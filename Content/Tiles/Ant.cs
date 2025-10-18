@@ -1,23 +1,11 @@
 ﻿using CalamityMod;
-using CalamityMod.DataStructures;
-using CalamityMod.Items.Fishing.SunkenSeaCatches;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.NPCs.Bosses.Ionogen;
-using CalRemix.Core.World;
-using CalRemix.UI;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace CalRemix.Content.Tiles

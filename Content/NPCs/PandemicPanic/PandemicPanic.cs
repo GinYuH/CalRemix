@@ -14,7 +14,6 @@ using CalRemix.Core.World;
 using CalamityMod.Projectiles.Typeless;
 using Terraria.DataStructures;
 using CalRemix.Content.Items.Tools;
-using static CalRemix.Content.NPCs.Eclipse.CrimsonKaiju;
 
 namespace CalRemix.Content.NPCs.PandemicPanic
 {

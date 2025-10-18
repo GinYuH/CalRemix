@@ -6,8 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using CalamityMod;
-using Terraria.Chat;
-using Terraria.Localization;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalRemix.Core.World;
 

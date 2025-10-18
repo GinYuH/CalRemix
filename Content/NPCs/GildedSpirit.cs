@@ -5,8 +5,6 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Microsoft.Xna.Framework;
 using CalamityMod.Items.Materials;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 
 namespace CalRemix.Content.NPCs
 {

@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.Items.Placeables;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 

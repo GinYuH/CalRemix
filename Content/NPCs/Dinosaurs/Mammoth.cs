@@ -1,11 +1,9 @@
 ﻿using CalamityMod;
-using CalRemix.Content.Items.Accessories;
 using CalRemix.UI;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;

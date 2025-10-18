@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Projectiles;

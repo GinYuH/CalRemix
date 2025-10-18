@@ -1,10 +1,7 @@
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
-using CalamityMod;
 using System.Collections.Generic;
-using System;
-using Stubble.Core.Classes;
 using SubworldLibrary;
 
 namespace CalRemix.Core.World

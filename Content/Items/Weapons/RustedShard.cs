@@ -3,8 +3,6 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Items.Materials;
-using Terraria.Audio;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Items.Materials;
 

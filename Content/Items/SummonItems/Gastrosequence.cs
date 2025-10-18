@@ -1,11 +1,7 @@
 ﻿using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
-using CalRemix.Content.NPCs.Bosses.Acideye;
-using CalamityMod;
-using CalamityMod.Items.Placeables;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;

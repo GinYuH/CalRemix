@@ -1,9 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Items;
-using CalamityMod.Rarities;
-using CalRemix.Content.Items.Materials;
 using CalamityMod.Items.Materials;
 
 namespace CalRemix.Content.Items.Tools

@@ -1,10 +1,7 @@
 ﻿using CalRemix.Content.Items.Tools;
-using CalRemix.Content.Items.Weapons;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

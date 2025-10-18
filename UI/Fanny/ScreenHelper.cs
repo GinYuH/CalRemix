@@ -18,11 +18,9 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
-using static Terraria.Graphics.Effects.Filters;
 
 namespace CalRemix.UI
 {

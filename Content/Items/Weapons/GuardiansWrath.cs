@@ -1,13 +1,10 @@
-﻿using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
+﻿using CalamityMod.Rarities;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
 using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Weapons;
-using CalamityMod.Items.Weapons.Melee;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 

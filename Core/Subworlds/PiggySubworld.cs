@@ -3,30 +3,12 @@ using Terraria;
 using SubworldLibrary;
 using Terraria.WorldBuilding;
 using Terraria.IO;
-using Terraria.ModLoader;
-using CalamityMod.Tiles.FurnitureExo;
 using System;
-using CalamityMod.Tiles.Ores;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.ID;
-using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
-using Terraria.Graphics.Effects;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalamityMod;
-using Terraria.Audio;
-using System.Configuration;
-using Iced.Intel;
-using CalRemix.Content.NPCs.Subworlds.GreatSea;
-using CalRemix.Core.Biomes;
-using CalamityMod.NPCs.SulphurousSea;
-using CalRemix.Content.NPCs.PandemicPanic;
-using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using Terraria.Utilities;
-using CalamityMod.DataStructures;
 using CalamityMod.Schematics;
-using Humanizer;
 
 namespace CalRemix.Core.Subworlds
 {

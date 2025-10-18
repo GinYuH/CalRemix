@@ -1,16 +1,6 @@
-﻿using CalamityMod.CalPlayer;
-using CalamityMod.Items.Materials;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Projectiles.Summon;
-using CalamityMod.Rarities;
-using CalamityMod.Items;
-using CalamityMod;
-using Microsoft.Xna.Framework;
+﻿using CalamityMod.Items;
 using Terraria;
-using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader;
-using CalamityMod.Items.Weapons.Summon;
 using Terraria.ID;
 
 namespace CalRemix.Content.Items.Accessories

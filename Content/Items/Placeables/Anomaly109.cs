@@ -4,8 +4,6 @@ using Terraria.ID;
 using CalRemix.Content.Tiles;
 using CalamityMod.Rarities;
 using CalamityMod.Items.Potions;
-using CalamityMod;
-using Microsoft.Xna.Framework;
 
 namespace CalRemix.Content.Items.Placeables
 {

@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CalamityMod;
 using CalamityMod.Graphics.Metaballs;
-using CalamityMod.Particles;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Subworlds;
-using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;

@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
-using CalRemix.Core.World;
 using CalRemix.Content.Items.Accessories;
 
 namespace CalRemix.Content.Items.Placeables

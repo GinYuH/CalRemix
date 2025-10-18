@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Items;
-using CalamityMod.Rarities;
 using CalamityMod;
 using System;
 using Terraria.Audio;
@@ -10,8 +9,6 @@ using CalamityMod.Buffs.StatBuffs;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Items.Materials;
-using CalamityMod.Projectiles.Typeless;
-using System.Linq.Expressions;
 
 namespace CalRemix.Content.Items.Accessories
 {

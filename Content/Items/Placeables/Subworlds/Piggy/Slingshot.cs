@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Piggy;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Piggy

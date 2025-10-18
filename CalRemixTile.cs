@@ -13,7 +13,6 @@ using CalamityMod.Tiles.Ores;
 using CalamityMod.Tiles.SunkenSea;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;

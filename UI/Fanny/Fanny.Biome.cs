@@ -13,8 +13,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.World;
-using System.Reflection;
-using System;
 
 namespace CalRemix.UI
 {

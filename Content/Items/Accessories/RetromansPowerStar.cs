@@ -3,8 +3,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using CalamityMod.Items.Weapons.Rogue;
 
-using Terraria.Graphics.Effects;
-
 namespace CalRemix.Content.Items.Accessories
 {
     [AutoloadEquip(EquipType.Head)]

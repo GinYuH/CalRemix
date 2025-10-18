@@ -1,5 +1,4 @@
-﻿using CalamityMod.Projectiles.Rogue;
-using CalRemix.Content.Projectiles.Weapons;
+﻿using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;

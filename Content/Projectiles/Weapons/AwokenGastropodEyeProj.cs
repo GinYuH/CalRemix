@@ -1,9 +1,4 @@
-﻿using CalamityMod.Particles;
-using CalamityMod.Projectiles.Rogue;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Audio;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 

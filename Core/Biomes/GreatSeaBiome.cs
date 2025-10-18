@@ -1,5 +1,4 @@
 ﻿using CalRemix.Core.Subworlds;
-using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using Terraria;

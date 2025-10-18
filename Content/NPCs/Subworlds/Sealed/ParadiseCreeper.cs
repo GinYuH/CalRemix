@@ -2,7 +2,6 @@
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Core.Biomes;
-using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -11,7 +10,6 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 //using CalamityMod.CalPlayer;
 

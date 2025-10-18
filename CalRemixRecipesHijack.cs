@@ -5,7 +5,6 @@ using CalamityMod.Items.Armor.Auric;
 using CalamityMod.Items.Armor.Plaguebringer;
 using CalamityMod.Items.Armor.PlagueReaper;
 using CalamityMod.Items.Armor.Statigel;
-using CalamityMod.Items.Armor.Victide;
 using CalamityMod.Items.DraedonMisc;
 using CalamityMod.Items.Fishing.AstralCatches;
 using CalamityMod.Items.Fishing.FishingRods;

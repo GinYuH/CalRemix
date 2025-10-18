@@ -1,6 +1,4 @@
-﻿using CalamityMod.Dusts;
-using CalamityMod.Items.Placeables.Furniture;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;

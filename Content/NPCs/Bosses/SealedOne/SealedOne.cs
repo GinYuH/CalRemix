@@ -7,14 +7,11 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using CalamityMod.World;
-using CalamityMod.Particles;
-using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Items.Placeables;
 using CalamityMod.Events;
 using CalRemix.UI;
 using System.Linq;
 using CalRemix.Content.Items.Placeables.Relics;
-using CalRemix.Content.NPCs.TownNPCs;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Bags;
@@ -24,11 +21,8 @@ using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
 using System.Collections.Generic;
 using System;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalamityMod.Projectiles.Boss;
-using System.Collections;
 using Microsoft.Xna.Framework.Graphics;
-using XPT.Core.Audio.MP3Sharp.Decoding;
 using Terraria.GameContent;
 
 namespace CalRemix.Content.NPCs.Bosses.SealedOne

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using CalamityMod.Projectiles.Magic;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,9 +7,7 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
 using CalamityMod.Graphics.Metaballs;
-using Terraria.GameContent;
 
 namespace CalRemix.Content.Particles
 {

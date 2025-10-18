@@ -1,6 +1,4 @@
-using CalamityMod;
 using CalRemix.Content.DamageClasses;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

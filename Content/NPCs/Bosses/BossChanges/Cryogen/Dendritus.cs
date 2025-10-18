@@ -1,22 +1,11 @@
 ﻿using CalamityMod;
-using CalamityMod.Events;
-using CalamityMod.NPCs;
-using CalamityMod.NPCs.Cryogen;
-using CalamityMod.Particles;
 using CalamityMod.Projectiles.Boss;
-using CalamityMod.World;
-using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 

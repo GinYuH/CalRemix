@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CalRemix.Content.NPCs.Bosses.Noxus;
@@ -8,7 +7,6 @@ using Terraria;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.DataStructures;
-using Terraria.GameContent;
 using System;
 using Terraria.Graphics;
 

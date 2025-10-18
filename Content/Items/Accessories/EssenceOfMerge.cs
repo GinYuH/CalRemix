@@ -1,13 +1,9 @@
-using CalamityMod.Rarities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using CalamityMod.Items.Accessories.Wings;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Materials;
 using CalamityMod.Items;
-using CalamityMod;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Accessories

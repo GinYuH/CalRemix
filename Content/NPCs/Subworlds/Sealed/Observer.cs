@@ -2,15 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Microsoft.Xna.Framework;
-using System;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
-using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Potions;
 

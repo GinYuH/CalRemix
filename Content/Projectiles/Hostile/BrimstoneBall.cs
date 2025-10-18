@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria;
-using CalamityMod.Buffs.DamageOverTime;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas

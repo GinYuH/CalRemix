@@ -1,11 +1,8 @@
 ﻿using CalamityMod.Items;
-using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Rarities;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

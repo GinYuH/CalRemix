@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 
 namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 {

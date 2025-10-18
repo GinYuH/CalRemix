@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using CalamityMod.BiomeManagers;
-using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Projectiles.Magic;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.World;

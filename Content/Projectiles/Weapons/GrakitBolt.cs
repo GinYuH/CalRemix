@@ -1,6 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

@@ -2,20 +2,15 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
-using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Tiles.Ores;
 using CalamityMod.CalPlayer;
 using CalRemix.Core.Subworlds;
-using Ionic.Zip;
-using CalamityMod.Particles;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.World;
 using CalamityMod.Graphics.Primitives;
@@ -23,7 +18,6 @@ using Terraria.Graphics.Shaders;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using CalamityMod.Sounds;
-using Newtonsoft.Json.Serialization;
 using CalamityMod.Projectiles.Typeless;
 using System.IO;
 

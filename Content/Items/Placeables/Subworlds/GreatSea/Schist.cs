@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using CalamityMod.Items;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.GreatSea
 {

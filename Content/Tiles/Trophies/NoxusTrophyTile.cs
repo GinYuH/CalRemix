@@ -1,6 +1,4 @@
-﻿using CalRemix.Content.Items;
-using Terraria;
-using Terraria.DataStructures;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;

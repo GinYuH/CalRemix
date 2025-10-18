@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework;
 using CalamityMod.Items.Materials;
 using Terraria.Audio;
 using CalamityMod.Buffs.DamageOverTime;
-using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Pets;
 using Terraria.Graphics.Shaders;
 using CalamityMod.Graphics.Primitives;

@@ -1,19 +1,11 @@
-﻿using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod.Items;
-using CalRemix.Content.Projectiles.Weapons;
+﻿using CalamityMod.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.CalPlayer;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
 using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalamityMod.Buffs.DamageOverTime;
 
 namespace CalRemix.Content.Items.Weapons
 {

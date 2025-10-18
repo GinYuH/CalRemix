@@ -4,15 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using CalRemix.UI;
-using System.Linq;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Potions;
-using CalamityMod.Items.Weapons.Summon;
-using CalRemix.Core.World;
 using CalamityMod.Items.Potions;
 
 namespace CalRemix.Content.NPCs

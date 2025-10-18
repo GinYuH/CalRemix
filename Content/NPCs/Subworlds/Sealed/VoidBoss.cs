@@ -1,19 +1,15 @@
 ﻿using CalRemix.Core.Biomes;
-using System;
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using CalRemix.Content.Items.Materials;
 using CalamityMod;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalamityMod.Graphics.Metaballs;
 using CalRemix.Content.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalRemix.Core.World;
-using Terraria.DataStructures;
-using CalamityMod.Items.Placeables.FurnitureVoid;
 using Terraria.Audio;
 using CalamityMod.CalPlayer;
 
@@ -99,10 +95,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         NPC.Center = target.Center - Vector2.UnitY * 300;
                         if (Timer > CinematicTime + 20)
                         {
-                            for (int i = 0; i < 110; i++)
-                            {
-                                VoidMetaball.SpawnParticle(NPC.Center, Main.rand.NextVector2Circular(1f, 1f) * Main.rand.NextFloat(16, 26), Main.rand.NextFloat(50, 130));
-                            }
+                            TeleportParticles();
                             NPC.alpha = 0;
                             NPC.dontTakeDamage = false;
                             ChangePhase(PhaseType.Idle);
@@ -147,6 +140,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             ExtraOne = 0;
             ExtraTwo = 0;
             NPC.netUpdate = true;
+        }
+
+        public void TeleportParticles()
+        {
+            for (int i = 0; i < 110; i++)
+            {
+                VoidMetaball.SpawnParticle(NPC.Center, Main.rand.NextVector2Circular(1f, 1f) * Main.rand.NextFloat(16, 26), Main.rand.NextFloat(50, 130));
+            }
         }
 
         public void SpawnParticles()

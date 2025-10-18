@@ -7,7 +7,6 @@ using CalamityMod.Items;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod;
 using CalamityMod.CalPlayer;
-using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Rarities;
 

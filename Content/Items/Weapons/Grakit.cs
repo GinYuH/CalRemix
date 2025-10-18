@@ -4,8 +4,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
-using CalamityMod.Items.Placeables;
-using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Weapons;
 
 namespace CalRemix.Content.Items.Weapons

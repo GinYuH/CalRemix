@@ -1,15 +1,9 @@
-﻿using CalamityMod.Items;
-using CalamityMod.Items.Materials;
+﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
-using CalamityMod.Projectiles.Rogue;
-using CalamityMod.Rarities;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalRemix.Content.DamageClasses;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {

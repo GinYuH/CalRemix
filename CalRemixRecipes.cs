@@ -7,7 +7,6 @@ using CalamityMod.Items.Armor.Empyrean;
 using CalamityMod.Items.Armor.Plaguebringer;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Fishing.AstralCatches;
-using CalRemix.Content.Items.Potions;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Placeables.Ores;
 using CalRemix.Content.Items.Materials;
@@ -32,7 +31,6 @@ using CalamityMod.Items.Armor.Umbraphile;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CalamityMod.Items.Armor;
 using CalamityMod.Items.Placeables.FurnitureStratus;
 using CalamityMod.Items.LoreItems;
 using CalamityMod;
@@ -49,7 +47,6 @@ using CalamityMod.Items.Armor.Silva;
 using System;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.UI.Anomaly109;
-using CalamityMod.Items.Tools;
 
 namespace CalRemix
 {

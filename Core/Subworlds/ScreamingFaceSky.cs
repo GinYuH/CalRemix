@@ -1,6 +1,5 @@
 ﻿using System;
 using CalamityMod;
-using CalRemix.Content.NPCs.Bosses.Origen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;

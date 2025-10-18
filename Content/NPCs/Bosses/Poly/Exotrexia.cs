@@ -6,7 +6,6 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalamityMod;
 using CalRemix.Core.World;
 using CalamityMod.Events;

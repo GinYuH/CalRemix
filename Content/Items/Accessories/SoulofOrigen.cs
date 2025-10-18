@@ -7,7 +7,6 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using CalRemix.Content.Items.Weapons;
 using CalRemix.UI;
 
 namespace CalRemix.Content.Items.Accessories

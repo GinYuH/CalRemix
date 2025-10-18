@@ -1,8 +1,5 @@
 ﻿using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

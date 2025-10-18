@@ -5,18 +5,13 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Localization;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria.Audio;
 using System.Collections.Generic;
 using CalamityMod;
 using Terraria.GameContent;
 using Terraria.DataStructures;
-using System.Linq;
-using CalamityMod.Projectiles.Melee;
 using SubworldLibrary;
 using CalRemix.Core.Subworlds;
-using Microsoft.CodeAnalysis.Text;
-using Newtonsoft.Json;
 using CalamityMod.Graphics.Primitives;
 
 namespace CalRemix.Content.Tiles.Subworlds.Piggy

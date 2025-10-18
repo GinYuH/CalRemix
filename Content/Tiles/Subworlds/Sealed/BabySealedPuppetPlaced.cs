@@ -1,28 +1,15 @@
-﻿
-using CalamityMod;
-using CalamityMod.Items.Accessories;
-using CalamityMod.NPCs.Crags;
-using CalamityMod.Particles;
-using CalRemix.Content.Items.Critters;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Misc;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalRemix.Content.Items.Potions;
-using Microsoft.CodeAnalysis.CSharp;
+﻿using CalRemix.Content.Items.Materials;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Utilities;
 
 namespace CalRemix.Content.Tiles
 {

@@ -6,10 +6,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using static System.MathF;
 using static Terraria.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
-using static CalRemix.CalRemixHelper;
 
 namespace CalRemix.Content.NPCs.Bosses.Noxus
 {

@@ -5,7 +5,6 @@ using CalamityMod.NPCs;
 using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Signus;
 using CalamityMod.NPCs.StormWeaver;
-using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using System.Linq;
 using Terraria;

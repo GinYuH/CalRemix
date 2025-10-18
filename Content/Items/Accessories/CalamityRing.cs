@@ -1,8 +1,6 @@
-﻿using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
+﻿using CalamityMod.Rarities;
 using CalRemix.UI;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Accessories

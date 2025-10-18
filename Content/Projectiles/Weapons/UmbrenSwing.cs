@@ -1,11 +1,7 @@
-﻿using System;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Items.Weapons.Melee;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;

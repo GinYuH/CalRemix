@@ -3,7 +3,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using Terraria.GameContent.ItemDropRules;
 using Microsoft.Xna.Framework;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Materials;

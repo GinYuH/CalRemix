@@ -1,14 +1,11 @@
 ﻿using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
-using CalamityMod.NPCs.SupremeCalamitas;
 using System;
 using CalamityMod.Projectiles.Boss;
-using System.Diagnostics;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
 {

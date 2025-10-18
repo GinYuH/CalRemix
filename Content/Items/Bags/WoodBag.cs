@@ -1,11 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using CalamityMod.Rarities;
-using CalamityMod.Items.Materials;
-using Terraria.GameContent.UI;
 using Terraria.ID;
-using Terraria.GameContent.ItemDropRules;
 using CalamityMod;
 using CalamityMod.Items.Placeables;
 using CalRemix.Core.World;

@@ -1,14 +1,9 @@
 ﻿using CalamityMod;
-using CalamityMod.Projectiles.Typeless;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
-using System;
 using Terraria.ModLoader;
-using CalamityMod.Projectiles.Magic;
 using CalRemix.Content.Projectiles.Hostile;
-using Humanizer;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {

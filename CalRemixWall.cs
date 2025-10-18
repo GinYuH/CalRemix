@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
+﻿using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalRemix.Core.Biomes;
 using Terraria;
 using Terraria.ID;

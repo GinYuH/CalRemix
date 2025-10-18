@@ -7,7 +7,6 @@ using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CalRemix.Content.Particles;
-using CalRemix.Core;
 using CalRemix.Core.Graphics;
 using Terraria;
 using Terraria.Audio;

@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.GameContent.ItemDropRules;
 using CalRemix.Content.Items.Materials;
-using CalamityMod.Buffs.StatDebuffs;
 using Terraria.ModLoader.Utilities;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Microsoft.Xna.Framework;
 
 namespace CalRemix.Content.NPCs
 {

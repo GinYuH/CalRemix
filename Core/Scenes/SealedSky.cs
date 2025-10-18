@@ -7,7 +7,6 @@ using SubworldLibrary;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 
 namespace CalRemix.Content.NPCs.Bosses.Carcinogen
 {

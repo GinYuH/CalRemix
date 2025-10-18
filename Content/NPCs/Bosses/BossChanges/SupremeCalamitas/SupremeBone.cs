@@ -2,7 +2,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
-using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod;
 using Terraria.Audio;
 using System;

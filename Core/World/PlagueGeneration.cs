@@ -3,14 +3,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using CalamityMod.World;
-using CalRemix.Core.Backgrounds.Plague;
 using CalRemix.Content.Projectiles;
-using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.PlaguedJungle;
-using System;
-using SubworldLibrary;
-using CalRemix.Core.Subworlds;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix.Core.World
 {

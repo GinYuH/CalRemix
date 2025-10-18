@@ -1,8 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.CalPlayer;
-using CalamityMod.Cooldowns;
-using CalamityMod.Items.Accessories;
-using CalRemix.Content.NPCs.Bosses.Origen;
 using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

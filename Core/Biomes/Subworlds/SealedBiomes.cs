@@ -1,11 +1,9 @@
-﻿using CalRemix.Core.Backgrounds;
-using CalRemix.Core.Subworlds;
+﻿using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using Terraria;
 using Terraria.Graphics.Capture;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Core.Biomes

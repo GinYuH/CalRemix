@@ -10,7 +10,6 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using CalRemix.UI;
 using Terraria.ModLoader.Default;
-using System.Linq;
 
 namespace CalRemix.Content.Items.Accessories
 {

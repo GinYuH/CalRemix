@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.Items.Placeables;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
+﻿using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

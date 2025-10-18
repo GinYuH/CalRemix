@@ -1,17 +1,6 @@
 ﻿using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatBuffs;
 using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.NPCs.Polterghast;
-using CalRemix.Content.Items.Placeables;
-using CalRemix.Content.Items.Weapons.Stormbow;
-using CalRemix.Content.NPCs.Bosses.Hypnos;
-using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

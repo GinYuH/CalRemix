@@ -1,13 +1,8 @@
-﻿using CalamityMod;
-using CalRemix.Content.NPCs.Bosses.Pyrogen;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
+﻿using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Core.Backgrounds;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using static CalRemix.Content.NPCs.Bosses.Pyrogen.Pyrogen;
 
 namespace CalRemix.Core.Scenes
 {

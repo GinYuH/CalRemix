@@ -1,10 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using CalamityMod.Items;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
-using CalRemix.Content.Walls;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
 {

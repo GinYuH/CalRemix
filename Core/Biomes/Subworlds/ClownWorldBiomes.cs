@@ -1,5 +1,4 @@
 ﻿using CalRemix.Core.Subworlds;
-using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
@@ -8,7 +7,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Capture;
 using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace CalRemix.Core.Biomes.Subworlds

@@ -1,16 +1,10 @@
-﻿using System;
-using CalamityMod;
+﻿using CalamityMod;
 using CalamityMod.Items;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Rarities;
 using CalamityMod.Sounds;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.DamageClasses;
-using CalRemix.Content.Projectiles.Weapons;
-using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

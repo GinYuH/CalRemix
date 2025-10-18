@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
@@ -8,9 +7,6 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
-using Terraria.GameContent.Animations;
-using CalRemix.Core.World;
-using Humanizer;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {

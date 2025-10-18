@@ -6,12 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
-using CalamityMod.Items.Materials;
-using CalRemix.Content.Items.Armor;
-using CalamityMod.Sounds;
-using CalRemix.Content.Projectiles.Hostile;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using CalRemix.Content.Items.Weapons.Stormbow;
 
 namespace CalRemix.Content.Items.Bags

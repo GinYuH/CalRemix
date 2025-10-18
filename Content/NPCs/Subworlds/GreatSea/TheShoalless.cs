@@ -2,17 +2,10 @@
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Content.Items.Placeables;
 using CalRemix.Core.Biomes;
-using CalamityMod.BiomeManagers;
-using CalRemix.Content.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using CalRemix.Content.NPCs.Bosses.Origen;
-using Newtonsoft.Json.Linq;
-using Terraria.Audio;
 using Terraria.GameContent;
 using System;
 

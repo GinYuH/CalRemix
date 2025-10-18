@@ -1,9 +1,7 @@
-﻿using CalamityMod.Items.Accessories.Wings;
-using CalamityMod.Items.Materials;
+﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
 using CalRemix.Content.Items.Placeables;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 

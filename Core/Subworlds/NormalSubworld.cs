@@ -2,15 +2,9 @@
 using Terraria;
 using SubworldLibrary;
 using Terraria.WorldBuilding;
-using Terraria.IO;
-using Terraria.ModLoader;
-using CalamityMod.Tiles.FurnitureExo;
-using System;
-using CalamityMod.Tiles.Ores;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.GameContent.Generation;
-using CalRemix.Core.World;
 
 namespace CalRemix.Core.Subworlds
 {

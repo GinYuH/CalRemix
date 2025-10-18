@@ -16,7 +16,6 @@ using CalamityMod.NPCs.TownNPCs;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Weapons;
-using CalRemix.UI.Logs;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;

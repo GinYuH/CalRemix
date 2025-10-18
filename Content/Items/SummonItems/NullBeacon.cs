@@ -1,10 +1,8 @@
 ﻿using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Items.Materials;
-using CalRemix.Core.World;
 
 namespace CalRemix.Content.Items.SummonItems
 {

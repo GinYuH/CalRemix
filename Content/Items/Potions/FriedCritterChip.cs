@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

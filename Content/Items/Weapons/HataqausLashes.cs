@@ -1,6 +1,5 @@
 ﻿using CalamityMod.Items;
 using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;

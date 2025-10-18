@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
@@ -14,13 +13,11 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Sounds;
 using CalamityMod.Particles;
 using CalRemix.UI;
 using System.Linq;
 using System.IO;
-using CalamityMod.NPCs.NormalNPCs;
 using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed

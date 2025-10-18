@@ -1,17 +1,14 @@
 ﻿using CalamityMod;
-using CalamityMod.Dusts;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.Particles;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Items.Potions;
-using CalRemix.Content.Tiles.PlaguedJungle;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;

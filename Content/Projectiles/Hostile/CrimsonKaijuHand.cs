@@ -1,7 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
-using CalamityMod.Projectiles.Boss;
-using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Eclipse;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -1,24 +1,7 @@
-﻿using CalamityMod;
-using CalamityMod.Dusts;
-using CalamityMod.NPCs.Cryogen;
-using CalamityMod.Particles;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalRemix.Content.Tiles.PlaguedJungle;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.GameContent;
-using Terraria.GameContent.Metadata;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 
 namespace CalRemix.Content.Tiles.Subworlds.Sealed
 {

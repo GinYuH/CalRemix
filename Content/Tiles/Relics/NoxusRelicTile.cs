@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using CalRemix.Content.Items;
 using ReLogic.Content;
 using System;
 using Terraria;

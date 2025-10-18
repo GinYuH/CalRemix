@@ -1,14 +1,12 @@
 ﻿using CalamityMod.Graphics.Primitives;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config.UI;
 
 namespace CalRemix.Content.Items.Mounts
 {

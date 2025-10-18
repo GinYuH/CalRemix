@@ -1,10 +1,7 @@
-﻿using CalamityMod;
-using CalamityMod.Particles;
-using CalamityMod.Projectiles.Rogue;
+﻿using CalamityMod.Projectiles.Rogue;
 using CalRemix.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
