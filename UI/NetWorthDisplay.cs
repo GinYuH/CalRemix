@@ -25,7 +25,7 @@ namespace CalRemix.UI
             IL_Main.DrawInfoAccs += NetworthDisplayProperly;
         }
 
-        private void NetworthDisplayProperly(MonoMod.Cil.ILContext il)
+        private void NetworthDisplayProperly(ILContext il)
         {
             var cursor = new ILCursor(il);
 

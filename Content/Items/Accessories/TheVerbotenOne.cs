@@ -175,7 +175,7 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient<QuiverofMadness>().
                 AddIngredient<MagnaCore>().
                 AddIngredient<ZenithArcanum>().
-                AddIngredient<CalamityMod.Items.Accessories.Nanotech>().
+                AddIngredient<Nanotech>().
                 AddIngredient<RoguesLootbox>().
                 AddIngredient<StatisVoidSash>().
                 AddIngredient<AsgardianAegis>().
@@ -206,7 +206,7 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient<QuiverofMadness>().
                 AddIngredient<MagnaCore>().
                 AddIngredient<ZenithArcanum>().
-                AddIngredient<CalamityMod.Items.Accessories.Nanotech>().
+                AddIngredient<Nanotech>().
                 AddIngredient<RoguesLootbox>().
                 AddIngredient<StatisVoidSash>().
                 AddIngredient<AsgardianAegis>().

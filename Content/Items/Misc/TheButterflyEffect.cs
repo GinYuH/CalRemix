@@ -22,7 +22,7 @@ namespace CalRemix.Content.Items.Misc
             Item.useAnimation = 15;
             Item.rare = ModContent.RarityType<CalamityRed>();
             Item.value = 0;
-            Item.makeNPC = (short)ModContent.NPCType<NPCs.FunnyButterfly>();
+            Item.makeNPC = (short)ModContent.NPCType<FunnyButterfly>();
         }
         public override bool CanUseItem(Player player) => !NPC.AnyNPCs(ModContent.NPCType<FunnyButterfly>());
         public override void AddRecipes()

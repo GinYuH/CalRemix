@@ -106,7 +106,7 @@ namespace CalRemix.UI.SubworldMap
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, hitbox.Center.ToVector2(), resizedHitbox, item.unlockCondition.Invoke() ? Color.White : Color.Gray, rot, hitbox.Size() / 2, 1, 0, 0);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, portraitRect.Center.ToVector2(), portraitRect, Color.Black, rot, portraitRect.Size() / 2, 1, 0, 0);
 
-                if (ModContent.RequestIfExists<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key, out Asset<Texture2D> asset))
+                if (ModContent.RequestIfExists("CalRemix/UI/SubworldMap/" + pair.Key, out Asset<Texture2D> asset))
                 {
                     spriteBatch.Draw(asset.Value, portraitRect.Center.ToVector2(), null, Color.White, rot, asset.Value.Size() / 2, 1, 0, 0);
                 }

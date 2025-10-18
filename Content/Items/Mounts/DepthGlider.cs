@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Mounts
     {
         public override void SetStaticDefaults()
         {
-            MountData.buff = ModContent.BuffType<Content.Buffs.DepthGliderBuff>();
+            MountData.buff = ModContent.BuffType<Buffs.DepthGliderBuff>();
             MountData.heightBoost = 15;
             MountData.fallDamage = 0f;
             MountData.runSpeed = 14f;

@@ -25,9 +25,9 @@ namespace CalRemix.Core.Subworlds
 
         public override void Load()
         {
-            updateOvergroundInfo = typeof(Terraria.WorldGen).GetMethod("UpdateWorld_OvergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
-            updateUndergroundInfo = typeof(Terraria.WorldGen).GetMethod("UpdateWorld_UndergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
-            ugGrassFieldButNotLikeAnActualGrassFieldTheGrassIsntGrowingOnTheFieldButInIt = typeof(Terraria.WorldGen).GetField("growGrassUnderground", BindingFlags.Static | BindingFlags.NonPublic);
+            updateOvergroundInfo = typeof(WorldGen).GetMethod("UpdateWorld_OvergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
+            updateUndergroundInfo = typeof(WorldGen).GetMethod("UpdateWorld_UndergroundTile", BindingFlags.Static | BindingFlags.NonPublic);
+            ugGrassFieldButNotLikeAnActualGrassFieldTheGrassIsntGrowingOnTheFieldButInIt = typeof(WorldGen).GetField("growGrassUnderground", BindingFlags.Static | BindingFlags.NonPublic);
         }
 
         public static void UpdateLiquids()

@@ -38,7 +38,7 @@ namespace CalRemix.Content.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            if (Main.LocalPlayer.TryGetModPlayer<CalRemixPlayer>(out CalRemixPlayer p) && !p.anomaly109UI)
+            if (Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer p) && !p.anomaly109UI)
             {
                 p.anomaly109UI = true;
                 return true;

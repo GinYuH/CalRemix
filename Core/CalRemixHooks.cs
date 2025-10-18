@@ -380,7 +380,7 @@ namespace CalRemix.Core
             orig(self);
         }
 
-        private static void AddDyeStats(Terraria.On_Player.orig_UpdateItemDye orig, Player self, bool isNotInVanitySlot, bool isSetToHidden, Item armorItem, Item dyeItem)
+        private static void AddDyeStats(On_Player.orig_UpdateItemDye orig, Player self, bool isNotInVanitySlot, bool isSetToHidden, Item armorItem, Item dyeItem)
         {
             orig(self, isNotInVanitySlot, isSetToHidden, armorItem, dyeItem);
             if (armorItem.IsAir || !CalRemixWorld.dyeStats)
@@ -641,7 +641,7 @@ namespace CalRemix.Core
         private static bool SendToFannyDimension(On_IngameOptions.orig_DrawLeftSide orig, SpriteBatch sb, string txt, int i, Vector2 anchor, Vector2 offset, float[] scales, float minscale, float maxscale, float scalespeed)
         {
             bool flag = false;
-            FieldInfo leftMapping = typeof(Terraria.IngameOptions).GetField("_leftSideCategoryMapping", BindingFlags.NonPublic | BindingFlags.Static);
+            FieldInfo leftMapping = typeof(IngameOptions).GetField("_leftSideCategoryMapping", BindingFlags.NonPublic | BindingFlags.Static);
             Dictionary<int, int> modsList = (Dictionary<int, int>)leftMapping.GetValue(null);
             if (modsList.TryGetValue(i, out var value))
             {
@@ -661,7 +661,7 @@ namespace CalRemix.Core
             Vector2 vector = Utils.DrawBorderStringBig(sb, txt, anchor + offset * (1 + i), color, scales[i] * (txt == "A Fan-tastic time awaits!" ? 0.8f : 1f), 0.5f, 0.5f);
             bool flag2 = new Rectangle((int)anchor.X - (int)vector.X / 2, (int)anchor.Y + (int)(offset.Y * (float)(1 + i)) - (int)vector.Y / 2, (int)vector.X, (int)vector.Y).Contains(new Point(Main.mouseX, Main.mouseY));
 
-            FieldInfo canConsume = typeof(Terraria.IngameOptions).GetField("_canConsumeHover", BindingFlags.NonPublic | BindingFlags.Static);
+            FieldInfo canConsume = typeof(IngameOptions).GetField("_canConsumeHover", BindingFlags.NonPublic | BindingFlags.Static);
             bool consumeHover = (bool)canConsume.GetValue(null);
             if (!consumeHover)
             {
@@ -772,8 +772,8 @@ namespace CalRemix.Core
         }
         private static SlotId PlayInerr(in SoundStyle style, Vector2? position, SoundUpdateCallback c)
         {
-            FieldInfo tracc = typeof(Terraria.Audio.SoundPlayer).GetField("_trackedSounds", BindingFlags.NonPublic | BindingFlags.Instance);
-            ReLogic.Utilities.SlotVector<ActiveSound> consumeHover = (ReLogic.Utilities.SlotVector<ActiveSound>)tracc.GetValue(Terraria.Audio.SoundEngine.SoundPlayer);
+            FieldInfo tracc = typeof(SoundPlayer).GetField("_trackedSounds", BindingFlags.NonPublic | BindingFlags.Instance);
+            SlotVector<ActiveSound> consumeHover = (SlotVector<ActiveSound>)tracc.GetValue(Terraria.Audio.SoundEngine.SoundPlayer);
 
             //ReLogic.Utilities.SlotVector<ActiveSound>
             int maxInstances = style.MaxInstances;

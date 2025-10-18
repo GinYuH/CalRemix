@@ -130,7 +130,7 @@ namespace CalRemix.Core.Graphics
         }
 
         // The purpose of this is to make these all work together and apply in the correct order.
-        private void EndCaptureManager(Terraria.Graphics.Effects.On_FilterManager.orig_EndCapture orig, FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
+        private void EndCaptureManager(On_FilterManager.orig_EndCapture orig, FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
         {
             // Draw the screen effects first.
             screenTarget1 = DrawBlurEffect(screenTarget1);

@@ -77,7 +77,7 @@ namespace CalRemix.Core.Graphics
             Main.spriteBatch.End();
         }
 
-        private void DrawMetaballsAfterProjectiles(Terraria.On_Main.orig_DrawProjectiles orig, Main self)
+        private void DrawMetaballsAfterProjectiles(On_Main.orig_DrawProjectiles orig, Main self)
         {
             orig(self);
 
@@ -86,7 +86,7 @@ namespace CalRemix.Core.Graphics
             Main.spriteBatch.End();
         }
 
-        private void DrawMetaballsBeforeNPCs(Terraria.On_Main.orig_DrawNPCs orig, Main self, bool behindTiles)
+        private void DrawMetaballsBeforeNPCs(On_Main.orig_DrawNPCs orig, Main self, bool behindTiles)
         {
             if (!behindTiles)
             {

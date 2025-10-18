@@ -204,7 +204,7 @@ namespace CalRemix.Content.Tiles
                 mincingTimer--;
                 if (mincingTimer <= 0)
                 {
-                    Item choice = Utils.SelectRandom<Item>(Main.rand, minceables[itemID].items.ToArray());
+                    Item choice = Utils.SelectRandom(Main.rand, minceables[itemID].items.ToArray());
                     int i = Item.NewItem(new EntitySource_TileEntity(this), (Position.X + 1) * 16, (Position.Y + 1) * 16, 2, 2, choice.type, choice.stack);
                     Main.item[i].velocity.Y = 4;
                     Main.item[i].velocity.X = 0;

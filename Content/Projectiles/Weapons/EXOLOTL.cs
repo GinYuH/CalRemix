@@ -77,7 +77,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                         {
                             Vector2 velocity = Vector2.Normalize(Projectile.velocity) * -10f;
                             SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LaserCannonSound with { Volume = CalamityMod.Sounds.CommonCalamitySounds.LaserCannonSound.Volume - 0.1f }, Projectile.Center);
-                            Projectile p = Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + (Vector2.UnitX * ((Projectile.velocity.X >= 0) ? -1 : 1) * Projectile.width).RotatedBy(Projectile.rotation), velocity, ModContent.ProjectileType<CalamityMod.Projectiles.Summon.AstrageldonLaser>(), Projectile.damage, Projectile.knockBack)];
+                            Projectile p = Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + (Vector2.UnitX * ((Projectile.velocity.X >= 0) ? -1 : 1) * Projectile.width).RotatedBy(Projectile.rotation), velocity, ModContent.ProjectileType<AstrageldonLaser>(), Projectile.damage, Projectile.knockBack)];
                             p.tileCollide = false;
                             if (p.whoAmI.WithinBounds(Main.maxProjectiles))
                             {
@@ -193,7 +193,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                     {
                         Vector2 velocity = Vector2.Normalize(Projectile.velocity) * -10f;
                         SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.LaserCannonSound with { Volume = CalamityMod.Sounds.CommonCalamitySounds.LaserCannonSound.Volume - 0.1f }, Projectile.Center);
-                        Projectile p = Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + (Vector2.UnitX * ((Projectile.velocity.X >= 0) ? -1 : 1) * Projectile.width).RotatedBy(Projectile.rotation), velocity, ModContent.ProjectileType<CalamityMod.Projectiles.Summon.AstrageldonLaser>(), Projectile.damage, Projectile.knockBack)];
+                        Projectile p = Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + (Vector2.UnitX * ((Projectile.velocity.X >= 0) ? -1 : 1) * Projectile.width).RotatedBy(Projectile.rotation), velocity, ModContent.ProjectileType<AstrageldonLaser>(), Projectile.damage, Projectile.knockBack)];
                         p.tileCollide = false;
                         if (p.whoAmI.WithinBounds(Main.maxProjectiles))
                         {

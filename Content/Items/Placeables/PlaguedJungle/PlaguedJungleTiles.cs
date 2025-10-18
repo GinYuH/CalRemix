@@ -23,7 +23,7 @@ namespace CalRemix.Content.Items.Placeables.PlaguedJungle
 		public override void AddRecipes()
         {
             CreateRecipe().
-            AddIngredient(ModContent.ItemType<Items.Placeables.PlaguedJungle.PlaguedMudWall>(), 1).
+            AddIngredient(ModContent.ItemType<PlaguedMudWall>(), 1).
             AddTile(TileID.WorkBenches).
             Register();
 		}
@@ -108,7 +108,7 @@ namespace CalRemix.Content.Items.Placeables.PlaguedJungle
 		public override void AddRecipes()
         {
             CreateRecipe(4).
-            AddIngredient(ModContent.ItemType<Items.Placeables.PlaguedJungle.PlaguedMud>(), 1).
+            AddIngredient(ModContent.ItemType<PlaguedMud>(), 1).
             AddTile(TileID.WorkBenches).
             Register();
 		}
@@ -129,7 +129,7 @@ namespace CalRemix.Content.Items.Placeables.PlaguedJungle
 		public override void AddRecipes()
         {
             CreateRecipe(4).
-			AddIngredient(ModContent.ItemType<Items.Placeables.PlaguedJungle.PlaguedStone>(), 1).
+			AddIngredient(ModContent.ItemType<PlaguedStone>(), 1).
 			AddTile(TileID.WorkBenches).
 			Register();
 		}

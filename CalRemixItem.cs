@@ -240,9 +240,9 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.IchorSpear>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.PalladiumJavelin>())
+                if (item.type == ItemType<PalladiumJavelin>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.PalJav>();
+                    item.shoot = ProjectileType<PalJav>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.CrystalPiercer>())
@@ -252,17 +252,17 @@ namespace CalRemix
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.DraedonsArsenal.FrequencyManipulator>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.FreqManip>();
+                    item.shoot = ProjectileType<FreqManip>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ScourgeoftheSeas>())
+                if (item.type == ItemType<ScourgeoftheSeas>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.ScourgeSea>();
+                    item.shoot = ProjectileType<ScourgeSea>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.SpearofPaleolith>())
+                if (item.type == ItemType<SpearofPaleolith>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Paleolith>();
+                    item.shoot = ProjectileType<Paleolith>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.WaveSkipper>())
@@ -270,9 +270,9 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.WaveSkipper>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.SpearofDestiny>())
+                if (item.type == ItemType<SpearofDestiny>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.SpearDestiny>();
+                    item.shoot = ProjectileType<SpearDestiny>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.PhantasmalRuin>())
@@ -280,9 +280,9 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.PhantasmalRuin>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ShardofAntumbra>())
+                if (item.type == ItemType<ShardofAntumbra>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Antumbra>();
+                    item.shoot = ProjectileType<Antumbra>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ProfanedPartisan>())
@@ -290,9 +290,9 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.ProfanedPartisan>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.RealityRupture>())
+                if (item.type == ItemType<RealityRupture>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.RealityRapture>();
+                    item.shoot = ProjectileType<RealityRapture>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.NightsGaze>())
@@ -300,14 +300,14 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.NightsGaze>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.EclipsesFall>())
+                if (item.type == ItemType<EclipsesFall>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.EclipseFall>();
+                    item.shoot = ProjectileType<EclipseFall>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.TheAtomSplitter>())
+                if (item.type == ItemType<TheAtomSplitter>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.AtomSplitter>();
+                    item.shoot = ProjectileType<AtomSplitter>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 /*if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.Wrathwing>()) he does not cooperate
@@ -320,7 +320,7 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.ScarletDevil>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Melee.ArkoftheCosmos>())
+                if (item.type == ItemType<ArkoftheCosmos>())
                 {
                     item.shoot = ProjectileType<Ark>();
                 }

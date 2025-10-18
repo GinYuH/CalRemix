@@ -3911,7 +3911,7 @@ namespace CalRemix.Core.Subworlds
                         num209 = GenVars.logY;
                         GenVars.logX = -1;
                     }
-                    int num210 = WorldGen.genRand.NextFromList<int>(21, 24, 27, 30, 33, 36, 39, 42);
+                    int num210 = WorldGen.genRand.NextFromList(21, 24, 27, 30, 33, 36, 39, 42);
                     for (int num211 = num206 - num207; num211 < num206 + num207; num211++)
                     {
                         for (int num212 = num209 - num208; num212 < num209 + num208; num212++)
@@ -4078,7 +4078,7 @@ namespace CalRemix.Core.Subworlds
                                 num213 = GenVars.logY;
                                 GenVars.logX = -1;
                             }
-                            int num214 = WorldGen.genRand.NextFromList<int>(21, 24, 27, 30, 33, 36, 39, 42);
+                            int num214 = WorldGen.genRand.NextFromList(21, 24, 27, 30, 33, 36, 39, 42);
                             for (int num215 = num206 - num207; num215 < num206 + num207; num215++)
                             {
                                 for (int num216 = num213 - num208; num216 < num213 + num208; num216++)

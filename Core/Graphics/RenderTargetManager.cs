@@ -14,7 +14,7 @@ namespace CalRemix.Core.Graphics
 
         public static event RenderTargetUpdateDelegate RenderTargetUpdateLoopEvent;
 
-        internal static void ResetTargetSizes(Terraria.On_Main.orig_SetDisplayMode orig, int width, int height, bool fullscreen)
+        internal static void ResetTargetSizes(On_Main.orig_SetDisplayMode orig, int width, int height, bool fullscreen)
         {
             foreach (ManagedRenderTarget target in ManagedTargets)
             {

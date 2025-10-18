@@ -947,7 +947,7 @@ namespace CalRemix
                         "Exo",
                         "Maze"
                     };
-                    jumpscareType = Utils.SelectRandom<string>(Main.rand, [.. keys]);
+                    jumpscareType = Utils.SelectRandom(Main.rand, [.. keys]);
                 }
                 jumpscare = EclipseJumpscares.jumpscareTypes[jumpscareType];
                 jumpscareTimer = jumpscare.duration + 60;

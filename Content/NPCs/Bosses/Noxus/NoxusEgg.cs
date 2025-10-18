@@ -82,7 +82,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             Terraria.On_NPC.DoDeathEvents_DropBossPotionsAndHearts += DisableNoxusEggBossDeathEffects;
         }
 
-        private void DisableNoxusEggBossDeathEffects(Terraria.On_NPC.orig_DoDeathEvents_DropBossPotionsAndHearts orig, NPC self, ref string typeName)
+        private void DisableNoxusEggBossDeathEffects(On_NPC.orig_DoDeathEvents_DropBossPotionsAndHearts orig, NPC self, ref string typeName)
         {
             if (self.type != Type)
                 orig(self, ref typeName);

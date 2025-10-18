@@ -179,7 +179,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             foreach (Player p in Main.ActivePlayers)
             {
-                if (p.TryGetModPlayer<CalamityPlayer>(out CalamityPlayer calp))
+                if (p.TryGetModPlayer(out CalamityPlayer calp))
                 {
                     calp.infiniteFlight = true;
                 }

@@ -115,7 +115,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                 );
             };*/
 
-            var boss = BossRushEvent.Bosses.First(x => x.EntityID == ModContent.NPCType<CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas>());
+            var boss = BossRushEvent.Bosses.First(x => x.EntityID == ModContent.NPCType<SCal>());
             boss.HostileNPCsToNotDelete.Add(ModContent.NPCType<SupremeSkeletron>());
             boss.HostileNPCsToNotDelete.Add(ModContent.NPCType<SupremeSkeletronHand>());
         }
@@ -155,7 +155,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         }
         public override void AI()
         {
-            int cala = NPC.FindFirstNPC(ModContent.NPCType<CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas>());
+            int cala = NPC.FindFirstNPC(ModContent.NPCType<SCal>());
             if (cala > -1)
             {
                 NPC calamitas = Main.npc[cala];

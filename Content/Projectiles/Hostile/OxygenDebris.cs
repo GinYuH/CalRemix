@@ -61,7 +61,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                 float hyposx = pivot.X - (int)(Math.Cos(rad) * distance) - Projectile.width / 2;
                 float hyposy = pivot.Y - (int)(Math.Sin(rad) * distance) - Projectile.height / 2;
 
-                Projectile.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                Projectile.position = new Vector2(hyposx, hyposy);
             }
 
         }

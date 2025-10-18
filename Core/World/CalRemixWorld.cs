@@ -1156,7 +1156,7 @@ namespace CalRemix.Core.World
             // Life Ore tiles
             lifeTiles = tileCounts[TileType<LifeOreTile>()];
             asbestosTiles = tileCounts[TileType<AsbestosPlaced>()];
-            vernalTiles = tileCounts[TileType<CalamityMod.Tiles.VernalSoil>()];
+            vernalTiles = tileCounts[TileType<VernalSoil>()];
             PlagueTiles = tileCounts[TileType<PlaguedGrass>()] +
             tileCounts[TileType<PlaguedMud>()] +
             tileCounts[TileType<PlaguedStone>()] +

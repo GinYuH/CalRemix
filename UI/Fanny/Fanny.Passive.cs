@@ -108,7 +108,7 @@ namespace CalRemix.UI
             {
                 if (Directory.Exists("C:\\Program Files (x86)\\Steam\\steamapps\\common\\"))
                 {
-                    List<string> games = Directory.GetDirectories("C:\\Program Files (x86)\\Steam\\steamapps\\common\\").ToList<string>();
+                    List<string> games = Directory.GetDirectories("C:\\Program Files (x86)\\Steam\\steamapps\\common\\").ToList();
                     if (games.Count > 0)
                     {
                         List<string> noTerraria = new List<string>();

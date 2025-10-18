@@ -74,7 +74,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
 
         public override void AI()
         {
-            Microsoft.Xna.Framework.Point p = NPC.Bottom.ToSafeTileCoordinates();
+            Point p = NPC.Bottom.ToSafeTileCoordinates();
             int groundHeight = 0;
             for (int i = 0; i < 10; i++)
             {
@@ -177,7 +177,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         {
             npcOffset = Vector2.UnitY * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 3) * 4;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 offset = NPC.Center - screenPos + npcOffset;
             Texture2D balloons = ModContent.Request<Texture2D>("Terraria/Images/Item_1164").Value;

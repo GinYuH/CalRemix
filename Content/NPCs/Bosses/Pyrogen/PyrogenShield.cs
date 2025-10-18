@@ -101,7 +101,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
-                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                            NPC.position = new Vector2(hyposx, hyposy);
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
@@ -120,11 +120,11 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             
                             if (NPC.localAI[1] <= Pyrogen.BlackholeSafeTime)
                             {
-                                NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                                NPC.position = new Vector2(hyposx, hyposy);
                             }
                             else if (NPC.localAI[1] < 600)
                             {
-                                NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                                NPC.position = new Vector2(hyposx, hyposy);
                                 NPC.damage = 200;
                             }
 
@@ -138,7 +138,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 distance = 100;
                                 hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                                 hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
-                                NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                                NPC.position = new Vector2(hyposx, hyposy);
                                 NPC.damage = 0;
                             }
                             if (pyro.ai[3] == 720) // done! restoring contact damage...
@@ -147,7 +147,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 NPC.localAI[1] = 0;
                             }
 
-                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                            NPC.position = new Vector2(hyposx, hyposy);
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
@@ -162,7 +162,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
-                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                            NPC.position = new Vector2(hyposx, hyposy);
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
@@ -176,7 +176,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
-                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                            NPC.position = new Vector2(hyposx, hyposy);
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                             break;
                         }
@@ -190,7 +190,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float hyposx = pyro.Center.X - (int)(Math.Cos(rad) * distance) - NPC.width / 2;
                             float hyposy = pyro.Center.Y - (int)(Math.Sin(rad) * distance) - NPC.height / 2;
 
-                            NPC.position = new Microsoft.Xna.Framework.Vector2(hyposx, hyposy);
+                            NPC.position = new Vector2(hyposx, hyposy);
                             NPC.rotation = NPC.DirectionTo(pyro.Center).ToRotation() - MathHelper.PiOver2;
                         }
                         break;

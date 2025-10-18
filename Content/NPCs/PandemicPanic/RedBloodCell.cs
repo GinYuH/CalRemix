@@ -67,12 +67,12 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 12, ProjectileID.BloodNautilusShot, CalRemixHelper.ProjectileDamage(140, 200), 0f);
                     }
                     NPC.velocity *= 0;
-                    NPC.position = Vector2.Lerp(NPC.position, new Microsoft.Xna.Framework.Vector2(hyposx, hyposy), 0.1f);
+                    NPC.position = Vector2.Lerp(NPC.position, new Vector2(hyposx, hyposy), 0.1f);
                 }
                 else
                 {
 
-                    NPC.velocity = NPC.DirectionTo(new Microsoft.Xna.Framework.Vector2(hyposx, hyposy)) * 8;
+                    NPC.velocity = NPC.DirectionTo(new Vector2(hyposx, hyposy)) * 8;
                 }
             }
             else

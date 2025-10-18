@@ -176,10 +176,10 @@ namespace CalRemix
             NPCID.QueenSlimeMinionPink,
             NPCID.QueenSlimeMinionPurple,
             NPCType<AeroSlime>(),
-            NPCType<CalamityMod.NPCs.Astral.AstralSlime>(),
-            NPCType<CalamityMod.NPCs.PlagueEnemies.PestilentSlime>(),
+            NPCType<AstralSlime>(),
+            NPCType<PestilentSlime>(),
             NPCType<BloomSlime>(),
-            NPCType<CalamityMod.NPCs.Crags.InfernalCongealment>(),
+            NPCType<InfernalCongealment>(),
             NPCType<PerennialSlime>(),
             NPCType<CryoSlime>(),
             NPCType<GammaSlime>(),
@@ -1153,7 +1153,7 @@ namespace CalRemix
             }
             if (!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type))
             {
-                if (npc.GetGlobalNPC<CalamityMod.NPCs.CalamityGlobalNPC>().pearlAura > 0)
+                if (npc.GetGlobalNPC<CalamityGlobalNPC>().pearlAura > 0)
                     npc.AddBuff(BuffType<CalamityMod.Buffs.StatDebuffs.GlacialState>(), 60);
             }
             if (npc.GetGlobalNPC<CalRemixNPC>().clawed > 0)
@@ -2335,7 +2335,7 @@ namespace CalRemix
 
         public static void ClearPool(ref IDictionary<int, float> pool)
         {
-            List<int> keys = pool.Keys.ToList<int>();
+            List<int> keys = pool.Keys.ToList();
             foreach (int key in keys)
             {
                 pool[key] = 0;
@@ -2343,7 +2343,7 @@ namespace CalRemix
         }
         public static void TryInjectSpawn(ref IDictionary<int, float> pool, int id, float chance)
         {
-            List<int> keys = pool.Keys.ToList<int>();
+            List<int> keys = pool.Keys.ToList();
             if (keys.Contains(id))
             {
                 pool[id] = chance;

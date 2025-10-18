@@ -22,7 +22,7 @@ namespace CalRemix.Content.Buffs
             // or ever
             if (player.buffTime[buffIndex] == 0);
             {
-            player.AddBuff(ModContent.BuffType<Buffs.MethLow>(), 216000);
+            player.AddBuff(ModContent.BuffType<MethLow>(), 216000);
             }
         }
     }

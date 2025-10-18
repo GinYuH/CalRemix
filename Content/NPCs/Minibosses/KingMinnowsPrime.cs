@@ -246,7 +246,7 @@ namespace CalRemix.Content.NPCs.Minibosses
 
 
         }
-        void SpawnProjectile(Terraria.Player player, float projectileSpeed, int damage, int knockBack, int type)
+        void SpawnProjectile(Player player, float projectileSpeed, int damage, int knockBack, int type)
 
         {
 

@@ -15,7 +15,7 @@ namespace CalRemix.Core.Graphics
             Terraria.On_Main.DrawProjectiles += DrawShaderProjectiles;
         }
 
-        private void DrawShaderProjectiles(Terraria.On_Main.orig_DrawProjectiles orig, Main self)
+        private void DrawShaderProjectiles(On_Main.orig_DrawProjectiles orig, Main self)
         {
             orig(self);
 
