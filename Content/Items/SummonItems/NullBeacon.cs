@@ -25,6 +25,7 @@ namespace CalRemix.Content.Items.SummonItems
 
         public override bool? UseItem(Player player)
         {
+            if (!NPC.AnyNPCs(ModContent.NPCType<VoidBoss>()))
             if (player.whoAmI == Main.myPlayer)
             {
                 CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<VoidBoss>());
