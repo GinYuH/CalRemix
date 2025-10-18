@@ -23,9 +23,13 @@ namespace CalRemix.Content.Items.SummonItems
             Item.consumable = false;
         }
 
+        public override bool CanUseItem(Player player)
+        {
+            return !NPC.AnyNPCs(ModContent.NPCType<VoidBoss>());
+        }
+
         public override bool? UseItem(Player player)
         {
-            if (!NPC.AnyNPCs(ModContent.NPCType<VoidBoss>()))
             if (player.whoAmI == Main.myPlayer)
             {
                 CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<VoidBoss>());

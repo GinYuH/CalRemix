@@ -15,6 +15,7 @@ using CalRemix.Core.World;
 using Terraria.DataStructures;
 using CalamityMod.Items.Placeables.FurnitureVoid;
 using Terraria.Audio;
+using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -137,10 +138,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             PassiveStuff();
             if (CurrentPhase != PhaseType.SpawnAnimation)
                 SpawnParticles();
-
-            NPC.localAI[0]++;
-            if (NPC.localAI[0] > 90)
-            Timer++;
         }
 
         public void ChangePhase(PhaseType phase)
@@ -179,6 +176,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             {
                 texOffset = Main.rand.NextVector2Circular(100, 100);
             }
+
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (p.TryGetModPlayer<CalamityPlayer>(out CalamityPlayer calp))
+                {
+                    calp.infiniteFlight = true;
+                }
+            }
+
+            NPC.localAI[0]++;
+            if (NPC.localAI[0] > 90)
+                Timer++;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
