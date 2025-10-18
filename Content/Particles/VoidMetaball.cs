@@ -25,11 +25,14 @@ namespace CalRemix.Content.Particles
 
             public Vector2 Center;
 
-            public VoidParticle(Vector2 center, Vector2 velocity, float size)
+            public int BoundNPC;
+
+            public VoidParticle(Vector2 center, Vector2 velocity, float size, int boundNPC = -1)
             {
                 Center = center;
                 Velocity = velocity;
                 Size = size;
+                BoundNPC = boundNPC;
             }
 
             public void Update()
@@ -37,6 +40,18 @@ namespace CalRemix.Content.Particles
                 Size *= 0.94f;
                 Center += Velocity;
                 Velocity *= 0.96f;
+                if (BoundNPC != -1)
+                {
+                    NPC n = Main.npc[BoundNPC];
+                    if (!n.active || n.life <= 0)
+                    {
+                        Size *= 0.8f;
+                    }
+                    else if (n.Distance(Center) > 300)
+                    {
+                        Size *= 0.8f;
+                    }
+                }
             }
         }
 
@@ -84,8 +99,8 @@ namespace CalRemix.Content.Particles
             Particles.RemoveAll(p => p.Size <= 2.5f);
         }
 
-        public static void SpawnParticle(Vector2 position, Vector2 velocity, float size) =>
-            Particles.Add(new(position, velocity, size));
+        public static void SpawnParticle(Vector2 position, Vector2 velocity, float size, int index = -1) =>
+            Particles.Add(new(position, velocity, size, index));
 
         public override Vector2 CalculateManualOffsetForLayer(int layerIndex)
         {
@@ -103,6 +118,15 @@ namespace CalRemix.Content.Particles
                 Vector2 origin = tex.Size() * 0.5f;
                 Vector2 scale = Vector2.One * particle.Size / tex.Size();
                 Main.spriteBatch.Draw(tex, drawPosition, null, Color.White, 0f, origin, scale, 0, 0f);
+            }
+
+            int voidType = ModContent.NPCType<VoidBoss>();
+            foreach (NPC n in Main.ActiveNPCs)
+            {
+                if (n.type == voidType)
+                {
+                    Main.spriteBatch.Draw(tex, n.Center - Main.screenPosition, null, Color.White, 0f, tex.Size() / 2, 2, 0, 0);
+                }
             }
         }
     }

@@ -48,21 +48,23 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void AI()
         {
             //NPC.velocity = Main.MouseWorld - NPC.Center;
-            VoidMetaball.SpawnParticle(NPC.Center + Main.rand.NextVector2Circular(40, 40), Main.rand.NextVector2Circular(2, 2), Main.rand.NextFloat(100, 150));
-            VoidMetaball.SpawnParticle(NPC.Center + Main.rand.NextVector2Circular(40, 40), Main.rand.NextVector2Circular(8, 8), Main.rand.NextFloat(30, 90));
-            if (NPC.velocity == Vector2.Zero)
+            if (NPC.velocity.Length() > 1)
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() + MathHelper.PiOver2, 0.2f);
+            else
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.2f);
+
+            int iterationAmt = 5;
+            for (int i = 0; i < iterationAmt; i++)
             {
-                for (int i = 0; i < 10; i++)
+                float comp = i / (float)(iterationAmt - 1);
+                VoidMetaball.SpawnParticle(NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * MathHelper.Lerp(0, 180, comp) + Main.rand.NextVector2Circular(40, 40), Main.rand.NextVector2Circular(2, 2), Main.rand.NextFloat(100, 150) * MathHelper.Lerp(1, 0.10f, comp));
+                if (Main.rand.NextBool(10))
                 {
 
-                    VoidMetaball.SpawnParticle(NPC.Center + Vector2.UnitY * i * 20 + Main.rand.NextVector2Circular(40, 40), Main.rand.NextVector2Circular(2, 2), Main.rand.NextFloat(100, 150) * MathHelper.Lerp(1, 0.01f, i / (float)(10 - 1)));
-                    if (Main.rand.NextBool(10))
-                    {
-
-                        VoidMetaball.SpawnParticle(NPC.Center + Vector2.UnitY * i * 20 + Main.rand.NextVector2Circular(40, 40), Main.rand.NextVector2Circular(8, 8), Main.rand.NextFloat(10, 30));
-                    }
+                    VoidMetaball.SpawnParticle(NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * MathHelper.Lerp(0, 180, comp) + Main.rand.NextVector2Circular(40, 40), Main.rand.NextVector2Circular(8, 8), Main.rand.NextFloat(10, 30), NPC.whoAmI);
                 }
             }
+
             if (NPC.frameCounter++ % 8 == 0)
             {
                 texOffset = Main.rand.NextVector2Circular(100, 100);
