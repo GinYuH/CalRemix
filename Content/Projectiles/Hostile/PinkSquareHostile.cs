@@ -1,40 +1,41 @@
-using CalamityMod;
+﻿using CalamityMod;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace CalRemix.Content.Projectiles.Weapons
+namespace CalRemix.Content.Projectiles.Hostile
 {
-    public class PinkSquare : ModProjectile
-	{
-        public override void SetStaticDefaults() 
-        {
-			// DisplayName.SetDefault("Square");
-		}
+    public class PinkSquareHostile : ModProjectile
+    {
+        public override string Texture => "CalRemix/Content/Projectiles/Weapons/PinkSquare";
+        
         public override void SetDefaults()
         {
             Projectile.width = 32;
             Projectile.height = 32;
-            Projectile.friendly = true;
-            Projectile.DamageType = ModContent.GetInstance<RogueDamageClass>();
+            Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.penetrate = 999;
-            Projectile.timeLeft = 3000;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 40;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 300;
         }
         public override void AI()
         {
-            if (Main.projectile[(int)Projectile.ai[0]] != null && Main.projectile[(int)Projectile.ai[0]].active && Main.projectile[(int)Projectile.ai[0]].type == ModContent.ProjectileType<UnsealedBlackhole>())
+            if (VoidBoss.VoidIDX <= -1)
             {
-                if (Projectile.Hitbox.Intersects(Main.projectile[(int)Projectile.ai[0]].Hitbox))
-                    Projectile.Kill();
+                Projectile.Kill();
             }
             else
-                Projectile.Kill();
+            {
+                NPC n = Main.npc[VoidBoss.VoidIDX];
+                if (!n.active || n.life <= 0)
+                {
+                    Projectile.Kill();
+                }
+            }
         }
         public override bool PreDraw(ref Color lightColor)
         {

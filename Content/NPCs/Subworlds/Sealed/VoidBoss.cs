@@ -12,6 +12,8 @@ using Terraria.GameContent;
 using CalRemix.Core.World;
 using Terraria.Audio;
 using CalamityMod.CalPlayer;
+using System;
+using CalRemix.Content.Projectiles.Hostile;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -26,12 +28,22 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public ref float ExtraTwo => ref NPC.ai[3];
 
+        public Vector2 SavePosition
+        {
+            get => new Vector2(NPC.Calamity().newAI[0], NPC.Calamity().newAI[1]);
+            set
+            {
+                NPC.Calamity().newAI[0] = value.X;
+                NPC.Calamity().newAI[1] = value.Y;
+            }
+        }
+
         public enum PhaseType
         {
             SpawnAnimation = 0,
             Idle = 1,
-            AttackOne = 2,
-            AttackTwo = 3,
+            Dashes = 2,
+            QuadLaser = 3,
             AttackThree = 4,
             AttackFour = 5
         }
@@ -98,7 +110,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             TeleportParticles();
                             NPC.alpha = 0;
                             NPC.dontTakeDamage = false;
-                            ChangePhase(PhaseType.Idle);
+                            ChangePhase(PhaseType.Dashes);
                         }
                     }
                     break;
@@ -107,14 +119,69 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                     }
                     break;
-                case PhaseType.AttackOne:
+                case PhaseType.Dashes:
                     {
+                        float startDash = 30;
+                        float dashLength = startDash + 30;
+                        float localTimer = Timer % dashLength;
+                        float projRate = 1;
+                        float dashAmt = 8;
 
+                        if (localTimer == 1)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            TeleportParticles(50, 0.6f);
+                            int direction = Main.rand.NextBool().ToDirectionInt();
+                            if (Math.Abs(target.velocity.X) > 5)
+                                direction = target.velocity.X.DirectionalSign();
+                            NPC.Center = target.Center + new Vector2(Main.rand.Next(700, 800) * direction, Main.rand.NextFloat(270, 380) * Main.rand.NextBool().ToDirectionInt());
+                            TeleportParticles(50, 0.6f);
+                            SavePosition = NPC.Center - target.Center;
+                            
+                        }
+                        else if (localTimer < startDash)
+                        {
+                            NPC.Center = target.Center + SavePosition;
+                        }
+                        else if (localTimer == startDash)
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemEmpressofLightEverlastingRainbow with { MaxInstances = 0, Pitch = 0.9f }, target.Center);
+                            if (Main.rand.NextBool())
+                            {
+                                NPC.velocity.X = 50 * NPC.DirectionTo(target.Center).X.DirectionalSign();
+                            }
+                            else
+                            {
+                                NPC.velocity.Y = 50 * NPC.DirectionTo(target.Center).Y.DirectionalSign();
+                            }
+                        }
+                        else if (localTimer < dashLength)
+                        {
+                            if (localTimer % projRate == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.RotatedBy(MathHelper.PiOver2 * Main.rand.NextBool().ToDirectionInt()).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(2, 5), ModContent.ProjectileType<PinkSquareHostile>(), CalRemixHelper.ProjectileDamage(210, 320), 1);
+                                }
+                            }
+                        }
+                        if (Timer > dashLength * dashAmt - 2)
+                        {
+                            ChangePhase(PhaseType.QuadLaser);
+                            int square = ModContent.ProjectileType<PinkSquareHostile>();
+                            foreach (Projectile p in Main.ActiveProjectiles)
+                            {
+                                if (p.type == square)
+                                {
+                                    p.timeLeft = Main.rand.Next(40, 60);
+                                }
+                            }
+                        }
                     }
                     break;
-                case PhaseType.AttackTwo:
+                case PhaseType.QuadLaser:
                     {
-
+                        ChangePhase(PhaseType.Dashes);
                     }
                     break;
                 case PhaseType.AttackThree:
@@ -135,6 +202,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public void ChangePhase(PhaseType phase)
         {
+            NPC.velocity = Vector2.Zero;
+            NPC.rotation = 0;
             CurrentPhase = phase;
             Timer = 0;
             ExtraOne = 0;
@@ -142,11 +211,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.netUpdate = true;
         }
 
-        public void TeleportParticles()
+        public void TeleportParticles(int amt = 110, float speedMod = 1f)
         {
-            for (int i = 0; i < 110; i++)
+            for (int i = 0; i < amt; i++)
             {
-                VoidMetaball.SpawnParticle(NPC.Center, Main.rand.NextVector2Circular(1f, 1f) * Main.rand.NextFloat(16, 26), Main.rand.NextFloat(50, 130));
+                VoidMetaball.SpawnParticle(NPC.Center, Main.rand.NextVector2Circular(1f, 1f) * Main.rand.NextFloat(16, 26) * speedMod, Main.rand.NextFloat(50, 130));
             }
         }
 
@@ -225,7 +294,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             {
                                 Main.spriteBatch.Begin();
 
-                                string text = "You feel a dark presence...";
+                                string text = CalRemixHelper.LocalText("StatusText.VoidSummon").Value;
                                 float boxOpacity = 0;
 
                                 float fullDuration = CinematicTime;
