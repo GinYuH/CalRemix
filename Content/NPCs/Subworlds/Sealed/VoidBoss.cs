@@ -14,6 +14,7 @@ using Terraria.Audio;
 using CalamityMod.CalPlayer;
 using System;
 using CalRemix.Content.Projectiles.Hostile;
+using CalamityMod.Tiles;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -43,8 +44,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SpawnAnimation = 0,
             Idle = 1,
             Dashes = 2,
-            QuadLaser = 3,
-            AttackThree = 4,
+            Checkers = 3,
+            QuadLaser = 4,
             AttackFour = 5
         }
 
@@ -57,6 +58,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public static int VoidIDX = -1;
 
         public static float CinematicTime => 360;
+
+        public static float AreaDuration => 60;
+
+        public static float AreaChargeUp => 60;
+
+        public static float AreaFade => 20;
+
+        public static float FullAreaTime => AreaDuration + AreaChargeUp + AreaFade;
 
         public override void SetStaticDefaults()
         {
@@ -167,7 +176,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         if (Timer > dashLength * dashAmt - 2)
                         {
-                            ChangePhase(PhaseType.QuadLaser);
+                            ChangePhase(PhaseType.Checkers);
                             int square = ModContent.ProjectileType<PinkSquareHostile>();
                             foreach (Projectile p in Main.ActiveProjectiles)
                             {
@@ -179,12 +188,46 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                     }
                     break;
-                case PhaseType.QuadLaser:
+                case PhaseType.Checkers:
                     {
-                        ChangePhase(PhaseType.Dashes);
+                        float spawnProjs = 30;
+                        float localTimer = Timer % FullAreaTime + spawnProjs;
+                        float cycles = (FullAreaTime + spawnProjs) * 3;
+                        NPC.velocity = (target.Center + Vector2.UnitY.RotatedBy(Timer * 0.02f) * 500) - NPC.Center;
+                        bool skip = false;
+                        if (localTimer == spawnProjs)
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemManaCrystal with { Pitch = 1 }, target.Center);
+                            int squareAmt = 13;
+                            int squareSpace = 300;
+                            int fullArea = squareSpace * squareAmt;
+                            Vector2 randomOffset = Main.rand.NextVector2Circular(200, 200);
+                            for (int i = 0; i < squareAmt; i++)
+                            {
+                                for (int j = 0; j < squareAmt; j++)
+                                {
+                                    if (!skip)
+                                    {
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            Projectile.NewProjectile(NPC.GetSource_FromThis(), target.Center + randomOffset + new Vector2(MathHelper.Lerp(-fullArea / 2f + squareSpace / 2f, fullArea / 2f - squareSpace / 2f, i / (float)(squareAmt - 1)), MathHelper.Lerp(-fullArea / 2f + squareSpace / 2f, fullArea / 2f - squareSpace / 2f, j / (float)(squareAmt - 1))), Vector2.Zero, ModContent.ProjectileType<PinkSquareArea>(), CalRemixHelper.ProjectileDamage(280, 420), 1, ai0: squareSpace);
+                                        }
+                                    }
+                                    skip = !skip;
+                                }
+                            }
+                        }
+                        if (localTimer == AreaChargeUp + spawnProjs && Timer > spawnProjs + AreaChargeUp)
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemTerraBeam with { Pitch = 2 }, target.Center);
+                        }
+                        if (Timer > cycles - 2)
+                        {
+                            ChangePhase(PhaseType.QuadLaser);
+                        }
                     }
                     break;
-                case PhaseType.AttackThree:
+                case PhaseType.QuadLaser:
                     {
 
                     }
