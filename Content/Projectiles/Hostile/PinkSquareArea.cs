@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Xml;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
@@ -48,6 +49,10 @@ namespace CalRemix.Content.Projectiles.Hostile
                 Projectile.Kill();
             }
             Projectile.ai[1]++;
+            if (Projectile.ai[2] == 1 && Projectile.ai[1] == VoidBoss.AreaChargeUp)
+            {
+                SoundEngine.PlaySound(BetterSoundID.ItemTerraBeam with { Pitch = 2 }, Projectile.Center);
+            }
         }
         public override bool PreDraw(ref Color lightColor)
         {

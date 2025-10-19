@@ -20,7 +20,7 @@ using CalamityMod.Sounds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
-    //[AutoloadBossHead]
+    [AutoloadBossHead]
     public class VoidBoss : ModNPC
     {
         public ref float Phase => ref NPC.ai[0];
@@ -48,7 +48,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Dashes = 2,
             Checkers = 3,
             QuadLaser = 4,
-            AttackFour = 5
+            Cluster = 5
         }
 
         public PhaseType CurrentPhase
@@ -135,7 +135,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         float startDash = 30;
                         float dashLength = startDash + 30;
                         float localTimer = Timer % dashLength;
-                        float projRate = 1;
+                        float projRate = NPC.life < (int)(NPC.lifeMax * 0.5f) ? 2 : 1;
                         float dashAmt = 8;
 
                         if (localTimer == 1)
@@ -173,6 +173,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.RotatedBy(MathHelper.PiOver2 * Main.rand.NextBool().ToDirectionInt()).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(2, 5), ModContent.ProjectileType<PinkSquareHostile>(), CalRemixHelper.ProjectileDamage(210, 320), 1);
+                                    if (NPC.life < (int)(NPC.lifeMax * 0.5f) && Main.rand.NextBool(20))
+                                    {
+                                        SoundEngine.PlaySound(BetterSoundID.ItemManaCrystal with { Pitch = 1 }, target.Center);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), target.Center + Main.rand.NextVector2Circular(-600, 600), Vector2.Zero, ModContent.ProjectileType<PinkSquareArea>(), CalRemixHelper.ProjectileDamage(280, 420), 1, ai0: 200, ai2: 1);
+                                    }
                                 }
                             }
                         }
@@ -258,7 +263,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         if (Timer > pause)
                         {
-                            ChangePhase(PhaseType.AttackFour);
+                            ChangePhase(PhaseType.Cluster);
                             foreach (Projectile p in Main.ActiveProjectiles)
                             {
                                 if (p.type == ModContent.ProjectileType<PinkSquareHoming>())
@@ -269,8 +274,30 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                     }
                     break;
-                case PhaseType.AttackFour:
+                case PhaseType.Cluster:
                     {
+                        float anticipation = 30;
+                        int squareSpace = CalamityWorld.death ? 400 : CalamityWorld.revenge ? 300 : Main.expertMode ? 200 : 150;
+                        if (Timer == anticipation)
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemManaCrystal with { Pitch = 1 }, target.Center);
+                            for (int i = 0; i < 60; i++)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), target.Center + Main.rand.NextVector2Circular(-2000, 2000), Vector2.Zero, ModContent.ProjectileType<PinkSquareArea>(), CalRemixHelper.ProjectileDamage(280, 420), 1, ai0: squareSpace);
+                                }
+                            }
+                        }
+                        if (Timer == AreaChargeUp + anticipation)
+                        {
+                            SoundEngine.PlaySound(BetterSoundID.ItemTerraBeam with { Pitch = 2 }, target.Center);
+                        }
+
+                        if (Timer > FullAreaTime)
+                        {
+                            ChangePhase(PhaseType.Dashes);
+                        }
                     }
                     break;
             }
@@ -353,6 +380,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, Color.Red * NPC.Opacity, 0, tex.Size() / 2, NPC.scale, 0, 0);
 
             return false;
+        }
+
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
         }
 
         private static void DrawVoidIntro(On_Main.orig_DoDraw orig, Main self, GameTime gameTime)
@@ -455,6 +487,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             RemixDowned.downedVoid = true;
             CalRemixWorld.UpdateWorldBool();
+            TeleportParticles(speedMod: 1.4f);
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
