@@ -17,6 +17,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Tiles;
 using CalamityMod.World;
 using CalamityMod.Sounds;
+using Terraria.GameContent.Bestiary;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -385,6 +386,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
+            });
         }
 
         private static void DrawVoidIntro(On_Main.orig_DoDraw orig, Main self, GameTime gameTime)
