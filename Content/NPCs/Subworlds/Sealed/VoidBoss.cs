@@ -15,6 +15,8 @@ using CalamityMod.CalPlayer;
 using System;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Tiles;
+using CalamityMod.World;
+using CalamityMod.Sounds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -114,7 +116,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 case PhaseType.SpawnAnimation:
                     {
                         NPC.Center = target.Center - Vector2.UnitY * 300;
-                        if (Timer > CinematicTime + 20)
+                        if (Timer > CinematicTime + 80)
                         {
                             TeleportParticles();
                             NPC.alpha = 0;
@@ -199,14 +201,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             SoundEngine.PlaySound(BetterSoundID.ItemManaCrystal with { Pitch = 1 }, target.Center);
                             int squareAmt = 13;
-                            int squareSpace = 300;
+                            int squareSpace = CalamityWorld.death ? 150 : CalamityWorld.revenge ? 200 : 300;
                             int fullArea = squareSpace * squareAmt;
                             Vector2 randomOffset = Main.rand.NextVector2Circular(200, 200);
                             for (int i = 0; i < squareAmt; i++)
                             {
                                 for (int j = 0; j < squareAmt; j++)
                                 {
-                                    if (!skip)
+                                    bool rng = CalamityWorld.revenge ? NPC.life < (int)(NPC.lifeMax * 0.5f) && Main.rand.NextBool(5) : true;
+                                    if (!skip || rng)
                                     {
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                         {
@@ -229,12 +232,45 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case PhaseType.QuadLaser:
                     {
+                        float anticipation = Main.expertMode ? 30 : 40;
+                        float localTimer = Timer % anticipation;
+                        float projPhaseLength = anticipation * 12;
+                        float pause = projPhaseLength + 120;
 
+                        if (localTimer == 0 && Timer < projPhaseLength)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            TeleportParticles(50, 0.6f);
+                            int direction = Main.rand.NextBool().ToDirectionInt();
+                            int directionY = Main.rand.NextBool().ToDirectionInt();
+                            if (Math.Abs(target.velocity.X) > 5)
+                                direction = target.velocity.X.DirectionalSign();
+                            if (Math.Abs(target.velocity.Y) > 5)
+                                direction = target.velocity.Y.DirectionalSign();
+                            NPC.Center = target.Center + new Vector2(Main.rand.Next(600, 1000) * direction, Main.rand.NextFloat(400, 680) * directionY);
+                            TeleportParticles(50, 0.6f);
+                            SavePosition = NPC.Center - target.Center;
+                            SoundEngine.PlaySound(CommonCalamitySounds.LargeWeaponFireSound with { Pitch = 2 }, NPC.Center);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(target.Center) * 4, ModContent.ProjectileType<PinkSquareHoming>(), CalRemixHelper.ProjectileDamage(240, 420), 1, ai0: target.whoAmI);
+                            }
+                        }
+                        if (Timer > pause)
+                        {
+                            ChangePhase(PhaseType.AttackFour);
+                            foreach (Projectile p in Main.ActiveProjectiles)
+                            {
+                                if (p.type == ModContent.ProjectileType<PinkSquareHoming>())
+                                {
+                                    p.ai[1] = 300;
+                                }
+                            }
+                        }
                     }
                     break;
                 case PhaseType.AttackFour:
                     {
-
                     }
                     break;
             }
