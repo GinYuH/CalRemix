@@ -1154,8 +1154,10 @@ namespace CalRemix.Core.Subworlds
             CalamityUtils.SpawnOre(iron, 12E-05, 0.25f, 0.85f, 8, 12, ModContent.TileType<SealedStonePlaced>());
             int cobalt = WorldGen.genRand.NextBool() ? TileID.Cobalt : TileID.Palladium;
             CalamityUtils.SpawnOre(cobalt, 11E-05, 0.4f, 0.9f, 8, 12, ModContent.TileType<SealedStonePlaced>());
-            int mythril = WorldGen.genRand.NextBool() ? TileID.Mythril : TileID.Adamantite;
+            int mythril = WorldGen.genRand.NextBool() ? TileID.Mythril : TileID.Orichalcum;
             CalamityUtils.SpawnOre(mythril, 10E-05, 0.5f, 0.9f, 8, 12, ModContent.TileType<SealedStonePlaced>());
+            int titanium = WorldGen.genRand.NextBool() ? TileID.Titanium : TileID.Adamantite;
+            CalamityUtils.SpawnOre(titanium, 9E-05, 0.5f, 0.95f, 8, 12, ModContent.TileType<SealedStonePlaced>());
         }
     }
 }
