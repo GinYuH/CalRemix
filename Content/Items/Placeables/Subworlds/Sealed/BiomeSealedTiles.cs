@@ -125,6 +125,14 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<TurnipFruitPlaced>());
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<Veinroot>(), 12).
+                AddIngredient(ModContent.ItemType<Gastrogel>()).
+                AddTile(TileID.MythrilAnvil).
+                Register();
+        }
     }
     public class TurnipLeaf: ModItem
     {
