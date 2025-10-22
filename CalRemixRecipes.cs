@@ -47,6 +47,7 @@ using CalamityMod.Items.Armor.Silva;
 using System;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.UI.Anomaly109;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 
 namespace CalRemix
 {
@@ -145,6 +146,20 @@ namespace CalRemix
             .AddTile(TileID.MythrilAnvil)
             .DisableDecraft()
             .Register();
+
+            Recipe.Create(ItemID.AdamantiteForge)
+                .AddIngredient(ItemID.AdamantiteOre, 20)
+                .AddIngredient(ItemType<PeatOre>(), 15)
+                .AddTile(TileID.MythrilAnvil)
+                .DisableDecraft()
+                .Register();
+
+            Recipe.Create(ItemID.TitaniumForge)
+                .AddIngredient(ItemID.TitaniumOre, 20)
+                .AddIngredient(ItemType<PeatOre>(), 15)
+                .AddTile(TileID.MythrilAnvil)
+                .DisableDecraft()
+                .Register();
 
             #region Anomaly Toggled
             List<Anomaly109Option> alist = Anomaly109Manager.options;
