@@ -5723,3 +5723,30 @@ NullBeacon: {
 	DisplayName: Null Beacon
 	Tooltip: Summons Void
 }
+
+VoidWings: {
+	DisplayName: Void Wings
+	Tooltip:
+		'''
+		Horizontal speed: 13
+		Acceleration multiplier: 2.5
+		Great vertical speed
+		Flight time: 170
+		Infinite flight while wearing Condensed Void armor
+		'''
+}
+
+VoidChestplate: {
+	DisplayName: Condensed Void Chestplate
+	Tooltip: "26% increased damage"
+}
+
+VoidHelmet: {
+	DisplayName: Condensed Void Helmet
+	Tooltip: "14% increased critical strike chance"
+}
+
+VoidLeggings: {
+	DisplayName: Condensed Void Leggings
+	Tooltip: "25% increased movement speed"
+}

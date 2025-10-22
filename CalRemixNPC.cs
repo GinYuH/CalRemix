@@ -1147,10 +1147,26 @@ namespace CalRemix
                     }
                 }
             }
-            if (!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type))
+            if ((!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type)) || RemixDowned.downedNoxus)
             {
                 if (npc.GetGlobalNPC<CalamityGlobalNPC>().pearlAura > 0)
                     npc.AddBuff(BuffType<CalamityMod.Buffs.StatDebuffs.GlacialState>(), 60);
+                foreach (Player p in Main.ActivePlayers)
+                {
+                    if (p.Remix().voidArmor)
+                    {
+                        float xSpeed = Math.Abs(npc.velocity.X);
+                        float ySpeed = Math.Abs(npc.velocity.Y);
+                        if (xSpeed > ySpeed)
+                        {
+                            npc.velocity.Y = 0;
+                        }
+                        else if (ySpeed > xSpeed)
+                        {
+                            npc.velocity.X = 0;
+                        }
+                    }
+                }
             }
             if (npc.GetGlobalNPC<CalRemixNPC>().clawed > 0)
             {
