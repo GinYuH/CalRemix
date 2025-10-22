@@ -5738,15 +5738,20 @@ VoidWings: {
 
 VoidChestplate: {
 	DisplayName: Condensed Void Chestplate
-	Tooltip: "26% increased damage"
+	Tooltip: 26% increased damage
 }
 
 VoidHelmet: {
 	DisplayName: Condensed Void Helmet
-	Tooltip: "14% increased critical strike chance"
+	Tooltip: 14% increased critical strike chance
 }
 
 VoidLeggings: {
 	DisplayName: Condensed Void Leggings
-	Tooltip: "25% increased movement speed"
+	Tooltip: 25% increased movement speed
+}
+
+MassBlaster: {
+	DisplayName: Mass Blaster
+	Tooltip: Fires a fast, precise, irritating spread of explosive infected orbs
 }
