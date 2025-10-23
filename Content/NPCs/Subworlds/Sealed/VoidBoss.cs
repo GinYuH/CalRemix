@@ -214,7 +214,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             {
                                 for (int j = 0; j < squareAmt; j++)
                                 {
-                                    bool rng = CalamityWorld.revenge ? NPC.life < (int)(NPC.lifeMax * 0.5f) && Main.rand.NextBool(5) : true;
+                                    bool rng = CalamityWorld.revenge ? NPC.life < (int)(NPC.lifeMax * 0.5f) && Main.rand.NextBool(5) : false;
                                     if (!skip || rng)
                                     {
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
