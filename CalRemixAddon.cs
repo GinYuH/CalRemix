@@ -226,7 +226,11 @@ namespace CalRemix
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 1f, 0, 0);
             };
-            bc.Call("LogBoss", Mod, "AscendedGastropod", 17.8, () => RemixDowned.downedGastropod, NPCType<MonorianGastropodAscended>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Disilphia", 17.8, () => RemixDowned.downedDisil, NPCType<Disilphia>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<DoctorsRemote>()
+            });
+            bc.Call("LogBoss", Mod, "AscendedGastropod", 17.9, () => RemixDowned.downedGastropod, NPCType<MonorianGastropodAscended>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<Gastrosequence>(),
                 ["customPortrait"] = gasPortrait
@@ -329,6 +333,7 @@ namespace CalRemix
             MakeCard(NPCType<Oxygen>(), (horz, anim) => Color.Lerp(Color.LightBlue, Color.SeaGreen, anim), "Oxygen", Oxygen.HitSound, SoundID.Shatter);
             MakeCard(NPCType<Pathogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pathogen", PerforatorHeadLarge.HitSound, PerforatorHeadSmall.HitSound);
             MakeCard(NPCType<VoidBoss>(), (horz, anim) => Color.Lerp(Color.Black, Color.Magenta, anim), "Void", BetterSoundID.ItemCast, BetterSoundID.ItemCast);
+            MakeCard(NPCType<Disilphia>(), (horz, anim) => Color.Lerp(Color.White, Color.White, anim), "Disilphia", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
             MakeCard(NPCType<MonorianGastropodAscended>(), (horz, anim) => Color.Lerp(Color.Pink, Color.Goldenrod, anim), "MonorianGastropodAscended", SoundID.NPCHit1, SoundID.NPCDeath1);
             MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", BetterSoundID.ItemInfernoFork, BetterSoundID.ItemInfernoExplosion);
             MakeCard(() => NPC.FindFirstNPC(NPCType<Hydrogen>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] < 300, (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Hydrogen", SoundID.Item14, CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);

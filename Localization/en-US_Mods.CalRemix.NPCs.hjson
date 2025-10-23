@@ -711,6 +711,16 @@ VoidBoss: {
 	BossChecklistIntegration: {
 		EntryName: Void
 		SpawnInfo: Use a [i:CalRemix/NullBeacon].
-		DespawnMessage: "[c/ff0ff:The Void seeps away.]"
+		DespawnMessage: "[c/ff00ff:The Void seeps away.]"
+	}
+}
+
+Disilphia: {
+	DisplayName: Disilphia
+
+	BossChecklistIntegration: {
+		EntryName: Disilphia
+		SpawnInfo: Use a [i:CalRemix/DoctorsRemote].
+		DespawnMessage: "[c/000000:The Threat has been taken care of.]"
 	}
 }
