@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
+    [AutoloadBossHead]
     public class Disilphia : ModNPC
     {
         public ref float Phase => ref NPC.ai[0];
