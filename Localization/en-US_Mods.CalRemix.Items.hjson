@@ -5755,3 +5755,18 @@ MassBlaster: {
 	DisplayName: Mass Blaster
 	Tooltip: Fires a fast, precise, irritating spread of explosive infected orbs
 }
+
+YellowLightChestplate: {
+	DisplayName: Yellow Light Chestplate
+	Tooltip: 12% increased damage
+}
+
+YellowLightHelmet: {
+	DisplayName: Yellow Light Helmet
+	Tooltip: 5% increased critical strike chance
+}
+
+YellowLightLeggings: {
+	DisplayName: Yellow Light Leggings
+	Tooltip: 5% increased movement speed
+}

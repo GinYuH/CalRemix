@@ -43,6 +43,7 @@ using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Light;
 using SubworldLibrary;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Items.Armor;
 
 namespace CalRemix.Core
 {
@@ -513,28 +514,35 @@ namespace CalRemix.Core
             }
         }
 
+        public static bool WearingLightArmor(Player p)
+        {
+            return p.armor[0].type == ItemType<YellowLightHelmet>() && p.armor[1].type == ItemType<YellowLightChestplate>() && p.armor[2].type == ItemType<YellowLightLeggings>();
+        }
+
         public static void CountDyes(ref Player player, int id)
         {
             if (player.TryGetModPlayer(out CalRemixPlayer p))
             {
                 if (CalRemixPlayer.dyeStats.ContainsKey(id))
                 {
+                    int lightMultiplier = WearingLightArmor(player) ? 5 : 1;
+
                     DyeStats d = CalRemixPlayer.dyeStats[id];
-                    p.dyesRed += d.red;
-                    p.dyesOrange += d.orange;
-                    p.dyesYellow += d.yellow;
-                    p.dyesLime += d.lime;
-                    p.dyesGreen += d.green;
-                    p.dyesCyan += d.cyan;
-                    p.dyesLightBlue += d.skyblue;
-                    p.dyesDarkBlue += d.blue;
-                    p.dyesTeal += d.teal;
-                    p.dyesPurple += d.purple;
-                    p.dyesViolet += d.violet;
-                    p.dyesBrown += d.brown;
-                    p.dyesPink += d.pink;
-                    p.dyesSilver += d.silver;
-                    p.dyesBlack += d.black;
+                    p.dyesRed += d.red * lightMultiplier;
+                    p.dyesOrange += d.orange * lightMultiplier;
+                    p.dyesYellow += d.yellow * lightMultiplier;
+                    p.dyesLime += d.lime * lightMultiplier;
+                    p.dyesGreen += d.green * lightMultiplier;
+                    p.dyesCyan += d.cyan * lightMultiplier;
+                    p.dyesLightBlue += d.skyblue * lightMultiplier;
+                    p.dyesDarkBlue += d.blue * lightMultiplier;
+                    p.dyesTeal += d.teal * lightMultiplier;
+                    p.dyesPurple += d.purple * lightMultiplier;
+                    p.dyesViolet += d.violet * lightMultiplier;
+                    p.dyesBrown += d.brown * lightMultiplier;
+                    p.dyesPink += d.pink * lightMultiplier;
+                    p.dyesSilver += d.silver * lightMultiplier;
+                    p.dyesBlack += d.black * lightMultiplier;
                 }
             }
         }
@@ -544,22 +552,24 @@ namespace CalRemix.Core
             {
                 if (CalRemixPlayer.dyeStats.ContainsKey(id))
                 {
+                    int lightMultiplier = WearingLightArmor(player) ? 5 : 1;
+
                     DyeStats d = CalRemixPlayer.dyeStats[id];
-                    p.dyesRed += d.red;
-                    p.dyesOrange += d.orange;
-                    p.dyesYellow += d.yellow;
-                    p.dyesLime += d.lime;
-                    p.dyesGreen += d.green;
-                    p.dyesCyan += d.cyan;
-                    p.dyesLightBlue += d.skyblue;
-                    p.dyesDarkBlue += d.blue;
-                    p.dyesTeal += d.teal;
-                    p.dyesPurple += d.purple;
-                    p.dyesViolet += d.violet;
-                    p.dyesBrown += d.brown;
-                    p.dyesPink += d.pink;
-                    p.dyesSilver += d.silver;
-                    p.dyesBlack += d.black;
+                    p.dyesRed += d.red * lightMultiplier;
+                    p.dyesOrange += d.orange * lightMultiplier;
+                    p.dyesYellow += d.yellow * lightMultiplier;
+                    p.dyesLime += d.lime * lightMultiplier;
+                    p.dyesGreen += d.green * lightMultiplier;
+                    p.dyesCyan += d.cyan * lightMultiplier;
+                    p.dyesLightBlue += d.skyblue * lightMultiplier;
+                    p.dyesDarkBlue += d.blue * lightMultiplier;
+                    p.dyesTeal += d.teal * lightMultiplier;
+                    p.dyesPurple += d.purple * lightMultiplier;
+                    p.dyesViolet += d.violet * lightMultiplier;
+                    p.dyesBrown += d.brown * lightMultiplier;
+                    p.dyesPink += d.pink * lightMultiplier;
+                    p.dyesSilver += d.silver * lightMultiplier;
+                    p.dyesBlack += d.black * lightMultiplier;
                 }
             }
         }

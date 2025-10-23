@@ -253,6 +253,7 @@ namespace CalRemix
         public bool carnelian;
         public bool sealedArmor;
         public bool voidArmor;
+        public bool lightArmor;
         public int sealedCooldown = 0;
 
         // Minions
@@ -1340,6 +1341,7 @@ namespace CalRemix
             sealedArmor = false;
             sealedCooldown = 0;
             voidArmor = false;
+            lightArmor = false;
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
