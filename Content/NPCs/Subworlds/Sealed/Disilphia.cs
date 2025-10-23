@@ -13,13 +13,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
     {
         public override void SetDefaults()
         {
-            NPC.width = 60;
-            NPC.height = 72;
+            NPC.width = 1150;
+            NPC.height = 1150;
             NPC.lavaImmune = true;
             NPC.HitSound = CommonCalamitySounds.ExoHitSound;
             NPC.DeathSound = CommonCalamitySounds.ExoDeathSound with { Pitch = -1 };
-            NPC.lifeMax = 5000;
-            NPC.defense = 100;
+            NPC.lifeMax = 300000;
+            NPC.defense = 200;
             NPC.Calamity().VulnerableToHeat = false;
             NPC.Calamity().VulnerableToSickness = false;
             NPC.Calamity().VulnerableToCold = false;
@@ -35,7 +35,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<Mercury>(), 1, 1, 2);
+            npcLoot.Add(ModContent.ItemType<MercuryCoatedSubcinium>(), 1, 16, 30);
+            npcLoot.Add(ModContent.ItemType<Mercury>(), 1, 25, 40);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

@@ -5770,3 +5770,8 @@ YellowLightLeggings: {
 	DisplayName: Yellow Light Leggings
 	Tooltip: 5% increased movement speed
 }
+
+DoctorsRemote: {
+	DisplayName: Doctors Remote
+	Tooltip: Summons Disilphia
+}

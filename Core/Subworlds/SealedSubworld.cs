@@ -976,9 +976,9 @@ namespace CalRemix.Core.Subworlds
         {
             ushort tType = (ushort)ModContent.TileType<VoidInfusedStonePlaced>();
             ushort wType = (ushort)ModContent.WallType<VoidInfusedStoneWallPlaced>();
-            int offset = (int)(Main.maxTilesX * turnipWidth * 0.5f);
+            int offset = (int)(Main.maxTilesX * turnipWidth * 0.4f);
             Point origin = new Point(turnipPosition + (int)(Main.maxTilesX * 0.5f * turnipWidth) - offset, caveTile);
-            int size = (int)(Main.maxTilesX * turnipWidth * 0.5f);
+            int size = (int)(Main.maxTilesX * turnipWidth * 0.4f);
             int floor = 10;
 
             Rectangle rect = new Rectangle(origin.X, origin.Y, size, size);
