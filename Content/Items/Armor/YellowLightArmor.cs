@@ -80,6 +80,8 @@ namespace CalRemix.Content.Items.Armor
     {
         public override void SetDefaults()
         {
+            ArmorIDs.Legs.Sets.HidesTopSkin[Item.legSlot] = true;
+            ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = true;
             Item.width = 20;
             Item.height = 18;
             Item.value = CalamityGlobalItem.RarityCyanBuyPrice;
