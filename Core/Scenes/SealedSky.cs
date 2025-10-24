@@ -1,4 +1,5 @@
 ﻿using System;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
@@ -7,6 +8,7 @@ using SubworldLibrary;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
+using Terraria.ModLoader;
 
 namespace CalRemix.Content.NPCs.Bosses.Carcinogen
 {
@@ -25,6 +27,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
         {
             if (Filters.Scene["CalRemix:VoidColors"].IsActive())
                 return Color.Black;
+            if (NPC.AnyNPCs(ModContent.NPCType<Disilphia>()))
+                return Color.Brown;
             if (p.InModBiome<UnsealedSeaBiome>())
             {
                 return Color.Gray;
@@ -90,7 +94,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
         {
             if (minDepth < 0)
             {
-                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.ScreenSize.X, (int)Main.ScreenSize.Y), current * 0.6f);
+                float mult = NPC.AnyNPCs(ModContent.NPCType<Disilphia>()) ? 1.5f : 0.6f;
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.ScreenSize.X, (int)Main.ScreenSize.Y), current * mult);
             }
         }
 
