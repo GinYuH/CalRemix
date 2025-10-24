@@ -195,7 +195,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY.RotatedByRandom(MathHelper.Pi) * Main.rand.NextFloat(800, 1400), Vector2.Zero, ModContent.ProjectileType<MercuryBlob>(), CalRemixHelper.ProjectileDamage(300, 450), 1f, ai0: NPC.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), target.Center + Main.rand.NextVector2Circular(1000, 1000), Vector2.Zero, ModContent.ProjectileType<MercuryBlob>(), CalRemixHelper.ProjectileDamage(300, 450), 1f, ai0: NPC.whoAmI);
                                 }
                             }
                         }
@@ -270,6 +270,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
+        }
+
+        public override bool CheckActive()
+        {
+            return !NPC.HasValidTarget;
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return NPC.velocity.Y != 0;
         }
     }
 }
