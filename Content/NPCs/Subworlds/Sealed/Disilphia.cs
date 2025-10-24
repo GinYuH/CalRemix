@@ -2,6 +2,7 @@
 using CalamityMod.Particles;
 using CalamityMod.Sounds;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
@@ -109,7 +110,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 int projCount = 5;
                                 for (int i = 0; i < projCount; i++)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), target.Center + new Vector2(MathHelper.Lerp(-2000, 2000, i / (float)(projCount - 1)), -1000), Vector2.Zero, ProjectileID.RocketSkeleton, CalRemixHelper.ProjectileDamage(300, 480), 1f, ai0: telegraphTime);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), target.Center + new Vector2(MathHelper.Lerp(-2000, 2000, i / (float)(projCount - 1)), -1000), Vector2.Zero, ModContent.ProjectileType<MercuryRocketFalling>(), CalRemixHelper.ProjectileDamage(300, 480), 1f, ai0: telegraphTime);
                                 }
                             }
                         }
@@ -123,22 +124,29 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     {
                         NPC.direction = NPC.DirectionTo(target.Center).X.DirectionalSign();
                         int spawnSpikeTime = 90;
-                        int spikeRate = 3;
-                        int waitTime = spawnSpikeTime + 60;
+                        int spikeRate = 7;
+                        int waitTime = spawnSpikeTime + 120;
                         if (Timer < spawnSpikeTime)
                         {
                             if (Timer % spikeRate == 0)
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Vector2 pos = target.Center + Main.rand.NextVector2CircularEdge(1000, 600);
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(target.Center) * 5, ProjectileID.RocketSkeleton, CalRemixHelper.ProjectileDamage(210, 340), 1);
+                                    Vector2 pos = target.Center + Main.rand.NextVector2CircularEdge(Main.rand.NextFloat(1300, 1400), Main.rand.NextFloat(1300, 1400));
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, pos.DirectionTo(target.Center) * 5, ModContent.ProjectileType<MercurySpike>(), CalRemixHelper.ProjectileDamage(210, 340), 1);
                                 }
                             }
                         }
                         else if (Timer > waitTime)
                         {
                             ChangePhase(PhaseType.Laser);
+                            foreach (Projectile p in Main.ActiveProjectiles)
+                            {
+                                if (p.type == ModContent.ProjectileType<MercurySpike>())
+                                {
+                                    p.ai[1] = 190;
+                                }
+                            }
                         }
                     }
                     break;
@@ -183,11 +191,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         int waitTime = rocketSpawnTime + 120;
                         if (Timer < rocketSpawnTime)
                         {
-                            if (Timer % 5 == 0)
+                            if (Timer % 3 == 0)
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY.RotatedByRandom(MathHelper.Pi) * Main.rand.NextFloat(1000, 2000), Vector2.Zero, ProjectileID.RocketSkeleton, CalRemixHelper.ProjectileDamage(300, 450), 1f, ai0: NPC.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY.RotatedByRandom(MathHelper.Pi) * Main.rand.NextFloat(800, 1400), Vector2.Zero, ModContent.ProjectileType<MercuryBlob>(), CalRemixHelper.ProjectileDamage(300, 450), 1f, ai0: NPC.whoAmI);
                                 }
                             }
                         }

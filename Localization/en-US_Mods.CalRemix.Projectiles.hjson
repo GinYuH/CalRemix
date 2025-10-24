@@ -388,3 +388,7 @@ AwokenGastropodEyeProj.DisplayName: Awoken Gastropod Eye
 PinkSquareArea.DisplayName: Void
 PinkSquareHostile.DisplayName: Void
 PinkSquareHoming.DisplayName: Void
+MercuryBlob.DisplayName: Mercury Blob
+MercuryRocket.DisplayName: Mercury Rocket
+MercuryRocketFalling.DisplayName: Mercury Rocket
+MercurySpike.DisplayName: Mercury Spike
