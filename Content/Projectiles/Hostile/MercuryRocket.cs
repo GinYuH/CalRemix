@@ -27,7 +27,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
             if (Main.rand.NextBool(3))
             {
-                GeneralParticleHandler.SpawnParticle(new SmallSmokeParticle(Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(3f, 5f), new Color(20, 20, 20), new Color(40, 40, 40), Main.rand.NextFloat(1f, 1.4f), 0.8f, 0.02f));
+                GeneralParticleHandler.SpawnParticle(new TimedSmokeParticle(Projectile.Center, -Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedByRandom(MathHelper.PiOver2 * 0.5f) * Main.rand.NextFloat(3f, 5f), new Color(20, 20, 20), new Color(40, 40, 40), Main.rand.NextFloat(1f, 1.4f), 0.8f, 40, 0.02f));
             }
             Projectile proj = Main.projectile[(int)Projectile.ai[0]];
             if (!proj.active)

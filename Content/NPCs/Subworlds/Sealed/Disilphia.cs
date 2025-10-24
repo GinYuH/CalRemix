@@ -1,7 +1,11 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.NPCs.AstrumDeus;
+using CalamityMod.NPCs.CalamityAIs.CalamityBossAIs;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Ranged;
+using CalamityMod.Projectiles.Summon.SmallAresArms;
 using CalamityMod.Sounds;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Hostile;
@@ -158,13 +162,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     {
                         int chargeUpTime = 180;
                         int waitTime = chargeUpTime + 60;
-                        int laserTime = waitTime + 180;
+                        int laserTime = waitTime + 360;
                         if (Timer == 1)
                         {
                             NPC.direction = NPC.DirectionTo(target.Center).X.DirectionalSign();
                         }
                         if (Timer < chargeUpTime)
                         {
+                            Main.LocalPlayer.Calamity().GeneralScreenShakePower = 2;
+                            if (Main.rand.NextBool())
+                            {
+                                SoundEngine.PlaySound(BetterSoundID.ItemBunnyMountSummon with { Pitch = 0.4f, Volume = 2f, MaxInstances = 0 }, target.Center);
+                            }
                             Vector2 pos = NPC.Center + new Vector2(NPC.direction * Main.rand.NextFloat(800, 3000), Main.rand.NextFloat(-600, 600));
                             float speed = Main.rand.NextFloat(20, 24);
                             float lifeTime = pos.Distance(NPC.Center) / speed;
@@ -177,14 +186,39 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (Timer == waitTime)
                         {
+                            SoundEngine.PlaySound(AstrumDeusHead.MineSound with { Pitch = -0.7f, Volume = 4f });
+                            SoundEngine.PlaySound(CommonCalamitySounds.LargeWeaponFireSound with { Pitch = -0.7f });
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(NPC.direction, 0), ProjectileID.RocketSkeleton, CalRemixHelper.ProjectileDamage(380, 590), 1f, ai0: NPC.whoAmI);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(NPC.direction, 0), ModContent.ProjectileType<DisilphiaBeam>(), CalRemixHelper.ProjectileDamage(380, 590), 1f, ai2: NPC.whoAmI);
+                            }
+                        }
+                        else if (Timer < laserTime)
+                        {
+                            if (Main.rand.NextBool())
+                            {
+                                SoundEngine.PlaySound(BetterSoundID.ItemPhaseblade with { Pitch = 0.8f, Volume = 2f, MaxInstances = 0 }, target.Center);
+                            }
+                            if (Timer % 20 == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Vector2 pos = target.Center + new Vector2(Main.rand.Next(1000, 1200) * Main.rand.NextBool().ToDirectionInt(), Main.rand.Next(200, 400) * Main.rand.NextBool().ToDirectionInt());
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, new Vector2((target.Center.X - pos.X).DirectionalSign() * 20, 0), ModContent.ProjectileType<MercuryRocket>(), CalRemixHelper.ProjectileDamage(200, 350), 1f);
+                                    Main.projectile[p].timeLeft = 90;
+                                }
                             }
                         }
                         else if (Timer >=  laserTime)
                         {
-                            ChangePhase(PhaseType.ClusterRockets);
+                            ChangePhase(PhaseType.Laser);
+                            foreach (Projectile p in Main.ActiveProjectiles)
+                            {
+                                if (p.type == ModContent.ProjectileType<DisilphiaBeam>())
+                                {
+                                    p.timeLeft = 60;
+                                }
+                            }
                         }
                     }
                     break;
@@ -192,7 +226,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     {
                         NPC.direction = NPC.DirectionTo(target.Center).X.DirectionalSign();
                         int rocketSpawnTime = 60;
-                        int waitTime = rocketSpawnTime + 120;
+                        int waitTime = rocketSpawnTime + 180;
                         if (Timer < rocketSpawnTime)
                         {
                             if (Timer % 3 == 0)
