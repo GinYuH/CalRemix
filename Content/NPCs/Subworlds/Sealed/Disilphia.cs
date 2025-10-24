@@ -211,7 +211,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (Timer >=  laserTime)
                         {
-                            ChangePhase(PhaseType.Laser);
+                            ChangePhase(PhaseType.ClusterRockets);
                             foreach (Projectile p in Main.ActiveProjectiles)
                             {
                                 if (p.type == ModContent.ProjectileType<DisilphiaBeam>())

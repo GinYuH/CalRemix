@@ -13,6 +13,7 @@ using CalamityMod.Graphics.Primitives;
 using ReLogic.Utilities;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Buffs.DamageOverTime;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 
 namespace CalRemix.Content.Projectiles.Hostile
 {
@@ -118,7 +119,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
             if (Owner is null) return;
-            if (Owner.life < 0 && !Owner.active)
+            if ((Owner.life < 0 && !Owner.active) || (Owner.type != ModContent.NPCType<Disilphia>()))
                 Projectile.Kill();
             Timer++;
 
