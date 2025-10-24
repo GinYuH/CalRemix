@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.Items.Weapons.Ranged;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -39,6 +40,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                     Projectile.ai[1]++;
                     if (Projectile.ai[1] == 120)
                     {
+                        SoundEngine.PlaySound(ScorchedEarth.ShootSound with { Volume = 0.8f }, Projectile.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(n.GetSource_FromThis(), n.Center, n.Center.DirectionTo(Projectile.Center) * 35, ModContent.ProjectileType<MercuryRocket>(), Projectile.damage, 1, ai0: Projectile.whoAmI);

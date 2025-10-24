@@ -59,7 +59,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             }
             if (Projectile.ai[1] > 90 && Projectile.ai[1] < 110)
             {
-                Projectile.Center = Vector2.Lerp(start, start + Projectile.rotation.ToRotationVector2().RotatedBy(MathHelper.PiOver2) * 1000, CalamityUtils.ExpInEasing(Utils.GetLerpValue(startShoot, endShoot, Projectile.ai[1], true), 1));
+                Projectile.Center = Vector2.Lerp(start, start + Projectile.rotation.ToRotationVector2().RotatedBy(MathHelper.PiOver2) * 600, CalamityUtils.ExpInEasing(Utils.GetLerpValue(startShoot, endShoot, Projectile.ai[1], true), 1));
             }
             if (Projectile.ai[1] > 190)
             {

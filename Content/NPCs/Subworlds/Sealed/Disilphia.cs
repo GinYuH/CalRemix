@@ -1,5 +1,7 @@
 ﻿using CalamityMod;
+using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Particles;
+using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Sounds;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Hostile;
@@ -8,6 +10,7 @@ using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -105,6 +108,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         int waitTime = telegraphTime + 120;
                         if (Timer == 1)
                         {
+                            SoundEngine.PlaySound(ScorchedEarth.ShootSound with { Volume = 0.8f }, target.Center);
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int projCount = 5;
