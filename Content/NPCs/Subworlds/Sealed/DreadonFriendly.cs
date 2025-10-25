@@ -55,7 +55,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = BetterSoundID.ItemElectricFizzleExplosion;
             NPC.noTileCollide = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<SealedFieldsBiome>().Type };
+            NPC.knockBackResist = 0;
+            NPC.dontTakeDamageFromHostiles = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<SealedUndergroundBiome>().Type };
         }
         public override void AI()
         {
@@ -180,7 +182,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Texture2D carpet = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/AuricCarpet").Value;
 
             if (IsFlying)
-                spriteBatch.Draw(carpet, NPC.Bottom - Main.screenPosition - Vector2.UnitY * 8, carpet.Frame(1, 6, 0, (int)(Utils.Lerp(0, 5, Utils.GetLerpValue(0, 7 * 6, NPC.frameCounter, true)))), drawColor * Utils.GetLerpValue(50, 60, Timer, true), 0, new Vector2(carpet.Width / 2, 0), NPC.scale * Utils.GetLerpValue(50, 60, Timer, true), fx, 0f);
+                spriteBatch.Draw(carpet, NPC.Bottom - screenPos - Vector2.UnitY * 8, carpet.Frame(1, 6, 0, (int)(Utils.Lerp(0, 5, Utils.GetLerpValue(0, 7 * 6, NPC.frameCounter, true)))), drawColor * Utils.GetLerpValue(50, 60, Timer, true), 0, new Vector2(carpet.Width / 2, 0), NPC.scale * Utils.GetLerpValue(50, 60, Timer, true), fx, 0f);
 
             int armLength = 26;
             int legLength = 24;
@@ -192,43 +194,43 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (IsGroovin)
                 armRot += MathF.Sin(Main.GlobalTimeWrappedHourly * 10) * 0.5f;
 
-            DrawLimb(spriteBatch, legOffset, legLength, 0);
-            DrawLimb(spriteBatch, legOffset with { X = -legOffset.X}, legLength, 0);
-            DrawLimb(spriteBatch, armOffset, armLength, -armRot, true);
-            DrawLimb(spriteBatch, armOffset with { X = -armOffset.X}, armLength, armRot, true);
+            DrawLimb(spriteBatch, legOffset - screenPos, legLength, 0);
+            DrawLimb(spriteBatch, legOffset with { X = -legOffset.X} - screenPos, legLength, 0);
+            DrawLimb(spriteBatch, armOffset - screenPos, armLength, -armRot, true);
+            DrawLimb(spriteBatch, armOffset with { X = -armOffset.X} - screenPos, armLength, armRot, true);
 
             float bodyOffset = 0;
             float headOffset = 12;
 
             float headRot = 0;
 
-            if (IsGroovin)
+            if (IsGroovin || NPC.IsABestiaryIconDummy)
             {
                 headRot = MathF.Sin(Main.GlobalTimeWrappedHourly * 5) * 0.25f;
                 headOffset += MathF.Sin(Main.GlobalTimeWrappedHourly * 10 + 1) * 2;
                 bodyOffset = MathF.Sin(Main.GlobalTimeWrappedHourly * 10) * 2;
             }
 
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY + texture.Height / 14 + bodyOffset), texture.Frame(1, 7, 0, (int)Utils.Lerp(0, 6, Utils.GetLerpValue(0, 7 * 6, NPC.frameCounter, true))), drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 7), NPC.scale, fx, 0f);
-            spriteBatch.Draw(head, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY - texture.Height / 14 + headOffset), null, drawColor, headRot, new Vector2(head.Width / 2, head.Height), NPC.scale, fx, 0f);
+            spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + texture.Height / 14 + bodyOffset), texture.Frame(1, 7, 0, (int)Utils.Lerp(0, 6, Utils.GetLerpValue(0, 7 * 6, NPC.frameCounter, true))), drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 7), NPC.scale, fx, 0f);
+            spriteBatch.Draw(head, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY - texture.Height / 14 + headOffset), null, drawColor, headRot, new Vector2(head.Width / 2, head.Height), NPC.scale, fx, 0f);
 
            return false;
         }
 
         public void DrawLimb(SpriteBatch spriteBatch, Vector2 pos, float lenght, float rot, bool arm = false)
         {
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, NPC.Center - Main.screenPosition + pos, new Rectangle(0, 0, 4, (int)lenght), Color.Black, rot, new Vector2(2, 0), NPC.scale, 0, 0);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, NPC.Center + pos, new Rectangle(0, 0, 4, (int)lenght), Color.Black, rot, new Vector2(2, 0), NPC.scale, 0, 0);
 
             if (arm)
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, NPC.Center - Main.screenPosition + pos + Vector2.UnitY.RotatedBy(rot) * lenght * 0.6f, new Rectangle(0, 0, 4, 10), Color.Black, rot + MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / 1f), new Vector2(2, 0), NPC.scale, 0, 0);
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, NPC.Center + pos + Vector2.UnitY.RotatedBy(rot) * lenght * 0.6f, new Rectangle(0, 0, 4, 10), Color.Black, rot + MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / 1f), new Vector2(2, 0), NPC.scale, 0, 0);
                 }
             }
             else
             {
-                spriteBatch.Draw(TextureAssets.MagicPixel.Value, NPC.Center - Main.screenPosition + pos + Vector2.UnitY.RotatedBy(rot) * lenght, new Rectangle(0, 0, 4, 10), Color.Black, rot - MathHelper.PiOver2 * pos.X.DirectionalSign(), new Vector2(2, 0), NPC.scale, 0, 0);
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, NPC.Center + pos + Vector2.UnitY.RotatedBy(rot) * lenght, new Rectangle(0, 0, 4, 10), Color.Black, rot - MathHelper.PiOver2 * pos.X.DirectionalSign(), new Vector2(2, 0), NPC.scale, 0, 0);
             }
 
         }

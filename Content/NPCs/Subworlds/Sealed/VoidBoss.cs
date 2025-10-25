@@ -376,9 +376,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D tex = TextureAssets.Npc[Type].Value;
+            Color col = NPC.IsABestiaryIconDummy ? Color.White : Color.Red;
+            if (NPC.IsABestiaryIconDummy)
+            {
+                NPC.alpha = 0;
+                tex = ModContent.Request<Texture2D>(Texture + "_BC").Value;
+            }
 
             Vector2 offset = Vector2.Zero;
-            spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, Color.Red * NPC.Opacity, 0, tex.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, col * NPC.Opacity, 0, tex.Size() / 2, NPC.scale, 0, 0);
 
             return false;
         }

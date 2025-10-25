@@ -8,6 +8,8 @@ using CalamityMod.Tiles.Ores;
 using CalamityMod.Particles;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.World;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -167,6 +169,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         break;
                     }
             }
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D tex = TextureAssets.Npc[Type].Value;
+            spriteBatch.Draw(tex, NPC.Center - screenPos, null, Color.White, NPC.rotation + MathHelper.PiOver2, new Vector2(tex.Width / 2, 0), NPC.scale, 0, 0);
+            return false;
         }
 
         public override bool CheckActive()

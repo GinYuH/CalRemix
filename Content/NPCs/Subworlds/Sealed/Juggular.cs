@@ -441,35 +441,43 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Texture2D texture = TextureAssets.Npc[Type].Value;
             Texture2D line = ModContent.Request<Texture2D>("CalamityMod/Particles/DrainLineBloom").Value;
 
-            spriteBatch.EnterShaderRegion(BlendState.Additive);
-
-            if (TelegraphTimer > 0)
+            if (!NPC.IsABestiaryIconDummy)
             {
-                float lineHeight = 3000;
-                float lineDist = 60 + MathF.Cos(Main.GlobalTimeWrappedHourly * 10) * 5;
-                float opacity = 1;
-                int teleFadeIn = (int)(TelegraphMaxTime * 0.7f);
-                int teleFadeOut = (int)(TelegraphMaxTime * 0.2f);
-                if (TelegraphTimer >= teleFadeIn)
-                {
-                    opacity = Utils.GetLerpValue(TelegraphMaxTime, teleFadeIn, TelegraphTimer, true);
-                }
-                else if (TelegraphTimer <= teleFadeOut)
-                {
-                    opacity = Utils.GetLerpValue(0, teleFadeOut, TelegraphTimer, true);
-                }
-                opacity += MathF.Sin(Main.GlobalTimeWrappedHourly * 22) * 0.2f;
-                for (int i = -1; i < 2; i += 2)
-                {
-                    spriteBatch.Draw(line, NPC.Center + Vector2.UnitX * lineDist * i - screenPos, null, Color.Orange * opacity, 0, new Vector2(line.Width / 2, 0), new Vector2(1, lineHeight / (float)line.Height), 0, 0);
-                }
-                Texture2D pixel = TextureAssets.MagicPixel.Value;
-                Rectangle pixelRect = new Rectangle(0, 0, (int)lineDist * 2, (int)lineHeight);
-                spriteBatch.Draw(pixel, NPC.Center - screenPos, pixelRect, Color.Orange * opacity * 0.3f, 0, new Vector2(pixelRect.Width / 2, 0), 1, 0, 0);
-            }
-            spriteBatch.ExitShaderRegion();
+                spriteBatch.EnterShaderRegion(BlendState.Additive);
 
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(texture.Width / 2, texture.Height / Main.npcFrameCount[Type] / 2), NPC.scale * Squish, 0, 0f);
+                if (TelegraphTimer > 0)
+                {
+                    float lineHeight = 3000;
+                    float lineDist = 60 + MathF.Cos(Main.GlobalTimeWrappedHourly * 10) * 5;
+                    float opacity = 1;
+                    int teleFadeIn = (int)(TelegraphMaxTime * 0.7f);
+                    int teleFadeOut = (int)(TelegraphMaxTime * 0.2f);
+                    if (TelegraphTimer >= teleFadeIn)
+                    {
+                        opacity = Utils.GetLerpValue(TelegraphMaxTime, teleFadeIn, TelegraphTimer, true);
+                    }
+                    else if (TelegraphTimer <= teleFadeOut)
+                    {
+                        opacity = Utils.GetLerpValue(0, teleFadeOut, TelegraphTimer, true);
+                    }
+                    opacity += MathF.Sin(Main.GlobalTimeWrappedHourly * 22) * 0.2f;
+                    for (int i = -1; i < 2; i += 2)
+                    {
+                        spriteBatch.Draw(line, NPC.Center + Vector2.UnitX * lineDist * i - screenPos, null, Color.Orange * opacity, 0, new Vector2(line.Width / 2, 0), new Vector2(1, lineHeight / (float)line.Height), 0, 0);
+                    }
+                    Texture2D pixel = TextureAssets.MagicPixel.Value;
+                    Rectangle pixelRect = new Rectangle(0, 0, (int)lineDist * 2, (int)lineHeight);
+                    spriteBatch.Draw(pixel, NPC.Center - screenPos, pixelRect, Color.Orange * opacity * 0.3f, 0, new Vector2(pixelRect.Width / 2, 0), 1, 0, 0);
+                }
+                spriteBatch.ExitShaderRegion();
+            }
+            else
+            {
+                NPC.alpha = 0;
+                Squish = Vector2.One;
+            }
+
+            spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(texture.Width / 2, texture.Height / Main.npcFrameCount[Type] / 2), NPC.scale * Squish, 0, 0f);
 
             return false;
         }

@@ -51,7 +51,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToElectricity = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.dontTakeDamage = true;
-            SpawnModBiomes = new[] { ModContent.GetInstance<SealedFieldsBiome>().Type };
+            SpawnModBiomes = new[] { ModContent.GetInstance<SealedUndergroundBiome>().Type };
         }
 
 

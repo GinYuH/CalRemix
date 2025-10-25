@@ -14,7 +14,7 @@ namespace CalRemix.Core.Biomes
 
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/SealedFieldsIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.Purple;
 
@@ -37,7 +37,7 @@ namespace CalRemix.Core.Biomes
 
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/CarnelianForestIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.Red;
 
@@ -60,7 +60,7 @@ namespace CalRemix.Core.Biomes
 
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/DarnwoodSwampIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.RosyBrown;
 
@@ -106,7 +106,7 @@ namespace CalRemix.Core.Biomes
 
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/BarrensIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.Black;
 
@@ -129,7 +129,7 @@ namespace CalRemix.Core.Biomes
 
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/BadlandsIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.Purple;
 
@@ -152,7 +152,7 @@ namespace CalRemix.Core.Biomes
 
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/TurnipBiomeIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.MediumPurple;
 
@@ -175,7 +175,7 @@ namespace CalRemix.Core.Biomes
 
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/VoidForestIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.Magenta;
 
@@ -198,7 +198,7 @@ namespace CalRemix.Core.Biomes
 
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
 
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/VolcanicFieldIcon";
         public override string BackgroundPath => "Terraria/Images/MapBG32";
         public override Color? BackgroundColor => Color.IndianRed;
 
@@ -212,6 +212,29 @@ namespace CalRemix.Core.Biomes
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+
+        public override int Music => CalRemixMusic.AsbestosCaves;
+    }
+    public class SealedUndergroundBiome : ModBiome
+    {
+        public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
+
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/SealedOil");
+
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/SealedUndergroundIcon";
+        public override string BackgroundPath => "Terraria/Images/MapBG32";
+        public override Color? BackgroundColor => Color.Purple;
+
+        public override string MapBackground => BackgroundPath;
+
+        public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
+
+        public override bool IsBiomeActive(Player player)
+        {
+            return SubworldSystem.IsActive<SealedSubworld>() && CalRemixWorld.sealedTiles > 100 && player.position.Y > SealedGeneration.caveHeight;
+        }
+
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
         public override int Music => CalRemixMusic.AsbestosCaves;
     }

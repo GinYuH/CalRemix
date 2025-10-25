@@ -176,6 +176,11 @@ Mods: {
 				DisplayName: Volcanic Field Biome
 				TownNPCDialogueName: the Volcanic Field Biome
 			}
+
+			SealedUndergroundBiome: {
+				DisplayName: Sealed Caverns
+				TownNPCDialogueName: the Sealed Underground Biome
+			}
 		}
 
 		Enchantments: {

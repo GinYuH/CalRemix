@@ -236,7 +236,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
             float animSpeed = State == 1 ? 50 : 7;
             Vector2 scale = new Vector2(MathF.Sin(Main.GlobalTimeWrappedHourly * animSpeed) * 0.022f, MathF.Cos(Main.GlobalTimeWrappedHourly * animSpeed) * 0.022f);
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), null, drawColor, NPC.rotation, texture.Size() / 2f, NPC.scale * Vector2.One + scale, 0, 0f);
+            spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), null, drawColor, NPC.rotation, texture.Size() / 2f, NPC.scale * Vector2.One + scale, 0, 0f);
             return false;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
