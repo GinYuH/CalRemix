@@ -175,8 +175,8 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             Main.tileLighted[Type] = true;
             TileID.Sets.Ore[Type] = true;
             Main.tileSpelunker[Type] = true;
-            Main.tileOreFinderPriority[Type] = 500;
-            AddMapEntry(new Color(63, 18, 130));
+            Main.tileOreFinderPriority[Type] = 700;
+            AddMapEntry(new Color(63, 18, 130), CalRemixHelper.LocalText("Items.FrozenSealedTearOre.DisplayName"));
             DustType = DustID.Clentaminator_Blue;
             HitSound = SoundID.Tink;
         }
@@ -199,8 +199,8 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             Main.tileBlockLight[Type] = true;
             TileID.Sets.Ore[Type] = true;
             Main.tileSpelunker[Type] = true;
-            Main.tileOreFinderPriority[Type] = 100;
-            AddMapEntry(new Color(23, 18, 12));
+            Main.tileOreFinderPriority[Type] = 615;
+            AddMapEntry(new Color(23, 18, 12), CalRemixHelper.LocalText("Items.PeatOre.DisplayName"));
             DustType = DustID.Mud;
             HitSound = SoundID.Tink;
         }
@@ -216,8 +216,8 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             Main.tileBlockLight[Type] = true;
             TileID.Sets.Ore[Type] = true;
             Main.tileSpelunker[Type] = true;
-            Main.tileOreFinderPriority[Type] = 600;
-            AddMapEntry(new Color(255, 0, 0));
+            Main.tileOreFinderPriority[Type] = 750;
+            AddMapEntry(new Color(255, 0, 0), CalRemixHelper.LocalText("Items.MonoriumOre.DisplayName"));
             DustType = DustID.RedMoss;
             HitSound = SoundID.Tink;
         }
@@ -233,8 +233,8 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
             Main.tileBlockLight[Type] = true;
             TileID.Sets.Ore[Type] = true;
             Main.tileSpelunker[Type] = true;
-            Main.tileOreFinderPriority[Type] = 200;
-            AddMapEntry(new Color(222, 49, 49));
+            Main.tileOreFinderPriority[Type] = 700;
+            AddMapEntry(new Color(222, 49, 49), CalRemixHelper.LocalText("Items.CarnelianiteOre.DisplayName"));
             DustType = DustID.RedTorch;
             HitSound = SoundID.Tink;
         }

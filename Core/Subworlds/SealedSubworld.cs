@@ -53,7 +53,7 @@ namespace CalRemix.Core.Subworlds
 
         bool ICustomSpawnSubworld.OverrideVanilla { get => false; }
 
-        public override int Height => 1000;
+        public override int Height => 900;
         public override int Width => 3000;
         public override List<GenPass> Tasks =>
         [
@@ -71,8 +71,11 @@ namespace CalRemix.Core.Subworlds
             SubworldUpdateMethods.UpdateTiles();
             SubworldUpdateMethods.UpdateTileEntities();
 
-            Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:Sealed", true);
-            SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
+            if (!NPC.AnyNPCs(ModContent.NPCType<Disilphia>()))
+            {
+                Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:Sealed", true);
+                SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
+            }
             Main.time = Main.dayLength * 0.5f;
             base.Update();
 
@@ -776,7 +779,7 @@ namespace CalRemix.Core.Subworlds
 
             Point chamberPoint = new Point(villageStart + 100, caveTile);
             bool _2 = false;
-            SchematicManager.PlaceSchematic("Sealed Chamber", chamberPoint, SchematicAnchor.CenterLeft, ref _2, new Action<Chest, int, bool>(FillCultChest));
+            SchematicManager.PlaceSchematic("Sealed Chamber", chamberPoint, SchematicAnchor.Center, ref _2, new Action<Chest, int, bool>(FillCultChest));
             Vector2 strucSize = new((int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(1)), (int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(0)));
             SealedSubworldData.tentPos = new Vector2(chamberPoint.X - 38, chamberPoint.Y + 32) * 16;
             SealedSubworldData.cultPos = new Vector2(chamberPoint.X + 85, chamberPoint.Y + 15) * 16;

@@ -162,7 +162,10 @@ namespace CalRemix.Content.Tiles
                 new (ModContent.ItemType<RottedTendril>(), 1),
                 new (ModContent.ItemType<Neoncane>(), 3),
                 new (ModContent.ItemType<SealedFruit>(), 1),
-            }, new SoundStyle("CalRemix/Assets/Sounds/SealedHurt") { Pitch = 0.5f, Volume = 0.8f }) }
+            }, new SoundStyle("CalRemix/Assets/Sounds/SealedHurt") { Pitch = 0.5f, Volume = 0.8f }) },
+            { ItemID.GlowTulip, new (new List<Item>() {
+                new (ItemID.XenonMoss, ItemID.GlowTulip)
+            }, new SoundStyle("CalRemix/Assets/Sounds/SealedHurt") { Pitch = -0.5f, Volume = 0.8f }) }
         };
 
         public override bool IsTileValidForEntity(int x, int y)

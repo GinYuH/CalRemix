@@ -22,7 +22,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
         {
             get
             {
-                return SubworldSystem.IsActive<SealedSubworld>();
+                return SubworldSystem.IsActive<SealedSubworld>() && !NPC.AnyNPCs(ModContent.NPCType<Disilphia>());
             }
         }
 
