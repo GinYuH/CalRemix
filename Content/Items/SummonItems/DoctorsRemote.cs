@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Items.Materials;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using CalamityMod;
+using SubworldLibrary;
+using CalRemix.Core.Subworlds;
 
 namespace CalRemix.Content.Items.SummonItems
 {
@@ -23,15 +28,20 @@ namespace CalRemix.Content.Items.SummonItems
 
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<Disilphia>());
+            return !NPC.AnyNPCs(ModContent.NPCType<Disilphia>()) && SubworldSystem.IsActive<SealedSubworld>();
         }
 
         public override bool? UseItem(Player player)
         {
-            if (player.whoAmI == Main.myPlayer)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<Disilphia>());
+                int npc = NPC.NewNPC(new EntitySource_BossSpawn(player), (int)(player.Center.X), (int)(player.position.Y - 3000f), ModContent.NPCType<Disilphia>(), 1);
+                Main.npc[npc].timeLeft *= 20;
+                CalamityUtils.BossAwakenMessage(npc);
             }
+            else
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, -1, -1, null, player.whoAmI, ModContent.NPCType<Disilphia>());
+
             return true;
         }
 

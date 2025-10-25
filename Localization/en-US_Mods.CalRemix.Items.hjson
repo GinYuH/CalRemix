@@ -5773,5 +5773,9 @@ YellowLightLeggings: {
 
 DoctorsRemote: {
 	DisplayName: Doctors Remote
-	Tooltip: Summons Disilphia
+	Tooltip:
+		'''
+		Summons Disilphia
+		Must be used in the Sealed Subworld
+		'''
 }
