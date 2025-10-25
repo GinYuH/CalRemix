@@ -416,6 +416,23 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             npcLoot.Add(ModContent.ItemType<Mercury>(), 1, 25, 40);
         }
 
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (NPC.life <= 0)
+            {
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, Mod.Find<ModGore>("Disilphia").Type, NPC.scale);
+                NPC p = NPC;
+                Main.LocalPlayer.Calamity().GeneralScreenShakePower += 12;
+                SoundEngine.PlaySound(MercuryRocket.RockyExplosion with { PitchVariance = 0.3f, Pitch = -0.3f, Volume = 3f }, p.Center);
+                for (int i = 0; i < 20; i++)
+                    GeneralParticleHandler.SpawnParticle(new CustomPulse(p.Center, Main.rand.NextVector2CircularEdge(1f, 1f) * Main.rand.NextFloat(88f, 128f), Color.Orange, "CalamityMod/Particles/Light", Vector2.One, 0, Main.rand.NextFloat(4f, 10f), 0, 40));
+                for (int i = 0; i < 100; i++)
+                    GeneralParticleHandler.SpawnParticle(new TimedSmokeParticle(p.Center, Main.rand.NextVector2Circular(280, 280), Color.Black, new Color(20, 20, 20), Main.rand.NextFloat(2f, 4f), 0.8f, 60, 0.02f));
+                GeneralParticleHandler.SpawnParticle(new StrongBloom(p.Center, Vector2.Zero, Color.Orange, 6f, 10));
+                GeneralParticleHandler.SpawnParticle(new PulseRing(p.Center, Vector2.Zero, Color.Gray * 0.4f, 0.4f, 10f, 10));
+            }
+        }
+
         public override void OnKill()
         {
             RemixDowned.downedDisil = true;
