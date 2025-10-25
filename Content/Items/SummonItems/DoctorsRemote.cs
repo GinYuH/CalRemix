@@ -28,7 +28,7 @@ namespace CalRemix.Content.Items.SummonItems
 
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<Disilphia>()) && SubworldSystem.IsActive<SealedSubworld>();
+            return !NPC.AnyNPCs(ModContent.NPCType<Disilphia>());
         }
 
         public override bool? UseItem(Player player)

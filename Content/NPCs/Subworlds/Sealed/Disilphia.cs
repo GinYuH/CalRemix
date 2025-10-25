@@ -139,6 +139,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 {
                                     ExtraOne = 1;
                                     Timer = 0;
+                                    for (int i = 0; i < 7; i++)
+                                    {
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + new Vector2(MathHelper.Lerp(-NPC.width / 2, NPC.width / 2, i / (float)(6)), NPC.height / 2), Vector2.Zero, ModContent.ProjectileType<MercuryRocketFalling>(), CalRemixHelper.ProjectileDamage(300, 480), 1f, ai0: 0);
+                                            Main.projectile[p].Kill();
+                                        }
+                                    }
                                 }
                                 if (NPC.velocity.Y < 60)
                                 {
