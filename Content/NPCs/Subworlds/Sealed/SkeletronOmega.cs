@@ -522,7 +522,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 6), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 6), NPC.scale, SpriteEffects.None, 0f);
 
             Texture2D arm = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/OmegaArm").Value;
 
@@ -535,7 +535,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         Limb lim = l.Limbs[i];
                         float rot = lim.ConnectPoint.DirectionTo(lim.EndPoint).ToRotation();
                         Point limp = ((lim.EndPoint - lim.ConnectPoint) * 0.5f + lim.ConnectPoint).ToTileCoordinates();
-                        spriteBatch.Draw(arm, lim.ConnectPoint - Main.screenPosition, null, Lighting.GetColor(limp), rot + MathHelper.PiOver2, new Vector2(arm.Width / 2, arm.Height), NPC.scale, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(arm, lim.ConnectPoint - screenPos, null, Lighting.GetColor(limp), rot + MathHelper.PiOver2, new Vector2(arm.Width / 2, arm.Height), NPC.scale, SpriteEffects.None, 0f);
                     }
                 }
             }

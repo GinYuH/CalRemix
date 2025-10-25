@@ -534,27 +534,30 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
 
-            if (!(State == (int)PhaseType.Stunned && ExtraVar2 != 3 && ExtraVar2 != 0))
+            if (!NPC.IsABestiaryIconDummy)
             {
-                float correctedRotation = NPC.rotation + MathHelper.PiOver2;
-
-                float currentSegmentRotation = correctedRotation;
-                List<Vector2> ribbonDrawPositions = new List<Vector2>();
-                int ct = NPC.oldRot.Length - 5;
-                for (int i = 0; i < ct; i++)
+                if (!(State == (int)PhaseType.Stunned && ExtraVar2 != 3 && ExtraVar2 != 0))
                 {
-                    float ribbonCompletionRatio = i / (float)ct;
-                    float wrappedAngularOffset = MathHelper.WrapAngle(NPC.oldRot[i + 1] - currentSegmentRotation + MathHelper.PiOver2) * 0.1f;
+                    float correctedRotation = NPC.rotation + MathHelper.PiOver2;
 
-                    Vector2 ribbonSegmentOffset = Vector2.UnitY.RotatedBy(currentSegmentRotation) * ribbonCompletionRatio * 290f;
-                    ribbonDrawPositions.Add(NPC.Center + ribbonSegmentOffset);
+                    float currentSegmentRotation = correctedRotation;
+                    List<Vector2> ribbonDrawPositions = new List<Vector2>();
+                    int ct = NPC.oldRot.Length - 5;
+                    for (int i = 0; i < ct; i++)
+                    {
+                        float ribbonCompletionRatio = i / (float)ct;
+                        float wrappedAngularOffset = MathHelper.WrapAngle(NPC.oldRot[i + 1] - currentSegmentRotation + MathHelper.PiOver2) * 0.1f;
 
-                    currentSegmentRotation += wrappedAngularOffset;
+                        Vector2 ribbonSegmentOffset = Vector2.UnitY.RotatedBy(currentSegmentRotation) * ribbonCompletionRatio * 290f;
+                        ribbonDrawPositions.Add(NPC.Center + ribbonSegmentOffset);
+
+                        currentSegmentRotation += wrappedAngularOffset;
+                    }
+
+                    spriteBatch.EnterShaderRegion();
+                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(new((float f) => 80 * (1 - f)), new PrimitiveSettings.VertexColorFunction((float f) => (Color.Lerp(IsSecondEye ? Color.Red : Color.CornflowerBlue, default, f))), shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
+                    spriteBatch.ExitShaderRegion();
                 }
-
-                spriteBatch.EnterShaderRegion();
-                PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(new((float f) => 80 * (1 - f)), new PrimitiveSettings.VertexColorFunction((float f) => (Color.Lerp(IsSecondEye ? Color.Red : Color.CornflowerBlue, default, f))), shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
-                spriteBatch.ExitShaderRegion();
             }
 
             Texture2D aye = TextureAssets.Npc[Type].Value;

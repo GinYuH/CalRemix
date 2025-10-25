@@ -119,16 +119,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             Texture2D tex = TextureAssets.Npc[Type].Value;
             //spriteBatch.Draw(tex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, tex.Size() / 2, NPC.scale, SpriteEffects.None, 0);
-
-            int pts = 60;
-            List<Vector2> points = new();
-            for (int i = 0; i < pts; i++)
+            if (!NPC.IsABestiaryIconDummy)
             {
-                Vector2 pos = Vector2.Lerp(NPC.Bottom, NPC.Bottom + Vector2.UnitY * 60, i / (float)pts);
-                pos.X += MathHelper.Lerp(0, MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + i * 0.1f + NPC.whoAmI) * 10, i / (float)pts); 
-                points.Add(pos);
+                int pts = 60;
+                List<Vector2> points = new();
+                for (int i = 0; i < pts; i++)
+                {
+                    Vector2 pos = Vector2.Lerp(NPC.Bottom, NPC.Bottom + Vector2.UnitY * 60, i / (float)pts);
+                    pos.X += MathHelper.Lerp(0, MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + i * 0.1f + NPC.whoAmI) * 10, i / (float)pts);
+                    points.Add(pos);
+                }
+                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f) => (1 - f) * 6), new PrimitiveSettings.VertexColorFunction((float f) => Color.Cyan * (1 - f))));
             }
-            PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f) => (1 - f) * 6), new PrimitiveSettings.VertexColorFunction((float f) => Color.Cyan * (1 - f))));
             return true;
         }
 

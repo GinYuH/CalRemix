@@ -195,7 +195,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 armRot += MathF.Sin(Main.GlobalTimeWrappedHourly * 10) * 0.5f;
 
             DrawLimb(spriteBatch, legOffset - screenPos, legLength, 0);
-            DrawLimb(spriteBatch, legOffset with { X = -legOffset.X} - screenPos, legLength, 0);
+            DrawLimb(spriteBatch, legOffset with { X = -legOffset.X} - screenPos, legLength, 0.00001f);
             DrawLimb(spriteBatch, armOffset - screenPos, armLength, -armRot, true);
             DrawLimb(spriteBatch, armOffset with { X = -armOffset.X} - screenPos, armLength, armRot, true);
 
@@ -230,7 +230,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             else
             {
-                spriteBatch.Draw(TextureAssets.MagicPixel.Value, NPC.Center + pos + Vector2.UnitY.RotatedBy(rot) * lenght, new Rectangle(0, 0, 4, 10), Color.Black, rot - MathHelper.PiOver2 * pos.X.DirectionalSign(), new Vector2(2, 0), NPC.scale, 0, 0);
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, NPC.Center + pos + Vector2.UnitY.RotatedBy(rot) * lenght, new Rectangle(0, 0, 4, 10), Color.Black, rot - MathHelper.PiOver2 * ((float)(rot != 0.00001f).ToInt()).DirectionalSign(), new Vector2(2, 0), NPC.scale, 0, 0);
             }
 
         }

@@ -61,7 +61,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
             SpriteEffects fx = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY), null, drawColor, NPC.rotation, texture.Size() / 2f, NPC.scale, fx, 0f);
+            spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), null, drawColor, NPC.rotation, texture.Size() / 2f, NPC.scale, fx, 0f);
             Texture2D arm = ModContent.Request<Texture2D>(Texture + "Arm").Value;
 
 
@@ -81,7 +81,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             SpriteEffects fxArm = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 origin = NPC.spriteDirection == -1 ? new(arm.Width - 3, 3) : new Vector2(3, 3);
-            spriteBatch.Draw(arm, NPC.Center - Main.screenPosition + new Vector2(0f, NPC.gfxOffY) - new Vector2(10 * -NPC.spriteDirection, 10), null, drawColor, armRot, origin, NPC.scale, fxArm, 0f);
+            spriteBatch.Draw(arm, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY) - new Vector2(10 * -NPC.spriteDirection, 10), null, drawColor, armRot, origin, NPC.scale, fxArm, 0f);
             return false;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
