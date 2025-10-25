@@ -1,6 +1,8 @@
 ﻿using CalamityMod;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -17,6 +19,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             Projectile.height = 40;
             Projectile.hostile = true;
             Projectile.timeLeft = 180;
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1000;
         }
         public override void AI()
         {
@@ -57,6 +60,24 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             // Only collide with tiles if past the player's vertical position
             return Projectile.position.Y > Main.player[(int)Projectile.ai[2]].Bottom.Y;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (Projectile.velocity.Y == 0)
+            {
+                Texture2D warning = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/MercuryWarning").Value;
+                Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
+                Main.EntitySpriteDraw(warning, new Vector2(Projectile.Center.X, Projectile.localAI[0]) - Main.screenPosition, null, Color.Orange * (1 + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 10)), 0, warning.Size() / 2, 1.5f * Projectile.scale, 0);
+                Main.spriteBatch.ExitShaderRegion();
+                return false;
+            }
+            return true;
+        }
+
+        public override bool CanHitPlayer(Player target)
+        {
+            return Projectile.velocity.Y > 0;
         }
     }
 }

@@ -16,8 +16,10 @@ using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Serialization;
+using System.Threading;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -97,6 +99,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.knockBackResist = 0f;
             NPC.value = Item.buyPrice(gold: 40);
             NPC.boss = true;
+            NPC.behindTiles = true;
             Music = CalRemixMusic.TheCalamity;
         }
 
@@ -137,21 +140,35 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         NPC.direction = NPC.DirectionTo(target.Center).X.DirectionalSign();
                         int telegraphTime = 60;
                         int waitTime = telegraphTime + 120;
-                        if (Timer == 1)
+                        float localTimer = Timer % waitTime;
+                        int attckCount = CalamityWorld.death ? 5 : CalamityWorld.revenge ? 4 : Main.expertMode ? 3 : 2;
+                        if (localTimer == 1)
                         {
-                            SoundEngine.PlaySound(ScorchedEarth.ShootSound with { Volume = 0.8f }, target.Center);
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int projCount = 5;
+                                int projCount = CalamityWorld.death ? 15 : CalamityWorld.revenge ? 13 : Main.expertMode ? 9 : 5;
                                 for (int i = 0; i < projCount; i++)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), target.Center + new Vector2(MathHelper.Lerp(-2000, 2000, i / (float)(projCount - 1)), -1000), Vector2.Zero, ModContent.ProjectileType<MercuryRocketFalling>(), CalRemixHelper.ProjectileDamage(300, 480), 1f, ai0: telegraphTime);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), target.Center + new Vector2(MathHelper.Lerp(-2000, 2000, i / (float)(projCount - 1)), -1000), Vector2.Zero, ModContent.ProjectileType<MercuryRocketFalling>(), CalRemixHelper.ProjectileDamage(300, 480), 1f, ai0: telegraphTime);
+                                    Main.projectile[p].localAI[0] = NPC.Center.Y - 200;
+                                    Main.projectile[p].netUpdate = true;
                                 }
                             }
                         }
-                        else if (Timer >= waitTime)
+                        else if (localTimer < waitTime)
+                        {
+                            if (localTimer % 120 == 2 && localTimer < telegraphTime)
+                            {
+                                SoundEngine.PlaySound(EvilEye.EvilEyeAlarm1 with { MaxInstances = 0 }, target.Center);
+                            }
+                        }
+                        if (Timer >= waitTime * attckCount)
                         {
                             ChangePhase(PhaseType.Spikes);
+                        }
+                        if (localTimer == telegraphTime)
+                        {
+                            SoundEngine.PlaySound(ScorchedEarth.ShootSound with { Volume = 0.8f }, target.Center);
                         }
                     }
                     break;
@@ -379,6 +396,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return NPC.velocity.Y != 0;
+        }
+
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ItemID.SuperHealingPotion;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D tex = TextureAssets.Npc[Type].Value;
+            spriteBatch.Draw(tex, NPC.Center - screenPos, null, Color.White * NPC.Opacity, NPC.rotation, tex.Size() / 2, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+            return false;
         }
     }
 }
