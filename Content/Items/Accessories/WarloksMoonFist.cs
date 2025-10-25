@@ -50,7 +50,7 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient(ItemID.LunarBar, 20).
                 AddIngredient(ItemID.Ectoplasm, 51). // I HATE IT I HATE IT I HATE IT
                 AddIngredient<Lumenyl>(20).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

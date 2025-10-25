@@ -10,6 +10,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Items.Weapons.Rogue;
+using CalRemix.Content.Items.Materials;
+using CalamityMod.Items;
 
 namespace CalRemix.Content.Items.Weapons;
 
@@ -34,8 +36,8 @@ public class GearworkShield: RogueWeapon
         Item.noMelee = true;
         Item.noUseGraphic = true;
         Item.knockBack = 4.25f;
-        Item.rare = ModContent.RarityType<PureGreen>();
-        Item.value = Item.sellPrice(gold: 20);
+        Item.rare = ItemRarityID.Red;
+        Item.value = CalamityGlobalItem.RarityRedBuyPrice;
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;
         Item.shoot = ModContent.ProjectileType<GearShield>();
@@ -134,9 +136,9 @@ public class GearworkShield: RogueWeapon
     {
         CreateRecipe().
             AddIngredient<OrnateShield>(1).
-            AddIngredient(ItemID.EoCShield).
-            AddIngredient<RuinousSoul>(5).
-            AddTile(TileID.LunarCraftingStation).
+            AddIngredient<ShieldoftheHighRuler>().
+            AddIngredient<MercuryCoatedSubcinium>(5).
+            AddTile(TileID.MythrilAnvil).
             Register();
     }
 

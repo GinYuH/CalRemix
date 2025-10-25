@@ -185,7 +185,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 AddIngredient(ItemID.Cobweb, 15).
                 AddIngredient<RuinousSoul>(30).
                 AddIngredient<ExodiumCluster>(30).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

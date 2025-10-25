@@ -47,7 +47,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void AddRecipes()
         {
             CreateRecipe().AddIngredient<ArchAmaryllis>().AddIngredient<DivineGeode>(15).AddIngredient<UnholyEssence>(10)
-                .AddTile(TileID.LunarCraftingStation)
+                .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
     }

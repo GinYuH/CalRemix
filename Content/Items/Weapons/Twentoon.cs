@@ -66,7 +66,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient<Triploon>().
                 AddIngredient<UelibloomBar>(10).
                 AddIngredient(ItemID.MusketBall, 20).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

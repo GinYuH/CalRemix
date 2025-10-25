@@ -177,7 +177,7 @@ namespace CalRemix
 
             Recipe.Create(ItemType<CosmiliteBar>(), 1)
             .AddIngredient<CosmiliteSlag>(5)
-            .AddTile(TileID.LunarCraftingStation)
+            .AddTile(TileID.MythrilAnvil)
             .AddCondition(new Condition(CalRemixHelper.LocalText($"UI.Anomaly.Condition").Format("cosmilite_slag"), () => CalRemixWorld.cosmislag))
             .Register();
 

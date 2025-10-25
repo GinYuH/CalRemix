@@ -146,7 +146,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 AddIngredient<StarryBlight>().
                 AddIngredient(ItemID.Cobweb, 15).
                 AddIngredient<AstralBar>(30).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

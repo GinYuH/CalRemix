@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Accessories
             CreateRecipe().
                 AddIngredient<BlazingPowder>(1).
                 AddIngredient<AstralPearl>(1).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

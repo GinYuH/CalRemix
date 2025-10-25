@@ -54,7 +54,7 @@ public class TitanTides : ModItem
         CreateRecipe().
             AddIngredient<TendonTides>(1).
             AddIngredient<CosmiliteBar>(10).
-            AddTile(TileID.LunarCraftingStation).
+            AddTile(TileID.MythrilAnvil).
             Register();
     }
 

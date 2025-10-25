@@ -8,6 +8,8 @@ using CalamityMod;
 using Terraria.DataStructures;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Weapons.Melee;
+using CalRemix.Content.Items.Materials;
+using CalamityMod.Items;
 
 namespace CalRemix.Content.Items.Weapons
 {
@@ -25,8 +27,8 @@ namespace CalRemix.Content.Items.Weapons
 		{
 			Item.width = 10;
 			Item.height = 10;
-			Item.rare = ModContent.RarityType<PureGreen>();
-            Item.value = Item.sellPrice(silver: 40);
+            Item.rare = ItemRarityID.Red;
+            Item.value = CalamityGlobalItem.RarityRedBuyPrice;
             Item.Calamity().donorItem = true;
             Item.useTime = 15; 
 			Item.useAnimation = 15;
@@ -75,8 +77,8 @@ namespace CalRemix.Content.Items.Weapons
             CreateRecipe().
                 AddIngredient(ItemID.Trident).
                 AddIngredient<YateveoBloom>().
-                AddIngredient<CosmiliteBar>(5).
-                AddTile(TileID.LunarCraftingStation).
+                AddIngredient<MercuryCoatedSubcinium>(5).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

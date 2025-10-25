@@ -7,6 +7,7 @@ using CalamityMod.Rarities;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons
 {
@@ -16,8 +17,8 @@ namespace CalRemix.Content.Items.Weapons
         {
             Item.width = 10;
             Item.height = 10;
-            Item.rare = ModContent.RarityType<PureGreen>();
-            Item.value = CalamityGlobalItem.RarityPureGreenBuyPrice;
+            Item.rare = ItemRarityID.Red;
+            Item.value = CalamityGlobalItem.RarityRedBuyPrice;
             Item.useTime = 6;
             Item.useAnimation = 6;
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -42,8 +43,8 @@ namespace CalRemix.Content.Items.Weapons
             CreateRecipe().
                 AddIngredient(ItemID.PearlwoodBow).
                 AddIngredient<ArchAmaryllis>().
-                AddIngredient<RuinousSoul>(5).
-                AddTile(TileID.LunarCraftingStation).
+                AddIngredient<MercuryCoatedSubcinium>(5).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

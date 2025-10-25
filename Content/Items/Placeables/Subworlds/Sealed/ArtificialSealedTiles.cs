@@ -40,7 +40,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
         {
             CreateRecipe(100)
                 .AddIngredient(ModContent.ItemType<Astrogel>(), 10)
-                .AddTile(TileID.LunarCraftingStation)
+                .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
     }
@@ -79,7 +79,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<TurnipFruit>())
                 .AddIngredient(ModContent.ItemType<VoidInfusedStone>(), 10)
-                .AddTile(TileID.LunarCraftingStation)
+                .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
     }
@@ -117,7 +117,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.Sealed
                 .AddIngredient(ModContent.ItemType<AstrogelBlock>())
                 .AddIngredient(ModContent.ItemType<GastrogelBlock>())
                 .AddIngredient(ModContent.ItemType<GroundFleshBlock>())
-                .AddTile(TileID.LunarCraftingStation)
+                .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
     }
