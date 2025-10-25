@@ -47,27 +47,26 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override void OnKill(int timeLeft)
         {
-            MercuryExplosion(Projectile);
-        }
-
-        public static void MercuryExplosion(Projectile p, float scale = 1f)
-        {
-            bool big = scale != 1f;
-            Main.LocalPlayer.Calamity().GeneralScreenShakePower += big ? 4 : 1;
+            Projectile p = Projectile;
+            Main.LocalPlayer.Calamity().GeneralScreenShakePower += 1;
             p.position = p.Center;
-            p.width = p.height = big ? 800 : 200;
+            p.width = p.height = 200;
             p.position.X = p.position.X - (float)(p.width / 2);
             p.position.Y = p.position.Y - (float)(p.height / 2);
             p.maxPenetrate = -1;
             p.penetrate = -1;
             p.Damage();
-            SoundEngine.PlaySound(RockyExplosion with { PitchVariance = 0.3f, Pitch = (big ? -0.3f : 1f), Volume = (big ? 3f : 1f) }, p.Center);
+            SoundEngine.PlaySound(RockyExplosion with { PitchVariance = 0.3f }, p.Center);
             for (int i = 0; i < 20; i++)
-                GeneralParticleHandler.SpawnParticle(new CustomPulse(p.Center, Main.rand.NextVector2CircularEdge(1f, 1f) * Main.rand.NextFloat(14f, 24f) * (big ? 2 : 1), Color.Orange, "CalamityMod/Particles/Light", Vector2.One, 0, Main.rand.NextFloat(2f, 5f) * scale, 0, big ? 40 : 20));
-            for (int i = 0; i < 50 * (big ? scale * 2 : scale); i++)
-                GeneralParticleHandler.SpawnParticle(new TimedSmokeParticle(p.Center, Main.rand.NextVector2Circular(40, 40) * scale, Color.Black, new Color(20, 20, 20), Main.rand.NextFloat(1f, 2f) * scale, 0.8f, 60, 0.02f));
-            GeneralParticleHandler.SpawnParticle(new StrongBloom(p.Center, Vector2.Zero, Color.Orange, 3f * scale, big ? 10 : 5));
-            GeneralParticleHandler.SpawnParticle(new PulseRing(p.Center, Vector2.Zero, Color.Gray * 0.4f, 0.4f, big ? 10f : 5f, 10));
+                GeneralParticleHandler.SpawnParticle(new CustomPulse(p.Center, Main.rand.NextVector2CircularEdge(1f, 1f) * Main.rand.NextFloat(14f, 24f), Color.Orange, "CalamityMod/Particles/Light", Vector2.One, 0, Main.rand.NextFloat(2f, 5f), 0, 20));
+            for (int i = 0; i < 30; i++)
+                GeneralParticleHandler.SpawnParticle(new TimedSmokeParticle(p.Center, Main.rand.NextVector2Circular(30, 30), Color.Black, new Color(20, 20, 20), Main.rand.NextFloat(2f, 2.4f), 0.8f, 30, 0.02f));
+            GeneralParticleHandler.SpawnParticle(new StrongBloom(p.Center, Vector2.Zero, Color.Orange, 3f, 5));
+            GeneralParticleHandler.SpawnParticle(new PulseRing(p.Center, Vector2.Zero, Color.Gray * 0.4f, 0.4f, 5f, 10));
+        }
+
+        public static void MercuryExplosion(Projectile p, float scale = 1f)
+        {
         }
     }
 }

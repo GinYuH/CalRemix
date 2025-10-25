@@ -119,7 +119,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
             if (Owner is null) return;
-            if ((Owner.life < 0 && !Owner.active) || (Owner.type != ModContent.NPCType<Disilphia>()))
+            if ((Owner.life < 0 || !Owner.active) || (Owner.type != ModContent.NPCType<Disilphia>()))
                 Projectile.Kill();
             Timer++;
 

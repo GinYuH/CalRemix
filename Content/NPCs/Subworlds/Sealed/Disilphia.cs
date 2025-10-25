@@ -7,12 +7,15 @@ using CalamityMod.Particles;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Summon.SmallAresArms;
 using CalamityMod.Sounds;
+using CalamityMod.World;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Serialization;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -31,6 +34,30 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public ref float ExtraOne => ref NPC.ai[2];
 
         public ref float ExtraTwo => ref NPC.ai[3];
+
+        public static float ULTIMA_FadeIn => 60;
+
+        public static float ULTIMA_BlackEnd => ULTIMA_FadeIn + 30;
+
+        public static float ULTIMA_Face => ULTIMA_BlackEnd + 30;
+
+        public static float ULTIMA_FaceDuration => ULTIMA_Face + 15;
+
+        public static float ULTIMA_Attack => ULTIMA_FaceDuration + 90;
+
+        public static float ULTIMA_AttackDuration => ULTIMA_Attack + 360;
+
+        public static float ULTIMA_FadeOutBlackGate => ULTIMA_AttackDuration + 90;
+
+        public static float ULTIMA_FadeOutBlackDuration => ULTIMA_FadeOutBlackGate + 100;
+
+        public static float ULTIMA_FinalFade => ULTIMA_FadeOutBlackDuration + 60;
+
+        public static float ULTIMA_FinalFadeDuration => ULTIMA_FinalFade + 50;
+
+        public static float ULTIMA_Total => ULTIMA_FinalFadeDuration + 40;
+
+
         public enum PhaseType
         {
             SpawnAnimation = 0,
@@ -172,7 +199,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 2;
                             if (Main.rand.NextBool())
                             {
-                                SoundEngine.PlaySound(BetterSoundID.ItemBunnyMountSummon with { Pitch = 0.4f, Volume = 2f, MaxInstances = 0 }, target.Center);
+                                SoundEngine.PlaySound(BetterSoundID.ItemBunnyMountSummon with { Pitch = 0.4f, Volume = 1f, MaxInstances = 0 }, target.Center);
                             }
                             Vector2 pos = NPC.Center + new Vector2(NPC.direction * Main.rand.NextFloat(800, 3000), Main.rand.NextFloat(-600, 600));
                             float speed = Main.rand.NextFloat(20, 24);
@@ -245,33 +272,63 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case PhaseType.Ultimate:
                     {
-                        int disappearTime = 60;
-                        int waitTime = disappearTime + 40;
-                        int scareWaitTime = waitTime + 20;
-                        int firingEndTime = scareWaitTime + 180;
-                        int cooldownTime = firingEndTime + 60;
+                        // FadeIn. Disilphia goes transparent. Start black
+                        // BlackEnd. Screen turns black by the end of this
+                        // Face. Face starts appearing
+                        // FaceDuration. Face disappears
+                        // Attack. Face appears, bg turns sharp brown.
+                        // AttackDuration. Attacks stop spawning
+                        // FadeOutBlackGate. Face and brown fade out
+                        // FadeOutBlackDuration. End of above
+                        // FinalFade. Start of black fade out
+                        // FinalFadeDuration. Black fades out
+                        // Total. End phase
+                        float disappearTime = ULTIMA_FadeIn;
+                        float waitTime = ULTIMA_Face;
+                        float scareWaitTime = ULTIMA_Attack;
+                        float firingEndTime = ULTIMA_AttackDuration;
+                        float cooldownTime = ULTIMA_FinalFadeDuration;
 
                         if (Timer <= disappearTime)
                         {
                             NPC.alpha = (int)MathHelper.Lerp(0, 255, Timer / (float)disappearTime);
+                            NPC.dontTakeDamage = true;
                         }
                         else if (Timer <= waitTime)
                         {
-
+                            if (Timer == waitTime)
+                            {
+                                SoundEngine.PlaySound(BetterSoundID.ItemXenopopperPop with { Pitch = -0.8f, Volume = 3 });
+                            }
                         }
                         else if (Timer <= scareWaitTime)
-                        { 
+                        {
+                            if (Timer == scareWaitTime)
+                            {
+                                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/GenericJumpscare") with { Pitch = -1.6f, Volume = 3 });
+                            }
                         }
                         else if (Timer <= firingEndTime)
                         {
-
+                            if (Timer % 40 == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    for (int i = 0; i < 30; i++)
+                                    {
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + new Vector2(MathHelper.Lerp(-3000, 3000, i / 29f), -600), new Vector2(Main.rand.NextBool().ToDirectionInt() * 5, 5 * (target.Center.Y > NPC.Center.Y - 600).ToDirectionInt()), ModContent.ProjectileType<DisilphiaGunk>(), CalRemixHelper.ProjectileDamage(210, 320), 1);
+                                    }
+                                }
+                            }
                         }
                         else if (Timer <= cooldownTime)
                         {
-
+                            NPC.alpha = (int)MathHelper.Lerp(255, 0, Utils.GetLerpValue(cooldownTime - disappearTime, cooldownTime, Timer, true));
+                            NPC.dontTakeDamage = false;
                         }
                         else
                         {
+                            NPC.Calamity().newAI[0] = 1;
                             ChangePhase((PhaseType)Main.rand.Next((int)PhaseType.DownRockets, (int)PhaseType.ClusterRockets + 1));
                         }
                     }
@@ -285,6 +342,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.velocity = Vector2.Zero;
             NPC.rotation = 0;
             CurrentPhase = phase;
+            if (NPC.life < (int)(NPC.lifeMax * 0.5f) && NPC.Calamity().newAI[0] == 0)
+            {
+                CurrentPhase = PhaseType.Ultimate;
+            }
             Timer = 0;
             ExtraOne = 0;
             ExtraTwo = 0;

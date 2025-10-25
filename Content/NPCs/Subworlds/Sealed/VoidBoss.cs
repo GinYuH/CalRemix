@@ -79,7 +79,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void Load()
         {
-            On_Main.DoDraw += DrawVoidIntro;
+            On_Main.DrawInfernoRings += DrawVoidIntro;
         }
 
         public override void SetDefaults()
@@ -394,9 +394,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             });
         }
 
-        private static void DrawVoidIntro(On_Main.orig_DoDraw orig, Main self, GameTime gameTime)
+        private static void DrawVoidIntro(On_Main.orig_DrawInfernoRings orig, Main self)
         {
-            orig(self, gameTime);
+            orig(self);
             Texture2D drainLine = ModContent.Request<Texture2D>("CalamityMod/Particles/TitaniumRailgunShellGlow").Value;
             if (!Main.gameMenu)
             {
@@ -410,8 +410,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             VoidBoss voidboss = voi.ModNPC as VoidBoss;
                             if (voidboss.CurrentPhase == PhaseType.SpawnAnimation && voidboss.Timer <= CinematicTime && voidboss.Timer >= 1)
                             {
-                                Main.spriteBatch.Begin();
-
                                 string text = CalRemixHelper.LocalText("StatusText.VoidSummon").Value;
                                 float boxOpacity = 0;
 
@@ -473,8 +471,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 Main.spriteBatch.Draw(drainLine, new Vector2(Main.screenWidth / 2, Main.screenHeight / 2 - boxHeight), null, Color.Black * boxOpacity * 1.6f, MathHelper.PiOver2, new Vector2(drainLine.Width / 2, drainLine.Height / 2), new Vector2(boxHeight / (float)drainLine.Width, Main.screenWidth  * 4 / (float)drainLine.Height), 0, 0);
                                 
                                 Utils.DrawBorderStringBig(Main.spriteBatch, text, Main.ScreenSize.ToVector2() / 2 - Vector2.UnitY * boxHeight, Color.Red * boxOpacity, 1, 0.5f, 0.5f);
-
-                                Main.spriteBatch.End();
                             }
                         }
                         else
