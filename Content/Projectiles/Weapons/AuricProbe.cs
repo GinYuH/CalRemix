@@ -3,6 +3,7 @@ using CalamityMod.Dusts;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Particles;
 using CalamityMod.Sounds;
+using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -51,17 +52,8 @@ namespace CalRemix.Content.Projectiles.Weapons
                     if (p.getRect().Intersects(Projectile.getRect()))
                     {
                         p.penetrate--;
+                        Projectile.ai[1] = 1;
                         Projectile.Kill();
-                        Projectile.ExpandHitboxBy(600);
-                        Projectile.maxPenetrate = -1;
-                        Projectile.penetrate = -1;
-                        Projectile.usesLocalNPCImmunity = true;
-                        Projectile.localNPCHitCooldown = 5;
-                        Projectile.Damage();
-                        SoundEngine.PlaySound(AresTeslaCannon.TeslaOrbShootSound with { Pitch = -0.5f }, Projectile.Center);
-                        SoundEngine.PlaySound(CommonCalamitySounds.LargeWeaponFireSound, Projectile.Center);
-                        CalRemixHelper.DustExplosionOutward(Projectile.Center, DustID.Electric, speedMin: 6, speedMax: 40, 100, default, 0, scale: Main.rand.NextFloat(1f, 2f));
-                        GeneralParticleHandler.SpawnParticle(new PlasmaExplosion(Projectile.Center, Vector2.Zero, Color.Cyan, Vector2.One, Main.rand.NextFloat(MathHelper.TwoPi), 0.1f, 0.4f, 20));
                         break;
                     }
                 }
@@ -73,6 +65,26 @@ namespace CalRemix.Content.Projectiles.Weapons
             {
                 Projectile.ai[0] = 2;
                 Projectile.alpha += 50;
+            }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (Projectile.ai[1] == 1)
+            {
+                Projectile.position = Projectile.Center;
+                Projectile.width = Projectile.height = 500;
+                Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+                Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+                Projectile.maxPenetrate = -1;
+                Projectile.penetrate = -1;
+                Projectile.usesLocalNPCImmunity = true;
+                Projectile.localNPCHitCooldown = 10;
+                Projectile.Damage();
+                SoundEngine.PlaySound(AresTeslaCannon.TeslaOrbShootSound with { Pitch = -0.5f }, Projectile.Center);
+                SoundEngine.PlaySound(CommonCalamitySounds.LargeWeaponFireSound, Projectile.Center);
+                CalRemixHelper.DustExplosionOutward(Projectile.Center, DustID.Electric, speedMin: 6, speedMax: 40, 100, default, 0, scale: Main.rand.NextFloat(1f, 2f));
+                GeneralParticleHandler.SpawnParticle(new PlasmaExplosion(Projectile.Center, Vector2.Zero, Color.Cyan, Vector2.One, Main.rand.NextFloat(MathHelper.TwoPi), 0.1f, 0.4f, 20));
             }
         }
 
@@ -89,7 +101,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override bool? CanHitNPC(NPC target)
         {
-            return false;
+            return Projectile.ai[1] == 1;
         }
     }
 }
