@@ -19,6 +19,7 @@ using CalRemix.UI;
 using System.Linq;
 using System.IO;
 using CalRemix.Core.World;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -248,6 +249,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ModContent.ItemType<NauseatingPowder>(), 3, 10, 15);
+            npcLoot.Add(ModContent.ItemType<GildedShard>(), 5);
+            npcLoot.Add(ModContent.ItemType<CarnelianRose>(), 5);
+            npcLoot.Add(ModContent.ItemType<GastropodHide>(), 1, 8, 16);
             npcLoot.Add(ModContent.ItemType<Gastrogel>(), 1, 35, 60);
             npcLoot.Add(ModContent.ItemType<MonorianGemShards>(), 1, 12, 20);
             npcLoot.Add(ModContent.ItemType<GastropodEye>());

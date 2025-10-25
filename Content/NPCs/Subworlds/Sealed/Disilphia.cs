@@ -414,6 +414,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             npcLoot.Add(ModContent.ItemType<MercuryCoatedSubcinium>(), 1, 16, 30);
             npcLoot.Add(ModContent.ItemType<Mercury>(), 1, 25, 40);
+            npcLoot.Add(ModContent.ItemType<SealloyBar>(), 1, 5, 10);
+            npcLoot.Add(ItemID.IronBar, 1, 25, 36);
+            npcLoot.Add(ItemID.LeadBar, 1, 25, 36);
         }
 
         public override void HitEffect(NPC.HitInfo hit)
