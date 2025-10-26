@@ -4980,7 +4980,7 @@ FrozenSealedTearOre: {
 
 FrozenSealedTear: {
 	DisplayName: Frozen Sealed Tear
-	Tooltip: ""
+	Tooltip: Very cold, and very durable
 }
 
 InactivePlumestone: {
@@ -5128,7 +5128,7 @@ LightColumn: {
 
 LightResidue: {
 	DisplayName: Light Residue
-	Tooltip: ""
+	Tooltip: Chunks of dimming yellow light
 }
 
 Neoncane: {
@@ -5214,22 +5214,22 @@ CarnelianWoodStormbow: {
 
 RefinedCarnelianite: {
 	DisplayName: Refined Carnelianite
-	Tooltip: ""
+	Tooltip: A shining red gemstone that has luminescent properties
 }
 
 RottedTendril: {
 	DisplayName: Rotted Tendril
-	Tooltip: ""
+	Tooltip: A tentacle severed from a Sealed entity
 }
 
 NeonDust: {
 	DisplayName: Neon Dust
-	Tooltip: ""
+	Tooltip: Dangerous powder with nauseating potential
 }
 
 Veinroot: {
 	DisplayName: Veinroot
-	Tooltip: ""
+	Tooltip: As much of a delicacy as it is a useful fillament
 }
 
 CritterChip: {
@@ -5254,7 +5254,7 @@ MonorianGem: {
 
 NauseatingPowder: {
 	DisplayName: Nauseating Powder
-	Tooltip: ""
+	Tooltip: An assortment of powders that can make many go mad
 }
 
 Delirium: {
@@ -5274,7 +5274,7 @@ SoftScarf: {
 
 Mercury: {
 	DisplayName: Mercury
-	Tooltip: ""
+	Tooltip: Solid, heat-resistant mercury
 }
 
 ArchRaptierre: {
@@ -5306,12 +5306,12 @@ HeavenReaper: {
 
 Astrogel: {
 	DisplayName: Astral Gel
-	Tooltip: ""
+	Tooltip: Sickly gel with cosmic potential
 }
 
 Gastrogel: {
 	DisplayName: Gastrogel
-	Tooltip: ""
+	Tooltip: Splatters of Gastropod hide that works as an adhesive
 }
 
 GastropodEye: {
@@ -5321,12 +5321,12 @@ GastropodEye: {
 
 GastropodHide: {
 	DisplayName: Gastropod Hide
-	Tooltip: ""
+	Tooltip: Somewhat hardy mollusk leather
 }
 
 GildedShard: {
 	DisplayName: Gilded Shard
-	Tooltip: ""
+	Tooltip: Bright flakes of yellow light that can pierce the moon
 }
 
 MercuryCoatedSubcinium: {
@@ -5336,7 +5336,7 @@ MercuryCoatedSubcinium: {
 
 VoidSingularity: {
 	DisplayName: Void Singularity
-	Tooltip: ""
+	Tooltip: Material Void in its purest form
 }
 
 AstrogelBlock: {
@@ -5356,7 +5356,7 @@ GildedHardlightBlock: {
 
 VoidInfusedTurnipFruit: {
 	DisplayName: Void Infused Turnip Fruit
-	Tooltip: ""
+	Tooltip: A highly focused source of void
 }
 
 CornSquare: {
@@ -5371,52 +5371,52 @@ GroundFleshBlock: {
 
 Pebble: {
 	DisplayName: Pebble
-	Tooltip: ""
+	Tooltip: A mundane stone
 }
 
 PebbleAstral: {
 	DisplayName: Astral Pebble
-	Tooltip: ""
+	Tooltip: Contains a large amount of Astral essence
 }
 
 PebbleBrimstone: {
 	DisplayName: Brimstone Pebble
-	Tooltip: ""
+	Tooltip: Contains a large amount of Brimstone essence
 }
 
 PebbleCarnelian: {
 	DisplayName: Carnelian Pebble
-	Tooltip: ""
+	Tooltip: Contains a large amount of Carnelian essence
 }
 
 PebbleFlake: {
 	DisplayName: Pebble Flake
-	Tooltip: ""
+	Tooltip: A mundane flake of stone that can be tainted with different forces
 }
 
 PebbleSealed: {
 	DisplayName: Sealed Pebble
-	Tooltip: ""
+	Tooltip: Contains a large amount of Sealed essence
 }
 
 PebbleShardAstral: {
 	DisplayName: Astral Pebble Flake
-	Tooltip: ""
+	Tooltip: Contains a small amount of Astral essence
 }
 
 PebbleShardBrimstone: {
 	DisplayName: Brimstone Pebble Flake
-	Tooltip: ""
+	Tooltip: Contains a small amount of Brimstone essence
 }
 
 PebbleShardCarnelian: {
 	DisplayName: Carnelian Pebble Flake
-	Tooltip: ""
+	Tooltip: Contains a small amount of Carnelian essence
 }
 
 PebbleShardSealed: {
 	DisplayName: Sealed Pebble Flake
-	Tooltip: ""
+	Tooltip: Contains a small amount of Sealed essence
 }
 
 LargeSealedFruit: {
@@ -5533,7 +5533,7 @@ SealToken: {
 
 SealloyBar: {
 	DisplayName: Sealloy Bar
-	Tooltip: ""
+	Tooltip: A strange alloy that can make even stranger things
 }
 
 MysteriousGraySlab: {
@@ -5607,7 +5607,7 @@ AbnormalEye: {
 
 RotPearl: {
 	DisplayName: Rot Pearl
-	Tooltip: ""
+	Tooltip: Icky pearls that have lost their luster
 }
 
 ExtremelyStrangePuppet: {
@@ -5626,27 +5626,27 @@ StrangePuppet: {
 
 AbnormalSample: {
 	DisplayName: Abnormal Sample
-	Tooltip: ""
+	Tooltip: "..."
 }
 
 NullHolder: {
 	DisplayName: Null Holder
-	Tooltip: ""
+	Tooltip: One piece of the Null Beacon
 }
 
 NullOrb: {
 	DisplayName: Null Orb
-	Tooltip: ""
+	Tooltip: One piece of the Null Beacon
 }
 
 NullPedestal: {
 	DisplayName: Null Pedestal
-	Tooltip: ""
+	Tooltip: One piece of the Null Beacon
 }
 
 WaterMesh: {
 	DisplayName: Water Mesh
-	Tooltip: ""
+	Tooltip: Strong liquidy fibers containing elemental energy
 }
 
 WaterSeeds: {
