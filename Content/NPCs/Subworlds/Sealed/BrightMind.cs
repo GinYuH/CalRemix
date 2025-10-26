@@ -49,10 +49,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 if (State == 0)
                 {
                     State = 1;
-                    if (!NPCDialogueUI.IsTalking(NPC))
-                    {
-                        NPCDialogueUI.StartDialogue(NPC.whoAmI, "Intro");
-                    }
+                    NPCDialogueUI.StartDialogue(NPC.whoAmI, "Intro");
                 }
             }
             else
@@ -62,13 +59,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (State == 1)
             {
                 Timer++;
-                if (NPCDialogueUI.IsTalking(NPC) && Timer % 7 == 0)
+                if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
                 {
                     SoundEngine.PlaySound(talkSound, NPC.Center);
                 }
                 if (!NPCDialogueUI.IsBeingTalkedTo(NPC))
                 {
-                    State = 0;
+                    State = 2;
                 }
             }
             else

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -102,9 +103,14 @@ namespace CalRemix.UI
             Main.LocalPlayer.Remix().talkedNPC = -1;
         }
 
-        public static bool IsTalking(NPC npc)
+        /// <summary>
+        /// Is this NPC currently writing text?
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <returns> False if not being talked to or the NPC has finished writing</returns>
+        public static bool NotFinishedTalking(NPC npc)
         {
-            if (currentKey == "")
+            if (!IsBeingTalkedTo(npc))
                 return false;
             if (currentMaxCharacters > 0 && currentCharacter >= currentMaxCharacters)
             {
@@ -113,8 +119,17 @@ namespace CalRemix.UI
             return currentCharacter >= 0;
         }
 
+        /// <summary>
+        /// Is this NPC's dialogue UI currently up?
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <returns>False if the NPC is not being talked to</returns>
         public static bool IsBeingTalkedTo(NPC npc)
         {
+            if (Main.LocalPlayer.Remix().talkedNPC <= -1)
+                return false;
+            if (Main.npc[Main.LocalPlayer.Remix().talkedNPC] != npc)
+                return false;
             if (currentKey == "")
                 return false;
             return true;
@@ -135,19 +150,15 @@ namespace CalRemix.UI
             SUI = new();
             UserInter = new();
             UserInter.SetState(SUI);
+        }
 
-            NPCDialogueSet brightMindDialogue = new NPCDialogueSet(
-            new() { { "Intro", new()
-            {
-                "OOOOHOOO! bobobobobo!",
-                "Babonya! bo oooaaa oaoaa!",
-                "...",
-                "FETCH ME !   THE    SHARDS !\nMonorian Gem Shards !!!!"
-            }
-            } }, Color.DarkGoldenrod, Color.LightGoldenrodYellow, "CalRemix/Content/NPCs/Subworlds/Sealed/BrightMind_Head");
+        public override void PostAddRecipes()
+        {
+            NPCDialogueSet brightMindDialogue = new(ModContent.NPCType<BrightMind>(),
+            "Intro", 
+            Color.DarkGoldenrod, Color.LightGoldenrodYellow);
 
-            allDialogue.Add(ModContent.NPCType<BrightMind>(), brightMindDialogue);
-
+            allDialogue.Add(brightMindDialogue.npcType, brightMindDialogue);
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -175,17 +186,30 @@ namespace CalRemix.UI
 
     public class NPCDialogueSet
     {
-        public Dictionary<string, List<string>> dialogue;
+        public Dictionary<string, List<string>> dialogue = new();
         public Color bgColor;
         public Color borderColor;
-        public string texture;
+        public int npcType;
 
-        public NPCDialogueSet(Dictionary<string, List<string>> dialogue, Color bgColor, Color borderColor, string texture)
+        public NPCDialogueSet(int npcType, string key, Color bgColor, Color borderColor)
         {
-            this.dialogue = dialogue;
+            List<string> allText = new();
+            for (int i = 0; i < 22; i++)
+            {
+                string currentText = "Mods.CalRemix.NPCDialog." + ContentSamples.NpcsByNetId[npcType].ModNPC.Name + "." + key + "." + i;
+                if (Language.Exists(currentText))
+                {
+                    allText.Add(Language.GetTextValue(currentText));
+                }
+                else
+                {
+                    break;
+                }
+            }
+            dialogue.Add(key, allText);
+            this.npcType = npcType;
             this.bgColor = bgColor;
             this.borderColor = borderColor;
-            this.texture = texture;
         }
     }
 }
