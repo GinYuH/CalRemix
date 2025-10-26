@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.UI;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -43,13 +44,31 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             NPC.TargetClosest();
             NPC.spriteDirection = NPC.direction;
+            if (NPC.Distance(Main.player[NPC.target].Center) < 600)
+            {
+                if (State == 0)
+                {
+                    State = 1;
+                    if (!NPCDialogueUI.IsTalking(NPC))
+                    {
+                        NPCDialogueUI.StartDialogue(NPC.whoAmI, "Intro");
+                    }
+                }
+            }
+            else
+            {
+                State = 0;
+            }
             if (State == 1)
             {
                 Timer++;
-                if (Main.mouseLeft && Main.mouseLeftRelease)
+                if (NPCDialogueUI.IsTalking(NPC) && Timer % 7 == 0)
                 {
                     SoundEngine.PlaySound(talkSound, NPC.Center);
-                    CombatText.NewText(NPC.getRect(), Color.Tan, "EFFSAF");
+                }
+                if (!NPCDialogueUI.IsBeingTalkedTo(NPC))
+                {
+                    State = 0;
                 }
             }
             else

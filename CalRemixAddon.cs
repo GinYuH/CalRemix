@@ -40,6 +40,9 @@ using CalRemix.Content.NPCs.Eclipse;
 using Terraria.ModLoader.Core;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
+using CalamityMod.Items.Placeables.Ores;
+using CalamityMod.CalPlayer;
+using CalamityMod.NPCs.ExoMechs.Ares;
 
 namespace CalRemix
 {
@@ -211,6 +214,16 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
             });
+            Action<SpriteBatch, Rectangle, Color> draePortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Dreadon_BC").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 1f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "Dreadon", 17.6, () => RemixDowned.downedDraedon, NPCType<DreadonFriendly>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<NullBeacon>(),
+                ["customPortrait"] = draePortrait
+            });
             Action<SpriteBatch, Rectangle, Color> voidPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/VoidBoss_BC").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
@@ -332,6 +345,9 @@ namespace CalRemix
             MakeCard(NPCType<Phytogen>(), (horz, anim) => Color.Lerp(Color.Lime, Color.Yellow, anim), "Phytogen", SoundID.Grass, SoundID.NPCDeath1);
             MakeCard(NPCType<Oxygen>(), (horz, anim) => Color.Lerp(Color.LightBlue, Color.SeaGreen, anim), "Oxygen", Oxygen.HitSound, SoundID.Shatter);
             MakeCard(NPCType<Pathogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pathogen", PerforatorHeadLarge.HitSound, PerforatorHeadSmall.HitSound);
+            MakeCard(NPCType<SkeletronOmega>(), (horz, anim) => Color.Lerp(Color.Gold, Color.SkyBlue, anim), "SkeletronOmega", CalamityMod.Tiles.Ores.AuricOre.MineSound, AresTeslaCannon.TeslaOrbShootSound);
+            MakeCard(NPCType<Godraycaster>(), (horz, anim) => Color.Lerp(Color.Gold, Color.SkyBlue, anim), "Godraycaster", CalamityMod.Tiles.Ores.AuricOre.MineSound, AresTeslaCannon.TeslaOrbShootSound);
+            MakeCard(NPCType<ObliteratorHead>(), (horz, anim) => Color.Lerp(Color.Gold, Color.SkyBlue, anim), "Obliterator", CalamityMod.Tiles.Ores.AuricOre.MineSound, AresTeslaCannon.TeslaOrbShootSound);
             MakeCard(NPCType<VoidBoss>(), (horz, anim) => Color.Lerp(Color.Black, Color.Magenta, anim), "Void", BetterSoundID.ItemCast, BetterSoundID.ItemCast);
             MakeCard(NPCType<Disilphia>(), (horz, anim) => Color.Lerp(Color.White, Color.White, anim), "Disilphia", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
             MakeCard(NPCType<MonorianGastropodAscended>(), (horz, anim) => Color.Lerp(Color.Pink, Color.Goldenrod, anim), "MonorianGastropodAscended", SoundID.NPCHit1, SoundID.NPCDeath1);

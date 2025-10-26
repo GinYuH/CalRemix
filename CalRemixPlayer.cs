@@ -345,6 +345,8 @@ namespace CalRemix
         public int dyesBrown = 0;
         public int dyesSilver = 0;
 
+        public int talkedNPC = -1;
+
 		public static Dictionary<int, DyeStats> dyeStats = new Dictionary<int, DyeStats>();
 
         private static readonly List<PlayerDrawLayer> HiddenGenLayers =
