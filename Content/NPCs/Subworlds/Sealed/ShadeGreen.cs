@@ -75,9 +75,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             bool readDialogue = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Intro4");
 
-            if (Main.LocalPlayer.controlUseItem && Main.LocalPlayer.selectedItem == 0)
-            Main.LocalPlayer.GetModPlayer<DialoguePlayer>().readDialogue.Clear();
-
+            // Repeat dialogue if clicked on
             if (NPC.type == ModContent.NPCType<ShadeGreen>())
             {
                 Rectangle maus = Utils.CenteredRectangle(Main.MouseWorld, Vector2.One * 10);
@@ -150,6 +148,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         SoundEngine.PlaySound(talkSound with { Pitch = -1.5f }, NPC.Center);
                     }
 
+                    // Dialogue flow
                     if (!readDialogue)
                     {
                         NPC GreenShade = NPC;
@@ -174,6 +173,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 break;
                         }
                     }
+                    // Reset if repeat dialogue
                     else if (!NPCDialogueUI.IsBeingTalkedTo(NPC))
                     {
                         Timer = 0;

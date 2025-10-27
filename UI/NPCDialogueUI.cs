@@ -28,13 +28,13 @@ namespace CalRemix.UI
             if (Main.LocalPlayer.Remix().talkedNPC > -1)
             {
                 NPC talkedNPC = Main.npc[Main.LocalPlayer.Remix().talkedNPC];
-                if (talkedNPC.life < 0 || !talkedNPC.active || !NPCDIalogueUISystem.allDialogue.ContainsKey(talkedNPC.type))
+                if (talkedNPC.life < 0 || !talkedNPC.active || !NPCDIalogueUISystem.allDialogue.TryGetValue(talkedNPC.type, out NPCDialogueSet value))
                 {
                     ResetDialogue();
                 }
                 else
                 {
-                    NPCDialogueSet dialogueInfo = NPCDIalogueUISystem.allDialogue[talkedNPC.type];
+                    NPCDialogueSet dialogueInfo = value;
                     if (currentKey == "" || currentIndex == -1)
                     {
                         ResetDialogue();
@@ -142,11 +142,26 @@ namespace CalRemix.UI
         public static bool HasReadDialogue(Player p, string key)
         {
             DialoguePlayer dialP = p.GetModPlayer<DialoguePlayer>();
-            if (dialP.readDialogue.ContainsKey(key))
+            if (dialP.readDialogue.TryGetValue(key, out bool value))
             {
-                return dialP.readDialogue[key];
+                return value;
             }
             return false;
+        }
+
+        public static bool HasReadDialogue(Player p, string npc, string key)
+        {
+            return HasReadDialogue(p, npc + "." + key);
+        }
+
+        public static bool HasReadDialogue(Player p, NPC npc, string key)
+        {
+            return HasReadDialogue(p, npc.ModNPC.Name + "." + key);
+        }
+
+        public static bool HasReadDialogue(Player p, int index, string key)
+        {
+            return HasReadDialogue(p, Main.npc[index].ModNPC.Name + "." + key);
         }
     }
 
@@ -256,9 +271,9 @@ namespace CalRemix.UI
             foreach (var v in readDialogue)
             {
                 string key = "RemixDialogue." + v.Key;
-                if (tag.ContainsKey(key))
+                if (tag.TryGet(key, out bool value))
                 {
-                    tag[key] = v.Value;
+                    tag[key] = value;
                 }
                 else
                 {
@@ -276,9 +291,9 @@ namespace CalRemix.UI
                 foreach (var pair in v.Value.dialogue)
                 {
                     string key = "RemixDialogue." + name + "." + pair.Key;
-                    if (readDialogue.ContainsKey(key))
+                    if (readDialogue.TryGetValue(key, out bool value))
                     {
-                        readDialogue[key] = tag.GetBool(key);
+                        readDialogue[key] = value;
                     }
                     else
                     {
