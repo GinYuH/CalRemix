@@ -314,17 +314,17 @@ namespace CalRemix.UI
                 {
                     case (int)FluxState.Asleep:
                         // if asleep, start waking up
-                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeWakingToAwake);
+                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeAsleepToWaking); // 28
                         currentFluxMode = (int)FluxState.WakingUp;
                         break; 
                     case (int)FluxState.WakingUp:
                         // if waking up, then fully wake up
-                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeAwakeToAsleep);
+                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeWakingToAwake); // 2
                         currentFluxMode = (int)FluxState.Awake;
                         break;
                     case (int)FluxState.Awake:
                         // if awake, go to sleep
-                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeAsleepToWaking);
+                        timeUntilNextFluxAction = HelperHelpers.GetTimeUntilNextStage(ScreenHelperManager.Flux_timeAwakeToAsleep); // 20
                         currentFluxMode = (int)FluxState.Asleep;
                         break;
                 }
