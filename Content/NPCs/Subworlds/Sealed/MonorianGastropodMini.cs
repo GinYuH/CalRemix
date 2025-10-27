@@ -41,7 +41,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 		public override void AI()
 		{
 			Player target = Main.player[NPC.target];
-			NPC.spriteDirection = -NPC.direction;
+			NPC.spriteDirection = NPC.direction;
 			NPC.TargetClosest();
 			if (NPC.ai[0] == 0)
 			{

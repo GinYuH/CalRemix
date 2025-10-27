@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria.ModLoader;
 using System.IO;
+using Microsoft.Build.Tasks;
 
 namespace CalRemix.Content.Projectiles.Hostile
 {
@@ -29,12 +30,14 @@ namespace CalRemix.Content.Projectiles.Hostile
 			if (Projectile.velocity.Y < 0) //Less than 0 means going up
             {
 				Projectile.damage = 0;
-				Projectile.alpha -= 2;
+				Projectile.alpha -= 5;
             }
 			else
             {
 				Projectile.alpha = 0;
 				Projectile.damage = Main.expertMode ? 10 : 15;
+				Projectile.rotation = MathHelper.ToRadians(135);
+				Projectile.velocity.X = 0;
             }
 			if (Projectile.velocity.Y > 6 && !stopeh)
             {
