@@ -165,6 +165,7 @@ namespace CalRemix.Core.World
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
+        public static int shadeQuestLevel = -1;
 
         public static int oxydayTime = 0;
         public static int timeSinceYharonMurdered = 0;
@@ -260,6 +261,9 @@ namespace CalRemix.Core.World
             ionQuestLevel = -1;
             wizardDisabled = false;
             oxydayTime = 0;
+
+            // Quest NPCs
+            shadeQuestLevel = -1;
 
             // Fanny
             postGenUpdate = false;
@@ -396,6 +400,8 @@ namespace CalRemix.Core.World
             tag["oxytime"] = oxydayTime;
             tag["timeSinceYharonMurdered"] = timeSinceYharonMurdered;
 
+            tag["shadeQuest"] = shadeQuestLevel;
+
             tag["109fanny"] = ScreenHelperManager.screenHelpersEnabled;
             tag["109fannyfreeze"] = ScreenHelperManager.fannyTimesFrozen;
             tag["genUpdate"] = postGenUpdate;
@@ -474,6 +480,8 @@ namespace CalRemix.Core.World
             hydrogenLocation.Y = tag.Get<float>("hydrolocationY");
             oxydayTime = tag.Get<int>("oxytime");
             timeSinceYharonMurdered = tag.Get<int>("timeSinceYharonMurdered");
+
+            shadeQuestLevel = tag.Get<int>("shadeQuest");
 
             GetData(ref ScreenHelperManager.screenHelpersEnabled, "109fanny", tag);
             ScreenHelperManager.fannyTimesFrozen = tag.Get<int>("109fannyfreeze");
@@ -564,6 +572,7 @@ namespace CalRemix.Core.World
             writer.Write(oxydayTime);
             writer.Write(timeSinceYharonMurdered);
             writer.Write(postGenUpdate);
+            writer.Write(shadeQuestLevel);
 
             writer.Write(ScreenHelperManager.screenHelpersEnabled);
             writer.Write(ScreenHelperManager.fannyTimesFrozen);
@@ -645,6 +654,7 @@ namespace CalRemix.Core.World
             oxydayTime = reader.ReadInt32();
             timeSinceYharonMurdered = reader.ReadInt32();
             postGenUpdate = reader.ReadBoolean();
+            shadeQuestLevel = reader.ReadInt32();
 
             ScreenHelperManager.screenHelpersEnabled = reader.ReadBoolean();
             ScreenHelperManager.fannyTimesFrozen = reader.ReadInt32();

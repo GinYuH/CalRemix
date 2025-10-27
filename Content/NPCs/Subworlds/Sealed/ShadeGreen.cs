@@ -13,6 +13,9 @@ using CalRemix.Content.Particles;
 using Terraria.ID;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework.Input;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -64,6 +67,42 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
         }
+
+        public static void IncrementShadeQuest()
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                CalRemixWorld.shadeQuestLevel++;
+
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.ShadeQuestIncrement);
+                packet.Write(CalRemixWorld.shadeQuestLevel + 1);
+                packet.Send();
+            }
+            else
+            {
+                CalRemixWorld.shadeQuestLevel++;
+            }
+        }
+
+        public static string CheckForItem(Player player, int type, int questLevelRequired, string newDialogue, string repeatDialogue)
+        {
+            if ((player.HasItem(type) && CalRemixWorld.shadeQuestLevel == questLevelRequired) || CalRemixWorld.shadeQuestLevel == questLevelRequired + 1)
+            {
+                player.ConsumeItem(ModContent.ItemType<AbnormalEye>());
+                string ret = newDialogue;
+                if (NPCDialogueUI.HasReadDialogue(player, "ShadeGreen", repeatDialogue))
+                {
+                    ret = repeatDialogue;
+                }
+                if (CalRemixWorld.shadeQuestLevel == 0)
+                    IncrementShadeQuest();
+                return ret;
+            }
+            return "";
+        }
+
+
         public override void AI()
         {
             NPC.TargetClosest();
@@ -73,7 +112,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             int blueIdx = NPC.FindFirstNPC(ModContent.NPCType<ShadeBlue>());
             int yellowIdx = NPC.FindFirstNPC(ModContent.NPCType<ShadeYellow>());
 
-            bool readDialogue = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Intro4");
+            bool readDialogueOne = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Intro4");
+            bool readDialogueTwo = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Mind2");
 
             // Repeat dialogue if clicked on
             if (NPC.type == ModContent.NPCType<ShadeGreen>())
@@ -81,10 +121,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 Rectangle maus = Utils.CenteredRectangle(Main.MouseWorld, Vector2.One * 10);
                 if (maus.Intersects(NPC.getRect()))
                 {
-                    if (Main.LocalPlayer.controlUseTile && State == 0 && Main.LocalPlayer.Remix().talkedNPC == -1 && Main.LocalPlayer.Distance(NPC.Center) < 600)
+                    if (Target.whoAmI == Main.myPlayer && Main.LocalPlayer.controlUseTile && State == 0 && Main.LocalPlayer.Remix().talkedNPC == -1 && Main.LocalPlayer.Distance(NPC.Center) < 600)
                     {
+                        string key = readDialogueOne ? "Intro4" : "Intro1";
+                        string newd = CheckForItem(Target, ModContent.ItemType<AbnormalEye>(), 0, "Mind1", "Mind2");
+                        key = newd == "" ? key : newd;
+                        NPCDialogueUI.StartDialogue(NPC.whoAmI, key);
+
                         State = 1;
-                        NPCDialogueUI.StartDialogue(NPC.whoAmI, readDialogue ? "Intro4" : "Intro1");
                     }
                 }
             }
@@ -121,7 +165,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             {
                 if (NPC.Distance(Main.player[NPC.target].Center) < 600)
                 {
-                    if (State == 0 && !readDialogue)
+                    if (State == 0 && !readDialogueOne)
                     {
                         State = 1;
                         NPCDialogueUI.StartDialogue(NPC.whoAmI, "Intro1");
@@ -132,7 +176,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     State = 0;
                 }
 
-                if (State >= 1 && State <= 9)
+                if (State >= 1)
                 {
                     Timer++;
                     if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
@@ -148,10 +192,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         SoundEngine.PlaySound(talkSound with { Pitch = -1.5f }, NPC.Center);
                     }
 
+                    NPC GreenShade = NPC;
                     // Dialogue flow
-                    if (!readDialogue)
+                    if (!readDialogueOne)
                     {
-                        NPC GreenShade = NPC;
                         switch (State)
                         {
                             case 1: SwitchShade(YellowShade, "Intro1"); break;
@@ -163,6 +207,24 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             case 7: SwitchShade(YellowShade, "Intro1"); break;
                             case 8: SwitchShade(GreenShade, "Intro4"); break;
                             case 9:
+                                {
+                                    if (Target.Remix().talkedNPC == -1)
+                                    {
+                                        Target.QuickSpawnItem(NPC.GetSource_FromThis(), ModContent.ItemType<RustedShard>());
+                                        State = 0;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    else if (!readDialogueTwo && CalRemixWorld.shadeQuestLevel == 1)
+                    {
+                        switch (State)
+                        {
+                            case 1: SwitchShade(BlueShade, "Mind1"); break;
+                            case 2: SwitchShade(YellowShade, "Intro1"); break;
+                            case 3: SwitchShade(GreenShade, "Mind2"); break;
+                            case 4:
                                 {
                                     if (Target.Remix().talkedNPC == -1)
                                     {

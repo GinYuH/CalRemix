@@ -59,7 +59,8 @@ namespace CalRemix
         StartPandemicPanic,
         EndPandemicPanic,
         KillDefender,
-        KillInvader
+        KillInvader,
+        ShadeQuestIncrement
     }
     public class CalRemix : Mod
     {
@@ -191,6 +192,13 @@ namespace CalRemix
                     {
                         int killCount = reader.ReadInt32();
                         PandemicPanic.InvadersKilled = killCount;
+                        CalRemixWorld.UpdateWorldBool();
+                        break;
+                    }
+                case RemixMessageType.ShadeQuestIncrement:
+                    {
+                        int count = reader.ReadInt32();
+                        CalRemixWorld.shadeQuestLevel = count;
                         CalRemixWorld.UpdateWorldBool();
                         break;
                     }

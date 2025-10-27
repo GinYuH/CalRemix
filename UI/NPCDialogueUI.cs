@@ -3,6 +3,7 @@ using CalRemix.Content.Items.ZAccessories;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -77,7 +78,10 @@ namespace CalRemix.UI
                                 if (currentIndex > dialogueInfo.dialogue[currentKey].Count - 1)
                                 {
                                     string key = talkedNPC.ModNPC.Name + "." + currentKey;
-                                    Main.LocalPlayer.GetModPlayer<DialoguePlayer>().readDialogue.TryAdd(key, true);
+                                    if (!Main.LocalPlayer.GetModPlayer<DialoguePlayer>().readDialogue.TryAdd(key, true))
+                                    {
+                                        Main.LocalPlayer.GetModPlayer<DialoguePlayer>().readDialogue[key] = true;
+                                    }
                                     ResetDialogue();
                                 }
                             }
@@ -188,11 +192,11 @@ namespace CalRemix.UI
             Color.DarkGoldenrod, Color.LightGoldenrodYellow));
 
             RegisterNPC(new(ModContent.NPCType<ShadeGreen>(),
-            ["Intro1", "Intro2", "Intro3", "Intro4" ],
+            ["Intro1", "Intro2", "Intro3", "Intro4", "Mind1", "Mind2" ],
             Color.Black, new(34, 177, 76)));
 
             RegisterNPC(new(ModContent.NPCType<ShadeBlue>(),
-            ["Intro1", "Intro2", "Intro3"],
+            ["Intro1", "Intro2", "Intro3", "Mind1"],
             Color.Black, Color.Blue));
 
             RegisterNPC(new(ModContent.NPCType<ShadeYellow>(),
@@ -270,14 +274,14 @@ namespace CalRemix.UI
         {
             foreach (var v in readDialogue)
             {
-                string key = "RemixDialogue." + v.Key;
-                if (tag.TryGet(key, out bool value))
+                string key = v.Key;
+                if (tag.TryGet(key, out bool _))
                 {
-                    tag[key] = value;
+                    tag[key] = v.Value;
                 }
                 else
                 {
-                    tag.Add("RemixDialogue." + v.Key, v.Value);
+                    tag.Add(key, v.Value);
                 }
             }
         }
@@ -286,18 +290,18 @@ namespace CalRemix.UI
         {
             foreach (var v in NPCDIalogueUISystem.allDialogue)
             {
-                NPC n = Main.npc[v.Key];
+                NPC n = ContentSamples.NpcsByNetId[v.Key];
                 string name = n.ModNPC.Name;
                 foreach (var pair in v.Value.dialogue)
                 {
-                    string key = "RemixDialogue." + name + "." + pair.Key;
-                    if (readDialogue.TryGetValue(key, out bool value))
+                    string registerKey = name + "." + pair.Key;
+                    if (readDialogue.TryGetValue(registerKey, out bool value))
                     {
-                        readDialogue[key] = value;
+                        readDialogue[registerKey] = value;
                     }
                     else
                     {
-                        readDialogue.Add(key, tag.GetBool(key));
+                        readDialogue.Add(registerKey, tag.GetBool(registerKey));
                     }
                 }
             }

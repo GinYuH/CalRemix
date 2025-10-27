@@ -46,6 +46,17 @@ ShadeGreen: {
 			and bring us their eye.
 			'''
 	}
+
+	Mind1: {
+		0: Ah, you've brought the eye, we'll take it.
+		1: ...
+		2: Wonderful.
+	}
+
+	Mind2: {
+		0: Our next target will be that babbling Bright Mind in the badlands.
+		1: Silence his gibberish and bring us a chunk of his brain.
+	}
 }
 
 ShadeYellow.Intro1.0: ...
@@ -54,4 +65,5 @@ ShadeBlue: {
 	Intro1.0: HELLO THERE NEW FRIEND!
 	Intro2.0: GO KILL PEOPLE!
 	Intro3.0: GOUGE OUT THEIR EYE AND BRING IT TO US!!!
+	Mind1.0: WOWIE! A REAL EYE!
 }
