@@ -94,6 +94,11 @@ namespace CalRemix.Core.Subworlds
                     if (!NPC.AnyNPCs(ModContent.NPCType<DreadonFriendly>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<DreadonFriendly>());
                 }
+                if (p.Distance(SealedSubworldData.citadelPos) < 1000 && RemixDowned.downedVoid)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<ShadeGreen>()))
+                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.citadelPos.X, (int)SealedSubworldData.citadelPos.Y, ModContent.NPCType<ShadeGreen>());
+                }
             }
         }
 
@@ -151,6 +156,7 @@ namespace CalRemix.Core.Subworlds
         public static Vector2 tentPos = Vector2.Zero;
         public static Vector2 horizonPos = Vector2.Zero;
         public static Vector2 warriorPos = Vector2.Zero;
+        public static Vector2 citadelPos = Vector2.Zero;
 
         public static float TentRight => SealedSubworldData.tentPos.X + 50 * 16;
 
@@ -169,6 +175,7 @@ namespace CalRemix.Core.Subworlds
             tag["tentPosition"] = tentPos;
             tag["horizonPosition"] = horizonPos;
             tag["warriorPosition"] = warriorPos;
+            tag["citadelPosition"] = citadelPos;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -179,6 +186,7 @@ namespace CalRemix.Core.Subworlds
             tentPos = tag.Get<Vector2>("tentPosition");
             horizonPos = tag.Get<Vector2>("horizonPosition");
             warriorPos = tag.Get<Vector2>("warriorPosition");
+            citadelPos = tag.Get<Vector2>("citadelPosition");
         }
     }
 
@@ -629,7 +637,11 @@ namespace CalRemix.Core.Subworlds
                             if (chem == "Turnip")
                                 SchematicManager.PlaceSchematic<Action<Chest>>(chem, new Point(i, j + offset), SchematicAnchor.BottomCenter, ref _);
                             else
+                            {
                                 SchematicManager.PlaceSchematic(chem, new Point(i, j + offset), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillCitadelChest));
+
+                                SealedSubworldData.citadelPos = new Vector2(i, j - RemixSchematics.TileMaps[chem].GetLength(1)) * 16;
+                            }
                             turnipCooldown = 30;
                             turnipsPlaced++;
                         }
