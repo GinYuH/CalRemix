@@ -39,6 +39,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public static SoundStyle talkSound = new SoundStyle("CalRemix/Assets/Sounds/BrightMind") with { PitchVariance = 0.75f, Pitch = -2 };
 
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                CustomTexturePath = Texture + "_Bestiary",
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset[Type] = value;
+        }
+
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -166,6 +175,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     Target.QuickSpawnItem(NPC.GetSource_FromThis(), ModContent.ItemType<RustedShard>());
                 }
                 NPCDialogueUI.StartDialogue(nextShade.whoAmI, key);
+                if (Main.BestiaryTracker.Kills.GetKillCount(nextShade) <= 1)
+                {
+                    for (int i = 0; i < 50; i++)
+                    Main.BestiaryTracker.Kills.RegisterKill(nextShade);
+                }
             }
         }
 
