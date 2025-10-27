@@ -16,9 +16,12 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework.Input;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Sounds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
+    // The dialogue code for these guys is fucking atrocious and I keep thinking about Undertale, remind me to never make a NPC-dependent dialogue system that supports multiple characters ever again
     public class ShadeGreen : ModNPC
     {
         public Player Target => Main.player[NPC.target];
@@ -87,15 +90,20 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public static string CheckForItem(Player player, int type, int questLevelRequired, string newDialogue, string repeatDialogue)
         {
-            if ((player.HasItem(type) && CalRemixWorld.shadeQuestLevel == questLevelRequired) || CalRemixWorld.shadeQuestLevel == questLevelRequired + 1)
+            bool inc = false;
+            if ((player.HasItem(type) && CalRemixWorld.shadeQuestLevel == questLevelRequired) || (CalRemixWorld.shadeQuestLevel == questLevelRequired + 1))
             {
+                if (player.HasItem(type))
+                {
+                    inc = true;
+                }
                 player.ConsumeItem(ModContent.ItemType<AbnormalEye>());
                 string ret = newDialogue;
                 if (NPCDialogueUI.HasReadDialogue(player, "ShadeGreen", repeatDialogue))
                 {
                     ret = repeatDialogue;
                 }
-                if (CalRemixWorld.shadeQuestLevel == 0)
+                if (CalRemixWorld.shadeQuestLevel == questLevelRequired && inc)
                     IncrementShadeQuest();
                 return ret;
             }
@@ -114,6 +122,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             bool readDialogueOne = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Intro4");
             bool readDialogueTwo = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Mind2");
+            bool readDialogueThree = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Cultist2");
+
+            //Main.LocalPlayer.GetModPlayer<DialoguePlayer>().readDialogue.Clear();
+            //CalRemixWorld.shadeQuestLevel = 0;
 
             // Repeat dialogue if clicked on
             if (NPC.type == ModContent.NPCType<ShadeGreen>())
@@ -126,6 +138,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         string key = readDialogueOne ? "Intro4" : "Intro1";
                         string newd = CheckForItem(Target, ModContent.ItemType<AbnormalEye>(), 0, "Mind1", "Mind2");
                         key = newd == "" ? key : newd;
+                        string newd2 = CheckForItem(Target, ModContent.ItemType<Mikado>(), 1, "Cultist1", "Cultist2");
+                        key = newd2 == "" ? key : newd2;
+                        string newd3 = CheckForItem(Target, ModContent.ItemType<VoidEdge>(), 2, "QuestEnd", "QuestEnd");
+                        key = newd3 == "" ? key : newd3;
                         NPCDialogueUI.StartDialogue(NPC.whoAmI, key);
 
                         State = 1;
@@ -235,6 +251,49 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 break;
                         }
                     }
+                    else if (!readDialogueThree && CalRemixWorld.shadeQuestLevel == 2)
+                    {
+                        switch (State)
+                        {
+                            case 1: SwitchShade(BlueShade, "Cultist1"); break;
+                            case 2: SwitchShade(YellowShade, "Cultist1"); break;
+                            case 3: SwitchShade(GreenShade, "Cultist2"); break;
+                            case 4:
+                                {
+                                    if (Target.Remix().talkedNPC == -1)
+                                    {
+                                        Target.QuickSpawnItem(NPC.GetSource_FromThis(), ModContent.ItemType<RustedShard>());
+                                        State = 0;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    else if (CalRemixWorld.shadeQuestLevel == 3)
+                    {
+                        switch (State)
+                        {
+                            case 1: SwitchShade(BlueShade, "QuestEnd"); break;
+                            case 2: SwitchShade(YellowShade, "Intro1"); break;
+                            case 3: SwitchShade(GreenShade, "QuestEnd"); break;
+                            case 4:
+                                {
+                                    SoundEngine.PlaySound(CommonCalamitySounds.LightningSound);
+                                    for (int i = 0; i < 110; i++)
+                                    {
+                                        VoidMetaballYellow.SpawnParticle(NPC.Center, Main.rand.NextVector2Circular(1f, 1f) * Main.rand.NextFloat(16, 26) * 2, Main.rand.NextFloat(50, 130));
+                                    }
+                                    for (int i = 0; i < 110; i++)
+                                    {
+                                        VoidMetaballYellow.SpawnParticle(BlueShade.Center, Main.rand.NextVector2Circular(1f, 1f) * Main.rand.NextFloat(16, 26) * 2, Main.rand.NextFloat(50, 130));
+                                    }
+                                    BlueShade.StrikeInstantKill();
+                                    YellowShade.ai[1] = 1;
+                                    NPC.StrikeInstantKill();
+                                }
+                                break;
+                        }
+                    }
                     // Reset if repeat dialogue
                     else if (!NPCDialogueUI.IsBeingTalkedTo(NPC))
                     {
@@ -309,14 +368,30 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.TargetClosest();
             NPC.spriteDirection = NPC.direction;
             int iterationAmt = 5;
+            float ex = State == 1 ? 3 : 1;
             for (int i = 0; i < iterationAmt; i++)
             {
                 float comp = i / (float)(iterationAmt - 1);
-                VoidMetaballYellow.SpawnParticle(NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * MathHelper.Lerp(0, 140, comp) + Main.rand.NextVector2Circular(30, 30), Main.rand.NextVector2Circular(2, 2), Main.rand.NextFloat(100, 150) * MathHelper.Lerp(1, 0.10f, comp));
+                VoidMetaballYellow.SpawnParticle(NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * MathHelper.Lerp(0, 140, comp) + Main.rand.NextVector2Circular(30, 30), Main.rand.NextVector2Circular(2, 2) * ex, Main.rand.NextFloat(100, 150) * MathHelper.Lerp(1, 0.10f, comp));
                 if (Main.rand.NextBool(10))
                 {
 
-                    VoidMetaballYellow.SpawnParticle(NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * MathHelper.Lerp(0, 140, comp) + Main.rand.NextVector2Circular(30, 30), Main.rand.NextVector2Circular(8, 8), Main.rand.NextFloat(10, 30), NPC.whoAmI);
+                    VoidMetaballYellow.SpawnParticle(NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * MathHelper.Lerp(0, 140, comp) + Main.rand.NextVector2Circular(30, 30), Main.rand.NextVector2Circular(8, 8) * ex, Main.rand.NextFloat(10, 30), NPC.whoAmI);
+                }
+            }
+            if (State == 1)
+            {
+                Timer++;
+                if (Timer == 120)
+                {
+                    NPCDialogueUI.StartDialogue(NPC.whoAmI, "QuestEnd");
+                }
+                if (Timer > 120)
+                {
+                    if (!NPCDialogueUI.IsBeingTalkedTo(NPC))
+                    {
+                        NPC.active = false;
+                    }
                 }
             }
         }

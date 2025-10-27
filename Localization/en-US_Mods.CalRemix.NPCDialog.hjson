@@ -57,13 +57,50 @@ ShadeGreen: {
 		0: Our next target will be that babbling Bright Mind in the badlands.
 		1: Silence his gibberish and bring us a chunk of his brain.
 	}
+
+	Cultist1.0: Great, you've brought the sample.
+
+	Cultist2: {
+		0:
+			'''
+			The final individual we need dispatched
+			is the gloomy hooded figure out in the barrens
+			'''
+		1: Take their ornament and return to us.
+	}
+
+	QuestEnd: {
+		0: And so you have slain the figure?
+		1: This ornament...
+		2:
+			'''
+			Thank you for your help little one.
+			You may find this gateway of interest
+			in furthering your travel
+			'''
+	}
 }
 
-ShadeYellow.Intro1.0: ...
+ShadeYellow: {
+	Intro1.0: ...
+
+	Cultist1: {
+		0: ...
+		1: ...
+	}
+
+	QuestEnd: {
+		0: ...
+		1: ...
+		2: I'll be seeing my ways away.
+	}
+}
 
 ShadeBlue: {
 	Intro1.0: HELLO THERE NEW FRIEND!
 	Intro2.0: GO KILL PEOPLE!
 	Intro3.0: GOUGE OUT THEIR EYE AND BRING IT TO US!!!
 	Mind1.0: WOWIE! A REAL EYE!
+	Cultist1.0: I LOVE SOME BRAIN FOOD!
+	QuestEnd.0: BYE BYE HITMAN!!!!
 }

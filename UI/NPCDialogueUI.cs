@@ -192,15 +192,15 @@ namespace CalRemix.UI
             Color.DarkGoldenrod, Color.LightGoldenrodYellow));
 
             RegisterNPC(new(ModContent.NPCType<ShadeGreen>(),
-            ["Intro1", "Intro2", "Intro3", "Intro4", "Mind1", "Mind2" ],
+            ["Intro1", "Intro2", "Intro3", "Intro4", "Mind1", "Mind2", "Cultist1", "Cultist2", "QuestEnd" ],
             Color.Black, new(34, 177, 76)));
 
             RegisterNPC(new(ModContent.NPCType<ShadeBlue>(),
-            ["Intro1", "Intro2", "Intro3", "Mind1"],
+            ["Intro1", "Intro2", "Intro3", "Mind1", "Cultist1", "QuestEnd" ],
             Color.Black, Color.Blue));
 
             RegisterNPC(new(ModContent.NPCType<ShadeYellow>(),
-            ["Intro1"],
+            ["Intro1", "Cultist1", "QuestEnd" ],
             Color.Black, Color.Yellow));
         }
 
