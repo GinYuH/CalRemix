@@ -5779,3 +5779,8 @@ DoctorsRemote: {
 	DisplayName: Doctors Remote
 	Tooltip: Summons Disilphia
 }
+
+ShadeSingularity: {
+	DisplayName: Shade Singularity [DEBUG]
+	Tooltip: "Resets the Shade quest"
+}

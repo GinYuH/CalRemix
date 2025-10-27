@@ -165,7 +165,7 @@ namespace CalRemix.Core.World
 
         public static int ionQuestLevel = -1;
         public static bool wizardDisabled = false;
-        public static int shadeQuestLevel = -1;
+        public static int shadeQuestLevel = 0;
 
         public static int oxydayTime = 0;
         public static int timeSinceYharonMurdered = 0;
@@ -263,7 +263,7 @@ namespace CalRemix.Core.World
             oxydayTime = 0;
 
             // Quest NPCs
-            shadeQuestLevel = -1;
+            shadeQuestLevel = 0;
 
             // Fanny
             postGenUpdate = false;

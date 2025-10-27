@@ -124,9 +124,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             bool readDialogueTwo = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Mind2");
             bool readDialogueThree = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Cultist2");
 
-            //Main.LocalPlayer.GetModPlayer<DialoguePlayer>().readDialogue.Clear();
-            //CalRemixWorld.shadeQuestLevel = 0;
-
             // Repeat dialogue if clicked on
             if (NPC.type == ModContent.NPCType<ShadeGreen>())
             {
