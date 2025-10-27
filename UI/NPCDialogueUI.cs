@@ -9,6 +9,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace CalRemix.UI
@@ -40,6 +41,7 @@ namespace CalRemix.UI
                     }
                     else
                     {
+                        Main.blockMouse = true;
                         string currentLine = dialogueInfo.dialogue[currentKey][currentIndex];
 
 
@@ -74,6 +76,8 @@ namespace CalRemix.UI
                                 currentCharacter = 0;
                                 if (currentIndex > dialogueInfo.dialogue[currentKey].Count - 1)
                                 {
+                                    string key = talkedNPC.ModNPC.Name + "." + currentKey;
+                                    Main.LocalPlayer.GetModPlayer<DialoguePlayer>().readDialogue.TryAdd(key, true);
                                     ResetDialogue();
                                 }
                             }
@@ -133,6 +137,16 @@ namespace CalRemix.UI
             if (currentKey == "")
                 return false;
             return true;
+        }
+
+        public static bool HasReadDialogue(Player p, string key)
+        {
+            DialoguePlayer dialP = p.GetModPlayer<DialoguePlayer>();
+            if (dialP.readDialogue.ContainsKey(key))
+            {
+                return dialP.readDialogue[key];
+            }
+            return false;
         }
     }
 
@@ -230,6 +244,48 @@ namespace CalRemix.UI
             this.npcType = npcType;
             this.bgColor = bgColor;
             this.borderColor = borderColor;
+        }
+    }
+
+    public class DialoguePlayer : ModPlayer
+    {
+        public Dictionary<string, bool> readDialogue = new();
+
+        public override void SaveData(TagCompound tag)
+        {
+            foreach (var v in readDialogue)
+            {
+                string key = "RemixDialogue." + v.Key;
+                if (tag.ContainsKey(key))
+                {
+                    tag[key] = v.Value;
+                }
+                else
+                {
+                    tag.Add("RemixDialogue." + v.Key, v.Value);
+                }
+            }
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            foreach (var v in NPCDIalogueUISystem.allDialogue)
+            {
+                NPC n = Main.npc[v.Key];
+                string name = n.ModNPC.Name;
+                foreach (var pair in v.Value.dialogue)
+                {
+                    string key = "RemixDialogue." + name + "." + pair.Key;
+                    if (readDialogue.ContainsKey(key))
+                    {
+                        readDialogue[key] = tag.GetBool(key);
+                    }
+                    else
+                    {
+                        readDialogue.Add(key, tag.GetBool(key));
+                    }
+                }
+            }
         }
     }
 }

@@ -40,7 +40,11 @@ ShadeGreen: {
 
 	Intro4: {
 		0: ...Yes
-		1: Kill the Ruby Warrior and bring us their eye.
+		1:
+			'''
+			Kill the Ruby Warrior in the Carnelian Forest
+			and bring us their eye.
+			'''
 	}
 }
 

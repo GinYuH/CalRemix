@@ -72,6 +72,26 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             bool yellowExists = true;
             int blueIdx = NPC.FindFirstNPC(ModContent.NPCType<ShadeBlue>());
             int yellowIdx = NPC.FindFirstNPC(ModContent.NPCType<ShadeYellow>());
+
+            bool readDialogue = NPCDialogueUI.HasReadDialogue(Target, "ShadeGreen.Intro4");
+
+            if (Main.LocalPlayer.controlUseItem && Main.LocalPlayer.selectedItem == 0)
+            Main.LocalPlayer.GetModPlayer<DialoguePlayer>().readDialogue.Clear();
+
+            if (NPC.type == ModContent.NPCType<ShadeGreen>())
+            {
+                Rectangle maus = Utils.CenteredRectangle(Main.MouseWorld, Vector2.One * 10);
+                if (maus.Intersects(NPC.getRect()))
+                {
+                    if (Main.LocalPlayer.controlUseTile && State == 0 && Main.LocalPlayer.Remix().talkedNPC == -1 && Main.LocalPlayer.Distance(NPC.Center) < 600)
+                    {
+                        State = 1;
+                        NPCDialogueUI.StartDialogue(NPC.whoAmI, readDialogue ? "Intro4" : "Intro1");
+                    }
+                }
+            }
+
+            #region Spwan Shades
             if (!NPC.AnyNPCs(ModContent.NPCType<ShadeBlue>()))
             {
                 blueExists = false;
@@ -96,13 +116,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             {
                 YellowShade = Main.npc[yellowIdx];
             }
+            #endregion
 
 
             if (blueExists && yellowExists)
             {
                 if (NPC.Distance(Main.player[NPC.target].Center) < 600)
                 {
-                    if (State == 0)
+                    if (State == 0 && !readDialogue)
                     {
                         State = 1;
                         NPCDialogueUI.StartDialogue(NPC.whoAmI, "Intro1");
@@ -113,7 +134,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     State = 0;
                 }
 
-                if (State >= 1 && State <= 8)
+                if (State >= 1 && State <= 9)
                 {
                     Timer++;
                     if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
@@ -129,17 +150,34 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         SoundEngine.PlaySound(talkSound with { Pitch = -1.5f }, NPC.Center);
                     }
 
-                    NPC GreenShade = NPC;
-                    switch (State)
+                    if (!readDialogue)
                     {
-                        case 1: SwitchShade(YellowShade, "Intro1"); break;
-                        case 2: SwitchShade(BlueShade, "Intro1"); break;
-                        case 3: SwitchShade(GreenShade, "Intro2"); break;
-                        case 4: SwitchShade(BlueShade, "Intro2"); break;
-                        case 5: SwitchShade(GreenShade, "Intro3"); break;
-                        case 6: SwitchShade(BlueShade, "Intro3"); break;
-                        case 7: SwitchShade(YellowShade, "Intro1"); break;
-                        case 8: SwitchShade(GreenShade, "Intro4"); break;
+                        NPC GreenShade = NPC;
+                        switch (State)
+                        {
+                            case 1: SwitchShade(YellowShade, "Intro1"); break;
+                            case 2: SwitchShade(BlueShade, "Intro1"); break;
+                            case 3: SwitchShade(GreenShade, "Intro2"); break;
+                            case 4: SwitchShade(BlueShade, "Intro2"); break;
+                            case 5: SwitchShade(GreenShade, "Intro3"); break;
+                            case 6: SwitchShade(BlueShade, "Intro3"); break;
+                            case 7: SwitchShade(YellowShade, "Intro1"); break;
+                            case 8: SwitchShade(GreenShade, "Intro4"); break;
+                            case 9:
+                                {
+                                    if (Target.Remix().talkedNPC == -1)
+                                    {
+                                        Target.QuickSpawnItem(NPC.GetSource_FromThis(), ModContent.ItemType<RustedShard>());
+                                        State = 0;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    else if (!NPCDialogueUI.IsBeingTalkedTo(NPC))
+                    {
+                        Timer = 0;
+                        State = 0;
                     }
                 }
                 else
@@ -170,10 +208,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (Target.Remix().talkedNPC == -1 && nextShade.whoAmI != -1)
             {
                 State++;
-                if (State == 9)
-                {
-                    Target.QuickSpawnItem(NPC.GetSource_FromThis(), ModContent.ItemType<RustedShard>());
-                }
                 NPCDialogueUI.StartDialogue(nextShade.whoAmI, key);
                 if (Main.BestiaryTracker.Kills.GetKillCount(nextShade) <= 1)
                 {
