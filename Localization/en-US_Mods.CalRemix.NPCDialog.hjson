@@ -10,3 +10,44 @@ BrightMind: {
 			'''
 	}
 }
+
+ShadeGreen: {
+	Intro1.0: Mm? We were summoned?
+
+	Intro2: {
+		0: Allow us to introduce ourselves.
+		1: We are The Shades.
+		2:
+			'''
+			You need not to know our history, however
+			what we want now is sacrifices.
+			'''
+	}
+
+	Intro3: {
+		0: Let's not get ahead of ourselves here
+		1:
+			'''
+			We need to do this perfectly,
+			so here's the deal.
+			'''
+		2:
+			'''
+			We'll test you by having you kill 
+			the warrior that resides in the Carnelian Forest.
+			'''
+	}
+
+	Intro4: {
+		0: ...Yes
+		1: Kill the Ruby Warrior and bring us their eye.
+	}
+}
+
+ShadeYellow.Intro1.0: ...
+
+ShadeBlue: {
+	Intro1.0: HELLO THERE NEW FRIEND!
+	Intro2.0: GO KILL PEOPLE!
+	Intro3.0: GOUGE OUT THEIR EYE AND BRING IT TO US!!!
+}

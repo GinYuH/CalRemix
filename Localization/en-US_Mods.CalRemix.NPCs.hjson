@@ -724,3 +724,7 @@ Disilphia: {
 		DespawnMessage: "[c/000000:The Threat has been taken care of.]"
 	}
 }
+
+ShadeBlue.DisplayName: Blue Shade
+ShadeGreen.DisplayName: Green Shade
+ShadeYellow.DisplayName: Yellow Shade

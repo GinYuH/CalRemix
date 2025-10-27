@@ -91,14 +91,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
-        public override bool CheckActive()
-        {
-            return false;
-        }
-        public override bool NeedSaving()
-        {
-            return true;
-        }
 
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {

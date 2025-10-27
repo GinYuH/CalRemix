@@ -154,12 +154,28 @@ namespace CalRemix.UI
 
         public override void PostAddRecipes()
         {
-            NPCDialogueSet brightMindDialogue = new(ModContent.NPCType<BrightMind>(),
-            "Intro", 
-            Color.DarkGoldenrod, Color.LightGoldenrodYellow);
+            RegisterNPC(new(ModContent.NPCType<BrightMind>(),
+            ["Intro"],
+            Color.DarkGoldenrod, Color.LightGoldenrodYellow));
 
-            allDialogue.Add(brightMindDialogue.npcType, brightMindDialogue);
+            RegisterNPC(new(ModContent.NPCType<ShadeGreen>(),
+            ["Intro1", "Intro2", "Intro3", "Intro4" ],
+            Color.Black, new(34, 177, 76)));
+
+            RegisterNPC(new(ModContent.NPCType<ShadeBlue>(),
+            ["Intro1", "Intro2", "Intro3"],
+            Color.Black, Color.Blue));
+
+            RegisterNPC(new(ModContent.NPCType<ShadeYellow>(),
+            ["Intro1"],
+            Color.Black, Color.Yellow));
         }
+
+        public static void RegisterNPC(NPCDialogueSet set)
+        {
+            allDialogue.Add(set.npcType, set);
+        }
+
 
         public override void UpdateUI(GameTime gameTime)
         {
@@ -191,22 +207,26 @@ namespace CalRemix.UI
         public Color borderColor;
         public int npcType;
 
-        public NPCDialogueSet(int npcType, string key, Color bgColor, Color borderColor)
+        public NPCDialogueSet(int npcType, List<string> keys, Color bgColor, Color borderColor)
         {
-            List<string> allText = new();
-            for (int i = 0; i < 22; i++)
+            for (int j = 0; j < keys.Count; j++)
             {
-                string currentText = "Mods.CalRemix.NPCDialog." + ContentSamples.NpcsByNetId[npcType].ModNPC.Name + "." + key + "." + i;
-                if (Language.Exists(currentText))
+                List<string> allText = new();
+                string key = keys[j];
+                for (int i = 0; i < 22; i++)
                 {
-                    allText.Add(Language.GetTextValue(currentText));
+                    string currentText = "Mods.CalRemix.NPCDialog." + ContentSamples.NpcsByNetId[npcType].ModNPC.Name + "." + key + "." + i;
+                    if (Language.Exists(currentText))
+                    {
+                        allText.Add(Language.GetTextValue(currentText));
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
-                {
-                    break;
-                }
+                dialogue.Add(key, allText);
             }
-            dialogue.Add(key, allText);
             this.npcType = npcType;
             this.bgColor = bgColor;
             this.borderColor = borderColor;
