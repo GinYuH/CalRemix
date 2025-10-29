@@ -15,6 +15,7 @@ using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using Terraria.Utilities;
+using Terraria.ModLoader.IO;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -75,6 +76,27 @@ namespace CalRemix.Core.Subworlds
             }
             return false;
         }
+        public static void SaveData(string world)
+        {
+            TagCompound savedWorldData = CalRemixHelper.SaveCommonSubworldBools();
+            CalRemixHelper.MakeTag(ref savedWorldData, "Livyatan", RemixDowned.downedLivyatan);
+
+            SubworldSystem.CopyWorldData("RemixCommonBools_" + world, savedWorldData);
+        }
+
+        public static void LoadData(string world)
+        {
+            TagCompound savedWorldData = CalRemixHelper.LoadCommonSubworldBools(world);
+            RemixDowned.downedLivyatan = savedWorldData.GetBool("Livyatan");
+        }
+
+        public override void CopyMainWorldData() => SaveData("Main");
+
+        public override void ReadCopiedMainWorldData() => LoadData("Main");
+
+        public override void CopySubworldData() => SaveData("GreatSea");
+
+        public override void ReadCopiedSubworldData() => LoadData("GreatSea");
 
         public override void OnEnter()
         {

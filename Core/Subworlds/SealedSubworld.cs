@@ -24,6 +24,8 @@ using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Potions;
+using CalamityMod.World;
+using static CalRemix.CalRemixHelper;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -64,6 +66,40 @@ namespace CalRemix.Core.Subworlds
         {
             base.OnEnter();
         }
+
+        public static void SaveData(string world)
+        {
+            TagCompound savedWorldData = SaveCommonSubworldBools();
+            MakeTag(ref savedWorldData, "ShadeLevel", CalRemixWorld.shadeQuestLevel);
+            MakeTag(ref savedWorldData, "Draedon", RemixDowned.downedDraedon);
+            MakeTag(ref savedWorldData, "Oneguy", RemixDowned.downedOneguy);
+            MakeTag(ref savedWorldData, "Gastropod", RemixDowned.downedGastropod);
+            MakeTag(ref savedWorldData, "OTWT", RemixDowned.downedOTWT);
+            MakeTag(ref savedWorldData, "Disilphia", RemixDowned.downedDisil);
+            MakeTag(ref savedWorldData, "Void", RemixDowned.downedVoid);
+
+            SubworldSystem.CopyWorldData("RemixCommonBools_" + world, savedWorldData);
+        }
+
+        public static void LoadData(string world)
+        {
+            TagCompound savedWorldData = LoadCommonSubworldBools(world);
+            CalRemixWorld.shadeQuestLevel = savedWorldData.GetInt("ShadeLevel");
+            RemixDowned.downedDraedon = savedWorldData.GetBool("Draedon");
+            RemixDowned.downedOneguy = savedWorldData.GetBool("Oneguy");
+            RemixDowned.downedGastropod = savedWorldData.GetBool("Gastropod");
+            RemixDowned.downedOTWT = savedWorldData.GetBool("OTWT");
+            RemixDowned.downedDisil = savedWorldData.GetBool("Disilphia");
+            RemixDowned.downedVoid = savedWorldData.GetBool("Void");
+        }
+
+        public override void CopyMainWorldData() => SaveData("Main");
+
+        public override void ReadCopiedMainWorldData() => LoadData("Main");
+
+        public override void CopySubworldData() => SaveData("Sealed");
+
+        public override void ReadCopiedSubworldData() => LoadData("Sealed");
 
         public override void Update()
         {

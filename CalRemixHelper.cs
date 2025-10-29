@@ -1,10 +1,14 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
+using CalamityMod.World;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Projectiles;
+using CalRemix.UI;
+using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +21,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace CalRemix
 {
@@ -1273,6 +1278,54 @@ namespace CalRemix
             }
 
             return false;
+        }
+        public static void MakeTag(ref TagCompound savedWorldData, string key, int status)
+        {
+            savedWorldData[key] = status;
+        }
+        public static void MakeTag(ref TagCompound savedWorldData, string key, bool status)
+        {
+            if (status)
+            {
+                savedWorldData[key] = status;
+            }
+        }
+
+        /// <summary>
+        /// Saves difficulties and Fanny togglage across subworlds
+        /// The returned TagComound has the name "RemixCommonBools" MAKE SURE to insert "SubworldSystem.CopyWorldData("RemixCommonBools_<WorldName>", savedWorldData);" after all further data saving!
+        /// </summary>
+        /// <returns></returns>
+        public static TagCompound SaveCommonSubworldBools()
+        {
+            TagCompound savedWorldData = [];
+            MakeTag(ref savedWorldData, "RevengeanceMode", CalamityWorld.revenge);
+            MakeTag(ref savedWorldData, "DeathMode", CalamityWorld.death);
+            MakeTag(ref savedWorldData, "Fanny", ScreenHelperManager.screenHelpersEnabled);
+            /*foreach (Anomaly109Option option in Anomaly109Manager.options)
+            {
+                MakeTag(ref savedWorldData, "Anomaly" + option.key, option.check.Invoke());
+            }*/
+            return savedWorldData;
+        }
+
+        /// <summary>
+        /// Loads difficulties and Fanny togglage across subworlds
+        /// </summary>
+        /// <returns></returns>
+        public static TagCompound LoadCommonSubworldBools(string world)
+        {
+            TagCompound savedWorldData = SubworldSystem.ReadCopiedWorldData<TagCompound>("RemixCommonBools_" + world);
+            CalamityWorld.revenge = savedWorldData.GetBool("RevengeanceMode");
+            CalamityWorld.death = savedWorldData.GetBool("DeathMode");
+            ScreenHelperManager.screenHelpersEnabled = savedWorldData.GetBool("Fanny");
+            /*for (int i = 0; i < Anomaly109Manager.options.Count; i++)
+            {
+                Anomaly109Option option = Anomaly109Manager.options[i];
+                if (option.check.Invoke() != savedWorldData.GetBool("Anomaly" + option.key))
+                    option.toggle();
+            }*/
+            return savedWorldData;
         }
     }
 

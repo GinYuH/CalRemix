@@ -102,38 +102,38 @@ namespace CalRemix.Core.World
         }
         public static bool downedLivyatan
         {
-            get => subbossDowns["Livyatan"];
-            set => subbossDowns["Livyatan"] = value;
+            get => bossDowns["Livyatan"];
+            set => bossDowns["Livyatan"] = value;
         }
         public static bool downedGastropod
         {
-            get => subbossDowns["Gastropod"];
-            set => subbossDowns["Gastropod"] = value;
+            get => bossDowns["Gastropod"];
+            set => bossDowns["Gastropod"] = value;
         }
         public static bool downedVoid
         {
-            get => subbossDowns["Void"];
-            set => subbossDowns["Void"] = value;
+            get => bossDowns["Void"];
+            set => bossDowns["Void"] = value;
         }
         public static bool downedDisil
         {
-            get => subbossDowns["Disilphia"];
-            set => subbossDowns["Disilphia"] = value;
+            get => bossDowns["Disilphia"];
+            set => bossDowns["Disilphia"] = value;
         }
         public static bool downedOneguy
         {
-            get => subbossDowns["Oneguy"];
-            set => subbossDowns["Oneguy"] = value;
+            get => bossDowns["Oneguy"];
+            set => bossDowns["Oneguy"] = value;
         }
         public static bool downedDraedon
         {
-            get => subbossDowns["Draedon"];
-            set => subbossDowns["Draedon"] = value;
+            get => bossDowns["Draedon"];
+            set => bossDowns["Draedon"] = value;
         }
         public static bool downedOTWT
         {
-            get => subbossDowns["OTWT"];
-            set => subbossDowns["OTWT"] = value;
+            get => bossDowns["OTWT"];
+            set => bossDowns["OTWT"] = value;
         }
 
         public static bool downedEarthElemental
@@ -235,11 +235,7 @@ namespace CalRemix.Core.World
             { "Dend", false },
             { "Maser", false },
             { "Red", false },
-            { "Gale", false }
-        };
-
-        public static Dictionary<string, bool> subbossDowns = new()
-        {
+            { "Gale", false },
             { "Livyatan", false },
             { "Gastropod", false },
             { "Void", false },
@@ -259,10 +255,14 @@ namespace CalRemix.Core.World
 
         public override void OnWorldLoad()
         {
+            if (SubworldSystem.AnyActive())
+                return;
             ResetBools();
         }
         public override void OnWorldUnload()
         {
+            if (SubworldSystem.AnyActive())
+                return;
             ResetBools();
         }
         public override void SaveWorldData(TagCompound tag)
@@ -270,10 +270,6 @@ namespace CalRemix.Core.World
             foreach (string key in bossDowns.Keys)
             {
                 tag["downed" + key] = bossDowns[key];
-            }
-            foreach (string key in subbossDowns.Keys)
-            {
-                tag["downed" + key] = subbossDowns[key];
             }
         }
 
@@ -283,11 +279,6 @@ namespace CalRemix.Core.World
             {
                 bossDowns[key] = tag.Get<bool>("downed" + key);
             }
-            foreach (string key in subbossDowns.Keys)
-            {
-                if (!subbossDowns[key] && !SubworldSystem.AnyActive())
-                    subbossDowns[key] = tag.Get<bool>("downed" + key);
-            }
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -296,20 +287,12 @@ namespace CalRemix.Core.World
             {
                 writer.Write(bossDowns[key]);
             }
-            foreach (string key in subbossDowns.Keys)
-            {
-                writer.Write(subbossDowns[key]);
-            }
         }
         public override void NetReceive(BinaryReader reader)
         {
             foreach (string key in bossDowns.Keys)
             {
                 bossDowns[key] = reader.ReadBoolean();
-            }
-            foreach (string key in subbossDowns.Keys)
-            {
-                subbossDowns[key] = reader.ReadBoolean();
             }
         }
     }
