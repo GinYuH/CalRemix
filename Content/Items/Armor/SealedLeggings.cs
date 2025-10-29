@@ -31,4 +31,28 @@ namespace CalRemix.Content.Items.Armor
                 Register();
         }
     }
+    [AutoloadEquip(EquipType.Legs)]
+    public class EnchantedSealedLeggings : ModItem
+    {
+        public override string Texture => "CalRemix/Content/Items/Armor/SealedLeggings";
+
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SealedLeggings>();
+        }
+
+        public override void SetDefaults()
+        {
+            Item.width = 20;
+            Item.height = 18;
+            Item.value = CalamityGlobalItem.RarityCyanBuyPrice;
+            Item.rare = ItemRarityID.Cyan;
+            Item.defense = 26;
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.moveSpeed += 0.3f;
+        }
+    }
 }

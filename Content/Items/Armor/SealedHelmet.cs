@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Armor
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == ModContent.ItemType<SealedChestplate>() && legs.type == ModContent.ItemType<SealedLeggings>();
+            return body.type == ModContent.ItemType<SealedChestplate>() && (legs.type == ModContent.ItemType<SealedLeggings>() || legs.type == ModContent.ItemType<EnchantedSealedLeggings>());
         }
 
         public override void UpdateArmorSet(Player player)

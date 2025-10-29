@@ -5804,3 +5804,18 @@ TanMatter: {
 	DisplayName: Tan Matter
 	Tooltip: It appears that brain rot has turned the gray matter tan
 }
+
+EnchantedSealedLeggings: {
+	DisplayName: Enchanted Sealed Leggings
+	Tooltip: 30% increased movement speed
+}
+
+EnchantedYellowLightLeggings: {
+	DisplayName: Enchanted Yellow Light Leggings
+	Tooltip: 10% increased movement speed
+}
+
+ArmorPolisher: {
+	DisplayName: Armor Polisher
+	Tooltip: Can enchant Yellow Light Leggings and Sealed Leggings
+}

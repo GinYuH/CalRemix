@@ -29,7 +29,7 @@ namespace CalRemix.Content.Items.Armor
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == ModContent.ItemType<YellowLightChestplate>() && legs.type == ModContent.ItemType<YellowLightLeggings>();
+            return body.type == ModContent.ItemType<YellowLightChestplate>() && (legs.type == ModContent.ItemType<YellowLightLeggings>() || legs.type == ModContent.ItemType<EnchantedYellowLightLeggings>());
         }
 
         public override void UpdateArmorSet(Player player)
@@ -99,6 +99,31 @@ namespace CalRemix.Content.Items.Armor
                 AddIngredient<LightResidue>(12).
                 AddTile(TileID.MythrilAnvil).
                 Register();
+        }
+    }
+    [AutoloadEquip(EquipType.Legs)]
+    public class EnchantedYellowLightLeggings : ModItem
+    {
+        public override string Texture => "CalRemix/Content/Items/Armor/YellowLightLeggings";
+
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<YellowLightLeggings>();
+        }
+        public override void SetDefaults()
+        {
+            ArmorIDs.Legs.Sets.HidesTopSkin[Item.legSlot] = true;
+            ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = true;
+            Item.width = 20;
+            Item.height = 18;
+            Item.value = CalamityGlobalItem.RarityCyanBuyPrice;
+            Item.rare = ItemRarityID.Cyan;
+            Item.defense = 12;
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.moveSpeed += 0.1f;
         }
     }
 }
