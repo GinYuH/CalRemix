@@ -5789,3 +5789,8 @@ DraedonRelic: {
 	DisplayName: True Draedon Relic
 	Tooltip: ""
 }
+
+TurnipSprout: {
+	DisplayName: Turnip Sprout
+	Tooltip: Draedon might be interested in this...
+}

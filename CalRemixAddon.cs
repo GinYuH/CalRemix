@@ -43,6 +43,7 @@ using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.CalPlayer;
 using CalamityMod.NPCs.ExoMechs.Ares;
+using CalamityMod.Items.Weapons.Melee;
 
 namespace CalRemix
 {
@@ -214,15 +215,19 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
             });
+            List<int> draedonBosses = new List<int>() { NPCType<SkeletronOmega>(), NPCType<Godraycaster>(), NPCType<ObliteratorHead>() };
             Action<SpriteBatch, Rectangle, Color> draePortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Dreadon_BC").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
                 sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 1f, 0, 0);
             };
-            bc.Call("LogBoss", Mod, "Dreadon", 17.6, () => RemixDowned.downedDraedon, NPCType<DreadonFriendly>(), new Dictionary<string, object>()
+            bc.Call("LogBoss", Mod, "Dreadon", 17.6, () => RemixDowned.downedDraedon, draedonBosses, new Dictionary<string, object>()
             {
-                ["spawnItems"] = ItemType<NullBeacon>(),
-                ["customPortrait"] = draePortrait
+                ["spawnItems"] = ItemType<TurnipSprout>(),
+                ["customPortrait"] = draePortrait,
+                ["displayName"] = CalRemixHelper.LocalText("NPCs.DreadonFriendly.BossChecklistIntegration.EntryName"),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.DreadonFriendly.BossChecklistIntegration.SpawnInfo"),
+                ["despawnMessage"] = CalRemixHelper.LocalText("NPCs.DreadonFriendly.BossChecklistIntegration.DespawnMessage"),
             });
             Action<SpriteBatch, Rectangle, Color> voidPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/VoidBoss_BC").Value;
