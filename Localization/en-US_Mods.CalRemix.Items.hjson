@@ -5784,3 +5784,8 @@ ShadeSingularity: {
 	DisplayName: Shade Singularity [DEBUG]
 	Tooltip: Resets the Shade quest
 }
+
+DraedonRelic: {
+	DisplayName: True Draedon Relic
+	Tooltip: ""
+}

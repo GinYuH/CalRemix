@@ -12,6 +12,8 @@ using CalRemix.Core.Subworlds;
 using CalamityMod.Projectiles.Typeless;
 using CalRemix.Content.Items.Weapons;
 using System.IO;
+using Terraria.GameContent.ItemDropRules;
+using CalRemix.Content.Items.Placeables.Relics;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -199,6 +201,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             npcLoot.Add(ModContent.ItemType<HeavenReaper>());
             npcLoot.Add(ModContent.ItemType<NauseatingPowder>(), 1, 8, 15);
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.RevAndMaster, ModContent.ItemType<DraedonRelic>()));
         }
 
         public override bool CheckActive()
