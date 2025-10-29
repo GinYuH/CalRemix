@@ -18,6 +18,7 @@ using CalRemix.Core.World;
 using Microsoft.Xna.Framework.Input;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Sounds;
+using CalRemix.Content.Items.Misc;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -135,9 +136,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         string key = readDialogueOne ? "Intro4" : "Intro1";
                         string newd = CheckForItem(Target, ModContent.ItemType<AbnormalEye>(), 0, "Mind1", "Mind2");
                         key = newd == "" ? key : newd;
-                        string newd2 = CheckForItem(Target, ModContent.ItemType<Mikado>(), 1, "Cultist1", "Cultist2");
+                        string newd2 = CheckForItem(Target, ModContent.ItemType<TanMatter>(), 1, "Cultist1", "Cultist2");
                         key = newd2 == "" ? key : newd2;
-                        string newd3 = CheckForItem(Target, ModContent.ItemType<VoidEdge>(), 2, "QuestEnd", "QuestEnd");
+                        string newd3 = CheckForItem(Target, ModContent.ItemType<PusSac>(), 2, "QuestEnd", "QuestEnd");
                         key = newd3 == "" ? key : newd3;
                         NPCDialogueUI.StartDialogue(NPC.whoAmI, key);
 

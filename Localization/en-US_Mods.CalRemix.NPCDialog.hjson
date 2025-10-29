@@ -66,12 +66,12 @@ ShadeGreen: {
 			The final individual we need dispatched
 			is the gloomy hooded figure out in the barrens
 			'''
-		1: Take their ornament and return to us.
+		1: Take one of their organs and return to us.
 	}
 
 	QuestEnd: {
 		0: And so you have slain the figure?
-		1: This ornament...
+		1: Yep... that certainly looks like a fatality.
 		2:
 			'''
 			Thank you for your help little one.

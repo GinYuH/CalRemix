@@ -5794,3 +5794,13 @@ TurnipSprout: {
 	DisplayName: Turnip Sprout
 	Tooltip: Draedon might be interested in this...
 }
+
+PusSac: {
+	DisplayName: Pus Sac
+	Tooltip: A gross organ allegedly ripped off of a monster
+}
+
+TanMatter: {
+	DisplayName: Tan Matter
+	Tooltip: It appears that brain rot has turned the gray matter tan
+}

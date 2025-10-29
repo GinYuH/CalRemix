@@ -9,6 +9,8 @@ using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.UI;
+using CalRemix.Content.Items.Misc;
+using CalamityMod;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -97,6 +99,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (projectile.type == ModContent.ProjectileType<RustedShardProjectile>())
                 return true;
             return false;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ModContent.ItemType<TanMatter>());
         }
     }
 }

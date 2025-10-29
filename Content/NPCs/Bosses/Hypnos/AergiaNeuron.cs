@@ -16,6 +16,8 @@ using CalamityMod.Graphics.Primitives;
 using Terraria.Graphics.Effects;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Skies;
+using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs.Bosses.Hypnos
 {
@@ -413,7 +415,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
-                                        target.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(target.name + " felt 10 thousand volts."), 200, 0);
+                                        target.Hurt(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LightningGate").Format(target.name))), 200, 0);
                                     }
                                 }
                             }
@@ -430,14 +432,14 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
-                                        target.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(target.name + " felt 10 thousand volts."), 600, 0);
+                                        target.Hurt(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LightningGate").Format(target.name))), 600, 0);
                                     }
                                 }
                                 if (nextneuron.type == ModContent.NPCType<AergiaNeuron>() && NPC.ai[1] == 3 && nextneuron.ai[1] == 0 && nextneuron.active)
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
-                                        target.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(target.name + " felt 10 thousand volts."), 600, 0);
+                                        target.Hurt(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LightningGate").Format(target.name))), 600, 0);
                                     }
                                 }
                             }
