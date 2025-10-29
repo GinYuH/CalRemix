@@ -30,6 +30,7 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Weapons;
+using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs.Bosses.Hydrogen
 {
@@ -296,7 +297,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                                 if (p.GetModPlayer<CalRemixPlayer>().fridge)
                                     continue;
                                 // Else disentegrate {{sic}}
-                                p.KillMe(PlayerDeathReason.ByCustomReason(p.name + " was atomized."), 9999, 1);
+                                p.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.Hydrogen").Format(p.name))), 9999, 1);
                             }
 
                             // Prevent netUpdate from being blocked by the spam counter.

@@ -1251,7 +1251,7 @@ namespace CalRemix
 
             if (taintedObsidian)
                 if (Player.lavaWet)
-                    Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + " thought that was orange juice"), Player.statLifeMax, 0);
+                    Player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LethalLava").Format(Player.name))), Player.statLifeMax, 0);
 
             if (salvageSuit)
             {
