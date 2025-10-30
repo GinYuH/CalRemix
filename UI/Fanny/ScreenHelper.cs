@@ -18,6 +18,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
@@ -1045,9 +1046,18 @@ namespace CalRemix.UI
         public static int ongoingConversationTimer = 0;
 
         #region Loading
+
         public override void Load()
         {
             LoadFannyPortraits();
+
+            screenHelpersEnabled = true;
+            fannyTimesFrozen = 0;
+            sceneMetrics = new ScreenHelperSceneMetrics();
+        }
+
+        public override void AddRecipes()
+        {
             LoadIntroMessages();
             LoadMoonLordDeath();
 
@@ -1078,10 +1088,6 @@ namespace CalRemix.UI
             LoadPinkFlameMessage();
             LoadCrimFatherMessages();
             SneakersRetheme.LoadHelperMessages();
-
-            screenHelpersEnabled = true;
-            fannyTimesFrozen = 0;
-            sceneMetrics = new ScreenHelperSceneMetrics();
         }
 
         public static void LoadFannyPortraits()
@@ -1635,9 +1641,9 @@ namespace CalRemix.UI
         /// <returns></returns>
         public static HelperMessage New(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool cantBeClickedOff = false, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
-            HelperMessage msg = new HelperMessage(identifier, message, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, cantBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
+            string txt = Language.GetOrRegister("Mods.CalRemix.Fanny." + identifier, () => message).Value;
 
-            //Language.GetOrRegister("Mods.CalRemix.Fanny" + identifier);
+            HelperMessage msg = new HelperMessage(identifier, txt, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, cantBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
 
             //Adds the message to the list
             ScreenHelperManager.screenHelperMessages.Add(msg);
