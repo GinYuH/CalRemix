@@ -17,14 +17,41 @@ using Terraria.UI;
 using static Terraria.Graphics.Effects.Filters;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader.IO;
+using CalamityMod.NPCs.Cryogen;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
     public class MonorianGemBoss : ModNPC
     {
+        public Player Target => Main.player[NPC.target];
+        public ref float Timer => ref NPC.ai[0];
+        public ref float State => ref NPC.ai[1];
+
+        public ref float ExtraVar => ref NPC.ai[2];
+
+        public ref float ExtraVar2 => ref NPC.ai[3];
+        public Vector2 SavePosition
+        {
+            get => new Vector2(NPC.Calamity().newAI[2], NPC.Calamity().newAI[1]);
+            set
+            {
+                NPC.Calamity().newAI[2] = value.X;
+                NPC.Calamity().newAI[1] = value.Y;
+            }
+        }
+        public Vector2 OldPosition
+        {
+            get => new Vector2(NPC.localAI[2], NPC.localAI[1]);
+            set
+            {
+                NPC.localAI[2] = value.X;
+                NPC.localAI[1] = value.Y;
+            }
+        }
 
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
 
+        #region Cube stuff
         public static List<Vector3> cubeVertices = new()
         {
             new ( 1, 1, 1 ), // Front bottom right
@@ -62,18 +89,19 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 new Vector4(7, 6, 5, 4),
                 new Vector4(5, 4, 1, 0),
         };
+        #endregion
 
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.width = 40;
-            NPC.height = 40;
+            NPC.width = 80;
+            NPC.height = 80;
             NPC.lifeMax = 100000;
             NPC.damage = 270;
             NPC.defense = 40;
             NPC.noGravity = true;
-            NPC.HitSound = null;
-            NPC.DeathSound = null;
+            NPC.HitSound = Cryogen.HitSound with { Pitch = -1 };
+            NPC.DeathSound = Cryogen.DeathSound with { Pitch = 1 };
             NPC.knockBackResist = 0f;
             NPC.noTileCollide = true;
             NPC.boss = true;
@@ -83,6 +111,36 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
         public override void AI()
         {
+            NPC.TargetClosest(false);
+            switch (State)
+            {
+                case 0:
+                    {
+
+                    }
+                    break;
+                case 1:
+                    {
+
+                    }
+                    break;
+                case 2:
+                    {
+
+                    }
+                    break;
+                case 3:
+                    {
+
+                    }
+                    break;
+                case 4:
+                    {
+
+                    }
+                    break;
+            }
+            Timer++;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
