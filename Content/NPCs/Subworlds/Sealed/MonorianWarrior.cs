@@ -14,6 +14,8 @@ using CalRemix.Core.World;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.World;
 using CalamityMod.InverseKinematics;
+using Terraria.GameContent.Bestiary;
+using CalRemix.Core.Biomes;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -53,12 +55,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
 		public override void SetDefaults()
 		{
-			NPC.damage = 0;
+			NPC.damage = 10;
 			NPC.npcSlots = 0f;
 			NPC.width = 28;
 			NPC.height = 48;
-			NPC.defense = 6;
-			NPC.lifeMax = 3000;
+			NPC.defense = 26;
+			NPC.lifeMax = 60000;
 			NPC.aiStyle = -1;
 			NPC.knockBackResist = 0f;
 			NPC.value = Item.buyPrice(0, 0, 10, 0);
@@ -66,8 +68,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.boss = true;
 			NPC.DR_NERD(0.1f);
-		}
-		private void EdgyTalk(string text, Color color, bool combatText = false)
+			SpawnModBiomes = [ModContent.GetInstance<VoidForestBiome>().Type];
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
+            });
+        }
+        private void EdgyTalk(string text, Color color, bool combatText = false)
 		{
 			if (combatText)
 			{
