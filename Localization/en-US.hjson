@@ -133,27 +133,27 @@ Mods: {
 			}
 
 			BadlandsBiome: {
-				DisplayName: Badlands Biome
+				DisplayName: Badlands
 				TownNPCDialogueName: the Badlands Biome
 			}
 
 			BarrensBiome: {
-				DisplayName: Barrens Biome
+				DisplayName: Barrens
 				TownNPCDialogueName: the Barrens Biome
 			}
 
 			CarnelianForestBiome: {
-				DisplayName: Carnelian Forest Biome
+				DisplayName: Carnelian Forest
 				TownNPCDialogueName: the Carnelian Forest Biome
 			}
 
 			DarnwoodSwampBiome: {
-				DisplayName: Darnwood Swamp Biome
+				DisplayName: Darnwood Swamp
 				TownNPCDialogueName: the Darnwood Swamp Biome
 			}
 
 			SealedFieldsBiome: {
-				DisplayName: Sealed Fields Biome
+				DisplayName: Sealed Fields
 				TownNPCDialogueName: the Sealed Fields Biome
 			}
 
@@ -163,17 +163,17 @@ Mods: {
 			}
 
 			UnsealedSeaBiome: {
-				DisplayName: Unsealed Sea Biome
+				DisplayName: Unsealed Sea
 				TownNPCDialogueName: the Unsealed Sea Biome
 			}
 
 			VoidForestBiome: {
-				DisplayName: Void Forest Biome
+				DisplayName: Void Forest
 				TownNPCDialogueName: the Void Forest Biome
 			}
 
 			VolcanicFieldBiome: {
-				DisplayName: Volcanic Field Biome
+				DisplayName: Volcanic Field
 				TownNPCDialogueName: the Volcanic Field Biome
 			}
 
