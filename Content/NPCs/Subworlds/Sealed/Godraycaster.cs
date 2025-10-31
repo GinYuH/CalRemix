@@ -562,8 +562,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             Texture2D aye = !IsSecondEye ? TextureAssets.Npc[Type].Value : ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Godraytracer").Value;
             Texture2D glow = !IsSecondEye ? ModContent.Request<Texture2D>(Texture + "_Glow").Value : ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Godraytracer_Glow").Value;
+            Texture2D gray = !IsSecondEye ? ModContent.Request<Texture2D>(Texture + "_Gray").Value : ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Godraytracer_Gray").Value;
             spriteBatch.Draw(aye, NPC.Center - screenPos, null, drawColor, NPC.rotation + MathHelper.PiOver2, aye.Size() / 2, NPC.scale, 0, 0);
 
+            spriteBatch.Draw(gray, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation + MathHelper.PiOver2, aye.Size() / 2, NPC.scale, 0, 0);
             float glowOpacy = State == (float)PhaseType.Stunned && ExtraVar2 == 2 ? CalamityUtils.ExpInEasing(Utils.GetLerpValue(100, 200, Timer, true), 1) : 1f;
             {
                 spriteBatch.Draw(glow, NPC.Center - screenPos, null, Color.White * glowOpacy, NPC.rotation + MathHelper.PiOver2, aye.Size() / 2, NPC.scale, 0, 0);
