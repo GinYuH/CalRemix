@@ -23,6 +23,7 @@ using CalRemix.Core.World;
 using CalamityMod.Projectiles.Boss;
 using Terraria.Audio;
 using Microsoft.Build.Evaluation;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -286,12 +287,61 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case PhaseType.Metagross:
                     {
+                        float repositionTime = 40;
+                        float attackTime = repositionTime + 400;
+                        float waitTime = attackTime + 60;
 
+                        if (Timer == 1)
+                        {
+                            SavePosition = Target.Center - Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2)) * 500;
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer <= repositionTime)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(1, repositionTime, Timer, true), 1));
+                        }
+                        else if (Timer < attackTime)
+                        {
+                            if (Timer % 10 == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi), ProjectileID.EyeLaser, CalRemixHelper.ProjectileDamage(240, 450), 1);
+                                }
+                            }
+                        }
+                        else if (Timer >= waitTime)
+                        {
+                            ChangePhase(PhaseType.Block);
+                        }
                     }
                     break;
                 case PhaseType.Block:
                     {
-
+                        float wait = 40;
+                        float attackRate = 50;
+                        float attackAmt = 6;
+                        float stopAttack = wait + attackRate * attackAmt;
+                        float next = stopAttack + 50;
+                        if (Timer == 1)
+                        {
+                            NPC.direction = Main.rand.NextBool().ToDirectionInt();
+                        }
+                        else if (Timer < stopAttack)
+                        {
+                            if (Timer % attackRate == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center) * 10, ProjectileID.EyeLaser, CalRemixHelper.ProjectileDamage(300, 480), 1);
+                                }
+                            }
+                        }
+                        else if (Timer >= next)
+                        {
+                            ChangePhase(PhaseType.Goozma);
+                        }
+                        NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * NPC.direction * 500, 0.1f);
                     }
                     break;
             }

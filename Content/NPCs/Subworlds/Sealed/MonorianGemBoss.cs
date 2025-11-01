@@ -210,17 +210,74 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case MonorianSoul.PhaseType.Laser:
                     {
+                        float repositionTime = 40;
+                        float waitTime = repositionTime + 20;
 
+                        if (Timer == 1)
+                        {
+                            NPC.velocity *= 0.9f;
+                            SavePosition = Target.Center -  new Vector2(Target.DirectionTo(NPC.Center).X.DirectionalSign() * 800, 300);
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer < repositionTime)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, Utils.GetLerpValue(0, repositionTime, Timer, true));
+                        }
+                        else if (Timer < waitTime)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                        }
+                        else if (Timer == waitTime)
+                        {
+                            NPC.velocity.X = NPC.DirectionTo(Target.Center).X.DirectionalSign() * 5;
+                        }
                     }
                     break;
                 case MonorianSoul.PhaseType.Metagross:
                     {
-
+                        float repositionTime = 30;
+                        float waitTime = repositionTime + 30;
+                        float dashTime = waitTime + 10;
+                        float waitAgain = dashTime + 30;
+                        float localTimer = Timer % waitAgain;
+                        if (localTimer <= 1)
+                        {
+                            OldPosition = NPC.Center;
+                            SavePosition = Vector2.UnitX * Target.DirectionTo(NPC.Center).X.DirectionalSign() * 800;
+                        }
+                        else if (localTimer <= repositionTime)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition + Target.Center, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(0, repositionTime, localTimer, true), 1));
+                        }
+                        else if (localTimer < waitTime)
+                        {
+                            if (localTimer < waitTime - 10)
+                            {
+                                NPC.Center = SavePosition + Target.Center;
+                            }
+                            else
+                            {
+                                NPC.velocity = Vector2.Zero;
+                            }
+                        }
+                        else if (localTimer == waitTime)
+                        {
+                            OldPosition = NPC.Center;
+                            SavePosition = NPC.Center + new Vector2(NPC.DirectionTo(Target.Center).X.DirectionalSign() * NPC.Distance(Target.Center) * 2, 0);
+                        }
+                        else if (localTimer < dashTime)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(waitTime, dashTime, localTimer, true), 1));
+                        }
+                        else if (localTimer < waitAgain)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                        }
                     }
                     break;
                 case MonorianSoul.PhaseType.Block:
                     {
-
+                        NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * Soul.direction * 360, 0.1f);
                     }
                     break;
             }
