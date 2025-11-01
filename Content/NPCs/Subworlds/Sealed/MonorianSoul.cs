@@ -22,6 +22,7 @@ using Terraria.Graphics.Shaders;
 using CalRemix.Core.World;
 using CalamityMod.Projectiles.Boss;
 using Terraria.Audio;
+using Microsoft.Build.Evaluation;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -183,6 +184,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             if (Timer == 1)
                             {
                                 NPC.direction = -Target.direction;
+                                OldPosition = NPC.Center;
+                                SavePosition = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * NPC.direction * 800, 0.1f);
                             }
                             if (ExtraVar >= shootTime)
                             {
@@ -196,7 +199,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 }
                                 ExtraVar = 0;
                             }
-                            CalamityUtils.SmoothMovement(NPC, 10, Target.Center + Vector2.UnitX * NPC.direction * 800 - NPC.Center, 20, 0.4f, true);
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, 0.1f);
                         }
                         else
                         {
@@ -233,7 +236,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (Timer <= attackTime)
                         {
-                            NPC.Center = SavePosition + Vector2.UnitY * MathF.Sin(Timer) * 8;
+                            NPC.Center = SavePosition + Vector2.UnitY * MathF.Sin(Timer * 0.1f) * 20;
                         }
                         else
                         {

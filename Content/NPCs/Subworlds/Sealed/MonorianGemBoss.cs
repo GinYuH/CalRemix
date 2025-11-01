@@ -18,6 +18,8 @@ using static Terraria.Graphics.Effects.Filters;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader.IO;
 using CalamityMod.NPCs.Cryogen;
+using CalRemix.Content.NPCs.Bosses.Noxus;
+using rail;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -27,8 +29,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public NPC Soul => Main.npc[(int)NPC.ai[1]];
 
-        public float Timer => Soul.ai[1];
-        public float State => Soul.ai[0];
+        public float Timer => Soul.ai[0];
+        public float State => Soul.ai[1];
 
         public ref float ExtraVar => ref NPC.ai[2];
 
@@ -131,17 +133,78 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case MonorianSoul.PhaseType.Goozma:
                     {
+                        float repoTime = 30;
+                        float waitTime = repoTime + 20;
+                        float dashTime = waitTime + 30;
+                        float localTimer = Timer % dashTime;
 
+                        if (localTimer < waitTime)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                        }
+                        else if (localTimer == waitTime)
+                        {
+                            NPC.velocity = NPC.DirectionTo(Target.Center) * 30;
+                        }
+                        else if (localTimer > dashTime - 5)
+                        {
+                            NPC.velocity *= 0.98f;
+                        }
                     }
                     break;
                 case MonorianSoul.PhaseType.Shotgun:
                     {
-
+                        float waitTime = 70;
+                        float countDownTime = waitTime + 240;
+                        Vector2 targetPos = Soul.Center + (Soul.DirectionTo(Target.Center) * Soul.Distance(Target.Center) * 2);
+                        if (Timer < waitTime)
+                        {
+                            NPC.Center = Vector2.Lerp(NPC.Center, targetPos, 0.1f);
+                        }
+                        else if (Timer <= countDownTime)
+                        {
+                            NPC.Center = targetPos;
+                        }
                     }
                     break;
                 case MonorianSoul.PhaseType.Bounce:
                     {
+                        float repositionTime = 40;
+                        float gemPositionTime = repositionTime + 40;
+                        Vector2 soulPos = Soul.ModNPC<MonorianSoul>().SavePosition;
 
+                        if (Timer <= repositionTime)
+                        {
+                            SavePosition = Soul.Center - Vector2.UnitY * 100;
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer < gemPositionTime)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, Utils.GetLerpValue(repositionTime, gemPositionTime - 20, Timer, true));
+                        }
+                        else if (Timer == gemPositionTime)
+                        {
+                            NPC.velocity = Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, Main.rand.Next(0, 4) / 4f)).RotatedBy(MathHelper.PiOver4) * 10;
+                        }
+                        else
+                        {
+                            float disX = Math.Abs(NPC.Center.X - soulPos.X);
+                            float disY = Math.Abs(NPC.Center.Y - soulPos.Y);
+                            if (disX > 300 && ExtraVar <= 0)
+                            {
+                                Vector2 flippedVelocity = new Vector2(-NPC.velocity.X, NPC.velocity.Y);
+                                NPC.velocity = flippedVelocity.RotatedByRandom(MathHelper.PiOver4);
+                                ExtraVar = 10;
+                            }
+                            if (disY > 300 && ExtraVar2 <= 0)
+                            {
+                                Vector2 flippedVelocity = new Vector2(NPC.velocity.X, -NPC.velocity.Y);
+                                NPC.velocity = flippedVelocity.RotatedByRandom(MathHelper.PiOver4);
+                                ExtraVar2 = 10;
+                            }
+                            ExtraVar--;
+                            ExtraVar2--;
+                        }
                     }
                     break;
                 case MonorianSoul.PhaseType.Laser:
