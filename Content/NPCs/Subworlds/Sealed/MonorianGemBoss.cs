@@ -175,6 +175,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                         if (Timer <= repositionTime)
                         {
+                            NPC.velocity *= 0.9f;
                             SavePosition = Soul.Center - Vector2.UnitY * 100;
                             OldPosition = NPC.Center;
                         }

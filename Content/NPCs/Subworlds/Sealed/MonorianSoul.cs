@@ -227,7 +227,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                         if (Timer == 1)
                         {
-                            SavePosition = Target.Center + Vector2.UnitY.RotatedBy(Main.rand.NextFloat(0, MathHelper.TwoPi)) * 300;
+                            SavePosition = Target.Center - Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2)) * 300;
                             OldPosition = NPC.Center;
                         }
                         else if (Timer <= repositionTime)
@@ -241,6 +241,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         else
                         {
                             ChangePhase(PhaseType.Laser);
+                        }
+
+                        if (SavePosition != Vector2.Zero)
+                        {
+                            foreach (Player p in Main.ActivePlayers)
+                            {
+                                p.velocity = Vector2.Lerp(p.velocity, p.DirectionTo(SavePosition) * 20, Utils.GetLerpValue(330, 400, NPC.Distance(p.Center), true));
+                                p.Calamity().infiniteFlight = true;
+                            }
                         }
                     }
                     break;
@@ -347,6 +356,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             //Main.spriteBatch.Draw(spark, NPC.Center - Main.screenPosition, null, Color.Cyan, Main.GlobalTimeWrappedHourly, spark.Size() / 2, NPC.scale * 1.8f * sizeMod, SpriteEffects.FlipHorizontally, 0);
             spriteBatch.Draw(star, NPC.Center - screenPos, null, Color.White, 0, star.Size() / 2, NPC.scale * 2.4f * sizeMod + (1 + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 2f)), SpriteEffects.FlipHorizontally, 0);
+
+            if (CurrentPhase == PhaseType.Bounce)
+            {
+                for (int i = 0; i < 50; i++)
+                {
+                    spriteBatch.Draw(star, SavePosition - Vector2.UnitY.RotatedBy(Main.GlobalTimeWrappedHourly * 0.6f + MathHelper.Lerp(0, MathHelper.TwoPi, i / 50f)) * 360 - screenPos, null, Color.Teal * Utils.GetLerpValue(20, 50, Timer, true));
+                }
+            }
 
             spriteBatch.ExitShaderRegion();
 
