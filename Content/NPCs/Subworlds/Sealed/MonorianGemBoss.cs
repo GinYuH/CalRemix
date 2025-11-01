@@ -24,8 +24,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
     public class MonorianGemBoss : ModNPC
     {
         public Player Target => Main.player[NPC.target];
-        public ref float Timer => ref NPC.ai[0];
-        public ref float State => ref NPC.ai[1];
+
+        public NPC Soul => Main.npc[(int)NPC.ai[1]];
+
+        public float Timer => Soul.ai[1];
+        public float State => Soul.ai[0];
 
         public ref float ExtraVar => ref NPC.ai[2];
 
@@ -48,6 +51,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 NPC.localAI[1] = value.Y;
             }
         }
+        public MonorianSoul.PhaseType CurrentPhase => (MonorianSoul.PhaseType)State;
 
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
 
@@ -103,6 +107,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.HitSound = Cryogen.HitSound with { Pitch = -1 };
             NPC.DeathSound = Cryogen.DeathSound with { Pitch = 1 };
             NPC.knockBackResist = 0f;
+            NPC.dontTakeDamage = true;
             NPC.noTileCollide = true;
             NPC.boss = true;
             NPC.Calamity().canBreakPlayerDefense = true;
@@ -111,36 +116,50 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
         public override void AI()
         {
-            NPC.TargetClosest(false);
-            switch (State)
+            if (!Soul.active || Soul.type != NPCType<MonorianSoul>() || Soul.life <= 0)
             {
-                case 0:
+                NPC.StrikeInstantKill();
+                return;
+            }
+            NPC.TargetClosest(false);
+            switch (CurrentPhase)
+            {
+                case MonorianSoul.PhaseType.SpawnAnimation:
                     {
 
                     }
                     break;
-                case 1:
+                case MonorianSoul.PhaseType.Goozma:
                     {
 
                     }
                     break;
-                case 2:
+                case MonorianSoul.PhaseType.Shotgun:
                     {
 
                     }
                     break;
-                case 3:
+                case MonorianSoul.PhaseType.Bounce:
                     {
 
                     }
                     break;
-                case 4:
+                case MonorianSoul.PhaseType.Laser:
+                    {
+
+                    }
+                    break;
+                case MonorianSoul.PhaseType.Metagross:
+                    {
+
+                    }
+                    break;
+                case MonorianSoul.PhaseType.Block:
                     {
 
                     }
                     break;
             }
-            Timer++;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -148,10 +167,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
-        }
-
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
-        {
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
