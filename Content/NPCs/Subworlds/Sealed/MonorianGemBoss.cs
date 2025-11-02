@@ -20,6 +20,9 @@ using Terraria.ModLoader.IO;
 using CalamityMod.NPCs.Cryogen;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using rail;
+using CalRemix.Content.Projectiles.Hostile;
+using Terraria.Audio;
+using CalamityMod.Sounds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -191,18 +194,34 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             float disX = Math.Abs(NPC.Center.X - soulPos.X);
                             float disY = Math.Abs(NPC.Center.Y - soulPos.Y);
+                            bool spawnProj = false;
                             if (disX > 300 && ExtraVar <= 0)
                             {
                                 Vector2 flippedVelocity = new Vector2(-NPC.velocity.X, NPC.velocity.Y);
                                 NPC.velocity = flippedVelocity.RotatedByRandom(MathHelper.PiOver4);
                                 ExtraVar = 10;
+                                spawnProj = true;
                             }
                             if (disY > 300 && ExtraVar2 <= 0)
                             {
                                 Vector2 flippedVelocity = new Vector2(NPC.velocity.X, -NPC.velocity.Y);
                                 NPC.velocity = flippedVelocity.RotatedByRandom(MathHelper.PiOver4);
                                 ExtraVar2 = 10;
+                                spawnProj = true;
                             }
+
+                            if (spawnProj)
+                            {
+                                SoundEngine.PlaySound(CommonCalamitySounds.PlasmaBoltSound with { Pitch = -0.4f }, NPC.Center);
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 4f)) * 10, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(200, 320), 1);
+                                    }
+                                }
+                            }
+
                             ExtraVar--;
                             ExtraVar2--;
                         }
@@ -277,7 +296,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case MonorianSoul.PhaseType.Block:
                     {
-                        NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * Soul.direction * 360, 0.1f);
+                        NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * Soul.direction * 410, 0.1f);
                     }
                     break;
             }

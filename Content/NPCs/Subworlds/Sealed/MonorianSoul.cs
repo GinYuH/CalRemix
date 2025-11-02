@@ -24,6 +24,8 @@ using CalamityMod.Projectiles.Boss;
 using Terraria.Audio;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using CalRemix.Content.Projectiles.Hostile;
+using CalamityMod.Sounds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -150,13 +152,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (Timer <= bulletHellTime)
                         {
-                            if (Timer % 3 == 0)
+                            if (Timer % 7 == 0)
                             {
+                                SoundEngine.PlaySound(CommonCalamitySounds.ExoPlasmaShootSound with { Pitch = 0.5f }, NPC.Center);
                                 for (int i = 0; i < bulletHellPoints; i++)
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / bulletHellPoints)).RotatedBy(MathHelper.TwoPi / bulletHellPoints * MathF.Sin(Timer * 0.02f) * 0.5f) * 10, ProjectileID.EyeLaser, CalRemixHelper.ProjectileDamage(300, 500), 1);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / bulletHellPoints)).RotatedBy(MathHelper.TwoPi / bulletHellPoints * MathF.Sin(Timer * 0.02f) * 0.5f) * 10, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(300, 500), 1);
                                     }
                                 }
                             }
@@ -185,8 +188,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             if (Timer == 1)
                             {
                                 NPC.direction = -Target.direction;
-                                OldPosition = NPC.Center;
-                                SavePosition = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * NPC.direction * 800, 0.1f);
+                                SavePosition = Vector2.UnitX * NPC.direction * 800;
                             }
                             if (ExtraVar >= shootTime)
                             {
@@ -195,21 +197,22 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center).RotatedBy(MathHelper.Lerp(-shootSpreead, shootSpreead, i / (float)(projCount - 1))) * shootVelocity, ProjectileID.EyeLaser, CalRemixHelper.ProjectileDamage(240, 360), 1);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center).RotatedBy(MathHelper.Lerp(-shootSpreead, shootSpreead, i / (float)(projCount - 1))) * shootVelocity, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(240, 360), 1);
                                     }
                                 }
                                 ExtraVar = 0;
                             }
-                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, 0.1f);
+                            NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + SavePosition, 0.1f);
                         }
                         else
                         {
                             NPC.velocity = Vector2.Zero;
                             if (Timer == waitForFinale)
                             {
+                                SoundEngine.PlaySound(CommonCalamitySounds.LargeWeaponFireSound with { Pitch = 0.5f }, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center) * 8, ProjectileID.EyeLaser, CalRemixHelper.ProjectileDamage(360, 570), 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center) * 18, ProjectileType<MonorianSoulBall>(), CalRemixHelper.ProjectileDamage(360, 570), 1);
                                 }
                             }
                             if (Timer >= finish)
@@ -275,7 +278,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<AstralLaser>(), CalRemixHelper.ProjectileDamage(410, 700), 1, ai0: NPC.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(410, 700), 1, ai0: NPC.whoAmI);
                                 }
                             }
                         }
@@ -304,9 +307,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             if (Timer % 10 == 0)
                             {
+                                SoundEngine.PlaySound(CommonCalamitySounds.ELRFireSound, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi), ProjectileID.EyeLaser, CalRemixHelper.ProjectileDamage(240, 450), 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi), ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(240, 450), 1, ai0: NPC.whoAmI);
                                 }
                             }
                         }
@@ -331,17 +335,26 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             if (Timer % attackRate == 0)
                             {
+                                SoundEngine.PlaySound(CommonCalamitySounds.ExoPlasmaShootSound with { Pitch = 0.5f }, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center) * 10, ProjectileID.EyeLaser, CalRemixHelper.ProjectileDamage(300, 480), 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center) * 10, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(300, 480), 1, ai0: 1, ai2: Target.whoAmI);
                                 }
                             }
                         }
                         else if (Timer >= next)
                         {
+                            int bolt = ProjectileType<MonorianSoulBolt>();
+                            foreach (Projectile p in Main.ActiveProjectiles)
+                            {
+                                if (p.type == bolt)
+                                {
+                                    p.timeLeft = 30;
+                                }
+                            }
                             ChangePhase(PhaseType.Goozma);
                         }
-                        NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * NPC.direction * 500, 0.1f);
+                        NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * NPC.direction * 630, 0.1f);
                     }
                     break;
             }
@@ -355,7 +368,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             ExtraVar = 0;
             OldPosition = Vector2.Zero;
             SavePosition = Vector2.Zero;
-            if (Gem.active && Gem.type == ModContent.NPCType<MonorianGemBoss>())
+            if (Gem.active && Gem.type == NPCType<MonorianGemBoss>())
             {
                 Gem.ai[2] = 0;
                 Gem.ai[3] = 0;
