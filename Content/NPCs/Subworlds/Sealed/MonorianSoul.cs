@@ -192,7 +192,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             }
                             if (ExtraVar >= shootTime)
                             {
-                                SoundEngine.PlaySound(BetterSoundID.ItemExplosiveShotgun with { Pitch = 0.4f }, NPC.Center);
+                                SoundEngine.PlaySound(BetterSoundID.ItemExplosiveShotgun with { Pitch = 0.4f, Volume = 2 }, Target.Center);
                                 for (int i = 0; i < projCount; i++)
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -212,7 +212,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 SoundEngine.PlaySound(CommonCalamitySounds.LargeWeaponFireSound with { Pitch = 0.5f }, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center) * 18, ProjectileType<MonorianSoulBall>(), CalRemixHelper.ProjectileDamage(360, 570), 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center) * 18, ProjectileType<MonorianSoulBall>(), CalRemixHelper.ProjectileDamage(360, 570), 1, ai0: NPC.whoAmI);
                                 }
                             }
                             if (Timer >= finish)

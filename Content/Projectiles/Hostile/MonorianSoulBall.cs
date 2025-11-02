@@ -39,18 +39,6 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override void AI()
         {
-            Player p = Main.player[(int)Projectile.ai[0]];
-            if (!p.active || p.dead)
-            {
-                foreach (Player player in Main.ActivePlayers)
-                {
-                    if (player.active && !player.dead)
-                    {
-                        Projectile.ai[0] = player.whoAmI;
-                        break;
-                    }
-                }
-            }
             int gem = ModContent.NPCType<MonorianGemBoss>();
             foreach (NPC n in Main.ActiveNPCs)
             {
@@ -77,7 +65,8 @@ namespace CalRemix.Content.Projectiles.Hostile
 
                     float toRot = velocity.ToRotation();
                     float dirToP = Projectile.DirectionTo(Main.npc[(int)Projectile.ai[0]].Center).ToRotation();
-                    if (Math.Abs(toRot - dirToP) < MathHelper.ToRadians(10))
+                    float spread = MathHelper.ToRadians(10);
+                    if (Math.Abs(MathHelper.WrapAngle(toRot - (spread * 0.5f)) - MathHelper.WrapAngle(dirToP)) < MathHelper.ToRadians(10))
                         continue;
 
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / projCount)) * 20, ModContent.ProjectileType<MonorianSoulBolt>(), Projectile.damage, 1);
