@@ -121,6 +121,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
         public override void AI()
         {
+            NPCID.Sets.TrailingMode[Type] = 1;
+            NPCID.Sets.TrailCacheLength[Type] = 10;
             if (!Soul.active || Soul.type != NPCType<MonorianSoul>() || Soul.life <= 0)
             {
                 NPC.StrikeInstantKill();
@@ -143,11 +145,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                         if (localTimer < waitTime)
                         {
+                            NPC.localAI[0] = 0;
                             NPC.velocity = Vector2.Zero;
                         }
                         else if (localTimer == waitTime)
                         {
                             NPC.velocity = NPC.DirectionTo(Target.Center) * 30;
+                            NPC.localAI[0] = 1;
+                            SoundEngine.PlaySound(SoundID.DD2_WyvernDiveDown with { Volume = 2 }, Target.Center);
                         }
                         else if (localTimer > dashTime - 5)
                         {
@@ -212,6 +217,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                             if (spawnProj)
                             {
+                                SoundEngine.PlaySound(BetterSoundID.ItemGolfClubSwing, NPC.Center);
                                 SoundEngine.PlaySound(CommonCalamitySounds.PlasmaBoltSound with { Pitch = -0.4f }, NPC.Center);
                                 for (int i = 0; i < 4; i++)
                                 {
@@ -283,13 +289,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             OldPosition = NPC.Center;
                             SavePosition = NPC.Center + new Vector2(NPC.DirectionTo(Target.Center).X.DirectionalSign() * NPC.Distance(Target.Center) * 2, 0);
+                            SoundEngine.PlaySound(SoundID.DD2_WyvernDiveDown with { Volume = 2 }, Target.Center);
                         }
                         else if (localTimer < dashTime)
                         {
+                            NPC.localAI[0] = 1;
                             NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(waitTime, dashTime, localTimer, true), 1));
                         }
                         else if (localTimer < waitAgain)
                         {
+                            NPC.localAI[0] = 0;
                             NPC.velocity = Vector2.Zero;
                         }
                     }
@@ -304,14 +313,39 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<MonorianSoul>()], quickUnlock: true);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            if (CurrentPhase == MonorianSoul.PhaseType.Block || CurrentPhase == MonorianSoul.PhaseType.Shotgun || CurrentPhase == MonorianSoul.PhaseType.Laser)
+                return false;
+            return true;
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
         {
             spriteBatch.ExitShaderRegion();
+
+            if (NPC.localAI[0] == 1)
+            {
+                int buffer = CurrentPhase == MonorianSoul.PhaseType.Goozma ? 3 : 1;
+                for (int i = 0; i < NPC.oldPos.Length; i += buffer)
+                {
+                    DrawCube(NPC.oldPos[i] - screenPos + NPC.Size / 2, 1 - i / (float)NPC.oldPos.Length);
+                }
+            }
+
+            DrawCube(NPC.Center - screenPos, NPC.Opacity);
+
+            return false;
+        }
+
+        public static void DrawCube(Vector2 position, float opacity)
+        {
             float animSpeed = 7;
             float size = 40;
             Matrix rotMatrix = Matrix.CreateRotationY(MathHelper.ToRadians(Main.GlobalTimeWrappedHourly * animSpeed));
@@ -327,7 +361,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
 
             List<Vector2> twodvertices = new();
-            for (int i = 0; i <  rotatedVertices.Count; i++)
+            for (int i = 0; i < rotatedVertices.Count; i++)
             {
                 Vector2 newpoint = new Vector2(rotatedVertices[i].X, rotatedVertices[i].Y) * size;
                 twodvertices.Add(newpoint);
@@ -337,7 +371,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Rectangle testFrame = new Rectangle(0, 0, (int)size, (int)size);
 
             Matrix rotation = Matrix.CreateRotationX(0);
-            Matrix translation = Matrix.CreateTranslation(new Vector3(NPC.Center.X - screenPos.X, NPC.Center.Y - screenPos.Y, 0));
+            Matrix translation = Matrix.CreateTranslation(new Vector3(position.X, position.Y, 0));
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -220, 220);
             Matrix renderMatrix = rotation * translation * view * projection;
@@ -354,10 +388,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 Vector3 botRight = new Vector3(rotatedVertices[(int)positions.W].X, rotatedVertices[(int)positions.W].Y, 0) * size;
 
                 VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4];
-                vertices[0] = new(topLeft, Color.Red, new Vector2(0, 0));
-                vertices[1] = new(topRight, Color.IndianRed, new Vector2(1, 0));
-                vertices[2] = new(botLeft, Color.Red, new Vector2(0, 1));
-                vertices[3] = new(botRight, Color.OrangeRed, new Vector2(1, 1));
+                vertices[0] = new(topLeft, Color.Red * opacity, new Vector2(0, 0));
+                vertices[1] = new(topRight, Color.IndianRed * opacity, new Vector2(1, 0));
+                vertices[2] = new(botLeft, Color.Red * opacity, new Vector2(0, 1));
+                vertices[3] = new(botRight, Color.OrangeRed * opacity, new Vector2(1, 1));
 
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                 {
@@ -372,8 +406,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, 4, indices, 0, 2);
                 }
             }
+        }
 
-            return false;
+        public override bool CheckDead()
+        {
+            return !Soul.active;
         }
     }
 }

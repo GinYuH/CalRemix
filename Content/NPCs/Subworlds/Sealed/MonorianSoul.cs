@@ -28,6 +28,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Sounds;
 using CalamityMod.World;
 using CalamityMod.Items.Weapons.DraedonsArsenal;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -121,6 +122,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 return;
             }
             NPC.TargetClosest(false);
+            if (!NPC.HasValidTarget)
+            {
+                if (Gem.active && Gem.type == ModContent.NPCType<MonorianGemBoss>())
+                {
+                    Gem.active = false;
+                }
+                NPC.active = false;
+            }
             switch (CurrentPhase)
             {
                 case PhaseType.SpawnAnimation:
@@ -199,7 +208,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center).RotatedBy(MathHelper.Lerp(-shootSpreead, shootSpreead, i / (float)(projCount - 1))) * shootVelocity, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(240, 360), 1);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Gem.Center).RotatedBy(MathHelper.Lerp(-shootSpreead, shootSpreead, i / (float)(projCount - 1))) * shootVelocity, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(240, 360), 1, ai0: 3);
                                     }
                                 }
                                 ExtraVar = 0;
@@ -337,12 +346,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (Timer < attackTime)
                         {
-                            if (Timer % 10 == 0)
+                            if (Timer % 30 == 0)
                             {
                                 SoundEngine.PlaySound(CommonCalamitySounds.ELRFireSound, NPC.Center);
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
+
+                                float randomRot = Main.rand.NextFloat(MathHelper.TwoPi);
+                                for (int i = 0; i < 4; i++)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi), ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(240, 450), 1, ai0: NPC.whoAmI);
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 4f)).RotatedBy(randomRot), ProjectileType<MonorianDeathraySmall>(), CalRemixHelper.ProjectileDamage(240, 450), 1, ai1: NPC.whoAmI);
+                                    }
                                 }
                             }
                         }
@@ -400,8 +414,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public void ChangePhase(PhaseType newPhase)
         {
-            //CurrentPhase = PhaseType.Laser;
             CurrentPhase = newPhase;
+            //CurrentPhase = PhaseType.Metagross;
             Timer = 0;
             ExtraVar = 0;
             OldPosition = Vector2.Zero;
@@ -412,6 +426,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 Gem.ai[3] = 0;
                 Gem.ModNPC<MonorianGemBoss>().OldPosition = Vector2.Zero;
                 Gem.ModNPC<MonorianGemBoss>().SavePosition = Vector2.Zero;
+                Gem.localAI[0] = 0;
                 Gem.netUpdate = true;
             }
             NPC.netUpdate = true;
@@ -427,6 +442,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemType<MonorianGemShards>(), 1, 50, 100);
+        }
+
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ItemID.SuperHealingPotion;
         }
 
         public override void OnKill()
@@ -440,7 +461,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             spriteBatch.ExitShaderRegion();
             Texture2D radians = TextureAssets.Npc[ModContent.NPCType<WalkingBird>()].Value;
-            Texture2D spark = Request<Texture2D>("CalamityMod/Particles/HollowCircleSoftEdge").Value;
             Texture2D star = Request<Texture2D>("CalamityMod/Particles/Sparkle").Value;
 
             float sizeMod = 0.5f;
@@ -455,7 +475,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             spriteBatch.ExitShaderRegion();
             spriteBatch.EnterShaderRegion(BlendState.Additive);
 
-            //Main.spriteBatch.Draw(spark, NPC.Center - Main.screenPosition, null, Color.Cyan, Main.GlobalTimeWrappedHourly, spark.Size() / 2, NPC.scale * 1.8f * sizeMod, SpriteEffects.FlipHorizontally, 0);
             spriteBatch.Draw(star, NPC.Center - screenPos, null, Color.White, 0, star.Size() / 2, NPC.scale * 2.4f * sizeMod + (1 + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 2f)), SpriteEffects.FlipHorizontally, 0);
 
             if (CurrentPhase == PhaseType.Bounce)

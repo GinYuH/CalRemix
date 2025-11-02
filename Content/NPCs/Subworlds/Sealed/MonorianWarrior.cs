@@ -678,13 +678,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
 		public override void OnKill()
 		{
-			RemixDowned.downedOneguy = true;
+			if (Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<MonorianSoul>());
+			}
 		}
 
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-		{
-		}
-		public override void SendExtraAI(BinaryWriter writer)
+        public override bool CheckActive()
+        {
+			return !NPC.HasValidTarget;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(Phase2);
 		}

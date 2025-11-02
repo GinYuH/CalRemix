@@ -18,10 +18,11 @@ using CalRemix.Content.NPCs.Subworlds.Sealed;
 using System.Collections.Generic;
 using Terraria.Graphics.Shaders;
 using CalamityMod.Graphics.Primitives;
+using Terraria.Audio;
 
 namespace CalRemix.Content.Projectiles.Hostile
 {
-    public class MonorianDeathray : BaseLaserbeamProjectile
+    public class MonorianDeathraySmall : BaseLaserbeamProjectile
     {
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
 
@@ -32,12 +33,14 @@ namespace CalRemix.Content.Projectiles.Hostile
         }
         public override float MaxScale => 1f;
         public override float MaxLaserLength => 2400f;
-        public override float Lifetime => 300;
+        public override float Lifetime => TelegraphTime + 30;
         public override Color LaserOverlayColor => Color.Cyan;
         public override Color LightCastColor => Color.White;
         public override Texture2D LaserBeginTexture => ModContent.Request<Texture2D>("CalamityMod/Projectiles/InvisibleProj", AssetRequestMode.ImmediateLoad).Value;
         public override Texture2D LaserMiddleTexture => ModContent.Request<Texture2D>("CalamityMod/Projectiles/InvisibleProj", AssetRequestMode.ImmediateLoad).Value;
         public override Texture2D LaserEndTexture => ModContent.Request<Texture2D>("CalamityMod/Projectiles/InvisibleProj", AssetRequestMode.ImmediateLoad).Value;
+
+        public static int TelegraphTime => 60;
 
         public override void SetStaticDefaults()
         {
@@ -46,14 +49,13 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override void SetDefaults()
         {
-            Projectile.Calamity().DealsDefenseDamage = true;
             Projectile.width = 30;
             Projectile.height = 30;
             Projectile.hostile = true;
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 600;
+            Projectile.timeLeft = (int)Lifetime;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -80,7 +82,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                 return;
             }
 
-            if (Main.npc[OwnerIndex].ModNPC<MonorianSoul>().CurrentPhase != MonorianSoul.PhaseType.Laser)
+            if (Main.npc[OwnerIndex].ModNPC<MonorianSoul>().CurrentPhase != MonorianSoul.PhaseType.Metagross)
             {
                 Projectile.Kill();
                 return;
@@ -89,28 +91,24 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override float DetermineLaserLength()
         {
-            int gem = NPC.FindFirstNPC(ModContent.NPCType<MonorianGemBoss>());
-
-            if (gem == -1)
-            {
-                return MaxLaserLength;
-            }
-            else
-            {
-                NPC gemNPC = Main.npc[gem];
-                float point = 0f;
-                if (Collision.CheckAABBvLineCollision(gemNPC.Hitbox.TopLeft(), gemNPC.Hitbox.Size(), Main.npc[OwnerIndex].Center, Main.npc[OwnerIndex].Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * MaxLaserLength, 20, ref point))
-                {
-                    return gemNPC.Distance(Main.npc[OwnerIndex].Center);
-                }
-                else return MaxLaserLength;
-            }
+            return MathHelper.Lerp(0, MaxLaserLength, Utils.GetLerpValue(0, 10, Time, true));
         }
 
         public override void ExtraBehavior()
         {
-            float laserSpeed = 0.01f;
-            RotationalSpeed = Projectile.ai[2] == 0 ? -laserSpeed : laserSpeed;
+            int fade = 10;
+            if (Projectile.timeLeft < fade)
+            {
+                Projectile.Opacity = MathHelper.Lerp(1, 0, Utils.GetLerpValue(fade, 0, Projectile.timeLeft, true));
+            }
+            else
+            {
+                Projectile.Opacity = MathHelper.Lerp(0, 1, Utils.GetLerpValue(ContentSamples.ProjectilesByType[Type].timeLeft, ContentSamples.ProjectilesByType[Type].timeLeft - TelegraphTime, Projectile.timeLeft, true));
+            }
+            if (Time == TelegraphTime)
+            {
+                SoundEngine.PlaySound(BetterSoundID.ItemLaserMachinegun with { Pitch = -0.2f }, Projectile.Center);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -138,12 +136,23 @@ namespace CalRemix.Content.Projectiles.Hostile
 
             points.Add(destination);
 
-            PrimitiveRenderer.RenderTrail(points, new((float f) => 90, (float f) => Color.Cyan, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
-            PrimitiveRenderer.RenderTrail(points, new((float f) => 40, (float f) => Color.White, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
+
+            float width = MathHelper.Lerp(5, 60, Utils.GetLerpValue(0, 20, Time, true));
+
+            Color back = Time > TelegraphTime ? Color.Lerp(Color.Cyan, Color.LightCyan, 0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 22)) : Color.Cyan;
+
+            PrimitiveRenderer.RenderTrail(points, new((float f) => width, (float f) => back * Projectile.Opacity, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
+            if (Time > TelegraphTime)
+                PrimitiveRenderer.RenderTrail(points, new((float f) => width * 0.33f, (float f) => Color.White * Projectile.Opacity, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
 
             Main.spriteBatch.ExitShaderRegion();
 
             return false;
+        }
+
+        public override bool CanHitPlayer(Player target)
+        {
+            return Time > TelegraphTime;
         }
     }
 }
