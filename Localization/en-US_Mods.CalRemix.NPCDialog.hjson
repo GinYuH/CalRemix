@@ -9,6 +9,17 @@ BrightMind: {
 			Monorian Gem Shards !!!!
 			'''
 	}
+
+	Hurt1.0: OW
+	Hurt2.0: NO NO NO
+	Hurt3.0: STOP IT!!!
+	Hurt4.0: OUCH
+	Hurt5.0: THAT HURT!!!
+	Hurt6.0: YOU  ARE   EVILLL!!!!!
+	Hurt7.0: GAH!
+	Hurt8.0: NOOOO
+	Hurt9.0: MY SHIN!
+	Hurt10.0: AHHHHH
 }
 
 ShadeGreen: {
@@ -103,4 +114,20 @@ ShadeBlue: {
 	Mind1.0: WOWIE! A REAL EYE!
 	Cultist1.0: I LOVE SOME BRAIN FOOD!
 	QuestEnd.0: BYE BYE HITMAN!!!!
+}
+
+MonorianWarrior: {
+	Intro: {
+		0: What! Who goes there!?
+		1: ...
+		2: Are YOU the one who has been causing so much noise here!?
+		3: I've spent YEARS in these lands unrivaled!
+		4:
+			'''
+			I AM THE MONORIAN WARRIOR! 
+			AND I WILL FORCIBLY CLOSE THIS ISSUE!!!!
+			'''
+	}
+
+	Enrage.0: I SEE HOW IT IS!!!
 }

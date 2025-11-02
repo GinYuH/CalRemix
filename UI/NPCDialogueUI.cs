@@ -188,7 +188,9 @@ namespace CalRemix.UI
         public override void PostAddRecipes()
         {
             RegisterNPC(new(ModContent.NPCType<BrightMind>(),
-            ["Intro"],
+            ["Intro",
+            "Hurt1", "Hurt2", "Hurt3", "Hurt4", "Hurt5", "Hurt6", "Hurt7", "Hurt8", "Hurt9", "Hurt10"
+            ],
             Color.DarkGoldenrod, Color.LightGoldenrodYellow));
 
             RegisterNPC(new(ModContent.NPCType<ShadeGreen>(),
@@ -202,6 +204,10 @@ namespace CalRemix.UI
             RegisterNPC(new(ModContent.NPCType<ShadeYellow>(),
             ["Intro1", "Cultist1", "QuestEnd" ],
             Color.Black, Color.Yellow));
+
+            RegisterNPC(new(ModContent.NPCType<MonorianWarrior>(),
+            ["Intro", "Enrage"],
+            Color.Red, Color.Cyan));
         }
 
         public static void RegisterNPC(NPCDialogueSet set)

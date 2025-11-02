@@ -326,6 +326,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             return true;
         }
 
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ItemID.SuperHealingPotion;
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
         {
             spriteBatch.ExitShaderRegion();

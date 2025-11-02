@@ -44,6 +44,8 @@ using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.CalPlayer;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Items.Weapons.Melee;
+using CalRemix.Content.Items.Materials;
+using CalamityMod.NPCs.Cryogen;
 
 namespace CalRemix
 {
@@ -253,6 +255,10 @@ namespace CalRemix
                 ["spawnItems"] = ItemType<Gastrosequence>(),
                 ["customPortrait"] = gasPortrait
             });
+            bc.Call("LogBoss", Mod, "MonorianWarrior", 17.91, () => RemixDowned.downedOneguy, NPCType<MonorianWarrior>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<GastropodEye>()
+            });
             Action<SpriteBatch, Rectangle, Color> lvPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/Livyatan_BC").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2) * 0.3f, rect.Center.Y - (texture.Height / 2) * 0.3f);
@@ -356,7 +362,9 @@ namespace CalRemix
             MakeCard(NPCType<VoidBoss>(), (horz, anim) => Color.Lerp(Color.Black, Color.Magenta, anim), "Void", BetterSoundID.ItemCast, BetterSoundID.ItemCast);
             MakeCard(NPCType<Disilphia>(), (horz, anim) => Color.Lerp(Color.White, Color.White, anim), "Disilphia", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
             MakeCard(NPCType<MonorianGastropodAscended>(), (horz, anim) => Color.Lerp(Color.Pink, Color.Goldenrod, anim), "MonorianGastropodAscended", SoundID.NPCHit1, SoundID.NPCDeath1);
-            MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", BetterSoundID.ItemInfernoFork, BetterSoundID.ItemInfernoExplosion);
+            MakeCard(NPCType<MonorianWarrior>(), (horz, anim) => Color.Lerp(Color.Red, Color.Red, anim), "MonorianWarrior", BetterSoundID.ItemAerialBane, SoundID.NPCDeath1);
+            MakeCard(NPCType<MonorianSoul>(), (horz, anim) => Color.Lerp(Color.Cyan, Color.Red, anim), "MonorianSoul", BetterSoundID.ItemAerialBane, SoundID.NPCDeath1);
+            MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", Cryogen.HitSound, Cryogen.DeathSound);
             MakeCard(() => NPC.FindFirstNPC(NPCType<Hydrogen>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] < 300, (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Hydrogen", SoundID.Item14, CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);
             MakeCard(NPCType<WulfwyrmHead>(), (horz, anim) => Color.Lerp(Color.LightGreen, Color.LightBlue, horz), "WulfrumExcavator", SoundID.NPCHit4, BetterSoundID.ItemThisStupidFuckingLaser);
             MakeCard(NPCType<Livyatan>(), (horz, anim) => Color.Lerp(Color.Turquoise, Color.SeaGreen, horz), "Livyatan", Livyatan.HitSound, Livyatan.RoarSound);

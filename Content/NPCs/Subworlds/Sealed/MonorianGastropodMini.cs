@@ -47,7 +47,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 			{
 				float fireRate = 90;
 				NPC.ai[1]++;
-				CalamityUtils.SmoothMovement(NPC, 5, target.Center + Vector2.UnitY.RotatedBy(NPC.ai[3]) * 300 - NPC.Center, 14, 0.1f, true);
+				CalamityUtils.SmoothMovement(NPC, 5, target.Center + Vector2.UnitY.RotatedBy(NPC.ai[3]) * 400 - NPC.Center, 14, 0.4f, true);
 				
 				if (NPC.ai[1] % fireRate == 0 && NPC.ai[1] > 1)
 				{

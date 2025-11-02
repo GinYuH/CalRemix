@@ -16,6 +16,8 @@ using CalamityMod.World;
 using CalamityMod.InverseKinematics;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
+using CalRemix.UI;
+using CalamityMod.Sounds;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -60,7 +62,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 			NPC.width = 28;
 			NPC.height = 48;
 			NPC.defense = 26;
-			NPC.lifeMax = 60000;
+			NPC.lifeMax = 30000;
 			NPC.aiStyle = -1;
 			NPC.knockBackResist = 0f;
 			NPC.value = Item.buyPrice(0, 0, 10, 0);
@@ -119,7 +121,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 			{
 				NPC.active = false;
             }
-            if (!Phase2 && NPC.life <= NPC.lifeMax * 0.5f && Main.expertMode)
+            if (!Phase2 && NPC.life <= NPC.lifeMax * 0.5f && Main.expertMode && CurrentPhase != PhaseType.Supercharge)
             {
                 Timer = 0;
                 NPC.ai[2] = 0;
@@ -140,25 +142,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						{
 							if (Timer == 20)
 							{
-								EdgyTalk("What! Who goes there!?", Color.LightSeaGreen, true);
+								NPCDialogueUI.StartDialogue(NPC.whoAmI, "Intro");
 							}
-							if (Timer == 180)
+							if (Timer > 20 && Timer % 7 == 0 && NPCDialogueUI.NotFinishedTalking(NPC))
 							{
-								EdgyTalk("...", Color.LightSeaGreen, true);
+								SoundEngine.PlaySound(BetterSoundID.ItemAerialBane with { Pitch = 3 }, NPC.Center);
 							}
-							if (Timer == 300)
-							{
-								EdgyTalk("Are you one of the people who've been destroying my work!?", Color.LightSeaGreen, true);
-							}
-							if (Timer == 420)
-							{
-								EdgyTalk("I've spent YEARS working on those robots!", Color.LightSeaGreen, true);
-							}
-							if (Timer == 510)
-							{
-								EdgyTalk("I'll need to forcibly close this issue", Color.LightSkyBlue, true);
-							}
-							if (Timer >= 630)
+							if (Timer >= 22 && !NPCDialogueUI.IsBeingTalkedTo(NPC))
 							{
 								Timer = 0;
 								CurrentPhase = PhaseType.Tank;
@@ -171,9 +161,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 							CurrentPhase = PhaseType.Tank;
 						}
 						if (NPC.life < NPC.lifeMax * 0.99f || playerX > 600 | playerX < -600 || playerY > 600 || playerY < -600)
-						{
-							EdgyTalk("Fine! I see how it is!", Color.LightSkyBlue, true);
-							Timer = 0;
+                        {
+                            NPCDialogueUI.StartDialogue(NPC.whoAmI, "Enrage");
+                            Timer = 0;
 							NPC.ai[3] = 0;
 							CurrentPhase = PhaseType.Tank;
 						}
@@ -255,12 +245,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 							SoundEngine.PlaySound(SoundID.Item23, NPC.position);
 							NPC.direction *= -1;
 						}
-						if (((playerX > 1200 || playerY < -360 || playerX < -1200) && Main.expertMode) || ((playerX > 1200 || playerY < -260 || playerX < -1200) && CalamityMod.World.CalamityWorld.revenge))
+						/*if (((playerX > 1200 || playerY < -360 || playerX < -1200) && Main.expertMode) || ((playerX > 1200 || playerY < -260 || playerX < -1200) && CalamityMod.World.CalamityWorld.revenge))
 						{
 							NPC.velocity.Y -= 0.8f;
 							CurrentPhase = PhaseType.TankEX;
 							Timer = 0;
-						}
+						}*/
 						if (Timer >= 300 || Timer >= 900)
 						{
 							Timer = 0;
@@ -276,15 +266,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						NPC.noGravity = true;
 						NPC.noTileCollide = true;
 						float speed = 10f;
-						int superboost = Phase2 ? 5 : 0;
-						int damage = Main.expertMode ? 10 + superboost : 15 + superboost;
 						int phaseTime = 360;
 						Vector2 playerPos = Main.player[NPC.target].Center - NPC.Center;
-						if (playerPos.Y < 50f)
+						if (playerPos.Y < 100f)
 						{
 							NPC.velocity.Y -= 0.1f;
 						}
-						if (playerPos.Y > 100f)
+						if (playerPos.Y > 200f)
 						{
 							NPC.velocity.Y += 0.1f;
 						}
@@ -319,7 +307,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						}
 						if (Timer % (Phase2 ? 30 : 70) == 0)
 						{
-							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(Main.player[NPC.target].Center) * speed, ModContent.ProjectileType<MonorianBolt>(), damage, 0f);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(Main.player[NPC.target].Center) * speed, ModContent.ProjectileType<MonorianBolt>(), CalRemixHelper.ProjectileDamage(210, 380), 0f);
 						}
 						if (Timer >= phaseTime)
 						{
@@ -433,18 +421,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						int ranshotspeed = (CalamityMod.World.CalamityWorld.revenge ? 68 : 85);
 						if (Timer % ranshotspeed == 0)
 						{
-							SoundEngine.PlaySound(SoundID.Item1, NPC.position);
+							SoundEngine.PlaySound(CommonCalamitySounds.SwiftSliceSound, NPC.position);
 							Vector2 position = NPC.Center;
 							Vector2 targetPosition = Main.player[NPC.target].Center;
 							Vector2 direction = targetPosition - position;
 							direction.Normalize();
 							int type = ModContent.ProjectileType<ArkhalisProj>();
-							int superboost = Phase2 ? 5 : 0;
-							int damage = Main.expertMode ? 10 + superboost : 15 + superboost;
 							int spacer = CalamityMod.World.CalamityWorld.revenge || Phase2 ? Main.rand.Next(3, 10) * NPC.direction : 5 * NPC.direction;
 							for (int spacing = 0; spacing < 10; spacing++)
 							{
-								Projectile.NewProjectile(NPC.GetSource_FromAI(), position.X, position.Y, (NPC.direction * spacing * (CalamityMod.World.CalamityWorld.revenge ? 2.5f : 3)) - spacer, -9, type, damage, 0f, Main.myPlayer);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), position.X, position.Y, (NPC.direction * spacing * (CalamityMod.World.CalamityWorld.revenge ? 2.5f : 3)) - spacer, -9, type, CalRemixHelper.ProjectileDamage(170, 310), 0f, Main.myPlayer);
 							}
 						}
 						if (Timer >= 300)
@@ -459,7 +445,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						float cycleLength = 90;
 						float localTimer = Timer % cycleLength;
 						float totalTime = cycleLength * 4;
-                        int projRate = (CalamityMod.World.CalamityWorld.revenge ? 80 : 90);
+                        int projRate = 45;
                         if (localTimer == 1)
 						{
 							for (int dusttimer = 0; dusttimer < 10; dusttimer++)
@@ -471,7 +457,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						if (localTimer == 2)
 						{
 							SoundEngine.PlaySound(SoundID.Item8, NPC.position);
-							NPC.position.X = Main.player[NPC.target].Center.X + 300 * NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
+							NPC.position.X = Main.player[NPC.target].Center.X + 500 * NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
 							NPC.position.Y = Main.player[NPC.target].Center.Y - 80;
 							NPC.direction = NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
                             for (int dusttimer = 0; dusttimer < 10; dusttimer++)
@@ -501,7 +487,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 								{
 									if (Main.netMode != NetmodeID.MultiplayerClient)
 									{
-										Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(NPC.direction, NPC.DirectionTo(Main.player[NPC.target].Center).Y).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / (float)(projCount - 1))) * 15, ModContent.ProjectileType<MonorianBolt>(), CalRemixHelper.ProjectileDamage(240, 410), 1);
+										Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(NPC.direction, NPC.DirectionTo(Main.player[NPC.target].Center).Y).RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, i / (float)(projCount - 1))) * 8, ModContent.ProjectileType<MonorianBolt>(), CalRemixHelper.ProjectileDamage(240, 410), 1);
 									}
 								}
 							}
@@ -605,10 +591,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						NPC.velocity.Y += 0.1f;
 						if (((NPC.collideX || NPC.collideY) && Timer < 180) || (Timer >= 180))
 						{
-							NPC.ai[3]++;
-							if (NPC.ai[2] <= 100)
+							if (Timer <= 100)
 							{
-								if (NPC.ai[3] >= 35)
+								if (Timer % 35 == 0)
 								{
 									SoundEngine.PlaySound(SoundID.Item43, NPC.position);
 									for (int x = 0; x < 20; x++)
@@ -619,12 +604,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 										dust = Terraria.Dust.NewDustPerfect(position, 43, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
 										dust.noGravity = true;
 									}
-									NPC.ai[3] = 0;
 								}
 							}
-							if (NPC.ai[2] > 100)
+							else if (Timer > 100)
 							{
-								if (NPC.ai[3] >= 20)
+								if (Timer % 20 == 0)
 								{
 									SoundEngine.PlaySound(SoundID.Item43, NPC.position);
 									for (int x = 0; x < 20; x++)
@@ -635,24 +619,25 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 										dust = Terraria.Dust.NewDustPerfect(position, 43, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
 										dust.noGravity = true;
 									}
-									NPC.ai[3] = 0;
 								}
 							}
-							if (NPC.ai[2] <= 160)
+							if (Timer < 160)
 							{
-								NPC.ai[2]++;
-								Dust dust;
-								Vector2 position = NPC.Center;
-								position.Y = NPC.Center.Y + (NPC.height / 2);
-								position.X = NPC.Center.X - 4;
-								for (int i = 0; i < 8; i++)
+								if (Timer % 5 == 0)
 								{
-									dust = Terraria.Dust.NewDustPerfect(position, DustID.GemRuby, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 8f)) * 2.5f, 0, new Color(255, 255, 255), 1f);
-									dust.noGravity = true;
+									Dust dust;
+									Vector2 position = NPC.Center;
+									position.Y = NPC.Center.Y + (NPC.height / 2);
+									position.X = NPC.Center.X - 4;
+									for (int i = 0; i < 8; i++)
+									{
+										dust = Terraria.Dust.NewDustPerfect(position, DustID.GemRuby, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 8f)) * 2.5f, 0, new Color(255, 255, 255), 1f);
+										dust.noGravity = true;
+									}
 								}
 							}
 						}
-						if (NPC.ai[2] >= 160)
+						if (Timer >= 160)
 						{
 							for (int x = 0; x < 40; x++)
 							{
@@ -665,8 +650,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 							SoundEngine.PlaySound(SoundID.Item117, NPC.position);
 							Phase2 = true;
 							Timer = 0;
-							NPC.ai[2] = 0;
-							NPC.ai[3] = 0;
                             CurrentPhase = PhaseType.Tank;
                         }
 					}
@@ -678,10 +661,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
 		public override void OnKill()
 		{
+			SoundEngine.PlaySound(BetterSoundID.ItemSentrySummonStrong with { Pitch = -0.4f });
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<MonorianSoul>());
 			}
+			CalRemixHelper.DustExplosionOutward(NPC.Center, DustID.TintableDustLighted, speedMax: 20, speedMin: 15, color: Color.Cyan, scaleMin: 1f, scaleMax: 1.1f);
 		}
 
         public override bool CheckActive()

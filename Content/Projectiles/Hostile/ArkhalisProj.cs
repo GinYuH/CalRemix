@@ -5,6 +5,9 @@ using System;
 using Terraria.ModLoader;
 using System.IO;
 using Microsoft.Build.Tasks;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using CalamityMod.Graphics.Primitives;
 
 namespace CalRemix.Content.Projectiles.Hostile
 {
@@ -12,12 +15,18 @@ namespace CalRemix.Content.Projectiles.Hostile
 	{
 		private bool stopeh = false;
 		public override string Texture => $"Terraria/Images/Item_{ItemID.Arkhalis}";
-		
-		public override void SetDefaults()
+
+        public override void SetStaticDefaults()
+        {
+			ProjectileID.Sets.TrailingMode[Type] = 1;
+			ProjectileID.Sets.TrailCacheLength[Type] = 10;
+        }
+
+        public override void SetDefaults()
 		{
 			Projectile.width = 20;
 			Projectile.height = 20;
-			Projectile.tileCollide = true;
+			Projectile.tileCollide = false;
 			Projectile.ignoreWater = false;
 			Projectile.hostile = true;
 			Projectile.aiStyle = 2;
@@ -34,28 +43,30 @@ namespace CalRemix.Content.Projectiles.Hostile
             }
 			else
             {
+				Projectile.tileCollide = true;
 				Projectile.alpha = 0;
-				Projectile.damage = Main.expertMode ? 10 : 15;
 				Projectile.rotation = MathHelper.ToRadians(135);
 				Projectile.velocity.X = 0;
             }
-			if (Projectile.velocity.Y > 6 && !stopeh)
-            {
-				stopeh = true;
-				Projectile.velocity.Y = 6;
-            }
-			if (stopeh)
-            {
-				Projectile.velocity.Y += 0.02f;
-            }
 		}
-		public override void SendExtraAI(BinaryWriter writer)
-		{
-			writer.Write(stopeh);
-		}
-		public override void ReceiveExtraAI(BinaryReader reader)
-		{
-			stopeh = reader.ReadBoolean();
-		}
-	}
+
+        public override bool CanHitPlayer(Player target)
+        {
+			return Projectile.velocity.Y > 0;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+			Texture2D tex = TextureAssets.Projectile[Type].Value;
+
+			Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, tex.Size() / 2, Projectile.scale, 0);
+
+			if (Projectile.velocity.Y > 0)
+			{
+				PrimitiveRenderer.RenderTrail(Projectile.oldPos, new((float f) => 4 * (1 - f), (float f) => Color.LightCyan * f * 0.3f, new((float f) => Projectile.Size * 0.5f)));
+			}
+
+			return false;
+        }
+    }
 }

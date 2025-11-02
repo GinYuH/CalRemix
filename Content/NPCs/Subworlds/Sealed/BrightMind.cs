@@ -101,6 +101,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             return false;
         }
 
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            NPCDialogueUI.StartDialogue(NPC.whoAmI, "Hurt" + Main.rand.Next(1, 11));
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<TanMatter>());

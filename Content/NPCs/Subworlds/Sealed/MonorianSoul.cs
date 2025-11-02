@@ -186,7 +186,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         float waitTime = 70;
                         float countDownTime = waitTime + 240;
                         float waitForFinale = countDownTime + 50;
-                        float finish = waitForFinale + 90;
+                        float finish = waitForFinale + 130;
 
                         float countDownCompletion = Utils.GetLerpValue(waitTime, countDownTime, Timer, true);
                         float shootTime = MathHelper.Lerp(70, 8, countDownCompletion);
