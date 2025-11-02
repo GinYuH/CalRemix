@@ -254,7 +254,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             foreach (Player p in Main.ActivePlayers)
                             {
                                 p.velocity = Vector2.Lerp(p.velocity, p.DirectionTo(SavePosition) * 20, Utils.GetLerpValue(330, 400, NPC.Distance(p.Center), true));
-                                p.Calamity().infiniteFlight = true;
                             }
                         }
                     }
@@ -390,6 +389,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + Vector2.UnitX * NPC.direction * 630, 0.1f);
                     }
                     break;
+            }
+
+            foreach (Player p in Main.ActivePlayers)
+            {
+                p.Calamity().infiniteFlight = true;
             }
             Timer++;
         }
