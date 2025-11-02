@@ -5819,3 +5819,22 @@ ArmorPolisher: {
 	DisplayName: Armor Polisher
 	Tooltip: Can enchant Yellow Light Leggings and Sealed Leggings
 }
+
+BrokenHeroGem: {
+	DisplayName: Broken Hero Gem
+	Tooltip: ""
+}
+
+InfinityPebble: {
+	DisplayName: Infinity Pebble
+	Tooltip:
+		'''
+		Fires a large beam which channels energy across different dimensions
+		After firing for a second, homing dimensional energy-infused Monorian Bolts fire outwards
+		'''
+}
+
+TrueMonorianGem: {
+	DisplayName: True Monorian Gem
+	Tooltip: Fires ascended monorian gemstones which summon lightning as they travel
+}

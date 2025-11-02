@@ -443,6 +443,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemType<MonorianGemShards>(), 1, 50, 100);
+            npcLoot.Add(ItemID.Arkhalis);
+            npcLoot.Add(ItemType<BrokenHeroGem>());
         }
 
         public override void BossLoot(ref int potionType)
