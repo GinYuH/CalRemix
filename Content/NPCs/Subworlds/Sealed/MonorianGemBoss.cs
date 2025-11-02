@@ -223,7 +223,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 4f)) * 10, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(200, 320), 1);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 4f)).RotatedBy(MathHelper.PiOver4) * 10, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(200, 320), 1);
                                     }
                                 }
                             }
