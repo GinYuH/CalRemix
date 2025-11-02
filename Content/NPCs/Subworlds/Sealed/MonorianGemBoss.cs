@@ -235,7 +235,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         if (Timer == 1)
                         {
                             NPC.velocity *= 0.9f;
-                            SavePosition = Target.Center -  new Vector2(Target.DirectionTo(NPC.Center).X.DirectionalSign() * 800, 300);
+                            SavePosition = Target.Center -  new Vector2(-Target.DirectionTo(NPC.Center).X.DirectionalSign() * 800, 200);
                             OldPosition = NPC.Center;
                         }
                         else if (Timer < repositionTime)

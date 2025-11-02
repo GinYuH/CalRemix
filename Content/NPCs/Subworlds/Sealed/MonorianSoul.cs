@@ -26,6 +26,8 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Sounds;
+using CalamityMod.World;
+using CalamityMod.Items.Weapons.DraedonsArsenal;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -276,9 +278,40 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         {
                             if (Timer == laserStart)
                             {
+                                SoundEngine.PlaySound(PulseRifle.FireSound with { Pitch = -0.3f }, Target.Center);
+                                Main.LocalPlayer.Calamity().GeneralScreenShakePower = 5;
+                                if (!CalamityWorld.revenge)
+                                {
+                                    bool left = Main.rand.NextBool();
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX * left.ToDirectionInt(), ProjectileType<MonorianDeathray>(), CalRemixHelper.ProjectileDamage(240, 400), 1, ai1: NPC.whoAmI, ai2: left.ToInt());
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = -1; i <= 1; i += 2)
+                                    {
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX * i, ProjectileType<MonorianDeathray>(), CalRemixHelper.ProjectileDamage(240, 400), 1, ai1: NPC.whoAmI, ai2: (i == 1).ToInt());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else if (Timer < attackLength)
+                        {
+                            if (Timer % 8 == 0)
+                            {
+                                SoundEngine.PlaySound(CommonCalamitySounds.ExoPlasmaShootSound with { Pitch = 0.3f, Volume = 0.7f }, NPC.Center);
+                            }
+                            if (Timer % 2 == 0)
+                            {
+                                float wiggleRoom = MathHelper.ToRadians(70);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(410, 700), 1, ai0: NPC.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-wiggleRoom, wiggleRoom)) * 20, ProjectileType<MonorianSoulBolt>(), CalRemixHelper.ProjectileDamage(260, 430), 1);
                                 }
                             }
                         }
@@ -363,6 +396,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public void ChangePhase(PhaseType newPhase)
         {
+            //CurrentPhase = PhaseType.Laser;
             CurrentPhase = newPhase;
             Timer = 0;
             ExtraVar = 0;
