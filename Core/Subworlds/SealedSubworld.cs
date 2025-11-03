@@ -129,6 +129,11 @@ namespace CalRemix.Core.Subworlds
 
             foreach (Player p in Main.ActivePlayers)
             {
+                if (p.Distance(SealedSubworldData.warriorPos) < 1000)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<RubyWarrior>()))
+                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.warriorPos.X, (int)SealedSubworldData.warriorPos.Y, ModContent.NPCType<RubyWarrior>());
+                }
                 if (p.Distance(SealedSubworldData.brightShrinePos) < 1000)
                 {
                     if (!NPC.AnyNPCs(ModContent.NPCType<BrightMind>()))

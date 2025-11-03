@@ -16,6 +16,7 @@ using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
+    [AutoloadHead]
     public class DreadonFriendly : QuestNPC
     {
         public override string Texture => "CalRemix/Content/NPCs/Subworlds/Sealed/Dreadon";
@@ -112,7 +113,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
                 else if (Timer == 290)
                 {
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y - 600, ModContent.NPCType<SkeletronOmega>());
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y - 600, ModContent.NPCType<SkeletronOmega>());
                 }
                 else if (Timer > 300 && !NPC.AnyNPCs(ModContent.NPCType<SkeletronOmega>()))
                 {
@@ -129,7 +131,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
                 else if (Timer == 120)
                 {
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.TentLeft - 300, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<Godraycaster>());
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.TentLeft - 300, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<Godraycaster>());
                 }
                 else if (Timer == 600)
                 {
@@ -159,7 +162,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
                 else if (Timer == 120)
                 {
-                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.TentLeft - 300, (int)SealedSubworldData.tentPos.Y + 100, ModContent.NPCType<ObliteratorHead>());
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        NPC.NewNPC(NPC.GetSource_FromThis(), (int)SealedSubworldData.TentLeft - 300, (int)SealedSubworldData.tentPos.Y + 100, ModContent.NPCType<ObliteratorHead>());
                     Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
                 }
                 else if (Timer > 620 && !NPC.AnyNPCs(ModContent.NPCType<ObliteratorHead>()))

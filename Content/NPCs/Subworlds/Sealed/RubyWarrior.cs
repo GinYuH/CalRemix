@@ -11,43 +11,42 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.UI;
 using CalRemix.Content.Items.Misc;
 using CalamityMod;
+using Terraria.ID;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
     [AutoloadHead]
-    public class BrightMind : QuestNPC
+    public class RubyWarrior : QuestNPC
     {
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
         public ref float State => ref NPC.ai[1];
 
-        public static SoundStyle talkSound = new SoundStyle("CalRemix/Assets/Sounds/BrightMind") with { PitchVariance = 0.75f };
-
-        public static SoundStyle hitSound = new SoundStyle("CalRemix/Assets/Sounds/BrightMindHit") with { PitchVariance = 0.75f };
-
-        public static SoundStyle deathSound = new SoundStyle("CalRemix/Assets/Sounds/BrightMindDeath");
+        public static SoundStyle talkSound = new SoundStyle("CalRemix/Assets/Sounds/RubyWarrior") with { PitchVariance = 0.75f };
 
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
             NPC.width = 54;
-            NPC.height = 80;
+            NPC.height = 60;
             NPC.lifeMax = 2000;
+            NPC.townNPC = true;
             NPC.damage = 0;
             NPC.defense = 8;
             NPC.friendly = true;
             NPC.noGravity = false;
-            NPC.HitSound = hitSound;
-            NPC.DeathSound = deathSound;
+            NPC.HitSound = new SoundStyle("CalRemix/Assets/Sounds/SealedHurt");
+            NPC.DeathSound = new SoundStyle("CalRemix/Assets/Sounds/SealedDeath");
             NPC.knockBackResist = 0f;
             NPC.noTileCollide = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<BadlandsBiome>().Type };
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<CarnelianForestBiome>().Type };
         }
+
         public override void AI()
         {
             base.AI();
             NPC.TargetClosest();
-            NPC.spriteDirection = NPC.direction;
+            NPC.spriteDirection = -NPC.direction;
             Timer++;
             if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
             {
@@ -80,14 +79,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             return false;
         }
 
-        public override void HitEffect(NPC.HitInfo hit)
+        public override void OnKill()
         {
-            NPCDialogueUI.StartDialogue(NPC.whoAmI, "Hurt" + Main.rand.Next(1, 11));
-        }
-
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
-        {
-            npcLoot.Add(ModContent.ItemType<TanMatter>());
+            if (!NPC.AnyNPCs(ModContent.NPCType<TemporalAbomination>()) && Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<TemporalAbomination>());
         }
     }
 }

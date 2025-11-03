@@ -23,6 +23,7 @@ using CalRemix.Content.Items.Misc;
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
     // The dialogue code for these guys is fucking atrocious and I keep thinking about Undertale, remind me to never make a NPC-dependent dialogue system that supports multiple characters ever again
+    [AutoloadHead]
     public class ShadeGreen : ModNPC
     {
         public Player Target => Main.player[NPC.target];

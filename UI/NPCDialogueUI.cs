@@ -218,6 +218,11 @@ namespace CalRemix.UI
             RegisterNPC(new(ModContent.NPCType<MonorianWarrior>(),
             ["Intro", "Enrage"],
             Color.Red, Color.Cyan));
+
+            RegisterNPC(new(ModContent.NPCType<RubyWarrior>(),
+            ["Intro", "Cookie", "Rapier", "End"
+            ],
+            Color.Pink, Color.DarkRed));
         }
 
         public static void RegisterNPC(NPCDialogueSet set)

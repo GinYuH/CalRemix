@@ -136,7 +136,7 @@ namespace CalRemix.Content.NPCs
                 new(ModContent.ItemType<GastropodEye>(), () => brainLevel == 2, () => brainLevel = 3, "GastroEye")
             });
 
-            itemQuests.Add(ModContent.NPCType<VoidBoss>(), new() {
+            itemQuests.Add(ModContent.NPCType<RubyWarrior>(), new() {
                 new(ModContent.ItemType<Butter>(), () => rubyLevel == 0, () => rubyLevel = 1, "Intro", true),
                 new(ItemID.ChocolateChipCookie, () => rubyLevel == 1, () => rubyLevel = 2, "Cookie", true),
                 new(ModContent.ItemType<ArcticRapier>(), () => rubyLevel == 2, () => rubyLevel = 3, "Rapier")
