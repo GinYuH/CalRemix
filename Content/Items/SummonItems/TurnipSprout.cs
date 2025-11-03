@@ -10,6 +10,8 @@ using CalRemix.Content.NPCs;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.Audio;
+using CalRemix.Core.World;
+using CalRemix.Core.Subworlds;
 
 namespace CalRemix.Content.Items.SummonItems
 {
@@ -34,13 +36,8 @@ namespace CalRemix.Content.Items.SummonItems
             {
                 return true;
             }
-            int drae = NPC.FindFirstNPC(ModContent.NPCType<DreadonFriendly>());
-            if (drae != -1)
+            if (RemixDowned.downedDraedon && player.Distance(SealedSubworldData.tentPos) < 1000)
             {
-                if (Main.npc[drae].ModNPC<DreadonFriendly>().State == 1)
-                {
-                    return false;
-                }
                 return true;
             }
             return false;
@@ -58,11 +55,7 @@ namespace CalRemix.Content.Items.SummonItems
                 }
                 else
                 {
-                    int drae = NPC.FindFirstNPC(ModContent.NPCType<DreadonFriendly>());
-                    if (drae != -1)
-                    {
-                        Main.npc[drae].ModNPC<DreadonFriendly>().State = 1;
-                    }
+                    NPC.NewNPC(Item.GetSource_FromThis(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<DreadonFriendly>(), ai1: 1);
                 }
             }
             return true;

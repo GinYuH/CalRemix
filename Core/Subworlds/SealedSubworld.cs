@@ -134,7 +134,7 @@ namespace CalRemix.Core.Subworlds
                     if (!NPC.AnyNPCs(ModContent.NPCType<BrightMind>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.brightShrinePos.X, (int)SealedSubworldData.brightShrinePos.Y, ModContent.NPCType<BrightMind>());
                 }
-                if (p.Distance(SealedSubworldData.tentPos) < 1000)
+                if (p.Distance(SealedSubworldData.tentPos) < 1000 && !RemixDowned.downedDraedon)
                 {
                     if (!NPC.AnyNPCs(ModContent.NPCType<DreadonFriendly>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<DreadonFriendly>());

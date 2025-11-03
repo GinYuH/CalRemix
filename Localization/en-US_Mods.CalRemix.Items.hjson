@@ -5782,7 +5782,7 @@ DoctorsRemote: {
 
 ShadeSingularity: {
 	DisplayName: Shade Singularity [DEBUG]
-	Tooltip: Resets the Shade quest
+	Tooltip: Resets all Sealed Dimension quests
 }
 
 DraedonRelic: {

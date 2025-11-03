@@ -116,7 +116,7 @@ RubyWarrior: {
 	Hurt.0: EEEEEEEEEEEEEEEEEEEEE
 }
 
-Draedon: {
+DreadonFriendly: {
 	Intro: {
 		0:
 			'''
@@ -190,6 +190,14 @@ Draedon: {
 			'''
 			It's where I usually toss my garbage
 			if you're into that thing.
+			'''
+		3: ...
+		4: Well this is embarassing.
+		5:
+			'''
+			I'm just going to see myself out.
+			If for whatever reason you want to fight those scraps
+			again, bring another Turnip Sprout.
 			'''
 	}
 }

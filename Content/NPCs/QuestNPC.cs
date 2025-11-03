@@ -25,6 +25,7 @@ using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.SummonItems;
 using Terraria.ModLoader.IO;
 using System.IO;
+using SubworldLibrary;
 
 namespace CalRemix.Content.NPCs
 {
@@ -47,7 +48,6 @@ namespace CalRemix.Content.NPCs
                         string key = "";
                         for (int i = 0; i < ItemQuestSystem.itemQuests[Type].Count; i++)
                         {
-                            Main.NewText(i);
                             ItemQuest quest = ItemQuestSystem.itemQuests[Type][i];
                             bool completedQuest = false;
                             if (quest.IsActive.Invoke())
@@ -162,6 +162,45 @@ namespace CalRemix.Content.NPCs
             rubyLevel = reader.ReadInt32();
             draedonLevel = reader.ReadInt32();
             cultistLevel = reader.ReadInt32();
+        }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            tag.Add("CultistLevel", cultistLevel);
+            tag.Add("BrainLevel", brainLevel);
+            tag.Add("DraedonLevel", draedonLevel);
+            tag.Add("RubyLevel", rubyLevel);
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            cultistLevel = tag.GetInt("CultistLevel");
+            brainLevel = tag.GetInt("BrainLevel");
+            draedonLevel = tag.GetInt("DraedonLevel");
+            rubyLevel = tag.GetInt("RubyLevel");
+        }
+
+        public override void OnWorldLoad()
+        {
+            ResetBools();
+        }
+
+        public override void OnWorldUnload()
+        {
+            ResetBools();
+        }
+
+
+        public static void ResetBools()
+        {
+            if (SubworldSystem.AnyActive())
+            {
+                return;
+            }
+            rubyLevel = 0;
+            cultistLevel = 0;
+            draedonLevel = 0;
+            rubyLevel = 0;
         }
     }
 }

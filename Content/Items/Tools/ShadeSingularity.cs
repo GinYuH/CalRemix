@@ -1,6 +1,7 @@
 ﻿using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Rarities;
+using CalRemix.Content.NPCs;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Terraria;
@@ -26,6 +27,10 @@ namespace CalRemix.Content.Items.Tools
         {
             player.GetModPlayer<DialoguePlayer>().readDialogue.Clear();
             CalRemixWorld.shadeQuestLevel = 0;
+            ItemQuestSystem.cultistLevel = 0;
+            ItemQuestSystem.rubyLevel = 0;
+            ItemQuestSystem.brainLevel = 0;
+            ItemQuestSystem.draedonLevel = 0;
             CalRemixWorld.UpdateWorldBool();
             return true;
         }

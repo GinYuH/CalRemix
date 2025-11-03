@@ -14,6 +14,7 @@ using CalRemix.Content.Items.Weapons;
 using System.IO;
 using Terraria.GameContent.ItemDropRules;
 using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -202,6 +203,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             npcLoot.Add(ModContent.ItemType<HeavenReaper>());
             npcLoot.Add(ModContent.ItemType<NauseatingPowder>(), 1, 8, 15);
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.RevAndMaster, ModContent.ItemType<DraedonRelic>()));
+        }
+
+        public override void OnKill()
+        {
+            RemixDowned.downedDraedon = true;
+            ItemQuestSystem.draedonLevel = 2;
+            CalRemixWorld.UpdateWorldBool();
         }
 
         public override bool CheckActive()

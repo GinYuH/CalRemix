@@ -9,15 +9,21 @@ using System;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Subworlds;
+using CalRemix.UI;
+using Terraria.Audio;
+using CalamityMod.Items.Placeables.Ores;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
-    public class DreadonFriendly : ModNPC
+    public class DreadonFriendly : QuestNPC
     {
         public override string Texture => "CalRemix/Content/NPCs/Subworlds/Sealed/Dreadon";
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
         public ref float State => ref NPC.ai[1];
+
+        public static SoundStyle DraedonTalk = new SoundStyle("CalRemix/Assets/Sounds/DraedonTalk") { PitchVariance = 0.4f };
 
 
         public Vector2 TargetLocation
@@ -34,12 +40,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         { 
             get => NPC.Calamity().newAI[3] == 1;
             set => NPC.Calamity().newAI[3] = value.ToInt();
-        }
-
-        public bool IsGroovin
-        {
-            get => NPC.Calamity().newAI[0] == 1;
-            set => NPC.Calamity().newAI[0] = value.ToInt();
         }
 
         public override void SetDefaults()
@@ -59,16 +59,41 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.dontTakeDamageFromHostiles = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SealedUndergroundBiome>().Type };
         }
+
+        public override bool CanBeTalkedTo => State == 0;
+
         public override void AI()
         {
-            if (Main.LocalPlayer.controlUseItem)
+            if (NPC.Distance(SealedSubworldData.tentPos) > 3000)
             {
-                //State = 1;
+                NPC.active = false;
+                return;
+            }
+            base.AI();
+            bool escaping = false;
+            if (!NPCDialogueUI.IsBeingTalkedTo(NPC) && ItemQuestSystem.draedonLevel == 1 && Target.Distance(NPC.Center) < 400 && State == 0)
+            {
+                State = 1;
+            }
+            else if (!NPCDialogueUI.IsBeingTalkedTo(NPC) && ItemQuestSystem.draedonLevel == 2 && RemixDowned.downedDraedon && State == 0)
+            {
+                NPC.noTileCollide = true;
+                NPC.noGravity = true;
+                NPC.velocity.Y -= 0.1f;
+                IsFlying = true;
+                escaping = true;
+                Timer += 5;
+            }
+            if (NPCDialogueUI.NotFinishedTalking(NPC))
+            {
+                if (Main.LocalPlayer.miscCounter % 7 == 0)
+                {
+                    SoundEngine.PlaySound(DraedonTalk, NPC.Center);
+                }
             }
             if (State == 1)
             {
                 NPC.boss = true;
-                IsGroovin = false;
                 Timer++;
                 if (Timer == 1)
                 {
@@ -149,6 +174,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     NPC.Calamity().ShouldCloseHPBar = true;
                     NPC.life = NPC.lifeMax;
                     NPC.dontTakeDamage = false;
+                    NPCDialogueUI.StartDialogue(NPC.whoAmI, "End");
                 }
             }
 
@@ -161,7 +187,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 NPC.frameCounter = 0;
 
 
-            if (IsFlying)
+            if (IsFlying && !escaping)
             {
                 CalamityUtils.SmoothMovement(NPC, 10, TargetLocation - NPC.Center, 20, 0.8f, true);
             }
@@ -191,7 +217,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             float armRot = MathHelper.ToRadians(50);
 
-            if (IsGroovin)
+            if (NPCDialogueUI.IsBeingTalkedTo(NPC))
                 armRot += MathF.Sin(Main.GlobalTimeWrappedHourly * 10) * 0.5f;
 
             DrawLimb(spriteBatch, legOffset - screenPos, legLength, 0);
@@ -204,7 +230,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             float headRot = 0;
 
-            if (IsGroovin || NPC.IsABestiaryIconDummy)
+            if (NPCDialogueUI.IsBeingTalkedTo(NPC) || NPC.IsABestiaryIconDummy)
             {
                 headRot = MathF.Sin(Main.GlobalTimeWrappedHourly * 5) * 0.25f;
                 headOffset += MathF.Sin(Main.GlobalTimeWrappedHourly * 10 + 1) * 2;

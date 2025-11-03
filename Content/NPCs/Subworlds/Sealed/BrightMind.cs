@@ -60,7 +60,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SpriteEffects fx = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             float speed = 40f;
             Vector2 scale = Vector2.One + new Vector2(MathF.Cos(Main.GlobalTimeWrappedHourly * speed), MathF.Sin(Main.GlobalTimeWrappedHourly * speed)) * 0.1f;
-            if (State != 1)
+            if (!NPCDialogueUI.NotFinishedTalking(NPC))
                 scale = Vector2.One;
             spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + texture.Height / 2), null, drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height), scale * NPC.scale, fx, 0f);
             return false;
