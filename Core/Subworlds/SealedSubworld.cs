@@ -26,6 +26,7 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Potions;
 using CalamityMod.World;
 using static CalRemix.CalRemixHelper;
+using CalRemix.Content.NPCs;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -71,6 +72,10 @@ namespace CalRemix.Core.Subworlds
         {
             TagCompound savedWorldData = SaveCommonSubworldBools();
             MakeTag(ref savedWorldData, "ShadeLevel", CalRemixWorld.shadeQuestLevel);
+            MakeTag(ref savedWorldData, "CultistLevel", ItemQuestSystem.cultistLevel);
+            MakeTag(ref savedWorldData, "BrainLevel", ItemQuestSystem.brainLevel);
+            MakeTag(ref savedWorldData, "RubyLevel", ItemQuestSystem.rubyLevel);
+            MakeTag(ref savedWorldData, "DraedonLevel", ItemQuestSystem.draedonLevel);
             MakeTag(ref savedWorldData, "Draedon", RemixDowned.downedDraedon);
             MakeTag(ref savedWorldData, "Oneguy", RemixDowned.downedOneguy);
             MakeTag(ref savedWorldData, "Gastropod", RemixDowned.downedGastropod);
@@ -91,6 +96,10 @@ namespace CalRemix.Core.Subworlds
             RemixDowned.downedOTWT = savedWorldData.GetBool("OTWT");
             RemixDowned.downedDisil = savedWorldData.GetBool("Disilphia");
             RemixDowned.downedVoid = savedWorldData.GetBool("Void");
+            ItemQuestSystem.cultistLevel = savedWorldData.GetInt("CultistLevel");
+            ItemQuestSystem.brainLevel = savedWorldData.GetInt("BrainLevel");
+            ItemQuestSystem.rubyLevel = savedWorldData.GetInt("RubyLevel");
+            ItemQuestSystem.draedonLevel = savedWorldData.GetInt("DraedonLevel");
         }
 
         public override void CopyMainWorldData() => SaveData("Main");

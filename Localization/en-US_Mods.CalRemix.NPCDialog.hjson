@@ -10,6 +10,31 @@ BrightMind: {
 			'''
 	}
 
+	Gastrosludge: {
+		0: YES YES YES! THE SHARDS!
+		1:
+			'''
+			I NOW REQUIRE   GASTROPOD HIDE.
+			FIND IN VOID FOREST.
+			'''
+	}
+
+	GastroEye: {
+		0: THE HIDE!!! THE HIDE!!!
+		1: BUT...
+		2: EVERY HIDE NEEDS AN EYE!
+		3:
+			'''
+			FIGHT AGAIN, SLUG BUT EMPOWERED
+			GET GASTROPOD EYE!
+			'''
+	}
+
+	End: {
+		0: ALL COMPONENTS GATHERED.
+		1: IT IS TIME     .
+	}
+
 	Hurt1.0: OW
 	Hurt2.0: NO NO NO
 	Hurt3.0: STOP IT!!!
@@ -20,6 +45,153 @@ BrightMind: {
 	Hurt8.0: NOOOO
 	Hurt9.0: MY SHIN!
 	Hurt10.0: AHHHHH
+}
+
+RubyWarrior: {
+	Intro: {
+		0: Goooood morning!
+		1:
+			'''
+			Or night, or whatever time it is
+			Time is a bit stale down here.
+			'''
+		2:
+			'''
+			I am the Ruby Warrior!
+			Great Warrior of the West!
+			Much better than the one of the East!
+			'''
+		3:
+			'''
+			I'm a bit hungry right now though...
+			Get me some butter!
+			'''
+	}
+
+	IntroRepeat.0:
+		'''
+		I'm a bit hungry right now...
+		Get me some butter!
+		'''
+
+	Cookie: {
+		0: I love butter.
+		1: You might actually be helpful!
+		2:
+			'''
+			You see, I can't really move around much
+			these days, one of my hair bones are broken.
+			'''
+		3:
+			'''
+			Well enough trauma-dumping.
+			I'm still hungry!
+			I request you bring me a chocolate chip cookie!
+			'''
+	}
+
+	Rapier: {
+		0: Perfect! Just unlike Mother Sealed's old cookies...
+		1:
+			'''
+			Now you may be thinking
+			that I'm going to request more food right?
+			'''
+		2: Correct!
+		3:
+			'''
+			Kill that bastard witch that has
+			been haunting these caverns.
+			'''
+		4: Bring me their weapon.
+	}
+
+	End: {
+		0: Yey! New food!
+		1: Thank you for all of your help!
+		2: I am NO longer hungry!
+		3: Ok, you may go now, byebye!
+	}
+
+	Hurt.0: EEEEEEEEEEEEEEEEEEEEE
+}
+
+Draedon: {
+	Intro: {
+		0:
+			'''
+			...What is this? 
+			Someone other than those arrogant brats?
+			'''
+		1:
+			'''
+			Well hello there! 
+			I am Draedon! Great Fabricator of Many Things.
+			'''
+		2:
+			'''
+			Though, these days I just spend my
+			time locked up in this moldy tent...
+			'''
+		3:
+			'''
+			Say, you seem a bit more well versed
+			in how the world currently is.
+			'''
+		4:
+			'''
+			I would like to make a request.
+			In the past there was a small field of turnips.
+			My hypothesis at the time was that they could 
+			grow to great sizes!
+			'''
+		5:
+			'''
+			Though I was never able to confirm this...
+			This is why I need YOU to get me one to grow down here!
+			'''
+		6:
+			'''
+			Mesh some Turnip Mesh and their favorite nutrient,
+			Frozen Sealed Tears, together to make a sprout.
+			Then bring the sprout to me.
+			'''
+	}
+
+	FightIntro: {
+		0: A real turnip sprout, it has been so long...
+		1:
+			'''
+			Well, that's all I needed really.
+			... At least in terms of items...
+			'''
+		2:
+			'''
+			In the many years I've spent down here,
+			I've been developing my greatest inventions...
+			Four powerful mechs! 
+			'''
+		3:
+			'''
+			Conveniently you arrived just as I was finishing them!
+			Now please be a good quest to them!
+			'''
+	}
+
+	End: {
+		0: Well that was... unsuccessful...
+		1:
+			'''
+			Eh? To experiment is to fail and to learn?
+			What a load of hogwash, aim for perfection 
+			on the first try or get sent to the Volcanic Fields!
+			'''
+		2:
+			'''
+			It's where I usually toss my garbage
+			if you're into that thing.
+			'''
+	}
 }
 
 ShadeGreen: {
@@ -54,7 +226,7 @@ ShadeGreen: {
 		1:
 			'''
 			Kill the Ruby Warrior in the Carnelian Forest
-			and bring us their eye.
+			and bring us one of their... tendrils?
 			'''
 	}
 

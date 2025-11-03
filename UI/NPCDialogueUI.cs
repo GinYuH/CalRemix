@@ -42,6 +42,12 @@ namespace CalRemix.UI
                     }
                     else
                     {
+                        if (!dialogueInfo.dialogue.ContainsKey(currentKey))
+                        {
+                            Main.NewText("Key " + currentKey + " for " + talkedNPC.ModNPC.Name + " not found", Color.Red);
+                            ResetDialogue();
+                            return;
+                        }
                         Main.blockMouse = true;
                         string currentLine = dialogueInfo.dialogue[currentKey][currentIndex];
 
@@ -188,7 +194,7 @@ namespace CalRemix.UI
         public override void PostAddRecipes()
         {
             RegisterNPC(new(ModContent.NPCType<BrightMind>(),
-            ["Intro",
+            ["Intro", "Gastrosludge", "GastroEye", "End",
             "Hurt1", "Hurt2", "Hurt3", "Hurt4", "Hurt5", "Hurt6", "Hurt7", "Hurt8", "Hurt9", "Hurt10"
             ],
             Color.DarkGoldenrod, Color.LightGoldenrodYellow));
@@ -204,6 +210,10 @@ namespace CalRemix.UI
             RegisterNPC(new(ModContent.NPCType<ShadeYellow>(),
             ["Intro1", "Cultist1", "QuestEnd" ],
             Color.Black, Color.Yellow));
+
+            RegisterNPC(new(ModContent.NPCType<DreadonFriendly>(),
+            ["Intro", "FightIntro", "End"],
+            Color.PaleGoldenrod, Color.Cyan));
 
             RegisterNPC(new(ModContent.NPCType<MonorianWarrior>(),
             ["Intro", "Enrage"],

@@ -14,7 +14,7 @@ using CalamityMod;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
-    public class BrightMind : ModNPC
+    public class BrightMind : QuestNPC
     {
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
@@ -44,35 +44,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
         public override void AI()
         {
+            base.AI();
             NPC.TargetClosest();
             NPC.spriteDirection = NPC.direction;
-            if (NPC.Distance(Main.player[NPC.target].Center) < 600)
+            Timer++;
+            if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
             {
-                if (State == 0)
-                {
-                    State = 1;
-                    NPCDialogueUI.StartDialogue(NPC.whoAmI, "Intro");
-                }
-            }
-            else
-            {
-                State = 0;
-            }
-            if (State == 1)
-            {
-                Timer++;
-                if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
-                {
-                    SoundEngine.PlaySound(talkSound, NPC.Center);
-                }
-                if (!NPCDialogueUI.IsBeingTalkedTo(NPC))
-                {
-                    State = 2;
-                }
-            }
-            else
-            {
-                Timer = 0;
+                SoundEngine.PlaySound(talkSound, NPC.Center);
             }
         }
 

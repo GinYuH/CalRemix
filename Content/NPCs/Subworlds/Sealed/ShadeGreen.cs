@@ -134,7 +134,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     if (Target.whoAmI == Main.myPlayer && Main.LocalPlayer.controlUseTile && State == 0 && Main.LocalPlayer.Remix().talkedNPC == -1 && Main.LocalPlayer.Distance(NPC.Center) < 600)
                     {
                         string key = readDialogueOne ? "Intro4" : "Intro1";
-                        string newd = CheckForItem(Target, ModContent.ItemType<AbnormalEye>(), 0, "Mind1", "Mind2");
+                        string newd = CheckForItem(Target, ModContent.ItemType<AbnormalSample>(), 0, "Mind1", "Mind2");
                         key = newd == "" ? key : newd;
                         string newd2 = CheckForItem(Target, ModContent.ItemType<TanMatter>(), 1, "Cultist1", "Cultist2");
                         key = newd2 == "" ? key : newd2;
