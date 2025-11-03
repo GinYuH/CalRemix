@@ -84,6 +84,7 @@ using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.NPCs.TownNPCs;
+using CalRemix.Content.Particles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
@@ -146,6 +147,7 @@ namespace CalRemix
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
+        public int shadeStacks = 0;
         public override bool InstancePerEntity => true;
 
         public List<int> BossSlimes = new List<int>
@@ -387,6 +389,23 @@ namespace CalRemix
             if (player.pathogenSoul)
             {
                 npc.canGhostHeal = true;
+            }
+
+            if (shadeStacks > 0)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector2 spawnPos = Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 4f)).RotatedBy(Main.GlobalTimeWrappedHourly) * (npc.width + npc.height) * 0.5f + Main.rand.NextVector2Circular(4, 4);
+                    float size = Main.rand.NextFloat(10, 20);
+                    if (i == 0)
+                        VoidMetaball.SpawnParticle(npc.Center + spawnPos, Vector2.Zero, size);
+                    if (i == 1 && shadeStacks >= 2)
+                        VoidMetaballBlue.SpawnParticle(npc.Center + spawnPos, Vector2.Zero, size);
+                    if (i == 2 && shadeStacks >= 3)
+                        VoidMetaballGreen.SpawnParticle(npc.Center + spawnPos, Vector2.Zero, size);
+                    if (i == 3 && shadeStacks >= 4)
+                        VoidMetaballYellow.SpawnParticle(npc.Center + spawnPos, Vector2.Zero, size);
+                }
             }
 
             // fall damage 

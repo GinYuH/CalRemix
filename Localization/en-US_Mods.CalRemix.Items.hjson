@@ -5848,3 +5848,16 @@ ParadiseBlade: {
 		'A blade which can fend off shadow in even the greatest darknesses'
 		'''
 }
+
+ShadesBane: {
+	DisplayName: Shades Bane
+	Tooltip:
+		'''
+		Increases maximum health by 100 while held
+		Fires spreads of shade bolts
+		Every first and third swing fires a large homing spread
+		Every third and fourth swing fires a tighter spread with increased damage
+		Hitting enemies with the blade stacks shades on them
+		Hitting an enemy with four stacks with the weapon's fifth, larger swing causes a devastating shade explosion
+		'''
+}

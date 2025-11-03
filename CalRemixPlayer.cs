@@ -1002,6 +1002,10 @@ namespace CalRemix
                     Player.moveSpeed *= 2;
                     Player.jumpHeight *= 2;
                 }
+                else if (Player.HeldItem.type == ItemType<ShadesBane>())
+                {
+                    Player.statLifeMax2 += 100;
+                }
             }
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (cart)
