@@ -39,7 +39,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ModContent.ItemType<PebbleBrimstone>()).
                 AddIngredient(ModContent.ItemType<PebbleSealed>()).
                 AddIngredient(ModContent.ItemType<PebbleCarnelian>()).
-                AddIngredient(ModContent.ItemType<MercuryCoatedSubcinium>(), 5).
+                AddRecipeGroup(Recipes.AnyEnemyStatue, 3).
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }

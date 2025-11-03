@@ -53,7 +53,7 @@ namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyExoMechMusicBox, AnyCritter;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyExoMechMusicBox, AnyCritter, AnyEnemyStatue;
         public static readonly MethodInfo CreateRecipeLookups = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Unload()
         {
@@ -91,6 +91,10 @@ namespace CalRemix
                 }
             }
             RecipeGroup.RegisterGroup("CalRemix:AnyCritter", AnyCritter);
+            AnyEnemyStatue = new RecipeGroup(() => GroupName("EnemyStatue"), ItemID.ZombieArmStatue, ItemID.BatStatue, ItemID.BloodZombieStatue, ItemID.BoneSkeletonStatue, ItemID.ChestStatue, ItemID.CorruptStatue, ItemID.CrabStatue,
+                ItemID.DripplerStatue, ItemID.EyeballStatue, ItemID.GoblinStatue, ItemID.GraniteGolemStatue, ItemID.HarpyStatue, ItemID.HopliteStatue, ItemID.HornetStatue, ItemID.ImpStatue, ItemID.JellyfishStatue,
+                ItemID.MedusaStatue, ItemID.PigronStatue, ItemID.PiranhaStatue, ItemID.SharkStatue, ItemID.UndeadVikingStatue, ItemID.UnicornStatue, ItemID.WallCreeperStatue, ItemID.WraithStatue);
+            RecipeGroup.RegisterGroup("CalRemix:EnemyStatue", AnyEnemyStatue);
         }
         public override void AddRecipes()
         {
