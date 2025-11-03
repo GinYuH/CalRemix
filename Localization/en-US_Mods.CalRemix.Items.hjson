@@ -5838,3 +5838,13 @@ TrueMonorianGem: {
 	DisplayName: True Monorian Gem
 	Tooltip: Fires ascended monorian gemstones which summon lightning as they travel
 }
+
+ParadiseBlade: {
+	DisplayName: Paradise Blade
+	Tooltip:
+		'''
+		<right> to spawn a light orb at the cursor
+		These orbs bypass special darkness mechanics
+		'A blade which can fend off shadow in even the greatest darknesses'
+		'''
+}
