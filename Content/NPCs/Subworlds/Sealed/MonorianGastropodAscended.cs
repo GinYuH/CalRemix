@@ -255,7 +255,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             npcLoot.Add(ModContent.ItemType<GastropodHide>(), 1, 8, 16);
             npcLoot.Add(ModContent.ItemType<Gastrogel>(), 1, 35, 60);
             npcLoot.Add(ModContent.ItemType<MonorianGemShards>(), 1, 12, 20);
-            npcLoot.Add(ModContent.ItemType<GastropodEye>());
+            npcLoot.Add(ModContent.ItemType<GastropodEye>(), 1, 2, 2);
         }
 
         public override bool? CanBeHitByItem(Player player, Item item)
