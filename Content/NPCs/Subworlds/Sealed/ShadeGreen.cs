@@ -352,6 +352,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
+
+        public override bool NeedSaving()
+        {
+            return true;
+        }
+
+        public override bool CheckActive()
+        {
+            return false;
+        }
     }
 
     public class ShadeYellow : ShadeGreen

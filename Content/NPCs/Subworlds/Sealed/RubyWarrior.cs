@@ -30,7 +30,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.width = 54;
             NPC.height = 60;
             NPC.lifeMax = 2000;
-            NPC.townNPC = true;
             NPC.damage = 0;
             NPC.defense = 8;
             NPC.friendly = true;
@@ -83,6 +82,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             if (!NPC.AnyNPCs(ModContent.NPCType<TemporalAbomination>()) && Main.netMode != NetmodeID.MultiplayerClient)
                 NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<TemporalAbomination>());
+        }
+
+        public override bool NeedSaving()
+        {
+            return true;
+        }
+
+        public override bool CheckActive()
+        {
+            return false;
         }
     }
 }

@@ -89,5 +89,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             npcLoot.Add(ModContent.ItemType<TanMatter>());
         }
+
+        public override bool NeedSaving()
+        {
+            return true;
+        }
+
+        public override bool CheckActive()
+        {
+            return false;
+        }
     }
 }
