@@ -5864,7 +5864,7 @@ ShadesBane: {
 
 NamelessMurasama: {
 	DisplayName: Nameless Murasama
-	Tooltip: 
+	Tooltip:
 		'''
 		An ultra high-frequency blade whirling with energy from multiple worlds
 		<right> to charge up and release gusts of energy trailed by slashes

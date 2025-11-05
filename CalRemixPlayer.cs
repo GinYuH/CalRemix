@@ -69,6 +69,7 @@ using CalRemix.Core.Retheme;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.UI.Anomaly109;
+using CalamityMod.Projectiles.Melee;
 
 namespace CalRemix
 {
@@ -240,6 +241,7 @@ namespace CalRemix
         public int chainSawChargeMax = 30 * 20;
         public int roxCooldown;
         public int krakenInvince = 0;
+        public bool murablink = false;
 
         // Tools
         public bool phd;
@@ -547,7 +549,7 @@ namespace CalRemix
 				if (!Player.HasCooldown(InfraredSightsCooldown.ID))
                 {
 					if (Main.myPlayer == Player.whoAmI)
-						CombatText.NewText(Player.getRect(), Color.Red, CalRemixHelper.LocalText("StatusText.InfaredScan").Value, true);
+						CombatText.NewText(Player.getRect(), Color.Red, LocalText("StatusText.InfaredScan").Value, true);
                     infraredSightsScanning = true;
                     Player.AddCooldown("InfraredSights", 3600);
                 }
@@ -555,6 +557,43 @@ namespace CalRemix
             if (CalamityKeybinds.RageHotKey.JustPressed && Player.Calamity().rage >= Player.Calamity().rageMax && irategel)
             {
                 Player.Hurt(new PlayerDeathReason(), Player.statLifeMax2 / 2, 0);
+            }
+            if (CalamityKeybinds.NormalityRelocatorHotKey.JustPressed && murablink && Main.myPlayer == Player.whoAmI)
+            {
+                if (!Player.CCed && !Player.chaosState && !Player.HasCooldown(NamelessCooldown.ID) && Player.HeldItem.type == ItemType<NamelessMurasama>())
+                {
+                    Vector2 teleportLocation;
+                    teleportLocation.X = (float)Main.mouseX + Main.screenPosition.X;
+                    if (Player.gravDir == 1f)
+                    {
+                        teleportLocation.Y = (float)Main.mouseY + Main.screenPosition.Y - (float)Player.height;
+                    }
+                    else
+                    {
+                        teleportLocation.Y = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY;
+                    }
+                    teleportLocation.X -= (float)(Player.width / 2);
+                    if (teleportLocation.X > 50f && teleportLocation.X < (float)(Main.maxTilesX * 16 - 50) && teleportLocation.Y > 50f && teleportLocation.Y < (float)(Main.maxTilesY * 16 - 50))
+                    {
+                        if (!Collision.SolidCollision(teleportLocation, Player.width, Player.height))
+                        {
+                            int slashCount = 10;
+                            for (int i = 0; i < slashCount; i++)
+                            {
+                                Vector2 spawnPos = Vector2.Lerp(Player.Center, teleportLocation, i / (float)(slashCount - 1));
+                                //Projectile.NewProjectile(Player.GetSource_FromThis(), spawnPos, Vector2.Zero, ProjectileType<ExobeamSlash>(), Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI);
+                            }
+
+                            Player.Teleport(teleportLocation, 4, 0);
+                            NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, (float)Player.whoAmI, teleportLocation.X, teleportLocation.Y, 1, 0, 0);
+
+                            int duration = CalamityPlayer.areThereAnyDamnBosses ? CalamityPlayer.chaosStateDuration_NR : 360;
+                            Player.AddCooldown(NamelessCooldown.ID, duration,true);
+
+                            SoundEngine.PlaySound(BetterSoundID.ItemTerraBeam with { Pitch = 0.4f }, teleportLocation);
+                        }
+                    }
+                }
             }
         }
 
@@ -1390,6 +1429,7 @@ namespace CalRemix
             taintedWarmth= false;
             taintedWater= false;
             taintedWrath= false;
+            murablink = false;
             phd = false;
 			infraredSights = false;
             exolotl = false;
