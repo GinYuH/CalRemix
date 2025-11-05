@@ -32,6 +32,8 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
             Projectile.scale = 1.4f;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.usesLocalNPCImmunity = true;
         }
         public override void AI()
         {
@@ -45,7 +47,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                     Projectile.Opacity += 0.1f;
             }
             Projectile.ai[1]++;
-            if (Projectile.ai[1] > 120)
+            if (Projectile.ai[1] > 40)
             {
                 Projectile.velocity *= 0.98f;
             }
@@ -83,6 +85,11 @@ namespace CalRemix.Content.Projectiles.Weapons
             Main.spriteBatch.ExitShaderRegion();
             //CalamityUtils.DrawAfterimagesCentered(Projectile, 1, Color.White * 0.4f);
             return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.velocity *= 0.7f;
         }
     }
 }

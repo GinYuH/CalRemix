@@ -6,12 +6,21 @@ using CalamityMod.Items.Weapons.Melee;
 using CalRemix.Content.Items.Materials;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
+using Terraria.Audio;
+using CalRemix.Content.Projectiles.Hostile;
+using System.Collections.Generic;
+using CalamityMod;
 
 namespace CalRemix.Content.Items.Weapons
 {
     public class NamelessMurasama : ModItem
     {
         public override string Texture => "CalamityMod/Items/Weapons/UHFMurasama";
+
+        public static SoundStyle LongCoolSlash = new SoundStyle("CalRemix/Assets/Sounds/LongCoolSlash");
+        public static SoundStyle MurasamaCut = new SoundStyle("CalRemix/Assets/Sounds/SwiftSlice", 2);
+        public static SoundStyle MurasamaTornado = new SoundStyle("CalRemix/Assets/Sounds/ReverbSliceQuick");
+
 
         public override void SetDefaults()
         {
@@ -33,16 +42,9 @@ namespace CalRemix.Content.Items.Weapons
             {
                 return false;
             }
-            if (player.altFunctionUse == 2)
+            if (player.altFunctionUse == 2 && player.ownedProjectileCounts[ModContent.ProjectileType<NamelessMurasamaSpin>()] > 0)
             {
-                Item.useTime = Item.useAnimation = 40;
-                Item.autoReuse = true;
-            }
-            else
-            {
-                Item.useAnimation = 25;
-                Item.useTime = 5;
-                Item.autoReuse = true;
+                return false;
             }
             return true;
         }
@@ -53,10 +55,12 @@ namespace CalRemix.Content.Items.Weapons
             return true;
             else
             {
-                Projectile.NewProjectile(source, player.Center, velocity, ModContent.ProjectileType<NamelessVortex>(), damage, knockback, player.whoAmI);
+                SoundEngine.PlaySound(MurasamaTornado with { PitchVariance = 0.2f }, player.Center);
+                Projectile.NewProjectile(source, player.Center, velocity, ModContent.ProjectileType<NamelessMurasamaSpin>(), damage, knockback, player.whoAmI);
                 return false;
             }
         }
+        public override void ModifyTooltips(List<TooltipLine> list) => list.IntegrateHotkey(CalamityKeybinds.NormalityRelocatorHotKey);
 
         public override void UpdateInventory(Player player)
         {

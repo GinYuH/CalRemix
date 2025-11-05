@@ -589,6 +589,7 @@ namespace CalRemix
 
                             int duration = CalamityPlayer.areThereAnyDamnBosses ? CalamityPlayer.chaosStateDuration_NR : 360;
                             Player.AddCooldown(NamelessCooldown.ID, duration,true);
+                            Player.AddBuff(BuffID.ChaosState, duration);
 
                             SoundEngine.PlaySound(BetterSoundID.ItemTerraBeam with { Pitch = 0.4f }, teleportLocation);
                         }

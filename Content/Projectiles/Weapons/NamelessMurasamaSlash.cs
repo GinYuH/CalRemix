@@ -37,5 +37,10 @@ namespace CalRemix.Content.Projectiles.Weapons
                     GeneralParticleHandler.SpawnParticle(new AltSparkParticle(target.Center + Main.rand.NextVector2Circular((float)target.width * 0.5f, (float)target.height * 0.5f) + Projectile.velocity * 1.2f, vector * (Slash3 ? 1f : 0.65f), affectedByGravity: false, (int)((float)Main.rand.Next(23, 35) * (Slash3 ? 1.2f : 1f)), Main.rand.NextFloat(0.95f, 1.8f) * (Slash3 ? 1.4f : 1f), Color.Violet));
             }
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.DefenseEffectiveness *= 0.5f;
+        }
     }
 }

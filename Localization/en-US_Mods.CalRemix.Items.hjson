@@ -5867,7 +5867,8 @@ NamelessMurasama: {
 	Tooltip:
 		'''
 		An ultra high-frequency blade whirling with energy from multiple worlds
-		<right> to charge up and release gusts of energy trailed by slashes
+		Ignores 50% of enemy defense and damage reduction
+		<right> to charge up and release gusts of energy
 		Press [KEY] to dash towards the cursor. This applies Chaos State.
 		'''
 }
@@ -5888,6 +5889,7 @@ Combosama: {
 	Tooltip:
 		'''
 		An amalgamated blade twisting with dimensional, furious, and serene energy
+		Ignores 50% of enemy defense and damage reduction
 		<right> to charge up and release gusts of energy trailed by slashes
 		Hold UP while charging to slow movement down greatly while increasing life regeneration
 		Press [KEY] to dash towards the cursor, trailed by slashes. This applies Chaos State.
