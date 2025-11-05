@@ -70,6 +70,7 @@ using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.UI.Anomaly109;
 using CalamityMod.Projectiles.Melee;
+using Mono.Cecil;
 
 namespace CalRemix
 {
@@ -242,6 +243,7 @@ namespace CalRemix
         public int roxCooldown;
         public int krakenInvince = 0;
         public bool murablink = false;
+        public bool muraregen = false;
 
         // Tools
         public bool phd;
@@ -560,7 +562,7 @@ namespace CalRemix
             }
             if (CalamityKeybinds.NormalityRelocatorHotKey.JustPressed && murablink && Main.myPlayer == Player.whoAmI)
             {
-                if (!Player.CCed && !Player.chaosState && !Player.HasCooldown(NamelessCooldown.ID) && Player.HeldItem.type == ItemType<NamelessMurasama>())
+                if (!Player.CCed && !Player.chaosState && ((!Player.HasCooldown(NamelessCooldown.ID) && Player.HeldItem.type == ItemType<NamelessMurasama>()) || (!Player.HasCooldown(ComboCooldown.ID) && Player.HeldItem.type == ItemType<Combosama>())))
                 {
                     Vector2 teleportLocation;
                     teleportLocation.X = (float)Main.mouseX + Main.screenPosition.X;
@@ -577,18 +579,25 @@ namespace CalRemix
                     {
                         if (!Collision.SolidCollision(teleportLocation, Player.width, Player.height))
                         {
-                            int slashCount = 10;
-                            for (int i = 0; i < slashCount; i++)
+                            if (Player.HeldItem.type == ItemType<Combosama>())
                             {
-                                Vector2 spawnPos = Vector2.Lerp(Player.Center, teleportLocation, i / (float)(slashCount - 1));
-                                //Projectile.NewProjectile(Player.GetSource_FromThis(), spawnPos, Vector2.Zero, ProjectileType<ExobeamSlash>(), Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI);
+                                int slashCount = 10;
+                                for (int i = 0; i < slashCount; i++)
+                                {
+                                    Vector2 spawnPos = Vector2.Lerp(Player.Center, teleportLocation, i / (float)(slashCount - 1));
+                                    Particle spark2 = new GlowSparkParticle(spawnPos, new Vector2(0.1f, 0.1f).RotatedByRandom(100), false, 12, Main.rand.NextFloat(0.05f, 0.09f), (Main.rand.NextBool() ? Color.Violet : Main.rand.NextBool() ? Color.Red : Color.PaleGoldenrod) * 0.7f, new Vector2(2, 0.5f), true);
+                                    GeneralParticleHandler.SpawnParticle(spark2);
+                                }
                             }
 
                             Player.Teleport(teleportLocation, 4, 0);
                             NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, (float)Player.whoAmI, teleportLocation.X, teleportLocation.Y, 1, 0, 0);
 
                             int duration = CalamityPlayer.areThereAnyDamnBosses ? CalamityPlayer.chaosStateDuration_NR : 360;
+                            if (Player.HeldItem.type == ItemType<NamelessMurasama>())
                             Player.AddCooldown(NamelessCooldown.ID, duration,true);
+                            else
+                                Player.AddCooldown(ComboCooldown.ID, duration, true);
                             Player.AddBuff(BuffID.ChaosState, duration);
 
                             SoundEngine.PlaySound(BetterSoundID.ItemTerraBeam with { Pitch = 0.4f }, teleportLocation);
@@ -871,6 +880,14 @@ namespace CalRemix
             }
         }
 
+        public override void PreUpdateMovement()
+        {
+            if (muraregen)
+            {
+                Player.moveSpeed *= 0.022f;
+            }
+        }
+
         public override bool PreItemCheck()
         {
             if (Main.myPlayer == Player.whoAmI)
@@ -997,7 +1014,8 @@ namespace CalRemix
         }
 
         public override void PostUpdateMiscEffects()
-        {   if (Main.myPlayer == Player.whoAmI)
+        {
+            if (Main.myPlayer == Player.whoAmI)
             {
                 if (Main.mouseItem.type == ItemType<ShardofGlass>())
                 {
@@ -1046,6 +1064,18 @@ namespace CalRemix
                 {
                     Player.statLifeMax2 += 100;
                 }
+                else if (Player.HeldItem.type == ItemType<ParadiseInfusedMurasama>() || Player.HeldItem.type == ItemType<Combosama>())
+                {
+                    Player.buffImmune[BuffID.Darkness] = true;
+                    Player.buffImmune[BuffID.Obstructed] = true;
+                    Player.Calamity().externalAbyssLight += 50;
+                }
+            }
+            if (Player.HasCooldown(ParadiseHealCooldown.ID) || (Player.HasCooldown(ComboCooldown.ID) && !(Player.controlUp && muraregen)))
+            {
+                Player.moveSpeed *= 3;
+                Player.jumpHeight *= 3;
+                Player.jumpSpeed *= 3;
             }
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 			if (cart)
@@ -1339,6 +1369,12 @@ namespace CalRemix
                     Player.fullRotationOrigin = new Vector2(Player.width / 2, (float)Player.height * 0.8f);
                 }
             }
+            if (Player.HasCooldown(ComboCooldown.ID) && Player.controlUp && muraregen)
+            {
+                Player.moveSpeed *= 0.02f;
+                Player.jumpHeight = (int)(Player.jumpHeight * 0.02f);
+                Player.jumpSpeed *= 0.02f;
+            }
         }
         public override void ResetEffects()
 		{
@@ -1431,6 +1467,7 @@ namespace CalRemix
             taintedWater= false;
             taintedWrath= false;
             murablink = false;
+            muraregen = false;
             phd = false;
 			infraredSights = false;
             exolotl = false;
@@ -1925,6 +1962,10 @@ namespace CalRemix
         public override void UpdateLifeRegen()
         {
             Player.lifeRegen += (int)MathHelper.Min(dyesPink, 0);
+            if (muraregen)
+            {
+                Player.lifeRegen += 20;
+            }
         }
 
         public override void FrameEffects()

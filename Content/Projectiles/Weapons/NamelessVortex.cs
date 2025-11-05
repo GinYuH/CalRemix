@@ -56,6 +56,18 @@ namespace CalRemix.Content.Projectiles.Weapons
 
             Vector2 spawnPos = Main.rand.NextVector2FromRectangle(Projectile.Hitbox);
             GeneralParticleHandler.SpawnParticle(new SquareParticle(spawnPos, spawnPos.DirectionTo(Projectile.Center) * 4, false, 60, Main.rand.NextFloat(1f, 2f), Color.Violet));
+            if (Projectile.ai[0] == 1)
+            {
+                if (Main.rand.NextBool(5))
+                { 
+                    Vector2 spawnPose = Main.rand.NextVector2FromRectangle(Projectile.Hitbox);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Particle spark2 = new GlowSparkParticle(spawnPose, new Vector2(0.1f, 0.1f).RotatedByRandom(100), false, 12, Main.rand.NextFloat(0.05f, 0.09f), (Main.rand.NextBool() ? Color.Violet : Main.rand.NextBool() ? Color.Red : Color.PaleGoldenrod) * 0.7f, new Vector2(2, 0.5f), true);
+                        GeneralParticleHandler.SpawnParticle(spark2);
+                    }
+                }
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -67,6 +79,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             float tentacleCount = 6;
             float pointCount = 51;
             float length = 300;
+            Color col = Projectile.ai[2] == 0 ? Color.Violet : Projectile.ai[2] == 1 ? Color.Red : Color.PaleGoldenrod;
             for (int i = 0; i < tentacleCount; i++)
             {
                 List<Vector2> points = new();
@@ -76,7 +89,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                     Vector2 end = Projectile.Center + Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / tentacleCount)).RotatedBy(-Projectile.rotation.DirectionalSign() * MathHelper.Lerp(0, MathHelper.PiOver2, j / pointCount)).RotatedBy(Projectile.rotation) * length;
                     points.Add(Vector2.Lerp(start, end, j / pointCount));
                 }
-                PrimitiveRenderer.RenderTrail(points.ToArray(), new PrimitiveSettings((float f) => 10 * MathHelper.Lerp(10, 20, CalamityUtils.SineOutEasing(1- f, 1)), (float f) => Color.Lerp(Color.Violet, Color.Violet * 0.1f, f), shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
+                PrimitiveRenderer.RenderTrail(points.ToArray(), new PrimitiveSettings((float f) => 10 * MathHelper.Lerp(10, 20, CalamityUtils.SineOutEasing(1- f, 1)), (float f) => Color.Lerp(col, col * 0.1f, f), shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
             }
             Main.spriteBatch.ExitShaderRegion();
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
@@ -90,6 +103,15 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity *= 0.7f;
+            if (Projectile.ai[0] == 1)
+            {
+                Vector2 spawnPos = Main.rand.NextVector2FromRectangle(Projectile.Hitbox);
+                for (int i = 0; i < 3; i++)
+                {
+                    Particle spark2 = new GlowSparkParticle(spawnPos, new Vector2(0.1f, 0.1f).RotatedByRandom(100), false, 12, Main.rand.NextFloat(0.05f, 0.09f), (Main.rand.NextBool() ? Color.Violet : Main.rand.NextBool() ? Color.Red : Color.PaleGoldenrod) * 0.7f, new Vector2(2, 0.5f), true);
+                    GeneralParticleHandler.SpawnParticle(spark2);
+                }
+            }
         }
     }
 }
