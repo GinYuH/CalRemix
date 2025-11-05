@@ -4728,7 +4728,7 @@ XiphactinusGun: {
 }
 
 LivyatanBag: {
-	DisplayName: Livyatan Bag
+	DisplayName: Treasure Bag (Livyatan)
 	Tooltip: ""
 }
 
@@ -5859,5 +5859,40 @@ ShadesBane: {
 		Every third and fourth swing fires a tighter spread with increased damage
 		Hitting enemies with the blade stacks shades on them
 		Hitting an enemy with four stacks with the weapon's fifth, larger swing causes a devastating shade explosion
+		'''
+}
+
+NamelessMurasama: {
+	DisplayName: Nameless Murasama
+	Tooltip: 
+		'''
+		An ultra high-frequency blade whirling with energy from multiple worlds
+		<right> to charge up and release gusts of energy trailed by slashes
+		Press [KEY] to dash towards the cursor. This applies Chaos State.
+		'''
+}
+
+ParadiseInfusedMurasama: {
+	DisplayName: Paradise Infused Murasama
+	Tooltip:
+		'''
+		A serene blade which emits small low frequency waves
+		Right click to heal 20% of your health
+		This has a 60 second cooldown, during this, speed is greatly increased
+		Disables unique darkness mechanics while held
+		'''
+}
+
+Combosama: {
+	DisplayName: Combosama
+	Tooltip:
+		'''
+		An amalgamated blade twisting with dimensional, furious, and serene energy
+		<right> to charge up and release gusts of energy trailed by slashes
+		Hold UP while charging to slow movement down greatly while increasing life regeneration
+		Press [KEY] to dash towards the cursor, trailed by slashes. This applies Chaos State.
+		While Chaos State is active, movement speed is greatly increased 
+		This is cancelled by entering regeneration mode
+		Disables unique darkness mechanics while held
 		'''
 }

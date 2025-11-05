@@ -139,12 +139,6 @@ namespace CalRemix.Content.Projectiles
                     }
                 }
             }
-            if (projectile.type == ProjectileType<MurasamaSlash>())
-            {
-                projectile.scale = 4f;
-                projectile.width = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].width * 4;
-                projectile.height = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].height * 4;
-            }
             if (projectile.type == ProjectileType<MutatedTruffleMinion>())
             {
                 projectile.frame = 0;
