@@ -26,6 +26,7 @@ using CalRemix.Content.Items.SummonItems;
 using Terraria.ModLoader.IO;
 using System.IO;
 using SubworldLibrary;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 
 namespace CalRemix.Content.NPCs
 {
@@ -61,15 +62,17 @@ namespace CalRemix.Content.NPCs
                             bool completedQuest = false;
                             if (quest.IsActive.Invoke())
                             {
+                                bool cusQuest = false;
                                 if (quest.CustomCondition != null)
                                 {
                                     if (quest.CustomCondition.Invoke())
                                     {
+                                        cusQuest = true;
                                         quest.CompletionEvent.Invoke();
                                         completedQuest = true;
                                     }
                                 }
-                                else if (Main.LocalPlayer.HasItem(quest.RequiredItem))
+                                if (!cusQuest && Main.LocalPlayer.HasItem(quest.RequiredItem))
                                 {
                                     if (quest.consume)
                                     {
@@ -85,6 +88,8 @@ namespace CalRemix.Content.NPCs
                             }
                             if (completedQuest)
                             {
+                                if (quest.reward != null)
+                                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_FromThis(), quest.reward);
                                 if (i == ItemQuestSystem.itemQuests[Type].Count - 1)
                                 {
                                     key = "End";
@@ -93,6 +98,7 @@ namespace CalRemix.Content.NPCs
                                 {
                                     key = ItemQuestSystem.itemQuests[Type][i + 1].AssociatedDialogue;
                                 }
+                                break;
                             }
                         }
                         if (key == "")
@@ -113,8 +119,9 @@ namespace CalRemix.Content.NPCs
         public bool IsFinished = false;
         public string AssociatedDialogue = "";
         public bool consume = false;
+        public Item reward;
 
-        public ItemQuest(int requiredItem, Func<bool> isActive, Action completionEvent, string associatedDialogue, bool consume = false, Func<bool> customCondition = null)
+        public ItemQuest(int requiredItem, Func<bool> isActive, Action completionEvent, string associatedDialogue, bool consume = false, Func<bool> customCondition = null, Item reward = null)
         {
             RequiredItem = requiredItem;
             IsActive = isActive;
@@ -122,6 +129,18 @@ namespace CalRemix.Content.NPCs
             this.consume = consume;
             CompletionEvent = completionEvent;
             CustomCondition = customCondition;
+            this.reward = reward;
+        }
+
+        public ItemQuest(Func<bool> customCondition, Func<bool> isActive, Action completionEvent, string associatedDialogue, bool consume = false, Item reward = null)
+        {
+            RequiredItem = -1;
+            IsActive = isActive;
+            AssociatedDialogue = associatedDialogue;
+            this.consume = consume;
+            CompletionEvent = completionEvent;
+            CustomCondition = customCondition;
+            this.reward = reward;
         }
     }
 
@@ -146,20 +165,20 @@ namespace CalRemix.Content.NPCs
             });
 
             itemQuests.Add(ModContent.NPCType<RubyWarrior>(), new() {
-                new(ModContent.ItemType<Butter>(), () => rubyLevel == 0, () => rubyLevel = 1, "Intro", true),
-                new(ItemID.ChocolateChipCookie, () => rubyLevel == 1, () => rubyLevel = 2, "Cookie", true),
-                new(ModContent.ItemType<ArcticRapier>(), () => rubyLevel == 2, () => rubyLevel = 3, "Rapier")
+                new(ModContent.ItemType<Butter>(), () => rubyLevel == 0, () => rubyLevel = 1, "Intro", true, reward: new Item(ModContent.ItemType<SealToken>(), 10)),
+                new(ItemID.ChocolateChipCookie, () => rubyLevel == 1, () => rubyLevel = 2, "Cookie", true, reward: new Item(ModContent.ItemType<SealToken>(), 20)),
+                new(ModContent.ItemType<ArcticRapier>(), () => rubyLevel == 2, () => rubyLevel = 3, "Rapier", reward: new Item(ModContent.ItemType<SealToken>(), 50))
             });
 
             itemQuests.Add(ModContent.NPCType<DreadonFriendly>(), new() {
                 new(ModContent.ItemType<TurnipSprout>(), () => draedonLevel == 0, () => draedonLevel = 1, "Intro", true),
-                new(ItemID.HornetBanner, () => draedonLevel == 1, () => draedonLevel = 2, "FightIntro", true, () => RemixDowned.downedDraedon),
+                new(() => RemixDowned.downedDraedon, () => draedonLevel == 1, () => draedonLevel = 2, "FightIntro", true),
             });
 
             itemQuests.Add(ModContent.NPCType<VigorCloak>(), new() {
-                new(ItemID.MossHornetBanner, () => cultistLevel == 0, () => cultistLevel = 1, "Intro", true, () => RemixDowned.downedVoid),
-                new(ItemID.HornetBanner, () => cultistLevel == 1, () => cultistLevel = 2, "Disilphia", true, () => RemixDowned.downedDisil),
-                new(ItemID.BeeWax, () => cultistLevel == 2, () => cultistLevel = 3, "Oneguy", true, () => RemixDowned.downedOneguy),
+                new(() => RemixDowned.downedVoid, () => cultistLevel == 0, () => cultistLevel = 1, "Intro", true, reward: new Item(ModContent.ItemType<GroundFleshBlock>(), 9999)),
+                new(() => RemixDowned.downedDisil, () => cultistLevel == 1, () => cultistLevel = 2, "Disilphia", true, reward: new Item(ModContent.ItemType<GroundFleshBlock>(), 9999)),
+                new(() => RemixDowned.downedOneguy, () => cultistLevel == 2, () => cultistLevel = 3, "Oneguy", true, reward: new Item(ModContent.ItemType<SkullKarrver>())),
             });
         }
 

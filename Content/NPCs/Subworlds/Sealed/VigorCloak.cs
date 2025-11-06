@@ -36,6 +36,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.HitSound = null;
             NPC.DeathSound = null;
             NPC.knockBackResist = 0f;
+            NPC.dontTakeDamage = true;
             NPC.noTileCollide = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<BarrensBiome>().Type };
         }
@@ -45,7 +46,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.TargetClosest();
             NPC.spriteDirection = NPC.direction = -1;
             Timer++;
-            if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
+            if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 18 == 0)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath13 with { Pitch = Main.rand.NextFloat(-1.4f, -0.8f) }, NPC.Center);
             }
