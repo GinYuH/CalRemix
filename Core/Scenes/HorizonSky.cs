@@ -51,8 +51,10 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                 }
                 Texture2D sun = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
                 spriteBatch.EnterShaderRegion(BlendState.Additive);
-                spriteBatch.Draw(sun, new Vector2(Main.screenWidth * 0.02f, Main.screenHeight * 0.56f), null, Color.Yellow, 0, sun.Size() / 2, 3, 0, 0);
-                spriteBatch.Draw(sun, new Vector2(Main.screenWidth * 0.02f, Main.screenHeight * 0.56f), null, Color.White, 0, sun.Size() / 2, 2.5f, 0, 0);
+                float unlocked = Main.maxTilesY * 0.9f * 16 - Main.screenPosition.Y;
+                Vector2 sunPosition = new Vector2(Main.screenWidth * 0.02f, Main.screenHeight * 0.8f);
+                spriteBatch.Draw(sun, sunPosition, null, Color.Yellow, 0, sun.Size() / 2, 5, 0, 0);
+                spriteBatch.Draw(sun, sunPosition, null, Color.White, 0, sun.Size() / 2, 4.5f, 0, 0);
                 spriteBatch.ExitShaderRegion();
             }
         }
