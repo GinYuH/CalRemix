@@ -31,6 +31,7 @@ namespace CalRemix.Content.Items.Tools
             ItemQuestSystem.rubyLevel = 0;
             ItemQuestSystem.brainLevel = 0;
             ItemQuestSystem.draedonLevel = 0;
+            RemixDowned.downedDraedon = false;
             CalRemixWorld.UpdateWorldBool();
             return true;
         }

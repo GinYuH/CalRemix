@@ -150,7 +150,7 @@ namespace CalRemix.Core.Subworlds
                     if (!NPC.AnyNPCs(ModContent.NPCType<DreadonFriendly>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<DreadonFriendly>());
                 }
-                if (p.Distance(SealedSubworldData.citadelPos) < 1000 && RemixDowned.downedVoid)
+                if (RemixDowned.downedVoid)
                 {
                     if (!NPC.AnyNPCs(ModContent.NPCType<ShadeGreen>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.citadelPos.X, (int)SealedSubworldData.citadelPos.Y, ModContent.NPCType<ShadeGreen>());

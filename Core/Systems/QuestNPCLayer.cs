@@ -17,7 +17,7 @@ namespace CalRemix.Core
             ModContent.NPCType<RubyWarrior>(),
             ModContent.NPCType<BrightMind>(),
             ModContent.NPCType<ShadeGreen>(),
-            ModContent.NPCType<RubyWarrior>(),
+            ModContent.NPCType<DreadonFriendly>(),
             ModContent.NPCType<VigorCloak>()
         };
 
