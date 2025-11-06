@@ -1,4 +1,5 @@
 ﻿using CalRemix.Content.NPCs.Subworlds.Sealed;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -28,8 +29,25 @@ namespace CalRemix.Core
                 if (validNPCs.Contains(n.type))
                 {
                     Texture2D head = ModContent.Request<Texture2D>(NPCLoader.GetNPC(n.type).HeadTexture).Value;
-                    if (context.Draw(head, n.Center / 16, Alignment.Center).IsMouseOver)
-                        text = n.GivenOrTypeName;
+                    //if (context.Draw(head, n.Center / 16, Alignment.Center).IsMouseOver)
+                     //   text = n.GivenOrTypeName;
+
+
+                    Vector2 position = (n.Center / 16 - context.MapPosition) * context.MapScale + context.MapOffset;
+                    NPCHeadDrawRenderTargetContent targ = new();
+                    targ.SetTexture(head);
+                    NPCHeadDrawRenderTargetContent nPCHeadDrawRenderTargetContent = targ;
+                    nPCHeadDrawRenderTargetContent.PrepareRenderTarget(Main.graphics.GraphicsDevice, Main.spriteBatch);
+                    if (nPCHeadDrawRenderTargetContent.IsReady)
+                    {
+                        RenderTarget2D target = nPCHeadDrawRenderTargetContent.GetTarget();
+                        Main.spriteBatch.Draw(target, position, null, Color.White, 0, target.Size() / 2f, 1, 0, 0f);
+                    }
+                    else
+                    {
+                        nPCHeadDrawRenderTargetContent.Request();
+                    }
+
                 }
             }
         }

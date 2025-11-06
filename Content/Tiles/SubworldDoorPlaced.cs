@@ -194,6 +194,15 @@ namespace CalRemix.Content.Tiles
         public override Color DoorColor => Color.Purple;
     }
 
+    public class HorizonDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/Tiles/Subworlds/Horizon/HorizonGrass";
+        public override Subworld BoundSubworld => ModContent.GetInstance<HorizonSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.PaleGoldenrod;
+    }
+
 
     // this is my special door for testing so it goes at the bottom always
     public class TestDoor : SubworldDoorPlaced
