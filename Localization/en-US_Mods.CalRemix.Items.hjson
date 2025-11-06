@@ -5898,3 +5898,8 @@ Combosama: {
 		Disables unique darkness mechanics while held
 		'''
 }
+
+Forknife: {
+	DisplayName: Forknife
+	Tooltip: "Thrusts forward three times before performing a spin"
+}

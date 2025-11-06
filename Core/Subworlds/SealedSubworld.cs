@@ -27,6 +27,7 @@ using CalRemix.Content.Items.Potions;
 using CalamityMod.World;
 using static CalRemix.CalRemixHelper;
 using CalRemix.Content.NPCs;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -891,6 +892,7 @@ namespace CalRemix.Core.Subworlds
                 { (ModContent.ItemType<SealloyBar>(), 1, 4) },
                 { (ModContent.ItemType<SealedFruit>(), 4, 8) },
                 { (ModContent.ItemType<SealToken>(), 2, 6) },
+                { (ModContent.ItemType<Forknife>(), 1, 1) },
                 { (ModContent.ItemType<MysteriousGraySlab>(), 3, 7) },
             };
             (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
@@ -898,7 +900,8 @@ namespace CalRemix.Core.Subworlds
             {
                 Item item = c.item[i];
                 item.SetDefaults(loot[i].Item1);
-                item.stack = WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
+                int stak = (loot[i].Item2 == loot[i].Item3) ? loot[i].Item2 : WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
+                item.stack = stak;
             }
         }
         public static void FillCultChest(Chest c, int Type, bool place)
