@@ -130,6 +130,11 @@ namespace CalRemix.Core.Subworlds
 
             foreach (Player p in Main.ActivePlayers)
             {
+                if (p.Distance(SealedSubworldData.horizonPos) < 1000)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<VigorCloak>()))
+                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.horizonPos.X, (int)SealedSubworldData.horizonPos.Y, ModContent.NPCType<VigorCloak>());
+                }
                 if (p.Distance(SealedSubworldData.warriorPos) < 1000)
                 {
                     if (!NPC.AnyNPCs(ModContent.NPCType<RubyWarrior>()))

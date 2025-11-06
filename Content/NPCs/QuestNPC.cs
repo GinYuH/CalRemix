@@ -45,6 +45,15 @@ namespace CalRemix.Content.NPCs
                 {
                     if (Main.LocalPlayer.controlUseTile && Main.LocalPlayer.Remix().talkedNPC == -1 && Main.LocalPlayer.Distance(NPC.Center) < 600)
                     {
+                        if (NPC.type == ModContent.NPCType<VigorCloak>())
+                        {
+                            if (CalRemixWorld.shadeQuestLevel == 2)
+                            {
+                                NPCDialogueUI.StartDialogue(NPC.whoAmI, "Shades");
+                                return;
+                            }
+                        }
+
                         string key = "";
                         for (int i = 0; i < ItemQuestSystem.itemQuests[Type].Count; i++)
                         {
@@ -145,6 +154,12 @@ namespace CalRemix.Content.NPCs
             itemQuests.Add(ModContent.NPCType<DreadonFriendly>(), new() {
                 new(ModContent.ItemType<TurnipSprout>(), () => draedonLevel == 0, () => draedonLevel = 1, "Intro", true),
                 new(ItemID.HornetBanner, () => draedonLevel == 1, () => draedonLevel = 2, "FightIntro", true, () => RemixDowned.downedDraedon),
+            });
+
+            itemQuests.Add(ModContent.NPCType<VigorCloak>(), new() {
+                new(ItemID.MossHornetBanner, () => cultistLevel == 0, () => cultistLevel = 1, "Intro", true, () => RemixDowned.downedVoid),
+                new(ItemID.HornetBanner, () => cultistLevel == 1, () => cultistLevel = 2, "Disilphia", true, () => RemixDowned.downedDisil),
+                new(ItemID.BeeWax, () => cultistLevel == 2, () => cultistLevel = 3, "Oneguy", true, () => RemixDowned.downedOneguy),
             });
         }
 

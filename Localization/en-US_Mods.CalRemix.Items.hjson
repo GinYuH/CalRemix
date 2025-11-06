@@ -5901,5 +5901,5 @@ Combosama: {
 
 Forknife: {
 	DisplayName: Forknife
-	Tooltip: "Thrusts forward three times before performing a spin"
+	Tooltip: Thrusts forward three times before performing a spin
 }

@@ -223,6 +223,10 @@ namespace CalRemix.UI
             ["Intro", "Cookie", "Rapier", "End"
             ],
             Color.Pink, Color.DarkRed));
+
+            RegisterNPC(new(ModContent.NPCType<VigorCloak>(),
+            ["Intro", "Void", "Disilphia", "Oneguy", "Shades", "End" ],
+            Color.MediumPurple, Color.Red));
         }
 
         public static void RegisterNPC(NPCDialogueSet set)

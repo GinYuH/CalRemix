@@ -18,6 +18,7 @@ namespace CalRemix.Core
             ModContent.NPCType<BrightMind>(),
             ModContent.NPCType<ShadeGreen>(),
             ModContent.NPCType<RubyWarrior>(),
+            ModContent.NPCType<VigorCloak>()
         };
 
         public override void Draw(ref MapOverlayDrawContext context, ref string text)

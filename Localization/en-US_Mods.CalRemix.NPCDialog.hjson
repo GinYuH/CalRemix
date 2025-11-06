@@ -311,3 +311,79 @@ MonorianWarrior: {
 
 	Enrage.0: I SEE HOW IT IS!!!
 }
+
+VigorCloak: {
+	Intro: {
+		0: Greetings young one.
+		1:
+			'''
+			It is often not that such a lively creature 
+			be found out here
+			'''
+		2:
+			'''
+			This land once prosperous has seen
+			a slow and drawn out death
+			'''
+		3: ...
+		4:
+			'''
+			Some forces remain upwards.
+			Perhaps upon their demise,
+			satisfaction will be brought
+			upon the one above
+			'''
+		5:
+			'''
+			Your first task:
+			A mischievous entity of the dark,
+			patterned with purple squares.
+			Some call it Void.
+			'''
+	}
+
+	Disilphia: {
+		0: Destroyed the Void is?
+		1:
+			'''
+			Not one of substantial strength it
+			was compared to some of the other powers
+			'''
+		2:
+			'''
+			In the Volcanic Fields.
+			One who once usurped, and brought armageddon.
+			Destroy Disilphia.
+			'''
+	}
+
+	Oneguy: {
+		0: Destroyed again is the great mechanism?
+		1: That is both powers accounted for.
+		2:
+			'''
+			However, there is a being who has
+			ascended to near godlike power
+			due to this decaying world's breaths of desperation
+			'''
+		3:
+			'''
+			Through his cultist, the Bright Mind,
+			satiate their objectives and it is then
+			that the Monorian Warrior will be driven out of hiding
+			'''
+	}
+
+	Shades: {
+		0: The red shade's siblings ordered my execution?
+		1: I'm afraid that is not something feasible at this moment
+		2: They requested one of my organs yes?
+		3: Here, take this sac. This should be satisfactory to them.
+	}
+
+	End: {
+		0: The great forces of this land have now been extinguished
+		1: It is time.
+		2: The one above, I offer my remaining vigor
+	}
+}
