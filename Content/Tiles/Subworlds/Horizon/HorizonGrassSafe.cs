@@ -10,19 +10,9 @@ using static CalRemix.Content.NPCs.Bosses.SealedOne.OrbitingOrb;
 
 namespace CalRemix.Content.Tiles.Subworlds.Horizon
 {
-    public class HorizonGrassSafe : ModTile
+    public class HorizonGrassSafe : HorizonGrass
     {
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
-
-        public static Asset<Texture2D> MainBlock;
-
-        public static Asset<Texture2D> GrassBlade;
-
-        public override void Load()
-        {
-            MainBlock = ModContent.Request<Texture2D>("CalRemix/Content/Tiles/Subworlds/Horizon/HorizonFloor");
-            GrassBlade = ModContent.Request<Texture2D>("CalRemix/Content/Tiles/Subworlds/Horizon/HorizonGrass");
-        }
 
         public override void SetStaticDefaults()
         {
@@ -35,22 +25,9 @@ namespace CalRemix.Content.Tiles.Subworlds.Horizon
             Main.tileBlendAll[Type] = true;
         }
 
-        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
-            Texture2D block = MainBlock.Value;
-            Texture2D blade = GrassBlade.Value;
-            int possibleX = 111;
-            int possibleY = 6;
-            bool left = ((i * 7 + j * 13) % 1000 / 1000f) == 0;
-            Rectangle frame = block.Frame(possibleX, possibleY, i % possibleX, j % possibleY);
-            if (!Main.tile[i, j - 1].HasTile)
-            {
-                for (int l = 0; l < 7; l++)
-                    spriteBatch.Draw(blade, new Vector2(i, j) * 16 + new Vector2(MathHelper.Lerp(0, 16, l / 7f), (i * 3 + j * 7 + l * 5) % 8) + CalamityUtils.TileDrawOffset - Main.screenPosition, blade.Frame(12, 1, ((i * 7 + j * 3 + l * 5) % 12) + 1, 0), (Color.White * 0.8f) with { A = 255 }, ((i * 5 + j * 13 + l * 3) % 100 / 100f * MathHelper.PiOver2 - MathHelper.PiOver4​) * (0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly + i % 7 + l % 3)), new Vector2(blade.Width / 24f, blade.Height), (i * 7 + j * 13 + l * 5) % 1000 / 1000f * 0.4f + 0.8f, left ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-            }
-            spriteBatch.Draw(block, new Vector2(i, j) * 16 + CalamityUtils.TileDrawOffset - Main.screenPosition, frame, Color.White, 0, Vector2.Zero, 1, 0, 0);
-
-            return false;
+            return true;
         }
     }
 }

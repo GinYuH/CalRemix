@@ -43,7 +43,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Horizon
             Texture2D block = MainBlock.Value;
             Texture2D blade = GrassBlade.Value;
             int possibleX = 111;
-            int possibleY = 6;
+            int possibleY = 12;
             bool left = ((i * 7 + j * 13) % 1000 / 1000f) == 0;
             Rectangle frame = block.Frame(possibleX, possibleY, i % possibleX, j % possibleY);
             if (!Main.tile[i, j - 1].HasTile)

@@ -18,7 +18,7 @@ using CalRemix.Content.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class HorizonSubworld : Subworld
+    public class HorizonSubworld : Subworld, IDisableSpawnsSubworld, IDisableOcean
     {
         public override int Height => 700;
         public override int Width => 2000;
@@ -34,6 +34,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SubworldSystem.hideUnderworld = true;
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:HorizonSky", true);
             SkyManager.Instance.Activate("CalRemix:HorizonSky", Main.LocalPlayer.position);
 
