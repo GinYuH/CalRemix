@@ -41,9 +41,9 @@ namespace CalRemix.Content.Tiles.Subworlds.Horizon
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            float strength = Utils.MultiLerp(CalamityUtils.SineInEasing(1 - Utils.GetLerpValue((int)(Main.maxTilesY * 0.902f), (int)(Main.maxTilesY * 0.92f), j, true), 1), 0, 0.4f, 1f);
-            r = strength;
-            g = strength;
+            float strength = Utils.MultiLerp(CalamityUtils.SineInEasing(1 - Utils.GetLerpValue((int)(Main.maxTilesY * 0.902f), (int)(Main.maxTilesY * 0.93f), j, true), 1), 0, 0.4f, 1f);
+            r = strength * 2f;
+            g = strength * 1.5f;
             b = strength;
         }
 
