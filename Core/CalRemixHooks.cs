@@ -183,12 +183,11 @@ namespace CalRemix.Core
                         int possibleY = 12;
                         bool left = ((i * 7 + j * 13) % 1000 / 1000f) == 0;
                         Rectangle frame = block.Frame(possibleX, possibleY, i % possibleX, j % possibleY);
-                        //if (!Main.tile[i, j - 1].HasTile)
-                        {
-                            float grassAmt = 5;
-                            for (int l = 0; l < grassAmt; l++)
-                                Main.spriteBatch.Draw(blade, new Vector2(i, j) * 16 + new Vector2(MathHelper.Lerp(0, 16, l / grassAmt), (i * 3 + j * 7 + l * 5) % 8) - Main.screenPosition, blade.Frame(12, 1, ((i * 7 + j * 3 + l * 5) % 12) + 1, 0), (Color.White * 0.8f).MultiplyRGB(Lighting.GetColor(i, j)) with { A = 255 }, ((i * 5 + j * 13 + l * 3) % 100 / 100f * MathHelper.PiOver2 - MathHelper.PiOver4​) * (0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly + i % 7 + l % 3)), new Vector2(blade.Width / 24f, blade.Height), (i * 7 + j * 13 + l * 5) % 1000 / 1000f * 0.4f + 0.8f, left ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-                        }
+                        bool isTop = !Main.tile[i, j - 1].HasTile;
+                        float grassAmt = isTop ? 5 : 3;
+                        for (int l = 0; l < grassAmt; l++)
+                            Main.spriteBatch.Draw(blade, new Vector2(i, j) * 16 + new Vector2(MathHelper.Lerp(0, 16, l / grassAmt), (i * 3 + j * 7 + l * 5) % 8) - Main.screenPosition, blade.Frame(12, 1, ((i * 7 + j * 3 + l * 5) % 12) + 1, 0), (Color.White * 0.8f).MultiplyRGB(Lighting.GetColor(i, j)) with { A = 255 }, ((i * 5 + j * 13 + l * 3) % 100 / 100f * MathHelper.PiOver2 - MathHelper.PiOver4​) * (0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly + i % 7 + l % 3)), new Vector2(blade.Width / 24f, blade.Height), (i * 7 + j * 13 + l * 5) % 1000 / 1000f * 0.4f + 0.8f, left ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+                        
                         Main.spriteBatch.Draw(block, new Vector2(i, j) * 16 - Main.screenPosition, frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, 0, 0);
                     }
                 }
