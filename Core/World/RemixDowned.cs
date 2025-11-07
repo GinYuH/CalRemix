@@ -130,10 +130,10 @@ namespace CalRemix.Core.World
             get => bossDowns["Draedon"];
             set => bossDowns["Draedon"] = value;
         }
-        public static bool downedOTWT
+        public static bool downedCrevi
         {
-            get => bossDowns["OTWT"];
-            set => bossDowns["OTWT"] = value;
+            get => bossDowns["Crevi"];
+            set => bossDowns["Crevi"] = value;
         }
 
         public static bool downedEarthElemental
@@ -242,7 +242,7 @@ namespace CalRemix.Core.World
             { "Disilphia", false },
             { "Draedon", false },
             { "Oneguy", false },
-            { "OTWT", false },
+            { "Crevi", false },
         };
 
         public static void ResetBools()

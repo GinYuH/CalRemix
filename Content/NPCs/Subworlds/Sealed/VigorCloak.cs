@@ -50,6 +50,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath13 with { Pitch = Main.rand.NextFloat(-1.4f, -0.8f) }, NPC.Center);
             }
+            if (Main.mouseLeft && !Main.mouseLeftRelease)
+            {
+                NPC.StrikeInstantKill();
+                NPC.NewNPC(NPC.GetSource_FromThis(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y - 600, ModContent.NPCType<Crevivence>());
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

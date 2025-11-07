@@ -80,7 +80,7 @@ namespace CalRemix.Core.Subworlds
             MakeTag(ref savedWorldData, "Draedon", RemixDowned.downedDraedon);
             MakeTag(ref savedWorldData, "Oneguy", RemixDowned.downedOneguy);
             MakeTag(ref savedWorldData, "Gastropod", RemixDowned.downedGastropod);
-            MakeTag(ref savedWorldData, "OTWT", RemixDowned.downedOTWT);
+            MakeTag(ref savedWorldData, "Crevi", RemixDowned.downedCrevi);
             MakeTag(ref savedWorldData, "Disilphia", RemixDowned.downedDisil);
             MakeTag(ref savedWorldData, "Void", RemixDowned.downedVoid);
 
@@ -94,7 +94,7 @@ namespace CalRemix.Core.Subworlds
             RemixDowned.downedDraedon = savedWorldData.GetBool("Draedon");
             RemixDowned.downedOneguy = savedWorldData.GetBool("Oneguy");
             RemixDowned.downedGastropod = savedWorldData.GetBool("Gastropod");
-            RemixDowned.downedOTWT = savedWorldData.GetBool("OTWT");
+            RemixDowned.downedCrevi = savedWorldData.GetBool("Crevi");
             RemixDowned.downedDisil = savedWorldData.GetBool("Disilphia");
             RemixDowned.downedVoid = savedWorldData.GetBool("Void");
             ItemQuestSystem.cultistLevel = savedWorldData.GetInt("CultistLevel");
