@@ -34,6 +34,9 @@ using Terraria.Graphics.CameraModifiers;
 using CalRemix.Core.Graphics;
 using CalamityMod.NPCs.Providence;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalamityMod.Physics;
+using System.Linq;
+using Steamworks;
 
 // So like, technically she's not in the Sealed Dimension, but Horizon is a mechanical extension of it so...
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
@@ -95,6 +98,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public static float SunOpacity = 1f;
 
+        public RopeHandle? LeftRibbon;
+        public RopeHandle? RightRibbon;
+
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
 
         public override void SetStaticDefaults()
@@ -125,6 +131,31 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
         public override void AI()
         {
+            Vector2 ribbonL = NPC.Center + new Vector2(-60, 70).RotatedBy(NPC.rotation);
+            Vector2 ribbonR = NPC.Center + new Vector2(60, 70).RotatedBy(NPC.rotation);
+            if (LeftRibbon == null || RightRibbon == null)
+            {
+                int ribbonSegmentCount = 40;
+                float distancePerSegment = 400 / ribbonSegmentCount;
+                RopeSettings ribbonSettings = new RopeSettings()
+                {
+                    StartIsFixed = true,
+                    Mass = 0.1f,
+                    RespondToEntityMovement = true,
+                    RespondToWind = false
+                };
+                LeftRibbon = GetInstance<RopeManagerSystem>().RequestNew(ribbonL, NPC.Center + Vector2.UnitY * 260, ribbonSegmentCount, distancePerSegment, Vector2.UnitY * 20, ribbonSettings, 80);
+                RightRibbon = GetInstance<RopeManagerSystem>().RequestNew(ribbonR, NPC.Center + Vector2.UnitY * 260, ribbonSegmentCount, distancePerSegment, Vector2.UnitY * 20, ribbonSettings, 80);
+            }
+            else
+            {
+                RopeHandle left = LeftRibbon.Value;
+                RopeHandle right = RightRibbon.Value;
+                left.Start = ribbonL;
+                left.Gravity = Vector2.UnitY.RotatedBy(NPC.rotation) * 10;
+                right.Start = ribbonR;
+                right.Gravity = Vector2.UnitY.RotatedBy(NPC.rotation) * 10;
+            }
             NPC.velocity = Main.MouseWorld - NPC.Center;
             if (NPC.velocity.X > 0)
             {
@@ -143,6 +174,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             {
                 case PhaseType.SpawnAnimation:
                     {
+                        if (true)
+                        {
+                            NPC.Opacity = 1;
+                            return;
+                        }
                         float startAction = 60;
                         float absorbSun = startAction + 300;
                         float waitForIt = absorbSun + 90;
@@ -322,21 +358,23 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 spriteBatch.Draw(sigils, finalPos - screenPos, newR, Color.White * NPC.Opacity, finalPos.DirectionTo(upPos).ToRotation() + MathHelper.PiOver2, newR.Size() / 2, NPC.scale, 0, 0);
             }
             spriteBatch.ExitShaderRegion();
-            for (int i = -1; i <= 1; i += 2)
+            if (NPC.Opacity > 0)
             {
-                Vector2 ribbonPos = eyePos + new Vector2(60 * i, 50).RotatedBy(NPC.rotation) + screenPos;
-                Vector2 endRibbonPos = eyePos + new Vector2(20 * i, 600).RotatedBy(NPC.rotation) + screenPos;
-                List<Vector2> poses = new();
-                for (int j = 0; j < 20; j++)
+                for (int i = -1; i <= 1; i += 2)
                 {
-                    Vector2 ribPos = Vector2.Lerp(ribbonPos, endRibbonPos, j / 19f) + (j == 0 ? Vector2.Zero : (Vector2.UnitX * MathF.Cos(i * Main.GlobalTimeWrappedHourly * 1 + j * 0.2f) * MathHelper.Lerp(10, 50, j / 19f)));
-                    poses.Add(ribPos);
-                    if (j == 18)
+                    List<Vector2> poses = new();
+                    RopeHandle handle = i == -1 ? LeftRibbon.Value : RightRibbon.Value;
+                    for (int j = 0; j < handle.SegmentCount; j++)
                     {
-                        spriteBatch.Draw(bloom, ribPos - screenPos, null, new Color(254, 152, 232) * NPC.Opacity, 0, bloom.Size() / 2, NPC.scale * 0.8f, 0, 0);
+                        Vector2 ribPos = handle.Positions.ToList()[j] + (j == 0 ? Vector2.Zero : (Vector2.UnitX * MathF.Cos(i * Main.GlobalTimeWrappedHourly * 2 + j * 0.2f) * MathHelper.Lerp(10, 40, j / 19f)));
+                        poses.Add(ribPos);
+                        if (j == handle.SegmentCount - 1)
+                        {
+                            spriteBatch.Draw(bloom, ribPos - screenPos, null, new Color(254, 152, 232) * NPC.Opacity, 0, bloom.Size() / 2, NPC.scale * 0.8f, 0, 0);
+                        }
                     }
+                    PrimitiveRenderer.RenderTrail(poses, new((float f) => 3, (float f) => Color.DarkGoldenrod * NPC.Opacity));
                 }
-                PrimitiveRenderer.RenderTrail(poses, new((float f) => 3, (float f) => Color.DarkGoldenrod * NPC.Opacity));
             }
 
             return false;
