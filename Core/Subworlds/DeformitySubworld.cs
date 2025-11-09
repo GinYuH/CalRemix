@@ -131,7 +131,7 @@ namespace CalRemix.Core.Subworlds
         {
             Rectangle rect = new Rectangle(0, surfaceTile + 10, Main.maxTilesX, hellTile - surfaceTile);
             Rectangle topRect = new Rectangle(0, surfaceTile, Main.maxTilesX, surfaceYArea);
-            PerlinGeneration(rect, tileType: TileID.LunarRustBrick, wallType: WallID.LunarRustBrickWall);
+            PerlinGeneration(rect, tileType: TileID.LunarRustBrick, wallType: WallID.LunarRustBrickWall, noiseStrength: 0.2f);
             for (int i = rect.X; i < rect.X + rect.Width; i++)
             {
                 for (int j = rect.Y; j < rect.Y + rect.Height; j++)
@@ -142,7 +142,7 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
             }
-            PerlinSurface(topRect, TileID.LunarRustBrick);
+            PerlinSurface(topRect, TileID.LunarRustBrick, perlinBottom: true);
         }
 
         public static void GenerateCryoLattices()
@@ -210,7 +210,7 @@ namespace CalRemix.Core.Subworlds
 
         public static void GenerateHeavensForge()
         {
-            Rectangle areaRect = new Rectangle((int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesY * 0.2f));
+            Rectangle areaRect = new Rectangle((int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesY * 0.2f), (int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesY * 0.1f));
             Point anchor = new Point(areaRect.Center.X, areaRect.Center.Y);
             int radius = areaRect.Height / 2;
             for (int i = anchor.X - radius; i < anchor.X + radius; i++)
@@ -220,23 +220,26 @@ namespace CalRemix.Core.Subworlds
                     Point cur = new Point(i, j);
                     if (cur.ToVector2().Distance(anchor.ToVector2()) < radius)
                     {
-                        WorldGen.PlaceTile(i, j, TileID.HeavenforgeBrick);
+                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.HeavenforgeBrick);
 
                     }
                 }
             }
-            for (int k = 0; k < 30; k++)
+            float puffAmt = 100;
+            for (int k = 0; k < puffAmt; k++)
             {
-                Point pos = new Point((int)MathHelper.Lerp(areaRect.X, areaRect.X + areaRect.Width, k / 29f), areaRect.Center.Y + (int)WorldGen.genRand.NextFloat(-radius * 0.8f, radius * 0.8f));
-                int smallRadius = (int)MathHelper.Lerp((int)(radius * 0.2f), radius, Utils.PingPongFrom01To010(k / 29f));
+                Point pos = new Point((int)MathHelper.Lerp(areaRect.X, areaRect.X + areaRect.Width, k / (float)(puffAmt - 1)), areaRect.Center.Y + (int)WorldGen.genRand.NextFloat(-radius * 0.8f, radius * 0.8f));
+                int smallRadius = (int)MathHelper.Lerp((int)(radius * 0.2f), radius, Utils.PingPongFrom01To010(k / (float)(puffAmt - 1)));
                 for (int i = pos.X - smallRadius; i < pos.X + smallRadius; i++)
                 {
                     for (int j = pos.Y - smallRadius; j < pos.Y + smallRadius; j++)
                     {
+                        if (CalamityUtils.ParanoidTileRetrieval(i, j).HasTile)
+                            continue;
                         Point cur = new Point(i, j);
                         if (cur.ToVector2().Distance(pos.ToVector2()) < smallRadius)
                         {
-                            WorldGen.PlaceTile(i, j, TileID.HeavenforgeBrick);
+                            CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.HeavenforgeBrick);
                         }
                     }
                 }
@@ -246,7 +249,7 @@ namespace CalRemix.Core.Subworlds
         public static void GenerateDarkCelestial()
         {
             int start = (int)(Main.maxTilesX * 0.28f);
-            for (int i = start; i < start * 2; i++)
+            for (int i = start; i < Main.maxTilesX - start; i++)
             {
                 for (int j = surfaceTile; j < caveTile + 30; j++)
                 {
