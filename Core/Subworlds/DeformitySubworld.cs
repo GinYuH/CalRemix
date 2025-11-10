@@ -132,17 +132,28 @@ namespace CalRemix.Core.Subworlds
             Rectangle rect = new Rectangle(0, surfaceTile + 10, Main.maxTilesX, hellTile - surfaceTile);
             Rectangle topRect = new Rectangle(0, surfaceTile, Main.maxTilesX, surfaceYArea);
             PerlinGeneration(rect, tileType: TileID.LunarRustBrick, wallType: WallID.LunarRustBrickWall, noiseStrength: 0.2f);
-            for (int i = rect.X; i < rect.X + rect.Width; i++)
+            PerlinSurface(topRect, TileID.LunarRustBrick, perlinBottom: true);
+            bool placeGrass = true;
+            for (int i = 0; i <= Main.maxTilesX; i++)
             {
-                for (int j = rect.Y; j < rect.Y + rect.Height; j++)
+                for (int j = 0; j < Main.maxTilesY; j++)
                 {
-                    if (CalamityUtils.ParanoidTileRetrieval(i, j).WallType == WallID.None)
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
+                    Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                    Tile top = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                    if (placeGrass && t.HasTile)
                     {
-                        CalamityUtils.ParanoidTileRetrieval(i, j).WallType = WallID.LunarRustBrickWall;
+                        t.TileType = TileID.LunarRustBrick;
+                        placeGrass = false;
+                    }
+                    if (!placeGrass && ((left.HasTile && right.HasTile && top.HasTile) || (j > surfaceTile + topRect.Height + 1)))
+                    {
+                        t.WallType = WallID.LunarRustBrickWall;
                     }
                 }
+                placeGrass = true;
             }
-            PerlinSurface(topRect, TileID.LunarRustBrick, perlinBottom: true);
         }
 
         public static void GenerateCryoLattices()
