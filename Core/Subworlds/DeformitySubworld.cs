@@ -74,7 +74,7 @@ namespace CalRemix.Core.Subworlds
 
         public static float caveHeight => 0.55f;
 
-        public static float hellHeight => 0.85f;
+        public static float hellHeight => 0.9f;
 
         public static int surfaceTile => (int)(Main.maxTilesY * surfaceHeight);
 
@@ -123,7 +123,7 @@ namespace CalRemix.Core.Subworlds
             progress.Value = 1f;
 
 
-            Main.spawnTileY = surfaceTile;
+            Main.spawnTileY = surfaceTile - 10;
             Main.spawnTileX = (int)(Main.maxTilesX * 0.5f);
         }
 
@@ -131,25 +131,40 @@ namespace CalRemix.Core.Subworlds
         {
             Rectangle rect = new Rectangle(0, surfaceTile + 10, Main.maxTilesX, hellTile - surfaceTile);
             Rectangle topRect = new Rectangle(0, surfaceTile, Main.maxTilesX, surfaceYArea);
-            PerlinGeneration(rect, tileType: TileID.LunarRustBrick, wallType: WallID.LunarRustBrickWall, noiseStrength: 0.2f);
+            PerlinGeneration(rect, tileType: TileID.LunarRustBrick, wallType: WallID.LunarRustBrickWall, noiseStrength: 0.2f, ease: PerlinEase.EaseOutBottom);
             PerlinSurface(topRect, TileID.LunarRustBrick, perlinBottom: true);
+            int lavaHeight = rect.Y + (int)(rect.Height * 0.9f);
+            int ditherAmt = 30;
             bool placeGrass = true;
             for (int i = 0; i <= Main.maxTilesX; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
-                    Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
-                    Tile top = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
-                    if (placeGrass && t.HasTile)
+                    if (j < lavaHeight - ditherAmt)
                     {
-                        t.TileType = TileID.LunarRustBrick;
-                        placeGrass = false;
+                        Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
+                        Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                        Tile top = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                        if (placeGrass && t.HasTile)
+                        {
+                            t.TileType = TileID.LunarRustBrick;
+                            placeGrass = false;
+                        }
+                        if (!placeGrass && ((left.HasTile && right.HasTile && top.HasTile) || (j > surfaceTile + topRect.Height + 1)))
+                        {
+                            t.WallType = WallID.LunarRustBrickWall;
+                        }
                     }
-                    if (!placeGrass && ((left.HasTile && right.HasTile && top.HasTile) || (j > surfaceTile + topRect.Height + 1)))
+                    else if (j > lavaHeight + ditherAmt)
                     {
-                        t.WallType = WallID.LunarRustBrickWall;
+                        t.WallType = WallID.CosmicEmberBrickWall;
+                    }
+                    else
+                    {
+                        float emberChance = MathHelper.Lerp(0, 100, Utils.GetLerpValue(lavaHeight - ditherAmt, lavaHeight + ditherAmt, j, true));
+                        ushort type = (WorldGen.genRand.Next(100) < emberChance) ? WallID.CosmicEmberBrickWall : WallID.LunarRustBrickWall;
+                        t.WallType = type;
                     }
                 }
                 placeGrass = true;
@@ -310,12 +325,83 @@ namespace CalRemix.Core.Subworlds
 
         public static void GemerateMercuryBasins()
         {
+            for (int l = 0; l < 3; l++)
+            {
+                int mercMin = (int)(Main.maxTilesX * MathHelper.Lerp(0.1f, 0.7f, l / 2f));
+                int mercMax = (int)(Main.maxTilesX * MathHelper.Lerp(0.3f, 0.9f, l / 2f));
+                int mercX = WorldGen.genRand.Next(mercMin, mercMax);
+                int mercY = (int)((hellTile - caveTile) * WorldGen.genRand.NextFloat(0.4f, 0.6f) + caveTile);
+                int primeMercRad = (int)((hellTile - caveTile) * WorldGen.genRand.NextFloat(0.1f, 0.2f));
+                Rectangle mercRect = new Rectangle(mercX - primeMercRad, mercY - primeMercRad, primeMercRad * 2, primeMercRad * 2);
+                for (int i = mercRect.X; i < mercRect.Right; i++)
+                {
+                    for (int j = mercRect.Y; j < mercRect.Bottom; j++)
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        if (WithinElipse(i, j, mercX, mercY, primeMercRad, primeMercRad))
+                        {
+                            t.TileType = TileID.MercuryBrick;
+                            t.WallType = WallID.MercuryBrickWall;
+                        }
+                    }
+                }
+                mercRect.Inflate(mercRect.Width / 2, mercRect.Height / 2);
+                for (int k = 0; k < 100; k++)
+                {
+                    Point newPos = (mercRect.Center() + WorldGen.genRand.NextVector2Circular(mercRect.Width / 3, mercRect.Height / 3)).ToPoint();
+                    int radius = (int)MathHelper.Lerp((int)(primeMercRad * 0.05f), (int)(primeMercRad * 0.5f), Utils.GetLerpValue(mercRect.Width / 2, 0, newPos.ToVector2().Distance(mercRect.Center()), true));
 
+
+                    PerlinGeneration(area: new Rectangle(newPos.X - radius, newPos.Y - radius, radius * 2, radius * 2), noiseSize: Vector2.One * 400, overrideTiles: true, eraseWalls: false, tileType: TileID.MercuryBrick, wallType: WallID.MercuryBrickWall, tileCondition: (Point p) => WithinElipse(p.X, p.Y, newPos.X, newPos.Y, radius, radius));
+
+                    /*for (int i = newPos.X - radius; i < newPos.X + radius; i++)
+                    {
+                        for (int j = newPos.Y - radius; j < newPos.Y + radius; j++)
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            if (WithinElipse(i, j, newPos.X, newPos.Y, radius, radius))
+                            {
+                                t.TileType = TileID.MercuryBrick;
+                                t.WallType = WallID.MercuryBrickWall;
+                            }
+                        }
+                    }*/
+                }
+            }
         }
 
         public static void GenerateCosmicEmberDepths()
         {
-
+            int halfWidth = (int)(Main.maxTilesX * 0.3f);
+            int start = Main.maxTilesX / 2 - halfWidth;
+            int end = Main.maxTilesX / 2 + halfWidth;
+            Point top = new Point(Main.maxTilesX / 2, hellTile);
+            Point left = new Point(start, Main.maxTilesY);
+            Point right = new Point(end, Main.maxTilesY);
+            int cut = hellTile + (int)((Main.maxTilesY - hellTile) * 0.4f);
+            for (int i = start; i < end; i++)
+            {
+                for (int j = hellTile; j < Main.maxTilesY; j++)
+                {
+                    if (j > cut)
+                    {
+                        if (WithinTriangle(top, left, right, new Point(i, j)))
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            t.ResetToType(TileID.CosmicEmberBrick);
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = cut + 2; j < Main.maxTilesY; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    t.LiquidAmount = 255;
+                    t.LiquidType = LiquidID.Lava;
+                }
+            }
         }
     }
 }
