@@ -24,6 +24,18 @@ namespace CalRemix.Core.Scenes
         public override SceneEffectPriority Priority => SceneEffectPriority.Event;
         public override int Music => CalRemixMusic.BloodMoonRemix;
     }
+    
+    public class DesertRemixlesScene : ModSceneEffect
+    {
+        public override bool IsSceneEffectActive(Player player)
+        {
+            if (Main.player[Main.myPlayer].ZoneDesert && !Main.player[Main.myPlayer].ZoneUndergroundDesert && !DownedBossSystem.downedDesertScourge)
+                return true;
+            return false;
+        }
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeLow;
+        public override int Music => CalRemixMusic.DesertRemixles;
+    }
 
     public class DesertRemixScene : ModSceneEffect
     {

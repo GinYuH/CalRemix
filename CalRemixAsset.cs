@@ -166,6 +166,7 @@ namespace CalRemix
         // Vanilla Replacement 
         public static readonly int BloodMoonRemix = Set("Misc/VanillaRemix/BloodMoon");
         public static readonly int DesertRemix = Set("Misc/VanillaRemix/Desert");
+        public static readonly int DesertRemixles = Set("Misc/VanillaRemix/DesertVanilla");
         public static readonly int QueenSlimeRemix = Set("Misc/VanillaRemix/QueenSlime");
         public static readonly int ShimmerRemix = Set("Misc/VanillaRemix/Shimmer");
 
