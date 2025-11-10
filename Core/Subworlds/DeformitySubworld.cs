@@ -37,7 +37,7 @@ namespace CalRemix.Core.Subworlds
 {
     public class DeformitySubworld : Subworld, IDisableOcean, IFixDrawBlack
     {
-        public override int Height => 900;
+        public override int Height => 2000;
         public override int Width => 3000;
         public override List<GenPass> Tasks =>
         [
@@ -72,9 +72,9 @@ namespace CalRemix.Core.Subworlds
 
         public static float surfaceHeight => 0.5f;
 
-        public static float caveHeight => 0.6f;
+        public static float caveHeight => 0.55f;
 
-        public static float hellHeight => 0.8f;
+        public static float hellHeight => 0.85f;
 
         public static int surfaceTile => (int)(Main.maxTilesY * surfaceHeight);
 
@@ -147,39 +147,64 @@ namespace CalRemix.Core.Subworlds
 
         public static void GenerateCryoLattices()
         {
-            int width = (int)(Main.maxTilesX * 0.28f);
-            for (int i = 0; i < width; i++)
+            int latticeWidth = (int)(Main.maxTilesX * 0.28f);
+            int biomeWidth = (int)(Main.maxTilesX * 0.4f);
+            int biomeHeight = caveTile + (caveTile - surfaceTile);
+            Point point1 = new Point(latticeWidth, surfaceTile);
+            Point point2 = new Point(latticeWidth, biomeHeight);
+            Point point3 = new Point(biomeWidth, biomeHeight);
+            for (int i = 0; i < biomeWidth; i++)
             {
-                for (int j = surfaceTile; j < caveTile + 30; j++)
+                if (i < latticeWidth)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    if (t.TileType == TileID.LunarRustBrick)
+                    for (int j = surfaceTile; j < biomeHeight; j++)
                     {
-                        t.TileType = TileID.CryocoreBrick;
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        if (t.TileType == TileID.LunarRustBrick)
+                        {
+                            t.TileType = TileID.CryocoreBrick;
+                        }
+                        if (t.WallType == WallID.LunarRustBrickWall)
+                        {
+                            t.WallType = WallID.CryocoreBrickWall;
+                        }
                     }
-                    if (t.WallType == WallID.LunarRustBrickWall)
+                    for (int j = 0; j < surfaceTile; j++)
                     {
-                        t.WallType = WallID.LunarRustBrickWall;
+                        if (WorldGen.genRand.NextBool(10000))
+                        {
+                            Point spikeOrigin = new(i, j);
+                            int spikeWidth = WorldGen.genRand.NextBool(5) ? WorldGen.genRand.Next(10, 30) : WorldGen.genRand.Next(4, 10);
+                            int spikeHeight = (int)(spikeWidth * WorldGen.genRand.NextFloat(2, 5));
+
+                            for (int k = spikeOrigin.X - spikeWidth * 2; k < spikeOrigin.X + spikeWidth * 2; k++)
+                            {
+                                for (int l = spikeOrigin.Y - spikeHeight * 2; l < spikeOrigin.Y + spikeHeight * 2; l++)
+                                {
+                                    if (WithinRhombus(spikeOrigin, new Point(spikeWidth, spikeHeight * 2), new Point(k, l)))
+                                    {
+                                        Tile t = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                        t.ResetToType(TileID.CryocoreBrick);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-
-                for (int j = 0; j < surfaceTile; j++)
+                else
                 {
-                    if (WorldGen.genRand.NextBool(20000))
+                    for (int j = 0; j < biomeHeight; j++)
                     {
-                        Point spikeOrigin = new(i, j);
-                        int spikeWidth = Main.rand.Next(4, 30);
-                        int spikeHeight = (int)(spikeWidth * Main.rand.NextFloat(2, 5));
-
-                        for (int k = spikeOrigin.X - spikeWidth * 2; k < spikeOrigin.X + spikeWidth * 2; k++)
+                        if (WithinTriangle(point1, point2, point3, new Point(i, j)))
                         {
-                            for (int l = spikeOrigin.Y - spikeHeight * 2; l < spikeOrigin.Y + spikeHeight * 2; l++)
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            if (t.TileType == TileID.LunarRustBrick)
                             {
-                                if (WithinRhombus(spikeOrigin, new Point(spikeWidth, spikeHeight * 2), new Point(k, l)))
-                                {
-                                    Tile t = CalamityUtils.ParanoidTileRetrieval(k, l);
-                                    t.ResetToType(TileID.CryocoreBrick);
-                                }
+                                t.TileType = TileID.CryocoreBrick;
+                            }
+                            if (t.WallType == WallID.LunarRustBrickWall)
+                            {
+                                t.WallType = WallID.CryocoreBrickWall;
                             }
                         }
                     }
@@ -191,18 +216,24 @@ namespace CalRemix.Core.Subworlds
         public static void GenerateAstraPlane()
         {
             int start = (int)(Main.maxTilesX * 0.72f);
+            int height = (int)(0.5f * (Main.maxTilesX - start));
+            Rectangle area = new Rectangle(start, surfaceTile - height / 2, Main.maxTilesX - start, height);
+            Point anchor = area.Center;
             for (int i = start; i < Main.maxTilesX; i++)
             {
-                for (int j = surfaceTile; j < caveTile + 30; j++)
+                for (int j = area.Top; j < area.Bottom; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    if (t.TileType == TileID.LunarRustBrick)
+                    if (WithinElipse(i, j, anchor.X, anchor.Y, area.Width / 2, area.Height / 2))
                     {
-                        t.TileType = TileID.AstraBrick;
-                    }
-                    if (t.WallType == WallID.LunarRustBrickWall)
-                    {
-                        t.WallType = WallID.AstraBrickWall;
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        if (t.TileType == TileID.LunarRustBrick)
+                        {
+                            t.TileType = TileID.AstraBrick;
+                        }
+                        if (t.WallType == WallID.LunarRustBrickWall)
+                        {
+                            t.WallType = WallID.AstraBrickWall;
+                        }
                     }
                 }
             }
@@ -210,7 +241,7 @@ namespace CalRemix.Core.Subworlds
 
         public static void GenerateHeavensForge()
         {
-            Rectangle areaRect = new Rectangle((int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesY * 0.2f), (int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesY * 0.1f));
+            Rectangle areaRect = new Rectangle((int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesY * 0.066f));
             Point anchor = new Point(areaRect.Center.X, areaRect.Center.Y);
             int radius = areaRect.Height / 2;
             for (int i = anchor.X - radius; i < anchor.X + radius; i++)
@@ -254,11 +285,11 @@ namespace CalRemix.Core.Subworlds
                 for (int j = surfaceTile; j < caveTile + 30; j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    if (t.HasTile)
+                    if (t.HasTile && t.TileType != TileID.CryocoreBrick)
                     {
                         t.TileType = TileID.DarkCelestialBrick;
                     }
-                    if (t.WallType != WallID.None)
+                    if (t.WallType != WallID.None && t.WallType != WallID.CryocoreBrickWall)
                     {
                         t.WallType = WallID.DarkCelestialBrickWall;
                     }

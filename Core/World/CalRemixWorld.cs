@@ -1423,8 +1423,6 @@ namespace CalRemix.Core.World
                                 {
                                     WorldGen.SlopeTile(i, j, noEffects: true);
                                     WorldGen.PlaceTile(i, j - 1, TileID.Switches);
-                                    Main.spawnTileX = i;
-                                    Main.spawnTileY = j - 3;
                                 }
                                 break;
                             }
