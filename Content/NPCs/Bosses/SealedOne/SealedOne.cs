@@ -30,7 +30,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
     [AutoloadBossHead]
     public class SealedOne : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod) => false;
+        //public override bool IsLoadingEnabled(Mod mod) => false;
 
         public ref float AttackType => ref NPC.ai[0];
         public ref float Timer => ref NPC.ai[1];
@@ -56,7 +56,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             ProjectileVomit = 3,
             LightningOrb = 4,
             Ritual = 5,
-            Something = 6,
+            HereticSpears = 6,
             SpinningRingProjectiles = 7,
             AncientDoomEsqueMines = 8
         }
@@ -352,7 +352,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 7:
-                                attackToUse = (int)AttackTypes.SpinningRingProjectiles;
+                                attackToUse = (int)AttackTypes.HereticSpears;
                                 break;
                             case 8:
                                 attackToUse = (int)AttackTypes.None;
@@ -462,6 +462,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     // final stuff: convert attacktouse to an attack to be used
                     if (attackToUse != (int)AttackTypes.PhaseTransition && attackToUse != (int)AttackTypes.None  && attackToUse != (int)AttackTypes.Move)
                     {
+                        attackToUse = (int)AttackTypes.HereticSpears;
                         AttackType = attackToUse;
                         Timer = 0f;
                     }
@@ -675,11 +676,59 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     NPC.netUpdate = true;
                 }
             }
-            else if (AttackType == (float)AttackTypes.Something)
+            else if (AttackType == (float)AttackTypes.HereticSpears)
             {
+                float endAttackTime = 4 + projVomitFireRate * projVomitAmount;
+
                 NPC.localAI[2] = 13f;
+
+                // if starting or close to target, make up a new target
+                // having the failsafe be triggered by vector2.zero means he cant go to the top left of the world
+                // zzzzzzzzzzz
+                int flip = Main.rand.Next(0, 2);
+                if (flip == 0)
+                    flip = -1;
+
+                int boundingBoxHeight = 800;
+                int boundingBoxVerticalOffset = -boundingBoxHeight / 2;
+                int boundingBoxWidth = 400;
+                int boundingBoxHorizontalOffset = 300 * flip;
+                int boundingBoxHalfWidth = boundingBoxWidth / 2;
+                // making a "bounding box" of areas he can choose to go to
+                float lowerBound = Target.Center.Y - boundingBoxVerticalOffset;
+                float upperBound = Target.Center.Y - boundingBoxHeight - boundingBoxVerticalOffset;
+                float leftBound = Target.Center.X - boundingBoxHalfWidth + boundingBoxHorizontalOffset;
+                float rightBound = Target.Center.X + boundingBoxHalfWidth + boundingBoxHorizontalOffset;
+
+                /*
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), lowerBound), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), upperBound), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(leftBound, Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(rightBound, Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                }
+                */
+
+                // fire projs from sides of screen
+                if (Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Vector2 spearSpawnSpot = new Vector2(Main.rand.NextFloat(leftBound, rightBound), Main.rand.NextFloat(lowerBound, upperBound));
+                    // play a sound
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), spearSpawnSpot.X, spearSpawnSpot.Y, 0, 0, ModContent.ProjectileType<HereticSpear>(), projVomitDamage, 0f, Main.myPlayer, 0, flip, 1);
+                }
+
+                // face left or right
+                int leftOrRight = Math.Sign(player.Center.X - npcCenter.X);
+                if (leftOrRight != 0)
+                {
+                    NPC.direction = (NPC.spriteDirection = leftOrRight);
+                }
+
                 Timer += 1f;
-                if (Timer >= 120f)
+
+                if (Timer >= 600f)
                 {
                     AttackType = (float)AttackTypes.None;
                     Timer = 0f;
