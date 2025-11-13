@@ -828,7 +828,6 @@ namespace CalRemix.Core.World
                 }
             }
             eaterTimer--;
-            ExcavatorSummon();
         }
 
         public static void ExcavatorSummon()

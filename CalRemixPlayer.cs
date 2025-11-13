@@ -71,6 +71,7 @@ using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.UI.Anomaly109;
 using CalamityMod.Projectiles.Melee;
 using Mono.Cecil;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 
 namespace CalRemix
 {
@@ -1257,13 +1258,53 @@ namespace CalRemix
                 if (timeSmoked > 0)
                     timeSmoked--;
             }
-			// Kick people from chests in pre hardmode
-			if (Player.chest > -1)
+            // Kick people from chests in pre hardmode
+            if (Player.chest > -1)
 			{
-				if (Player.InModBiome<FrozenStrongholdBiome>() && !Main.hardMode)
+                if (Player.InModBiome<FrozenStrongholdBiome>() && !Main.hardMode)
 				{
 					Player.chest = -1;
-				}
+                }
+                RecentChest = Player.chest;
+            }
+            if (Player.chest == -1)
+            {
+                if (RecentChest >= 0 && Main.chest[RecentChest] != null && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    int i = Main.chest[RecentChest].x;
+                    int j = Main.chest[RecentChest].y;
+                    int chestenum = Chest.FindChest(i, j);
+                    if (chestenum >= 0)
+                    {
+                        Chest cheste = Main.chest[RecentChest];
+                        if (Main.tile[cheste.x, cheste.y].TileType == TileID.Containers && (Main.tile[i, j].TileFrameX == 432 || Main.tile[i, j].TileFrameX == 450))
+                        {
+                            for (int slot = 0; slot < Chest.maxItems; slot++)
+                            {
+                                if (!NPC.AnyNPCs(NPCType<WulfwyrmHead>()) && WulfwyrmHead.SummonItems.Contains(cheste.item[slot].type) && cheste.item[slot].stack == 1)
+                                {
+                                    // is the rest of the chest empty
+                                    int ok = 0;
+                                    for (int q = 0; q < Chest.maxItems; q++) ok += cheste.item[q].stack;
+                                    if (ok == 1)
+                                    {
+                                        cheste.item[slot] = new Item();
+
+                                        NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, chestenum, slot, cheste.item[slot].stack, cheste.item[slot].prefix, cheste.item[slot].type);
+
+                                        SoundEngine.PlaySound(SoundID.Roar, new Vector2(i * 16, j * 16));
+                                        int worm = NPC.NewNPC(Player.GetSource_FromThis(), i * 16, j * 16 + 1200, NPCType<WulfwyrmHead>());
+                                        Main.npc[worm].timeLeft *= 20;
+                                        Main.npc[worm].velocity.Y = -20;
+                                        ChatMessage(Language.GetTextValue("Announcement.HasAwoken", Main.npc[worm].TypeName), new Color(175, 75, 255), NetworkText.FromKey("Announcement.HasAwoken", Main.npc[worm].GetTypeNetName()));
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, worm);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             Player.GetDamage<GenericDamageClass>() += (float)(dyesRed * 0.01f);

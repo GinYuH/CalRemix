@@ -258,12 +258,11 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
         public void SpawnSegments()
         {
-            // if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int previousSegment = NPC.whoAmI;
                 for (int i = 0; i < SegmentCount; i++)
                 {
-
                     int nextSegmentIndex;
                     if (i < SegmentCount - 1)
                     {
@@ -275,9 +274,9 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                     Main.npc[nextSegmentIndex].realLife = NPC.whoAmI;
                     Main.npc[nextSegmentIndex].ai[2] = NPC.whoAmI;
                     Main.npc[nextSegmentIndex].ai[1] = previousSegment;
+                    Main.npc[nextSegmentIndex].CopyInteractions(NPC);
+                    NetMessage.SendData(MessageID.SyncNPC, number: nextSegmentIndex);
                     Main.npc[previousSegment].ai[0] = nextSegmentIndex;
-                    Main.npc[nextSegmentIndex].netUpdate = true;
-                    Main.npc[previousSegment].netUpdate = true;
 
                     previousSegment = nextSegmentIndex;
                 }
