@@ -19,16 +19,19 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrb);
             Projectile.aiStyle = -1;
             Projectile.width = 25;
             Projectile.height = 25;
+            Projectile.timeLeft = 200;
+            Projectile.tileCollide = false;
+            Projectile.hostile = true;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
         {
             int timerStartMovingFast = 10;
-            int timerFullyFadeIn = 240;
+            int timerFullyFadeIn = 40;
             int timerEndMovingFast = 100;
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
@@ -47,16 +50,19 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             if (Flip == 1)
                 Projectile.velocity.X *= -1;
 
-            if (Timer > 200)
-                Projectile.Kill();
-
             Timer++;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.OrangeRed, lightColor, 1);
-            return false;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 position = Projectile.Center - Main.screenPosition;
+            Color color = Color.OrangeRed * Projectile.Opacity;
+            Vector2 origin = texture.Size() * 0.5f;
+            Vector2 scale = Vector2.One;
+
+            Main.spriteBatch.Draw(texture, position, null, color, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+            return true;
         }
     }
 }

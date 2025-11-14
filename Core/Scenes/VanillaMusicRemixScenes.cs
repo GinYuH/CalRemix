@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalamityMod.BiomeManagers;
 using CalamityMod.CalPlayer;
 using CalamityMod.Events;
 using CalRemix.Content.NPCs.Minibosses;
@@ -79,5 +80,17 @@ namespace CalRemix.Core.Scenes
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => CalRemixMusic.ShimmerRemix;
+    }
+
+    public class SulphSeaDayRemixScene : ModSceneEffect
+    {
+        public override bool IsSceneEffectActive(Player player)
+        {
+            if (!CalamityPlayer.areThereAnyDamnBosses && Main.player[Main.myPlayer].InModBiome(ModContent.GetInstance<SulphurousSeaBiome>()) && Main.dayTime && Main.cloudAlpha <= 0f && !AcidRainEvent.AcidRainEventIsOngoing)
+                return true;
+            return false;
+        }
+        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
+        public override int Music => CalRemixMusic.SulphSeaDayRemix;
     }
 }

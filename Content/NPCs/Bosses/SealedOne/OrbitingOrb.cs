@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -17,12 +18,9 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
         public override string Texture => "CalRemix/Assets/Gores/Derellect1";
 
         public Vector2 IdealLocation = Vector2.Zero;
-
-        public enum Modes
-        {
-            RotateAroundPlayer = 0,
-            GoInwards = 1
-        }
+        public bool FUCKYOU = false;
+        public float StartingSpeed = 1;
+        Vector2? directionToPlayer = null;
 
         public override void SetStaticDefaults()
         {
@@ -39,62 +37,60 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
 
         public override void OnSpawn(IEntitySource source)
         {
-            Timer = Main.rand.Next(0, 365);
-            //SpinDuration = Main.rand.NextFloat(0.5f, 0.75f);
-            SpinDuration = 0.01f;
+            SpinDuration = Main.rand.Next(0, 366);
+            StartingSpeed = Main.rand.NextFloat(0.8f, 1.1f);
         }
 
         public override void AI()
         {
-            Player player = Main.player[Main.myPlayer];
-
-            if (Mode == (float)Modes.RotateAroundPlayer)
+            int distanceFromPlayer = 450;
+            float slowDownEasing = 100;
+            if (Timer > 80)
             {
-                int distanceFromPlayer = 450;
-                float IdealPositionX = (float)(player.MountedCenter.X - (Math.Cos((Timer * 0.06f) - SpinDuration) * distanceFromPlayer));
-                float IdealPositionY = (float)(player.MountedCenter.Y - (Math.Sin((Timer * 0.06f) - SpinDuration) * distanceFromPlayer));
-                Projectile.Center = new Vector2(IdealPositionX, IdealPositionY);
-
-                // the number 2.45 was pulled out of my ass after i trial-and-errored a good spot for this thing to stop
-                // i did this because i do not want to work with this projectile anymore 
-                // everything about this is unelegant and unintelligently done
-                // i believe this is the... "fabsol style"
-                if (SpinDuration < 2.45f)
-                {
-                    Timer++;
-                    SpinDuration *= 1.025f;
-                }
-                else
-                {
-                    Mode = (float)Modes.GoInwards;
-                    Timer = 0;
-                }
+                if (!FUCKYOU)
+                    slowDownEasing = 1 - CalamityUtils.CircOutEasing(Mode / 150f, 1);
+                if (slowDownEasing <= 0)
+                    FUCKYOU = true;
+                Mode++;
             }
-            else if (Mode == (float)Modes.GoInwards)
+            if (FUCKYOU)
+                slowDownEasing = 0;
+            else if (slowDownEasing >= StartingSpeed)
+                slowDownEasing = StartingSpeed;
+            double radians = SpinDuration / 10;
+            //Vector2 IdealPosition = Main.LocalPlayer.Center + Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, Utils.GetLerpValue(50, 300, Timer, true))) * distanceFromPlayer;
+            Vector2 IdealPosition = Main.LocalPlayer.Center + Vector2.UnitY.RotatedBy(radians) * distanceFromPlayer;
+
+            if (!FUCKYOU)
             {
-                // telegraph stuff, save player location
-                if (Timer == 0)
-                {
-                    SoundEngine.PlaySound(SoundID.Zombie5 with { MaxInstances = 0, Volume = 2f, Pitch = Main.rand.NextFloat(-3.0f, 3.0f) });
-                    for (int i = 0; i < 15; i++)
-                    {
-                        Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1), 0, default, 1f);
-                    }
-
-                    IdealLocation = Projectile.DirectionTo(player.Center);
-                }
-
-                // go to place
-                Projectile.velocity += IdealLocation * 0.8f;
-
-                Timer++;
+                Projectile.position = IdealPosition;
+                Projectile.position.X -= Projectile.width / 2;
+                Projectile.position.Y -= Projectile.height / 2;
             }
             else
             {
-                // just in case
-                Projectile.active = false;
+                if (directionToPlayer == null)
+                {
+                    directionToPlayer = Projectile.Center.DirectionTo(Main.LocalPlayer.Center);
+
+                    SoundEngine.PlaySound(SoundID.Zombie5 with { MaxInstances = 0, Volume = 2f, Pitch = Main.rand.NextFloat(-3.0f, 3.0f) });
+                    for (int i = 0; i < 15; i++)
+                        Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1), 0, default, 1f);
+                    
+                    Timer = 0;
+                }
+                float rampup = (float)(Math.Pow(Timer, 2) / 150);
+                if (rampup > 2.5f)
+                    rampup = 2.5f;
+                Main.NewText(rampup);
+                Projectile.velocity += (Vector2)directionToPlayer * rampup;
             }
-            
+
+                SpinDuration += slowDownEasing;
+            if (slowDownEasing <= 0)
+                slowDownEasing = 0;
+
+            Timer++;
         }
 
         public override bool PreDraw(ref Color lightColor)
