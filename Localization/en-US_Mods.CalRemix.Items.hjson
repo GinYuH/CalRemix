@@ -5903,3 +5903,8 @@ Forknife: {
 	DisplayName: Forknife
 	Tooltip: Thrusts forward three times before performing a spin
 }
+
+Hermes: {
+	DisplayName: Hermes
+	Tooltip: "Fires mercury rockets which create large smoky explosions"
+}
