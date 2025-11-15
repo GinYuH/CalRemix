@@ -43,6 +43,7 @@ using static Terraria.ModLoader.ModContent;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.UI;
+using CalRemix.Content.Buffs;
 
 namespace CalRemix
 {
@@ -274,6 +275,7 @@ namespace CalRemix
             // all for the eight seconds its all worth it
             cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/Bleeding", (NPC npc) => npc.HasBuff(BuffID.Bleeding));
 
+            cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/RealityBearerForClopsBuff", (NPC npc) => npc.HasBuff<RealityBearerForClopsBuff>());
 
             CalRemixPlayer.LoadDyeStats();
         }

@@ -442,3 +442,8 @@ CultaceanBuff: {
 	DisplayName: Cultacean
 	Description: Who are these guys???
 }
+
+RealityBearerForClopsBuff: {
+	DisplayName: Reality Bearer For Clops Buff
+	Description: Mods.CalRemix.Buffs.RealityBearerForClopsBuff.Description
+}

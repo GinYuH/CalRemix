@@ -5913,3 +5913,8 @@ SilverWater: {
 	DisplayName: Silver Water
 	Tooltip: ""
 }
+
+AnechoicAnchor: {
+	DisplayName: Anechoic Anchor
+	Tooltip: ""
+}
