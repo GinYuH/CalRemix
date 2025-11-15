@@ -1,5 +1,6 @@
 ﻿using CalamityMod.Items.Accessories.Vanity;
 using CalamityMod.Items.Accessories.Wings;
+using CalamityMod.Items.Weapons.Melee;
 using ReLogic.OS;
 using System;
 using Terraria;
@@ -114,6 +115,23 @@ namespace CalRemix.UI
             HelperMessage.New("CrimFather2", "We shouldn't be much longer - we're going to pick up a surprise for a little guy. Just keep an eye on him for a bit more, and we'll take him off your hands again, yeah? Again, thank you so much. God bless you.",
                 "CrimFather")
                 .SpokenByAnotherHelper(ScreenHelpersUIState.CrimFather).ChainAfter(cf1, delay: 1, startTimerOnMessageSpoken: true);
+        }
+        #endregion
+
+        #region Example Helper
+        // This method loads all dialogue relating to the ExampleHelper helper
+        public static void LoadExampleHelperMessage()
+        {
+            // Helper messages are all registered using the HelperMessage.New method
+            // The key is mostly worthless in terms of actually appearing, and is solely used for the game to recognize different messages and mark them as read or not. Usually you can just put a humerous name.
+            // The next parameter is the actual message. This does not need to be manually localized as the helper system's loading automatically registers any non-localized dialogue then pulls from it.
+            // The third parameter is the portrait used. This is the sprite's name with the "Helper" in front subtracted.
+            // The fourth parameter is the condition for the message to appear. In this case, the message has a 1 in 600 chance to appear any frame while the Example Mod is enabled OR the player has the Seashine Sword.
+            // There are other parameters but they should be self explanatory
+            // SpokenByAnotherHelper will allow you to make the message spoken by a helper other than Fanny. In this case, the helper is our ExampleHelper.
+            HelperMessage.New("ExampleHelperDialogue", "This is an example message.",
+                "ExampleHelper", (ScreenHelperSceneMetrics m) => (Main.LocalPlayer.HasItem(ModContent.ItemType<SeashineSword>()) || CalRemixAddon.ExampleMod != null) && Main.rand.NextBool(600))
+                .SpokenByAnotherHelper(ScreenHelpersUIState.ExampleHelper);
         }
         #endregion
     }

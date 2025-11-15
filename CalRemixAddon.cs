@@ -61,6 +61,7 @@ namespace CalRemix
         internal static Mod MusicDisplay;
         internal static Mod Wikithis;
         internal static Mod Census;
+        internal static Mod ExampleMod;
 
         internal static Mod Remnants;
         internal static Mod Spirit;
@@ -107,6 +108,7 @@ namespace CalRemix
             ModLoader.TryGetMod("Census", out Census);
             ModLoader.TryGetMod("MusicDisplay", out MusicDisplay);
             ModLoader.TryGetMod("Wikithis", out Wikithis);
+            ModLoader.TryGetMod("ExampleMod", out ExampleMod);
 
             ModLoader.TryGetMod("Remnants", out Remnants);
             ModLoader.TryGetMod("SpiritMod", out Spirit);
@@ -124,6 +126,7 @@ namespace CalRemix
             Census = null;
             MusicDisplay = null;
             Wikithis = null;
+            ExampleMod = null;
 
             Remnants = null;
             Spirit = null;

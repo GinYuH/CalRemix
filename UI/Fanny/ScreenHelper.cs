@@ -662,6 +662,7 @@ namespace CalRemix.UI
         public static ScreenHelper AltMetalFanny = new("AltMetalFanny");
         public static ScreenHelper ThePinkFlame = new("ThePinkFlame");
         public static ScreenHelper CrimFather = new("CrimFather");
+        public static ScreenHelper ExampleHelper = new("ExampleHelper");
 
         public override void OnInitialize()
         {
@@ -826,6 +827,16 @@ namespace CalRemix.UI
                 .SetTextboxStyle("Anytime, Crim Father.", new HelperTextboxPalette(Color.Red, Color.Yellow, Color.DarkRed, Color.Black, Color.Black))
                 .SetAvailabilityCondition(() => DownedBossSystem.downedYharon && (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss) && CalRemixWorld.timeSinceYharonMurdered >= 36000)
                 .SetPositionData(false, 360);
+
+            // This is how a helper is registered
+            // First make a static ScreenHelper instance, then assign the base texture to it. This texture will have the word "Helper" in front of it in the actual files, so in this example, the file is called HelperExampleHelper.
+            // SetVoiceStyle sets the sound that plays when the helper appears.
+            // SetTextboxStyle allows you to put the default response to this helper's dialogue as well as the colors for its text box
+            // SetPositoinData sets where the helper will appear on screen. This helper appears in the same place as Fanny.
+            LoadScreenHelper(ExampleHelper, "ExampleHelper", false)
+                .SetVoiceStyle(SoundID.MenuOpen)
+                .SetTextboxStyle("This is an example response.", new HelperTextboxPalette(Color.White, Color.Black, Color.White, Color.LightGray, Color.Black))
+                .SetPositionData(false, 240, 0.17f);
         }
 
         /// <summary>
@@ -1087,6 +1098,7 @@ namespace CalRemix.UI
             LoadMiracleBoyMessages();
             LoadPinkFlameMessage();
             LoadCrimFatherMessages();
+            LoadExampleHelperMessage();
             SneakersRetheme.LoadHelperMessages();
         }
 
@@ -1218,6 +1230,9 @@ namespace CalRemix.UI
 
             //Crim Father
             ScreenHelperPortrait.LoadPortrait("CrimFather", 1);
+
+            //Example Helper
+            ScreenHelperPortrait.LoadPortrait("ExampleHelper", 1);
 
             //Moviecygn
             ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);
