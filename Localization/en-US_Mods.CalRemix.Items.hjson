@@ -5906,5 +5906,10 @@ Forknife: {
 
 Hermes: {
 	DisplayName: Hermes
-	Tooltip: "Fires mercury rockets which create large smoky explosions"
+	Tooltip: Fires mercury rockets which create large smoky explosions
+}
+
+SilverWater: {
+	DisplayName: Silver Water
+	Tooltip: ""
 }

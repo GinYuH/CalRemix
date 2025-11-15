@@ -84,7 +84,7 @@ namespace CalRemix.Content.NPCs
         {
             Texture2D tex = TextureAssets.Npc[Type].Value;
             float rotOff = 0; // NPC.spriteDirection == -1 ? MathHelper.Pi : 0;
-            spriteBatch.Draw(tex, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation + rotOff, tex.Size() / 2, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+            spriteBatch.Draw(tex, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation + rotOff, tex.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
             return false;
         }
     }

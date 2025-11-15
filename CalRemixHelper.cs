@@ -1358,6 +1358,36 @@ namespace CalRemix
             }*/
             return savedWorldData;
         }
+
+        /// <summary>
+        /// Quickly returns SpriteEffects based on the Entity's direction. Defaults to flipping if the entity faces left (-1)
+        /// </summary>
+        /// <param name="proj">The projectile</param>
+        /// <param name="reverse">Flip when facing right instead</param>
+        /// <returns></returns>
+        public static SpriteEffects FlippedEffects(this Projectile proj, bool reverse = false)
+        {
+            if ((proj.spriteDirection == -1 && !reverse) || (reverse && proj.spriteDirection == 1))
+            {
+                return SpriteEffects.None;
+            }
+            return SpriteEffects.FlipHorizontally;
+        }
+
+        /// <summary>
+        /// Quickly returns SpriteEffects based on the Entity's direction. Defaults to flipping if the entity faces left (-1)
+        /// </summary>
+        /// <param name="npc">The NPC</param>
+        /// <param name="reverse">Flip when facing right instead</param>
+        /// <returns></returns>
+        public static SpriteEffects FlippedEffects(this NPC npc, bool reverse = false)
+        {
+            if ((npc.spriteDirection == -1 && !reverse) || (reverse && npc.spriteDirection == 1))
+            {
+                return SpriteEffects.None;
+            }
+            return SpriteEffects.FlipHorizontally;
+        }
     }
 
     public static class RarityHelper
@@ -1402,7 +1432,13 @@ namespace CalRemix
         public const int Pathogen = 8;
         public const int LunaticCultist = 9;
         public const int AstrumDeus = 9;
+        public const int SealedMain = 9;
+        public const int Void = 10;
+        public const int Disilphia = 10;
+        public const int GastropodA = 10;
+        public const int Oneguy = 10;
         public const int MoonLord = 10;
+        public const int Crevi = 11;
     }
 
     public static class BetterSoundID

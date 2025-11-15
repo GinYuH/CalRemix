@@ -1,9 +1,13 @@
 ﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Sounds;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Projectiles.Weapons;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
@@ -111,6 +115,23 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             CreateRecipe().
                 AddIngredient(ItemID.LunarTabletFragment, 2).
                 AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.MythrilAnvil).
+                Register();
+        }
+    }
+    public class SilverWater : StormbowAbstract
+    {
+        public override int damage => 36;
+        public override int useTime => 8;
+        public override SoundStyle useSound => CommonCalamitySounds.LargeWeaponFireSound with { Pitch = 2 };
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<MercuryRocketFriendly>() };
+        public override int arrowAmount => 1;
+        public override OverallRarity overallRarity => OverallRarity.Red;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ModContent.ItemType<MercuryCoatedSubcinium>(), 5).
+                AddIngredient(ModContent.ItemType<Mercury>(), 30).
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }
