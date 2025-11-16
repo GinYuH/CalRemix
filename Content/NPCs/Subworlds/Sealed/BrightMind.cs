@@ -11,6 +11,8 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.UI;
 using CalRemix.Content.Items.Misc;
 using CalamityMod;
+using Terraria.ID;
+using CalamityMod.NPCs.Perforator;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -52,6 +54,49 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
             {
                 SoundEngine.PlaySound(talkSound, NPC.Center);
+            }
+            if ((JustFinishedTalking || Main.netMode != NetmodeID.SinglePlayer) && ItemQuestSystem.brainLevel == 3 && Main.player[NPC.target].Distance(NPC.Center) < 600)
+            {
+                State = 1;
+                Timer = 0;
+            }
+            if (State == 1)
+            {
+                int wait = 30;
+                int impact = 20;
+                int knockoff = 30;
+                if (Timer < wait)
+                {
+                    NPC.dontTakeDamage = true;
+                }
+                else if (Timer == wait)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X + 1000, (int)NPC.Center.Y, ModContent.NPCType<MonorianWarrior>());
+                }
+                else if (Timer < wait + impact)
+                {
+
+                }
+                else if (Timer == wait + impact)
+                {
+                    NPC.velocity = new Vector2(-50, -26);
+                    SoundEngine.PlaySound(PerforatorHive.DeathSound with { Pitch = 0.5f, Volume = 2 }, NPC.Center);
+                    Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
+                }
+                else if (Timer > wait + impact && Timer < wait + impact + knockoff)
+                {
+                    NPC.velocity = new Vector2(-40, -26);
+                    NPC.rotation -= 0.2f;
+                }
+                else if (Timer > wait + impact + knockoff)
+                {
+                    NPC.active = false;
+                }
+            }
+            else
+            {
+                NPC.dontTakeDamage = false;
             }
         }
 
@@ -99,5 +144,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             return false;
         }
+
+        public override bool CanBeTalkedTo => State == 0;
     }
 }

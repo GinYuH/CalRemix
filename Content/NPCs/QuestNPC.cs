@@ -34,6 +34,23 @@ namespace CalRemix.Content.NPCs
     {
         public virtual bool CanBeTalkedTo => true;
 
+        public bool JustFinishedTalking = false;
+
+        public bool IsTalking = false;
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(IsTalking);
+            writer.Write(JustFinishedTalking);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            IsTalking = reader.ReadBoolean();
+            JustFinishedTalking = reader.ReadBoolean();
+        }
+
+
         public override void AI()
         {
             if (CanBeTalkedTo)
@@ -104,6 +121,31 @@ namespace CalRemix.Content.NPCs
                         if (key == "")
                             key = "End";
                         NPCDialogueUI.StartDialogue(NPC.whoAmI, key);
+                    }
+                }
+            }
+            if (NPCDialogueUI.IsBeingTalkedTo(NPC))
+            {
+                if (!IsTalking)
+                {
+                    IsTalking = true;
+                    NPC.netUpdate = true;
+                }
+            }
+            else
+            {
+                if (IsTalking)
+                {
+                    IsTalking = false;
+                    JustFinishedTalking = true;
+                    NPC.netUpdate = true;
+                }
+                else
+                {
+                    if (JustFinishedTalking)
+                    {
+                        JustFinishedTalking = false;
+                        NPC.netUpdate = true;
                     }
                 }
             }

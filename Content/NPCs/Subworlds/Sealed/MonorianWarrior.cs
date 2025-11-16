@@ -35,8 +35,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 		public ref float Timer => ref NPC.ai[1];
 
 		public enum PhaseType
-		{
-			Idle = 0,
+        {
+            SpawnAnim = 0,
+            Idle = 11,
 			Tank = 1,
 			Hover = 2,
 			Drones = 3,
@@ -72,30 +73,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 			NPC.DR_NERD(0.1f);
 			SpawnModBiomes = [ModContent.GetInstance<VoidForestBiome>().Type];
         }
+
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }
-        private void EdgyTalk(string text, Color color, bool combatText = false)
-		{
-			if (combatText)
-			{
-				CombatText.NewText(NPC.getRect(), color, text, true);
-			}
-			else
-			{
-				if (Main.netMode == NetmodeID.SinglePlayer)
-				{
-					Main.NewText(text, color);
-				}
-				else if (Main.netMode == NetmodeID.Server)
-				{
-					ChatHelper.BroadcastChatMessage(NetworkText.FromKey(text), color);
-				}
-			}
-		}
 
 		public override void AI()
 		{
@@ -130,6 +114,32 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             switch (CurrentPhase)
 			{
+				case PhaseType.SpawnAnim:
+					{
+						int gorb = NPC.FindFirstNPC(ModContent.NPCType<BrightMind>());
+						if (gorb != -1)
+						{
+							Vector2 startPos = new Vector2(NPC.Calamity().newAI[1], NPC.Calamity().newAI[2]);
+							if (startPos == Vector2.Zero)
+							{
+								NPC.Calamity().newAI[1] = NPC.Center.X;
+								NPC.Calamity().newAI[2] = NPC.Center.Y;
+								NPC.netUpdate = true;
+							}
+							else if (Main.npc[gorb].velocity == Vector2.Zero)
+							{
+								NPC.Center = Vector2.Lerp(startPos, Main.npc[gorb].Left, Timer / 20f);
+							}
+						}
+						else
+						{
+							Timer = 0;
+							CurrentPhase = PhaseType.Idle;
+							NPC.velocity = Vector2.Zero;
+							NPC.netUpdate = true;
+						}
+					}
+					break;
 				case PhaseType.Idle:
 					{
 						float playerX = Main.player[NPC.target].position.X - (NPC.position.X + NPC.width);
@@ -240,7 +250,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						{
 							NPC.velocity.Y = 10f;
 						}
-						if (localTimer == 1 && Timer < 295) //Charge for 2.5 seconds then switch directions
+						if (localTimer == 1 && Timer < 295)
 						{
 							SoundEngine.PlaySound(SoundID.Item23, NPC.position);
 							NPC.direction *= -1;
@@ -363,7 +373,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						NPC.damage = 0;
 						NPC.position.X = Main.player[NPC.target].Center.X - 120;
 						NPC.position.Y = Main.player[NPC.target].Center.Y - 16;
-						//210 and 300
 						if ((Timer == 67 | Timer == 157) && (CalamityMod.World.CalamityWorld.revenge || (Main.expertMode && Phase2)))
 						{
 							SoundEngine.PlaySound(SoundID.Item43, Main.player[NPC.target].Center);
@@ -677,10 +686,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(Phase2);
-		}
+			writer.Write(NPC.Calamity().newAI[0]);
+            writer.Write(NPC.Calamity().newAI[1]);
+            writer.Write(NPC.Calamity().newAI[2]);
+        }
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			Phase2 = reader.ReadBoolean();
-		}
+			NPC.Calamity().newAI[0] = reader.ReadSingle();
+            NPC.Calamity().newAI[1] = reader.ReadSingle();
+            NPC.Calamity().newAI[2] = reader.ReadSingle();
+        }
 	}
 }

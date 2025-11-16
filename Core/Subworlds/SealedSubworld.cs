@@ -140,7 +140,7 @@ namespace CalRemix.Core.Subworlds
                     if (!NPC.AnyNPCs(ModContent.NPCType<RubyWarrior>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.warriorPos.X, (int)SealedSubworldData.warriorPos.Y, ModContent.NPCType<RubyWarrior>());
                 }
-                if (p.Distance(SealedSubworldData.brightShrinePos) < 1000)
+                if (p.Distance(SealedSubworldData.brightShrinePos) < 1000 && !NPC.AnyNPCs(ModContent.NPCType<MonorianWarrior>()))
                 {
                     if (!NPC.AnyNPCs(ModContent.NPCType<BrightMind>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.brightShrinePos.X, (int)SealedSubworldData.brightShrinePos.Y, ModContent.NPCType<BrightMind>());
