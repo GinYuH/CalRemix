@@ -23,13 +23,12 @@ namespace CalRemix.Content.Items.Weapons
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = true;
             Item.UseSound = BetterSoundID.ItemGrenadeChuck with { Pitch = -0.5f };
-            Item.DamageType = DamageClass.Magic;
+            Item.DamageType = DamageClass.Ranged;
             Item.damage = 103;
             Item.knockBack = 8f;
             Item.noMelee = true;
             Item.shoot = ModContent.ProjectileType<AspidShotFriendly>();
             Item.shootSpeed = 18;
-            Item.mana = 18;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

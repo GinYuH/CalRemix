@@ -23,7 +23,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.height = 20;
             Projectile.friendly = true;
             Projectile.timeLeft = 480;
-            Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Ranged;
         }
         public override void AI()
         {
