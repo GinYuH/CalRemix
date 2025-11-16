@@ -42,6 +42,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.HitSound = hitSound;
             NPC.DeathSound = deathSound;
             NPC.knockBackResist = 0f;
+            NPC.dontTakeDamage = true;
             NPC.noTileCollide = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<BadlandsBiome>().Type };
         }
@@ -51,11 +52,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.TargetClosest();
             NPC.spriteDirection = NPC.direction;
             Timer++;
+            if (Timer > 120 && NPC.dontTakeDamage && State == 0)
+            {
+                NPC.dontTakeDamage = false;
+            }
             if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
             {
                 SoundEngine.PlaySound(talkSound, NPC.Center);
             }
-            if ((JustFinishedTalking || Main.netMode != NetmodeID.SinglePlayer) && ItemQuestSystem.brainLevel == 3 && Main.player[NPC.target].Distance(NPC.Center) < 600)
+            if ((JustFinishedTalking || Main.netMode != NetmodeID.SinglePlayer) && ItemQuestSystem.brainLevel == 3 && Main.player[NPC.target].Distance(NPC.Center) < 600 && NPC.life == NPC.lifeMax)
             {
                 State = 1;
                 Timer = 0;
@@ -122,7 +127,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
-            if (projectile.type == ModContent.ProjectileType<RustedShardProjectile>())
+            if (projectile.type == ModContent.ProjectileType<RustedShardProjectile>() && !NPC.dontTakeDamage)
                 return true;
             return false;
         }
