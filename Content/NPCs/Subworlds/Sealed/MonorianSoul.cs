@@ -464,6 +464,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             spriteBatch.ExitShaderRegion();
             Texture2D radians = TextureAssets.Npc[ModContent.NPCType<WalkingBird>()].Value;
             Texture2D star = Request<Texture2D>("CalamityMod/Particles/Sparkle").Value;
+            Texture2D sigil = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/MonorianSigil").Value;
 
             float sizeMod = 0.5f;
 
@@ -477,7 +478,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             spriteBatch.ExitShaderRegion();
             spriteBatch.EnterShaderRegion(BlendState.Additive);
 
-            spriteBatch.Draw(star, NPC.Center - screenPos, null, Color.White, 0, star.Size() / 2, NPC.scale * 2.4f * sizeMod + (1 + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 2f)), SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(sigil, NPC.Center - screenPos, null, Color.White, 0, sigil.Size() / 2, NPC.scale * 0.8f * sizeMod + (1 + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 2f)) * 0.2f, SpriteEffects.FlipHorizontally, 0);
 
             if (CurrentPhase == PhaseType.Bounce)
             {
