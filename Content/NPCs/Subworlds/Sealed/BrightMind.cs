@@ -83,11 +83,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     NPC.velocity = new Vector2(-50, -26);
                     SoundEngine.PlaySound(PerforatorHive.DeathSound with { Pitch = 0.5f, Volume = 2 }, NPC.Center);
                     Main.LocalPlayer.Calamity().GeneralScreenShakePower = 10;
+                    NPC.noTileCollide = true;
                 }
                 else if (Timer > wait + impact && Timer < wait + impact + knockoff)
                 {
                     NPC.velocity = new Vector2(-40, -26);
                     NPC.rotation -= 0.2f;
+                    NPC.noTileCollide = true;
                 }
                 else if (Timer > wait + impact + knockoff)
                 {
