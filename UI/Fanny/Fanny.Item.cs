@@ -5,6 +5,7 @@ using CalamityMod.Items.Dyes;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Pets;
+using CalamityMod.Items.Placeables.Furniture.BossRelics;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Magic;
@@ -15,6 +16,7 @@ using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.TownNPCs;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Weapons;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,6 +137,9 @@ namespace CalRemix.UI
             HelperMessage.New("SuperiorHealing2", "There you go, here's a little boost! This is why I always carry my trusty potions!",
                 "FannyIdle", HelperMessage.AlwaysShow).ChainAfter().AddStartEvent(FannyHeal);
 
+            HelperMessage.New("MrRelic", "Relics are a fun way of displaying that you have beaten a boss in a difficult difficulty. However! A dark secret that they don't want you to know is that if you spell relic backwards... you get Ciler! Kinda like Killer! It is for this reason that I have decided that henceforth, all relics should be known as treasures.",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.inventory.Any(i => Relics.Contains(i.type)));
+
             //Evil Fanny
             HelperMessage.New("EvilMinions", "Oh, summoner, how nice. I want to ask this in the most genuine way I can, do you play videogames for fun? Did you open up a terraria world and genuinely go \"Oh boy! Let's play summoner! I'm going to have so much fun!\"? No!!! You didn't!!! Half of your minions have braindead AI because you're playing Calamity!!! Just play any other class, man. You make me sad.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ActiveItem().DamageType == DamageClass.Summon && Main.LocalPlayer.numMinions >= 10).SpokenByEvilFanny();
@@ -220,6 +225,27 @@ namespace CalRemix.UI
             ItemID.SuperHealingPotion,
             ModContent.ItemType<SupremeHealingPotion>(),
             ModContent.ItemType<OmegaHealingPotion>()
+        };
+        private static readonly List<int> Relics = new List<int>
+        {
+            ModContent.ItemType<CalamityRelic>(),
+            ModContent.ItemType<OrigenRelic>(),
+            ModContent.ItemType<WulfwyrmRelic>(),
+            ModContent.ItemType<AcidsighterRelic>(),
+            ModContent.ItemType<CarcinogenRelic>(),
+            ModContent.ItemType<DesertScourgeRelic>(),
+            ModContent.ItemType<CrabulonRelic>(),
+            ModContent.ItemType<HiveMindRelic>(),
+            ModContent.ItemType<PerforatorsRelic>(),
+            ModContent.ItemType<SlimeGodRelic>(),
+            ItemID.EyeofCthulhuMasterTrophy,
+            ItemID.KingSlimeMasterTrophy,
+            ItemID.EaterofWorldsMasterTrophy,
+            ItemID.BrainofCthulhuMasterTrophy,
+            ItemID.DeerclopsMasterTrophy,
+            ItemID.QueenBeeMasterTrophy,
+            ItemID.SkeletronMasterTrophy,
+            ItemID.WallofFleshMasterTrophy
         };
         private static void TakeRoxcaliburStuff()
         {
