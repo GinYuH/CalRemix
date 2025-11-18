@@ -391,6 +391,8 @@ namespace CalRemix.Core
         {
             if (Main.LocalPlayer.name == "Dinnerbone" || Main.LocalPlayer.name == "Grumm")
                 orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, (byte)SpriteEffects.FlipVertically);
+            else if (Main.LocalPlayer.name == "jeb_")
+                orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, Main.DiscoColor, originX, originY, rotationSin, rotationCos, depth, effects);
             else
                 orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, effects);
         }
