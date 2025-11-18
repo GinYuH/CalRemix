@@ -300,7 +300,14 @@ namespace CalRemix
         {
             if (npc.type == NPCType<OldDuke>())
             {
-                npc.active = false;
+                if (BossRushEvent.BossRushActive)
+                {
+                    npc.StrikeInstantKill();
+                }
+                else
+                {
+                    npc.active = false;
+                }
             }
             if (npc.type == NPCType<SepulcherHead>() || npc.type == NPCType<SepulcherBody>() || npc.type == NPCType<SepulcherBodyEnergyBall>() || npc.type == NPCType<SepulcherTail>() || npc.type == NPCType<SepulcherArm>())
             {
