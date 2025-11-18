@@ -438,5 +438,24 @@ Mods: {
 				Tooltip: ""
 			}
 		}
+
+		Prefixes: {
+			Bountiful.DisplayName: Bountiful
+			Clear.DisplayName: Clear
+			Clumsy.DisplayName: Clumsy
+			Erratic.DisplayName: Erratic
+			Erroneous.DisplayName: Erroneous
+			Focused.DisplayName: Focused
+			Fumbling.DisplayName: Fumbling
+			Infinite.DisplayName: Infinite
+			Jittery.DisplayName: Jittery
+			Nervous.DisplayName: Nervous
+			Persistent.DisplayName: Persistent
+			Steady.DisplayName: Steady
+			Torrential.DisplayName: Torrential
+			Turbulent.DisplayName: Turbulent
+			Unstable.DisplayName: Unstable
+			Unyielding.DisplayName: Unyielding
+		}
 	}
 }

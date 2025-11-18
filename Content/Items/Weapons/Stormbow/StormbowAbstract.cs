@@ -210,5 +210,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 Main.projectile[shotProj].noDropItem = true;
             }
         }
+        public override bool WeaponPrefix() => true;
     }
 }
