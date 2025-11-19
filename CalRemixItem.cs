@@ -75,7 +75,7 @@ namespace CalRemix
         public int NonScoria = -1;
         public int BuffedFrameTimer = 64;
         public int BuffedFrameCounter = -1;
-        public float arrowAmount = 1;
+        public float arrowAmount = 0;
         internal static List<int> Torch = new()
         {
             ItemID.RainbowTorch,
