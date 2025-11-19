@@ -142,7 +142,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int amountOfEvil = Main.rand.Next(2, 30);
-            ShootArrowsLikeStormbow(player, source, amountOfEvil, new List<int>{ ProjectileID.LightDisc });
+            ShootArrowsLikeStormbow(player, source, (int)(amountOfEvil + Item.Remix().arrowAmount), new List<int>{ ProjectileID.LightDisc });
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
         public override void AddRecipes()

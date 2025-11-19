@@ -1,4 +1,6 @@
-﻿using CalRemix.Content.DamageClasses;
+﻿using CalamityMod;
+using CalRemix.Content.DamageClasses;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -21,6 +23,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     {
         public override float useTimeMult => 0.75f;
         public override float shootSpeedMult => 0.9f;
+
+        public override float projAmount => 4;
     }
 
     public class Torrential : StormbowPrefix
@@ -29,12 +33,16 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override float useTimeMult => 0.9f;
 
         public override int critBonus => 3;
+
+        public override float projAmount => 4;
     }
 
     public class Unyielding : StormbowPrefix
     {
         public override float damageMult => 1.1f;
         public override float useTimeMult => 0.8f;
+
+        public override float projAmount => 3;
     }
 
     public class Persistent : StormbowPrefix
@@ -56,12 +64,16 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override float shootSpeedMult => 1.3f;
 
         public override int critBonus => 5;
+
+        public override float projAmount => 5;
     }
 
     public class Unstable : StormbowPrefix
     {
         public override float damageMult => 0.8f;
         public override float shootSpeedMult => 0.8f;
+
+        public override float projAmount => -2;
     }
 
     public class Clumsy : StormbowPrefix
@@ -74,6 +86,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     {
         public override float shootSpeedMult => 0.7f;
         public override float useTimeMult => 1.05f;
+
+        public override float projAmount => -1;
     }
 
     public class Fumbling : StormbowPrefix
@@ -81,6 +95,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override float damageMult => 0.95f;
         public override float shootSpeedMult => 0.8f;
         public override float useTimeMult => 1.05f;
+
+        public override float projAmount => -2;
     }
 
     public class Erratic : StormbowPrefix
@@ -93,6 +109,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     {
         public override float damageMult => 0.7f;
         public override float shootSpeedMult => 0.6f;
+
+        public override float projAmount => -2;
     }
 
     public class Jittery : StormbowPrefix
@@ -105,6 +123,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     {
         public override float useTimeMult => 0.6f;
         public override float shootSpeedMult => 0.6f;
+
+        public override float projAmount => -4;
     }
 
     public abstract class StormbowPrefix : ModPrefix, ILocalizedModType
@@ -117,6 +137,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public virtual int critBonus => 0;
         public virtual float shootSpeedMult => 1f;
 
+        public virtual float projAmount => 1f;
+
+
         // Prefix roll logic -- Can also be rolled by throwing weapons, even if stealth strikes don't exist
         public override PrefixCategory Category => PrefixCategory.AnyWeapon;
         public override bool CanRoll(Item item) => item.CountsAsClass<StormbowDamageClass>() && (item.maxStack == 1 || item.AllowReforgeForStackableItem) && GetType() != typeof(StormbowPrefix);
@@ -128,6 +151,66 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             useTimeMult = this.useTimeMult;
             critBonus = this.critBonus;
             shootSpeedMult = this.shootSpeedMult;
+        }
+
+
+        // Applying stealth strike damage
+        public override void Apply(Item item)
+        {
+            int arrowNum = 1;
+            if (item.ModItem != null)
+            {
+                if (item.ModItem is StormbowAbstract abs)
+                {
+                    if (abs.arrowAmount <= 1)
+                        return;
+                    else
+                        arrowNum = abs.arrowAmount;
+                }
+            }
+            int finalAmt = (int)projAmount;
+            if ((int)(arrowNum + projAmount) < 1)
+                finalAmt = 1 - arrowNum;
+            if (item.CountsAsClass<StormbowDamageClass>())
+                item.Remix().arrowAmount = finalAmt;
+        }
+
+        // Changing value based on prefix tier (rarity is set automatically around value multiplier)
+        public override void ModifyValue(ref float valueMult)
+        {
+            float extraStealthDamage = projAmount - 2;
+            float stealthDamageValueMultiplier = 1f;
+            float extraValue = 1f + stealthDamageValueMultiplier * extraStealthDamage;
+            valueMult *= extraValue;
+        }
+
+        // Extra tooltip for new modifier stats
+        public LocalizedText StormbowArrowTooltip => CalRemixHelper.LocalText($"{LocalizationCategory}.StormbowArrowTooltip");
+        public override IEnumerable<TooltipLine> GetTooltipLines(Item item)
+        {
+            // Ignore this if there's no mult
+            if (projAmount == 1f)
+                yield break;
+
+            if (item.ModItem != null)
+            {
+                if (item.ModItem is StormbowAbstract abs)
+                {
+                    if (abs.arrowAmount <= 1)
+                        yield break;
+                }
+            }
+
+            yield return new TooltipLine(Mod, "PrefixStormbowArrowBoost", StormbowArrowTooltip.Format((projAmount >= 1f ? "+" : string.Empty) + (projAmount - 1).ToString("N0"), projAmount > 1f ? GetPrefixText("MoreArrow") : GetPrefixText("LessArrow")))
+            {
+                IsModifier = true,
+                IsModifierBad = projAmount < 1f
+            };
+        }
+
+        public string GetPrefixText(string key)
+        {
+            return CalRemixHelper.LocalText($"{LocalizationCategory}." + key).Value;
         }
     }
 }

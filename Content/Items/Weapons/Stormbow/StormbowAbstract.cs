@@ -155,7 +155,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             // add funny noise to arrow shoot amount
-            int arrowAmountNoisy = arrowAmount;
+            int arrowAmountNoisy = (int)(arrowAmount + Item.Remix().arrowAmount);
             if (!disableArrowRainNoise && Main.rand.NextBool(3))
                 arrowAmountNoisy++;
 
@@ -166,7 +166,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
         public void ShootArrowsFromPoint(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 idealLocation, Vector2 extraSpeed)
         {
-            for (int i = 0; i < arrowAmount; i++)
+            for (int i = 0; i < arrowAmount + Item.Remix().arrowAmount; i++)
             {
                 Vector2 speed = new(Main.rand.Next(-60, 91) * 0.02f, Main.rand.Next(-60, 91) * 0.02f);
                 speed += extraSpeed;

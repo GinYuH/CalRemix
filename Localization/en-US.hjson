@@ -456,6 +456,9 @@ Mods: {
 			Turbulent.DisplayName: Turbulent
 			Unstable.DisplayName: Unstable
 			Unyielding.DisplayName: Unyielding
+			StormbowArrowTooltip: "{0} projectiles"
+			MoreArrow: more
+			LessArrow: less
 		}
 	}
 }
