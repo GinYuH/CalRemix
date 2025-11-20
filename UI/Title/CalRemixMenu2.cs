@@ -173,13 +173,13 @@ namespace CalRemix.UI.Title
                 Main.dayTime = true;
             }
             Texture2D Glow = ModContent.Request<Texture2D>("CalRemix/UI/Title/LogoGlow2").Value;
-            Rectangle rect = new(0, Frame * (Logo.Value.Height / 5), Logo.Value.Width, Logo.Value.Height / 5);
-            spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 471f) + new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), rect, Main.DiscoColor, 0, Glow.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 471f), rect, drawColor, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
+            Rectangle rect = new(0, Frame * (Logo.Value.Height / 12), Logo.Value.Width, Logo.Value.Height / 12);
+            spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 125) + new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), rect, Main.DiscoColor, 0, new Vector2(Logo.Value.Width / 2, Logo.Value.Height / 24), 0.45f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 125), rect, drawColor, 0, new Vector2(Logo.Value.Width / 2, Logo.Value.Height / 24), 0.45f, SpriteEffects.None, 0f);
             FrameCounter++;
             if (FrameCounter > 6)
             {
-                if (Frame > 3)
+                if (Frame > 10)
                     Frame = 0;
                 else
                     Frame++;
