@@ -6,7 +6,7 @@ BossChecklistIntegration: {
 	AcidRainT1.SpawnInfo: Use a [i:CalamityMod/CausticTear] or wait for an acidic downpour to occur naturally after the Acidsighter is defeated.
 }
 
-GameTips.DrunkPrincessTip: No amount of Vodka can attract anyone.
+Buffs.DamageOverTime.Nightwither.DisplayName: Moon Burnt
 
 Items: {
 	Armor: {
@@ -54,5 +54,4 @@ Items: {
 	}
 
 	Weapons.Melee.ArkoftheCosmos.Tooltip: Swings around a large scissor blade which spawns homing stars in a circular pattern
-	Buffs.DamageOverTime.Nightwither.DisplayName: Moon Burnt
 }
