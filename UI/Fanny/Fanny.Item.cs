@@ -140,6 +140,9 @@ namespace CalRemix.UI
             HelperMessage.New("MrRelic", "Relics are a fun way of displaying that you have beaten a boss in a difficult difficulty. However! A dark secret that they don't want you to know is that if you spell relic backwards... you get Ciler! Kinda like Killer! It is for this reason that I have decided that henceforth, all relics should be known as treasures.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.inventory.Any(i => Relics.Contains(i.type)));
 
+            HelperMessage.New("LightPower", "Torches and other lighting mechanisms hold more power than you think! Things like swords and armors, those can only be used on this universe's creatures. On the other hand, light emitting objects shine right through your screen, meaning they have outer-universal power!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.CountItem(ItemID.Torch) >= 300);
+
             //Evil Fanny
             HelperMessage.New("EvilMinions", "Oh, summoner, how nice. I want to ask this in the most genuine way I can, do you play videogames for fun? Did you open up a terraria world and genuinely go \"Oh boy! Let's play summoner! I'm going to have so much fun!\"? No!!! You didn't!!! Half of your minions have braindead AI because you're playing Calamity!!! Just play any other class, man. You make me sad.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ActiveItem().DamageType == DamageClass.Summon && Main.LocalPlayer.numMinions >= 10).SpokenByEvilFanny();
