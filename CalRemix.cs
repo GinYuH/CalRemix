@@ -274,7 +274,6 @@ namespace CalRemix
 
             // all for the eight seconds its all worth it
             cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/Bleeding", (NPC npc) => npc.HasBuff(BuffID.Bleeding));
-
             cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/RealityBearerForClopsBuff", (NPC npc) => npc.HasBuff<RealityBearerForClopsBuff>());
 
             CalRemixPlayer.LoadDyeStats();

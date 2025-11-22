@@ -770,7 +770,6 @@ namespace CalRemix.UI.ElementalSystem
             { "Sacrifice", new Element[]{ Element.Stab, Element.Unholy }},
             { "ScarletDevil", new Element[]{ Element.Stab, Element.Unholy }},
             { "SealedSingularity", new Element[]{ Element.Dark }},
-            { "SearedPan", new Element[]{ Element.Impact, Element.Fire }},
             { "Seraphim", new Element[]{ Element.Stab, Element.Holy }},
             { "ShatteredSun", new Element[]{ Element.Stab, Element.Holy, Element.Fire }},
             { "Supernova", new Element[]{ Element.Impact, Element.Machine, Element.Fire, Element.Cold }},
