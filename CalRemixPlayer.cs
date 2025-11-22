@@ -383,9 +383,7 @@ namespace CalRemix
 		};
 
         public override void Load()
-        {
-            LoadDyeStats();
-            
+        {           
             On_PlayerDrawLayers.DrawPlayer_03_PortableStool += StretchStool;
         }
 

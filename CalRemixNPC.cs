@@ -296,7 +296,14 @@ namespace CalRemix
         {
             if (npc.type == NPCType<OldDuke>())
             {
-                npc.active = false;
+                if (BossRushEvent.BossRushActive)
+                {
+                    npc.StrikeInstantKill();
+                }
+                else
+                {
+                    npc.active = false;
+                }
             }
             if (CalRemixWorld.wizardDisabled)
             {
