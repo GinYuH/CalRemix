@@ -459,6 +459,7 @@ Mods: {
 			StormbowArrowTooltip: "{0} projectiles"
 			MoreArrow: more
 			LessArrow: less
+			FolvsPrefix.DisplayName: Folv's
 		}
 	}
 }

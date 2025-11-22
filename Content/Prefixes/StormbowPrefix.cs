@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalRemix.Content.DamageClasses;
+using CalRemix.Content.Items.Weapons.Stormbow;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace CalRemix.Content.Items.Weapons.Stormbow
+namespace CalRemix.Content.Prefixes
 {
     public class Turbulent : StormbowPrefix
     {

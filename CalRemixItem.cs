@@ -43,6 +43,7 @@ using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.Prefixes;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
@@ -62,6 +63,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
@@ -122,8 +124,17 @@ namespace CalRemix
             ItemType<SoulofPyrogen>(),
         };
 
+        public override void SetStaticDefaults()
+        {
+            foreach (var v in ContentSamples.ItemsByType)
+            {
+                ItemID.Sets.CanGetPrefixes[v.Key] = true;
+            }
+        }
+
         public override void SetDefaults(Item item)
         {
+            item.AllowReforgeForStackableItem = true;
             if (item.type == ItemType<EssenceofHavoc>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofLaw>();
@@ -1216,6 +1227,12 @@ namespace CalRemix
             }
             else
                 return true;
+        }
+
+        public override int ChoosePrefix(Item item, UnifiedRandom rand)
+        {
+            int pfx = base.ChoosePrefix(item, rand);
+            return pfx == -1 ? PrefixType<FolvsPrefix>() : rand.NextBool(2) ? PrefixType<FolvsPrefix>() : pfx;
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

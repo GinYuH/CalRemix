@@ -46,6 +46,7 @@ using CalRemix.Content.Tiles;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
 using System.Threading.Tasks.Dataflow;
+using CalRemix.Content.Prefixes;
 
 namespace CalRemix.Core
 {
@@ -111,6 +112,7 @@ namespace CalRemix.Core
             On_Main.DrawBlack += FixSubworldDrawBlack;
             On_WorldGen.oceanDepths += DisableOceanSubworld;
             On_Main.DrawPlayers_AfterProjectiles += DrawGrass;
+            On_Item.Prefix += FolvsPrefix;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
@@ -128,6 +130,23 @@ namespace CalRemix.Core
         {
             loadStoneHook = null;
             drawHook = null;
+        }
+
+        public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)
+        {            
+            bool ret = orig(self, pfx);
+            if (!orig(self, pfx))
+            {
+                self.prefix = PrefixType<FolvsPrefix>();
+            }
+            else
+            {
+                if (Main.rand.NextBool(30))
+                {
+                    self.prefix = PrefixType<FolvsPrefix>();
+                }
+            }
+            return self.prefix == PrefixType<FolvsPrefix>() ? true : ret;
         }
 
         public static void DrawGrass(On_Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
