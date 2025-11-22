@@ -30,7 +30,7 @@ namespace CalRemix.Core.Scenes
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            if (Main.player[Main.myPlayer].ZoneDesert && !Main.player[Main.myPlayer].ZoneUndergroundDesert && !DownedBossSystem.downedDesertScourge)
+            if (Main.LocalPlayer.ZoneDesert && !Main.LocalPlayer.ZoneUndergroundDesert && !DownedBossSystem.downedDesertScourge)
                 return true;
             return false;
         }
@@ -42,7 +42,7 @@ namespace CalRemix.Core.Scenes
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            if (Main.player[Main.myPlayer].ZoneDesert && !Main.player[Main.myPlayer].ZoneUndergroundDesert && DownedBossSystem.downedDesertScourge)
+            if (Main.LocalPlayer.ZoneDesert && !Main.LocalPlayer.ZoneUndergroundDesert && DownedBossSystem.downedDesertScourge)
                 return true;
             return false;
         }
@@ -74,7 +74,7 @@ namespace CalRemix.Core.Scenes
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            if (Main.player[Main.myPlayer].ZoneShimmer)
+            if (Main.LocalPlayer.ZoneShimmer)
                 return true;
             return false;
         }
@@ -86,11 +86,28 @@ namespace CalRemix.Core.Scenes
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            if (!CalamityPlayer.areThereAnyDamnBosses && Main.player[Main.myPlayer].InModBiome(ModContent.GetInstance<SulphurousSeaBiome>()) && Main.dayTime && Main.cloudAlpha <= 0f && !AcidRainEvent.AcidRainEventIsOngoing)
+            if (!CalamityPlayer.areThereAnyDamnBosses && Main.LocalPlayer.InModBiome(ModContent.GetInstance<SulphurousSeaBiome>()) && Main.dayTime && Main.cloudAlpha <= 0f && !AcidRainEvent.AcidRainEventIsOngoing)
                 return true;
             return false;
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => CalRemixMusic.SulphSeaDayRemix;
+    }
+
+    public class GoblinArmyRemixScene : ModSceneEffect
+    {
+        public override bool IsSceneEffectActive(Player player)
+        {
+            foreach (NPC npc in Main.npc)
+            {
+                if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinThief || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinScout || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinSummoner)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public override SceneEffectPriority Priority => SceneEffectPriority.Event;
+        public override int Music => CalRemixMusic.GoblinArmyRemix;
     }
 }

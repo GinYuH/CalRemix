@@ -170,6 +170,7 @@ namespace CalRemix
         public static readonly int QueenSlimeRemix = Set("Misc/VanillaRemix/QueenSlime");
         public static readonly int ShimmerRemix = Set("Misc/VanillaRemix/Shimmer");
         public static readonly int SulphSeaDayRemix = Set("Misc/VanillaRemix/probably-not-wasteland-by-dm-dokuro-unlisted-on-my-channel-for-my-playlists-and-such-128-ytshorts.savetube.me");
+        public static readonly int GoblinArmyRemix = Set("Misc/VanillaRemix/GoblinArmy");
 
         // Misc
         public static readonly int Menu = Set("Misc/Menu");
