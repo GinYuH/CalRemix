@@ -108,7 +108,12 @@ namespace CalRemix.Content.Projectiles
             }
             if (projectile.type == ProjectileID.PureSpray)
             {
+                PlagueToPureConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
                 BaronStraitConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
+            }
+            if (projectile.type == ProjectileID.CorruptSpray || projectile.type == ProjectileID.CrimsonSpray || projectile.type == ProjectileID.HallowSpray || projectile.type == ProjectileType<AstralSpray>() || projectile.type == ProjectileID.MushroomSpray)
+            {
+                PlagueToNeutralConvert((int)(projectile.position.X + projectile.width / 2) / 16, (int)(projectile.position.Y + projectile.height / 2) / 16, 2);
             }
             if (CalRemixAddon.Wrath != null)
             {
