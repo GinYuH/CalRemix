@@ -6,7 +6,7 @@ BossChecklistIntegration: {
 	AcidRainT1.SpawnInfo: Use a [i:CalamityMod/CausticTear] or wait for an acidic downpour to occur naturally after the Acidsighter is defeated.
 }
 
-Buffs.DamageOverTime.Nightwither.DisplayName: Moon Burnt
+Buffs.Nightwither.DisplayName: Moon Burnt
 
 Items: {
 	Armor: {
