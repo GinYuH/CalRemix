@@ -1,0 +1,85 @@
+﻿using System.Collections.Generic;
+using Terraria;
+using SubworldLibrary;
+using Terraria.WorldBuilding;
+using Terraria.IO;
+using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Terraria.GameContent;
+using Terraria.ID;
+using CalRemix.Core.World;
+using CalRemix.Content.Tiles;
+using Terraria.Graphics.Effects;
+using CalRemix.Content.Tiles.Subworlds.Nowhere;
+
+namespace CalRemix.Core.Subworlds
+{
+    public class NowhereSubworld : Subworld
+    {
+        public override int Height => 600;
+        public override int Width => 800;
+        public override List<GenPass> Tasks => new List<GenPass>()
+        {
+            new NowhereGeneration()
+        };
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+        }
+
+        public override void Update()
+        {
+            Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:NowhereSky", true);
+            SkyManager.Instance.Activate("CalRemix:NowhereSky", Main.LocalPlayer.position);
+            base.Update();
+        }
+
+        public override void DrawMenu(GameTime gameTime)
+        {
+            base.DrawMenu(gameTime);
+            string str = CalRemixHelper.LocalText("StatusText.Screaming").Value;
+            Vector2 size = FontAssets.MouseText.Value.MeasureString(str) * 2;
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, Main.screenWidth * 2, Main.screenHeight * 2), Color.Black, 0, Vector2.Zero, 1, 0, 0);
+            Utils.DrawBorderString(Main.spriteBatch,
+                str,
+                Main.ScreenSize.ToVector2() * 0.5f - size * 0.5f, Color.White, 2);
+
+        }
+    }
+    public class NowhereGeneration : GenPass
+    {
+        public NowhereGeneration() : base("Terrain", 1) { }
+
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Generating terrain"; // Sets the text displayed for this pass
+            Main.worldSurface = Main.maxTilesY - 42; // Hides the underground layer just out of bounds
+            Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
+
+            float surfaceLevel = 0.3f;
+            float caveStart = 0.4f;
+            float emptyLevel = 0.6f;
+
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = (int)(Main.maxTilesY * surfaceLevel); j < Main.maxTilesY; j++)
+                {
+                    if (j < (int)(Main.maxTilesY * caveStart))
+                    {
+                        WorldGen.PlaceTile(i, j, ModContent.TileType<NowhereBlock>(), true, true);
+                    }
+                    else if (j < (int)(Main.maxTilesY * emptyLevel))
+                    {
+                        if (WorldGen.genRand.Next((int)MathHelper.Lerp(0, 50, Utils.GetLerpValue((int)(Main.maxTilesY * caveStart), (int)(Main.maxTilesY * emptyLevel), j, true))) < 5)
+                        {
+                            WorldGen.PlaceTile(i, j, ModContent.TileType<NowhereBlock>(), true, true);
+                        }
+                    }
+                }
+            }
+            Main.spawnTileY = (int)(surfaceLevel * Main.maxTilesY);
+            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<ScreamDoor>());
+        }
+    }
+}

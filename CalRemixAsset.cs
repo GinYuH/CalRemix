@@ -56,6 +56,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:ClownWorldSky"] = new ClownWorldSky();
                 Filters.Scene["CalRemix:EaterSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseOpacity(0f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:EaterSky"] = new EaterSky();
+                Filters.Scene["CalRemix:NowhereSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:NowhereSky"] = new NowhereSky();
 
 
                 Filters.Scene["CalRemix:Sealed"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
