@@ -43,6 +43,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Nowhere
                 if ((Timer % 150 == 0) || Math.Abs(NPC.velocity.X) < 1 || Math.Abs(NPC.velocity.Y) < 1)
                 {
                     NPC.velocity = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(1, 2);
+                    if (Main.rand.NextBool(3) && NPC.velocity.Y < 0)
+                    {
+                        NPC.velocity.Y *= -1;
+                    }
                 }
                 if (Main.player[NPC.target].Distance(NPC.Center) < 100)
                 {

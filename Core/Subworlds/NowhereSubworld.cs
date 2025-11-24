@@ -12,6 +12,7 @@ using Terraria.Graphics.Effects;
 using CalRemix.Content.Tiles.Subworlds.Nowhere;
 using System;
 using CalRemix.Content.NPCs.Subworlds.Nowhere;
+using Terraria.Utilities;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -36,6 +37,12 @@ namespace CalRemix.Core.Subworlds
         {
             new NowhereGeneration()
         };
+
+        public override bool GetLight(Tile tile, int x, int y, ref FastRandom rand, ref Vector3 color)
+        {
+            color = Color.White.ToVector3();
+            return false;
+        }
 
         public override void OnEnter()
         {
@@ -90,6 +97,10 @@ namespace CalRemix.Core.Subworlds
                         {
                             WorldGen.PlaceTile(i, j, ModContent.TileType<NowhereBlock>(), true, true);
                         }
+                    }
+                    if (j == (int)Main.maxTilesY * surfaceLevel)
+                    {
+                        WorldGen.PlaceObject(i, j - 1, ModContent.TileType<NowhereBacking>(), true, i % 12);
                     }
                 }
             }
