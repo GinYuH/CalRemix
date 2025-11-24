@@ -186,6 +186,11 @@ Mods: {
 				DisplayName: Edis Biome
 				TownNPCDialogueName: the Edis Biome
 			}
+
+			NowhereBiome: {
+				DisplayName: Nowhere
+				TownNPCDialogueName: the Nowhere Biome
+			}
 		}
 
 		Enchantments: {

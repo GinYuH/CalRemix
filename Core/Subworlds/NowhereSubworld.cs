@@ -11,11 +11,25 @@ using CalRemix.Core.World;
 using CalRemix.Content.Tiles;
 using Terraria.Graphics.Effects;
 using CalRemix.Content.Tiles.Subworlds.Nowhere;
+using System;
+using CalRemix.Content.NPCs.Subworlds.Nowhere;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class NowhereSubworld : Subworld
+    public class NowhereSubworld : Subworld, ICustomSpawnSubworld, IDisableOcean
     {
+        public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
+        {
+            List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
+            list.Add(item: (ModContent.NPCType<Noone>(), 1f, (NPCSpawnInfo n) => n.Player.Center.Y < (16 * Main.maxTilesY * 0.4f)));
+            return list;
+        }
+
+        int ICustomSpawnSubworld.MaxSpawns { get => 12; }
+        float ICustomSpawnSubworld.SpawnMult { get => 0.1f; }
+
+        public bool OverrideVanilla => true;        
+
         public override int Height => 600;
         public override int Width => 800;
         public override List<GenPass> Tasks => new List<GenPass>()
