@@ -221,6 +221,15 @@ namespace CalRemix.Content.Tiles
         public override Color DoorColor => Color.Gray;
     }
 
+    public class SPDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/GreatSea/AnomalyDisciple3";
+        public override Subworld BoundSubworld => ModContent.GetInstance<SingularPointSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.DarkSeaGreen;
+    }
+
     public class EdisDoor : SubworldDoorPlaced
     {
         public override string PreviewTexName => "CalRemix/Content/NPCs/CarrierHead";

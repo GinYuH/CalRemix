@@ -5911,7 +5911,7 @@ Hermes: {
 
 SilverWater: {
 	DisplayName: Silver Water
-	Tooltip: ""
+	Tooltip: Barrages enemies with mercury rockets
 }
 
 AnechoicAnchor: {
@@ -5935,4 +5935,9 @@ NowhereStaff: {
 		This has a 25 second cooldown
 		'Not for the heartless'
 		'''
+}
+
+Prasinite: {
+	DisplayName: Prasinite
+	Tooltip: ""
 }

@@ -60,6 +60,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:NowhereSky"] = new NowhereSky();
                 Filters.Scene["CalRemix:EdisSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(EdisSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:EdisSky"] = new EdisSky();
+                Filters.Scene["CalRemix:SPSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:SPSky"] = new SPSky();
 
 
                 Filters.Scene["CalRemix:Sealed"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);

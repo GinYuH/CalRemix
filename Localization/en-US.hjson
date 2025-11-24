@@ -191,6 +191,11 @@ Mods: {
 				DisplayName: Nowhere
 				TownNPCDialogueName: the Nowhere Biome
 			}
+
+			SPBiome: {
+				DisplayName: S P Biome
+				TownNPCDialogueName: the S P Biome
+			}
 		}
 
 		Enchantments: {

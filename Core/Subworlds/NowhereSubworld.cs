@@ -53,6 +53,11 @@ namespace CalRemix.Core.Subworlds
         {
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:NowhereSky", true);
             SkyManager.Instance.Activate("CalRemix:NowhereSky", Main.LocalPlayer.position);
+
+            if (Main.LocalPlayer.Center.Y > Main.maxTilesY * 16 * 0.9f)
+            {
+                SubworldSystem.Enter<SingularPointSubworld>();
+            }
             base.Update();
         }
 
