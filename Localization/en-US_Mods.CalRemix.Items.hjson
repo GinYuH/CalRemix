@@ -5918,3 +5918,8 @@ AnechoicAnchor: {
 	DisplayName: Anechoic Anchor
 	Tooltip: ""
 }
+
+LionDogMoth: {
+	DisplayName: Lion Dog Repulsor Moth
+	Tooltip: ""
+}
