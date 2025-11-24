@@ -221,6 +221,14 @@ namespace CalRemix.Content.Tiles
         public override Color DoorColor => Color.Gray;
     }
 
+    public class EdisDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/NPCs/CarrierHead";
+        public override Subworld BoundSubworld => ModContent.GetInstance<EdisSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.Gray;
+    }
 
     // this is my special door for testing so it goes at the bottom always
     public class TestDoor : SubworldDoorPlaced

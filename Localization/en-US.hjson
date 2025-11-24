@@ -181,6 +181,11 @@ Mods: {
 				DisplayName: Sealed Caverns
 				TownNPCDialogueName: the Sealed Underground Biome
 			}
+
+			EdisBiome: {
+				DisplayName: Edis Biome
+				TownNPCDialogueName: the Edis Biome
+			}
 		}
 
 		Enchantments: {

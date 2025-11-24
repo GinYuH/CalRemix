@@ -58,6 +58,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:EaterSky"] = new EaterSky();
                 Filters.Scene["CalRemix:NowhereSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:NowhereSky"] = new NowhereSky();
+                Filters.Scene["CalRemix:EdisSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(EdisSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:EdisSky"] = new EdisSky();
 
 
                 Filters.Scene["CalRemix:Sealed"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
@@ -108,6 +110,7 @@ namespace CalRemix
         // Subworlds
         public static readonly int Exosphere = Set("Biomes/Subworlds/Exosphere");
         public static readonly int ClownWorld = Set("Biomes/Subworlds/ClownWorld");
+        public static readonly int Edis = Set("needs replacement/edistemp");
 
         // Biomes
         public static readonly int AsbestosCaves = Set("Biomes/AsbestosCaves");
