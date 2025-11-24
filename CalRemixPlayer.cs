@@ -275,6 +275,7 @@ namespace CalRemix
         public bool exolotl;
         public bool cSlime3;
         public bool cultacean;
+        public bool nowhereDragons;
 
         // Pets
         public bool nothing;
@@ -1430,6 +1431,7 @@ namespace CalRemix
             sickcell = false;
 			neuron = false;
             soldier = false;
+            nowhereDragons = false;
 			corrosiveEye = false;
             onyxFist = false;
 			astEffigy = false;

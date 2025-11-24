@@ -447,3 +447,8 @@ RealityBearerForClopsBuff: {
 	DisplayName: Reality Bearer For Clops Buff
 	Description: Mods.CalRemix.Buffs.RealityBearerForClopsBuff.Description
 }
+
+NowhereDragonBuff: {
+	DisplayName: Rift Dragons
+	Description: Seems they're going nowhere
+}

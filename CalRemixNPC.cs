@@ -1841,19 +1841,38 @@ namespace CalRemix
             }
 
         }
+
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (player.Remix().taintedWrath)
             {
                 modifiers.SourceDamage *= 0;
             }
+            foreach (Projectile p in Main.ActiveProjectiles)
+            {
+                if (p.type == ProjectileType<NowhereAura>())
+                {
+                    if (p.Distance(npc.Center) < 100)
+                        modifiers.SourceDamage *= 1.7f;
+                }
+            }
         }
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.owner > -1)
-            if (Main.player[projectile.owner].Remix().taintedWrath)
             {
-                modifiers.SourceDamage *= 0;
+                if (Main.player[projectile.owner].Remix().taintedWrath)
+                {
+                    modifiers.SourceDamage *= 0;
+                }
+            }
+            foreach (Projectile p in Main.ActiveProjectiles)
+            {
+                if (p.type == ProjectileType<NowhereAura>())
+                {
+                    if (p.Distance(npc.Center) < 100)
+                        modifiers.SourceDamage *= 1.7f;
+                }
             }
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)

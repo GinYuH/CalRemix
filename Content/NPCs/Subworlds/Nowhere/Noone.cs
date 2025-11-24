@@ -10,6 +10,7 @@ using System;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod;
 using Terraria.Audio;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Subworlds.Nowhere
 {
@@ -104,6 +105,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Nowhere
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
+        }
+
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ModContent.ItemType<NowhereStaff>(), 50);
         }
     }
 }

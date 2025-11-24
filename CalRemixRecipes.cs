@@ -479,6 +479,10 @@ namespace CalRemix
                 {
                     recipe.AddIngredient(ItemType<WoodenEmblem>());
                 }
+                if (recipe.HasResult(ItemType<KingofConstellationsTenryu>()))
+                {
+                    recipe.AddIngredient(ItemType<NowhereStaff>());
+                }
                 #endregion
                 #region Remove
                 if (recipe.HasResult(ItemType<DefiledGreatsword>()))
