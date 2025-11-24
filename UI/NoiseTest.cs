@@ -42,7 +42,7 @@ namespace CalRemix.UI.SubworldMap
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            return;
+            //return;
             Main.blockInput = true;
             if (Main.mouseLeft)
             {
@@ -206,6 +206,8 @@ namespace CalRemix.UI.SubworldMap
                                 PerlinEase.EaseInOut => "Ease in out",
                                 PerlinEase.EaseOutTop => "Ease out top",
                                 PerlinEase.EaseOutBottom => "Ease out bottom",
+                                PerlinEase.EaseAirTopSolidBottom => "Ease Air Top\nSolid Bottom",
+                                PerlinEase.EaseSolidTopAirBottom => "Ease Solid Top\nAir Bottom",
                                 _ => "None",
 
                             };
@@ -222,7 +224,7 @@ namespace CalRemix.UI.SubworldMap
                                     {
                                         easingType = (PerlinEase)((int)easingType - 1);
                                     }
-                                    easingType = (PerlinEase)MathHelper.Clamp((int)easingType, 0, 6);
+                                    easingType = (PerlinEase)MathHelper.Clamp((int)easingType, 0, 8);
                                 }
                             };
                         }
@@ -368,6 +370,26 @@ namespace CalRemix.UI.SubworldMap
                             else
                             {
                                 endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0.5f, bottomStop, (j / (float)area.Height), true));
+                            }
+                            break;
+                        case PerlinEase.EaseAirTopSolidBottom:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(0, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noiseThreshold, noise, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
+                            }
+                            break;
+                        case PerlinEase.EaseSolidTopAirBottom:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noiseThreshold, 0, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
                             }
                             break;
                     }

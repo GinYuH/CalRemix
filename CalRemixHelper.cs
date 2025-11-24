@@ -487,7 +487,15 @@ namespace CalRemix
             /// <summary>
             /// Top is air, bottom is noise
             /// </summary>
-            EaseOutTop = 6
+            EaseOutTop = 6,
+            /// <summary>
+            /// Top is air, middle is noise, bottom is solid
+            /// </summary>
+            EaseAirTopSolidBottom = 7,
+            /// <summary>
+            /// Top is solid, middle is noise, bottom is air
+            /// </summary>
+            EaseSolidTopAirBottom = 8,
         }
 
         /// <summary>
@@ -556,6 +564,26 @@ namespace CalRemix
                             else
                             {
                                 endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0.5f, bottomStop, (j / (float)area.Height), true));
+                            }
+                            break;
+                        case PerlinEase.EaseAirTopSolidBottom:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(0, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noiseThreshold, noise, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
+                            }
+                            break;
+                        case PerlinEase.EaseSolidTopAirBottom:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noiseThreshold, 0, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
                             }
                             break;
                     }
