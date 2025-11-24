@@ -5930,7 +5930,8 @@ NowhereStaff: {
 		'''
 		Summons the Light and Dark Rift Dragons to fight for you
 		The dragons grow in size and damage based on how many minion slots the user has remaining
-		<right> to summon an aura on your cursor that causes enemies within it to take 70% more damage
+		Use the weapon while the dragons are out to summon an aura on your cursor
+		Enemies caught within the aura take 70% more damage
 		This has a 25 second cooldown
 		'Not for the heartless'
 		'''
