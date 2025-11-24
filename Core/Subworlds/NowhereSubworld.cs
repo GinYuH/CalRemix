@@ -85,7 +85,8 @@ namespace CalRemix.Core.Subworlds
                     }
                     else if (j < (int)(Main.maxTilesY * emptyLevel))
                     {
-                        if (WorldGen.genRand.Next((int)MathHelper.Lerp(0, 50, Utils.GetLerpValue((int)(Main.maxTilesY * caveStart), (int)(Main.maxTilesY * emptyLevel), j, true))) < 5)
+                        float comp = Utils.GetLerpValue((int)(Main.maxTilesY * caveStart), (int)(Main.maxTilesY * emptyLevel), j, true);
+                        if (WorldGen.genRand.Next((int)MathHelper.Lerp(0, 100, comp)) < MathHelper.Lerp(20, 1, comp))
                         {
                             WorldGen.PlaceTile(i, j, ModContent.TileType<NowhereBlock>(), true, true);
                         }

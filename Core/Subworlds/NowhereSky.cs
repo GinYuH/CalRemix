@@ -36,7 +36,7 @@ namespace CalRemix.Core.Subworlds
         }
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            float value = 188 / 255f;
+            float value = MathHelper.Lerp(188 / 255f, 10 / 255f, Utils.GetLerpValue(Main.maxTilesY * 0.4f, Main.maxTilesY * 0.8f, Main.LocalPlayer.Center.Y / 16f, true));
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.screenWidth, (int)Main.screenHeight), new Color(value, value, value));
             Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
 
