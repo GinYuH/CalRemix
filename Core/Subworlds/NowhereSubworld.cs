@@ -105,7 +105,6 @@ namespace CalRemix.Core.Subworlds
                 }
             }
             Main.spawnTileY = (int)(surfaceLevel * Main.maxTilesY);
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<ScreamDoor>());
         }
     }
 }
