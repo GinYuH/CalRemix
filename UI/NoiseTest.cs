@@ -42,7 +42,7 @@ namespace CalRemix.UI.SubworldMap
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //return;
+            return;
             Main.blockInput = true;
             if (Main.mouseLeft)
             {

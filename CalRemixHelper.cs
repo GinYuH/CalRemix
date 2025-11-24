@@ -524,12 +524,13 @@ namespace CalRemix
                 noiseSize.Y = 120f;
             }
 
+            int seed = (int)Main.GlobalTimeWrappedHourly;
             // Create a perlin noise map
             for (int i = 0; i < area.Width; i++)
             {
                 for (int j = 0; j < area.Height; j++)
                 {
-                    float noise = CalamityUtils.PerlinNoise2D(i / noiseSize.X, j / noiseSize.Y, 3, (int)Main.GlobalTimeWrappedHourly) * 0.5f + 0.5f;
+                    float noise = CalamityUtils.PerlinNoise2D(i / noiseSize.X, j / noiseSize.Y, 3, seed) * 0.5f + 0.5f;
 
                     float endPoint = noiseThreshold;
                     switch (ease)
