@@ -63,8 +63,8 @@ namespace CalRemix.Core.Subworlds
                 {
                     CameraSavePoint = Main.LocalPlayer.Center;
                 }
-                //Main.blockInput = true;
-                //Main.LocalPlayer.mount.Dismount(Main.LocalPlayer);
+                Main.blockInput = true;
+                Main.LocalPlayer.mount.Dismount(Main.LocalPlayer);
                 CameraPanSystem.CameraFocusPoint = CameraSavePoint;
                 CameraPanSystem.CameraPanInterpolant = 1;
                 if (Main.LocalPlayer.Center.Y > Main.maxTilesY * 16 * 0.9f)
