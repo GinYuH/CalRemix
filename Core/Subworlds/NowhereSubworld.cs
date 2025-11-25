@@ -13,6 +13,7 @@ using CalRemix.Content.Tiles.Subworlds.Nowhere;
 using System;
 using CalRemix.Content.NPCs.Subworlds.Nowhere;
 using Terraria.Utilities;
+using CalRemix.Core.Graphics;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -49,14 +50,35 @@ namespace CalRemix.Core.Subworlds
             base.OnEnter();
         }
 
+        public static Vector2 CameraSavePoint = new();
+
         public override void Update()
         {
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:NowhereSky", true);
             SkyManager.Instance.Activate("CalRemix:NowhereSky", Main.LocalPlayer.position);
 
-            if (Main.LocalPlayer.Center.Y > Main.maxTilesY * 16 * 0.9f)
+            if (Main.LocalPlayer.Center.Y > Main.maxTilesY * 16 * 0.8f)
             {
-                SubworldSystem.Enter<SingularPointSubworld>();
+                if (CameraSavePoint == default)
+                {
+                    CameraSavePoint = Main.LocalPlayer.Center;
+                }
+                //Main.blockInput = true;
+                //Main.LocalPlayer.mount.Dismount(Main.LocalPlayer);
+                CameraPanSystem.CameraFocusPoint = CameraSavePoint;
+                CameraPanSystem.CameraPanInterpolant = 1;
+                if (Main.LocalPlayer.Center.Y > Main.maxTilesY * 16 * 0.9f)
+                {
+                    Main.blockInput = false;
+                    CameraPanSystem.CameraPanInterpolant = 0;
+                    SubworldSystem.Enter<SingularPointSubworld>();
+                }
+            }
+            else
+            {
+                Main.blockInput = false;
+                CameraPanSystem.CameraPanInterpolant = 0;
+                CameraSavePoint = Vector2.Zero;
             }
             base.Update();
         }
