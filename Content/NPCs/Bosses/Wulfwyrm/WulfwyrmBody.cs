@@ -29,7 +29,7 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             npc.Calamity().unbreakableDR = true;
             npc.LifeMaxNERB(3500, 5000, 1500000);
 
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             npc.lifeMax += (int)(npc.lifeMax * HPBoost);
             npc.damage = 10;
             npc.ModNPC.AIType = -1;

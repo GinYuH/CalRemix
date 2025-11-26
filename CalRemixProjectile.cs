@@ -597,7 +597,7 @@ namespace CalRemix.Content.Projectiles
                 float drawRotation = projectile.rotation + (projectile.spriteDirection == -1 && m.State != 0 ? MathHelper.Pi : 0f);
                 SpriteEffects effects = projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-                if (CalamityConfig.Instance.Afterimages && (projectile.ai[0] == 1 || projectile.ai[0] == 3))
+                if (CalamityClientConfig.Instance.Afterimages && (projectile.ai[0] == 1 || projectile.ai[0] == 3))
                 {
                     for (int i = 0; i < projectile.oldPos.Length; i++)
                     {

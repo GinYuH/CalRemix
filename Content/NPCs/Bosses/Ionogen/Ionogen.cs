@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
             NPC.LifeMaxNERB(30000, 36000, 300000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
@@ -98,7 +98,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
         {
             NPC.TargetClosest();
             // Start a thunderstorm
-            if (!CalamityMod.CalamityConfig.Instance.BossesStopWeather)
+            if (!CalamityMod.CalamityServerConfig.Instance.BossesStopWeather)
             {
                 Main.raining = true;
                 Main.cloudBGActive = 1f;

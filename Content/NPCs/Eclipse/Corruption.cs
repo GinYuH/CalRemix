@@ -139,7 +139,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                 sprite = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Eclipse/Corruption" + (NPC.ai[0] + 1)).Value;
             }
 
-            if (CalamityConfig.Instance.Afterimages)
+            if (CalamityClientConfig.Instance.Afterimages)
             {
                 for (int i = 1; i < 22; i += 4)
                 {

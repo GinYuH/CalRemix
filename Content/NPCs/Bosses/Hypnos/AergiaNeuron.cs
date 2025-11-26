@@ -1114,7 +1114,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             int afterimageAmt = 7;
 
 
-            if (CalamityConfig.Instance.Afterimages && afterimages)
+            if (CalamityClientConfig.Instance.Afterimages && afterimages)
             {
                 for (int i = 1; i < afterimageAmt; i += 2)
                 {
@@ -1230,7 +1230,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                 Color eyecolor = hypnos.ModNPC<Hypnos>().ragetimer > 0 ? Color.Red : Lighting.GetColor((int)hypnos.position.X / 16, (int)hypnos.position.Y / 16);
                 Color glowcolor = hypnos.ModNPC<Hypnos>().ragetimer > 0 ? Color.Red : Color.White;
 
-                if (CalamityConfig.Instance.Afterimages && hypnos?.ModNPC<Hypnos>().afterimages == true)
+                if (CalamityClientConfig.Instance.Afterimages && hypnos?.ModNPC<Hypnos>().afterimages == true)
                 {
                     for (int i = 1; i < afterimageAmt; i += 2)
                     {
