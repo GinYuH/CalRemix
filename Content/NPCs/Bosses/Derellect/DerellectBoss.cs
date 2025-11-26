@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs.Bosses.Derellect
             NPC.lavaImmune = true;
             NPC.aiStyle = -1;
             NPC.LifeMaxNERB(42000, 55000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.Item14;

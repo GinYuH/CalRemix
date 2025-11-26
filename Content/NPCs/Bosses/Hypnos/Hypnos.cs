@@ -69,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             NPC.lavaImmune = true;
             NPC.aiStyle = -1;
             NPC.LifeMaxNERB(1320000, 1980000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.DeathSound = CalamityMod.Sounds.CommonCalamitySounds.ExoDeathSound;
             NPC.knockBackResist = 0f;
@@ -809,7 +809,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                 Color eyecolor = NPC.ModNPC<Hypnos>().ragetimer > 0 ? Color.Red : Lighting.GetColor((int)NPC.position.X / 16, (int)NPC.position.Y / 16);
                 Color glowcolor = NPC.ModNPC<Hypnos>().ragetimer > 0 ? Color.Red : Color.White;
 
-                if (CalamityConfig.Instance.Afterimages && NPC?.ModNPC<Hypnos>().afterimages == true)
+                if (CalamityClientConfig.Instance.Afterimages && NPC?.ModNPC<Hypnos>().afterimages == true)
                 {
                     for (int i = 1; i < afterimageAmt; i += 2)
                     {

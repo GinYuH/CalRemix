@@ -41,7 +41,7 @@ namespace CalRemix.Core.Graphics
         /// <param name="lifetime">How long the effect should last</param>
         public static void SetBlurEffect(Vector2 position, float intensity, int lifetime)
         {
-            if (CalamityConfig.Instance.ScreenshakePower <= 0 || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
+            if (CalamityClientConfig.Instance.ScreenshakePower <= 0 || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
                 return;
 
             BlurPosition = position;
@@ -75,7 +75,7 @@ namespace CalRemix.Core.Graphics
         /// <param name="lifetime">How long the effect should last</param>
         public static void SetFlashEffect(Vector2 position, float intensity, int lifetime)
         {
-            if (CalamityConfig.Instance.ScreenshakePower <= 0 || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
+            if (CalamityClientConfig.Instance.ScreenshakePower <= 0 || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
                 return;
 
             FlashPosition = position;
@@ -101,7 +101,7 @@ namespace CalRemix.Core.Graphics
 
         public static void SetChromaticAberrationEffect(Vector2 position, float intensity, int lifetime)
         {
-            if (CalamityConfig.Instance.ScreenshakePower <= 0 || AberrationLifetimeRatio > 0f || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
+            if (CalamityClientConfig.Instance.ScreenshakePower <= 0 || AberrationLifetimeRatio > 0f || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
                 return;
 
             AberrationPosition = position;

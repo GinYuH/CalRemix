@@ -189,7 +189,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.defense = 60;
             NPC.DR_NERD(0.3f);
             NPC.LifeMaxNERB(161300, 187850, 675000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
