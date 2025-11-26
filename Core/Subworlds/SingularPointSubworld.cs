@@ -33,8 +33,8 @@ namespace CalRemix.Core.Subworlds
         public override bool GetLight(Tile tile, int x, int y, ref FastRandom rand, ref Vector3 color)
         {
             if (tile.HasTile)
-                return true;
-            if (tile.LiquidAmount > 0)
+                color = Color.White.ToVector3() * 0.01f;
+            else if (tile.LiquidAmount > 0)
                 color = Color.LightSeaGreen.ToVector3();
             else
                 color = Color.DarkSeaGreen.ToVector3();
