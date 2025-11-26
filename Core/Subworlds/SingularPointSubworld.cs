@@ -15,6 +15,9 @@ using CalRemix.Content.NPCs.Subworlds.Nowhere;
 using Terraria.Utilities;
 using CalRemix.Content.Tiles.Subworlds.SingularPoint;
 using CalamityMod;
+using Terraria.ID;
+using Terraria.DataStructures;
+using CalRemix.Content.NPCs.Subworlds.SingularPoint;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -47,6 +50,19 @@ namespace CalRemix.Core.Subworlds
         {
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:SPSky", true);
             SkyManager.Instance.Activate("CalRemix:SPSky", Main.LocalPlayer.position);
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (Math.Abs(p.Center.X - Main.maxTilesX * 16 * 0.5f) < 50)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyTwo>()))
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            NPC.NewNPC(new EntitySource_WorldEvent(), (int)p.Center.X, (int)p.Center.Y, ModContent.NPCType<AnomalyTwo>());
+                        }
+                    }
+                }
+            }
             base.Update();
         }
 

@@ -294,6 +294,22 @@ namespace CalRemix
         {
             return SpawnNewNPC(source, (int)position.X, (int)position.Y, type, minSlot, ai0, ai1, ai2, ai3, target, npcTasks, awakenMessage);
         }
+
+        /// <summary>
+        /// Spawns a NPC at this entity's center
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="id"></param>
+        /// <param name="ai0"></param>
+        /// <param name="ai1"></param>
+        /// <param name="ai2"></param>
+        /// <param name="ai3"></param>
+        /// <returns></returns>
+        public static NPC QuickSpawnNPC(this Entity entity, int id, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f, float ai3 = 0f)
+        {
+            return SpawnNewNPC(entity.GetSource_FromThis(), (int)entity.Center.X, (int)entity.Center.Y, id, ai0: ai0, ai1: ai1, ai2: ai2, ai3: ai3);
+        }
+
         public static void DestroyTile(int i, int j, bool fail = false, bool effectOnly = false, bool noItem = false)
         {
             WorldGen.KillTile(i, j, fail, effectOnly, noItem);
