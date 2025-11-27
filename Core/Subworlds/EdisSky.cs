@@ -52,7 +52,7 @@ namespace CalRemix.Core.Subworlds
                 for (int i = 0; i < 201; i++)
                 {
                     spriteBatch.Draw(face, Vector2.Zero + new Vector2(xPos + offset * flip.ToDirectionInt() - 100, height), null, Color.White * 0.6f, 0, face.Size() / 2, 1, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-                    if (CalamityConfig.Instance.Afterimages)
+                    if (CalamityClientConfig.Instance.Afterimages)
                     {
                         for (int j = 0; j < 4; j++)
                         {

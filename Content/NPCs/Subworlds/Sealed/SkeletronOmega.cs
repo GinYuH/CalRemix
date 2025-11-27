@@ -125,7 +125,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SealedFieldsBiome>().Type };
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.DR_NERD(0.3f);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             AIType = -1;
             NPC.knockBackResist = 0f;

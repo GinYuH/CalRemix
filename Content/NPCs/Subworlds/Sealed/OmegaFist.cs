@@ -45,7 +45,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = true;
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.DR_NERD(0.05f);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             AIType = -1;
             NPC.knockBackResist = 0f;

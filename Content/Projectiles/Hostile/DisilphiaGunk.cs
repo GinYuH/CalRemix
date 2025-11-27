@@ -57,7 +57,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             }
 
             bool flag = false;
-            if (CalamityConfig.Instance.Afterimages)
+            if (CalamityClientConfig.Instance.Afterimages)
             {
                 Vector2 vector = proj.Size / 2f;
                 Color alpha = proj.GetAlpha(lightColor);
@@ -81,7 +81,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                 }
             }
 
-            if (!CalamityConfig.Instance.Afterimages || ProjectileID.Sets.TrailCacheLength[proj.type] <= 0 || flag)
+            if (!CalamityClientConfig.Instance.Afterimages || ProjectileID.Sets.TrailCacheLength[proj.type] <= 0 || flag)
             {
                 Vector2 vector2 = proj.Center;
                 Main.spriteBatch.Draw(texture, vector2 - Main.screenPosition + new Vector2(0f, proj.gfxOffY), rectangle, proj.GetAlpha(lightColor), rotation, origin, scale, effects, 0f);
