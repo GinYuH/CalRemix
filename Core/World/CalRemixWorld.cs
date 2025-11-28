@@ -59,6 +59,8 @@ namespace CalRemix.Core.World
 {
     public class CalRemixWorld : ModSystem
     {
+        public DateTime BlackFriday = new();
+
         public const int ROACHDURATIONSECONDS = 22;
         public const int maxStoryTime = 660;
 
@@ -1011,8 +1013,15 @@ namespace CalRemix.Core.World
                 }
             }
             // Roach Mayhem!!!
-            // If the date is Black Friday (well for 2025 at least), start incrementing the timer if it isn't at -1
-            if (DateTime.Now.Month == 11 && DateTime.Now.Day == 28 && RoachCountdown >= 0 && !seenRoaches)
+            // If the date is Black Friday, start incrementing the timer if it isn't at -1
+            if (BlackFriday == default)
+            {
+                DateTime november1 = new DateTime(DateTime.Now.Year, 11, 1);
+                int firstThursday = ((int)DayOfWeek.Thursday - (int)november1.DayOfWeek + 7) % 7 + 1;
+                DateTime thanksgiving = november1.AddDays(firstThursday - 1 + 21);
+                BlackFriday = thanksgiving.AddDays(1);
+            }
+            if (DateTime.Now.Month == BlackFriday.Month && DateTime.Now.Day == BlackFriday.Day && RoachCountdown >= 0 && !seenRoaches)
             {
                 RoachCountdown++;
             }
