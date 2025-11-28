@@ -428,6 +428,7 @@ namespace CalRemix.Core.World
             GetData(ref canGenerateBaron, "canBaron", tag);
             GetData(ref generatedHydrogen, "genHydrogen", tag);
             GetData(ref generatedGrime, "grime", tag);
+            GetData(ref generatedPlague, "plague", tag);
             GetData(ref seenRoaches, "seenRoach", tag);
             GetData(ref seenMBP, "mbp", tag);
             GetData(ref metNoxus, "metNoxus", tag);
