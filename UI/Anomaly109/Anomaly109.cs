@@ -577,6 +577,7 @@ namespace CalRemix.UI.Anomaly109
                 CalRemixWorld.sneakerheadMode = !CalRemixWorld.sneakerheadMode;
                 SneakersRetheme.UpdateChanges();
             }, () => CalRemixWorld.sneakerheadMode));
+            options.Add(new Anomaly109Option("sugarcane", "folvs_prefix", "Toggles Folv's prefix from appearing on new items", () => { CalRemixWorld.folvsPrefix = !CalRemixWorld.folvsPrefix; }, () => CalRemixWorld.folvsPrefix));
             options.Add(new Anomaly109Option("colour", "dye_stats", "Toggles stat boosts from dyes", () => { CalRemixWorld.dyeStats = !CalRemixWorld.dyeStats; }, () => CalRemixWorld.dyeStats));
             options.Add(new Anomaly109Option("saharaslicers", "weapon_reworks", "Toggles reworks for Ark, Enchanted Sword, and javelins", () => { CalRemixWorld.weaponReworks = !CalRemixWorld.weaponReworks; }, () => CalRemixWorld.weaponReworks));
             options.Add(new Anomaly109Option("roverdrive", "accessory_reworks", "Toggles reworks and recipe additions for accessories", () => { Recipes.MassModifyIngredient(CalRemixWorld.accReworks, Recipes.accessoryCrafts); CalRemixWorld.accReworks = !CalRemixWorld.accReworks; }, () => CalRemixWorld.accReworks));

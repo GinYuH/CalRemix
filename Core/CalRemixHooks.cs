@@ -134,10 +134,15 @@ namespace CalRemix.Core
 
         public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)
         {            
+            if (!CalRemixWorld.folvsPrefix)
+            {
+                return orig(self, pfx);
+            }
             bool ret = orig(self, pfx);
             if (!orig(self, pfx))
             {
-                self.prefix = PrefixType<FolvsPrefix>();
+                if (pfx <= -2 || (pfx == -1 && Main.rand.NextBool(200)))
+                    self.prefix = PrefixType<FolvsPrefix>();
             }
             else
             {
