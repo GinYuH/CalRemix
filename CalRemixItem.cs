@@ -344,8 +344,33 @@ namespace CalRemix
                 {
                     item.UseSound = new SoundStyle("CalRemix/Assets/Sounds/DeathWhistle") { Volume = 0.6f };
                 }
+                if (item.type == ItemID.CopperWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalamityUtils.SecondsToFrames(300));
+                }
+                if (item.type == ItemID.TinWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalamityUtils.SecondsToFrames(420));
+                }
+                if (item.type == ItemID.SilverWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalamityUtils.SecondsToFrames(300));
+                }
+                if (item.type == ItemID.TungstenWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalamityUtils.SecondsToFrames(420));
+                }
+                if (item.type == ItemID.GoldWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalamityUtils.SecondsToFrames(300));
+                }
+                if (item.type == ItemID.PlatinumWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalamityUtils.SecondsToFrames(420));
+                }
             }
         }
+
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
             if (CalRemixWorld.cosmislag)
