@@ -3,6 +3,7 @@
     "Terraria": {
       "commandName": "Executable",
       "executablePath": "$(DotNetName)",
+      //"commandLineArgs": "$(tMLPath) -skipselect \"harold:Aloof Nugget of Advantage\"",
       "commandLineArgs": "$(tMLPath) -skipselect \"calamitys vanities:calamit\"",
       "workingDirectory": "$(tMLSteamPath)"
     },
