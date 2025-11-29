@@ -47,6 +47,7 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
 using System.Threading.Tasks.Dataflow;
 using CalRemix.Content.Prefixes;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 
 namespace CalRemix.Core
 {
@@ -161,58 +162,39 @@ namespace CalRemix.Core
                 return;
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
             int grass = TileType<HorizonGrass>();
-            Vector2 screenPosition = Main.Camera.UnscaledPosition;
-            Vector2 offSet = new Vector2(Main.offScreenRange, Main.offScreenRange);
-            int firstTileX = (int)((screenPosition.X - offSet.X) / 16f - 1f);
-            int lastTileX = (int)((screenPosition.X + (float)Main.screenWidth + offSet.X) / 16f) + 2;
-            int firstTileY = (int)((screenPosition.Y - offSet.Y) / 16f - 1f);
-            int lastTileY = (int)((screenPosition.Y + (float)Main.screenHeight + offSet.Y) / 16f) + 5;
-            if (firstTileX < 4)
+            
+            foreach (Player p in Main.ActivePlayers)
             {
-                firstTileX = 4;
-            }
-            if (lastTileX > Main.maxTilesX - 4)
-            {
-                lastTileX = Main.maxTilesX - 4;
-            }
-            if (firstTileY < 4)
-            {
-                firstTileY = 4;
-            }
-            if (lastTileY > Main.maxTilesY - 4)
-            {
-                lastTileY = Main.maxTilesY - 4;
-            }
-            if (Main.sectionManager.AnyUnfinishedSections)
-            {
-                TimeLogger.DetailedDrawReset();
-                WorldGen.SectionTileFrameWithCheck(firstTileX, firstTileY, lastTileX, lastTileY);
-                TimeLogger.DetailedDrawTime(5);
-            }
-            if (Main.sectionManager.AnyNeedRefresh)
-            {
-                WorldGen.RefreshSections(firstTileX, firstTileY, lastTileX, lastTileY);
-            }
-            for (int i = firstTileX - 2; i < lastTileX + 2; i++)
-            {
-                for (int j = firstTileY; j < lastTileY + 4; j++)
+                int checkRange = 3;
+                Point pos = p.Bottom.ToTileCoordinates();
+                for (int i = pos.X - checkRange; i < pos.X + checkRange; i++)
                 {
-                    int type = Framing.GetTileSafely(i, j).TileType;
-
-                    if (type == grass)
+                    for (int j =  pos.Y - checkRange;  j < pos.Y + checkRange; j++)
                     {
-                        Texture2D block = HorizonGrass.MainBlock.Value;
-                        Texture2D blade = HorizonGrass.GrassBlade.Value;
-                        int possibleX = 111;
-                        int possibleY = 12;
-                        bool left = ((i * 7 + j * 13) % 1000 / 1000f) == 0;
-                        Rectangle frame = block.Frame(possibleX, possibleY, i % possibleX, j % possibleY);
-                        bool isTop = !Main.tile[i, j - 1].HasTile;
-                        float grassAmt = isTop ? 5 : 3;
-                        for (int l = 0; l < grassAmt; l++)
-                            Main.spriteBatch.Draw(blade, new Vector2(i, j) * 16 + new Vector2(MathHelper.Lerp(0, 16, l / grassAmt), (i * 3 + j * 7 + l * 5) % 8) - Main.screenPosition, blade.Frame(12, 1, ((i * 7 + j * 3 + l * 5) % 12) + 1, 0), (Color.White * 0.8f).MultiplyRGB(Lighting.GetColor(i, j)) with { A = 255 }, ((i * 5 + j * 13 + l * 3) % 100 / 100f * MathHelper.PiOver2 - MathHelper.PiOver4​) * (0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly + i % 7 + l % 3)), new Vector2(blade.Width / 24f, blade.Height), (i * 7 + j * 13 + l * 5) % 1000 / 1000f * 0.4f + 0.8f, left ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-                        
-                        Main.spriteBatch.Draw(block, new Vector2(i, j) * 16 - Main.screenPosition, frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, 0, 0);
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        if (t.TileType == grass)
+                        {
+                            HorizonGrass.DrawHorizonGrass(i, j, Main.spriteBatch, true);
+                        }
+                    }
+                }
+            }
+
+            int vigor = NPC.FindFirstNPC(NPCType<VigorCloak>());
+            if (vigor != -1)
+            {
+                NPC n = Main.npc[vigor];
+                int checkRange = (int)(n.width / 16f);
+                Point pos = n.Bottom.ToTileCoordinates();
+                for (int i = pos.X - checkRange; i < pos.X + checkRange; i++)
+                {
+                    for (int j = pos.Y - 2; j < pos.Y + 2; j++)
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        if (t.TileType == grass)
+                        {
+                            HorizonGrass.DrawHorizonGrass(i, j, Main.spriteBatch, true);
+                        }
                     }
                 }
             }
