@@ -16,6 +16,7 @@ using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
@@ -515,6 +516,14 @@ namespace CalRemix
                 if (type == TileType<SeaPrism>())
                 {
                     Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.SeaPrism>());
+                }
+            }
+            if (type == TileID.Chandeliers && Main.tile[i, j].TileFrameX == 72 && Main.tile[i, j].TileFrameY % 54 == 0)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Main.NewText("One spawned");
+                    Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, (j + 1) * 16 + 8), Vector2.Zero, ProjectileType<FallingChandelier>(), ProjectileDamage(20, 40), 1, ai1: Main.tile[i, j].TileFrameY);
                 }
             }
         }
