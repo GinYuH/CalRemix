@@ -229,7 +229,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Color outlineColor = Color.SeaGreen;
+            Color outlineColor = Color.SeaGreen * NPC.Opacity;
             Vector3 outlineHSL = Main.rgbToHsl(outlineColor);
             float outlineThickness = 2;
             CalamityUtils.EnterShaderRegion(spriteBatch);
@@ -262,13 +262,13 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             int yOff = -60;
             int eyeYOff = -40;
             spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, norm, 0, new Vector2(tex.Width / 2, tex.Height / 2), NPC.scale, 0, 0);
-            spriteBatch.Draw(tongue, NPC.Center - screenPos - Vector2.UnitY * 60, null, Color.White, 0, new Vector2(tongue.Width / 2, tongue.Height), NPC.scale, 0, 0);
+            spriteBatch.Draw(tongue, NPC.Center - screenPos - Vector2.UnitY * 60, null, Color.White * NPC.Opacity, 0, new Vector2(tongue.Width / 2, tongue.Height), NPC.scale, 0, 0);
             spriteBatch.Draw(jaw, NPC.Center - screenPos + new Vector2(-xOff, yOff) + offset, null, norm, JawRotation, new Vector2(xOrig, yOrig), NPC.scale, 0, 0);
             spriteBatch.Draw(jaw, NPC.Center - screenPos + new Vector2(xOff, yOff) + offset, null, norm, -JawRotation, new Vector2(jaw.Width - xOrig, yOrig), NPC.scale, SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(eye, NPC.Center - screenPos + new Vector2(-xOff, yOff) + Vector2.UnitY.RotatedBy(JawRotation) * eyeYOff + offset, eye.Frame(1, 2, 0, 0), Color.White, JawRotation, new Vector2(eye.Width / 2, eye.Height / 4), NPC.scale, 0, 0);
-            spriteBatch.Draw(eye, NPC.Center - screenPos + new Vector2(xOff, yOff) + Vector2.UnitY.RotatedBy(-JawRotation) * eyeYOff + offset, eye.Frame(1, 2, 0, 0), Color.White, -JawRotation, new Vector2(eye.Width / 2, eye.Height / 4), NPC.scale, SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(eye, NPC.Center - screenPos + new Vector2(-xOff, yOff) + Vector2.UnitY.RotatedBy(JawRotation) * eyeYOff + offset, eye.Frame(1, 2, 0, 0), Color.White * NPC.Opacity, JawRotation, new Vector2(eye.Width / 2, eye.Height / 4), NPC.scale, 0, 0);
+            spriteBatch.Draw(eye, NPC.Center - screenPos + new Vector2(xOff, yOff) + Vector2.UnitY.RotatedBy(-JawRotation) * eyeYOff + offset, eye.Frame(1, 2, 0, 0), Color.White * NPC.Opacity, -JawRotation, new Vector2(eye.Width / 2, eye.Height / 4), NPC.scale, SpriteEffects.FlipHorizontally, 0);
 
-            spriteBatch.Draw(core, NPC.Center - screenPos + offset, null, Color.White, 0, tex.Size() / 2, NPC.scale, 0, 0);
+            spriteBatch.Draw(core, NPC.Center - screenPos + offset, null, Color.White * NPC.Opacity, 0, tex.Size() / 2, NPC.scale, 0, 0);
         }
     }
 }
