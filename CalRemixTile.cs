@@ -522,7 +522,7 @@ namespace CalRemix
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, (j + 1) * 16 + 8), Vector2.Zero, ProjectileType<FallingChandelier>(), ProjectileDamage(20, 40), 1, ai1: Main.tile[i, j].TileFrameY);
+                    Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, (j + 1) * 16 + 8), Vector2.Zero, ProjectileType<FallingChandelier>(), ProjectileDamage(20, 40), 1, ai0: Main.tile[i, j].TileFrameY);
                 }
             }
         }
