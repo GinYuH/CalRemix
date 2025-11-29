@@ -1,5 +1,7 @@
 ﻿using CalamityMod;
+using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.Projectiles.Boss;
+using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -120,6 +122,25 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen
             Main.EntitySpriteDraw(texture.Value, NPC.Center - Main.screenPosition, null, Color.AliceBlue, NPC.rotation + AITimer * 0.25f, texture.Size() / 2, NPC.scale, 0, 0);
             Main.EntitySpriteDraw(eye.Value, NPC.Center - Main.screenPosition + NPC.Center.DirectionTo(new Vector2(IdealPositionX, IdealPositionY)) * 5, null, Color.AliceBlue, NPC.rotation, eye.Size() / 2, NPC.scale, 0, 0);
             return false;
+        }
+    }
+
+    public class FUCKYOUSPECTRUMINTERNET : GlobalNPC
+    {
+        public override void OnKill(NPC npc)
+        {
+            if (npc.type == ModContent.NPCType<AureusSpawn>())
+            {
+                SoundEngine.PlaySound(SoundID.Zombie92 with { MaxInstances = 0, Volume = 3, Pitch = Main.rand.NextFloat(-1.0f, 1.0f) }, npc.Center);
+
+                for (int i = 0; i < 50; i++)
+                {
+                    Vector2 target = npc.Center.DirectionTo(Main.player[npc.target].Center) * Main.rand.NextFloat(1, 10);
+                    target.X += Main.rand.NextFloat(-1, 1);
+                    target.Y += Main.rand.NextFloat(-1, 1);
+                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, target, ModContent.ProjectileType<AstralCrystal>(), 75, 5);
+                }
+            }
         }
     }
 }

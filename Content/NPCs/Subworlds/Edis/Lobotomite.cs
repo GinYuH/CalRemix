@@ -27,9 +27,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Edis
         private static int origMouthOpenRate = 30;
         
         private bool isMouthOpen = false;
-        private bool spinHead = false;
+        private bool doRotationAdjust = false;
         private float mouthOpenRate = origMouthOpenRate;
         private bool doEyeGlow = false;
+        private float verticalOffset = 20;
 
         public enum AttackTypes
         {
@@ -45,8 +46,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Edis
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.width = 38;
-            NPC.height = 30;
+            NPC.width = 58;
+            NPC.height = 50;
             NPC.lifeMax = 5000;
             NPC.damage = 0;
             NPC.defense = 50;
@@ -81,14 +82,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Edis
                         Timer = 0;
                         NPC.velocity = Vector2.Zero;
                         Mode = (int)AttackTypes.Awake;
-                        spinHead = true;
+                        doRotationAdjust = true;
                     }
 
                     // this wouldnt normally work, but since its the first loop, it does
-                    if (Timer == 0)
-                    {
+                    if (Mode == (int)AttackTypes.Idle && Timer == 0)
                         NPC.rotation = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
-                    }
+
                     break;
                 case (int)AttackTypes.Awake:
                     NPC.noTileCollide = true;
@@ -132,7 +132,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Edis
                         else
                             NPC.rotation += Main.rand.NextFloat(0.5f, MathHelper.Pi);
 
-                        for (int i = 0; i < 3; i++)
+                        for (int i = 0; i < 2; i++)
                         {
                             Vector2 vel = new Vector2(0, -Main.rand.NextFloat(7, 10));
                             vel = vel.RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4));
@@ -164,7 +164,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Edis
             #endregion
 
             #region Head Rotation Stuff
-            if (spinHead)
+            if (doRotationAdjust)
             {
                 // if left-leaning, reset rot towards right. if right leaning, reset rot towards left
                 if (NPC.rotation >= MathHelper.Pi)
@@ -188,6 +188,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Edis
             }
             #endregion
 
+            #region Vertical Offset
+            if (Mode == (int)AttackTypes.Awake || Mode == (int)AttackTypes.ChasePlayer)
+            {
+                if (verticalOffset > 0)
+                    verticalOffset *= 0.9f;
+                else if (verticalOffset > 0.01)
+                    verticalOffset = 0;
+            }
+            #endregion
+
             Timer++;
             TimerVisual++;
         }
@@ -195,13 +205,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Edis
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
-            Texture2D glowmask = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/SupremeCalamitas/SupremeSkeletronGlow").Value;
+            Texture2D glowmask = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Edis/LobotomiteGlow").Value;
+
+            Vector2 position = new Vector2(NPC.Center.X - screenPos.X, NPC.Center.Y - screenPos.Y + verticalOffset);
 
             int mouthOpen = isMouthOpen ? 1 : 0;
             float eyeOpacity = doEyeGlow ? Math.Clamp((float)Math.Sin(TimerVisual * 0.01f) + 0.5f, 0.5f, 1) : 0f;
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, texture.Frame(1, 2, 0, mouthOpen), drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 4), NPC.scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(glowmask, NPC.Center - screenPos, glowmask.Frame(1, 2, 0, mouthOpen), Color.White * eyeOpacity, NPC.rotation, new Vector2(glowmask.Width / 2, glowmask.Height / 4), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, position, texture.Frame(1, 2, 0, mouthOpen), drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height / 4), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(glowmask, position, glowmask.Frame(1, 2, 0, mouthOpen), Color.White * eyeOpacity, NPC.rotation, new Vector2(glowmask.Width / 2, glowmask.Height / 4), NPC.scale, SpriteEffects.None, 0f);
 
             return false;
         }
