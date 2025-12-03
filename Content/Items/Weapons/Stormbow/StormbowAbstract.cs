@@ -20,6 +20,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public virtual int useTime => 32;
         public virtual SoundStyle useSound => SoundID.Item5;
         public virtual List<int> projsToShoot => new List<int>() { ProjectileID.WoodenArrowFriendly };
+        public virtual Vector2 extraSpeed => Vector2.Zero;
         public virtual int arrowAmount => 3;
         public virtual bool disableArrowRainNoise => false;
         public enum OverallRarity
@@ -159,12 +160,12 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             if (!disableArrowRainNoise && Main.rand.NextBool(3))
                 arrowAmountNoisy++;
 
-            ShootArrowsLikeStormbow(player, source, arrowAmountNoisy, projsToShoot);
+            ShootArrowsLikeStormbow(player, source, arrowAmountNoisy, projsToShoot, extraSpeed);
 
             return false;
         }
 
-        public void ShootArrowsFromPoint(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 idealLocation, Vector2 extraSpeed)
+        public void ShootArrowsFromPoint(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 idealLocation, Vector2 extraSpeed = default)
         {
             for (int i = 0; i < arrowAmount + Item.Remix().arrowAmount; i++)
             {
@@ -178,7 +179,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 int projectile = Projectile.NewProjectile(source, idealLocation.X, idealLocation.Y, speed.X, speed.Y, Item.shoot, Item.damage, Item.knockBack, player.whoAmI);
             }
         }
-        public void ShootArrowsLikeStormbow(Player player, EntitySource_ItemUse_WithAmmo source, int arrowAmount, List<int> projToShoot)
+        public void ShootArrowsLikeStormbow(Player player, EntitySource_ItemUse_WithAmmo source, int arrowAmount, List<int> projToShoot, Vector2 extraSpeed = default)
         {
             // TODO: clean up
             for (int i = 0; i < arrowAmount; i++)
@@ -206,7 +207,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 pointPoisition.X += Main.rand.Next(-50, 51);
 
                 int projType = projToShoot[Main.rand.Next(0, projsToShoot.Count)];
-                int shotProj = Projectile.NewProjectile(source, pointPoisition.X, pointPoisition.Y, speedX, speedY, projType, damage, 3.5f, player.whoAmI);
+                int shotProj = Projectile.NewProjectile(source, pointPoisition.X, pointPoisition.Y, speedX + extraSpeed.X, speedY + extraSpeed.Y, projType, damage, 3.5f, player.whoAmI);
                 Main.projectile[shotProj].noDropItem = true;
             }
         }
