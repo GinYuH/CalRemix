@@ -165,6 +165,13 @@ namespace CalRemix
                 .DisableDecraft()
                 .Register();
 
+            if (CalRemixAddon.CalVal != null)
+            {
+                Recipe.Create(CalRemixAddon.CalVal.Find<ModItem>("AstralPearlBlock").Type)
+                    .AddIngredient(ModContent.ItemType<AstralPearl>(), 9)
+                    .Register();
+            }
+
             #region Anomaly Toggled
             List<Anomaly109Option> alist = Anomaly109Manager.options;
 
