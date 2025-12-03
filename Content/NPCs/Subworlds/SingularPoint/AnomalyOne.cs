@@ -103,7 +103,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             if (!MainHead.active || MainHead.type != ModContent.NPCType<AnomalyTwo>())
             {
                 int dHead = NPC.FindFirstNPC(ModContent.NPCType<AnomalyTwo>());
-                if (dHead == -1)
+                if (dHead != -1)
                 {
                     MainHead = Main.npc[dHead];
                     NPC.netUpdate = true;
@@ -112,7 +112,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             if (!OrbHead.active || OrbHead.type != ModContent.NPCType<AnomalyTwo>())
             {
                 int oHead = NPC.FindFirstNPC(ModContent.NPCType<AnomalyTwo>());
-                if (oHead == -1)
+                if (oHead != -1)
                 {
                     OrbHead = Main.npc[oHead];
                     NPC.netUpdate = true;

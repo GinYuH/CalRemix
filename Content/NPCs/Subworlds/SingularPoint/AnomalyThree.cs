@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using System;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -31,6 +32,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 NPC.Calamity().newAI[1] = value.Y;
             }
         }
+
+        public ref float EyeRotation => ref NPC.Calamity().newAI[2];
 
         public NPC MainHead
         {
@@ -103,7 +106,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             if (!MainHead.active || MainHead.type != ModContent.NPCType<AnomalyTwo>())
             {
                 int dHead = NPC.FindFirstNPC(ModContent.NPCType<AnomalyTwo>());
-                if (dHead == -1)
+                if (dHead != -1)
                 {
                     MainHead = Main.npc[dHead];
                     NPC.netUpdate = true;
@@ -112,7 +115,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             if (!DragonHead.active || DragonHead.type != ModContent.NPCType<AnomalyOne>())
             {
                 int oHead = NPC.FindFirstNPC(ModContent.NPCType<AnomalyOne>());
-                if (oHead == -1)
+                if (oHead != -1)
                 {
                     DragonHead = Main.npc[oHead];
                     NPC.netUpdate = true;
@@ -163,6 +166,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             writer.Write(NPC.localAI[2]);
             writer.Write(NPC.Calamity().newAI[0]);
             writer.Write(NPC.Calamity().newAI[1]);
+            writer.Write(NPC.Calamity().newAI[2]);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -172,17 +176,53 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             NPC.localAI[2] = reader.ReadSingle();
             NPC.Calamity().newAI[0] = reader.ReadSingle();
             NPC.Calamity().newAI[1] = reader.ReadSingle();
+            NPC.Calamity().newAI[2] = reader.ReadSingle();
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            //DrawGuy(spriteBatch, screenPos, drawColor);
+            EyeRotation += Main.LocalPlayer.selectedItem * 0.05f;
+            Texture2D chain = ModContent.Request<Texture2D>(Texture + "_Segment").Value;
+            if (MainHead.active)
+            {
+                if (MainHead.type == ModContent.NPCType<AnomalyTwo>())
+                {
+                    int chainAmt = 18;
+
+                    for (int i = 0; i < chainAmt; i++)
+                    {
+                        Vector2 pos = Vector2.Lerp(NPC.Center, MainHead.Bottom, i / (float)chainAmt);
+                        Main.EntitySpriteDraw(chain, pos - screenPos, null, Color.White, 0, chain.Size() / 2, NPC.scale, 0);
+                    }
+                }
+            }
+            Color outlineColor = Color.SeaGreen * NPC.Opacity;
+            Vector3 outlineHSL = Main.rgbToHsl(outlineColor);
+            float outlineThickness = 2;
+            CalamityUtils.EnterShaderRegion(spriteBatch);
+            GameShaders.Misc["CalamityMod:BasicTint"].UseOpacity(1f);
+            GameShaders.Misc["CalamityMod:BasicTint"].UseColor(Main.hslToRgb(1 - outlineHSL.X, outlineHSL.Y, outlineHSL.Z));
+            GameShaders.Misc["CalamityMod:BasicTint"].Apply();
+            for (float i = 0; i < 1; i += 0.125f)
+            {
+                DrawGuy(spriteBatch, screenPos, drawColor, (i * MathHelper.TwoPi + NPC.rotation).ToRotationVector2() * outlineThickness, Color.SeaGreen);
+            }
+            CalamityUtils.ExitShaderRegion(spriteBatch);
+            DrawGuy(spriteBatch, screenPos, drawColor);
             return false;
         }
 
-        public void DrawGuy(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public void DrawGuy(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Vector2 offset = default, Color overrideColor = default)
         {
-
+            Texture2D tex = TextureAssets.Npc[Type].Value;
+            Texture2D eye = ModContent.Request<Texture2D>(Texture + "_Eye").Value;
+            Color norm = overrideColor == default ? NPC.GetAlpha(drawColor) : overrideColor;
+            spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, norm, NPC.rotation, tex.Size() / 2, NPC.scale, 0, 0);
+            for (int i = 0; i < 3; i++)
+            {
+                Vector2 pos = NPC.Center - Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 3f)).RotatedBy(EyeRotation) * 50;
+                spriteBatch.Draw(eye, pos - screenPos, null, Color.White, NPC.rotation, eye.Size() / 2, NPC.scale, 0, 0);
+            }
         }
     }
 }
