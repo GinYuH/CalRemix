@@ -3,6 +3,8 @@ using Terraria.ModLoader.IO;
 using System.IO;
 using System.Collections.Generic;
 using SubworldLibrary;
+using System.Reflection;
+using Stubble.Core.Classes;
 
 namespace CalRemix.Core.World
 {
@@ -10,246 +12,88 @@ namespace CalRemix.Core.World
     {
         public static bool DownedGens => downedOrigen && downedCarcinogen && downedPhytogen && downedHydrogen && downedOxygen && downedIonogen && downedPathogen;
 
-        public static bool downedCalamity
-        {
-            get => bossDowns["Calamity"];
-            set => bossDowns["Calamity"] = value;
-        }
-        public static bool downedExcavator
-        {
-            get => bossDowns["Excavator"];
-            set => bossDowns["Excavator"] = value;
-        }
-        public static bool downedAcidsighter
-        {
-            get => bossDowns["Acidsighter"];
-            set => bossDowns["Acidsighter"] = value;
-        }
-        public static bool downedOrigen
-        {
-            get => bossDowns["Origen"];
-            set => bossDowns["Origen"] = value;
-        }
-        public static bool downedCarcinogen
-        {
-            get => bossDowns["Carcinogen"];
-            set => bossDowns["Carcinogen"] = value;
-        }
-        public static bool downedPhytogen
-        {
-            get => bossDowns["Phytogen"];
-            set => bossDowns["Phytogen"] = value;
-        }
-        public static bool downedIonogen
-        {
-            get => bossDowns["Ionogen"];
-            set => bossDowns["Ionogen"] = value;
-        }
-        public static bool downedHydrogen
-        {
-            get => bossDowns["Hydrogen"];
-            set => bossDowns["Hydrogen"] = value;
-        }
-        public static bool downedOxygen
-        {
-            get => bossDowns["Oxygen"];
-            set => bossDowns["Oxygen"] = value;
-        }
-        public static bool downedPathogen
-        {
-            get => bossDowns["Pathogen"];
-            set => bossDowns["Pathogen"] = value;
-        }
-        public static bool downedPyrogen
-        {
-            get => bossDowns["Pyrogen"];
-            set => bossDowns["Pyrogen"] = value;
-        }
-        public static bool downedDerellect
-        {
-            get => bossDowns["Derellect"];
-            set => bossDowns["Derellect"] = value;
-        }
-        public static bool downedPolyphemalus
-        {
-            get => bossDowns["Polyphemalus"];
-            set => bossDowns["Polyphemalus"] = value;
-        }
-        public static bool downedAurelionium
-        {
-            get => bossDowns["Aurelionium"];
-            set => bossDowns["Aurelionium"] = value;
-        }
-        public static bool downedHypnos
-        {
-            get => bossDowns["Hypnos"];
-            set => bossDowns["Hypnos"] = value;
-        }
-        public static bool downedSealedOne
-        {
-            get => bossDowns["SealedOne"];
-            set => bossDowns["SealedOne"] = value;
-        }
-        public static bool downedNoxegg
-        {
-            get => bossDowns["Noxegg"];
-            set => bossDowns["Noxegg"] = value;
-        }
-        public static bool downedNoxus
-        {
-            get => bossDowns["Noxus"];
-            set => bossDowns["Noxus"] = value;
-        }
-        public static bool downedLivyatan
-        {
-            get => bossDowns["Livyatan"];
-            set => bossDowns["Livyatan"] = value;
-        }
-        public static bool downedGastropod
-        {
-            get => bossDowns["Gastropod"];
-            set => bossDowns["Gastropod"] = value;
-        }
-        public static bool downedVoid
-        {
-            get => bossDowns["Void"];
-            set => bossDowns["Void"] = value;
-        }
-        public static bool downedDisil
-        {
-            get => bossDowns["Disilphia"];
-            set => bossDowns["Disilphia"] = value;
-        }
-        public static bool downedOneguy
-        {
-            get => bossDowns["Oneguy"];
-            set => bossDowns["Oneguy"] = value;
-        }
-        public static bool downedDraedon
-        {
-            get => bossDowns["Draedon"];
-            set => bossDowns["Draedon"] = value;
-        }
-        public static bool downedCrevi
-        {
-            get => bossDowns["Crevi"];
-            set => bossDowns["Crevi"] = value;
-        }
+        public static bool downedCalamity;
 
-        public static bool downedEarthElemental
-        {
-            get => bossDowns["EarthElemental"];
-            set => bossDowns["EarthElemental"] = value;
-        }
-        public static bool downedLifeSlime
-        {
-            get => bossDowns["LifeSlime"];
-            set => bossDowns["LifeSlime"] = value;
-        }
-        public static bool downedClamitas
-        {
-            get => bossDowns["Clamitas"];
-            set => bossDowns["Clamitas"] = value;
-        }
-        public static bool downedCyberDraedon
-        {
-            get => bossDowns["CyberDraedon"];
-            set => bossDowns["CyberDraedon"] = value;
-        }
-        public static bool downedOnyxKinsman
-        {
-            get => bossDowns["OnyxKinsman"];
-            set => bossDowns["OnyxKinsman"] = value;
-        }
-        public static bool downedYggdrasilEnt
-        {
-            get => bossDowns["YggdrasilEnt"];
-            set => bossDowns["YggdrasilEnt"] = value;
-        }
-        public static bool downedPlagueEmperor
-        {
-            get => bossDowns["PlagueEmperor"];
-            set => bossDowns["PlagueEmperor"] = value;
-        }
-        public static bool downedLaRuga
-        {
-            get => bossDowns["LaRuga"];
-            set => bossDowns["LaRuga"] = value;
-        }
-        public static bool downedKingMinnowsPrime
-        {
-            get => bossDowns["KingMinnowsPrime"];
-            set => bossDowns["KingMinnowsPrime"] = value;
-        }
-        public static bool downedDend
-        {
-            get => bossDowns["Dend"];
-            set => bossDowns["Dend"] = value;
-        }
-        public static bool downedMaser
-        {
-            get => bossDowns["Maser"];
-            set => bossDowns["Maser"] = value;
-        }
-        public static bool downedRed
-        {
-            get => bossDowns["Red"];
-            set => bossDowns["Red"] = value;
-        }
+        public static bool downedExcavator;
 
-        public static bool downedGale
-        {
-            get => bossDowns["Gale"];
-            set => bossDowns["Gale"] = value;
-        }
+        public static bool downedAcidsighter;
 
-        public static Dictionary<string, bool> bossDowns = new()
-        {
-            { "Calamity", false },
-            { "Excavator", false },
-            { "Acidsighter", false },
-            { "Origen", false },
-            { "Carcinogen", false },
-            { "Phytogen", false },
-            { "Ionogen", false },
-            { "Hydrogen", false },
-            { "Oxygen", false },
-            { "Pathogen", false },
-            { "Pyrogen", false },
-            { "Derellect", false },
-            { "Polyphemalus", false },
-            { "Aurelionium", false },
-            { "Hypnos", false },
-            { "SealedOne", false },
-            { "Noxegg", false },
-            { "Noxus", false },
-            { "EarthElemental", false },
-            { "LifeSlime", false },
-            { "Clamitas", false },
-            { "CyberDraedon", false },
-            { "OnyxKinsman", false },
-            { "YggdrasilEnt", false },
-            { "PlagueEmperor", false },
-            { "LaRuga", false },
-            { "KingMinnowsPrime", false },
-            { "Dend", false },
-            { "Maser", false },
-            { "Red", false },
-            { "Gale", false },
-            { "Livyatan", false },
-            { "Gastropod", false },
-            { "Void", false },
-            { "Disilphia", false },
-            { "Draedon", false },
-            { "Oneguy", false },
-            { "Crevi", false },
-        };
+        public static bool downedOrigen;
 
-        public static void ResetBools()
+        public static bool downedCarcinogen;
+
+        public static bool downedPhytogen;
+
+        public static bool downedIonogen;
+
+        public static bool downedHydrogen;
+
+        public static bool downedOxygen;
+
+        public static bool downedPathogen;
+
+        public static bool downedPyrogen;
+
+        public static bool downedDerellect;
+
+        public static bool downedPolyphemalus;
+
+        public static bool downedAurelionium;
+
+        public static bool downedHypnos;
+
+        public static bool downedSealedOne;
+
+        public static bool downedNoxegg;
+
+        public static bool downedNoxus;
+
+        public static bool downedLivyatan;
+
+        public static bool downedGastropod;
+
+        public static bool downedVoid;
+
+        public static bool downedDisil;
+
+        public static bool downedOneguy;
+
+        public static bool downedDraedon;
+
+        public static bool downedCrevi;
+
+        public static bool downedEarthElemental;
+
+        public static bool downedLifeSlime;
+
+        public static bool downedClamitas;
+
+        public static bool downedCyberDraedon;
+
+        public static bool downedOnyxKinsman;
+
+        public static bool downedYggdrasilEnt;
+
+        public static bool downedPlagueEmperor;
+
+        public static bool downedLaRuga;
+
+        public static bool downedKingMinnowsPrime;
+
+        public static bool downedDend;
+
+        public static bool downedMaser;
+
+        public static bool downedRed;
+
+        public static bool downedGale;
+
+        public void ResetBools()
         {
-            foreach (string key in bossDowns.Keys)
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Static | BindingFlags.Public);
+            foreach (FieldInfo field in fields)
             {
-                bossDowns[key] = false;
+                field.SetValue(null, false);
             }
         }
 
@@ -267,32 +111,39 @@ namespace CalRemix.Core.World
         }
         public override void SaveWorldData(TagCompound tag)
         {
-            foreach (string key in bossDowns.Keys)
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Static | BindingFlags.Public);
+            foreach (FieldInfo field in fields)
             {
-                tag["downed" + key] = bossDowns[key];
+                tag[field.Name.Replace("downed", "")] = field.GetValue(null);
             }
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
-            foreach (string key in bossDowns.Keys)
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Static | BindingFlags.Public);
+            foreach (FieldInfo field in fields)
             {
-                bossDowns[key] = tag.Get<bool>("downed" + key);
+                if (tag.TryGet<bool>(field.Name.Replace("downed", ""), out var boolValue))
+                {
+                    field.SetValue(null, boolValue);
+                }
             }
         }
 
         public override void NetSend(BinaryWriter writer)
         {
-            foreach (string key in bossDowns.Keys)
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Static | BindingFlags.Public);
+            foreach (FieldInfo field in fields)
             {
-                writer.Write(bossDowns[key]);
+                writer.Write((bool)field.GetValue(null));
             }
         }
         public override void NetReceive(BinaryReader reader)
         {
-            foreach (string key in bossDowns.Keys)
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Static | BindingFlags.Public);
+            foreach (FieldInfo field in fields)
             {
-                bossDowns[key] = reader.ReadBoolean();
+               field.SetValue(null, reader.ReadBoolean());
             }
         }
     }
