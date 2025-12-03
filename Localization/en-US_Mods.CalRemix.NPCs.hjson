@@ -735,7 +735,7 @@ MonorianWarrior: {
 
 	BossChecklistIntegration: {
 		EntryName: Monorian Warrior
-		SpawnInfo: Uhhh idk yet.
+		SpawnInfo: Finish the Bright Mind's questline and talk to them.
 		DespawnMessage: "[c/ff0000:I'M A WINNER!!!]"
 	}
 }

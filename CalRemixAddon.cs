@@ -258,10 +258,7 @@ namespace CalRemix
                 ["spawnItems"] = ItemType<Gastrosequence>(),
                 ["customPortrait"] = gasPortrait
             });
-            bc.Call("LogBoss", Mod, "MonorianWarrior", 17.91, () => RemixDowned.downedOneguy, NPCType<MonorianWarrior>(), new Dictionary<string, object>()
-            {
-                ["spawnItems"] = ItemType<GastropodEye>()
-            });
+            bc.Call("LogBoss", Mod, "MonorianWarrior", 17.91, () => RemixDowned.downedOneguy, NPCType<MonorianWarrior>(), new Dictionary<string, object>());
             Action<SpriteBatch, Rectangle, Color> lvPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/Livyatan_BC").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2) * 0.3f, rect.Center.Y - (texture.Height / 2) * 0.3f);
