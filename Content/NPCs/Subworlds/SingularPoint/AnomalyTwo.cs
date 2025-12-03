@@ -98,18 +98,18 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 NPC.active = false;
                 return;
             }
-            if (!DragonHead.active || DragonHead.type != ModContent.NPCType<AnomalyTwo>())
+            if (!DragonHead.active || DragonHead.type != ModContent.NPCType<AnomalyOne>())
             {
-                int dHead = NPC.FindFirstNPC(ModContent.NPCType<AnomalyTwo>());
+                int dHead = NPC.FindFirstNPC(ModContent.NPCType<AnomalyOne>());
                 if (dHead == -1)
                 {
                     DragonHead = Main.npc[dHead];
                     NPC.netUpdate = true;
                 }
             }
-            if (!OrbHead.active || OrbHead.type != ModContent.NPCType<AnomalyTwo>())
+            if (!OrbHead.active || OrbHead.type != ModContent.NPCType<AnomalyThree>())
             {
-                int oHead = NPC.FindFirstNPC(ModContent.NPCType<AnomalyTwo>());
+                int oHead = NPC.FindFirstNPC(ModContent.NPCType<AnomalyThree>());
                 if (oHead == -1)
                 {
                     OrbHead = Main.npc[oHead];
@@ -122,11 +122,11 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                     {
                         if (Timer > 120)
                         {
-                            if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyTwo>()))
+                            if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyOne>()))
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    DragonHead = NPC.QuickSpawnNPC(ModContent.NPCType<AnomalyTwo>());
+                                    DragonHead = NPC.QuickSpawnNPC(ModContent.NPCType<AnomalyOne>());
                                 }
                             }
                         }
@@ -143,11 +143,11 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                     {
                         if (Timer > 120)
                         {
-                            if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyTwo>()))
+                            if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyThree>()))
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    OrbHead = NPC.QuickSpawnNPC(ModContent.NPCType<AnomalyTwo>());
+                                    OrbHead = NPC.QuickSpawnNPC(ModContent.NPCType<AnomalyThree>());
                                 }
                             }
                         }
