@@ -5941,3 +5941,8 @@ Prasinite: {
 	DisplayName: Prasinite
 	Tooltip: ""
 }
+
+NerveEndingBundle: {
+	DisplayName: Nerve Ending Bundle
+	Tooltip: Often finds itself in places that it shouldn't be
+}

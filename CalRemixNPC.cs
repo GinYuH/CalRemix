@@ -1398,6 +1398,10 @@ namespace CalRemix
                     npcLoot.Add(ItemType<MeldChipIceCream>(), 33);
                     break;
             }
+            if (npc.type == NPCID.BrainScrambler || npc.type == NPCID.NebulaBrain)
+            {
+                npcLoot.Add(ItemType<NerveEndingBundle>(), 10, 14, 28);
+            }
             if (npc.type == NPCType<SightseerSpitter>())
             {
                 npcLoot.Add(ItemType<AstralPearl>(), new Fraction(1, 15));
