@@ -725,7 +725,7 @@ namespace CalRemix
                     recipe.AddIngredient(ItemType<ExodiumCluster>(), 25);
                     recipe.AddTile(TileID.DemonAltar);
                 }
-                if (recipe.createItem.rare >= ItemRarityID.Yellow)
+                if (recipe.createItem.rare >= ItemRarityID.Cyan)
                 {
                     bool isRogue = false;
                     if (recipe.createItem.ModItem != null)
