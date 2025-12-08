@@ -181,8 +181,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             {
                                 SoundEngine.PlaySound(ReaperShark.EnragedRoarSound with { Pitch = 1 });
                             }
-                            NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.PiOver4, 0.1f);
-                            JawRotation = MathHelper.ToRadians(40) + MathF.Sin(Timer * 1f) * MathHelper.ToRadians(5);
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.PiOver4 + MathF.Sin(Timer * 0.4f + 1) * MathHelper.ToRadians(10), 0.1f);
+                            JawRotation = MathHelper.ToRadians(40) + MathF.Sin(Timer * 1f) * MathHelper.ToRadians(4);
                             EditPoints(new() { new(), new(-200, 250), new(400, 550), new(0, 900) });
                         }
                         else if (Timer < stopLooking)
@@ -353,7 +353,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 return;
             if (points[0] == Vector2.Zero)
                 points[0] = new Vector2(-TextureAssets.Npc[Type].Value.Width / 2 * -NPC.spriteDirection, 0).RotatedBy(NPC.rotation);
-            points[^1] = new Vector2(points[^1].X, (int)(Main.maxTilesY - 200) * 16);
+            points[^1] = new Vector2(points[^1].X, (int)(Main.maxTilesY - 120) * 16);
             for (int i = 0; i < points.Count; i++)
             {
                 ctrlPoints[i] = Vector2.Lerp(ctrlPoints[i], points[i], 0.4f);
