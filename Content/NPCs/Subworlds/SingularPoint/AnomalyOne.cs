@@ -143,10 +143,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         float endRise = startRise + 90;
                         float roarDuration = endRise + 120;
                         float stopLooking = roarDuration + 70;
-                        float travelTime = stopLooking + 10;
+                        float travelTime = stopLooking + 30;
                         float arenaCreationTime = travelTime + 60;
                         float lookDown = arenaCreationTime + 60;
-                        float finish = lookDown + 30;
+                        float finish = lookDown + 50;
 
                         if (Timer == 0)
                         {
@@ -198,7 +198,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.PiOver4, 0.2f);
                             JawRotation = Utils.AngleLerp(0, MathHelper.ToRadians(40), 0.2f);
                             NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.ExpInEasing(Utils.GetLerpValue(stopLooking, travelTime, Timer, true), 1));
-                            EditPoints(new() { new(), new(-160, 60), new(260, 550), new(0, 900) });
+                            EditPoints(new() { new(), new(0, 250), new(0, 550), new(0, 900) });
                         }
                         else if (Timer < arenaCreationTime)
                         {
@@ -217,9 +217,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         {
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.PiOver4, 0.2f);
                             JawRotation = 0;
+                            EditPoints(new() { new(), new(-560, -20), new(260, 550), new(0, 900) });
                             if (Timer == arenaCreationTime)
                             {
-                                SavePosition = target.Center + new Vector2(300, -200);
+                                SavePosition = target.Center + new Vector2(-300, -200);
                                 OldPosition = NPC.Center;
                             }
                             else
@@ -352,9 +353,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 return;
             if (points[0] == Vector2.Zero)
                 points[0] = new Vector2(-TextureAssets.Npc[Type].Value.Width / 2 * -NPC.spriteDirection, 0).RotatedBy(NPC.rotation);
+            points[^1] = new Vector2(points[^1].X, (int)(Main.maxTilesY - 200) * 16);
             for (int i = 0; i < points.Count; i++)
             {
-                ctrlPoints[i] = Vector2.Lerp(ctrlPoints[i], points[i], 0.2f);
+                ctrlPoints[i] = Vector2.Lerp(ctrlPoints[i], points[i], 0.4f);
             }
         }
     }
