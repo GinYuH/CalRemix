@@ -181,7 +181,6 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            EyeRotation += Main.LocalPlayer.selectedItem * 0.05f;
             Texture2D chain = ModContent.Request<Texture2D>(Texture + "_Segment").Value;
             if (MainHead.active)
             {

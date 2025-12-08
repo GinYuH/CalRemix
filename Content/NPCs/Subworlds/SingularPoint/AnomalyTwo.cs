@@ -120,19 +120,16 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             {
                 case PhaseType.PhaseOne:
                     {
-                        if (Timer > 120)
+                        if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyOne>()))
                         {
-                            if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyOne>()))
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
-                                {
-                                    DragonHead = NPC.QuickSpawnNPC(ModContent.NPCType<AnomalyOne>());
-                                }
+                                DragonHead = NPC.QuickSpawnNPC(ModContent.NPCType<AnomalyOne>());
                             }
                         }
-                        if (DragonHead.active)
+                        if (DragonHead.active && DragonHead.type == ModContent.NPCType<AnomalyOne>())
                         {
-                            if (DragonHead.ai[0] == 3)
+                            if (DragonHead.ModNPC<AnomalyOne>().CurrentPhase == AnomalyOne.PhaseType.Knockout)
                             {
                                 ChangePhase(PhaseType.PhaseTwo);
                             }
@@ -151,9 +148,9 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 }
                             }
                         }
-                        if (OrbHead.active)
+                        if (OrbHead.active && DragonHead.type == ModContent.NPCType<AnomalyThree>())
                         {
-                            if (OrbHead.ai[0] == 3)
+                            if (OrbHead.ModNPC<AnomalyThree>().CurrentPhase == AnomalyThree.PhaseType.Knockout)
                             {
                                 ChangePhase(PhaseType.Rise);
                             }
@@ -247,7 +244,6 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public void DrawGuy(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Vector2 offset = default, Color overrideColor = default)
         {
-            JawRotation = NPC.Center.DirectionTo(Main.MouseWorld).ToRotation();
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D jaw = ModContent.Request<Texture2D>(Texture + "_Jaw").Value;
             Texture2D eye = ModContent.Request<Texture2D>(Texture + "_Eye").Value;
