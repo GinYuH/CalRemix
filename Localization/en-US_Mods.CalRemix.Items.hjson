@@ -5946,3 +5946,12 @@ NerveEndingBundle: {
 	DisplayName: Nerve Ending Bundle
 	Tooltip: Often finds itself in places that it shouldn't be
 }
+
+Grablerscalibur: {
+	DisplayName: Grablerscalibur
+	Tooltip:
+		'''
+		Flings chunks of putrid god-flesh. 
+		Close-range strikes will inflict the enemy with a terrible curse
+		'''
+}
