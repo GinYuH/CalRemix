@@ -1,7 +1,6 @@
 ﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -17,6 +16,7 @@ public class Ozma : ModNPC
     {
         NPC.width = 256;
         NPC.height = 256;
+        NPC.scale = 2f;
         NPC.damage = 200;
         NPC.LifeMaxNERB(55535, 5553500, 55535);
         if (Main.expertMode)
@@ -28,6 +28,7 @@ public class Ozma : ModNPC
         NPC.boss = true;
         NPC.npcSlots = 10f;
         NPC.netAlways = true;
+        NPC.hide = true;
         //Music = -1;
         //SceneEffectPriority = SceneEffectPriority.None;
     }
@@ -56,7 +57,7 @@ public class Ozma : ModNPC
 
         var ozmaShader = GameShaders.Misc[$"{Mod.Name}:Ozma"];
 
-        Vector2 worldPos = Vector2.Transform(NPC.Center - Main.screenPosition, Main.GameViewMatrix.ZoomMatrix) / Main.ScreenSize.ToVector2();
+        //Vector2 worldPos = Vector2.Transform(NPC.Center - Main.screenPosition, Main.GameViewMatrix.ZoomMatrix) / Main.ScreenSize.ToVector2();
         ozmaShader.Shader.Parameters["uTime"]?.SetValue(Time);
         ozmaShader.Shader.Parameters["uRotSpeed"]?.SetValue(0.01f);
         ozmaShader.Shader.Parameters["uSwirlStrength"]?.SetValue(3f);
@@ -87,5 +88,10 @@ public class Ozma : ModNPC
         spriteBatch.Draw(bossTexture, NPC.Center - Main.screenPosition, null, Color.Transparent, 0f, origin, stretchScale * NPC.scale, SpriteEffects.None, 0);
         
         return false;
+    }
+
+    public override void DrawBehind(int index)
+    {
+        Main.instance.DrawCacheNPCsMoonMoon.Add(index);
     }
 }
