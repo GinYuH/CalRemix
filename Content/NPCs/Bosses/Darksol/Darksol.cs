@@ -366,7 +366,7 @@ public class Darksol : ModNPC
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
     {
-        if (AIState == DarksolAIState.SpinDashes || (AIState == DarksolAIState.SneakyCure && AttackTime < 600 && ))
+        if (AIState == DarksolAIState.SpinDashes || (AIState == DarksolAIState.SneakyCure && AttackTime < 600))
             AttackBool = true;
     }
 

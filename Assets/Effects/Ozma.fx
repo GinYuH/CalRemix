@@ -1,129 +1,124 @@
-sampler baseTexture : register(s0);
-sampler noiseTexture : register(s1);
-sampler dissolveTexture : register(s2);
-sampler invertTexture : register(s3);
+sampler2D uImage0 : register(s0);
+sampler2D uImage1 : register(s1);
+sampler2D uImage2 : register(s2);
+float uTime;
+float3 uRotation;
+float uRotSpeed;
+float uSwirlStrength;
+float uSaturation;
+float uPixelSize;
+float3 uOutlineColor;
 
-float time : register(C0);
-float rotation;
-float dissolveRatio;
-float inversionRatio;
-
-float blowUpPower = 2.5; 
-float blowUpSize = 0.25; 
-float noiseScale = 0.75; 
-float scrollSpeed = 0.005;
-float noiseContrast = 1.75;
-float noiseRotation = 1.5708;
-float pixelation = 128; 
-
-float dissolveNoiseScale = 0.5;
-float invertNoiseScale = 1;
-
-float4 color1 = float4(1.0, 0.1, 0.1, 1.0); 
-float4 color2 = float4(0.9, 0.9, 0.9, 1.0); 
-float4 color3 = float4(0.8, 0.2, 1.0, 1.0); 
-float4 color4 = float4(0.4, 0.2, 0.8, 1.0); 
-float4 color5 = float4(0.2, 0.6, 1.0, 1.0);
-float4 color6 = float4(0.9, 0.9, 0.9, 1.0);
-float4 color7 = float4(0.9, 0.9, 0.9, 1.0); 
-float4 color8 = float4(1.0, 0.9, 0.2, 1.0); 
-
-float4 PixelShaderFunction(float2 coords : TEXCOORD0, float4 sampleColor : COLOR0) : COLOR0
+float4x4 rotationMatrix(float3 axis, float angle)
 {
-    if (pixelation > 0.0)
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+    
+    return float4x4(
+        oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s, 0.0,
+        oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s, 0.0,
+        oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c, 0.0,
+        0.0, 0.0, 0.0, 1.0
+    );
+}
+
+float3 rotatePoint(float3 p, float3 rotation)
+{
+    float4x4 rotX = rotationMatrix(float3(1, 0, 0), rotation.x);
+    float4x4 rotY = rotationMatrix(float3(0, 1, 0), rotation.y);
+    float4x4 rotZ = rotationMatrix(float3(0, 0, 1), rotation.z);
+    
+    p = mul(float4(p, 1.0), rotX).xyz;
+    p = mul(float4(p, 1.0), rotY).xyz;
+    p = mul(float4(p, 1.0), rotZ).xyz;
+    
+    return p;
+}
+
+float3 saturateColor(float3 color, float saturation)
+{
+    float gray = dot(color, float3(0.299, 0.587, 0.114));
+    return lerp(float3(gray, gray, gray), color, saturation);
+}
+
+float4 PixelShaderFunction(float2 texCoord : TEXCOORD0) : COLOR0
+{
+    float2 pixelatedCoord = texCoord;
+    if (uPixelSize > 1.0)
     {
-        float pixelSize = 1.0 / pixelation;
-        coords.x = floor(coords.x / pixelSize) * pixelSize;
-        coords.y = floor(coords.y / pixelSize) * pixelSize;
+        pixelatedCoord = floor(texCoord * uPixelSize) / uPixelSize;
     }
     
-    float4 baseColor = tex2D(baseTexture, coords);
-
-    if (!any(baseColor))
-        return baseColor;
+    float2 uv = pixelatedCoord * 2.0 - 1.0;
     
-    float2 centeredCoords = coords - 0.5;
+    float dist = length(uv);
     
-    float cosR = cos(rotation);
-    float sinR = sin(rotation);
-    float2 rotatedCoords = float2(
-        centeredCoords.x * cosR - centeredCoords.y * sinR,
-        centeredCoords.x * sinR + centeredCoords.y * cosR
-    ) + 0.5;
-    
-    float2 uv = rotatedCoords;
-    
-    float distanceFromCenter = length(uv - 0.5) * 2.0;
-    
-    float cosNR = cos(noiseRotation);
-    float sinNR = sin(noiseRotation);
-    float2 centeredUV = uv - 0.5;
-    float2 rotatedUV = float2(
-        centeredUV.x * cosNR - centeredUV.y * sinNR,
-        centeredUV.x * sinNR + centeredUV.y * cosNR
-    ) + 0.5;
-    
-    float blownUpUVX = pow(abs(rotatedUV.x - 0.5) * 2.0, blowUpPower);
-    float blownUpUVY = pow(abs(rotatedUV.y - 0.5) * 2.0, blowUpPower);
-    
-    float2 blownUpUV = float2(
-        -blownUpUVY * blowUpSize * 0.5 + rotatedUV.x * (1.0 + blownUpUVY * blowUpSize),
-        -blownUpUVX * blowUpSize * 0.5 + rotatedUV.y * (1.0 + blownUpUVX * blowUpSize)
-    );
-        
-    blownUpUV.y += time * scrollSpeed;
-    
-    float2 unscaledBlownUpCoords = blownUpUV;
-
-    if (tex2D(dissolveTexture, unscaledBlownUpCoords * dissolveNoiseScale).r <= dissolveRatio)
-        return (0, 0, 0, 0);
-    
-    blownUpUV *= noiseScale;
-    
-    float combinedNoise = tex2D(noiseTexture, blownUpUV).r;
-    combinedNoise = ((combinedNoise - 0.5) * noiseContrast) + 0.5;
-    combinedNoise += pow(distanceFromCenter, 6.0) * 0.3;    
-    combinedNoise = saturate(combinedNoise);
-    
-    float4 marbleColor;
-    if (combinedNoise < 0.125)
-        marbleColor = lerp(color1, color2, combinedNoise * 8.0);
-    else if (combinedNoise < 0.25)
-        marbleColor = lerp(color2, color3, (combinedNoise - 0.125) * 8.0);
-    else if (combinedNoise < 0.375)
-        marbleColor = lerp(color3, color4, (combinedNoise - 0.25) * 8.0);
-    else if (combinedNoise < 0.5)
-        marbleColor = lerp(color4, color5, (combinedNoise - 0.375) * 8.0);
-    else if (combinedNoise < 0.625)
-        marbleColor = lerp(color5, color6, (combinedNoise - 0.5) * 8.0);
-    else if (combinedNoise < 0.75)
-        marbleColor = lerp(color6, color7, (combinedNoise - 0.625) * 8.0);
-    else if (combinedNoise < 0.875)
-        marbleColor = lerp(color7, color8, (combinedNoise - 0.75) * 8.0);
-    else
-        marbleColor = lerp(color8, color1, (combinedNoise - 0.875) * 8.0);
-    
-    float rimLight = pow(1.0 - distanceFromCenter, 3.0);
-    marbleColor.rgb -= rimLight * 0.25;
-    
-    if (tex2D(invertTexture, unscaledBlownUpCoords * invertNoiseScale).r < inversionRatio)
-        marbleColor.rgb = 1 - marbleColor.rgb;
-        
-    float circleMask = 1.0 - smoothstep(0.95, 1.0, distanceFromCenter);
-    
-    marbleColor.a = baseColor.a * circleMask;
-    
-    if (marbleColor.a < 0.01)
+    if (dist >= 1.0)
         return float4(0, 0, 0, 0);
     
-    marbleColor.rgb *= sampleColor.rgb;
+    float z = sqrt(1.0 - dist * dist);
     
-    return marbleColor;
+    float3 spherePoint = float3(uv.x, uv.y, z);
+    
+    spherePoint = rotatePoint(spherePoint, uRotation);
+    
+    bool isLightHalf = spherePoint.y < 0.0;
+    
+    float hemisphereRotation = uTime * uRotSpeed * 2.0;
+    if (isLightHalf)
+        spherePoint = mul(float4(spherePoint, 1.0), rotationMatrix(float3(0, 1, 0), -hemisphereRotation)).xyz;
+    else
+        spherePoint = mul(float4(spherePoint, 1.0), rotationMatrix(float3(0, 1, 0), hemisphereRotation)).xyz;
+    
+    float phi = atan2(spherePoint.z, spherePoint.x);
+    float theta = asin(clamp(spherePoint.y, -1.0, 1.0));
+    
+    float radialDist;
+    if (isLightHalf)
+        radialDist = 1.0 + (theta / (3.14159265359 / 2.0));
+    else
+        radialDist = 1.0 - (theta / (3.14159265359 / 2.0));
+    
+    float swirlAmount = radialDist;
+    if(isLightHalf)
+        swirlAmount *= uSwirlStrength;
+    else
+        swirlAmount *= -uSwirlStrength;
+    
+    float swirledPhi = phi + swirlAmount;
+    
+    float2 textureUV;
+    textureUV.x = 0.5 + radialDist * cos(swirledPhi) * 0.5;
+    textureUV.y = 0.5 + radialDist * sin(swirledPhi) * 0.5;
+    
+    float4 color;
+    if (isLightHalf)
+        color = tex2D(uImage1, textureUV);
+    else
+        color = tex2D(uImage2, textureUV);
+    
+    color.rgb = saturateColor(color.rgb, uSaturation);
+    
+    float equatorDist = abs(spherePoint.y);
+    
+    float coreWidth = 0.03;
+    float coreStrength = smoothstep(coreWidth, 0.0, equatorDist);
+    
+    float gradientWidth = 0.15;
+    float gradientStrength = smoothstep(gradientWidth, 0.0, equatorDist);
+    gradientStrength = pow(gradientStrength, 2.0);
+    
+    float totalOutline = max(coreStrength * 0.8, gradientStrength * 0.4);
+    color.rgb = lerp(color.rgb, uOutlineColor, totalOutline);
+    
+    return color;
 }
 
 technique Technique1
 {
-    pass MarblePass
+    pass AutoloadPass
     {
         PixelShader = compile ps_3_0 PixelShaderFunction();
     }
