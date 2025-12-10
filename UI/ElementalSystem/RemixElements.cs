@@ -154,6 +154,7 @@ namespace CalRemix.UI.ElementalSystem
             { "Phytogen", new Tuple<Element[], Element[]>([Element.Fire, Element.Poison, Element.Cold], [Element.Water, Element.Cold, Element.Machine]) },
             { "Pathogen", new Tuple<Element[], Element[]>([Element.Poison, Element.Water], [Element.Fire, Element.Cold]) },
             { "Pyrogen", new Tuple<Element[], Element[]>([Element.Water, Element.Wind], [Element.Fire, Element.Cold, Element.Slash]) },
+            { "Ozma", new Tuple<Element[], Element[]>([Element.Wind, Element.Holy], [Element.Impact]) },
             { "Hypnos", new Tuple<Element[], Element[]>([Element.Water, Element.Poison, Element.Cold], [Element.Dark, Element.Machine, Element.Unholy]) },
         };
     }
