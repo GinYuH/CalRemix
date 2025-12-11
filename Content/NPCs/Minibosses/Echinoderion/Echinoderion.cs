@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.Graphics;
@@ -35,7 +36,7 @@ namespace CalRemix.Content.NPCs.Minibosses.Echinoderion
             NPC.value = Item.buyPrice(gold: 12, silver: 10);
             NPC.noGravity = false;
             NPC.HitSound = CalamityMod.NPCs.NormalNPCs.Rimehound.HitSound with { Pitch = 1 };
-            NPC.DeathSound = SoundID.NPCDeath27 with { Pitch = 1 };
+            NPC.DeathSound = new SoundStyle("CalRemix/Assets/Sounds/HorseDeath") with { Pitch = -0.4f };
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToWater = false;
             NPC.Calamity().VulnerableToElectricity = true;
