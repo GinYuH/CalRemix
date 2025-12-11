@@ -131,10 +131,10 @@ namespace CalRemix.Content.NPCs.Minibosses.Echinoderion
             Vector3 botRight = new Vector3(center.X + (testFrame.Width / 2), center.Y + (testFrame.Height / 2), 0);
 
             VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4];
-            vertices[0] = new(topLeft, Color.White, new Vector2(0, 0));
-            vertices[1] = new(topRight, Color.White, new Vector2(1, 0));
-            vertices[2] = new(botLeft, Color.White, new Vector2(0, 1));
-            vertices[3] = new(botRight, Color.White, new Vector2(1, 1));
+            vertices[0] = new(topLeft, NPC.GetAlpha(drawColor), new Vector2(0, 0));
+            vertices[1] = new(topRight, NPC.GetAlpha(drawColor), new Vector2(1, 0));
+            vertices[2] = new(botLeft, NPC.GetAlpha(drawColor), new Vector2(0, 1));
+            vertices[3] = new(botRight, NPC.GetAlpha(drawColor), new Vector2(1, 1));
 
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
