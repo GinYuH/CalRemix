@@ -76,7 +76,7 @@ namespace CalRemix.UI
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple && Main.rand.NextBool(600));
 
             HelperMessage.New("TempleWires", "Aw man, there's so many booby traps in here! Try using that fancy gadget of yours to disable them!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple && (Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(3611))).AddItemDisplay(ItemID.WireCutter);
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneLihzhardTemple && (Main.LocalPlayer.HasItem(ItemID.WireCutter) || Main.LocalPlayer.HasItem(ItemID.MulticolorWrench) || Main.LocalPlayer.HasItem(ItemID.WireKite))).AddItemDisplay(ItemID.WireCutter);
 
             HelperMessage.New("Altars", "Smashing demon altars is no longer guaranteed to bless your world with ores. But it’s still worth a shot!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => (Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneCrimson) && Main.hardMode && CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !Main.LocalPlayer.ZoneUnderworldHeight);

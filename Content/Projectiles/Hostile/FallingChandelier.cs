@@ -17,7 +17,6 @@ namespace CalRemix.Content.Projectiles.Hostile
 {
     public class FallingChandelier : ModProjectile
     {
-        private bool stopeh = false;
         public override string Texture => $"Terraria/Images/Tiles_{TileID.Chandeliers}";
 
 

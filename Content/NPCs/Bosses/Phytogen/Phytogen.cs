@@ -356,7 +356,6 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                             minTime /= 2;
                             maxTime /= 2;
                         }
-                        int height = 100;
                         int fireRate = rev ? 120 : 160;
                         NPC.ai[2]++;
                         NPC.ai[3]++;
@@ -443,7 +442,6 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                 case (int)PhaseType.LastStand:
                     {
                         float speed = 2f;
-                        int maxTime = 120;
                         int sporeFireRate = death ? 20 : rev ? 30 : expert ? 40 : 50;
                         int petalFireRate = death ? 40 : rev ? 60 : expert ? 70 : 80;
                         float petalSpeed = 8f;
@@ -551,7 +549,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             }
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
         }

@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.width = 480;
             Projectile.height = 480;
             Projectile.friendly = true;
-            Projectile.aiStyle = 2;
+            Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
             Projectile.penetrate = 10;
             Projectile.ignoreWater = true;
             Projectile.DamageType = ModContent.GetInstance<StormbowDamageClass>();

@@ -1346,7 +1346,7 @@ namespace CalRemix
                     }
 
                     WorldGen.RangeFrame(i - 2, j - treeHeight - 1, i + 2, j + 1);
-                    if (Main.netMode == 2)
+                    if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendTileSquare(-1, i - 1, j - treeHeight, 3, treeHeight);
 
                     return true;

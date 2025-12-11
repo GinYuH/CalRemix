@@ -141,7 +141,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 NPC.netUpdate = true;
             }
 
-            if (Collision.IsWorldPointSolid(NPC.Center) || Main.tile[(int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16)].WallType > 0 || NPC.Distance(phyto.Center) > maxDist)
+            if (Collision.IsWorldPointSolid(NPC.Center) || Main.tile[(int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16)].WallType > WallID.None || NPC.Distance(phyto.Center) > maxDist)
             {
                 if (NPC.ai[2] > 60)
                 {

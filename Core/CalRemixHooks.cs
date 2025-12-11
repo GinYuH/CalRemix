@@ -307,7 +307,7 @@ namespace CalRemix.Core
                             bool notBrightEnough = brightness <= brightnessThreshold && (liquidAmount < 250 || WorldGen.SolidTile(tile) || (liquidAmount >= 200 && brightness == 0f));
                             bool opaqueTile = tile.HasTile && Main.tileBlockLight[tile.TileType] && (!tile.IsTileInvisible || showInvisibleWalls);
                             bool opaqueWall = !WallID.Sets.Transparent[tile.WallType] && (!tile.IsWallInvisible || showInvisibleWalls);
-                            if (!notBrightEnough || (!opaqueWall && !opaqueTile) || (!Main.drawToScreen && LiquidRenderer.Instance.HasFullWater(j, i) && tile.WallType == 0 && !tile.IsHalfBlock && !((double)i <= Main.worldSurface)))
+                            if (!notBrightEnough || (!opaqueWall && !opaqueTile) || (!Main.drawToScreen && LiquidRenderer.Instance.HasFullWater(j, i) && tile.WallType == WallID.None && !tile.IsHalfBlock && !((double)i <= Main.worldSurface)))
                             {
                                 break;
                             }
@@ -466,7 +466,7 @@ namespace CalRemix.Core
             {
                 return;
             }
-            bool itemVisibleAnyways = armorItem.wingSlot > 0 || armorItem.type == ItemID.FlyingCarpet || armorItem.type == ItemID.PortableStool || armorItem.type == 5126 || armorItem.type == ItemID.UnicornHornHat || armorItem.type == ItemID.AngelHalo;
+            bool itemVisibleAnyways = armorItem.wingSlot > 0 || armorItem.type == ItemID.FlyingCarpet || armorItem.type == ItemID.PortableStool || armorItem.type == ItemID.HandOfCreation || armorItem.type == ItemID.UnicornHornHat || armorItem.type == ItemID.AngelHalo;
             bool hiddenFunctional = isNotInVanitySlot && isSetToHidden;
             bool shouldDyeWork = false;
             if (armorItem.shieldSlot > 0 && armorItem.shieldSlot < ArmorIDs.Shield.Count && (self.cShieldFallback == -1 || !hiddenFunctional))
@@ -569,7 +569,7 @@ namespace CalRemix.Core
             {
                 shouldDyeWork = true;
             }
-            if (armorItem.type == ItemID.PortableStool || armorItem.type == 5126)
+            if (armorItem.type == ItemID.PortableStool || armorItem.type == ItemID.HandOfCreation)
             {
                 shouldDyeWork = true;
             }

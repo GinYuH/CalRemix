@@ -22,7 +22,7 @@ namespace CalRemix.Content.Tiles
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(95, 194, 239), name);
 
-            DustType = 84;
+            DustType = DustID.Platinum;
             HitSound = SoundID.Tink;
             MineResist = 4f;
             MinPick = 200;

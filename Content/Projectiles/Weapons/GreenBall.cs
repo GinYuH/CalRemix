@@ -21,7 +21,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.ignoreWater = true;
             Projectile.penetrate = 2;
             Projectile.alpha = 255;
-            Projectile.aiStyle = 14;
+            Projectile.aiStyle = ProjAIStyleID.GroundProjectile;
             Projectile.timeLeft = 300;
         }
 

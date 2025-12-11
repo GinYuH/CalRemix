@@ -14,7 +14,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.height = 70;
             Projectile.damage = 320;
             Projectile.friendly = true;
-            Projectile.aiStyle = 1;
+            Projectile.aiStyle = ProjAIStyleID.Arrow;
             Projectile.DamageType = ModContent.GetInstance<StormbowDamageClass>();
         }
         public override void OnKill(int timeLeft)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Walls
@@ -11,7 +12,7 @@ namespace CalRemix.Content.Walls
             Main.wallHouse[Type] = false;
             //ItemDrop = ModContent.ItemType<FrostflakeWall>();
             AddMapEntry(new Color(7, 99, 133));
-            DustType = 92;
+            DustType = DustID.Frost;
         }
     }
 }

@@ -48,7 +48,6 @@ namespace CalRemix.Content.Projectiles
         public bool whipGonged = false;
         public int taintSummon = 0;
         public int deflectedEnemy = -1;
-        NPC exc;
         public override bool InstancePerEntity => true;
         public int[] baronStraitTiles =
         {
@@ -145,7 +144,7 @@ namespace CalRemix.Content.Projectiles
 
             }
 
-            if (CalRemixWorld.oxydayTime > 0 && projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == 0 && (projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f || projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
+            if (CalRemixWorld.oxydayTime > 0 && projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == WallID.None && (projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f || projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
             {
                 projectile.velocity.X += Main.windSpeedCurrent * Main.windPhysicsStrength;
                 MathHelper.Clamp(projectile.velocity.X, -222f, 222f);

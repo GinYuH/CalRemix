@@ -822,8 +822,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             #endregion
 
             #region setup area to place in
-            Tile tile = new Tile();
-            Point currentTilePointer = new Point();
             int width = 60;
             int height = 30;
             List<List<Point>> bestPointsForPlacement = GetIdealPlacementArea(origin, width, height, 5);
@@ -1046,7 +1044,6 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public static List<List<Point>> GetIdealPlacementArea(Point origin, int width, int height, int threshold)
         {
             Rectangle validPlacementRect = new Rectangle(origin.X - (width / 2), origin.Y - (height / 2), width, height);
-            Tile tile = new Tile();
             List<Point> validPointsForPlacement = GetGeneralPlacementArea(origin, width, height);
             List<Point> bestPointsForPlacement_Buffer = new List<Point>();
             List<List<Point>> bestPointsForPlacement_Final = new List<List<Point>>();

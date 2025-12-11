@@ -68,9 +68,6 @@ namespace CalRemix.Content.Projectiles
             if (Projectile.ai[0] < 0)
                 Projectile.ai[0] = 0;
 
-            int animationSpeed = 6;
-            int totalLength = 59;
-
             if (Projectile.ai[0] % 5 == 0 && Projectile.ai[0] > 0)
             {
                 SoundEngine.PlaySound(BetterSoundID.ItemPoopSquish with { Pitch = 0.8f }, Projectile.Center);

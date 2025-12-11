@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             Projectile.width = 10;
 			Projectile.height = 10;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;
             AIType = ProjectileID.WoodenArrowFriendly;

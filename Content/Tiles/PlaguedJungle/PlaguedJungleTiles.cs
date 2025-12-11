@@ -121,7 +121,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			CalamityUtils.SetMerge(Type, 60);
 			Main.tileMerge[Type][ModContent.TileType<PlaguedStone>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<OvergrownPlaguedStone>()] = true;
-			DustType = 36;
+			DustType = DustID.Ash;
 			AddMapEntry(new Color(25, 47, 50));
 		}
 
@@ -143,7 +143,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedMud>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<OvergrownPlaguedStone>());
 			HitSound = SoundID.Tink;
-			DustType = 1;
+			DustType = DustID.Stone;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedStone>();
 			AddMapEntry(new Color(55, 67, 49));
 		}
@@ -165,7 +165,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedMud>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedStone>());
             HitSound = SoundID.Tink;
-            DustType = 1;
+            DustType = DustID.Stone;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.OvergrownPlaguedStone>();
 			AddMapEntry(new Color(52, 64, 46));
 		}
@@ -194,7 +194,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			CalamityUtils.SetMerge(Type, 60);
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedStone>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<OvergrownPlaguedStone>());
-			DustType = 1;
+			DustType = DustID.Stone;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedPipe>();
 			AddMapEntry(new Color(46, 54, 56));
 		}
@@ -212,7 +212,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			CalamityUtils.SetMerge(Type, ModContent.TileType<Sporezol>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedStone>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<OvergrownPlaguedStone>());
-			DustType = 1;
+			DustType = DustID.Stone;
 			AddMapEntry(new Color(55, 67, 49));
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -231,7 +231,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			Main.tileLighted[Type] = true;
 			Main.tileBlendAll[Type] = false;
 			CalamityUtils.SetMerge(Type, ModContent.TileType<UndeadPlaguePipe>());
-			DustType = 1;
+			DustType = DustID.Stone;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.Sporezol>();
 			AddMapEntry(new Color(159, 188, 22));
 			MinPick = 22222;
@@ -264,7 +264,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedStone>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<OvergrownPlaguedStone>());
             HitSound = SoundID.Tink;
-			DustType = 1;
+			DustType = DustID.Stone;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedClay>();
 			AddMapEntry(new Color(33, 55, 45));
 		}
@@ -293,7 +293,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedMud>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedStone>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<OvergrownPlaguedStone>());
-			DustType = 1;
+			DustType = DustID.Stone;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedSilt>();
 			AddMapEntry(new Color(30, 52, 36));
 		}
@@ -322,7 +322,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedMud>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedStone>());
 			CalamityUtils.SetMerge(Type, ModContent.TileType<OvergrownPlaguedStone>());
-			DustType = 1;
+			DustType = DustID.Stone;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedSand>();
 			AddMapEntry(new Color(154, 169, 124));
 			//SetModPalmTree(new PlaguedPalmTree());
@@ -399,7 +399,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 			Main.tileLighted[Type] = false;
 			Main.tileBlendAll[Type] = true;
 			CalamityUtils.SetMerge(Type, ModContent.TileType<PlaguedMud>());
-			DustType = 1;
+			DustType = DustID.Stone;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedHive>();
 			AddMapEntry(new Color(40, 66, 70));
 		}
@@ -435,7 +435,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(14, 28, 31));
-			DustType = 36;
+			DustType = DustID.Ash;
 		}
 	}
 	public class PlaguedVine : ModTile
@@ -504,7 +504,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(12, 28, 31));
-			DustType = 36;
+			DustType = DustID.Ash;
 		}
 	}
 	public class PlaguedPipeWall : ModWall
@@ -513,7 +513,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 		{
 			Main.wallHouse[Type] = true;
 			AddMapEntry(new Color(37, 48, 46));
-			DustType = 36;
+			DustType = DustID.Ash;
 		}
 	}
 	public class PlaguedStoneWall : ModWall
@@ -522,7 +522,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(29, 35, 24));
-			DustType = 36;
+			DustType = DustID.Ash;
 		}
 	}
 	public class PlaguedVineWall : ModWall
@@ -531,7 +531,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(22, 37, 40));
-			DustType = 2;
+			DustType = DustID.Grass;
 		}
 	}
 	/*WallsSafe*/
@@ -541,7 +541,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(12, 28, 31));
-			DustType = 36;
+			DustType = DustID.Ash;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedMudWall>();
 		}
 	}
@@ -551,7 +551,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(29, 35, 24));
-			DustType = 36;
+			DustType = DustID.Ash;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedStoneWall>();
 		}
 	}
@@ -561,7 +561,7 @@ namespace CalRemix.Content.Tiles.PlaguedJungle
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(22, 37, 40));
-			DustType = 2;
+			DustType = DustID.Grass;
 			//drop = ModContent.ItemType<Items.Placeable.PlaguedJungle.PlaguedVineWall>();
 		}
 	}

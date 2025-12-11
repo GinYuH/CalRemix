@@ -211,11 +211,11 @@ namespace CalRemix.World
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = Main.tile[i, j];
-                    t.WallType = 0;
+                    t.WallType = WallID.None;
                     t.LiquidAmount = 0;
                     t.IsActuated = false;
                     t.Slope = SlopeType.Solid;
-                    t.TileColor = 0;
+                    t.TileColor = PaintID.None;
                     t.IsTileInvisible = false;
                     t.IsTileFullbright = false;
                     t.HasActuator = false;

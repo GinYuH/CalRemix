@@ -63,7 +63,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             float speed = 5f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            bool slowDown = false;
             if (target != null && target.active && !(target is NPC ne && ne.life <= 0))
             {
                 NPC.direction = target.position.X - NPC.position.X > 0 ? 1 : -1;
@@ -79,7 +78,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 }
                 else if (Phase == 1f)
                 {
-                    slowDown = true;
                     FireRate += 1f;
                     if (FireRate % 5f == 0f)
                     {
@@ -95,7 +93,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 else if (Phase == 2f)
                 {
                     {
-                        slowDown = true;
                         FireRate += 1f;
                         if (FireRate == 22)
                         {

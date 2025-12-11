@@ -338,7 +338,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
             Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), position, Velocity.RotatedBy(spread * Math.PI / 180), type, damage, 0f, Main.myPlayer);
             proj.timeLeft = 1200;
         }
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             if (NPC.AnyNPCs(ModContent.NPCType<Cataractacomb>()) || NPC.AnyNPCs(ModContent.NPCType<Exotrexia>()) || NPC.AnyNPCs(ModContent.NPCType<Conjunctivirus>()))
                 potionType = ItemID.None;

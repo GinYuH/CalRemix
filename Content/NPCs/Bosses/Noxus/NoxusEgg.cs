@@ -69,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             Main.npcFrameCount[Type] = 1;
             NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 90;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Scale = 0.3f,
                 PortraitScale = 0.5f
@@ -887,7 +887,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             CalamityNetcode.SyncWorld();
         }
 
-        public override void BossLoot(ref string name, ref int potionType) => potionType = ModContent.ItemType<OmegaHealingPotion>();
+        public override void BossLoot(ref int potionType) => potionType = ModContent.ItemType<OmegaHealingPotion>();
 
         // Ensure that Noxus' contact damage adhere to the special boss-specific cooldown slot, to prevent things like lava cheese.
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

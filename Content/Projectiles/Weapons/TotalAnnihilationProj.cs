@@ -112,7 +112,6 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
 
             Vector2 mountedCenter = player.MountedCenter;
-            bool doFastThrowDust = false;
             bool shouldOwnerHitCheck = false;
             int launchTimeLimit = 15;  // How much time the projectile can go before retracting (speed and shootTimer will set the flail's range)
             float launchSpeed = 44f; // How fast the projectile can move
@@ -179,7 +178,6 @@ namespace CalRemix.Content.Projectiles.Weapons
                     }
                 case AIState.LaunchingForward:
                     {
-                        doFastThrowDust = true;
                         bool shouldSwitchToRetracting = StateTimer++ >= launchTimeLimit;
                         shouldSwitchToRetracting |= Projectile.Distance(mountedCenter) >= maxLaunchLength;
                         if (player.controlUseItem) // If the player clicks, transition to the Dropping state
@@ -389,14 +387,6 @@ namespace CalRemix.Content.Projectiles.Weapons
                 player.itemRotation += (float)Math.PI;
             }
             player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
-
-            // Spawning dust. We spawn dust more often when in the LaunchingForward state
-            int dustRate = 15;
-            if (doFastThrowDust)
-                dustRate = 1;
-
-            //if (Main.rand.NextBool(dustRate))
-                //Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<Sparkle>(), 0f, 0f, 150, default(Color), 1.3f);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

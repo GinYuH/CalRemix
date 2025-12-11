@@ -332,7 +332,7 @@ namespace CalRemix.Core.Subworlds
             for (int j = (int)worldSurface; j < Main.maxTilesY; j++)
             {
                 tile = Main.tile[x, j];
-                if (tile.TileType == 1)
+                if (tile.TileType == TileID.Stone)
                 {
                     tile = Main.tile[x, j];
                     if (tile.HasTile)
@@ -343,7 +343,7 @@ namespace CalRemix.Core.Subworlds
                 tile = Main.tile[x, j];
                 tile.HasTile = true;
                 tile = Main.tile[x, j];
-                tile.TileType = 0;
+                tile.TileType = TileID.Dirt;
                 tile = Main.tile[x, j];
                 tile.TileFrameX = -1;
                 tile = Main.tile[x, j];
@@ -604,10 +604,10 @@ namespace CalRemix.Core.Subworlds
                         for (int num1013 = num1012; num1013 < num1012 + 5; num1013++)
                         {
                             tile35 = Main.tile[num1011, num1013];
-                            if (tile35.TileType == 40)
+                            if (tile35.TileType == TileID.ClayBlock)
                             {
                                 tile35 = Main.tile[num1011, num1013];
-                                tile35.TileType = 0;
+                                tile35.TileType = TileID.Dirt;
                             }
                         }
                         break;
@@ -896,30 +896,30 @@ namespace CalRemix.Core.Subworlds
                 if (tile33.HasTile)
                 {
                     tile33 = Main.tile[num950 - 1, num951];
-                    if (tile33.TileType == 0)
+                    if (tile33.TileType == TileID.Dirt)
                     {
                         tile33 = Main.tile[num950 + 1, num951];
                         if (tile33.HasTile)
                         {
                             tile33 = Main.tile[num950 + 1, num951];
-                            if (tile33.TileType == 0)
+                            if (tile33.TileType == TileID.Dirt)
                             {
                                 tile33 = Main.tile[num950, num951 - 1];
                                 if (tile33.HasTile)
                                 {
                                     tile33 = Main.tile[num950, num951 - 1];
-                                    if (tile33.TileType == 0)
+                                    if (tile33.TileType == TileID.Dirt)
                                     {
                                         tile33 = Main.tile[num950, num951 + 1];
                                         if (tile33.HasTile)
                                         {
                                             tile33 = Main.tile[num950, num951 + 1];
-                                            if (tile33.TileType == 0)
+                                            if (tile33.TileType == TileID.Dirt)
                                             {
                                                 tile33 = Main.tile[num950, num951];
                                                 tile33.HasTile = true;
                                                 tile33 = Main.tile[num950, num951];
-                                                tile33.TileType = 2;
+                                                tile33.TileType = TileID.Grass;
                                             }
                                         }
                                     }
@@ -938,30 +938,30 @@ namespace CalRemix.Core.Subworlds
                 if (tile33.HasTile)
                 {
                     tile33 = Main.tile[num950 - 1, num951];
-                    if (tile33.TileType == 0)
+                    if (tile33.TileType == TileID.Dirt)
                     {
                         tile33 = Main.tile[num950 + 1, num951];
                         if (tile33.HasTile)
                         {
                             tile33 = Main.tile[num950 + 1, num951];
-                            if (tile33.TileType == 0)
+                            if (tile33.TileType == TileID.Dirt)
                             {
                                 tile33 = Main.tile[num950, num951 - 1];
                                 if (tile33.HasTile)
                                 {
                                     tile33 = Main.tile[num950, num951 - 1];
-                                    if (tile33.TileType == 0)
+                                    if (tile33.TileType == TileID.Dirt)
                                     {
                                         tile33 = Main.tile[num950, num951 + 1];
                                         if (tile33.HasTile)
                                         {
                                             tile33 = Main.tile[num950, num951 + 1];
-                                            if (tile33.TileType == 0)
+                                            if (tile33.TileType == TileID.Dirt)
                                             {
                                                 tile33 = Main.tile[num950, num951];
                                                 tile33.HasTile = true;
                                                 tile33 = Main.tile[num950, num951];
-                                                tile33.TileType = 2;
+                                                tile33.TileType = TileID.Grass;
                                             }
                                         }
                                     }
@@ -1110,13 +1110,13 @@ namespace CalRemix.Core.Subworlds
                         while (!Main.tile[num744, num748].HasTile)
                         {
                             num748++;
-                            if ((double)num748 >= Main.worldSurface || Main.tile[num744, num748].WallType > 0)
+                            if ((double)num748 >= Main.worldSurface || Main.tile[num744, num748].WallType > WallID.None)
                             {
                                 flag48 = true;
                                 break;
                             }
                         }
-                        if (Main.tile[num744, num748].TileType == 53)
+                        if (Main.tile[num744, num748].TileType == TileID.Sand)
                         {
                             flag48 = true;
                         }
@@ -1127,7 +1127,7 @@ namespace CalRemix.Core.Subworlds
                             {
                                 for (int num751 = num748 - num749; num751 <= num748 + num749; num751++)
                                 {
-                                    if (Main.tile[num750, num751].TileType == 203 || Main.tile[num750, num751].TileType == 25) // TODO this is where the error happens, its getting out of bounds variables
+                                    if (Main.tile[num750, num751].TileType == TileID.Crimstone || Main.tile[num750, num751].TileType == TileID.Ebonstone) // TODO this is where the error happens, its getting out of bounds variables
                                     {
                                         flag48 = true;
                                         break;
@@ -1152,7 +1152,7 @@ namespace CalRemix.Core.Subworlds
                                     for (int num753 = num744 - num749; num753 <= num744 + num749; num753++)
                                     {
                                         int y25 = num748 - 20;
-                                        if (Main.tile[num753, y25].HasTile || Main.tile[num753, y25].WallType > 0)
+                                        if (Main.tile[num753, y25].HasTile || Main.tile[num753, y25].WallType > WallID.None)
                                         {
                                             flag48 = true;
                                         }
@@ -1199,31 +1199,31 @@ namespace CalRemix.Core.Subworlds
                     if (!flag43)
                     {
                         tile25 = Main.tile[num678, num680];
-                        if (tile25.WallType == 0)
+                        if (tile25.WallType == WallID.None)
                         {
                             tile25 = Main.tile[num678, num680 + 1];
-                            if (tile25.WallType == 0)
+                            if (tile25.WallType == WallID.None)
                             {
                                 tile25 = Main.tile[num678, num680 + 2];
-                                if (tile25.WallType == 0)
+                                if (tile25.WallType == WallID.None)
                                 {
                                     tile25 = Main.tile[num678, num680 + 3];
-                                    if (tile25.WallType == 0)
+                                    if (tile25.WallType == WallID.None)
                                     {
                                         tile25 = Main.tile[num678, num680 + 4];
-                                        if (tile25.WallType == 0)
+                                        if (tile25.WallType == WallID.None)
                                         {
                                             tile25 = Main.tile[num678 - 1, num680];
-                                            if (tile25.WallType == 0)
+                                            if (tile25.WallType == WallID.None)
                                             {
                                                 tile25 = Main.tile[num678 + 1, num680];
-                                                if (tile25.WallType == 0)
+                                                if (tile25.WallType == WallID.None)
                                                 {
                                                     tile25 = Main.tile[num678 - 2, num680];
-                                                    if (tile25.WallType == 0)
+                                                    if (tile25.WallType == WallID.None)
                                                     {
                                                         tile25 = Main.tile[num678 + 2, num680];
-                                                        if (tile25.WallType == 0)
+                                                        if (tile25.WallType == WallID.None)
                                                         {
                                                             tile25 = Main.tile[num678, num680];
                                                             if (!tile25.HasTile)
@@ -1254,16 +1254,16 @@ namespace CalRemix.Core.Subworlds
                         continue;
                     }
                     tile25 = Main.tile[num678, num680];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num678, num680];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num678, num680];
-                            if (tile25.WallType != 64)
+                            if (tile25.WallType != WallID.JungleUnsafe)
                             {
                                 tile25 = Main.tile[num678, num680];
-                                if (tile25.WallType != 86)
+                                if (tile25.WallType != WallID.HiveUnsafe)
                                 {
                                     goto IL_00c2;
                                 }
@@ -1271,17 +1271,17 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                     tile25 = Main.tile[num678, num680];
-                    tile25.WallType = 0;
+                    tile25.WallType = WallID.None;
                     goto IL_00c2;
                 IL_035f:
                     tile25 = Main.tile[num678 + 3, num680];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num678 + 3, num680];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num678 + 3, num680];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_03d8;
                             }
@@ -1290,18 +1290,18 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num678 + 3, num680];
-                        tile25.WallType = 0;
+                        tile25.WallType = WallID.None;
                     }
                     goto IL_03d8;
                 IL_0201:
                     tile25 = Main.tile[num678 - 3, num680];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num678 - 3, num680];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num678 - 3, num680];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_027a;
                             }
@@ -1310,18 +1310,18 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num678 - 3, num680];
-                        tile25.WallType = 0;
+                        tile25.WallType = WallID.None;
                     }
                     goto IL_027a;
                 IL_0188:
                     tile25 = Main.tile[num678 - 2, num680];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num678 - 2, num680];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num678 - 2, num680];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_0201;
                             }
@@ -1330,7 +1330,7 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num678 - 2, num680];
-                        tile25.WallType = 0;
+                        tile25.WallType = WallID.None;
                     }
                     goto IL_0201;
                 IL_03d8:
@@ -1342,13 +1342,13 @@ namespace CalRemix.Core.Subworlds
                     continue;
                 IL_02e6:
                     tile25 = Main.tile[num678 + 2, num680];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num678 + 2, num680];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num678 + 2, num680];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_035f;
                             }
@@ -1357,57 +1357,57 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num678 + 2, num680];
-                        tile25.WallType = 0;
+                        tile25.WallType = WallID.None;
                     }
                     goto IL_035f;
                 IL_00c2:
                     tile25 = Main.tile[num678, num680];
-                    if (tile25.TileType == 53)
+                    if (tile25.TileType == TileID.Sand)
                     {
                         continue;
                     }
                     tile25 = Main.tile[num678, num680];
-                    if (tile25.TileType == 112)
+                    if (tile25.TileType == TileID.Ebonsand)
                     {
                         continue;
                     }
                     tile25 = Main.tile[num678, num680];
-                    if (tile25.TileType == 234)
+                    if (tile25.TileType == TileID.Crimsand)
                     {
                         continue;
                     }
                     tile25 = Main.tile[num678 - 1, num680];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num678 - 1, num680];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num678 - 1, num680];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_0188;
                             }
                         }
                     }
                     tile25 = Main.tile[num678 - 1, num680];
-                    tile25.WallType = 0;
+                    tile25.WallType = WallID.None;
                     goto IL_0188;
                 IL_027a:
                     tile25 = Main.tile[num678 + 1, num680];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num678 + 1, num680];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num678 + 1, num680];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_02e6;
                             }
                         }
                     }
                     tile25 = Main.tile[num678 + 1, num680];
-                    tile25.WallType = 0;
+                    tile25.WallType = WallID.None;
                     goto IL_02e6;
                 }
             }
@@ -1420,31 +1420,31 @@ namespace CalRemix.Core.Subworlds
                     if (!flag44)
                     {
                         tile25 = Main.tile[num681, num683];
-                        if (tile25.WallType == 0)
+                        if (tile25.WallType == WallID.None)
                         {
                             tile25 = Main.tile[num681, num683 + 1];
-                            if (tile25.WallType == 0)
+                            if (tile25.WallType == WallID.None)
                             {
                                 tile25 = Main.tile[num681, num683 + 2];
-                                if (tile25.WallType == 0)
+                                if (tile25.WallType == WallID.None)
                                 {
                                     tile25 = Main.tile[num681, num683 + 3];
-                                    if (tile25.WallType == 0)
+                                    if (tile25.WallType == WallID.None)
                                     {
                                         tile25 = Main.tile[num681, num683 + 4];
-                                        if (tile25.WallType == 0)
+                                        if (tile25.WallType == WallID.None)
                                         {
                                             tile25 = Main.tile[num681 - 1, num683];
-                                            if (tile25.WallType == 0)
+                                            if (tile25.WallType == WallID.None)
                                             {
                                                 tile25 = Main.tile[num681 + 1, num683];
-                                                if (tile25.WallType == 0)
+                                                if (tile25.WallType == WallID.None)
                                                 {
                                                     tile25 = Main.tile[num681 - 2, num683];
-                                                    if (tile25.WallType == 0)
+                                                    if (tile25.WallType == WallID.None)
                                                     {
                                                         tile25 = Main.tile[num681 + 2, num683];
-                                                        if (tile25.WallType == 0)
+                                                        if (tile25.WallType == WallID.None)
                                                         {
                                                             tile25 = Main.tile[num681, num683];
                                                             if (!tile25.HasTile)
@@ -1475,30 +1475,30 @@ namespace CalRemix.Core.Subworlds
                         continue;
                     }
                     tile25 = Main.tile[num681, num683];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num681, num683];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num681, num683];
-                            if (tile25.WallType != 64)
+                            if (tile25.WallType != WallID.JungleUnsafe)
                             {
                                 goto IL_062f;
                             }
                         }
                     }
                     tile25 = Main.tile[num681, num683];
-                    tile25.WallType = 0;
+                    tile25.WallType = WallID.None;
                     goto IL_062f;
                 IL_0838:
                     tile25 = Main.tile[num681 + 2, num683];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num681 + 2, num683];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num681 + 2, num683];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_08b9;
                             }
@@ -1507,18 +1507,18 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num681 + 2, num683];
-                        tile25.WallType = 0;
+                        tile25.WallType = WallID.None;
                     }
                     goto IL_08b9;
                 IL_0743:
                     tile25 = Main.tile[num681 - 3, num683];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num681 - 3, num683];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num681 - 3, num683];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_07c4;
                             }
@@ -1527,35 +1527,35 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num681 - 3, num683];
-                        tile25.WallType = 0;
+                        tile25.WallType = WallID.None;
                     }
                     goto IL_07c4;
                 IL_07c4:
                     tile25 = Main.tile[num681 + 1, num683];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num681 + 1, num683];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num681 + 1, num683];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_0838;
                             }
                         }
                     }
                     tile25 = Main.tile[num681 + 1, num683];
-                    tile25.WallType = 0;
+                    tile25.WallType = WallID.None;
                     goto IL_0838;
                 IL_06c2:
                     tile25 = Main.tile[num681 - 2, num683];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num681 - 2, num683];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num681 - 2, num683];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_0743;
                             }
@@ -1564,7 +1564,7 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num681 - 2, num683];
-                        tile25.WallType = 0;
+                        tile25.WallType = WallID.None;
                     }
                     goto IL_0743;
                 IL_093a:
@@ -1576,35 +1576,35 @@ namespace CalRemix.Core.Subworlds
                     continue;
                 IL_062f:
                     tile25 = Main.tile[num681, num683];
-                    if (tile25.TileType == 53)
+                    if (tile25.TileType == TileID.Sand)
                     {
                         continue;
                     }
                     tile25 = Main.tile[num681 - 1, num683];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num681 - 1, num683];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num681 - 1, num683];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_06c2;
                             }
                         }
                     }
                     tile25 = Main.tile[num681 - 1, num683];
-                    tile25.WallType = 0;
+                    tile25.WallType = WallID.None;
                     goto IL_06c2;
                 IL_08b9:
                     tile25 = Main.tile[num681 + 3, num683];
-                    if (tile25.WallType != 2)
+                    if (tile25.WallType != WallID.DirtUnsafe)
                     {
                         tile25 = Main.tile[num681 + 3, num683];
-                        if (tile25.WallType != 40)
+                        if (tile25.WallType != WallID.SnowWallUnsafe)
                         {
                             tile25 = Main.tile[num681 + 3, num683];
-                            if (tile25.WallType != 40)
+                            if (tile25.WallType != WallID.SnowWallUnsafe)
                             {
                                 goto IL_093a;
                             }
@@ -1613,7 +1613,7 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num681 + 3, num683];
-                        tile25.WallType = 0;
+                        tile25.WallType = WallID.None;
                     }
                     goto IL_093a;
                 }
@@ -1626,7 +1626,7 @@ namespace CalRemix.Core.Subworlds
             {
                 int num669 = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
                 int num670 = WorldGen.genRand.Next(10, (int)Main.worldSurface);
-                if (Main.tile[num669, num670].WallType == 2)
+                if (Main.tile[num669, num670].WallType == WallID.DirtUnsafe)
                 {
                     WorldGen.DirtyRockRunner(num669, num670);
                 }
@@ -1641,9 +1641,9 @@ namespace CalRemix.Core.Subworlds
                 double value11 = (double)num565 / (double)Main.maxTilesX;
                 for (int num566 = 20; num566 < Main.maxTilesY - 20; num566++)
                 {
-                    if (Main.tile[num565, num566].TileType != 48 && Main.tile[num565, num566].TileType != 137 && Main.tile[num565, num566].TileType != 232 && Main.tile[num565, num566].TileType != 191 && Main.tile[num565, num566].TileType != 151 && Main.tile[num565, num566].TileType != 274)
+                    if (Main.tile[num565, num566].TileType != TileID.Spikes && Main.tile[num565, num566].TileType != TileID.Traps && Main.tile[num565, num566].TileType != TileID.WoodenSpikes && Main.tile[num565, num566].TileType != TileID.LivingWood && Main.tile[num565, num566].TileType != TileID.SandstoneBrick && Main.tile[num565, num566].TileType != TileID.SandStoneSlab)
                     {
-                        if (!Main.tile[num565, num566 - 1].HasTile && Main.tile[num565 - 1, num566].TileType != 136 && Main.tile[num565 + 1, num566].TileType != 136)
+                        if (!Main.tile[num565, num566 - 1].HasTile && Main.tile[num565 - 1, num566].TileType != TileID.Switches && Main.tile[num565 + 1, num566].TileType != TileID.Switches)
                         {
                             if (WorldGen.SolidTile(num565, num566) && TileID.Sets.CanBeClearedDuringGeneration[Main.tile[num565, num566].TileType])
                             {
@@ -1725,11 +1725,11 @@ namespace CalRemix.Core.Subworlds
                                     }
                                 }
                             }
-                            else if (!Main.tile[num565, num566].HasTile && Main.tile[num565, num566 + 1].TileType != 151 && Main.tile[num565, num566 + 1].TileType != 274)
+                            else if (!Main.tile[num565, num566].HasTile && Main.tile[num565, num566 + 1].TileType != TileID.SandstoneBrick && Main.tile[num565, num566 + 1].TileType != TileID.SandStoneSlab)
                             {
-                                if (Main.tile[num565 + 1, num566].TileType != 190 && Main.tile[num565 + 1, num566].TileType != 48 && Main.tile[num565 + 1, num566].TileType != 232 && WorldGen.SolidTile(num565 - 1, num566 + 1) && WorldGen.SolidTile(num565 + 1, num566) && !Main.tile[num565 - 1, num566].HasTile && !Main.tile[num565 + 1, num566 - 1].HasTile)
+                                if (Main.tile[num565 + 1, num566].TileType != TileID.MushroomBlock && Main.tile[num565 + 1, num566].TileType != TileID.Spikes && Main.tile[num565 + 1, num566].TileType != TileID.WoodenSpikes && WorldGen.SolidTile(num565 - 1, num566 + 1) && WorldGen.SolidTile(num565 + 1, num566) && !Main.tile[num565 - 1, num566].HasTile && !Main.tile[num565 + 1, num566 - 1].HasTile)
                                 {
-                                    if (Main.tile[num565 + 1, num566].TileType == 495)
+                                    if (Main.tile[num565 + 1, num566].TileType == TileID.ShellPile)
                                     {
                                         WorldGen.PlaceTile(num565, num566, Main.tile[num565 + 1, num566].TileType);
                                     }
@@ -1746,9 +1746,9 @@ namespace CalRemix.Core.Subworlds
                                         WorldGen.PoundTile(num565, num566);
                                     }
                                 }
-                                if (Main.tile[num565 - 1, num566].TileType != 190 && Main.tile[num565 - 1, num566].TileType != 48 && Main.tile[num565 - 1, num566].TileType != 232 && WorldGen.SolidTile(num565 + 1, num566 + 1) && WorldGen.SolidTile(num565 - 1, num566) && !Main.tile[num565 + 1, num566].HasTile && !Main.tile[num565 - 1, num566 - 1].HasTile)
+                                if (Main.tile[num565 - 1, num566].TileType != TileID.MushroomBlock && Main.tile[num565 - 1, num566].TileType != TileID.Spikes && Main.tile[num565 - 1, num566].TileType != TileID.WoodenSpikes && WorldGen.SolidTile(num565 + 1, num566 + 1) && WorldGen.SolidTile(num565 - 1, num566) && !Main.tile[num565 + 1, num566].HasTile && !Main.tile[num565 - 1, num566 - 1].HasTile)
                                 {
-                                    if (Main.tile[num565 - 1, num566].TileType == 495)
+                                    if (Main.tile[num565 - 1, num566].TileType == TileID.ShellPile)
                                     {
                                         WorldGen.PlaceTile(num565, num566, Main.tile[num565 - 1, num566].TileType);
                                     }
@@ -1789,7 +1789,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int num568 = 20; num568 < Main.maxTilesY - 20; num568++)
                 {
-                    if (WorldGen.genRand.NextBool(2) && !Main.tile[num567, num568 - 1].HasTile && Main.tile[num567, num568].TileType != 137 && Main.tile[num567, num568].TileType != 48 && Main.tile[num567, num568].TileType != 232 && Main.tile[num567, num568].TileType != 191 && Main.tile[num567, num568].TileType != 151 && Main.tile[num567, num568].TileType != 274 && Main.tile[num567, num568].TileType != 75 && Main.tile[num567, num568].TileType != 76 && WorldGen.SolidTile(num567, num568) && Main.tile[num567 - 1, num568].TileType != 137 && Main.tile[num567 + 1, num568].TileType != 137)
+                    if (WorldGen.genRand.NextBool(2) && !Main.tile[num567, num568 - 1].HasTile && Main.tile[num567, num568].TileType != TileID.Traps && Main.tile[num567, num568].TileType != TileID.Spikes && Main.tile[num567, num568].TileType != TileID.WoodenSpikes && Main.tile[num567, num568].TileType != TileID.LivingWood && Main.tile[num567, num568].TileType != TileID.SandstoneBrick && Main.tile[num567, num568].TileType != TileID.SandStoneSlab && Main.tile[num567, num568].TileType != TileID.ObsidianBrick && Main.tile[num567, num568].TileType != TileID.HellstoneBrick && WorldGen.SolidTile(num567, num568) && Main.tile[num567 - 1, num568].TileType != TileID.Traps && Main.tile[num567 + 1, num568].TileType != TileID.Traps)
                     {
                         if (WorldGen.SolidTile(num567, num568 + 1) && WorldGen.SolidTile(num567 + 1, num568) && !Main.tile[num567 - 1, num568].HasTile)
                         {
@@ -1888,7 +1888,7 @@ namespace CalRemix.Core.Subworlds
                                 flag35 = false;
                             }
                         }
-                        if ((Main.tile[num556, num558].TileType == 75 || Main.tile[num556, num558].TileType == 76) && !WorldGen.genRand.NextBool(10))
+                        if ((Main.tile[num556, num558].TileType == TileID.ObsidianBrick || Main.tile[num556, num558].TileType == TileID.HellstoneBrick) && !WorldGen.genRand.NextBool(10))
                         {
                             flag35 = false;
                         }
@@ -1904,7 +1904,7 @@ namespace CalRemix.Core.Subworlds
                 double num563 = (double)num562 / (double)Main.maxTilesX;
                 for (int num564 = 20; num564 < Main.maxTilesY - 20; num564++)
                 {
-                    if (Main.tile[num562, num564].TileType != 48 && Main.tile[num562, num564].TileType != 232 && WorldGen.SolidTile(num562, num564) && WorldGen.SolidTile(num562, num564 + 1))
+                    if (Main.tile[num562, num564].TileType != TileID.Spikes && Main.tile[num562, num564].TileType != TileID.WoodenSpikes && WorldGen.SolidTile(num562, num564) && WorldGen.SolidTile(num562, num564 + 1))
                     {
                         if (!WorldGen.SolidTile(num562 + 1, num564) && Main.tile[num562 - 1, num564].IsHalfBlock && Main.tile[num562 - 2, num564].LiquidAmount > 0)
                         {
@@ -1971,18 +1971,18 @@ namespace CalRemix.Core.Subworlds
                 Tile tile19 = Main.tile[point2.X, point2.Y];
                 Tile tile20 = Main.tile[point2.X, point2.Y - 1];
                 ushort num553 = 0;
-                if (tile19.TileType == 60)
+                if (tile19.TileType == TileID.JungleGrass)
                 {
                     num553 = (ushort)(204 + WorldGen.genRand.Next(4));
                 }
-                else if (tile19.TileType == 1 && tile20.WallType == 0)
+                else if (tile19.TileType == TileID.Stone && tile20.WallType == WallID.None)
                 {
                     num553 = ((!WorldGen.remixWorldGen) ? (((double)point2.Y < GenVars.rockLayer) ? ((ushort)(196 + WorldGen.genRand.Next(4))) : ((point2.Y >= GenVars.lavaLine) ? ((ushort)(208 + WorldGen.genRand.Next(4))) : ((ushort)(212 + WorldGen.genRand.Next(4))))) : (((double)point2.Y > GenVars.rockLayer) ? ((ushort)(196 + WorldGen.genRand.Next(4))) : ((point2.Y <= GenVars.lavaLine || !WorldGen.genRand.NextBool(2)) ? ((ushort)(212 + WorldGen.genRand.Next(4))) : ((ushort)(208 + WorldGen.genRand.Next(4))))));
                 }
                 if (tile19.HasTile && num553 != 0 && !tile20.HasTile)
                 {
                     foundInvalidTile = false;
-                    bool flag34 = ((tile19.TileType != 60) ? WorldUtils.Gen(new Point(point2.X, point2.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Actions.Blank().Output(shapeData), new Actions.ContinueWrapper(Actions.Chain(new Modifiers.IsTouching(true, 60, 147, 161, 396, 397, 70, 191), new Modifiers.IsTouching(true, 147, 161, 396, 397, 70, 191), new Actions.Custom(delegate
+                    bool flag34 = ((tile19.TileType != TileID.JungleGrass) ? WorldUtils.Gen(new Point(point2.X, point2.Y - 1), new ShapeFloodFill(1000), Actions.Chain(new Modifiers.IsNotSolid(), new Actions.Blank().Output(shapeData), new Actions.ContinueWrapper(Actions.Chain(new Modifiers.IsTouching(true, 60, 147, 161, 396, 397, 70, 191), new Modifiers.IsTouching(true, 147, 161, 396, 397, 70, 191), new Actions.Custom(delegate
                     {
                         foundInvalidTile = true;
                         return true;
@@ -2013,7 +2013,7 @@ namespace CalRemix.Core.Subworlds
                     if ((double)num438 < Main.worldSurface && WorldGen.oceanDepths(num437, num438))
                     {
                         tile17 = Main.tile[num437, num438];
-                        if (tile17.TileType == 53)
+                        if (tile17.TileType == TileID.Sand)
                         {
                             tile17 = Main.tile[num437, num438];
                             if (tile17.HasTile)
@@ -2030,12 +2030,12 @@ namespace CalRemix.Core.Subworlds
                                     if (tile17.HasTile)
                                     {
                                         tile17 = Main.tile[num437, num439];
-                                        if (tile17.TileType == 397)
+                                        if (tile17.TileType == TileID.HardenedSand)
                                         {
                                             break;
                                         }
                                         tile17 = Main.tile[num437, num439];
-                                        if (tile17.TileType == 53)
+                                        if (tile17.TileType == TileID.Sand)
                                         {
                                             break;
                                         }
@@ -2044,17 +2044,17 @@ namespace CalRemix.Core.Subworlds
                                     if (tile17.HasTile)
                                     {
                                         tile17 = Main.tile[num437, num439 + 1];
-                                        if (tile17.TileType == 397)
+                                        if (tile17.TileType == TileID.HardenedSand)
                                         {
                                             break;
                                         }
                                         tile17 = Main.tile[num437, num439 + 1];
-                                        if (tile17.TileType == 53)
+                                        if (tile17.TileType == TileID.Sand)
                                         {
                                             break;
                                         }
                                         tile17 = Main.tile[num437, num439 + 1];
-                                        if (tile17.TileType == 495)
+                                        if (tile17.TileType == TileID.ShellPile)
                                         {
                                             break;
                                         }
@@ -2063,23 +2063,23 @@ namespace CalRemix.Core.Subworlds
                                     if (tile17.HasTile)
                                     {
                                         tile17 = Main.tile[num437, num439 + 2];
-                                        if (tile17.TileType == 397)
+                                        if (tile17.TileType == TileID.HardenedSand)
                                         {
                                             break;
                                         }
                                         tile17 = Main.tile[num437, num439 + 2];
-                                        if (tile17.TileType == 53)
+                                        if (tile17.TileType == TileID.Sand)
                                         {
                                             break;
                                         }
                                         tile17 = Main.tile[num437, num439 + 2];
-                                        if (tile17.TileType == 495)
+                                        if (tile17.TileType == TileID.ShellPile)
                                         {
                                             break;
                                         }
                                     }
                                     tile17 = Main.tile[num437, num439];
-                                    tile17.TileType = 0;
+                                    tile17.TileType = TileID.Dirt;
                                     tile17 = Main.tile[num437, num439];
                                     tile17.HasTile = true;
                                     tile17 = Main.tile[num437, num439];
@@ -2091,42 +2091,42 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                     tile17 = Main.tile[num437, num438];
-                    if (tile17.WallType != 187)
+                    if (tile17.WallType != WallID.Sandstone)
                     {
                         tile17 = Main.tile[num437, num438];
-                        if (tile17.WallType != 216)
+                        if (tile17.WallType != WallID.HardenedSand)
                         {
                             goto IL_03c6;
                         }
                     }
                     tile17 = Main.tile[num437, num438];
-                    if (tile17.TileType != 59)
+                    if (tile17.TileType != TileID.Mud)
                     {
                         tile17 = Main.tile[num437, num438];
-                        if (tile17.TileType != 123)
+                        if (tile17.TileType != TileID.Silt)
                         {
                             tile17 = Main.tile[num437, num438];
-                            if (tile17.TileType != 224)
+                            if (tile17.TileType != TileID.Slush)
                             {
                                 goto IL_030c;
                             }
                         }
                     }
                     tile17 = Main.tile[num437, num438];
-                    tile17.TileType = 397;
+                    tile17.TileType = TileID.HardenedSand;
                     goto IL_030c;
                 IL_030c:
                     tile17 = Main.tile[num437, num438];
-                    if (tile17.TileType != 368)
+                    if (tile17.TileType != TileID.Granite)
                     {
                         tile17 = Main.tile[num437, num438];
-                        if (tile17.TileType != 367)
+                        if (tile17.TileType != TileID.Marble)
                         {
                             goto IL_035e;
                         }
                     }
                     tile17 = Main.tile[num437, num438];
-                    tile17.TileType = 397;
+                    tile17.TileType = TileID.HardenedSand;
                     goto IL_035e;
                 IL_03c6:
                     if ((double)num438 < Main.worldSurface)
@@ -2135,10 +2135,10 @@ namespace CalRemix.Core.Subworlds
                         if (tile17.HasTile)
                         {
                             tile17 = Main.tile[num437, num438];
-                            if (tile17.TileType == 53)
+                            if (tile17.TileType == TileID.Sand)
                             {
                                 tile17 = Main.tile[num437, num438 + 1];
-                                if (tile17.WallType == 0 && !WorldGen.SolidTile(num437, num438 + 1))
+                                if (tile17.WallType == WallID.None && !WorldGen.SolidTile(num437, num438 + 1))
                                 {
                                     ushort num440 = 0;
                                     int num441 = 3;
@@ -2147,7 +2147,7 @@ namespace CalRemix.Core.Subworlds
                                         for (int num443 = num438 - num441; num443 <= num438 + num441; num443++)
                                         {
                                             tile17 = Main.tile[num442, num443];
-                                            if (tile17.WallType > 0)
+                                            if (tile17.WallType > WallID.None)
                                             {
                                                 tile17 = Main.tile[num442, num443];
                                                 num440 = tile17.WallType;
@@ -2160,7 +2160,7 @@ namespace CalRemix.Core.Subworlds
                                         tile17 = Main.tile[num437, num438 + 1];
                                         tile17.WallType = num440;
                                         tile17 = Main.tile[num437, num438];
-                                        if (tile17.WallType == 0)
+                                        if (tile17.WallType == WallID.None)
                                         {
                                             tile17 = Main.tile[num437, num438];
                                             tile17.WallType = num440;
@@ -2171,7 +2171,7 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                     tile17 = Main.tile[num437, num438];
-                    if (tile17.TileType != 19)
+                    if (tile17.TileType != TileID.Platforms)
                     {
                         bool[] canBeClearedDuringGeneration = TileID.Sets.CanBeClearedDuringGeneration;
                         tile17 = Main.tile[num437, num438];
@@ -2192,10 +2192,10 @@ namespace CalRemix.Core.Subworlds
                                             tile17.HasTile = false;
                                         }
                                         tile17 = Main.tile[num437 + 1, num438];
-                                        if (tile17.TileType != 137)
+                                        if (tile17.TileType != TileID.Traps)
                                         {
                                             tile17 = Main.tile[num437 - 1, num438];
-                                            if (tile17.TileType != 137)
+                                            if (tile17.TileType != TileID.Traps)
                                             {
                                                 continue;
                                             }
@@ -2207,7 +2207,7 @@ namespace CalRemix.Core.Subworlds
                                 }
                             }
                             tile17 = Main.tile[num437, num438];
-                            if (tile17.TileType == 225)
+                            if (tile17.TileType == TileID.Hive)
                             {
                                 tile17 = Main.tile[num437, num438];
                                 if (tile17.IsHalfBlock)
@@ -2221,10 +2221,10 @@ namespace CalRemix.Core.Subworlds
                                 tile17.HasTile = false;
                             }
                             tile17 = Main.tile[num437 + 1, num438];
-                            if (tile17.TileType != 137)
+                            if (tile17.TileType != TileID.Traps)
                             {
                                 tile17 = Main.tile[num437 - 1, num438];
-                                if (tile17.TileType != 137)
+                                if (tile17.TileType != TileID.Traps)
                                 {
                                     continue;
                                 }
@@ -2281,18 +2281,18 @@ namespace CalRemix.Core.Subworlds
                                         if (tile16.HasTile)
                                         {
                                             tile16 = Main.tile[num401, num402];
-                                            if (tile16.TileType == 0)
+                                            if (tile16.TileType == TileID.Dirt)
                                             {
                                                 tile16 = Main.tile[num401, num402 - 1];
                                                 if (!tile16.HasTile)
                                                 {
                                                     tile16 = Main.tile[num401, num402];
-                                                    tile16.TileType = 60;
+                                                    tile16.TileType = TileID.JungleGrass;
                                                 }
                                                 else
                                                 {
                                                     tile16 = Main.tile[num401, num402];
-                                                    tile16.TileType = 59;
+                                                    tile16.TileType = TileID.Mud;
                                                 }
                                             }
                                         }
@@ -2312,29 +2312,29 @@ namespace CalRemix.Core.Subworlds
                                         if (tile16.HasTile)
                                         {
                                             tile16 = Main.tile[num405, num406];
-                                            if (tile16.TileType == 53 || num404 == 53)
+                                            if (tile16.TileType == TileID.Sand || num404 == 53)
                                             {
                                                 num404 = 53;
                                             }
                                             else
                                             {
                                                 tile16 = Main.tile[num405, num406];
-                                                if (tile16.TileType != 59)
+                                                if (tile16.TileType != TileID.Mud)
                                                 {
                                                     tile16 = Main.tile[num405, num406];
-                                                    if (tile16.TileType != 60)
+                                                    if (tile16.TileType != TileID.JungleGrass)
                                                     {
                                                         tile16 = Main.tile[num405, num406];
-                                                        if (tile16.TileType != 147)
+                                                        if (tile16.TileType != TileID.SnowBlock)
                                                         {
                                                             tile16 = Main.tile[num405, num406];
-                                                            if (tile16.TileType != 161)
+                                                            if (tile16.TileType != TileID.IceBlock)
                                                             {
                                                                 tile16 = Main.tile[num405, num406];
-                                                                if (tile16.TileType != 199)
+                                                                if (tile16.TileType != TileID.CrimsonGrass)
                                                                 {
                                                                     tile16 = Main.tile[num405, num406];
-                                                                    if (tile16.TileType != 23)
+                                                                    if (tile16.TileType != TileID.CorruptGrass)
                                                                     {
                                                                         continue;
                                                                     }
@@ -2350,7 +2350,7 @@ namespace CalRemix.Core.Subworlds
                                         else if (num406 < num400)
                                         {
                                             tile16 = Main.tile[num405, num406];
-                                            if (tile16.WallType == 0)
+                                            if (tile16.WallType == WallID.None)
                                             {
                                                 flag22 = true;
                                             }
@@ -2396,7 +2396,7 @@ namespace CalRemix.Core.Subworlds
                             if (flag23)
                             {
                                 tile16 = Main.tile[num407, num408];
-                                if (tile16.TileType == 0)
+                                if (tile16.TileType == TileID.Dirt)
                                 {
                                     try
                                     {
@@ -2419,7 +2419,7 @@ namespace CalRemix.Core.Subworlds
                         else
                         {
                             tile16 = Main.tile[num407, num408];
-                            if (tile16.WallType == 0)
+                            if (tile16.WallType == WallID.None)
                             {
                                 flag23 = true;
                             }
@@ -2433,7 +2433,7 @@ namespace CalRemix.Core.Subworlds
                         for (int num410 = (int)GenVars.rockLayerLow + WorldGen.genRand.Next(-1, 2); num410 < Main.maxTilesY - 200; num410++)
                         {
                             tile16 = Main.tile[num409, num410];
-                            if (tile16.TileType == 0)
+                            if (tile16.TileType == TileID.Dirt)
                             {
                                 tile16 = Main.tile[num409, num410];
                                 if (tile16.HasTile)
@@ -2472,7 +2472,7 @@ namespace CalRemix.Core.Subworlds
                                         }
                                     }
                                     tile16 = Main.tile[num409, num410];
-                                    tile16.TileType = 2;
+                                    tile16.TileType = TileID.Grass;
                                 }
                             }
                         }
@@ -2482,7 +2482,7 @@ namespace CalRemix.Core.Subworlds
                         for (int num412 = (int)GenVars.rockLayerLow + WorldGen.genRand.Next(-1, 2); num412 < Main.maxTilesY - 200; num412++)
                         {
                             tile16 = Main.tile[num411, num412];
-                            if (tile16.TileType == 2)
+                            if (tile16.TileType == TileID.Grass)
                             {
                                 tile16 = Main.tile[num411, num412 - 1];
                                 if (!tile16.HasTile && WorldGen.genRand.NextBool(20))
@@ -2531,9 +2531,9 @@ namespace CalRemix.Core.Subworlds
                                     WorldGen.Convert(num414, num415, conversionType, 1);
                                 }
                                 tile16 = Main.tile[num414, num415];
-                                tile16.TileColor = 0;
+                                tile16.TileColor = PaintID.None;
                                 tile16 = Main.tile[num414, num415];
-                                tile16.WallColor = 0;
+                                tile16.WallColor = PaintID.None;
                             }
                         }
                     }
@@ -2595,52 +2595,52 @@ namespace CalRemix.Core.Subworlds
                         {
                             num309 = WorldGen.genRand.Next(22);
                         }
-                        if ((Main.tile[num306, num307 + 1].TileType == 0 || Main.tile[num306, num307 + 1].TileType == 1 || Main.tileMoss[Main.tile[num306, num307 + 1].TileType]) && WorldGen.genRand.NextBool(5))
+                        if ((Main.tile[num306, num307 + 1].TileType == TileID.Dirt || Main.tile[num306, num307 + 1].TileType == TileID.Stone || Main.tileMoss[Main.tile[num306, num307 + 1].TileType]) && WorldGen.genRand.NextBool(5))
                         {
                             num309 = WorldGen.genRand.Next(23, 29);
                             num308 = 187;
                         }
-                        if (num307 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num306, num307].WallType] || Main.tile[num306, num307 + 1].TileType == 30 || Main.tile[num306, num307 + 1].TileType == 19 || Main.tile[num306, num307 + 1].TileType == 25 || Main.tile[num306, num307 + 1].TileType == 203)
+                        if (num307 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num306, num307].WallType] || Main.tile[num306, num307 + 1].TileType == TileID.WoodBlock || Main.tile[num306, num307 + 1].TileType == TileID.Platforms || Main.tile[num306, num307 + 1].TileType == TileID.Ebonstone || Main.tile[num306, num307 + 1].TileType == TileID.Crimstone)
                         {
                             num309 = WorldGen.genRand.Next(7);
                             num308 = 186;
                         }
-                        if (Main.tile[num306, num307 + 1].TileType == 147 || Main.tile[num306, num307 + 1].TileType == 161 || Main.tile[num306, num307 + 1].TileType == 162)
+                        if (Main.tile[num306, num307 + 1].TileType == TileID.SnowBlock || Main.tile[num306, num307 + 1].TileType == TileID.IceBlock || Main.tile[num306, num307 + 1].TileType == TileID.BreakableIce)
                         {
                             num309 = WorldGen.genRand.Next(26, 32);
                             num308 = 186;
                         }
-                        if (Main.tile[num306, num307 + 1].TileType == 60)
+                        if (Main.tile[num306, num307 + 1].TileType == TileID.JungleGrass)
                         {
                             num308 = 187;
                             num309 = WorldGen.genRand.Next(6);
                         }
-                        if ((Main.tile[num306, num307 + 1].TileType == 57 || Main.tile[num306, num307 + 1].TileType == 58) && WorldGen.genRand.Next(3) < 2)
+                        if ((Main.tile[num306, num307 + 1].TileType == TileID.Ash || Main.tile[num306, num307 + 1].TileType == TileID.Hellstone) && WorldGen.genRand.Next(3) < 2)
                         {
                             num308 = 187;
                             num309 = WorldGen.genRand.Next(6, 9);
                         }
-                        if (Main.tile[num306, num307 + 1].TileType == 226)
+                        if (Main.tile[num306, num307 + 1].TileType == TileID.LihzahrdBrick)
                         {
                             num308 = 187;
                             num309 = WorldGen.genRand.Next(18, 23);
                         }
-                        if (Main.tile[num306, num307 + 1].TileType == 70)
+                        if (Main.tile[num306, num307 + 1].TileType == TileID.MushroomGrass)
                         {
                             num309 = WorldGen.genRand.Next(32, 35);
                             num308 = 186;
                         }
-                        if (Main.tile[num306, num307 + 1].TileType == 396 || Main.tile[num306, num307 + 1].TileType == 397 || Main.tile[num306, num307 + 1].TileType == 404)
+                        if (Main.tile[num306, num307 + 1].TileType == TileID.Sandstone || Main.tile[num306, num307 + 1].TileType == TileID.HardenedSand || Main.tile[num306, num307 + 1].TileType == TileID.DesertFossil)
                         {
                             num309 = WorldGen.genRand.Next(29, 35);
                             num308 = 187;
                         }
-                        if (Main.tile[num306, num307 + 1].TileType == 368)
+                        if (Main.tile[num306, num307 + 1].TileType == TileID.Granite)
                         {
                             num309 = WorldGen.genRand.Next(35, 41);
                             num308 = 187;
                         }
-                        if (Main.tile[num306, num307 + 1].TileType == 367)
+                        if (Main.tile[num306, num307 + 1].TileType == TileID.Marble)
                         {
                             num309 = WorldGen.genRand.Next(41, 47);
                             num308 = 187;
@@ -2660,7 +2660,7 @@ namespace CalRemix.Core.Subworlds
                             {
                                 WorldGen.PlaceTile(num306, num307, num308, mute: true, forced: false, -1, num309);
                             }
-                            if (Main.tile[num306, num307].TileType == 186 || Main.tile[num306, num307].TileType == 187)
+                            if (Main.tile[num306, num307].TileType == TileID.LargePiles || Main.tile[num306, num307].TileType == TileID.LargePiles2)
                             {
                                 flag11 = true;
                             }
@@ -2705,21 +2705,21 @@ namespace CalRemix.Core.Subworlds
                         {
                             num319 = WorldGen.genRand.Next(22);
                         }
-                        if (num317 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num316, num317].WallType] || Main.tile[num316, num317 + 1].TileType == 30 || Main.tile[num316, num317 + 1].TileType == 19)
+                        if (num317 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num316, num317].WallType] || Main.tile[num316, num317 + 1].TileType == TileID.WoodBlock || Main.tile[num316, num317 + 1].TileType == TileID.Platforms)
                         {
                             num319 = WorldGen.genRand.Next(7);
                         }
-                        if ((Main.tile[num316, num317 + 1].TileType == 57 || Main.tile[num316, num317 + 1].TileType == 58) && WorldGen.genRand.Next(3) < 2)
+                        if ((Main.tile[num316, num317 + 1].TileType == TileID.Ash || Main.tile[num316, num317 + 1].TileType == TileID.Hellstone) && WorldGen.genRand.Next(3) < 2)
                         {
                             num318 = 187;
                             num319 = WorldGen.genRand.Next(6, 9);
                         }
-                        if (Main.tile[num316, num317 + 1].TileType == 147 || Main.tile[num316, num317 + 1].TileType == 161 || Main.tile[num316, num317 + 1].TileType == 162)
+                        if (Main.tile[num316, num317 + 1].TileType == TileID.SnowBlock || Main.tile[num316, num317 + 1].TileType == TileID.IceBlock || Main.tile[num316, num317 + 1].TileType == TileID.BreakableIce)
                         {
                             num319 = WorldGen.genRand.Next(26, 32);
                         }
                         WorldGen.PlaceTile(num316, num317, num318, mute: true, forced: false, -1, num319);
-                        if (Main.tile[num316, num317].TileType == 186 || Main.tile[num316, num317].TileType == 187)
+                        if (Main.tile[num316, num317].TileType == TileID.LargePiles || Main.tile[num316, num317].TileType == TileID.LargePiles2)
                         {
                             flag12 = true;
                         }
@@ -2764,25 +2764,25 @@ namespace CalRemix.Core.Subworlds
                         {
                         }
                         int num329 = WorldGen.genRand.Next(7, 13);
-                        if (num328 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num327, num328].WallType] || Main.tile[num327, num328 + 1].TileType == 30 || Main.tile[num327, num328 + 1].TileType == 19 || Main.tile[num327, num328 + 1].TileType == 25 || Main.tile[num327, num328 + 1].TileType == 203 || Main.tile[num327, num328 + 1].TileType == 234 || Main.tile[num327, num328 + 1].TileType == 112)
+                        if (num328 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num327, num328].WallType] || Main.tile[num327, num328 + 1].TileType == TileID.WoodBlock || Main.tile[num327, num328 + 1].TileType == TileID.Platforms || Main.tile[num327, num328 + 1].TileType == TileID.Ebonstone || Main.tile[num327, num328 + 1].TileType == TileID.Crimstone || Main.tile[num327, num328 + 1].TileType == TileID.Crimsand || Main.tile[num327, num328 + 1].TileType == TileID.Ebonsand)
                         {
                             num329 = -1;
                         }
-                        if (Main.tile[num327, num328 + 1].TileType == 147 || Main.tile[num327, num328 + 1].TileType == 161 || Main.tile[num327, num328 + 1].TileType == 162)
+                        if (Main.tile[num327, num328 + 1].TileType == TileID.SnowBlock || Main.tile[num327, num328 + 1].TileType == TileID.IceBlock || Main.tile[num327, num328 + 1].TileType == TileID.BreakableIce)
                         {
                             num329 = WorldGen.genRand.Next(26, 32);
                         }
-                        if (Main.tile[num327, num328 + 1].TileType == 53)
+                        if (Main.tile[num327, num328 + 1].TileType == TileID.Sand)
                         {
                             num326 = 187;
                             num329 = WorldGen.genRand.Next(52, 55);
                         }
-                        if (Main.tile[num327, num328 + 1].TileType == 2 || Main.tile[num327 - 1, num328 + 1].TileType == 2 || Main.tile[num327 + 1, num328 + 1].TileType == 2)
+                        if (Main.tile[num327, num328 + 1].TileType == TileID.Grass || Main.tile[num327 - 1, num328 + 1].TileType == TileID.Grass || Main.tile[num327 + 1, num328 + 1].TileType == TileID.Grass)
                         {
                             num326 = 187;
                             num329 = WorldGen.genRand.Next(14, 17);
                         }
-                        if (Main.tile[num327, num328 + 1].TileType == 151 || Main.tile[num327, num328 + 1].TileType == 274)
+                        if (Main.tile[num327, num328 + 1].TileType == TileID.SandstoneBrick || Main.tile[num327, num328 + 1].TileType == TileID.SandStoneSlab)
                         {
                             num326 = 186;
                             num329 = WorldGen.genRand.Next(7);
@@ -2807,31 +2807,31 @@ namespace CalRemix.Core.Subworlds
                     num331--;
                     int num332 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
                     int num333 = WorldGen.genRand.Next(10, (int)Main.worldSurface);
-                    if (!Main.tile[num332, num333].HasTile && Main.tile[num332, num333].WallType > 0)
+                    if (!Main.tile[num332, num333].HasTile && Main.tile[num332, num333].WallType > WallID.None)
                     {
                         int num334 = 186;
                         for (; !Main.tile[num332, num333 + 1].HasTile && num333 < Main.maxTilesY - 5; num333++)
                         {
                         }
                         int num335 = WorldGen.genRand.Next(7, 13);
-                        if (num333 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num332, num333].WallType] || Main.tile[num332, num333 + 1].TileType == 30 || Main.tile[num332, num333 + 1].TileType == 19)
+                        if (num333 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num332, num333].WallType] || Main.tile[num332, num333 + 1].TileType == TileID.WoodBlock || Main.tile[num332, num333 + 1].TileType == TileID.Platforms)
                         {
                             num335 = -1;
                         }
-                        if (Main.tile[num332, num333 + 1].TileType == 25)
+                        if (Main.tile[num332, num333 + 1].TileType == TileID.Ebonstone)
                         {
                             num335 = WorldGen.genRand.Next(7);
                         }
-                        if (Main.tile[num332, num333 + 1].TileType == 147 || Main.tile[num332, num333 + 1].TileType == 161 || Main.tile[num332, num333 + 1].TileType == 162)
+                        if (Main.tile[num332, num333 + 1].TileType == TileID.SnowBlock || Main.tile[num332, num333 + 1].TileType == TileID.IceBlock || Main.tile[num332, num333 + 1].TileType == TileID.BreakableIce)
                         {
                             num335 = WorldGen.genRand.Next(26, 32);
                         }
-                        if (Main.tile[num332, num333 + 1].TileType == 2 || Main.tile[num332 - 1, num333 + 1].TileType == 2 || Main.tile[num332 + 1, num333 + 1].TileType == 2)
+                        if (Main.tile[num332, num333 + 1].TileType == TileID.Grass || Main.tile[num332 - 1, num333 + 1].TileType == TileID.Grass || Main.tile[num332 + 1, num333 + 1].TileType == TileID.Grass)
                         {
                             num334 = 187;
                             num335 = WorldGen.genRand.Next(14, 17);
                         }
-                        if (Main.tile[num332, num333 + 1].TileType == 151 || Main.tile[num332, num333 + 1].TileType == 274)
+                        if (Main.tile[num332, num333 + 1].TileType == TileID.SandstoneBrick || Main.tile[num332, num333 + 1].TileType == TileID.SandStoneSlab)
                         {
                             num334 = 186;
                             num335 = WorldGen.genRand.Next(7);
@@ -2873,7 +2873,7 @@ namespace CalRemix.Core.Subworlds
                     num341--;
                     int num342 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
                     int num343 = WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20);
-                    if (Main.tile[num342, num343].WallType == 87 && WorldGen.genRand.NextBool(2))
+                    if (Main.tile[num342, num343].WallType == WallID.LihzahrdBrickUnsafe && WorldGen.genRand.NextBool(2))
                     {
                         num342 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
                         num343 = WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20);
@@ -2913,7 +2913,7 @@ namespace CalRemix.Core.Subworlds
                                 num345 = WorldGen.genRand.Next(6, 16);
                             }
                         }
-                        if (Main.wallDungeon[Main.tile[num342, num343].WallType] || Main.tile[num342, num343 + 1].TileType == 30 || Main.tile[num342, num343 + 1].TileType == 19 || Main.tile[num342, num343 + 1].TileType == 25 || Main.tile[num342, num343 + 1].TileType == 203 || Main.tile[num342, num343].WallType == 87)
+                        if (Main.wallDungeon[Main.tile[num342, num343].WallType] || Main.tile[num342, num343 + 1].TileType == TileID.WoodBlock || Main.tile[num342, num343 + 1].TileType == TileID.Platforms || Main.tile[num342, num343 + 1].TileType == TileID.Ebonstone || Main.tile[num342, num343 + 1].TileType == TileID.Crimstone || Main.tile[num342, num343].WallType == WallID.LihzahrdBrickUnsafe)
                         {
                             if (num344 == 0 && num345 < 12)
                             {
@@ -2928,7 +2928,7 @@ namespace CalRemix.Core.Subworlds
                                 num345 -= 10;
                             }
                         }
-                        if (Main.tile[num342, num343 + 1].TileType == 147 || Main.tile[num342, num343 + 1].TileType == 161 || Main.tile[num342, num343 + 1].TileType == 162)
+                        if (Main.tile[num342, num343 + 1].TileType == TileID.SnowBlock || Main.tile[num342, num343 + 1].TileType == TileID.IceBlock || Main.tile[num342, num343 + 1].TileType == TileID.BreakableIce)
                         {
                             if (num344 == 0 && num345 < 12)
                             {
@@ -2943,7 +2943,7 @@ namespace CalRemix.Core.Subworlds
                                 num345 += 25;
                             }
                         }
-                        if (Main.tile[num342, num343 + 1].TileType == 151 || Main.tile[num342, num343 + 1].TileType == 274)
+                        if (Main.tile[num342, num343 + 1].TileType == TileID.SandstoneBrick || Main.tile[num342, num343 + 1].TileType == TileID.SandStoneSlab)
                         {
                             if (num344 == 0)
                             {
@@ -2954,7 +2954,7 @@ namespace CalRemix.Core.Subworlds
                                 num345 = WorldGen.genRand.Next(12, 19);
                             }
                         }
-                        if (Main.tile[num342, num343 + 1].TileType == 368)
+                        if (Main.tile[num342, num343 + 1].TileType == TileID.Granite)
                         {
                             if (num344 == 0)
                             {
@@ -2965,7 +2965,7 @@ namespace CalRemix.Core.Subworlds
                                 num345 = WorldGen.genRand.Next(47, 53);
                             }
                         }
-                        if (Main.tile[num342, num343 + 1].TileType == 367)
+                        if (Main.tile[num342, num343 + 1].TileType == TileID.Marble)
                         {
                             if (num344 == 0)
                             {
@@ -3029,7 +3029,7 @@ namespace CalRemix.Core.Subworlds
                         {
                             num355 = WorldGen.genRand.Next(5);
                         }
-                        if (Main.tile[num352, num353 + 1].TileType == 147 || Main.tile[num352, num353 + 1].TileType == 161 || Main.tile[num352, num353 + 1].TileType == 162)
+                        if (Main.tile[num352, num353 + 1].TileType == TileID.SnowBlock || Main.tile[num352, num353 + 1].TileType == TileID.IceBlock || Main.tile[num352, num353 + 1].TileType == TileID.BreakableIce)
                         {
                             if (num354 == 0 && num355 < 12)
                             {
@@ -3044,11 +3044,11 @@ namespace CalRemix.Core.Subworlds
                                 num355 += 25;
                             }
                         }
-                        if (Main.tile[num352, num353 + 1].TileType == 2 && num354 == 1)
+                        if (Main.tile[num352, num353 + 1].TileType == TileID.Grass && num354 == 1)
                         {
                             num355 = WorldGen.genRand.Next(38, 41);
                         }
-                        if (Main.tile[num352, num353 + 1].TileType == 151 || Main.tile[num352, num353 + 1].TileType == 274)
+                        if (Main.tile[num352, num353 + 1].TileType == TileID.SandstoneBrick || Main.tile[num352, num353 + 1].TileType == TileID.SandStoneSlab)
                         {
                             if (num354 == 0)
                             {
@@ -3059,7 +3059,7 @@ namespace CalRemix.Core.Subworlds
                                 num355 = WorldGen.genRand.Next(12, 19);
                             }
                         }
-                        if (!Main.wallDungeon[Main.tile[num352, num353].WallType] && Main.tile[num352, num353 + 1].TileType != 30 && Main.tile[num352, num353 + 1].TileType != 19 && Main.tile[num352, num353 + 1].TileType != 41 && Main.tile[num352, num353 + 1].TileType != 43 && Main.tile[num352, num353 + 1].TileType != 44 && Main.tile[num352, num353 + 1].TileType != 481 && Main.tile[num352, num353 + 1].TileType != 482 && Main.tile[num352, num353 + 1].TileType != 483 && Main.tile[num352, num353 + 1].TileType != 45 && Main.tile[num352, num353 + 1].TileType != 46 && Main.tile[num352, num353 + 1].TileType != 47 && Main.tile[num352, num353 + 1].TileType != 175 && Main.tile[num352, num353 + 1].TileType != 176 && Main.tile[num352, num353 + 1].TileType != 177 && Main.tile[num352, num353 + 1].TileType != 53 && Main.tile[num352, num353 + 1].TileType != 25 && Main.tile[num352, num353 + 1].TileType != 203)
+                        if (!Main.wallDungeon[Main.tile[num352, num353].WallType] && Main.tile[num352, num353 + 1].TileType != TileID.WoodBlock && Main.tile[num352, num353 + 1].TileType != TileID.Platforms && Main.tile[num352, num353 + 1].TileType != TileID.BlueDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.GreenDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.PinkDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.CrackedBlueDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.CrackedGreenDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.CrackedPinkDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.GoldBrick && Main.tile[num352, num353 + 1].TileType != TileID.SilverBrick && Main.tile[num352, num353 + 1].TileType != TileID.CopperBrick && Main.tile[num352, num353 + 1].TileType != TileID.TinBrick && Main.tile[num352, num353 + 1].TileType != TileID.TungstenBrick && Main.tile[num352, num353 + 1].TileType != TileID.PlatinumBrick && Main.tile[num352, num353 + 1].TileType != TileID.Sand && Main.tile[num352, num353 + 1].TileType != TileID.Ebonstone && Main.tile[num352, num353 + 1].TileType != TileID.Crimstone)
                         {
                             flag16 = WorldGen.PlaceSmallPile(num352, num353, num355, num354, 185);
                         }
@@ -3075,7 +3075,7 @@ namespace CalRemix.Core.Subworlds
                     num357--;
                     int num358 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
                     int num359 = WorldGen.genRand.Next(15, (int)Main.worldSurface);
-                    if (!Main.tile[num358, num359].HasTile && (Main.tile[num358, num359].WallType == 2 || Main.tile[num358, num359].WallType == 40))
+                    if (!Main.tile[num358, num359].HasTile && (Main.tile[num358, num359].WallType == WallID.DirtUnsafe || Main.tile[num358, num359].WallType == WallID.SnowWallUnsafe))
                     {
                         for (; !Main.tile[num358, num359 + 1].HasTile && num359 < Main.maxTilesY - 5; num359++)
                         {
@@ -3086,7 +3086,7 @@ namespace CalRemix.Core.Subworlds
                         {
                             num361 = WorldGen.genRand.Next(5);
                         }
-                        if (Main.tile[num358, num359 + 1].TileType == 147 || Main.tile[num358, num359 + 1].TileType == 161 || Main.tile[num358, num359 + 1].TileType == 162)
+                        if (Main.tile[num358, num359 + 1].TileType == TileID.SnowBlock || Main.tile[num358, num359 + 1].TileType == TileID.IceBlock || Main.tile[num358, num359 + 1].TileType == TileID.BreakableIce)
                         {
                             if (num360 == 0 && num361 < 12)
                             {
@@ -3101,11 +3101,11 @@ namespace CalRemix.Core.Subworlds
                                 num361 += 25;
                             }
                         }
-                        if (Main.tile[num358, num359 + 1].TileType == 2 && num360 == 1)
+                        if (Main.tile[num358, num359 + 1].TileType == TileID.Grass && num360 == 1)
                         {
                             num361 = WorldGen.genRand.Next(38, 41);
                         }
-                        if (Main.tile[num358, num359 + 1].TileType == 151 || Main.tile[num358, num359 + 1].TileType == 274)
+                        if (Main.tile[num358, num359 + 1].TileType == TileID.SandstoneBrick || Main.tile[num358, num359 + 1].TileType == TileID.SandStoneSlab)
                         {
                             if (num360 == 0)
                             {
@@ -3116,7 +3116,7 @@ namespace CalRemix.Core.Subworlds
                                 num361 = WorldGen.genRand.Next(12, 19);
                             }
                         }
-                        if ((Main.tile[num358, num359].LiquidAmount != byte.MaxValue || Main.tile[num358, num359 + 1].TileType != 53 || Main.tile[num358, num359].WallType != 0) && !Main.wallDungeon[Main.tile[num358, num359].WallType] && Main.tile[num358, num359 + 1].TileType != 30 && Main.tile[num358, num359 + 1].TileType != 19 && Main.tile[num358, num359 + 1].TileType != 41 && Main.tile[num358, num359 + 1].TileType != 43 && Main.tile[num358, num359 + 1].TileType != 44 && Main.tile[num358, num359 + 1].TileType != 481 && Main.tile[num358, num359 + 1].TileType != 482 && Main.tile[num358, num359 + 1].TileType != 483 && Main.tile[num358, num359 + 1].TileType != 45 && Main.tile[num358, num359 + 1].TileType != 46 && Main.tile[num358, num359 + 1].TileType != 47 && Main.tile[num358, num359 + 1].TileType != 175 && Main.tile[num358, num359 + 1].TileType != 176 && Main.tile[num358, num359 + 1].TileType != 177 && Main.tile[num358, num359 + 1].TileType != 25 && Main.tile[num358, num359 + 1].TileType != 203)
+                        if ((Main.tile[num358, num359].LiquidAmount != byte.MaxValue || Main.tile[num358, num359 + 1].TileType != TileID.Sand || Main.tile[num358, num359].WallType != WallID.None) && !Main.wallDungeon[Main.tile[num358, num359].WallType] && Main.tile[num358, num359 + 1].TileType != TileID.WoodBlock && Main.tile[num358, num359 + 1].TileType != TileID.Platforms && Main.tile[num358, num359 + 1].TileType != TileID.BlueDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.GreenDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.PinkDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.CrackedBlueDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.CrackedGreenDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.CrackedPinkDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.GoldBrick && Main.tile[num358, num359 + 1].TileType != TileID.SilverBrick && Main.tile[num358, num359 + 1].TileType != TileID.CopperBrick && Main.tile[num358, num359 + 1].TileType != TileID.TinBrick && Main.tile[num358, num359 + 1].TileType != TileID.TungstenBrick && Main.tile[num358, num359 + 1].TileType != TileID.PlatinumBrick && Main.tile[num358, num359 + 1].TileType != TileID.Ebonstone && Main.tile[num358, num359 + 1].TileType != TileID.Crimstone)
                         {
                             flag17 = WorldGen.PlaceSmallPile(num358, num359, num361, num360, 185);
                         }
@@ -3211,13 +3211,13 @@ namespace CalRemix.Core.Subworlds
                     if (tile15.HasTile)
                     {
                         tile15 = Main.tile[num283, num284];
-                        if (tile15.TileType == 2)
+                        if (tile15.TileType == TileID.Grass)
                         {
                             tile15 = Main.tile[num283, num284];
-                            if (tile15.WallType != 2)
+                            if (tile15.WallType != WallID.DirtUnsafe)
                             {
                                 tile15 = Main.tile[num283, num284];
-                                if (tile15.WallType != 63)
+                                if (tile15.WallType != WallID.GrassUnsafe)
                                 {
                                     goto IL_0170;
                                 }
@@ -3227,7 +3227,7 @@ namespace CalRemix.Core.Subworlds
                                 for (int num288 = num284 - 1; num288 <= num284 + 1; num288++)
                                 {
                                     tile15 = Main.tile[num287, num288];
-                                    if (tile15.WallType == 0 && !WorldGen.SolidTile(num287, num288))
+                                    if (tile15.WallType == WallID.None && !WorldGen.SolidTile(num287, num288))
                                     {
                                         flag8 = true;
                                     }
@@ -3240,10 +3240,10 @@ namespace CalRemix.Core.Subworlds
                                     for (int num290 = num284 - 1; num290 <= num284 + 1; num290++)
                                     {
                                         tile15 = Main.tile[num289, num290];
-                                        if (tile15.WallType != 2)
+                                        if (tile15.WallType != WallID.DirtUnsafe)
                                         {
                                             tile15 = Main.tile[num289, num290];
-                                            if (tile15.WallType != 15)
+                                            if (tile15.WallType != WallID.MudUnsafe)
                                             {
                                                 continue;
                                             }
@@ -3282,16 +3282,16 @@ namespace CalRemix.Core.Subworlds
                 for (int num292 = 10; (double)num292 < Main.worldSurface - 1.0; num292++)
                 {
                     tile15 = Main.tile[num291, num292];
-                    if (tile15.WallType == 63 && WorldGen.genRand.NextBool(10))
+                    if (tile15.WallType == WallID.GrassUnsafe && WorldGen.genRand.NextBool(10))
                     {
                         tile15 = Main.tile[num291, num292];
-                        tile15.WallType = 65;
+                        tile15.WallType = WallID.FlowerUnsafe;
                     }
                     tile15 = Main.tile[num291, num292];
                     if (tile15.HasTile)
                     {
                         tile15 = Main.tile[num291, num292];
-                        if (tile15.TileType == 0)
+                        if (tile15.TileType == TileID.Dirt)
                         {
                             bool flag9 = false;
                             for (int num293 = num291 - 1; num293 <= num291 + 1; num293++)
@@ -3300,10 +3300,10 @@ namespace CalRemix.Core.Subworlds
                                 while (num294 <= num292 + 1)
                                 {
                                     tile15 = Main.tile[num293, num294];
-                                    if (tile15.WallType != 63)
+                                    if (tile15.WallType != WallID.GrassUnsafe)
                                     {
                                         tile15 = Main.tile[num293, num294];
-                                        if (tile15.WallType != 65)
+                                        if (tile15.WallType != WallID.FlowerUnsafe)
                                         {
                                             num294++;
                                             continue;
@@ -3348,7 +3348,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     for (int num276 = num273; num276 < num274; num276++)
                     {
-                        if (Main.tile[num275, num276].TileType == 2 && Main.tile[num275, num276].HasTile && !Main.tile[num275, num276 - 1].HasTile)
+                        if (Main.tile[num275, num276].TileType == TileID.Grass && Main.tile[num275, num276].HasTile && !Main.tile[num275, num276 - 1].HasTile)
                         {
                             WorldGen.PlaceTile(num275, num276 - 1, 27, mute: true);
                         }
@@ -3384,7 +3384,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int num249 = 1; num249 < Main.maxTilesY; num249++)
                 {
-                    if (Main.tile[num248, num249].TileType == 2 && Main.tile[num248, num249].HasUnactuatedTile)
+                    if (Main.tile[num248, num249].TileType == TileID.Grass && Main.tile[num248, num249].HasUnactuatedTile)
                     {
                         if (!Main.tile[num248, num249 - 1].HasTile)
                         {
@@ -3392,21 +3392,21 @@ namespace CalRemix.Core.Subworlds
                             Main.tile[num248, num249 - 1].CopyPaintAndCoating(Main.tile[num248, num249]);
                         }
                     }
-                    else if (Main.tile[num248, num249].TileType == 23 && Main.tile[num248, num249].HasUnactuatedTile)
+                    else if (Main.tile[num248, num249].TileType == TileID.CorruptGrass && Main.tile[num248, num249].HasUnactuatedTile)
                     {
                         if (!Main.tile[num248, num249 - 1].HasTile)
                         {
                             WorldGen.PlaceTile(num248, num249 - 1, 24, mute: true);
                         }
                     }
-                    else if (Main.tile[num248, num249].TileType == 199 && Main.tile[num248, num249].HasUnactuatedTile)
+                    else if (Main.tile[num248, num249].TileType == TileID.CrimsonGrass && Main.tile[num248, num249].HasUnactuatedTile)
                     {
                         if (!Main.tile[num248, num249 - 1].HasTile)
                         {
                             WorldGen.PlaceTile(num248, num249 - 1, 201, mute: true);
                         }
                     }
-                    else if (Main.tile[num248, num249].TileType == 633 && Main.tile[num248, num249].HasUnactuatedTile && !Main.tile[num248, num249 - 1].HasTile)
+                    else if (Main.tile[num248, num249].TileType == TileID.AshGrass && Main.tile[num248, num249].HasUnactuatedTile && !Main.tile[num248, num249 - 1].HasTile)
                     {
                         WorldGen.PlaceTile(num248, num249 - 1, 637, mute: true);
                     }
@@ -3457,10 +3457,10 @@ namespace CalRemix.Core.Subworlds
                         continue;
                     }
                     tile13 = Main.tile[num217, num221];
-                    if (tile13.TileType != 2)
+                    if (tile13.TileType != TileID.Grass)
                     {
                         tile13 = Main.tile[num217, num221];
-                        if (tile13.TileType != 192 || !WorldGen.genRand.NextBool(4))
+                        if (tile13.TileType != TileID.LeafBlock || !WorldGen.genRand.NextBool(4))
                         {
                             continue;
                         }
@@ -3471,28 +3471,28 @@ namespace CalRemix.Core.Subworlds
                     }
                     num219 = 52;
                     tile13 = Main.tile[num217, num221];
-                    if (tile13.WallType != 68)
+                    if (tile13.WallType != WallID.Flower)
                     {
                         tile13 = Main.tile[num217, num221];
-                        if (tile13.WallType != 65)
+                        if (tile13.WallType != WallID.FlowerUnsafe)
                         {
                             tile13 = Main.tile[num217, num221];
-                            if (tile13.WallType != 66)
+                            if (tile13.WallType != WallID.Grass)
                             {
                                 tile13 = Main.tile[num217, num221];
-                                if (tile13.WallType != 63)
+                                if (tile13.WallType != WallID.GrassUnsafe)
                                 {
                                     tile13 = Main.tile[num217, num221 + 1];
-                                    if (tile13.WallType != 68)
+                                    if (tile13.WallType != WallID.Flower)
                                     {
                                         tile13 = Main.tile[num217, num221 + 1];
-                                        if (tile13.WallType != 65)
+                                        if (tile13.WallType != WallID.FlowerUnsafe)
                                         {
                                             tile13 = Main.tile[num217, num221 + 1];
-                                            if (tile13.WallType != 66)
+                                            if (tile13.WallType != WallID.Grass)
                                             {
                                                 tile13 = Main.tile[num217, num221 + 1];
-                                                if (tile13.WallType != 63)
+                                                if (tile13.WallType != WallID.GrassUnsafe)
                                                 {
                                                     goto IL_0247;
                                                 }
@@ -3528,7 +3528,7 @@ namespace CalRemix.Core.Subworlds
                             tile13 = Main.tile[num217, num222];
                             tile13.HasTile = true;
                             tile13 = Main.tile[num217, num222];
-                            tile13.TileType = 62;
+                            tile13.TileType = TileID.JungleVines;
                             num218--;
                             goto IL_02e9;
                         }
@@ -3542,7 +3542,7 @@ namespace CalRemix.Core.Subworlds
                         continue;
                     }
                     tile13 = Main.tile[num217, num222];
-                    if (tile13.TileType != 60)
+                    if (tile13.TileType != TileID.JungleGrass)
                     {
                         continue;
                     }
@@ -3566,13 +3566,13 @@ namespace CalRemix.Core.Subworlds
                                     if (!tile13.BottomSlope)
                                     {
                                         tile13 = Main.tile[num217, num222 - 1];
-                                        if (tile13.TileType != 60)
+                                        if (tile13.TileType != TileID.JungleGrass)
                                         {
                                             tile13 = Main.tile[num217, num222 - 1];
-                                            if (tile13.TileType != 444)
+                                            if (tile13.TileType != TileID.BeeHive)
                                             {
                                                 tile13 = Main.tile[num217, num222 - 1];
-                                                if (tile13.TileType != 230)
+                                                if (tile13.TileType != TileID.CrispyHoneyBlock)
                                                 {
                                                     goto IL_062a;
                                                 }
@@ -3592,7 +3592,7 @@ namespace CalRemix.Core.Subworlds
                                                     if (tileCut[tile13.TileType])
                                                     {
                                                         tile13 = Main.tile[num223, num224];
-                                                        if (tile13.TileType != 444)
+                                                        if (tile13.TileType != TileID.BeeHive)
                                                         {
                                                             goto IL_04ae;
                                                         }
@@ -3641,7 +3641,7 @@ namespace CalRemix.Core.Subworlds
                                                     tile13 = Main.tile[num227, num228];
                                                     tile13.HasTile = true;
                                                     tile13 = Main.tile[num227, num228];
-                                                    tile13.TileType = 444;
+                                                    tile13.TileType = TileID.BeeHive;
                                                     tile13 = Main.tile[num227, num228];
                                                     tile13.TileFrameX = (short)((num227 - num217) * 18);
                                                     tile13 = Main.tile[num227, num228];
@@ -3664,7 +3664,7 @@ namespace CalRemix.Core.Subworlds
                         if (tile13.HasTile)
                         {
                             tile13 = Main.tile[num217 + 1, num222];
-                            if (tile13.TileType == 60)
+                            if (tile13.TileType == TileID.JungleGrass)
                             {
                                 tile13 = Main.tile[num217 + 1, num222];
                                 if (!tile13.BottomSlope && WorldGen.genRand.NextBool(40))
@@ -3683,7 +3683,7 @@ namespace CalRemix.Core.Subworlds
                                                 if (tileCut2[tile13.TileType])
                                                 {
                                                     tile13 = Main.tile[num229, num230];
-                                                    if (tile13.TileType != 444)
+                                                    if (tile13.TileType != TileID.BeeHive)
                                                     {
                                                         goto IL_0723;
                                                     }
@@ -3732,7 +3732,7 @@ namespace CalRemix.Core.Subworlds
                                                 tile13 = Main.tile[num233, num234];
                                                 tile13.HasTile = true;
                                                 tile13 = Main.tile[num233, num234];
-                                                tile13.TileType = 444;
+                                                tile13.TileType = TileID.BeeHive;
                                                 tile13 = Main.tile[num233, num234];
                                                 tile13.TileFrameX = (short)((num233 - num217) * 18);
                                                 tile13 = Main.tile[num233, num234];
@@ -3763,7 +3763,7 @@ namespace CalRemix.Core.Subworlds
                             tile13 = Main.tile[num217, num235];
                             tile13.HasTile = true;
                             tile13 = Main.tile[num217, num235];
-                            tile13.TileType = 528;
+                            tile13.TileType = TileID.MushroomVines;
                             num218--;
                             goto IL_0922;
                         }
@@ -3775,7 +3775,7 @@ namespace CalRemix.Core.Subworlds
                     if (tile13.HasTile)
                     {
                         tile13 = Main.tile[num217, num235];
-                        if (tile13.TileType == 70 && WorldGen.genRand.NextBool(5))
+                        if (tile13.TileType == TileID.MushroomGrass && WorldGen.genRand.NextBool(5))
                         {
                             tile13 = Main.tile[num217, num235];
                             if (!tile13.BottomSlope && WorldGen.GrowMoreVines(num217, num235) && WorldGen.genRand.Next(5) < 3)
@@ -3796,7 +3796,7 @@ namespace CalRemix.Core.Subworlds
                             tile13 = Main.tile[num217, num236];
                             tile13.HasTile = true;
                             tile13 = Main.tile[num217, num236];
-                            tile13.TileType = 636;
+                            tile13.TileType = TileID.CorruptVines;
                             num218--;
                             goto IL_0a13;
                         }
@@ -3811,7 +3811,7 @@ namespace CalRemix.Core.Subworlds
                         if (!tile13.BottomSlope)
                         {
                             tile13 = Main.tile[num217, num236];
-                            if (tile13.TileType == 23 && WorldGen.GrowMoreVines(num217, num236) && WorldGen.genRand.Next(5) < 3)
+                            if (tile13.TileType == TileID.CorruptGrass && WorldGen.GrowMoreVines(num217, num236) && WorldGen.genRand.Next(5) < 3)
                             {
                                 num218 = WorldGen.genRand.Next(1, 10);
                             }
@@ -3829,7 +3829,7 @@ namespace CalRemix.Core.Subworlds
                             tile13 = Main.tile[num217, num237];
                             tile13.HasTile = true;
                             tile13 = Main.tile[num217, num237];
-                            tile13.TileType = 205;
+                            tile13.TileType = TileID.CrimsonVines;
                             num218--;
                             goto IL_0af7;
                         }
@@ -3844,7 +3844,7 @@ namespace CalRemix.Core.Subworlds
                         if (!tile13.BottomSlope)
                         {
                             tile13 = Main.tile[num217, num237];
-                            if (tile13.TileType == 199 && WorldGen.GrowMoreVines(num217, num237) && WorldGen.genRand.Next(5) < 3)
+                            if (tile13.TileType == TileID.CrimsonGrass && WorldGen.GrowMoreVines(num217, num237) && WorldGen.genRand.Next(5) < 3)
                             {
                                 num218 = WorldGen.genRand.Next(1, 10);
                             }
@@ -3862,7 +3862,7 @@ namespace CalRemix.Core.Subworlds
                             tile13 = Main.tile[num217, num238];
                             tile13.HasTile = true;
                             tile13 = Main.tile[num217, num238];
-                            tile13.TileType = 638;
+                            tile13.TileType = TileID.AshVines;
                             num218--;
                             goto IL_0bde;
                         }
@@ -3877,7 +3877,7 @@ namespace CalRemix.Core.Subworlds
                         if (!tile13.BottomSlope)
                         {
                             tile13 = Main.tile[num217, num238];
-                            if (tile13.TileType == 633 && WorldGen.GrowMoreVines(num217, num238) && WorldGen.genRand.Next(5) < 3)
+                            if (tile13.TileType == TileID.AshGrass && WorldGen.GrowMoreVines(num217, num238) && WorldGen.genRand.Next(5) < 3)
                             {
                                 num218 = WorldGen.genRand.Next(1, 10);
                             }
@@ -3913,7 +3913,7 @@ namespace CalRemix.Core.Subworlds
                         for (int num212 = num209 - num208; num212 < num209 + num208; num212++)
                         {
                             tile12 = Main.tile[num211, num212];
-                            if (tile12.TileType == 488)
+                            if (tile12.TileType == TileID.FallenLog)
                             {
                                 continue;
                             }
@@ -3924,30 +3924,30 @@ namespace CalRemix.Core.Subworlds
                                 continue;
                             }
                             tile12 = Main.tile[num211, num212];
-                            if (tile12.TileType == 3)
+                            if (tile12.TileType == TileID.Plants)
                             {
                                 tile12 = Main.tile[num211, num212];
                                 tile12.TileFrameX = (short)((num210 + WorldGen.genRand.Next(3)) * 18);
                                 if (!WorldGen.genRand.NextBool(3))
                                 {
                                     tile12 = Main.tile[num211, num212];
-                                    tile12.TileType = 73;
+                                    tile12.TileType = TileID.Plants2;
                                 }
                                 continue;
                             }
                             tile12 = Main.tile[num211, num212 + 1];
-                            if (tile12.WallType != 0)
+                            if (tile12.WallType != WallID.None)
                             {
                                 continue;
                             }
                             tile12 = Main.tile[num211, num212 + 1];
-                            if (tile12.TileType != 2)
+                            if (tile12.TileType != TileID.Grass)
                             {
                                 tile12 = Main.tile[num211, num212 + 1];
-                                if (tile12.TileType != 40)
+                                if (tile12.TileType != TileID.ClayBlock)
                                 {
                                     tile12 = Main.tile[num211, num212 + 1];
-                                    if (tile12.TileType != 1)
+                                    if (tile12.TileType != TileID.Stone)
                                     {
                                         bool[] ore = TileID.Sets.Ore;
                                         tile12 = Main.tile[num211, num212 + 1];
@@ -3967,16 +3967,16 @@ namespace CalRemix.Core.Subworlds
                             if (tile12.HasTile)
                             {
                                 tile12 = Main.tile[num211, num212];
-                                if (tile12.TileType != 185)
+                                if (tile12.TileType != TileID.SmallPiles)
                                 {
                                     tile12 = Main.tile[num211, num212];
-                                    if (tile12.TileType != 186)
+                                    if (tile12.TileType != TileID.LargePiles)
                                     {
                                         tile12 = Main.tile[num211, num212];
-                                        if (tile12.TileType != 187)
+                                        if (tile12.TileType != TileID.LargePiles2)
                                         {
                                             tile12 = Main.tile[num211, num212];
-                                            if ((tile12.TileType != 5 || !((double)num211 < (double)Main.maxTilesX * 0.48)) && !((double)num211 > (double)Main.maxTilesX * 0.52))
+                                            if ((tile12.TileType != TileID.Trees || !((double)num211 < (double)Main.maxTilesX * 0.48)) && !((double)num211 > (double)Main.maxTilesX * 0.52))
                                             {
                                                 continue;
                                             }
@@ -3985,10 +3985,10 @@ namespace CalRemix.Core.Subworlds
                                 }
                             }
                             tile12 = Main.tile[num211, num212 + 1];
-                            if (tile12.TileType != 40)
+                            if (tile12.TileType != TileID.ClayBlock)
                             {
                                 tile12 = Main.tile[num211, num212 + 1];
-                                if (tile12.TileType != 1)
+                                if (tile12.TileType != TileID.Stone)
                                 {
                                     bool[] ore2 = TileID.Sets.Ore;
                                     tile12 = Main.tile[num211, num212 + 1];
@@ -3999,12 +3999,12 @@ namespace CalRemix.Core.Subworlds
                                 }
                             }
                             tile12 = Main.tile[num211, num212 + 1];
-                            tile12.TileType = 2;
+                            tile12.TileType = TileID.Grass;
                             tile12 = Main.tile[num211, num212 + 2];
-                            if (tile12.TileType != 40)
+                            if (tile12.TileType != TileID.ClayBlock)
                             {
                                 tile12 = Main.tile[num211, num212 + 2];
-                                if (tile12.TileType != 1)
+                                if (tile12.TileType != TileID.Stone)
                                 {
                                     bool[] ore3 = TileID.Sets.Ore;
                                     tile12 = Main.tile[num211, num212 + 2];
@@ -4015,7 +4015,7 @@ namespace CalRemix.Core.Subworlds
                                 }
                             }
                             tile12 = Main.tile[num211, num212 + 2];
-                            tile12.TileType = 2;
+                            tile12.TileType = TileID.Grass;
                             goto IL_0432;
                         IL_0432:
                             WorldGen.KillTile(num211, num212);
@@ -4031,22 +4031,22 @@ namespace CalRemix.Core.Subworlds
                             if (tile12.HasTile)
                             {
                                 tile12 = Main.tile[num211, num212];
-                                if (tile12.TileType == 3)
+                                if (tile12.TileType == TileID.Plants)
                                 {
                                     tile12 = Main.tile[num211, num212];
                                     tile12.TileFrameX = (short)((num210 + WorldGen.genRand.Next(3)) * 18);
                                     if (!WorldGen.genRand.NextBool(3))
                                     {
                                         tile12 = Main.tile[num211, num212];
-                                        tile12.TileType = 73;
+                                        tile12.TileType = TileID.Plants2;
                                     }
                                 }
                             }
                             tile12 = Main.tile[num211, num212 + 2];
-                            if (tile12.TileType != 40)
+                            if (tile12.TileType != TileID.ClayBlock)
                             {
                                 tile12 = Main.tile[num211, num212 + 2];
-                                if (tile12.TileType != 1)
+                                if (tile12.TileType != TileID.Stone)
                                 {
                                     bool[] ore4 = TileID.Sets.Ore;
                                     tile12 = Main.tile[num211, num212 + 2];
@@ -4057,7 +4057,7 @@ namespace CalRemix.Core.Subworlds
                                 }
                             }
                             tile12 = Main.tile[num211, num212 + 2];
-                            tile12.TileType = 0;
+                            tile12.TileType = TileID.Dirt;
                         }
                     }
                 }
@@ -4080,7 +4080,7 @@ namespace CalRemix.Core.Subworlds
                                 for (int num216 = num213 - num208; num216 < num213 + num208; num216++)
                                 {
                                     tile12 = Main.tile[num215, num216];
-                                    if (tile12.TileType == 488)
+                                    if (tile12.TileType == TileID.FallenLog)
                                     {
                                         continue;
                                     }
@@ -4091,30 +4091,30 @@ namespace CalRemix.Core.Subworlds
                                         continue;
                                     }
                                     tile12 = Main.tile[num215, num216];
-                                    if (tile12.TileType == 3)
+                                    if (tile12.TileType == TileID.Plants)
                                     {
                                         tile12 = Main.tile[num215, num216];
                                         tile12.TileFrameX = (short)((num214 + WorldGen.genRand.Next(3)) * 18);
                                         if (!WorldGen.genRand.NextBool(3))
                                         {
                                             tile12 = Main.tile[num215, num216];
-                                            tile12.TileType = 73;
+                                            tile12.TileType = TileID.Plants2;
                                         }
                                         continue;
                                     }
                                     tile12 = Main.tile[num215, num216 + 1];
-                                    if (tile12.WallType != 0)
+                                    if (tile12.WallType != WallID.None)
                                     {
                                         continue;
                                     }
                                     tile12 = Main.tile[num215, num216 + 1];
-                                    if (tile12.TileType != 2)
+                                    if (tile12.TileType != TileID.Grass)
                                     {
                                         tile12 = Main.tile[num215, num216 + 1];
-                                        if (tile12.TileType != 40)
+                                        if (tile12.TileType != TileID.ClayBlock)
                                         {
                                             tile12 = Main.tile[num215, num216 + 1];
-                                            if (tile12.TileType != 1)
+                                            if (tile12.TileType != TileID.Stone)
                                             {
                                                 bool[] ore5 = TileID.Sets.Ore;
                                                 tile12 = Main.tile[num215, num216 + 1];
@@ -4134,16 +4134,16 @@ namespace CalRemix.Core.Subworlds
                                     if (tile12.HasTile)
                                     {
                                         tile12 = Main.tile[num215, num216];
-                                        if (tile12.TileType != 185)
+                                        if (tile12.TileType != TileID.SmallPiles)
                                         {
                                             tile12 = Main.tile[num215, num216];
-                                            if (tile12.TileType != 186)
+                                            if (tile12.TileType != TileID.LargePiles)
                                             {
                                                 tile12 = Main.tile[num215, num216];
-                                                if (tile12.TileType != 187)
+                                                if (tile12.TileType != TileID.LargePiles2)
                                                 {
                                                     tile12 = Main.tile[num215, num216];
-                                                    if ((tile12.TileType != 5 || !((double)num215 < (double)Main.maxTilesX * 0.48)) && !((double)num215 > (double)Main.maxTilesX * 0.52))
+                                                    if ((tile12.TileType != TileID.Trees || !((double)num215 < (double)Main.maxTilesX * 0.48)) && !((double)num215 > (double)Main.maxTilesX * 0.52))
                                                     {
                                                         continue;
                                                     }
@@ -4152,10 +4152,10 @@ namespace CalRemix.Core.Subworlds
                                         }
                                     }
                                     tile12 = Main.tile[num215, num216 + 1];
-                                    if (tile12.TileType != 40)
+                                    if (tile12.TileType != TileID.ClayBlock)
                                     {
                                         tile12 = Main.tile[num215, num216 + 1];
-                                        if (tile12.TileType != 1)
+                                        if (tile12.TileType != TileID.Stone)
                                         {
                                             bool[] ore6 = TileID.Sets.Ore;
                                             tile12 = Main.tile[num215, num216 + 1];
@@ -4166,12 +4166,12 @@ namespace CalRemix.Core.Subworlds
                                         }
                                     }
                                     tile12 = Main.tile[num215, num216 + 1];
-                                    tile12.TileType = 2;
+                                    tile12.TileType = TileID.Grass;
                                     tile12 = Main.tile[num215, num216 + 2];
-                                    if (tile12.TileType != 40)
+                                    if (tile12.TileType != TileID.ClayBlock)
                                     {
                                         tile12 = Main.tile[num215, num216 + 2];
-                                        if (tile12.TileType != 1)
+                                        if (tile12.TileType != TileID.Stone)
                                         {
                                             bool[] ore7 = TileID.Sets.Ore;
                                             tile12 = Main.tile[num215, num216 + 2];
@@ -4182,7 +4182,7 @@ namespace CalRemix.Core.Subworlds
                                         }
                                     }
                                     tile12 = Main.tile[num215, num216 + 2];
-                                    tile12.TileType = 2;
+                                    tile12.TileType = TileID.Grass;
                                     goto IL_094c;
                                 IL_094c:
                                     WorldGen.KillTile(num215, num216);
@@ -4198,22 +4198,22 @@ namespace CalRemix.Core.Subworlds
                                     if (tile12.HasTile)
                                     {
                                         tile12 = Main.tile[num215, num216];
-                                        if (tile12.TileType == 3)
+                                        if (tile12.TileType == TileID.Plants)
                                         {
                                             tile12 = Main.tile[num215, num216];
                                             tile12.TileFrameX = (short)((num214 + WorldGen.genRand.Next(3)) * 18);
                                             if (!WorldGen.genRand.NextBool(3))
                                             {
                                                 tile12 = Main.tile[num215, num216];
-                                                tile12.TileType = 73;
+                                                tile12.TileType = TileID.Plants2;
                                             }
                                         }
                                     }
                                     tile12 = Main.tile[num215, num216 + 2];
-                                    if (tile12.TileType != 40)
+                                    if (tile12.TileType != TileID.ClayBlock)
                                     {
                                         tile12 = Main.tile[num215, num216 + 2];
-                                        if (tile12.TileType != 1)
+                                        if (tile12.TileType != TileID.Stone)
                                         {
                                             bool[] ore8 = TileID.Sets.Ore;
                                             tile12 = Main.tile[num215, num216 + 2];
@@ -4224,7 +4224,7 @@ namespace CalRemix.Core.Subworlds
                                         }
                                     }
                                     tile12 = Main.tile[num215, num216 + 2];
-                                    tile12.TileType = 0;
+                                    tile12.TileType = TileID.Dirt;
                                 }
                             }
                             break;
@@ -4253,13 +4253,13 @@ namespace CalRemix.Core.Subworlds
                             for (int num203 = num201 - num197; num203 < num201 + num197 && num202 >= 10 && num203 >= 0 && num202 <= Main.maxTilesX - 10 && num203 <= Main.maxTilesY - 10; num203++)
                             {
                                 tile11 = Main.tile[num202, num203];
-                                if (tile11.TileType != 3)
+                                if (tile11.TileType != TileID.Plants)
                                 {
                                     tile11 = Main.tile[num202, num203];
-                                    if (tile11.TileType != 24)
+                                    if (tile11.TileType != TileID.CorruptPlants)
                                     {
                                         tile11 = Main.tile[num202, num203];
-                                        if (tile11.TileType == 201)
+                                        if (tile11.TileType == TileID.CrimsonPlants)
                                         {
                                             tile11 = Main.tile[num202, num203];
                                             tile11.TileFrameX = 270;
@@ -4315,12 +4315,12 @@ namespace CalRemix.Core.Subworlds
                     }
                     if (!WorldGen.oceanDepths(num19, num20) && !Main.tile[num19, num20].HasTile && WorldGen.genRand.NextBool(5))
                     {
-                        if ((Main.tile[num19, num20 - 1].TileType == 1 || Main.tile[num19, num20 - 1].TileType == 147 || Main.tile[num19, num20 - 1].TileType == 161 || Main.tile[num19, num20 - 1].TileType == 25 || Main.tile[num19, num20 - 1].TileType == 203 || Main.tileStone[Main.tile[num19, num20 - 1].TileType] || Main.tileMoss[Main.tile[num19, num20 - 1].TileType]) && !Main.tile[num19, num20].HasTile && !Main.tile[num19, num20 + 1].HasTile)
+                        if ((Main.tile[num19, num20 - 1].TileType == TileID.Stone || Main.tile[num19, num20 - 1].TileType == TileID.SnowBlock || Main.tile[num19, num20 - 1].TileType == TileID.IceBlock || Main.tile[num19, num20 - 1].TileType == TileID.Ebonstone || Main.tile[num19, num20 - 1].TileType == TileID.Crimstone || Main.tileStone[Main.tile[num19, num20 - 1].TileType] || Main.tileMoss[Main.tile[num19, num20 - 1].TileType]) && !Main.tile[num19, num20].HasTile && !Main.tile[num19, num20 + 1].HasTile)
                         {
                             //Main.tile[num19, num20 - 1].Slope = 0;
                             WorldGen.SlopeTile(num19, num20 - 1, 0);
                         }
-                        if ((Main.tile[num19, num20 + 1].TileType == 1 || Main.tile[num19, num20 + 1].TileType == 147 || Main.tile[num19, num20 + 1].TileType == 161 || Main.tile[num19, num20 + 1].TileType == 25 || Main.tile[num19, num20 + 1].TileType == 203 || Main.tileStone[Main.tile[num19, num20 + 1].TileType] || Main.tileMoss[Main.tile[num19, num20 + 1].TileType]) && !Main.tile[num19, num20].HasTile && !Main.tile[num19, num20 - 1].HasTile)
+                        if ((Main.tile[num19, num20 + 1].TileType == TileID.Stone || Main.tile[num19, num20 + 1].TileType == TileID.SnowBlock || Main.tile[num19, num20 + 1].TileType == TileID.IceBlock || Main.tile[num19, num20 + 1].TileType == TileID.Ebonstone || Main.tile[num19, num20 + 1].TileType == TileID.Crimstone || Main.tileStone[Main.tile[num19, num20 + 1].TileType] || Main.tileMoss[Main.tile[num19, num20 + 1].TileType]) && !Main.tile[num19, num20].HasTile && !Main.tile[num19, num20 - 1].HasTile)
                         {
                             //Main.tile[num19, num20 + 1].Slope = 0;
                             WorldGen.SlopeTile(num19, num20 + 1, 0);
@@ -4330,7 +4330,7 @@ namespace CalRemix.Core.Subworlds
                 }
                 for (int num22 = 5; num22 < (int)Main.worldSurface; num22++)
                 {
-                    if ((Main.tile[num19, num22 - 1].TileType == 147 || Main.tile[num19, num22 - 1].TileType == 161) && WorldGen.genRand.NextBool(5))
+                    if ((Main.tile[num19, num22 - 1].TileType == TileID.SnowBlock || Main.tile[num19, num22 - 1].TileType == TileID.IceBlock) && WorldGen.genRand.NextBool(5))
                     {
                         if (!Main.tile[num19, num22].HasTile && !Main.tile[num19, num22 + 1].HasTile)
                         {
@@ -4339,7 +4339,7 @@ namespace CalRemix.Core.Subworlds
                         }
                         WorldGen.PlaceTight(num19, num22);
                     }
-                    if ((Main.tile[num19, num22 - 1].TileType == 25 || Main.tile[num19, num22 - 1].TileType == 203) && WorldGen.genRand.NextBool(5))
+                    if ((Main.tile[num19, num22 - 1].TileType == TileID.Ebonstone || Main.tile[num19, num22 - 1].TileType == TileID.Crimstone) && WorldGen.genRand.NextBool(5))
                     {
                         if (!Main.tile[num19, num22].HasTile && !Main.tile[num19, num22 + 1].HasTile)
                         {
@@ -4348,7 +4348,7 @@ namespace CalRemix.Core.Subworlds
                         }
                         WorldGen.PlaceTight(num19, num22);
                     }
-                    if ((Main.tile[num19, num22 + 1].TileType == 25 || Main.tile[num19, num22 + 1].TileType == 203) && WorldGen.genRand.NextBool(5))
+                    if ((Main.tile[num19, num22 + 1].TileType == TileID.Ebonstone || Main.tile[num19, num22 + 1].TileType == TileID.Crimstone) && WorldGen.genRand.NextBool(5))
                     {
                         if (!Main.tile[num19, num22].HasTile && !Main.tile[num19, num22 - 1].HasTile)
                         {
@@ -4486,7 +4486,7 @@ namespace CalRemix.Core.Subworlds
                                         if (WorldGen.genRand.Next(maxValue3) <= 1)
                                         {
                                             tile5 = Main.tile[num57, num58];
-                                            if (tile5.WallType == 86)
+                                            if (tile5.WallType == WallID.HiveUnsafe)
                                             {
                                                 num61 = 375;
                                             }
@@ -4553,7 +4553,7 @@ namespace CalRemix.Core.Subworlds
                                 if (TileID.Sets.Conversion.Sandstone[tile6.TileType] || TileID.Sets.Conversion.HardenedSand[tile6.TileType])
                                 {
                                     tile5 = Main.tile[num57, num58];
-                                    tile5.TileType = 461;
+                                    tile5.TileType = TileID.SandDrip;
                                     tile5 = Main.tile[num57, num58];
                                     tile5.TileFrameX = 0;
                                     tile5 = Main.tile[num57, num58];
@@ -4565,7 +4565,7 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.TileType == 137)
+                    if (tile5.TileType == TileID.Traps)
                     {
                         tile5 = Main.tile[num57, num58];
                         int num65 = tile5.TileFrameY / 18;
@@ -4593,7 +4593,7 @@ namespace CalRemix.Core.Subworlds
                     else
                     {
                         tile5 = Main.tile[num57, num58];
-                        if (tile5.TileType == 162)
+                        if (tile5.TileType == TileID.BreakableIce)
                         {
                             tile5 = Main.tile[num57, num58 + 1];
                             if (tile5.LiquidAmount == 0 && WorldGen.CanKillTile(num57, num58))
@@ -4606,7 +4606,7 @@ namespace CalRemix.Core.Subworlds
                     goto IL_05b9;
                 IL_0601:
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.TileType == 31)
+                    if (tile5.TileType == TileID.ShadowOrbs)
                     {
                         tile5 = Main.tile[num57, num58];
                         int num67 = tile5.TileFrameX / 18;
@@ -4621,7 +4621,7 @@ namespace CalRemix.Core.Subworlds
                         else
                         {
                             tile5 = Main.tile[num57, num58];
-                            num70 = ((tile5.WallType == 83) ? 1 : 0);
+                            num70 = ((tile5.WallType == WallID.CrimstoneUnsafe) ? 1 : 0);
                         }
                         num68 = num70;
                         num67 %= 2;
@@ -4646,7 +4646,7 @@ namespace CalRemix.Core.Subworlds
                                 tile5 = Main.tile[x6, y6];
                                 tile5.IsHalfBlock = false;
                                 tile5 = Main.tile[x6, y6];
-                                tile5.TileType = 31;
+                                tile5.TileType = TileID.ShadowOrbs;
                                 tile5 = Main.tile[x6, y6];
                                 tile5.TileFrameX = (short)(num74 * 18 + 36 * num68);
                                 tile5 = Main.tile[x6, y6];
@@ -4655,7 +4655,7 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.TileType == 12)
+                    if (tile5.TileType == TileID.Heart)
                     {
                         tile5 = Main.tile[num57, num58];
                         int num76 = tile5.TileFrameX / 18;
@@ -4684,7 +4684,7 @@ namespace CalRemix.Core.Subworlds
                                 tile5 = Main.tile[x7, y7];
                                 tile5.IsHalfBlock = false;
                                 tile5 = Main.tile[x7, y7];
-                                tile5.TileType = 12;
+                                tile5.TileType = TileID.Heart;
                                 tile5 = Main.tile[x7, y7];
                                 tile5.TileFrameX = (short)(num82 * 18 + 36 * num77);
                                 tile5 = Main.tile[x7, y7];
@@ -4707,12 +4707,12 @@ namespace CalRemix.Core.Subworlds
                                     }
                                 }
                                 tile5 = Main.tile[num82, num58 + 2];
-                                tile5.TileType = 0;
+                                tile5.TileType = TileID.Dirt;
                             }
                         }
                     }
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.TileType == 639)
+                    if (tile5.TileType == TileID.ManaCrystal)
                     {
                         tile5 = Main.tile[num57, num58];
                         int num84 = tile5.TileFrameX / 18;
@@ -4741,7 +4741,7 @@ namespace CalRemix.Core.Subworlds
                                 tile5 = Main.tile[x8, y8];
                                 tile5.IsHalfBlock = false;
                                 tile5 = Main.tile[x8, y8];
-                                tile5.TileType = 639;
+                                tile5.TileType = TileID.ManaCrystal;
                                 tile5 = Main.tile[x8, y8];
                                 tile5.TileFrameX = (short)(num90 * 18 + 36 * num85);
                                 tile5 = Main.tile[x8, y8];
@@ -4764,7 +4764,7 @@ namespace CalRemix.Core.Subworlds
                                     }
                                 }
                                 tile5 = Main.tile[num90, num58 + 2];
-                                tile5.TileType = 0;
+                                tile5.TileType = TileID.Dirt;
                             }
                         }
                     }
@@ -4781,7 +4781,7 @@ namespace CalRemix.Core.Subworlds
                         tile5 = Main.tile[num57, num58];
                         int num97 = num96 - tile5.TileFrameY / 18;
                         tile5 = Main.tile[num57, num58];
-                        if (tile5.TileType == 467)
+                        if (tile5.TileType == TileID.Containers2)
                         {
                             num94 = 467;
                         }
@@ -4803,19 +4803,19 @@ namespace CalRemix.Core.Subworlds
                         {
                             switch (Main.chest[num98].item[0].type)
                             {
-                                case 1156:
+                                case ItemID.PiranhaGun:
                                     num93 = 23;
                                     break;
-                                case 1571:
+                                case ItemID.ScourgeoftheCorruptor:
                                     num93 = 24;
                                     break;
-                                case 1569:
+                                case ItemID.VampireKnives:
                                     num93 = 25;
                                     break;
-                                case 1260:
+                                case ItemID.RainbowGun:
                                     num93 = 26;
                                     break;
-                                case 1572:
+                                case ItemID.StaffoftheFrostHydra:
                                     num93 = 27;
                                     break;
                             }
@@ -4856,12 +4856,12 @@ namespace CalRemix.Core.Subworlds
                                     }
                                 }
                                 tile5 = Main.tile[num99, num58 + 2];
-                                tile5.TileType = 0;
+                                tile5.TileType = TileID.Dirt;
                             }
                         }
                     }
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.TileType == 28)
+                    if (tile5.TileType == TileID.Pots)
                     {
                         tile5 = Main.tile[num57, num58];
                         int num101 = tile5.TileFrameX / 18;
@@ -4896,7 +4896,7 @@ namespace CalRemix.Core.Subworlds
                                 tile5 = Main.tile[x10, y10];
                                 tile5.IsHalfBlock = false;
                                 tile5 = Main.tile[x10, y10];
-                                tile5.TileType = 28;
+                                tile5.TileType = TileID.Pots;
                                 tile5 = Main.tile[x10, y10];
                                 tile5.TileFrameX = (short)(num107 * 18 + 36 * num102);
                                 tile5 = Main.tile[x10, y10];
@@ -4919,12 +4919,12 @@ namespace CalRemix.Core.Subworlds
                                     }
                                 }
                                 tile5 = Main.tile[num107, num58 + 2];
-                                tile5.TileType = 0;
+                                tile5.TileType = TileID.Dirt;
                             }
                         }
                     }
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.TileType == 26)
+                    if (tile5.TileType == TileID.DemonAltar)
                     {
                         tile5 = Main.tile[num57, num58];
                         int num109 = tile5.TileFrameX / 18;
@@ -4947,7 +4947,7 @@ namespace CalRemix.Core.Subworlds
                         else
                         {
                             tile5 = Main.tile[num57, num58];
-                            num114 = ((tile5.WallType == 83) ? 1 : 0);
+                            num114 = ((tile5.WallType == WallID.CrimstoneUnsafe) ? 1 : 0);
                         }
                         num110 = num114;
                         for (int num115 = 0; num115 < 3; num115++)
@@ -4963,7 +4963,7 @@ namespace CalRemix.Core.Subworlds
                                 tile5 = Main.tile[x11, y11];
                                 tile5.IsHalfBlock = false;
                                 tile5 = Main.tile[x11, y11];
-                                tile5.TileType = 26;
+                                tile5.TileType = TileID.DemonAltar;
                                 tile5 = Main.tile[x11, y11];
                                 tile5.TileFrameX = (short)(num115 * 18 + 54 * num110);
                                 tile5 = Main.tile[x11, y11];
@@ -4991,10 +4991,10 @@ namespace CalRemix.Core.Subworlds
                             if (!platforms[tile5.TileType])
                             {
                                 tile5 = Main.tile[num111 + num115, num113 + 2];
-                                if (tile5.TileType == 484)
+                                if (tile5.TileType == TileID.RollingCactus)
                                 {
                                     tile5 = Main.tile[num111 + num115, num113 + 2];
-                                    tile5.TileType = 397;
+                                    tile5.TileType = TileID.HardenedSand;
                                 }
                                 else
                                 {
@@ -5015,7 +5015,7 @@ namespace CalRemix.Core.Subworlds
                                         }
                                     }
                                     tile5 = Main.tile[num111 + num115, num113 + 2];
-                                    tile5.TileType = 0;
+                                    tile5.TileType = TileID.Dirt;
                                 }
                             }
                             goto IL_13ca;
@@ -5025,13 +5025,13 @@ namespace CalRemix.Core.Subworlds
                             tile5 = Main.tile[num111 + num115, num113 + 2];
                             tile5.IsHalfBlock = false;
                             tile5 = Main.tile[num111 + num115, num113 + 3];
-                            if (tile5.TileType == 28)
+                            if (tile5.TileType == TileID.Pots)
                             {
                                 tile5 = Main.tile[num111 + num115, num113 + 3];
                                 if (tile5.TileFrameY % 36 >= 18)
                                 {
                                     tile5 = Main.tile[num111 + num115, num113 + 3];
-                                    tile5.TileType = 0;
+                                    tile5.TileType = TileID.Dirt;
                                     tile5 = Main.tile[num111 + num115, num113 + 3];
                                     tile5.HasTile = false;
                                 }
@@ -5040,13 +5040,13 @@ namespace CalRemix.Core.Subworlds
                         for (int num117 = 0; num117 < 3; num117++)
                         {
                             tile5 = Main.tile[num111 - 1, num113 + num117];
-                            if (tile5.TileType != 28)
+                            if (tile5.TileType != TileID.Pots)
                             {
                                 tile5 = Main.tile[num111 - 1, num113 + num117];
-                                if (tile5.TileType != 12)
+                                if (tile5.TileType != TileID.Heart)
                                 {
                                     tile5 = Main.tile[num111 - 1, num113 + num117];
-                                    if (tile5.TileType != 639)
+                                    if (tile5.TileType != TileID.ManaCrystal)
                                     {
                                         goto IL_1553;
                                     }
@@ -5056,20 +5056,20 @@ namespace CalRemix.Core.Subworlds
                             if (tile5.TileFrameX % 36 < 18)
                             {
                                 tile5 = Main.tile[num111 - 1, num113 + num117];
-                                tile5.TileType = 0;
+                                tile5.TileType = TileID.Dirt;
                                 tile5 = Main.tile[num111 - 1, num113 + num117];
                                 tile5.HasTile = false;
                             }
                             goto IL_1553;
                         IL_1553:
                             tile5 = Main.tile[num111 + 3, num113 + num117];
-                            if (tile5.TileType != 28)
+                            if (tile5.TileType != TileID.Pots)
                             {
                                 tile5 = Main.tile[num111 + 3, num113 + num117];
-                                if (tile5.TileType != 12)
+                                if (tile5.TileType != TileID.Heart)
                                 {
                                     tile5 = Main.tile[num111 - 1, num113 + num117];
-                                    if (tile5.TileType != 639)
+                                    if (tile5.TileType != TileID.ManaCrystal)
                                     {
                                         continue;
                                     }
@@ -5079,24 +5079,24 @@ namespace CalRemix.Core.Subworlds
                             if (tile5.TileFrameX % 36 >= 18)
                             {
                                 tile5 = Main.tile[num111 + 3, num113 + num117];
-                                tile5.TileType = 0;
+                                tile5.TileType = TileID.Dirt;
                                 tile5 = Main.tile[num111 + 3, num113 + num117];
                                 tile5.HasTile = false;
                             }
                         }
                     }
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.TileType == 237)
+                    if (tile5.TileType == TileID.LihzahrdAltar)
                     {
                         tile5 = Main.tile[num57, num58 + 1];
-                        if (tile5.TileType == 232)
+                        if (tile5.TileType == TileID.WoodenSpikes)
                         {
                             tile5 = Main.tile[num57, num58 + 1];
-                            tile5.TileType = 226;
+                            tile5.TileType = TileID.LihzahrdBrick;
                         }
                     }
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.WallType == 87)
+                    if (tile5.WallType == WallID.LihzahrdBrickUnsafe)
                     {
                         tile5 = Main.tile[num57, num58];
                         tile5.LiquidAmount = 0;
@@ -5111,10 +5111,10 @@ namespace CalRemix.Core.Subworlds
                     goto IL_00f0;
                 IL_05b9:
                     tile5 = Main.tile[num57, num58];
-                    if (tile5.WallType != 13)
+                    if (tile5.WallType != WallID.HellstoneBrickUnsafe)
                     {
                         tile5 = Main.tile[num57, num58];
-                        if (tile5.WallType != 14)
+                        if (tile5.WallType != WallID.ObsidianBrickUnsafe)
                         {
                             goto IL_0601;
                         }
@@ -5139,19 +5139,19 @@ namespace CalRemix.Core.Subworlds
                     if (tile.HasTile && !WorldGen.SolidTile(i, num + 1))
                     {
                         tile = Main.tile[i, num];
-                        if (tile.TileType != 53)
+                        if (tile.TileType != TileID.Sand)
                         {
                             tile = Main.tile[i, num];
-                            if (tile.TileType != 112)
+                            if (tile.TileType != TileID.Ebonsand)
                             {
                                 tile = Main.tile[i, num];
-                                if (tile.TileType != 234)
+                                if (tile.TileType != TileID.Crimsand)
                                 {
                                     tile = Main.tile[i, num];
-                                    if (tile.TileType != 224)
+                                    if (tile.TileType != TileID.Slush)
                                     {
                                         tile = Main.tile[i, num];
-                                        if (tile.TileType != 123)
+                                        if (tile.TileType != TileID.Silt)
                                         {
                                             goto IL_06be;
                                         }
@@ -5165,7 +5165,7 @@ namespace CalRemix.Core.Subworlds
                             if (!tile.HasTile)
                             {
                                 tile = Main.tile[i, num + 1];
-                                if (tile.WallType != 191 && !WorldGen.oceanDepths(i, num))
+                                if (tile.WallType != WallID.CorruptionUnsafe4 && !WorldGen.oceanDepths(i, num))
                                 {
                                     int num2 = 10;
                                     int num3 = num + 1;
@@ -5175,7 +5175,7 @@ namespace CalRemix.Core.Subworlds
                                         if (tile.HasTile)
                                         {
                                             tile = Main.tile[i, j];
-                                            if (tile.TileType == 314)
+                                            if (tile.TileType == TileID.MinecartTrack)
                                             {
                                                 num2 = 0;
                                                 break;
@@ -5214,33 +5214,33 @@ namespace CalRemix.Core.Subworlds
                                             tile = Main.tile[i, num];
                                             switch (tile.TileType)
                                             {
-                                                case 53:
+                                                case TileID.Sand:
                                                     tile = Main.tile[i, num3];
-                                                    tile.TileType = 397;
-                                                    tile = Main.tile[i, num3];
-                                                    tile.HasTile = true;
-                                                    break;
-                                                case 112:
-                                                    tile = Main.tile[i, num3];
-                                                    tile.TileType = 398;
+                                                    tile.TileType = TileID.HardenedSand;
                                                     tile = Main.tile[i, num3];
                                                     tile.HasTile = true;
                                                     break;
-                                                case 234:
+                                                case TileID.Ebonsand:
                                                     tile = Main.tile[i, num3];
-                                                    tile.TileType = 399;
-                                                    tile = Main.tile[i, num3];
-                                                    tile.HasTile = true;
-                                                    break;
-                                                case 224:
-                                                    tile = Main.tile[i, num3];
-                                                    tile.TileType = 147;
+                                                    tile.TileType = TileID.CorruptHardenedSand;
                                                     tile = Main.tile[i, num3];
                                                     tile.HasTile = true;
                                                     break;
-                                                case 123:
+                                                case TileID.Crimsand:
                                                     tile = Main.tile[i, num3];
-                                                    tile.TileType = 1;
+                                                    tile.TileType = TileID.CrimsonHardenedSand;
+                                                    tile = Main.tile[i, num3];
+                                                    tile.HasTile = true;
+                                                    break;
+                                                case TileID.Slush:
+                                                    tile = Main.tile[i, num3];
+                                                    tile.TileType = TileID.SnowBlock;
+                                                    tile = Main.tile[i, num3];
+                                                    tile.HasTile = true;
+                                                    break;
+                                                case TileID.Silt:
+                                                    tile = Main.tile[i, num3];
+                                                    tile.TileType = TileID.Stone;
                                                     tile = Main.tile[i, num3];
                                                     tile.HasTile = true;
                                                     break;
@@ -5301,37 +5301,37 @@ namespace CalRemix.Core.Subworlds
                     tile = Main.tile[i, num];
                     switch (tile.TileType)
                     {
-                        case 53:
+                        case TileID.Sand:
                             tile = Main.tile[i, num];
-                            tile.TileType = 397;
+                            tile.TileType = TileID.HardenedSand;
                             break;
-                        case 112:
+                        case TileID.Ebonsand:
                             tile = Main.tile[i, num];
-                            tile.TileType = 398;
+                            tile.TileType = TileID.CorruptHardenedSand;
                             break;
-                        case 234:
+                        case TileID.Crimsand:
                             tile = Main.tile[i, num];
-                            tile.TileType = 399;
+                            tile.TileType = TileID.CrimsonHardenedSand;
                             break;
-                        case 224:
+                        case TileID.Slush:
                             tile = Main.tile[i, num];
-                            tile.TileType = 147;
+                            tile.TileType = TileID.SnowBlock;
                             break;
-                        case 123:
+                        case TileID.Silt:
                             tile = Main.tile[i, num];
-                            tile.TileType = 1;
+                            tile.TileType = TileID.Stone;
                             break;
                     }
                     goto IL_0690;
                 IL_0753:
                     tile = Main.tile[i, num];
-                    if (tile.TileType != 485)
+                    if (tile.TileType != TileID.AntlionLarva)
                     {
                         tile = Main.tile[i, num];
-                        if (tile.TileType != 187)
+                        if (tile.TileType != TileID.LargePiles2)
                         {
                             tile = Main.tile[i, num];
-                            if (tile.TileType != 165)
+                            if (tile.TileType != TileID.Stalactite)
                             {
                                 goto IL_07bb;
                             }
@@ -5341,7 +5341,7 @@ namespace CalRemix.Core.Subworlds
                     goto IL_07bb;
                 IL_0825:
                     tile = Main.tile[i, num];
-                    if (tile.TileType == 26)
+                    if (tile.TileType == TileID.DemonAltar)
                     {
                         WorldGen.TileFrame(i, num);
                     }
@@ -5350,7 +5350,7 @@ namespace CalRemix.Core.Subworlds
                     if (!isATreeTrunk[tile.TileType])
                     {
                         tile = Main.tile[i, num];
-                        if (tile.TileType != 323)
+                        if (tile.TileType != TileID.PalmTree)
                         {
                             goto IL_0896;
                         }
@@ -5359,22 +5359,22 @@ namespace CalRemix.Core.Subworlds
                     goto IL_0896;
                 IL_0690:
                     tile = Main.tile[i, num - 1];
-                    if (tile.TileType == 323)
+                    if (tile.TileType == TileID.PalmTree)
                     {
                         WorldGen.TileFrame(i, num - 1);
                     }
                     goto IL_06be;
                 IL_07bb:
                     tile = Main.tile[i, num];
-                    if (tile.TileType == 28)
+                    if (tile.TileType == TileID.Pots)
                     {
                         WorldGen.TileFrame(i, num);
                     }
                     tile = Main.tile[i, num];
-                    if (tile.TileType != 10)
+                    if (tile.TileType != TileID.ClosedDoor)
                     {
                         tile = Main.tile[i, num];
-                        if (tile.TileType != 11)
+                        if (tile.TileType != TileID.OpenDoor)
                         {
                             goto IL_0825;
                         }
@@ -5383,7 +5383,7 @@ namespace CalRemix.Core.Subworlds
                     goto IL_0825;
                 IL_0896:
                     tile = Main.tile[i, num];
-                    if (tile.TileType == 137)
+                    if (tile.TileType == TileID.Traps)
                     {
                         tile = Main.tile[i, num];
                         tile.Slope = 0;
@@ -5409,7 +5409,7 @@ namespace CalRemix.Core.Subworlds
                             for (int k = 0; k < 2; k++)
                             {
                                 Tile tile2 = Main.tile[num5 + k, num7 - 1];
-                                if (tile2 != null && tile2.HasTile && tile2.TileType == 26)
+                                if (tile2 != null && tile2.HasTile && tile2.TileType == TileID.DemonAltar)
                                 {
                                     flag = true;
                                     break;
@@ -5438,7 +5438,7 @@ namespace CalRemix.Core.Subworlds
                             {
                                 ushort num8 = 0;
                                 tile = Main.tile[i, num];
-                                if (tile.TileType == 484)
+                                if (tile.TileType == TileID.RollingCactus)
                                 {
                                     num8 = 397;
                                 }
@@ -5466,7 +5466,7 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                     tile = Main.tile[i, num];
-                    if (tile.TileType == 323)
+                    if (tile.TileType == TileID.PalmTree)
                     {
                         tile = Main.tile[i, num];
                         if (tile.LiquidAmount > 0)
@@ -5484,7 +5484,7 @@ namespace CalRemix.Core.Subworlds
                         if (tile.HasTile)
                         {
                             tile = Main.tile[i, num];
-                            if (tile.TileType == 56)
+                            if (tile.TileType == TileID.Obsidian)
                             {
                                 WorldGen.KillTile(i, num);
                                 tile = Main.tile[i, num];
@@ -5498,7 +5498,7 @@ namespace CalRemix.Core.Subworlds
                     if (tile.HasTile)
                     {
                         tile = Main.tile[i, num];
-                        if (tile.TileType == 314)
+                        if (tile.TileType == TileID.MinecartTrack)
                         {
                             int num9 = 15;
                             int num10 = 1;
@@ -5520,7 +5520,7 @@ namespace CalRemix.Core.Subworlds
                     if (tile.HasTile)
                     {
                         tile = Main.tile[i, num];
-                        if (tile.TileType == 332)
+                        if (tile.TileType == TileID.GoldCoinPile)
                         {
                             tile = Main.tile[i, num + 1];
                             if (!tile.HasTile)
@@ -5530,7 +5530,7 @@ namespace CalRemix.Core.Subworlds
                                 tile = Main.tile[i, num + 1];
                                 tile.HasTile = true;
                                 tile = Main.tile[i, num + 1];
-                                tile.TileType = 332;
+                                tile.TileType = TileID.GoldCoinPile;
                             }
                         }
                     }
@@ -5578,10 +5578,10 @@ namespace CalRemix.Core.Subworlds
                     continue;
                 IL_06be:
                     tile = Main.tile[i, num];
-                    if (tile.WallType != 187)
+                    if (tile.WallType != WallID.Sandstone)
                     {
                         tile = Main.tile[i, num];
-                        if (tile.WallType != 216)
+                        if (tile.WallType != WallID.HardenedSand)
                         {
                             goto IL_0753;
                         }
@@ -5625,7 +5625,7 @@ namespace CalRemix.Core.Subworlds
                 int x3 = WorldGen.genRand.Next(minValue, maxValue);
                 int y3 = WorldGen.genRand.Next(minValue2, maxValue2);
                 Tile tile3 = Main.tile[x3, y3];
-                if (tile3.HasTile && tile3.TileType >= 0)
+                if (tile3.HasTile && tile3.TileType >= TileID.Dirt)
                 {
                     bool flag2 = TileID.Sets.Dirt[tile3.TileType];
                     if (WorldGen.notTheBees)
@@ -5637,7 +5637,7 @@ namespace CalRemix.Core.Subworlds
                         num12++;
                         tile3.ClearTile();
                         tile3.HasTile = true;
-                        tile3.TileType = 668;
+                        tile3.TileType = TileID.DirtiestBlock;
                     }
                 }
             }

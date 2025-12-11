@@ -288,7 +288,6 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             int laserBurstCount = 3;
             int segmentSpacingPerLaser = 3;
             int delayPerBurst = 360;
-            int damageDelay = 200;
             int slowdownTime = 30;
             int timeSpentFiringLasers = 60;
             int laserShootTime = slowdownTime + timeSpentFiringLasers;
@@ -394,7 +393,6 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             int laserCount = 4;
             int delayPerBurst = 180;
             int slowdownTime = 30;
-            int segmentSpacingPerLaser = 3;
             int timeSpentFiringLasers = 60;
             int laserShootTime = slowdownTime + timeSpentFiringLasers;
             int laserDamage = 24;

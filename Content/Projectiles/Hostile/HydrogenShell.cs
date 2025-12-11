@@ -140,7 +140,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                     if (t != null && (t.WallType == ModContent.WallType<NavystoneWall>() || t.WallType == ModContent.WallType<EutrophicSandWall>()))
                     {
                         WorldGen.KillWall((int)(proj.Center.X / 16) + i, (int)(proj.Center.Y / 16) + j);
-                        if (t.WallType == 0 && Main.netMode != NetmodeID.SinglePlayer)
+                        if (t.WallType == WallID.None && Main.netMode != NetmodeID.SinglePlayer)
                             NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 2, i, j);
                     }
                 }

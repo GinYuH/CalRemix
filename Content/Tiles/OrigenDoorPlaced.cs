@@ -11,8 +11,6 @@ namespace CalRemix.Content.Tiles
 {
     public class OrigenDoorPlaced : ModTile
     {
-        private bool spawnjon = false;
-        private bool sound = false;
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -26,7 +24,7 @@ namespace CalRemix.Content.Tiles
             TileID.Sets.PreventsSandfall[Type] = true;
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(75, 139, 166));
-            DustType = 1;
+            DustType = DustID.Stone;
             AnimationFrameHeight = 54;
             TileID.Sets.DisableSmartCursor[Type] = true;
         }

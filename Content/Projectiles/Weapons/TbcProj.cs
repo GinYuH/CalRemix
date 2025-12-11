@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.width = 17;
             Projectile.height = 36;
             Projectile.friendly = true;
-            Projectile.aiStyle = 1;
+            Projectile.aiStyle = ProjAIStyleID.Arrow;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.penetrate = 3;

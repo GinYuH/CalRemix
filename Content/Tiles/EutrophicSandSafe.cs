@@ -28,7 +28,7 @@ namespace CalRemix.Content.Tiles
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeDugByShovel[Type] = true;
 
-            DustType = 108;
+            DustType = DustID.RainCloud;
             AddMapEntry(new Color(92, 145, 167));
             RegisterItemDrop(ModContent.ItemType<CalamityMod.Items.Placeables.EutrophicSand>());
         }

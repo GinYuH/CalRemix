@@ -25,7 +25,7 @@ namespace CalRemix.Content.Tiles
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeDugByShovel[Type] = true;
 
-            DustType = 108;
+            DustType = DustID.RainCloud;
             AddMapEntry(new Color(67, 107, 143));
         }
 

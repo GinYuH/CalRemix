@@ -390,7 +390,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 									Dust dust;
 									Vector2 position = NPC.Center;
 									position.X = NPC.Center.X - 4;
-									dust = Terraria.Dust.NewDustPerfect(position, 43, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), 0, new Color(0, 177, 255), 1.718605f);
+									dust = Terraria.Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), 0, new Color(0, 177, 255), 1.718605f);
 									dust.noGravity = true;
 								}
 							}
@@ -610,7 +610,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 										Dust dust;
 										Vector2 position = NPC.Center;
 										position.X = NPC.Center.X - 4;
-										dust = Terraria.Dust.NewDustPerfect(position, 43, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
+										dust = Terraria.Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
 										dust.noGravity = true;
 									}
 								}
@@ -625,7 +625,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 										Dust dust;
 										Vector2 position = NPC.Center;
 										position.X = NPC.Center.X - 4;
-										dust = Terraria.Dust.NewDustPerfect(position, 43, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
+										dust = Terraria.Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
 										dust.noGravity = true;
 									}
 								}
@@ -653,7 +653,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 								Dust dust;
 								Vector2 position = NPC.Center;
 								position.X = NPC.Center.X - 4;
-								dust = Terraria.Dust.NewDustPerfect(position, 43, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), 0, new Color(0, 177, 255), 4.718605f);
+								dust = Terraria.Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), 0, new Color(0, 177, 255), 4.718605f);
 								dust.noGravity = true;
 							}
 							SoundEngine.PlaySound(SoundID.Item117, NPC.position);

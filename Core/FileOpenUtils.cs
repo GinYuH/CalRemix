@@ -35,7 +35,7 @@ namespace CalRemix
                 tex = Texture2D.FromStream(Main.graphics.GraphicsDevice, stream);
                 stream.Dispose();
             }
-            catch (Exception exception)
+            catch
             {
                 MessageBox.Show("Couldn't open file!", "Our studio apologizes for the inconvenience");
             }

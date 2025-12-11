@@ -57,7 +57,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPC.friendly = true;
             NPC.width = 18;
             NPC.height = 40;
-            NPC.aiStyle = 7;
+            NPC.aiStyle = NPCAIStyleID.Passive;
             NPC.damage = 200;
             NPC.defense = 25;
             NPC.lifeMax = 30000;

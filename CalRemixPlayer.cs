@@ -410,7 +410,7 @@ namespace CalRemix
 		        return;
 	        }
 
-	        var value = TextureAssets.Extra[102].Value;
+	        var value = TextureAssets.Extra[ExtrasID.PortableStool].Value;
 	        var position = new Vector2(
 		        (int)(drawinfo.Position.X - Main.screenPosition.X + drawinfo.drawPlayer.width / 2f),
 		        (int)(drawinfo.Position.Y - Main.screenPosition.Y + drawinfo.drawPlayer.height + drawinfo.drawPlayer.portableStoolInfo.HeightBoost)

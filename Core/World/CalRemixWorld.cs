@@ -1416,11 +1416,6 @@ namespace CalRemix.Core.World
                     }
 
                     return;
-
-                    static float StupidNoise(float x, float y)
-                    {
-                        return (MathF.Sin(x) * MathF.Cos(y) + 1) / 2;
-                    }
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Paying Respects to Legends Lost Too Soon", (progress, config) => { HallOfLegends.GenerateHallOfLegends(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Switching things up", (progress, config) => {
@@ -1629,7 +1624,7 @@ namespace CalRemix.Core.World
                     }
                     if (t.WallType == WallType<NavystoneWall>() || t.WallType == WallType<EutrophicSandWall>())
                     {
-                        t.WallType = 0;
+                        t.WallType = WallID.None;
                     }
                     if (!t.HasTile)
                     {

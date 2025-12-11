@@ -1,5 +1,6 @@
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Weapons
@@ -25,7 +26,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 			base.Projectile.hide = true;
 			base.Projectile.ownerHitCheck = true;
 			base.Projectile.DamageType = DamageClass.Melee;
-			Projectile.aiStyle = 20;
+			Projectile.aiStyle = ProjAIStyleID.Drill;
             Projectile.usesLocalNPCImmunity= true;
             Projectile.localNPCHitCooldown = 5;
 		}

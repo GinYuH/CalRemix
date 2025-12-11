@@ -21,7 +21,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 			Projectile.hostile = false;
             Projectile.timeLeft = 80;
 			Projectile.DamageType = DamageClass.Summon;
-            Projectile.aiStyle = 1;
+            Projectile.aiStyle = ProjAIStyleID.Arrow;
         }
         public override void AI()
         {

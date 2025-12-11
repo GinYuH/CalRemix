@@ -210,36 +210,36 @@ namespace CalRemix.UI
 
             #region boss spawn/death
             HelperMessage.New("BossSpawn1", "Oh jeez, that's one big foe... I wish I could help you...",
-                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1, cooldown: 3, onlyPlayOnce: false)
+                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != NPCID.EyeofCthulhu) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossSpawn2", "You're gonna wanna be careful. It looks like something big is coming...",
-                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2, cooldown: 3, onlyPlayOnce: false)
+                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != NPCID.EyeofCthulhu) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossSpawn3", "Oh no... Something big's approaching, and fast. Are you gonna be alright?",
-                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3, cooldown: 3, onlyPlayOnce: false)
+                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != NPCID.EyeofCthulhu) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossSpawn4", "Some sort of boss monster is coming... Watch out...",
-                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4, cooldown: 3, onlyPlayOnce: false)
+                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != NPCID.EyeofCthulhu) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == true && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
 
             HelperMessage.New("BossDie1", "Thank goodness, you're still alive! Good job...",
-                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1, cooldown: 3, onlyPlayOnce: false)
+                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != NPCID.EyeofCthulhu) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 1, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossDie2", "Is that thing down? I wish i could have helped you... Atleast you made it out alive.",
-                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2, cooldown: 3, onlyPlayOnce: false)
+                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != NPCID.EyeofCthulhu) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 2, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossDie3", "Glad to see that thing taken care of. Take some time to heal your wounds, please...",
-                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3, cooldown: 3, onlyPlayOnce: false)
+                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != NPCID.EyeofCthulhu) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 3, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             HelperMessage.New("BossDie4", "With that thing down, the world is just an inch safer. Let's hope it doesn't come back...",
-                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != 4) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4, cooldown: 3, onlyPlayOnce: false)
+                "FluxIdle", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type != NPCID.EyeofCthulhu) && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossIsPresent == false && Main.LocalPlayer.GetModPlayer<FluxPlayer>().bossSpawnEndMessageVariant == 4, cooldown: 3, onlyPlayOnce: false)
                 .AddStartEvent(SwitchBossActivity)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             #endregion

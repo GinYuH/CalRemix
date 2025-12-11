@@ -119,7 +119,7 @@ namespace CalRemix.Content.NPCs.Subworlds.ClownWorld
                     }
                 }
                 bool flag61 = false;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     // randomly decide to fall sometimes
                     if (ShouldRandomlyFall == 0f && Main.rand.NextBool(7200))

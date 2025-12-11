@@ -19,8 +19,8 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.height = 38;
             Projectile.timeLeft = 300;
             Projectile.DamageType = ModContent.GetInstance<RogueDamageClass>();
-            Projectile.aiStyle = 2;
-            AIType = 48;
+            Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
+            AIType = ProjectileID.ThrowingKnife;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
             Projectile.friendly = true;

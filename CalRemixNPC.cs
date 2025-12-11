@@ -2367,7 +2367,7 @@ namespace CalRemix
                         spawnInfo.SpawnTileType = aboveSpawnTile.TileType;
                         spawnInfo.SpawnTileX = checkPositionX;
                         spawnInfo.SpawnTileY = checkPositionY - 1;
-                        spawnInfo.Water = aboveSpawnTile.LiquidAmount >= 255 && aboveSpawnTile.LiquidType == 0;
+                        spawnInfo.Water = aboveSpawnTile.LiquidAmount >= 255 && aboveSpawnTile.LiquidType == LiquidID.Water;
 
                         WeightedRandom<(int, Predicate<NPCSpawnInfo>)> pool = new WeightedRandom<(int, Predicate<NPCSpawnInfo>)>();
                         pool.Add((NPCID.None, (NPCSpawnInfo s) => true), 1f);
@@ -2929,22 +2929,6 @@ namespace CalRemix
                                 }
                             }
                             Vector2 pos = target != null ? target.position : prowlPoint;
-                            if (false)
-                            {
-                                flag6 = true;
-                                if (Math.Abs(npc.velocity.X) < speed / 2f)
-                                {
-                                    if (npc.velocity.X == 0f)
-                                    {
-                                        npc.velocity.X -= npc.direction;
-                                    }
-                                    npc.velocity.X *= 1.1f;
-                                }
-                                else if (npc.velocity.Y > 0f - speed)
-                                {
-                                    npc.velocity.Y -= acceleration;
-                                }
-                            }
                         }
                         if (!flag6)
                         {

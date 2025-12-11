@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             Projectile.width = 14;
 			Projectile.height = 14;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.friendly = true;
 			Projectile.penetrate = 2;
 			Projectile.DamageType = DamageClass.Ranged;

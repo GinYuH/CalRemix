@@ -12,7 +12,6 @@ namespace CalRemix.Content.Projectiles.Weapons
         public ref float Timer => ref Projectile.ai[0];
         public ref float State => ref Projectile.ai[1];
         public Player Owner => Main.player[Projectile.owner];
-        private Vector2 InitVelocity;
         public override void SetStaticDefaults() 
         {
 			// DisplayName.SetDefault("Onyx Fragment");
