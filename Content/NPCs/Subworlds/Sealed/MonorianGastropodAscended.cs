@@ -196,7 +196,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             }
                         }
 
-                        if (Timer > 180)
+                        if (Timer > 320)
                         {
                             State = 0;
                             Timer = 0;
@@ -311,6 +311,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
         }
     }
 }
