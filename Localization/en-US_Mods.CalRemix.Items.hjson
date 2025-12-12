@@ -5955,3 +5955,12 @@ Grablerscalibur: {
 		Close-range strikes will inflict the enemy with a terrible curse
 		'''
 }
+
+FriendshipPotion: {
+	DisplayName: Potion of Friendship
+	Tooltip:
+		'''
+		Causes a barrage of rainbow stars to rain downward constantly
+		Makes the world more "nightcore"
+		'''
+}

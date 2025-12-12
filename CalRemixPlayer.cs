@@ -285,6 +285,7 @@ namespace CalRemix
         public int calamitizedCounter;
         public int calamitizedHitCooldown;
         public bool stratusBeverage;
+        public bool friendship;
         // Tainted
         public bool taintedAmmo;
         public bool taintedArchery;
@@ -1471,6 +1472,7 @@ namespace CalRemix
 			invGar = false;
 			hayFever = false;
             stratusBeverage = false;
+            friendship = false;
             taintedAmmo= false;
             taintedArchery= false;
             taintedBattle= false;
