@@ -827,7 +827,12 @@ namespace CalRemix.Core
         {
             if (Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer crp))
             {
+                float addedPitch = 0;
                 if (crp.oxygenSoul)
+                    addedPitch += 1;
+                if (crp.friendship)
+                    addedPitch += 1;
+                if (addedPitch > 0)
                 {
                     SoundUpdateCallback updateCallback2 = updateCallback;
                     if (Main.dedServ)
@@ -848,7 +853,7 @@ namespace CalRemix.Core
                         return Main.RunOnMainThread(() => PlayInerr(in styleCopy, position, updateCallback2)).GetAwaiter().GetResult();
                     }
                     SoundStyle newst = new SoundStyle();
-                    newst = style with { Pitch = 1f };
+                    newst = style with { Pitch = style.Pitch + addedPitch };
                     return PlayInerr(in newst, position, updateCallback2);
                 }
                 return orig(self, ref style, position, updateCallback);

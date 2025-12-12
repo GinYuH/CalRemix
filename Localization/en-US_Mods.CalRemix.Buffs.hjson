@@ -452,3 +452,8 @@ NowhereDragonBuff: {
 	DisplayName: Rift Dragons
 	Description: Seems they're going nowhere
 }
+
+FriendshipBuff: {
+	DisplayName: The Power of Friendship
+	Description: Yeah!!!!
+}
