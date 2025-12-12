@@ -2,6 +2,7 @@
 using CalamityMod.DataStructures;
 using CalamityMod.World;
 using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.Projectiles;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
@@ -244,6 +245,21 @@ namespace CalRemix
             else
                 NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: playerWhoAmI, number2: type);
         }
+
+        public static void SpawnClientBossRandomPos(int id, Vector2 position, bool msg = true)
+        {
+            CalamityNetcode.NewNPC_ClientSide(position + Main.rand.NextVector2CircularEdge(1000, 600), id, Main.LocalPlayer);
+            if (msg)
+                ChatMessage(Language.GetTextValue("Announcement.HasAwoken", ContentSamples.NpcsByNetId[id].TypeName), new Color(175, 75, 255), NetworkText.FromKey("Announcement.HasAwoken", ContentSamples.NpcsByNetId[id].GetTypeNetName()));
+        }
+        public static void SpawnClientBoss(int id, Vector2 position, bool msg = true)
+        {
+            CalamityNetcode.NewNPC_ClientSide(position, id, Main.LocalPlayer);
+            if (msg)
+                ChatMessage(Language.GetTextValue("Announcement.HasAwoken", ContentSamples.NpcsByNetId[id].TypeName), new Color(175, 75, 255), NetworkText.FromKey("Announcement.HasAwoken", ContentSamples.NpcsByNetId[id].GetTypeNetName()));
+        }
+
+
         /// <summary>
         /// Spawns a new npc with multiplayer and action invocation support.
         /// </summary>

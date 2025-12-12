@@ -44,7 +44,7 @@ namespace CalRemix.Content.Items.SummonItems
             if (player.whoAmI == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Roar, player.position);
-                CalRemixHelper.SpawnNPCOnPlayer(player.whoAmI, ModContent.NPCType<Pyrogen>());
+                CalRemixHelper.SpawnClientBossRandomPos(ModContent.NPCType<Pyrogen>(), player.Center);
             }
             return true;
         }
