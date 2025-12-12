@@ -5958,9 +5958,5 @@ Grablerscalibur: {
 
 FriendshipPotion: {
 	DisplayName: Potion of Friendship
-	Tooltip:
-		'''
-		Causes a barrage of rainbow stars to rain downward constantly
-		Makes the world more "nightcore"
-		'''
+	Tooltip: Unleashes the true power of friendship
 }

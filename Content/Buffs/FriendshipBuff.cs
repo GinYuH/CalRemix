@@ -15,8 +15,9 @@ namespace CalRemix.Content.Buffs
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                for (int i = 0; i < 2; i++)
-                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + new Vector2(Main.rand.Next(-2000, 2000), -600), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(30) * Main.windSpeedTarget.DirectionalSign()).RotatedByRandom(MathHelper.ToRadians(22)) * 20, ModContent.ProjectileType<FriendshipStar>(), 1000, 1, player.whoAmI);
+                float num = ((Entity)player).position.X + (float)Main.rand.Next(-1200, 1200);
+                float num2 = ((Entity)player).position.Y - (float)Main.rand.Next(500, 800);
+                Projectile.NewProjectile(player.GetSource_FromThis(), num, num2, 2f, 10f, ModContent.ProjectileType<FriendshipStar>(), 150, 3f, ((Entity)player).whoAmI, 0f, 0f);
             }
         }
     }
