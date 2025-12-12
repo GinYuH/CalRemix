@@ -2510,25 +2510,25 @@ namespace CalRemix.Core.Subworlds
                                     {
                                         if (num414 < Main.maxTilesX / 2 + WorldGen.genRand.Next(-2, 3))
                                         {
-                                            WorldGen.Convert(num414, num415, 4, 1);
+                                            WorldGen.Convert(num414, num415, 4, 1, true, true);
                                         }
                                         else
                                         {
-                                            WorldGen.Convert(num414, num415, 1, 1);
+                                            WorldGen.Convert(num414, num415, 1, 1, true, true);
                                         }
                                     }
                                     else if (num414 < Main.maxTilesX / 2 + WorldGen.genRand.Next(-2, 3))
                                     {
-                                        WorldGen.Convert(num414, num415, 1, 1);
+                                        WorldGen.Convert(num414, num415, 1, 1, true, true);
                                     }
                                     else
                                     {
-                                        WorldGen.Convert(num414, num415, 4, 1);
+                                        WorldGen.Convert(num414, num415, 4, 1, true, true);
                                     }
                                 }
                                 else
                                 {
-                                    WorldGen.Convert(num414, num415, conversionType, 1);
+                                    WorldGen.Convert(num414, num415, conversionType, 1, true, true);
                                 }
                                 tile16 = Main.tile[num414, num415];
                                 tile16.TileColor = PaintID.None;
