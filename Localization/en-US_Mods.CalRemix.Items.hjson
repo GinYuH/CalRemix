@@ -5955,3 +5955,18 @@ Grablerscalibur: {
 		Close-range strikes will inflict the enemy with a terrible curse
 		'''
 }
+
+HydrothermalHurl: {
+	DisplayName: Hydrothermal Hurl
+	Tooltip: ""
+}
+
+FlashFreeze: {
+	DisplayName: Flash Freeze
+	Tooltip: ""
+}
+
+BlossomBlast: {
+	DisplayName: Blossom Blast
+	Tooltip: ""
+}
