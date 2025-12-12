@@ -149,18 +149,28 @@ namespace CalRemix.Core
                 CalRemix.instance.Logger.Error("DisablePerennial: Could not find second downed");
                 return;
             }
-            cursor.Emit(OpCodes.Ret);
+            if (!cursor.TryGotoNext(i => i.OpCode.FlowControl == FlowControl.Cond_Branch))
+            {
+                CalRemix.instance.Logger.Error("DisablePerennial: Could not find conditional");
+                return;
+            }
+            cursor.Next.OpCode = OpCodes.Brtrue;
         }
 
         public static void DisableCryonic(ILContext il)
         {
             var cursor = new ILCursor(il);
-            if (!cursor.TryGotoNext(MoveType.Before, i => i.MatchCallOrCallvirt<CalamityMod.DownedBossSystem>("get_downedCryogen")))
+            if (!cursor.TryGotoNext(i => i.MatchCallOrCallvirt<CalamityMod.DownedBossSystem>("get_downedCryogen")))
             {
                 CalRemix.instance.Logger.Error("DisableCryonic: Could not find downed");
                 return;
             }
-            cursor.Emit(OpCodes.Ret);
+            if (!cursor.TryGotoNext(i => i.OpCode.FlowControl == FlowControl.Cond_Branch))
+            {
+                CalRemix.instance.Logger.Error("DisableCryonic: Could not find conditional");
+                return;
+            }
+            cursor.Next.OpCode = OpCodes.Brtrue;
         }
 
         public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)
