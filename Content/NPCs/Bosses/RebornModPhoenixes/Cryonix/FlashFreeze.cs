@@ -13,7 +13,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix
         {
             Item.width = 28;
             Item.height = 30;
-            Item.damage = 80;
+            Item.damage = 100;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 20;
             Item.useTime = 20;
@@ -24,7 +24,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix
             Item.value = 20000;
             Item.rare = ItemRarityID.Pink;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<PerennialFlowerMine>();
+            Item.shoot = ModContent.ProjectileType<CryoIcicle>();
             Item.shootSpeed = 13f;
             Item.UseSound = SoundID.Item8;
         }

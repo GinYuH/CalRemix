@@ -13,7 +13,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Chaotrix
         {
             Item.width = 28;
             Item.height = 30;
-            Item.damage = 78;
+            Item.damage = 178;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 40;
             Item.useTime = 50;
@@ -24,7 +24,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Chaotrix
             Item.value = 20000;
             Item.rare = ItemRarityID.Yellow;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<PerennialFlowerMine>();
+            Item.shoot = ModContent.ProjectileType<FireWaveBomb>();
             Item.shootSpeed = 13f;
             Item.UseSound = SoundID.Item8;
         }

@@ -25,6 +25,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
         public virtual int health => 9000;
         public virtual int projType => ModContent.ProjectileType<BrimstoneBall>();
         public virtual int dustType => DustID.Torch;
+        public virtual int invulThreshold => 600;
 
         public Vector2 targetPos;
 
@@ -87,7 +88,8 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
             NPC.netUpdate = true;
             NPC.ai[2]++;
             NPC.ai[1]++;
-            if (NPC.ai[0] > 0) NPC.ai[0] -= 1.2f;
+            if (NPC.ai[0] > 0) NPC.ai[0] -= invulThreshold * 0.002f; // defaults to 1.2 w/ 600
+            if (NPC.ai[0] < 0) NPC.ai[0] = 0;
             targetPos = new Vector2(NPC.position.X + (NPC.width * 0.5f), NPC.position.Y + (NPC.height / 2));
             Vector2 vector8 = targetPos;
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active || Main.player[NPC.target].position.Y > (Main.maxTilesY - 250) * 16)
@@ -95,7 +97,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
                 NPC.TargetClosest(true);
             }
             Color color = new Color();
-            int dust = Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, dustType, NPC.velocity.X, NPC.velocity.Y, 200, color, 0.5f + NPC.ai[0] / 75);
+            int dust = Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, dustType, NPC.velocity.X, NPC.velocity.Y, 200, color, 0.5f + (NPC.ai[0] / invulThreshold * 600) / 75);
             Main.dust[dust].noGravity = true;
 
             ExtraAI();
@@ -173,7 +175,12 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
                 if (NPC.ai[3] == 100)
                 {
                     NPC.ai[3] = 1;
-                    NPC.life += 250;
+                    float healAmt = health * (1 / 36f); // defaults to 250 with default hp value 9000
+                    NPC.life += (int)healAmt;
+
+                    // this isnt part of the og, but im adding it for player visibility
+                    NPC.HealEffect((int)healAmt);
+
                     if (NPC.life > NPC.lifeMax) NPC.life = NPC.lifeMax;
                 }
                 if (NPC.ai[1] >= 0)
@@ -235,7 +242,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
         public override void HitEffect(NPC.HitInfo hit)
         {
             NPC.ai[0] += (float)hit.Damage;
-            if (NPC.ai[0] > 600)
+            if (NPC.ai[0] > invulThreshold)
             {
                 NPC.ai[3] = 1;
                 Color color = new Color();

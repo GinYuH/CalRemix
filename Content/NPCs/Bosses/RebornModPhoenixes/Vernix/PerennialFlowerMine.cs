@@ -1,10 +1,6 @@
 ﻿using CalamityMod;
-using CalamityMod.Projectiles.Boss;
-using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix

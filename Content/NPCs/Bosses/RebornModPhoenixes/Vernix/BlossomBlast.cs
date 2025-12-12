@@ -12,7 +12,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix
         {
             Item.width = 28;
             Item.height = 30;
-            Item.damage = 98;
+            Item.damage = 78;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 20;
             Item.useTime = 30;
