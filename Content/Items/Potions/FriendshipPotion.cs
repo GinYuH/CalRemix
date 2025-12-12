@@ -34,9 +34,11 @@ namespace CalRemix.Content.Items.Potions
         {
             CreateRecipe().
                 AddIngredient(ItemID.BottledWater).
-                AddIngredient(ModContent.ItemType<GalacticaSingularity>()).
-                AddIngredient(ModContent.ItemType<MeldBlob>(), 1).
-                AddTile(TileID.AlchemyTable).
+                AddIngredient(ModContent.ItemType<GalacticaSingularity>(). 10).
+                AddIngredient(ModContent.ItemType<MeldBlob>(), 10).
+                AddIngredient(ItemID.PixieDust, 20).
+                AddIngredient(ItemID.FallenStar, 20).
+                AddTile(TileID.Bottles).
                 Register();
         }
     }
