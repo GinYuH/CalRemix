@@ -23,11 +23,11 @@ namespace CalRemix
             {
                 string shaderName = Path.GetFileNameWithoutExtension(path);
                 string clearedPath = Path.Combine(Path.GetDirectoryName(path), shaderName).Replace(@"\", @"/");
-                Ref<Effect> shader = new(Mod.Assets.Request<Effect>(clearedPath, AssetRequestMode.ImmediateLoad).Value);
+                Asset<Effect> shader = Mod.Assets.Request<Effect>(clearedPath, AssetRequestMode.ImmediateLoad);
                 GameShaders.Misc[$"{Mod.Name}:{shaderName}"] = new MiscShaderData(shader, "AutoloadPass");
             }
 
-            Ref<Effect> s = new(Mod.Assets.Request<Effect>("Assets/Effects/LocalizedDistortionShader", AssetRequestMode.ImmediateLoad).Value);
+            Asset<Effect> s = Mod.Assets.Request<Effect>("Assets/Effects/LocalizedDistortionShader", AssetRequestMode.ImmediateLoad);
             Filters.Scene["CalRemix:NoxusEggSky"] = new Filter(new NoxusEggScreenShaderData(s, "AutoloadPass"), EffectPriority.VeryHigh);
 
             Filters.Scene["CalRemix:NoxusSky"] = new Filter(new NoxusScreenShaderData("FilterMiniTower").UseColor(Color.Transparent).UseOpacity(0f), EffectPriority.VeryHigh);
