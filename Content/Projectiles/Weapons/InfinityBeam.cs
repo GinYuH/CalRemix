@@ -152,7 +152,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public static Color LaserColorFunction(float completionRatio)
         {
-            return CalamityUtils.MulticolorLerp(completionRatio, Color.Red, Color.Cyan, Color.Purple, Color.Teal, Color.DarkRed);
+            return CalamityUtils.MulticolorLerp((1 - completionRatio) + Main.GlobalTimeWrappedHourly * 0.4f, Color.Red, Color.Cyan, Color.Purple, Color.Teal, Color.DarkRed);
         }
     }
 }

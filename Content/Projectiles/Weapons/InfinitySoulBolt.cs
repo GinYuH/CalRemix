@@ -138,7 +138,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public Color FlameTrailColorFunction(float completionRatio)
         {
-            Color main = CalamityUtils.MulticolorLerp(completionRatio, Color.Teal, Color.Cyan, Color.Purple, Color.Red, Color.DarkRed);
+            Color main = CalamityUtils.MulticolorLerp(completionRatio + Main.GlobalTimeWrappedHourly, Color.Teal, Color.Cyan, Color.Purple, Color.Red, Color.DarkRed);
             return Color.Lerp(main * 2, default, completionRatio) * Projectile.Opacity;
         }
     }
