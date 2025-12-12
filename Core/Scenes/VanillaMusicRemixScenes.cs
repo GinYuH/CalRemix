@@ -100,7 +100,7 @@ namespace CalRemix.Core.Scenes
         {
             foreach (NPC npc in Main.npc)
             {
-                if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinThief || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinScout || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinSummoner)
+                if (npc.type == NPCID.GoblinPeon || npc.type == NPCID.GoblinThief || npc.type == NPCID.GoblinWarrior || npc.type == NPCID.GoblinArcher || npc.type == NPCID.GoblinSummoner)
                 {
                     return true;
                 }

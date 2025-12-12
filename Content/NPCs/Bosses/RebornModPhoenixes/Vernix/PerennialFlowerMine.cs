@@ -41,7 +41,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix
             
             for (int i = 0; i < total; i++)
             {
-                int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, new Vector2(0, -num48), type, damage, 0f, Main.myPlayer);
+                int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(0, -num48), type, damage, 0f, Main.myPlayer);
                 Main.projectile[proj].velocity = Main.projectile[proj].velocity.RotatedBy(((MathHelper.TwoPi / total) * i) + randomRot);
                 Main.projectile[proj].friendly = Projectile.friendly;
                 Main.projectile[proj].hostile = Projectile.hostile;
