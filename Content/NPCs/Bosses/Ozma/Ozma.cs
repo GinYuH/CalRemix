@@ -5,11 +5,13 @@ using CalamityMod.DataStructures;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -30,7 +32,6 @@ public class Ozma : ModNPC
     {
         None = 0,
 
-        //Odd Attacks
         FlareStar, 
         //Wiki Description: Deals damage based on the characters' level. Can miss.
         //My Idea: Fires plasma balls at the player that ater being fired combine into eachother, creating a massive explosion once all have been absorbed.
@@ -50,16 +51,17 @@ public class Ozma : ModNPC
         Holy,
         //Wiki Description: Deals Holy damage to one target. Ozma will not use the ability if the target absorbs it.
         //My Idea: Light beams come down from above, inflicting a debuff that deals rapid damage whilst within them.
+        //         If its an even attack, alter the attack to specifically be more difficult in multiplayer (to mimic the LVx variant)
 
         Death,
         //Wiki Description: Defeats one party member if it hits.
         //My Idea: Summons Reaper Phantoms around player's that slash at the target with their scythe soon after being summoned. ONE SHOTS :D
+        //         If its an even attack, alter the attack to specifically be more difficult in multiplayer (to mimic the LVx variant)
 
         AbsorbMP,
         //Wiki Description: Used if Ozma is low on MP. Drains MP from the party.
         //My Idea: Ozma attempts to get close to a player, if in range, Ozma will begin draining them of their Mana, and if their mana reaches zero during this, they die.
 
-        //Even Attacks
         Curse,
         //Wiki Description: Deals non-elemental damage to all party members and inflicts Confuse, Poison, Slow, Mini, and Darkness.
         //Fabsolian Description: A miasma of green energy spreads around the arena.  If you touch it you will be inflicted with: Cursed, Horror, Plague, Blind, and Marked.
@@ -67,14 +69,6 @@ public class Ozma : ModNPC
         Mini,
         //Wiki Description: Inflicts Mini status on all targets.
         //Fabsolian Description: If you do too much damage to him in one hit it will be reduced to 0 and he will immediately counterattack with a move that reduces all of your stats by 50%.
-
-        LV4_Holy,
-        //Wiki Description: Deals Holy damage to all party members whose levels are a multiple of 4. Ozma will only use Lv4 Holy if the party has a member susceptible to it.
-        //My Idea: Light beams come down from above, inflicting a debuff that deals rapid damage whilst within them.
-
-        LV5_Death,
-        //Wiki Description: Defeats all party members whose levels are a multiple of 5. Ozma will only use Lv5 Death if the party has a member susceptible to it; if no party member is of a suitable level, Ozma will not waste its turn.
-        //My Idea: Summons Reaper Phantoms around player's that slash at the target with their scythe soon after being summoned. ONE SHOTS :D
 
         Curaga,
         //Wiki Description: Used as a counterattack; there is a higher chance of countering with Curaga when Ozma's health is low.
@@ -93,15 +87,15 @@ public class Ozma : ModNPC
         OzmaAttack.Doomsday, 
         //OzmaAttack.Flare, 
         //OzmaAttack.Holy, 
-        //OzmaAttack.Death, 
-        //OzmaAttack.AbsorbMP
+        OzmaAttack.Death, 
+        OzmaAttack.AbsorbMP
     ];
 
     private static OzmaAttack[] EvenAttacks => [
         OzmaAttack.Curse,
         //OzmaAttack.Mini,
         //OzmaAttack.LV4_Holy,
-        //OzmaAttack.LV5_Death,
+        OzmaAttack.Death,
         OzmaAttack.Curaga,
         //OzmaAttack.Esuna,
     ];
@@ -180,6 +174,67 @@ public class Ozma : ModNPC
                     }
                 }
                 break;
+            case OzmaAttack.Death:
+                bool UseLVVariant = TurnCounter % 2 == 0;
+
+                NPC.velocity = ((Target.Center - (Vector2.UnitY * 96)) - NPC.Center) / 30f;
+                NPC.rotation *= 0.9f;
+                NPC.rotation += NPC.velocity.X / 188f;
+
+                if (AttackTime >= 600)
+                {
+                    PickAttack();
+                    return;
+                }
+                if (AttackTime % 90 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    if (UseLVVariant)
+                    {
+                        foreach (Player p in Main.ActivePlayers)
+                        {
+                            if(!p.dead)
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), p.Center, Vector2.Zero, ModContent.ProjectileType<ReaperSlash>(), 50, 1f, -1, p.whoAmI, Main.rand.NextBool() ? -1 : 1);
+                        }
+                    }
+                    else
+                    {
+                        PickTarget();
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center, Vector2.Zero, ModContent.ProjectileType<ReaperSlash>(), 50, 1f, -1, Target.whoAmI, Main.rand.NextBool() ? -1 : 1);
+                    }
+                }
+
+                break;
+            case OzmaAttack.AbsorbMP:
+                NPC.velocity = ((Target.Center - (Vector2.UnitY * 96)) - NPC.Center) / 60f;
+                NPC.rotation *= 0.9f;
+                NPC.rotation += NPC.velocity.X / 188f;
+
+                float absorbRadius = 450;
+
+                if(AttackTime > 90)
+                    foreach(Player p in Main.ActivePlayers)
+                    {
+                        if (p.dead)
+                            continue;
+
+                        if(p.Distance(NPC.Center) < absorbRadius)
+                        {
+                            Dust.NewDustPerfect(p.Center, DustID.ManaRegeneration, p.DirectionTo(NPC.Center) * Main.rand.NextFloat(2, 4));
+                            if (!p.CheckMana(2, true, true))
+                                p.KillMe(PlayerDeathReason.ByNPC(NPC.whoAmI), 9999, 0);
+                        }
+                    }
+
+                Vector2 spawnPos = NPC.Center + Main.rand.NextVector2CircularEdge(absorbRadius, absorbRadius);
+                Dust.NewDustPerfect(spawnPos, DustID.ManaRegeneration, spawnPos.DirectionTo(NPC.Center) * Main.rand.NextFloat(4, 8));
+
+                if (AttackTime >= 600)
+                {
+                    PickAttack();
+                    return;
+                }
+
+                break;
             case OzmaAttack.Curse:
                 NPC.velocity = ((Target.Center - (Vector2.UnitY * 180)) - NPC.Center) / 30f;
                 NPC.rotation *= 0.9f;
@@ -212,7 +267,9 @@ public class Ozma : ModNPC
                     if (healAmt + NPC.life > NPC.lifeMax)
                         healAmt = NPC.lifeMax - NPC.life;
                     NPC.life += healAmt;
-                    CombatText.NewText(NPC.Hitbox, CombatText.HealLife, healAmt, true);
+                    Rectangle area = NPC.Hitbox;
+                    area.Inflate(-96, -96);
+                    CombatText.NewText(area, CombatText.HealLife, healAmt, true);
                     NPC.netUpdate = true;
                 }
                 break;
@@ -356,6 +413,7 @@ public class DoomsdayOrb : ModProjectile
             Projectile.damage = defDamage;
             Projectile.velocity = Vector2.Zero;
             Projectile.Opacity = 0f;
+            SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
         }
 
         Time++;
@@ -402,7 +460,6 @@ public class Miasma : ModProjectile
         Projectile.timeLeft = 600;
         Projectile.penetrate = -1;
         Projectile.hostile = true;
-        Projectile.friendly = true;
         Projectile.tileCollide = false;
         Projectile.ignoreWater = true;
     }
@@ -512,5 +569,98 @@ public class MiasmaGas : Particle
 
         float TimeRatio = CalamityUtils.SineInEasing(MathHelper.Clamp(Time / (float)UpTime, 0f, 1f), 1);
         Color = Color.Lerp(ColorFire, ColorFade, TimeRatio) * Opacity * (1 - TimeRatio);
+    }
+}
+
+public class ReaperSlash : ModProjectile
+{
+    public override string Texture => "CalamityMod/Projectiles/Melee/DeathsAscensionSwing";
+
+
+    private int frameX = 0;
+    private int frameY = 0;
+
+    private int CurrentFrame
+    {
+        get => frameX * 6 + frameY;
+        set
+        {
+            frameX = value / 6;
+            frameY = value % 6;
+        }
+    }
+
+    private Player Target => Main.player[(int)Projectile.ai[0]];
+    private float Time = 0;
+
+    int SpawnTime => 60;
+
+    public override void SetDefaults()
+    {
+        Projectile.width = 159;
+        Projectile.height = 230;
+        Projectile.scale = 1.15f;
+        Projectile.penetrate = -1;
+        Projectile.hostile = true;
+        Projectile.damage = 9999;
+        Projectile.tileCollide = false;
+        Projectile.ignoreWater = true;
+        Projectile.timeLeft = SpawnTime + 24 + 30;
+    }
+
+    public override void AI()
+    {
+        Projectile.damage = 9999;
+        Projectile.spriteDirection = (int)Projectile.ai[1];
+
+        if (Time > SpawnTime)
+            Projectile.frameCounter++;
+
+        if (Projectile.frameCounter > 2)
+        {
+            CurrentFrame++;
+            if (frameX >= 2)
+            {
+                CurrentFrame--;
+            }
+
+            if (frameX == 0 && frameY == 3)
+            {
+                SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
+            }
+            Projectile.frameCounter = 0;
+        }
+
+        float dist = -24 * Projectile.spriteDirection;
+
+        if (Time <= SpawnTime)
+            Projectile.Center = Target.Center + Vector2.UnitX * dist;
+        else
+        {
+            float xPos = Projectile.Center.X;
+            if (Projectile.spriteDirection == 1 && (Target.Center + Vector2.UnitX * dist).X < xPos)
+                xPos = (Target.Center + Vector2.UnitX * dist).X;
+            else if(Projectile.spriteDirection == -1 && (Target.Center + Vector2.UnitX * dist).X > xPos)
+                xPos = (Target.Center + Vector2.UnitX * dist).X;
+            Projectile.Center = new(xPos, Target.Center.Y);
+        }
+
+        if (Time > SpawnTime + 24)
+            Projectile.Opacity -= 1 / 30f;
+
+        Time++;
+    }
+
+    public override bool CanHitPlayer(Player target) => CurrentFrame >= 4 && CurrentFrame <= 9;
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        Texture2D texture = TextureAssets.Projectile[Type].Value;
+        Vector2 position = Projectile.Center - Main.screenPosition + (Projectile.spriteDirection == -1 ? new Vector2(60, 0) : new Vector2(-60, 0)) - Projectile.velocity;
+        Vector2 origin = texture.Size() / new Vector2(2f, 6f) * 0.5f;
+        Rectangle frame = texture.Frame(2, 6, frameX, frameY);
+        SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+        Main.EntitySpriteDraw(texture, position, frame, Color.White * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+        return false;
     }
 }
