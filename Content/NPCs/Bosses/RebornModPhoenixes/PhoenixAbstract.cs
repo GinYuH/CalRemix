@@ -16,10 +16,18 @@ using Terraria.ModLoader.Utilities;
 using tModPorter;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Distortix
+namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
 {
-    public class Distortix : ModNPC
+    public abstract class PhoenixAbstract : ModNPC
     {
+        public virtual int damage => 30;
+        public virtual int defense => 10;
+        public virtual int health => 9000;
+        public virtual int projType => ModContent.ProjectileType<BrimstoneBall>();
+        public virtual int dustType => DustID.Torch;
+
+        public Vector2 targetPos;
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 7;
@@ -50,20 +58,47 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Distortix
             NPC.buffImmune[BuffID.Confused] = true;
         }
 
+        public void ExtraAI()
+        {
+            //Main.NewText("ai 0: " + NPC.ai[0]);
+            //Main.NewText("ai 1: " + NPC.ai[1]);
+            //Main.NewText("ai 2: " + NPC.ai[2]);
+            //Main.NewText("ai 3: " + NPC.ai[3]);
+        }
+
+        public virtual void ShootProjectiles()
+        {
+            Vector2 vector8 = targetPos;
+            float num48 = 50f;
+            int damage = 14;
+            int type = projType;
+            SoundEngine.PlaySound(SoundID.Item17, vector8);
+            float rotation = (float)Math.Atan2(vector8.Y - 80 - (Main.player[NPC.target].position.Y + (Main.player[NPC.target].height * 0.5f)), vector8.X - (Main.player[NPC.target].position.X + (Main.player[NPC.target].width * 0.5f)));
+            int num54 = Projectile.NewProjectile(NPC.GetSource_FromThis(), vector8.X, vector8.Y - 80, (float)((Math.Cos(rotation) * num48) * -1), (float)((Math.Sin(rotation) * num48) * -1), type, damage, 0f, Main.myPlayer);
+            Main.projectile[num54].timeLeft = 300;
+            num54 = Projectile.NewProjectile(NPC.GetSource_FromThis(), vector8.X, vector8.Y - 80, (float)((Math.Cos(rotation + 0.4) * num48) * -1), (float)((Math.Sin(rotation + 0.4) * num48) * -1), type, damage, 0f, Main.myPlayer);
+            Main.projectile[num54].timeLeft = 300;
+            num54 = Projectile.NewProjectile(NPC.GetSource_FromThis(), vector8.X, vector8.Y - 80, (float)((Math.Cos(rotation - 0.4) * num48) * -1), (float)((Math.Sin(rotation - 0.4) * num48) * -1), type, damage, 0f, Main.myPlayer);
+            Main.projectile[num54].timeLeft = 300;
+        }
+
         public override void AI()
         {
             NPC.netUpdate = true;
             NPC.ai[2]++;
             NPC.ai[1]++;
             if (NPC.ai[0] > 0) NPC.ai[0] -= 1.2f;
-            Vector2 vector8 = new Vector2(NPC.position.X + (NPC.width * 0.5f), NPC.position.Y + (NPC.height / 2));
+            targetPos = new Vector2(NPC.position.X + (NPC.width * 0.5f), NPC.position.Y + (NPC.height / 2));
+            Vector2 vector8 = targetPos;
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active || Main.player[NPC.target].position.Y > (Main.maxTilesY - 250) * 16)
             {
                 NPC.TargetClosest(true);
             }
             Color color = new Color();
-            int dust = Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, 6, NPC.velocity.X, NPC.velocity.Y, 200, color, 0.5f + NPC.ai[0] / 75);
+            int dust = Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, dustType, NPC.velocity.X, NPC.velocity.Y, 200, color, 0.5f + NPC.ai[0] / 75);
             Main.dust[dust].noGravity = true;
+
+            ExtraAI();
 
             if (NPC.ai[3] == 0)
             {
@@ -94,17 +129,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Distortix
 
                     if (NPC.ai[1] >= 0 && NPC.ai[2] > 120 && NPC.ai[2] < 600)
                     {
-                        float num48 = 50f;
-                        int damage = 14;
-                        int type = ModContent.ProjectileType<BrimstoneBall>();
-                        SoundEngine.PlaySound(SoundID.Item17, vector8);
-                        float rotation = (float)Math.Atan2(vector8.Y - 80 - (Main.player[NPC.target].position.Y + (Main.player[NPC.target].height * 0.5f)), vector8.X - (Main.player[NPC.target].position.X + (Main.player[NPC.target].width * 0.5f)));
-                        int num54 = Projectile.NewProjectile(NPC.GetSource_FromThis(), vector8.X, vector8.Y - 80, (float)((Math.Cos(rotation) * num48) * -1), (float)((Math.Sin(rotation) * num48) * -1), type, damage, 0f, Main.myPlayer);
-                        Main.projectile[num54].timeLeft = 300;
-                        num54 = Projectile.NewProjectile(NPC.GetSource_FromThis(), vector8.X, vector8.Y - 80, (float)((Math.Cos(rotation + 0.4) * num48) * -1), (float)((Math.Sin(rotation + 0.4) * num48) * -1), type, damage, 0f, Main.myPlayer);
-                        Main.projectile[num54].timeLeft = 300;
-                        num54 = Projectile.NewProjectile(NPC.GetSource_FromThis(), vector8.X, vector8.Y - 80, (float)((Math.Cos(rotation - 0.4) * num48) * -1), (float)((Math.Sin(rotation - 0.4) * num48) * -1), type, damage, 0f, Main.myPlayer);
-                        Main.projectile[num54].timeLeft = 300;
+                        ShootProjectiles();
                         NPC.ai[1] = -90;
                     }
                 }
@@ -156,7 +181,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Distortix
                     NPC.ai[3] = 0;
                     for (int num36 = 0; num36 < 40; num36++)
                     {
-                        Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, 6, 0, 0, 0, color, 3f);
+                        Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, dustType, 0, 0, 0, color, 3f);
                     }
                 }
             }
@@ -169,11 +194,6 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Distortix
                     return;
                 }
             }
-
-            Main.NewText("ai 0: " + NPC.ai[0]);
-            Main.NewText("ai 1: " + NPC.ai[1]);
-            Main.NewText("ai 2: " + NPC.ai[2]);
-            Main.NewText("ai 3: " + NPC.ai[3]);
         }
 
         public override void FindFrame(int frameHeight)
@@ -221,11 +241,11 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Distortix
                 Color color = new Color();
                 for (int num36 = 0; num36 < 50; num36++)
                 {
-                    int dust = Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, 4, 0, 0, 100, color, 3f);
+                    int dust = Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, DustID.TintableDust, 0, 0, 100, color, 3f);
                 }
                 for (int num36 = 0; num36 < 20; num36++)
                 {
-                    int dust = Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, 6, 0, 0, 100, color, 3f);
+                    int dust = Dust.NewDust(new Vector2((float)NPC.position.X, (float)NPC.position.Y), NPC.width, NPC.height, dustType, 0, 0, 100, color, 3f);
                 }
                 NPC.ai[1] = -300;
                 NPC.ai[0] = 0;

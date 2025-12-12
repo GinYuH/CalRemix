@@ -5956,6 +5956,21 @@ Grablerscalibur: {
 		'''
 }
 
+HydrothermalHurl: {
+	DisplayName: Hydrothermal Hurl
+	Tooltip: ""
+}
+
+FlashFreeze: {
+	DisplayName: Flash Freeze
+	Tooltip: ""
+}
+
+BlossomBlast: {
+	DisplayName: Blossom Blast
+	Tooltip: ""
+}
+
 FriendshipPotion: {
 	DisplayName: Potion of Friendship
 	Tooltip: Unleashes the true power of friendship
