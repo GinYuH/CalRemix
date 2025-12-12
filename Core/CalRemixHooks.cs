@@ -48,6 +48,7 @@ using CalRemix.Content.Tiles.Subworlds.Horizon;
 using System.Threading.Tasks.Dataflow;
 using CalRemix.Content.Prefixes;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
+using CalamityMod.NPCs.Cryogen;
 
 namespace CalRemix.Core
 {
@@ -95,7 +96,9 @@ namespace CalRemix.Core
 
             IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
             IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
-            
+            IL.CalamityMod.NPCs.Cryogen.Cryogen.OnKill += DisableCryonic;
+            IL.CalamityMod.NPCs.CalamityGlobalNPC.OnKill += DisablePerennial;
+
             IL_UIWorldCreation.AddWorldSizeOptions += ReplaceWorldSelectionSizeDescriptions;
             //IL_NPC.SpawnNPC += NewSpawnNPC;
 
@@ -131,6 +134,33 @@ namespace CalRemix.Core
         {
             loadStoneHook = null;
             drawHook = null;
+        }
+
+        public static void DisablePerennial(ILContext il)
+        {
+            var cursor = new ILCursor(il);
+            if (!cursor.TryGotoNext(MoveType.After, i => i.MatchLdsfld<NPC>("downedPlantBoss")))
+            {
+                CalRemix.instance.Logger.Error("DisablePerennial: Could not find first downed");
+                return;
+            }
+            if (!cursor.TryGotoNext(MoveType.Before, i => i.MatchLdsfld<NPC>("downedPlantBoss")))
+            {
+                CalRemix.instance.Logger.Error("DisablePerennial: Could not find second downed");
+                return;
+            }
+            cursor.Emit(OpCodes.Ret);
+        }
+
+        public static void DisableCryonic(ILContext il)
+        {
+            var cursor = new ILCursor(il);
+            if (!cursor.TryGotoNext(MoveType.Before, i => i.MatchCallOrCallvirt<CalamityMod.DownedBossSystem>("get_downedCryogen")))
+            {
+                CalRemix.instance.Logger.Error("DisableCryonic: Could not find downed");
+                return;
+            }
+            cursor.Emit(OpCodes.Ret);
         }
 
         public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)
