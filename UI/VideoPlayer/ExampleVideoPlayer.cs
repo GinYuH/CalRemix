@@ -20,9 +20,6 @@ public class ExampleVideoPlayerUI : UIState
     private UITextPanel<string> _stopButton;
     private UITextPanel<string> _closeButton;
 
-    // Test video path (change this to your video)
-    private string _testVideoPath = @"C:\Users\evanm\OneDrive\Documents\My Games\Terraria\tModLoader\ModSources\CalRemix\UI\VideoPlayer\PortedHim.mp4";
-
     public override void OnInitialize()
     {
         // Create main container panel
@@ -116,7 +113,6 @@ public class ExampleVideoPlayerUI : UIState
 
     private void OnCloseClicked(UIMouseEvent evt, UIElement listeningElement)
     {
-        // Close this UI
         ModContent.GetInstance<ExampleVideoUISystem>().HideUI();
     }
 
@@ -124,7 +120,6 @@ public class ExampleVideoPlayerUI : UIState
     {
         base.Update(gameTime);
 
-        // Allow ESC to close
         if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape) &&
             !Main.oldKeyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
         {
@@ -132,7 +127,6 @@ public class ExampleVideoPlayerUI : UIState
         }
     }
 
-    // Clean up when UI is closed
     public void OnClose()
     {
         _videoPlayer?.Stop();
