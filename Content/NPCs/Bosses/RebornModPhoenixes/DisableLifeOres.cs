@@ -49,10 +49,11 @@ using System.Threading.Tasks.Dataflow;
 using CalRemix.Content.Prefixes;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalamityMod.NPCs.Cryogen;
+using CalamityMod.Tiles.Ores;
 
 namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
 {
-    internal class DisableLifeOres : ModSystem
+    internal class DisableCryonicPerennialOres : ModSystem
     {
         public override void Load()
         {
@@ -95,6 +96,33 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
                 return;
             }
             cursor.Next.OpCode = OpCodes.Brtrue;
+        }
+    }
+
+    public class DisableScoriaOre : GlobalTile
+    {
+        public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
+        {
+            if (type == ModContent.TileType<ScoriaOre>())
+                return RemixDowned.downedChaotrix;
+            
+            return base.CanKillTile(i, j, type, ref blockDamaged);
+        }
+
+        public override bool CanExplode(int i, int j, int type)
+        {
+            if (type == ModContent.TileType<ScoriaOre>())
+                return RemixDowned.downedChaotrix;
+
+            return base.CanExplode(i, j, type);
+        }
+
+        public override bool CanReplace(int i, int j, int type, int tileTypeBeingPlaced)
+        {
+            if (type == ModContent.TileType<ScoriaOre>())
+                return RemixDowned.downedChaotrix;
+
+            return base.CanReplace(i, j, type, tileTypeBeingPlaced);
         }
     }
 }
