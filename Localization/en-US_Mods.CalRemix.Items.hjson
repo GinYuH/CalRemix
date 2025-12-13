@@ -5975,3 +5975,13 @@ FriendshipPotion: {
 	DisplayName: Potion of Friendship
 	Tooltip: Unleashes the true power of friendship
 }
+
+VideoTestItem: {
+	DisplayName: Video Test Item
+	Tooltip: ""
+}
+
+VideoPlayerOpenerItem: {
+	DisplayName: Video Player Opener Item
+	Tooltip: ""
+}

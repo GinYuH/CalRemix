@@ -2,13 +2,15 @@ using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Crabulon;
 using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.OldDuke;
 using CalamityMod.NPCs.PlaguebringerGoliath;
-using CalamityMod.NPCs.CeaselessVoid;
+using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.ZAccessories;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Acideye;
@@ -28,7 +30,12 @@ using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.OutboundCompatibility;
 using CalRemix.Core.World;
+using CalRemix.UI;
+using CalRemix.UI.Anomaly109;
 using CalRemix.UI.Title;
+using CalRemix.UI.VideoPlayer;
+using LibVLCSharp.Shared;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,10 +47,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using CalRemix.UI.Anomaly109;
-using CalRemix.Content.Items.Weapons;
-using CalRemix.UI;
-using CalRemix.Content.Buffs;
 
 namespace CalRemix
 {
@@ -80,6 +83,9 @@ namespace CalRemix
             TileID.Gold,
             TileID.Platinum
         };
+
+        public static LibVLC LibVLCInstance { get; private set; }
+
         // Defer mod call handling to the extraneous mod call manager.
         public override object Call(params object[] args) => ModCallManager.Call(args);
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -209,12 +215,18 @@ namespace CalRemix
         {
             instance = this;
             PlagueGlobalNPC.PlagueHelper = new PlagueJungleHelper();
+
+            if (!Main.dedServ)
+                SetupLibVLC();
         }
 
         public override void Unload()
         {
             instance = null;
             PlagueGlobalNPC.PlagueHelper = null;
+
+            LibVLCInstance?.Dispose();
+            LibVLCInstance = null;
         }
         public override void PostSetupContent()
         {
@@ -288,6 +300,33 @@ namespace CalRemix
                 return;
             if (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName is null || menu.FullName is null)
                 return;
+        }
+        private static void SetupLibVLC()
+        {
+            VideoPlayerUIElement.Background = Request<Texture2D>("CalamityMod/ExtraTextures/Pixel");
+
+            string vlcPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"My Games", "Terraria", "tModLoader", "VideoPlayerLibs");
+
+            try
+            {
+
+                LibVLCSharp.Shared.Core.Initialize(vlcPath);
+
+                LibVLCInstance = new LibVLC(
+                [
+                    "--no-video-title-show",
+                    "--quiet",
+                    "--no-stats"
+                ]);
+
+                instance.Logger.Info("LibVLC initialized successfully!");
+                instance.Logger.Info($"LibVLC version: {LibVLCInstance.Version}");
+            }
+            catch (Exception ex)
+            {
+                instance.Logger.Error($"Failed to initialize LibVLC: {ex.Message}");
+                instance.Logger.Error($"Stack trace: {ex.StackTrace}");
+            }
         }
 
         internal void AddEnchantments(Mod cal)

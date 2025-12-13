@@ -1,7 +1,7 @@
 displayName = Calamity: Community Remix
 author = Fanny the Flame
 version = 1.3.8
-dllReferences = MMHOOK_CalamityMod, TomatsSecretAwesomeStuff
+dllReferences = MMHOOK_CalamityMod, TomatsSecretAwesomeStuff, LibVLCSharp, YoutubeExplode, AngleSharp, Microsoft.Bcl.AsyncInterfaces, System.Linq.Async, System.Text.Json, System.IO.Pipelines, System.Text.Encodings.Web
 modReferences = CalamityMod, SubworldLibrary
 loadAfter = CalamityMod, CalValEX
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, TomatsSecretAwesomeStuff\*, *.sln
