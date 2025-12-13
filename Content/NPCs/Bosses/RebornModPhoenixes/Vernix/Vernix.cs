@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalamityMod.Tiles.Ores;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Lore;
@@ -9,6 +10,8 @@ using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes;
 using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +30,17 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix
         public override int health => 90000;
         public override int projType => ModContent.ProjectileType<PerennialFlowerMine>();
         public override int dustType => DustID.JungleSpore;
-        public override int invulThreshold => 4000;
+
+        public override void OnKill()
+        {
+            RemixDowned.downedVernix = true;
+
+            CalamityUtils.SpawnOre(ModContent.TileType<PerennialOre>(), 12E-05, 0.65f, 0.85f, 5, 10, TileID.Dirt, TileID.Stone);
+
+            string key = "Mods.CalamityMod.Status.Progression.PlantOreText";
+            Color messageColor = Color.GreenYellow;
+            CalamityUtils.DisplayLocalizedText(key, messageColor);
+        }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
