@@ -705,16 +705,8 @@ namespace CalRemix.Core.World
                 worldFullyStarted = true;
             if (!loadedRecipeInjections)
             {
-                if (reargar)
-                {
-                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-                }
                 if (frontgar)
                 {
-                    RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
                     RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
                 }
                 if (cosmislag)
@@ -1104,30 +1096,14 @@ namespace CalRemix.Core.World
             }
             else
             {
-                if (npcType == ItemType<SulphurousCrate>())
-                {
-                    // dude i fucking FUCKING LOATHE drop code
-                    var postDuke = new LeadingConditionRule(DropHelper.PostOD());
-                    postDuke.Add(ItemType<ReaperTooth>(), 10, 1, 5);
-                    var postPolter = new LeadingConditionRule(DropHelper.PostPolter()).OnSuccess(postDuke);
-                    Main.ItemDropsDB.RegisterToItem(npcType, postPolter);
-                }
-                if (npcType == ItemID.JungleFishingCrate)
-                {
-                    var postDuke = new LeadingConditionRule(DropHelper.PostProv());
-                    postDuke.Add(ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>(), 5, 16, 28);
-                    postDuke.Add(ItemType<CalamityMod.Items.Materials.UelibloomBar>(), new Fraction(15, 100), 4, 7);
-                    Main.ItemDropsDB.RegisterToItem(npcType, postDuke);
-                    Main.ItemDropsDB.RegisterToItem(ItemID.JungleFishingCrateHard, postDuke);
-                }
             }
         }
         public static void RemoveLoot(int bagType, int itemToRemove, bool npc = false)
         {
-            List<IItemDropRule> JungleCrateDrops = npc ? Main.ItemDropsDB.GetRulesForNPCID(bagType) : Main.ItemDropsDB.GetRulesForItemID(bagType);
-            for (int i = 0; i < JungleCrateDrops.Count; i++)
+            List<IItemDropRule> lootRules = npc ? Main.ItemDropsDB.GetRulesForNPCID(bagType) : Main.ItemDropsDB.GetRulesForItemID(bagType);
+            for (int i = 0; i < lootRules.Count; i++)
             {
-                if (JungleCrateDrops[i] is LeadingConditionRule lead)
+                if (lootRules[i] is LeadingConditionRule lead)
                 {
                     for (int j = 0; j < lead.ChainedRules.Count; j++)
                     {
