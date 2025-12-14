@@ -303,8 +303,6 @@ namespace CalRemix
         }
         private static void SetupLibVLC()
         {
-            VideoPlayerUIElement.Background = Request<Texture2D>("CalamityMod/ExtraTextures/Pixel");
-
             string vlcPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"My Games", "Terraria", "tModLoader", "VideoPlayerLibs");
 
             try

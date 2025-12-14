@@ -20,7 +20,6 @@ public class VideoPlayerUIElement : UIElement, IDisposable
     private Media _currentMedia;
     private VideoFrameHandler _frameHandler;
     private Texture2D _videoTexture;
-    public static Asset<Texture2D> Background;
 
     // Video dimensions
     private int _videoWidth;
@@ -29,13 +28,17 @@ public class VideoPlayerUIElement : UIElement, IDisposable
     // Playback state
     private bool _isInitialized;
     private bool _isPlaying;
+    private bool _isPaused;
     private string _currentVideoPath;
 
     // Display settings
     private bool _maintainAspectRatio = true;
     private Color _backgroundColor = Color.Black;
 
-    private bool _isDisposed = false;
+    // Session and request tracking
+    private Guid _sessionId = Guid.NewGuid();
+    private Guid _currentRequestId;
+    internal bool _isDisposed = false;
 
     /// <summary>
     /// Creates a new video player with specified dimensions.
@@ -88,7 +91,7 @@ public class VideoPlayerUIElement : UIElement, IDisposable
 
             _isInitialized = true;
 
-            CalRemix.instance.Logger.Info("VideoPlayerUIElement initialized successfully");
+            CalRemix.instance.Logger.Info($"VideoPlayerUIElement initialized successfully (session {_sessionId})");
         }
         catch (Exception ex)
         {
@@ -108,25 +111,51 @@ public class VideoPlayerUIElement : UIElement, IDisposable
     {
         if (_isDisposed) return;
 
+        CalRemix.instance.Logger.Info($"Disposing VideoPlayerUIElement (session {_sessionId})");
+
         if (disposing)
         {
+            // Cancel any pending request for this player
+            VideoUrlHelper.CancelRequest(_currentRequestId);
+
             if (_mediaPlayer != null)
             {
-                _mediaPlayer.Stop();
-                _mediaPlayer.Dispose();
+                _mediaPlayer.Playing -= OnPlaying;
+                _mediaPlayer.Paused -= OnPaused;
+                _mediaPlayer.Stopped -= OnStopped;
+                _mediaPlayer.EndReached -= OnEndReached;
+                _mediaPlayer.EncounteredError -= OnError;
+
+                try
+                {
+                    _mediaPlayer.Stop();
+                    _mediaPlayer.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    CalRemix.instance.Logger.Error($"Error disposing media player: {ex.Message}");
+                }
                 _mediaPlayer = null;
             }
+
             _currentMedia?.Dispose();
             _currentMedia = null;
+
+            _frameHandler?.Dispose();
             _frameHandler = null;
+
             _videoTexture?.Dispose();
             _videoTexture = null;
         }
 
+        _sessionId = Guid.Empty;
         _isDisposed = true;
         _isInitialized = false;
+        _isPlaying = false;
+        _isPaused = false;
+        _currentVideoPath = null;
 
-        CalRemix.instance.Logger.Info("VideoPlayerUIElement disposed.");
+        CalRemix.instance.Logger.Info("VideoPlayerUIElement disposed successfully.");
     }
 
     #region Playback Control
@@ -146,6 +175,9 @@ public class VideoPlayerUIElement : UIElement, IDisposable
 
         try
         {
+            // Cancel any pending request
+            VideoUrlHelper.CancelRequest(_currentRequestId);
+
             _videoTexture?.Dispose();
             _videoTexture = null;
 
@@ -174,18 +206,35 @@ public class VideoPlayerUIElement : UIElement, IDisposable
             return;
         }
 
+        // Cancel any previous request
+        VideoUrlHelper.CancelRequest(_currentRequestId);
+
+        // Generate a new request ID for this playback attempt
+        _currentRequestId = Guid.NewGuid();
+        var requestId = _currentRequestId;
+        var sessionId = _sessionId;
+
+        CalRemix.instance.Logger.Info($"Starting YouTube request {requestId} for session {sessionId}");
+
         VideoUrlHelper.ProcessUrlAsync(url, (processedUrl) =>
         {
-            if (_isDisposed)
-            {
-                CalRemix.instance.Logger.Info("Ignoring YouTube callback because the player UI was closed/disposed.");
-                return; // Exit the callback entirely
-            }
+            // Log the callback
+            CalRemix.instance.Logger.Info($"YouTube callback for session {sessionId}, request {requestId}");
 
             Main.QueueMainThreadAction(() =>
             {
-                if (_mediaPlayer == null || !_isInitialized || _isDisposed)
-                    return; // Player was closed, do nothing
+                // Check if this callback is for a different session or request
+                if (_sessionId != sessionId || _currentRequestId != requestId)
+                {
+                    CalRemix.instance.Logger.Info($"Ignoring stale callback. Current session: {_sessionId}, request: {_currentRequestId}. Callback session: {sessionId}, request: {requestId}");
+                    return;
+                }
+
+                if (_isDisposed)
+                {
+                    CalRemix.instance.Logger.Info($"Callback for disposed player (session {sessionId})");
+                    return;
+                }
 
                 if (processedUrl == null)
                 {
@@ -211,7 +260,7 @@ public class VideoPlayerUIElement : UIElement, IDisposable
                     Main.NewText($"Failed to play URL: {ex.Message}", Color.Red);
                 }
             });
-        });
+        }, requestId);
     }
 
     /// <summary>
@@ -235,6 +284,9 @@ public class VideoPlayerUIElement : UIElement, IDisposable
     /// </summary>
     public void Stop()
     {
+        // Cancel any pending request
+        VideoUrlHelper.CancelRequest(_currentRequestId);
+
         _mediaPlayer?.Stop();
         _videoTexture?.Dispose();
         _videoTexture = null;
@@ -278,6 +330,7 @@ public class VideoPlayerUIElement : UIElement, IDisposable
     #region Getters
 
     public bool IsPlaying => _isPlaying;
+    public bool IsPaused => _isPaused;
     public bool IsInitialized => _isInitialized;
     public string CurrentVideoPath => _currentVideoPath;
 
@@ -332,31 +385,24 @@ public class VideoPlayerUIElement : UIElement, IDisposable
     private void OnPlaying(object sender, EventArgs e)
     {
         _isPlaying = true;
+        _isPaused = false;
     }
 
     private void OnPaused(object sender, EventArgs e)
     {
-        
+        _isPaused = true;
     }
 
     private void OnStopped(object sender, EventArgs e)
     {
         _isPlaying = false;
-
-        _videoTexture?.Dispose();
-        _videoTexture = null;
-
-        _currentMedia?.Dispose();
+        _isPaused = false;
     }
 
     private void OnEndReached(object sender, EventArgs e)
     {
         _isPlaying = false;
-
-        _videoTexture?.Dispose();
-        _videoTexture = null;
-
-        _currentMedia?.Dispose();
+        _isPaused = false;
     }
 
     private void OnError(object sender, EventArgs e)
@@ -387,7 +433,11 @@ public class VideoPlayerUIElement : UIElement, IDisposable
 
     private void UpdateTexture(byte[] rgbaData)
     {
-        _videoTexture ??= new Texture2D(Main.graphics.GraphicsDevice, _videoWidth, _videoHeight);
+        if (_videoTexture == null || _videoTexture.Width != _videoWidth || _videoTexture.Height != _videoHeight)
+        {
+            _videoTexture?.Dispose();
+            _videoTexture = new Texture2D(Main.graphics.GraphicsDevice, _videoWidth, _videoHeight);
+        }
 
         try
         {
@@ -396,6 +446,7 @@ public class VideoPlayerUIElement : UIElement, IDisposable
         catch (Exception ex)
         {
             Main.NewText($"Failed to update video texture: {ex.Message}", Color.Red);
+            CalRemix.instance.Logger.Error($"Texture update failed: {ex.Message}");
         }
     }
 
@@ -405,7 +456,7 @@ public class VideoPlayerUIElement : UIElement, IDisposable
         Rectangle drawArea = dimensions.ToRectangle();
 
         // Draw background
-        spriteBatch.Draw(Background.Value, drawArea, _backgroundColor);
+        spriteBatch.Draw(ExampleVideoUISystem.Background.Value, drawArea, _backgroundColor);
 
         // Draw video if available and playing
         if (_videoTexture != null && _isPlaying)
@@ -446,34 +497,6 @@ public class VideoPlayerUIElement : UIElement, IDisposable
         int y = containerRect.Y + (containerRect.Height - drawHeight) / 2;
 
         return new Rectangle(x, y, drawWidth, drawHeight);
-    }
-
-    #endregion
-
-    #region Cleanup
-
-    /// <summary>
-    /// Clean up resources. Call this when removing the element.
-    /// </summary>
-    public void RemoveCleanup()
-    {
-        _mediaPlayer?.Stop();
-
-        if (_mediaPlayer != null)
-        {
-            _mediaPlayer.Playing -= OnPlaying;
-            _mediaPlayer.Paused -= OnPaused;
-            _mediaPlayer.Stopped -= OnStopped;
-            _mediaPlayer.EndReached -= OnEndReached;
-            _mediaPlayer.EncounteredError -= OnError;
-        }
-
-        _currentMedia?.Dispose();
-        _mediaPlayer?.Dispose();
-        _videoTexture?.Dispose();
-        _frameHandler?.Dispose();
-
-        _isInitialized = false;
     }
 
     #endregion
