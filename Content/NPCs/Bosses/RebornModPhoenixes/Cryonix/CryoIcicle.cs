@@ -11,10 +11,10 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix
         {
             Projectile.aiStyle = 0;
             Projectile.hostile = true;
-            Projectile.height = 46;
+            Projectile.height = 64;
             Projectile.penetrate = 50;
             Projectile.tileCollide = false;
-            Projectile.width = 48;
+            Projectile.width = 64;
             Projectile.timeLeft = 480;
             //killPretendType=15   uhhhmmmm documentation says this controls what happens on death but im too lazy to copy it
         }
@@ -23,7 +23,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix
         {
             Projectile.velocity = Projectile.velocity.ClampMagnitude(-20, 20);
             Projectile.rotation += Projectile.velocity.X * 0.05f;
-            Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.Pi / 2;
         }
 
         public override void OnKill(int timeLeft)
