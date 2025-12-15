@@ -22,7 +22,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix
     {
         public override int damage => 64;
         public override int defense => 40;
-        public override int health => 20000;
+        public override int health => 30000;
         public override int projType => ModContent.ProjectileType<CryoIcicle>();
         public override int dustType => DustID.Frost;
 
