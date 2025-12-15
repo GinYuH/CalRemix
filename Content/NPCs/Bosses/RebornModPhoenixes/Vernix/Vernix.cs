@@ -27,7 +27,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix
     {
         public override int damage => 90;
         public override int defense => 40;
-        public override int health => 90000;
+        public override int health => 75000;
         public override int projType => ModContent.ProjectileType<PerennialFlowerMine>();
         public override int dustType => DustID.JungleSpore;
 

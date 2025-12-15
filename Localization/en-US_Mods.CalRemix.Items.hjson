@@ -5975,3 +5975,13 @@ FriendshipPotion: {
 	DisplayName: Potion of Friendship
 	Tooltip: Unleashes the true power of friendship
 }
+
+FabergéEgg: {
+	DisplayName: Fabergé Egg
+	Tooltip:
+		'''
+		An ancient egg laid by the Fabergé Hen of Aerospec
+		When used in different areas, it may summon unique foes...
+		These foes may be related to the acquisition of Cryonic, Perennial, and Scoria Ore...
+		'''
+}

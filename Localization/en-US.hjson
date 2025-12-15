@@ -476,5 +476,17 @@ Mods: {
 			LessArrow: less
 			FolvsPrefix.DisplayName: Folv's
 		}
+
+		"Use a [i:CalRemix/FabergéEgg] in the Tundra": Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Tundra
+
+		"Use a [i:CalRemix/FabergéEgg] in the Jungle": {
+			$parentVal: Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Jungle
+			"": Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Jungle.
+		}
+
+		"Use a [i:CalRemix/FabergéEgg] in the Abyss": {
+			$parentVal: Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Abyss
+			"": Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Abyss.
+		}
 	}
 }

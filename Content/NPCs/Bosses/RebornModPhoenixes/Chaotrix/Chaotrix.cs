@@ -16,9 +16,9 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Chaotrix
 {
     public class Chaotrix : PhoenixAbstract
     {
-        public override int damage => 30;
-        public override int defense => 10;
-        public override int health => 9000;
+        public override int damage => 100;
+        public override int defense => 50;
+        public override int health => 90000;
         public override int projType => ModContent.ProjectileType<FireWaveBomb>();
         public override int dustType => DustID.Torch;
 
