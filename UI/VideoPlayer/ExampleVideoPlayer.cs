@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalRemix.Core.VideoPlayer;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
@@ -32,8 +33,8 @@ public class ExampleVideoPlayerUI : UIState
     private UITextPanel<string> _closeButton;
 
     // Timeline elements
-    private TimelineBar _timelineBar;
-    private TimelineProgress _timelineProgress;
+    private UIRectangle _timelineBar;
+    private UIRectangle _timelineProgress;
     private DraggableTimelineScrubber _timelineScrubber;
     private UIText _currentTimeText;
     private UIText _totalTimeText;
@@ -62,6 +63,19 @@ public class ExampleVideoPlayerUI : UIState
         _mainPanel.HAlign = 0.5f;
         _mainPanel.VAlign = 0.5f;
         _mainPanel.BackgroundColor = new Color(33, 43, 79) * 0.9f;
+
+        _mainPanel.ShouldDrag = () => {
+            if (_timelinePanel != null && _timelinePanel.IsMouseHovering) return false;
+            if (_resizeHandle != null && _resizeHandle.IsMouseHovering) return false;
+            if (_urlInput != null && _urlInput.IsMouseHovering) return false;
+            if (_loadButton != null && _loadButton.IsMouseHovering) return false;
+            if (_playButton != null && _playButton.IsMouseHovering) return false;
+            if (_pauseButton != null && _pauseButton.IsMouseHovering) return false;
+            if (_stopButton != null && _stopButton.IsMouseHovering) return false;
+            if (_closeButton != null && _closeButton.IsMouseHovering) return false;
+            return true;
+        };
+
         Append(_mainPanel);
 
         SetupURLPanel();
@@ -88,7 +102,7 @@ public class ExampleVideoPlayerUI : UIState
         _urlLabel.Top.Set(15, 0f);
         _urlPanel.Append(_urlLabel);
 
-        _urlInput = new CustomTextInput(500);
+        _urlInput = new CustomTextInput(500, "Enter URL...");
         _urlInput.Width.Set(-130, 1f);
         _urlInput.Height.Set(30, 0f);
         _urlInput.Left.Set(50, 0f);
@@ -123,7 +137,6 @@ public class ExampleVideoPlayerUI : UIState
         _timelinePanel.HAlign = 0.5f;
         _timelinePanel.Top.Set(-130, 1f);
         _timelinePanel.BackgroundColor = new Color(25, 33, 63);
-        _mainPanel.Append(_timelinePanel);
 
         // Current time
         _currentTimeText = new UIText("0:00", 0.8f);
@@ -132,7 +145,7 @@ public class ExampleVideoPlayerUI : UIState
         _timelinePanel.Append(_currentTimeText);
 
         // Timeline bar
-        _timelineBar = new TimelineBar();
+        _timelineBar = new UIRectangle(Color.Gray * 0.5f);
         _timelineBar.Width.Set(-120, 1f);
         _timelineBar.Height.Set(10, 0f);
         _timelineBar.Left.Set(60, 0f);
@@ -141,7 +154,7 @@ public class ExampleVideoPlayerUI : UIState
         _timelinePanel.Append(_timelineBar);
 
         // Progress bar - using custom element
-        _timelineProgress = new TimelineProgress();
+        _timelineProgress = new UIRectangle(Color.Blue);
         _timelineProgress.Width.Set(0, 0f);
         _timelineProgress.Height.Set(0, 1f);
         _timelineBar.Append(_timelineProgress);
@@ -232,21 +245,14 @@ public class ExampleVideoPlayerUI : UIState
 
     private void OnLoadClicked(UIMouseEvent evt, UIElement listeningElement)
     {
-        string url = _urlInput.Text;
-        if (string.IsNullOrWhiteSpace(url))
+        string input = _urlInput.Text;
+        if (string.IsNullOrWhiteSpace(input))
         {
-            Main.NewText("Please enter a URL!", Color.Orange);
+            Main.NewText("Please enter something to play!", Color.Orange);
             return;
         }
 
-        if (url.Contains("youtube.com") || url.Contains("youtu.be"))
-        {
-            _videoPlayer.PlayUrl(url);
-        }
-        else
-        {
-            _videoPlayer.PlayVideo(url);
-        }
+        _videoPlayer.Play(input);
     }
 
     private void OnPlayClicked(UIMouseEvent evt, UIElement listeningElement)
@@ -257,21 +263,14 @@ public class ExampleVideoPlayerUI : UIState
         }
         else if (!_videoPlayer.IsPlaying)
         {
-            string url = _urlInput.Text;
-            if (!string.IsNullOrWhiteSpace(url))
+            string input = _urlInput.Text;
+            if (!string.IsNullOrWhiteSpace(input))
             {
-                if (url.Contains("youtube.com") || url.Contains("youtu.be"))
-                {
-                    _videoPlayer.PlayUrl(url);
-                }
-                else
-                {
-                    _videoPlayer.PlayVideo(url);
-                }
+                _videoPlayer.Play(input);
             }
             else
             {
-                Main.NewText("Please enter a URL first!", Color.Orange);
+                Main.NewText("Please enter something to play!", Color.Orange);
             }
         }
     }
@@ -402,17 +401,20 @@ public class DraggableUIPanel : UIPanel
 {
     private Vector2 offset;
     private bool dragging;
+    public Func<bool> ShouldDrag;
 
     public override void LeftMouseDown(UIMouseEvent evt)
     {
         base.LeftMouseDown(evt);
-        DragStart(evt);
+        if (ShouldDrag == null || ShouldDrag())
+            DragStart(evt);
     }
 
     public override void LeftMouseUp(UIMouseEvent evt)
     {
         base.LeftMouseUp(evt);
-        DragEnd(evt);
+        if (dragging)
+            DragEnd(evt);
     }
 
     private void DragStart(UIMouseEvent evt)
@@ -527,6 +529,8 @@ public class ResizeHandle : UIPanel
 public class DraggableTimelineScrubber(VideoPlayerUIElement player) : UIElement
 {
     private bool _dragging;
+    private float _lastSeekPosition = -1f;
+    private const float SEEK_THRESHOLD = 0.005f;
 
     public override void LeftMouseDown(UIMouseEvent evt)
     {
@@ -550,7 +554,16 @@ public class DraggableTimelineScrubber(VideoPlayerUIElement player) : UIElement
             float relativeX = Main.mouseX - parentDims.X;
             float percentage = Math.Clamp(relativeX / parentDims.Width, 0f, 1f);
 
-            player.Seek(percentage);
+            // Only seek if position changed significantly
+            if (Math.Abs(percentage - _lastSeekPosition) > SEEK_THRESHOLD)
+            {
+                player.Seek(percentage);
+                _lastSeekPosition = percentage;
+            }
+        }
+        else if (!_dragging)
+        {
+            _lastSeekPosition = -1f;
         }
 
         if (IsMouseHovering)
@@ -566,24 +579,13 @@ public class DraggableTimelineScrubber(VideoPlayerUIElement player) : UIElement
     }
 }
 
-public class TimelineBar : UIElement
-{
-    protected override void DrawSelf(SpriteBatch spriteBatch)
-    {
-        CalculatedStyle dimensions = GetDimensions();
-        spriteBatch.Draw(ExampleVideoUISystem.Background.Value, dimensions.ToRectangle(), Color.Gray * 0.5f);
-    }
-}
-
-public class TimelineProgress : UIElement
+public class UIRectangle(Color Color) : UIElement
 {
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         CalculatedStyle dimensions = GetDimensions();
         if (dimensions.Width > 0 && dimensions.Height > 0)
-        {
-            spriteBatch.Draw(ExampleVideoUISystem.Background.Value, dimensions.ToRectangle(), Color.Blue);
-        }
+            spriteBatch.Draw(ExampleVideoUISystem.Background.Value, dimensions.ToRectangle(), Color);
     }
 }
 
@@ -595,9 +597,9 @@ public class CustomTextInput : UIPanel
     public string Text = "";
     internal bool _active = false;
     private readonly int _maxLength = 100;
-    private readonly string _placeholder = "Enter URL...";
+    private readonly string _placeholder = "Enter text...";
 
-    public CustomTextInput(int maxLength = 100, string placeholder = "Enter URL...")
+    public CustomTextInput(int maxLength = 100, string placeholder = "Enter text...")
     {
         _maxLength = maxLength;
         _placeholder = placeholder;

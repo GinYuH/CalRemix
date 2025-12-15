@@ -5985,3 +5985,8 @@ VideoPlayerOpenerItem: {
 	DisplayName: Video Player Opener Item
 	Tooltip: ""
 }
+
+FlatscreenTVItem: {
+	DisplayName: Flatscreen T V Item
+	Tooltip: ""
+}
