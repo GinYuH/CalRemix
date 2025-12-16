@@ -40,6 +40,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
@@ -85,6 +86,7 @@ namespace CalRemix
         };
 
         public static LibVLC LibVLCInstance { get; private set; }
+        private static bool _coreInitialized = false;
 
         // Defer mod call handling to the extraneous mod call manager.
         public override object Call(params object[] args) => ModCallManager.Call(args);
@@ -227,7 +229,9 @@ namespace CalRemix
 
             LibVLCInstance?.Dispose();
             LibVLCInstance = null;
+            _coreInitialized = false;
         }
+
         public override void PostSetupContent()
         {
             // Calamity Calls
@@ -301,29 +305,60 @@ namespace CalRemix
             if (((ModMenu)typeof(MenuLoader).GetField("switchToMenu", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null)).FullName is null || menu.FullName is null)
                 return;
         }
+
         private static void SetupLibVLC()
         {
-            string vlcPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"My Games", "Terraria", "tModLoader", "VideoPlayerLibs");
+            if (_coreInitialized)
+                return;
+
+            string vlcPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                                          "My Games", "Terraria", "tModLoader", "VideoPlayerLibs");
 
             try
             {
-
                 LibVLCSharp.Shared.Core.Initialize(vlcPath);
+                _coreInitialized = true;
 
-                LibVLCInstance = new LibVLC(
-                [
-                    "--no-video-title-show",
-                    "--quiet",
-                    "--no-stats"
-                ]);
+                string[] args = new string[]
+                {
+                    "--no-quiet", // Keep LibVLC logs for now, helpful for debugging
+                    "--network-caching=1000",
+                    "--file-caching=1000",
+                    "--avcodec-fast",
+                    "--aout=directsound,waveout,mmdevice",
+                };
+
+                LibVLCInstance = new LibVLC(args);
 
                 instance.Logger.Info("LibVLC initialized successfully!");
                 instance.Logger.Info($"LibVLC version: {LibVLCInstance.Version}");
+
+                LogAudioCapabilities();
             }
             catch (Exception ex)
             {
                 instance.Logger.Error($"Failed to initialize LibVLC: {ex.Message}");
                 instance.Logger.Error($"Stack trace: {ex.StackTrace}");
+            }
+        }
+
+        private static void LogAudioCapabilities()
+        {
+            try
+            {
+                var audioOutputs = LibVLCInstance.AudioOutputs;
+                instance.Logger.Info($"Available audio outputs: {audioOutputs.Count}");
+
+                foreach (var output in audioOutputs)
+                {
+                    instance.Logger.Info($"  - {output.Name}");
+                    instance.Logger.Info($"    Description: {output.Description}");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                instance.Logger.Warn($"Could not log audio capabilities: {ex.Message}");
             }
         }
 

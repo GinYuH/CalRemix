@@ -1,5 +1,6 @@
 ﻿using CalRemix.Content.Tiles.TVs;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,116 +9,165 @@ using Terraria.ModLoader;
 namespace CalRemix.Core.VideoPlayer;
 
 /// <summary>
-/// Centralized TV volume management to avoid per-tile calculations.
+/// Manages volume for shared channels with spatial audio.
+/// For each channel, finds the closest TV and sets the channel's volume based on that distance.
+/// TVs on different channels play independently.
 /// </summary>
 public class TVVolumeManager : ModSystem
 {
-    private struct TVInfo
-    {
-        public Point16 Position;
-        public Point TileSize;
-        public TVTileEntity Entity;
-    }
-
-    private List<TVInfo> _activeTVs = [];
-    private const int UPDATE_INTERVAL = 5;
-    private int _frameCounter = 0;
-
     // Distance settings
     private const float MAX_HEARING_DISTANCE = 800f;
     private const float FULL_VOLUME_DISTANCE = 150f;
-    private const float MAX_HEARING_DISTANCE_SQ = MAX_HEARING_DISTANCE * MAX_HEARING_DISTANCE;
-    private const float FULL_VOLUME_DISTANCE_SQ = FULL_VOLUME_DISTANCE * FULL_VOLUME_DISTANCE;
+
+    // Performance optimization
+    private int _frameCounter = 0;
+    private const int UPDATE_INTERVAL = 2;
 
     public override void PostUpdateEverything()
     {
         _frameCounter++;
-        if (_frameCounter < UPDATE_INTERVAL)
+        if (_frameCounter % UPDATE_INTERVAL != 0)
             return;
-        _frameCounter = 0;
 
-        _activeTVs.Clear();
+        Player localPlayer = Main.LocalPlayer;
+        if (!localPlayer.active || Main.gameMenu)
+            return;
+
+        UpdateChannelVolumes(localPlayer);
+    }
+
+    /// <summary>
+    /// Update volume for each channel based on the closest TV to the player.
+    /// </summary>
+    private void UpdateChannelVolumes(Player player)
+    {
+        var manager = ModContent.GetInstance<VideoChannelManager>();
+        if (manager == null) return;
+
+        // Group TVs by channel and find closest TV per channel
+        var channelClosestTV = new Dictionary<int, (TVTileEntity TV, float Distance, int TargetVolume)>();
 
         foreach (var kvp in TileEntity.ByID)
         {
-            if (kvp.Value is TVTileEntity tvEntity)
-            {
-                var player = tvEntity.GetVideoPlayer();
-                if (player != null && player.IsPlaying)
-                {
-                    if (TVTileEntity.TileData.TryGetValue(Main.tile[tvEntity.Position.X, tvEntity.Position.Y].TileType, out var tileInfo))
-                    {
-                        _activeTVs.Add(new TVInfo
-                        {
-                            Position = tvEntity.Position,
-                            TileSize = tileInfo.TileSize,
-                            Entity = tvEntity
-                        });
-                    }
-                }
-            }
-        }
-
-        if (_activeTVs.Count == 0)
-            return;
-
-        Player closestPlayer = null;
-        float closestDistanceSq = float.MaxValue;
-
-        foreach (Player p in Main.player)
-        {
-            if (!p.active)
+            if (kvp.Value is not TVTileEntity tvEntity || !tvEntity.IsOn)
                 continue;
 
-            float dx = p.Center.X - Main.LocalPlayer.Center.X;
-            float dy = p.Center.Y - Main.LocalPlayer.Center.Y;
-            float distSq = dx * dx + dy * dy;
+            int channelId = tvEntity.CurrentChannel;
 
-            if (distSq < closestDistanceSq)
+            // Calculate distance to this TV
+            Vector2 tvCenter = GetTVCenter(tvEntity);
+            float distance = Vector2.Distance(player.Center, tvCenter);
+
+            // Calculate what volume this TV would want
+            int distanceVolume = CalculateVolumeFromDistance(distance);
+            int targetVolume = (int)(distanceVolume * (tvEntity.Volume / 100f));
+            targetVolume = Math.Clamp(targetVolume, 0, 100);
+
+            // Is this the closest TV on this channel?
+            if (!channelClosestTV.ContainsKey(channelId) ||
+                distance < channelClosestTV[channelId].Distance)
             {
-                closestDistanceSq = distSq;
-                closestPlayer = p;
+                channelClosestTV[channelId] = (tvEntity, distance, targetVolume);
             }
         }
 
-        if (closestPlayer == null)
-            return;
-
-        foreach (var tv in _activeTVs)
+        // Now set volume for each channel based on its closest TV
+        foreach (var kvp in channelClosestTV)
         {
-            Vector2 tvCenter = new Vector2(
-                (tv.Position.X + tv.TileSize.X / 2f) * 16f,
-                (tv.Position.Y + tv.TileSize.Y / 2f) * 16f
-            );
+            int channelId = kvp.Key;
+            var (closestTV, distance, targetVolume) = kvp.Value;
 
-            float dx = closestPlayer.Center.X - tvCenter.X;
-            float dy = closestPlayer.Center.Y - tvCenter.Y;
-            float distanceSq = dx * dx + dy * dy;
+            var channelPlayer = manager.GetChannelPlayer(channelId);
+            if (channelPlayer == null || !channelPlayer.IsPlaying)
+                continue;
 
-            int volume = CalculateVolumeFromDistanceSq(distanceSq);
+            int currentVolume = channelPlayer.GetVolume();
 
-            tv.Entity.GetVideoPlayer()?.SetVolume(volume);
+            // Apply smoothing
+            int smoothedVolume = (int)(currentVolume * 0.7f + targetVolume * 0.3f);
+
+            // Only update if change is significant
+            if (Math.Abs(smoothedVolume - currentVolume) > 2)
+            {
+                channelPlayer.SetVolume(smoothedVolume);
+
+                // Debug info
+                if (_frameCounter % 120 == 0 && smoothedVolume > 0)
+                {
+                    CalRemix.instance.Logger.Debug(
+                        $"Channel {channelId}: Volume {smoothedVolume}% " +
+                        $"(closest TV at {distance:F0} units)"
+                    );
+                }
+            }
+
+            // Handle mute state
+            if (targetVolume > 0)
+            {
+                channelPlayer.SetMute(false);
+            }
+            else if (targetVolume == 0)
+            {
+                channelPlayer.SetMute(true);
+            }
+        }
+
+        // Mute any channels that have no active TVs
+        for (int channelId = VideoChannelManager.MIN_CHANNEL;
+             channelId <= VideoChannelManager.MAX_CHANNEL;
+             channelId++)
+        {
+            if (!channelClosestTV.ContainsKey(channelId))
+            {
+                var channelPlayer = manager.GetChannelPlayer(channelId);
+                if (channelPlayer != null && channelPlayer.IsPlaying)
+                {
+                    channelPlayer.SetMute(true);
+                }
+            }
         }
     }
 
     /// <summary>
-    /// Calculate volume using squared distance.
+    /// Get the world center position of a TV.
     /// </summary>
-    private static int CalculateVolumeFromDistanceSq(float distanceSq)
+    private static Vector2 GetTVCenter(TVTileEntity tvEntity)
     {
-        if (distanceSq <= FULL_VOLUME_DISTANCE_SQ)
+        if (TVTileEntity.TileData.TryGetValue(
+            Main.tile[tvEntity.Position.X, tvEntity.Position.Y].TileType,
+            out var tileInfo))
+        {
+            return new Vector2(
+                (tvEntity.Position.X + tileInfo.TileSize.X / 2f) * 16f,
+                (tvEntity.Position.Y + tileInfo.TileSize.Y / 2f) * 16f
+            );
+        }
+
+        return new Vector2(
+            (tvEntity.Position.X + 0.5f) * 16f,
+            (tvEntity.Position.Y + 0.5f) * 16f
+        );
+    }
+
+    /// <summary>
+    /// Calculate volume based on distance from player.
+    /// </summary>
+    private static int CalculateVolumeFromDistance(float distance)
+    {
+        if (distance <= FULL_VOLUME_DISTANCE)
             return 100;
 
-        if (distanceSq >= MAX_HEARING_DISTANCE_SQ)
+        if (distance >= MAX_HEARING_DISTANCE)
             return 0;
 
-        // Convert to normalized value [0, 1]
-        float normalizedDist = (distanceSq - FULL_VOLUME_DISTANCE_SQ) /
-                               (MAX_HEARING_DISTANCE_SQ - FULL_VOLUME_DISTANCE_SQ);
+        float t = (distance - FULL_VOLUME_DISTANCE) /
+                 (MAX_HEARING_DISTANCE - FULL_VOLUME_DISTANCE);
 
-        // Apply curve (sqrt for smoother falloff since we're working with squared distances)
-        float volume = 1f - (float)System.Math.Sqrt(normalizedDist);
+        return (int)(100 * (1 - t));
+    }
 
-        return (int)(volume * 100f);
+    public override void OnWorldUnload()
+    {
+        _frameCounter = 0;
     }
 }

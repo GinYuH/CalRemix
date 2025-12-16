@@ -1,14 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using YoutubeExplode;
 using YoutubeExplode.Common;
+using YoutubeExplode.Playlists;
 using YoutubeExplode.Search;
 
 namespace CalRemix.Core.VideoPlayer;
@@ -24,14 +27,49 @@ public static class VideoUrlHelper
     private static readonly TimeSpan SemaphoreTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
+    /// Check if a URL is a YouTube playlist link.
+    /// </summary>
+    public static bool IsYouTubePlaylist(string url)
+    {
+        return (url.Contains("youtube.com") || url.Contains("youtu.be")) &&
+               (url.Contains("list=") || url.Contains("/playlist?"));
+    }
+
+    /// <summary>
     /// Check if a URL is a YouTube link.
     /// </summary>
     public static bool IsYouTubeUrl(string url) => url.Contains("youtube.com") || url.Contains("youtu.be");
 
     /// <summary>
-    /// Check if a string is a YouTube search query.
+    /// Extract playlist ID from a YouTube URL.
+    /// Returns null if not a playlist or extraction fails.
     /// </summary>
-    public static bool IsYouTubeSearch(string input) => input.TrimStart().StartsWith("search:", StringComparison.OrdinalIgnoreCase);
+    public static string ExtractPlaylistId(string url)
+    {
+        try
+        {
+            // Format: youtube.com/playlist?list=PLAYLIST_ID
+            // Or: youtube.com/watch?v=VIDEO_ID&list=PLAYLIST_ID
+            int listIndex = url.IndexOf("list=");
+            if (listIndex == -1)
+                return null;
+
+            string afterList = url.Substring(listIndex + 5);
+
+            // Extract until next & or end of string
+            int ampersandIndex = afterList.IndexOf('&');
+            string playlistId = ampersandIndex != -1
+                ? afterList.Substring(0, ampersandIndex)
+                : afterList;
+
+            return playlistId;
+        }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"Failed to extract playlist ID: {ex.Message}");
+            return null;
+        }
+    }
 
     /// <summary>
     /// Clear the URL cache.
@@ -73,11 +111,15 @@ public static class VideoUrlHelper
     }
 
     /// <summary>
-    /// Search YouTube for videos and return the URL of the first result.
+    /// Search YouTube for videos and return the URL of the specified result (0-based index).
     /// Uses reflection to avoid JIT compilation issues with IAsyncEnumerable.
-    /// Returns null if no results found.
+    /// Returns null if no results found or index out of range.
     /// </summary>
-    public static async Task<string> SearchYouTubeAsync(string searchQuery, CancellationToken cancellationToken = default)
+    /// <param name="searchQuery">The search query</param>
+    /// <param name="resultIndex">Which result to return (0 = first, 1 = second, etc.). Use -1 for random.</param>
+    /// <param name="maxResults">Maximum results to fetch when using random selection (default 10)</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    public static async Task<string> SearchYouTubeAsync(string searchQuery, int resultIndex = 0, int maxResults = 10, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -85,7 +127,7 @@ public static class VideoUrlHelper
             return null;
         }
 
-        CalRemix.instance.Logger.Info($"Searching YouTube for: '{searchQuery}'");
+        CalRemix.instance.Logger.Info($"Searching YouTube for: '{searchQuery}' (result index: {resultIndex})");
 
         try
         {
@@ -93,7 +135,6 @@ public static class VideoUrlHelper
             httpClient.Timeout = ConnectionTimeout;
             var youtube = new YoutubeClient(httpClient);
 
-            // Use reflection to call GetVideosAsync
             var searchClient = youtube.Search;
             var getVideosMethod = searchClient.GetType().GetMethod("GetVideosAsync");
 
@@ -106,7 +147,6 @@ public static class VideoUrlHelper
             // Invoke GetVideosAsync
             object searchResultsObj = getVideosMethod.Invoke(searchClient, new object[] { searchQuery, cancellationToken });
 
-            // Get the IAsyncEnumerable interface
             var asyncEnumerableInterface = searchResultsObj.GetType().GetInterfaces()
                 .FirstOrDefault(i => i.Name.Contains("IAsyncEnumerable"));
 
@@ -116,9 +156,7 @@ public static class VideoUrlHelper
                 return null;
             }
 
-            // Get GetAsyncEnumerator method from the interface
             var getEnumeratorMethod = asyncEnumerableInterface.GetMethod("GetAsyncEnumerator");
-
             if (getEnumeratorMethod == null)
             {
                 CalRemix.instance.Logger.Error("GetAsyncEnumerator not found on interface");
@@ -128,7 +166,6 @@ public static class VideoUrlHelper
             // Call GetAsyncEnumerator
             object enumeratorObj = getEnumeratorMethod.Invoke(searchResultsObj, new object[] { cancellationToken });
 
-            // Get the IAsyncEnumerator interface from the enumerator
             var asyncEnumeratorInterface = enumeratorObj.GetType().GetInterfaces()
                 .FirstOrDefault(i => i.Name.Contains("IAsyncEnumerator"));
 
@@ -138,7 +175,6 @@ public static class VideoUrlHelper
                 return null;
             }
 
-            // Get MoveNextAsync and Current from the enumerator interface
             var moveNextMethod = asyncEnumeratorInterface.GetMethod("MoveNextAsync");
             var currentProperty = asyncEnumeratorInterface.GetProperty("Current");
 
@@ -150,23 +186,51 @@ public static class VideoUrlHelper
 
             try
             {
-                // Move to first result
-                dynamic moveNextTask = moveNextMethod.Invoke(enumeratorObj, null);
-                bool hasResult = await moveNextTask;
+                List<VideoSearchResult> results = new List<VideoSearchResult>();
+                int fetchLimit = resultIndex >= 0 ? resultIndex + 1 : maxResults;
 
-                if (hasResult)
+                // Fetch results up to the needed amount
+                while (results.Count < fetchLimit)
                 {
-                    // Get the first video result
-                    VideoSearchResult firstVideo = (VideoSearchResult)currentProperty.GetValue(enumeratorObj);
-                    string videoUrl = $"https://youtube.com/watch?v={firstVideo.Id}";
-                    CalRemix.instance.Logger.Info($"Found video: '{firstVideo.Title}' by {firstVideo.Author}");
-                    return videoUrl;
+                    dynamic moveNextTask = moveNextMethod.Invoke(enumeratorObj, null);
+                    bool hasResult = await moveNextTask;
+
+                    if (!hasResult)
+                        break;
+
+                    VideoSearchResult video = (VideoSearchResult)currentProperty.GetValue(enumeratorObj);
+                    results.Add(video);
                 }
-                else
+
+                if (results.Count == 0)
                 {
                     CalRemix.instance.Logger.Warn($"No video results found for: '{searchQuery}'");
                     return null;
                 }
+
+                // Select the appropriate result
+                VideoSearchResult selectedVideo;
+
+                if (resultIndex == -1)
+                {
+                    // Random selection
+                    selectedVideo = results[Main.rand.Next(results.Count)];
+                    CalRemix.instance.Logger.Info($"Randomly selected video {results.IndexOf(selectedVideo) + 1}/{results.Count}: '{selectedVideo.Title}' by {selectedVideo.Author}");
+                }
+                else if (resultIndex >= results.Count)
+                {
+                    // Index out of range, use last result
+                    selectedVideo = results[results.Count - 1];
+                    CalRemix.instance.Logger.Warn($"Result index {resultIndex} out of range (only {results.Count} results), using last result");
+                }
+                else
+                {
+                    selectedVideo = results[resultIndex];
+                    CalRemix.instance.Logger.Info($"Selected result {resultIndex + 1}: '{selectedVideo.Title}' by {selectedVideo.Author}");
+                }
+
+                string videoUrl = $"https://youtube.com/watch?v={selectedVideo.Id}";
+                return videoUrl;
             }
             finally
             {
@@ -198,10 +262,140 @@ public static class VideoUrlHelper
     }
 
     /// <summary>
+    /// Get all video URLs from a YouTube playlist.
+    /// Returns empty list if extraction fails.
+    /// </summary>
+    public static async Task<List<string>> GetPlaylistVideosAsync(string playlistId, CancellationToken cancellationToken = default)
+    {
+        var videoUrls = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(playlistId))
+        {
+            CalRemix.instance.Logger.Error("Empty playlist ID");
+            return videoUrls;
+        }
+
+        CalRemix.instance.Logger.Info($"Direct scraping playlist: {playlistId}");
+
+        try
+        {
+            using var httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(30);
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
+
+            // Fetch the playlist page
+            string playlistUrl = $"https://www.youtube.com/playlist?list={playlistId}";
+            string html = await httpClient.GetStringAsync(playlistUrl, cancellationToken);
+            CalRemix.instance.Logger.Debug($"Fetched playlist page, length: {html.Length} chars");
+
+            // Strategy 1: Try to extract from JSON-LD structured data (more reliable)
+            var jsonLdMatch = System.Text.RegularExpressions.Regex.Match(
+                html,
+                @"<script type=\""application/ld\+json\"">(.*?)</script>",
+                System.Text.RegularExpressions.RegexOptions.Singleline
+            );
+
+            if (jsonLdMatch.Success)
+            {
+                string json = jsonLdMatch.Groups[1].Value;
+                CalRemix.instance.Logger.Debug("Found JSON-LD data, extracting video URLs...");
+
+                // Look for video URLs in the JSON
+                var videoIdMatches = System.Text.RegularExpressions.Regex.Matches(
+                    json,
+                    @"""url"":\s*\""https:\\/\\/www\.youtube\.com\\/watch\\?v=([A-Za-z0-9_-]{11})"""
+                );
+
+                foreach (System.Text.RegularExpressions.Match match in videoIdMatches)
+                {
+                    if (match.Groups.Count > 1)
+                    {
+                        string videoId = match.Groups[1].Value.Replace("\\", "");
+                        string videoUrl = $"https://www.youtube.com/watch?v={videoId}";
+                        if (!videoUrls.Contains(videoUrl))
+                        {
+                            videoUrls.Add(videoUrl);
+                        }
+                    }
+                }
+
+                CalRemix.instance.Logger.Debug($"Extracted {videoUrls.Count} videos from JSON-LD");
+            }
+
+            // Strategy 2: Fallback to general HTML regex search (less reliable)
+            if (videoUrls.Count == 0)
+            {
+                CalRemix.instance.Logger.Debug("JSON-LD extraction failed, falling back to HTML regex...");
+
+                // Look for video IDs in various HTML patterns
+                var fallbackMatches = System.Text.RegularExpressions.Regex.Matches(
+                    html,
+                    @"/watch\?v=([A-Za-z0-9_-]{11})"
+                );
+
+                foreach (System.Text.RegularExpressions.Match match in fallbackMatches)
+                {
+                    if (match.Groups.Count > 1)
+                    {
+                        string videoId = match.Groups[1].Value;
+                        string videoUrl = $"https://www.youtube.com/watch?v={videoId}";
+                        if (!videoUrls.Contains(videoUrl))
+                        {
+                            videoUrls.Add(videoUrl);
+                        }
+                    }
+                }
+
+                CalRemix.instance.Logger.Debug($"Extracted {videoUrls.Count} videos from HTML regex");
+            }
+
+            // Strategy 3: Look for initial data (YouTube's internal data structure)
+            if (videoUrls.Count == 0)
+            {
+                var ytInitialDataMatch = System.Text.RegularExpressions.Regex.Match(
+                    html,
+                    @"var ytInitialData\s*=\s*({.*?});\s*</script>",
+                    System.Text.RegularExpressions.RegexOptions.Singleline
+                );
+
+                if (ytInitialDataMatch.Success)
+                {
+                    CalRemix.instance.Logger.Debug("Found ytInitialData, attempting extraction...");
+                    // Note: This JSON contains the full playlist structure but is complex to parse
+                    // You could use Newtonsoft.Json or System.Text.Json here if needed
+                }
+            }
+
+            // Remove duplicates while preserving order
+            int initialCount = videoUrls.Count;
+            videoUrls = videoUrls.Distinct().ToList();
+
+            if (initialCount != videoUrls.Count)
+            {
+                CalRemix.instance.Logger.Debug($"Removed {initialCount - videoUrls.Count} duplicate video entries");
+            }
+
+            CalRemix.instance.Logger.Info($"Direct scraping found {videoUrls.Count} unique videos in playlist");
+
+            return videoUrls;
+        }
+        catch (OperationCanceledException)
+        {
+            CalRemix.instance.Logger.Error("Direct playlist fetch was cancelled");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"Direct playlist fetch failed: {ex.Message}\n{ex.StackTrace}");
+            return videoUrls;
+        }
+    }
+
+    /// <summary>
     /// Search YouTube and get the direct stream URL of the first result.
     /// Callback is invoked on completion with the result URL (or null on failure).
     /// </summary>
-    public static void ProcessSearchAsync(string searchQuery, Action<string> onComplete, Guid requestId)
+    public static void ProcessSearchAsync(string searchQuery, Action<string> onComplete, Guid requestId, int resultIndex = 0, int maxResults = 10)
     {
         Main.NewText("Searching YouTube...", Color.LightBlue);
 
@@ -213,12 +407,11 @@ public static class VideoUrlHelper
             try
             {
                 // First, search to get video URL
-                string videoUrl = await SearchYouTubeAsync(searchQuery, cts.Token)
+                string videoUrl = await SearchYouTubeAsync(searchQuery, resultIndex, maxResults, cts.Token)
                     .ConfigureAwait(false);
 
                 if (videoUrl == null)
                 {
-                    // Don't remove/dispose yet - check cancellation first
                     if (cts.Token.IsCancellationRequested)
                     {
                         // Cancelled - don't show message
@@ -251,11 +444,9 @@ public static class VideoUrlHelper
             }
             catch (OperationCanceledException)
             {
-                // This is intentional cancellation, not an error - don't log it
                 CalRemix.instance.Logger.Info($"Search request {requestId} was cancelled by user");
                 _activeRequests.TryRemove(requestId, out var cancelledCts);
                 cancelledCts?.Dispose();
-                // Don't call onComplete - the operation was cancelled
             }
             catch (Exception ex)
             {
@@ -273,10 +464,13 @@ public static class VideoUrlHelper
     /// </summary>
     public static async Task<string> GetDirectUrlFromYouTubeAsync(string youtubeUrl, CancellationToken cancellationToken = default)
     {
+        CalRemix.instance.Logger.Info($"GetDirectUrlFromYouTubeAsync callback invoked, URL: {youtubeUrl}");
+
         // Check cache first
         if (_urlCache.TryGetValue(youtubeUrl, out var cached) &&
             DateTime.Now - cached.Timestamp < CacheDuration)
         {
+            CalRemix.instance.Logger.Info($"Direct url found in cache.");
             return cached.Url;
         }
 
@@ -287,6 +481,7 @@ public static class VideoUrlHelper
             {
                 string directUrl = await FetchSingleAttemptAsync(youtubeUrl, cancellationToken);
                 _urlCache[youtubeUrl] = (directUrl, DateTime.Now);
+                CalRemix.instance.Logger.Info($"YouTube direct url found.");
                 return directUrl;
             }
             catch (OperationCanceledException)

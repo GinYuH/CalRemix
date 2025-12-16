@@ -15,41 +15,56 @@ using Terraria.ModLoader.IO;
 namespace CalRemix.Content.Tiles.TVs;
 
 /// <summary>
-/// Base tile entity for all TV types.
-/// Handles channel management, rendering, and persistence.
+/// TV tile entity that displays video from shared channels.
+/// All TVs on the same channel show the same video (perfectly synced).
 /// </summary>
 public class TVTileEntity : ModTileEntity
 {
     public static Dictionary<int, (Point TileSize, Rectangle ScreenOffsets)> TileData = [];
 
     public bool IsOn { get; set; } = false;
+    public int Volume { get; set; } = 100;
+
+    // Track if we've started the channel
+    private bool _hasStartedChannel = false;
 
     // Channel this TV is tuned to
-    public int CurrentChannel { get; set; } = VideoChannelManager.DEFAULT_CHANNEL;
+    public int CurrentChannel
+    {
+        get => _currentChannel;
+        set
+        {
+            if (_currentChannel != value)
+            {
+                int oldChannel = _currentChannel;
+                _currentChannel = value;
+                _hasStartedChannel = false;
+                OnChannelChanged(oldChannel, value);
+            }
+        }
+    }
+    private int _currentChannel = VideoChannelManager.DEFAULT_CHANNEL;
 
-    // Position of the TV in the world
     public Point16 TilePosition { get; set; }
 
-    // Get the video player for this TV's current channel
+    // Get the shared video player for this TV's channel
     public VideoPlayerCore GetVideoPlayer()
     {
         var manager = ModContent.GetInstance<VideoChannelManager>();
-        return manager?.GetChannel(CurrentChannel);
+        return manager?.GetChannelPlayer(CurrentChannel);
     }
 
-    // Get or create the video player for this TV's channel
-    public VideoPlayerCore GetOrCreateVideoPlayer()
-    {
-        var manager = ModContent.GetInstance<VideoChannelManager>();
-        return manager?.GetOrCreateChannel(CurrentChannel);
-    }
+    public string GetDebugInfo() =>
+        $"TV Entity ID: {ID}, Position: {Position}, TilePosition: {TilePosition}, " +
+        $"Channel: {CurrentChannel}, IsOn: {IsOn}, Volume: {Volume}";
 
     /// <summary>
     /// Switch to a different channel.
     /// </summary>
     public void SetChannel(int channelId)
     {
-        if (channelId < VideoChannelManager.MIN_CHANNEL || channelId > VideoChannelManager.MAX_CHANNEL)
+        if (channelId < VideoChannelManager.MIN_CHANNEL ||
+            channelId > VideoChannelManager.MAX_CHANNEL)
         {
             Main.NewText($"Invalid channel: {channelId}", Color.Red);
             return;
@@ -60,32 +75,51 @@ public class TVTileEntity : ModTileEntity
     }
 
     /// <summary>
-    /// Play media on this TV's channel.
+    /// Handle channel change.
     /// </summary>
-    public void Play(string input)
+    private void OnChannelChanged(int oldChannel, int newChannel)
     {
+        if (!IsOn) return;
+
         var manager = ModContent.GetInstance<VideoChannelManager>();
-        manager?.PlayOnChannel(CurrentChannel, input);
+
+        // Check if old channel should be stopped
+        manager.StopChannelIfUnused(oldChannel);
+
+        // Start new channel if it's a preset
+        if (manager.IsPresetChannel(newChannel))
+        {
+            manager.StartChannel(newChannel);
+            _hasStartedChannel = true;
+        }
     }
 
     /// <summary>
-    /// Stop playback on this TV's channel.
+    /// Play media on custom channel (not implemented in shared system).
+    /// </summary>
+    public void Play(string input)
+    {
+        CalRemix.instance.Logger.Warn("Direct play not supported in shared channel system");
+    }
+
+    /// <summary>
+    /// Stop playback (stops channel if no other TVs watching).
     /// </summary>
     public void Stop()
     {
         var manager = ModContent.GetInstance<VideoChannelManager>();
-        manager?.StopChannel(CurrentChannel);
+        manager?.StopChannelIfUnused(CurrentChannel);
     }
 
     public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
     {
         TilePosition = new Point16(i, j);
 
-        // If in multiplayer, tell the server to place the tile entity and DO NOT place it yourself. That would mismatch IDs.
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
             int tile = Main.tile[i, j].TileType;
-            NetMessage.SendTileSquare(Main.myPlayer, i, j, TileData[tile].TileSize.X, TileData[tile].TileSize.Y);
+            NetMessage.SendTileSquare(Main.myPlayer, i, j,
+                TileData[tile].TileSize.X, TileData[tile].TileSize.Y);
             NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type);
             return -1;
         }
@@ -93,19 +127,58 @@ public class TVTileEntity : ModTileEntity
         return Place(i, j);
     }
 
+    public override void Update()
+    {
+        var manager = ModContent.GetInstance<VideoChannelManager>();
+        if (manager == null) return;
+
+        if (!IsOn)
+        {
+            if (_hasStartedChannel)
+            {
+                // Check if channel should stop now that THIS TV is off
+                manager.StopChannelIfUnused(CurrentChannel);
+                _hasStartedChannel = false;
+            }
+            return;
+        }
+
+        // TV is ON - start preset channel if not started
+        if (manager.IsPresetChannel(CurrentChannel))
+        {
+            var player = manager.GetChannelPlayer(CurrentChannel);
+
+            // Start channel if it doesn't exist or isn't playing
+            if (player == null || (!player.IsPlaying && !player.IsLoading && !player.IsPreparing))
+            {
+                manager.StartChannel(CurrentChannel);
+                _hasStartedChannel = true;
+            }
+            else if (!_hasStartedChannel)
+            {
+                // Channel is already playing (another TV started it), mark as started
+                _hasStartedChannel = true;
+            }
+        }
+
+        // Note: Volume is managed by TVVolumeManager based on distance
+    }
+
     public override void SaveData(TagCompound tag)
     {
         tag["channel"] = CurrentChannel;
         tag["posX"] = TilePosition.X;
         tag["posY"] = TilePosition.Y;
-        tag["isOn"] = IsOn; // Save on/off state
+        tag["isOn"] = IsOn;
+        tag["volume"] = Volume;
     }
 
     public override void LoadData(TagCompound tag)
     {
         CurrentChannel = tag.GetInt("channel");
         TilePosition = new Point16(tag.GetShort("posX"), tag.GetShort("posY"));
-        IsOn = tag.GetBool("isOn"); // Load on/off state
+        IsOn = tag.GetBool("isOn");
+        Volume = tag.GetInt("volume");
     }
 
     public override bool IsTileValidForEntity(int x, int y)
@@ -114,90 +187,161 @@ public class TVTileEntity : ModTileEntity
         return tile.HasTile && TileData.ContainsKey(tile.TileType);
     }
 
-    private Rectangle? _cachedScreenArea;
-    private int _cachedTileType;
-
     /// <summary>
     /// Render the video on this TV.
-    /// Called from the tile's PostDraw.
     /// </summary>
-    public void DrawVideoContent(SpriteBatch spriteBatch, Vector2 position, Vector2 size)
+    public void DrawVideoOrLoading(SpriteBatch spriteBatch, Vector2 position, Vector2 size)
     {
-        if (!IsOn)
-            return;
+        if (!IsOn) return;
 
         var player = GetVideoPlayer();
+        if (player == null) return;
 
-        if (player != null && player.IsLoading)
+        if (player.IsLoading)
         {
             Vector2 center = position + size / 2f;
             DrawLoadingSpinner(spriteBatch, center, player.LoadingRotation);
             return;
         }
 
-        if (player != null && player.IsPlaying && player.CurrentTexture != null)
+        if (player.IsPlaying && player.CurrentTexture != null)
         {
-            // Use position and scale for sub-pixel precision
-            Vector2 scale = new Vector2(size.X / player.CurrentTexture.Width, size.Y / player.CurrentTexture.Height);
-            spriteBatch.Draw(player.CurrentTexture, position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            return;
-        }
-
-        if (player == null || (!player.IsPlaying && !player.IsLoading && !player.IsPreparing))
-        {
-            DrawStatic(spriteBatch, position, size);
+            try
+            {
+                Vector2 scale = new Vector2(
+                    size.X / player.CurrentTexture.Width,
+                    size.Y / player.CurrentTexture.Height
+                );
+                spriteBatch.Draw(player.CurrentTexture, position, null,
+                    Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            }
+            catch (Exception ex)
+            {
+                CalRemix.instance.Logger.Error($"Error drawing video texture: {ex.Message}");
+            }
         }
     }
 
-    private Asset<Texture2D> _staticTexture;
+    private static Asset<Texture2D> _staticTexture;
     private Vector2 _staticOffset;
-    private int _staticFrameCounter;
 
-    private void DrawStatic(SpriteBatch spriteBatch, Vector2 position, Vector2 size)
+    public void DrawStatic(SpriteBatch spriteBatch, Rectangle screenArea)
     {
-        _staticTexture ??= ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/StaticNoise");
-
-        _staticFrameCounter++;
-        if (_staticFrameCounter > 3)
+        try
         {
-            _staticFrameCounter = 0;
-            _staticOffset = new Vector2(
-                Main.rand.Next(0, Math.Max(1, _staticTexture.Width() - (int)size.X)),
-                Main.rand.Next(0, Math.Max(1, _staticTexture.Height() - (int)size.Y))
+            _staticTexture ??= ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/StaticNoise");
+
+            if ((int)(Main.GlobalTimeWrappedHourly * 60) % 3 == 0)
+            {
+                _staticOffset = new Vector2(
+                    Main.rand.Next(0, Math.Max(1, _staticTexture.Width() - screenArea.Width)),
+                    Main.rand.Next(0, Math.Max(1, _staticTexture.Height() - screenArea.Height))
+                );
+            }
+
+            Rectangle sourceRect = new Rectangle(
+                (int)_staticOffset.X, (int)_staticOffset.Y,
+                Math.Min(_staticTexture.Width(), screenArea.Width),
+                Math.Min(_staticTexture.Height(), screenArea.Height)
             );
+
+            spriteBatch.Draw(_staticTexture.Value, screenArea, sourceRect, Color.White);
         }
-
-        Rectangle sourceRect = new Rectangle(
-            (int)_staticOffset.X,
-            (int)_staticOffset.Y,
-            Math.Min(_staticTexture.Width(), (int)size.X),
-            Math.Min(_staticTexture.Height(), (int)size.Y)
-        );
-
-        Vector2 scale = new Vector2(size.X / sourceRect.Width, size.Y / sourceRect.Height);
-        spriteBatch.Draw(_staticTexture.Value, position, sourceRect, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"Error drawing static: {ex.Message}");
+        }
     }
 
     private static void DrawLoadingSpinner(SpriteBatch spriteBatch, Vector2 center, float rotation)
     {
-        Texture2D pixel = ExampleVideoUISystem.Background.Value;
-
-        for (int i = 0; i < 8; i++)
+        try
         {
-            float angle = rotation + (i * MathHelper.TwoPi / 8f);
-            float alpha = 0.3f + (0.7f * (i / 8f));
-            Vector2 offset = new Vector2(
-                (float)Math.Cos(angle) * 10f,
-                (float)Math.Sin(angle) * 10f
-            );
+            Texture2D pixel = ExampleVideoUISystem.Background.Value;
 
-            Rectangle dotRect = new Rectangle(
-                (int)(center.X + offset.X - 2),
-                (int)(center.Y + offset.Y - 2),
-                4, 4
-            );
+            for (int i = 0; i < 8; i++)
+            {
+                float angle = rotation + (i * MathHelper.TwoPi / 8f);
+                float alpha = 0.3f + (0.7f * (i / 8f));
+                Vector2 offset = new Vector2(
+                    (float)Math.Cos(angle) * 10f,
+                    (float)Math.Sin(angle) * 10f
+                );
 
-            spriteBatch.Draw(pixel, dotRect, Color.White * alpha);
+                Rectangle dotRect = new Rectangle(
+                    (int)(center.X + offset.X - 2), (int)(center.Y + offset.Y - 2), 4, 4
+                );
+
+                spriteBatch.Draw(pixel, dotRect, Color.White * alpha);
+            }
         }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"Error drawing loading spinner: {ex.Message}");
+        }
+    }
+
+    private Vector2? _cachedVideoPosition;
+    private Vector2? _cachedVideoSize;
+    private Rectangle? _cachedStaticArea;
+    private float _lastCachedZoom = -1f;
+    private Vector2 _lastCachedScreenPos;
+
+    public (Vector2 Position, Vector2 Size, Rectangle StaticArea) CalculateScreenAreas()
+    {
+        bool cacheValid = _lastCachedZoom == Main.GameViewMatrix.Zoom.X &&
+                          _lastCachedScreenPos == Main.screenPosition;
+
+        if (cacheValid && _cachedVideoPosition.HasValue &&
+            _cachedVideoSize.HasValue && _cachedStaticArea.HasValue)
+        {
+            return (_cachedVideoPosition.Value, _cachedVideoSize.Value, _cachedStaticArea.Value);
+        }
+
+        int tileType = Main.tile[Position.X, Position.Y].TileType;
+        if (!TileData.TryGetValue(tileType, out var tileInfo))
+            return (Vector2.Zero, Vector2.Zero, Rectangle.Empty);
+
+        Rectangle worldArea = new Rectangle(
+            Position.X * 16, Position.Y * 16,
+            tileInfo.TileSize.X * 16, tileInfo.TileSize.Y * 16
+        );
+
+        worldArea.X += tileInfo.ScreenOffsets.X;
+        worldArea.Y += tileInfo.ScreenOffsets.Y;
+        worldArea.Width -= tileInfo.ScreenOffsets.X;
+        worldArea.Height -= tileInfo.ScreenOffsets.Y;
+        worldArea.Width += tileInfo.ScreenOffsets.Width;
+        worldArea.Height += tileInfo.ScreenOffsets.Height;
+
+        Vector2 worldPos = new Vector2(worldArea.X, worldArea.Y);
+        Vector2 screenPos = worldPos - Main.screenPosition;
+        float zoom = Main.GameViewMatrix.Zoom.X;
+        Vector2 screenCenter = new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f);
+
+        Vector2 finalPos = (screenPos - screenCenter) * zoom + screenCenter;
+        Vector2 finalSize = new Vector2(worldArea.Width, worldArea.Height) * zoom;
+
+        Rectangle staticArea = new Rectangle(
+            (int)screenPos.X, (int)screenPos.Y, worldArea.Width, worldArea.Height
+        );
+
+        _cachedVideoPosition = finalPos;
+        _cachedVideoSize = finalSize;
+        _cachedStaticArea = staticArea;
+        _lastCachedZoom = zoom;
+        _lastCachedScreenPos = Main.screenPosition;
+
+        return (finalPos, finalSize, staticArea);
+    }
+
+    // Cleanup when TV is destroyed
+    public override void OnKill()
+    {
+        // Check if channel should stop when this TV is destroyed
+        var manager = ModContent.GetInstance<VideoChannelManager>();
+        manager?.StopChannelIfUnused(CurrentChannel);
+
+        base.OnKill();
     }
 }

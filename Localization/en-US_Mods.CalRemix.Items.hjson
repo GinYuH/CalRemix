@@ -5990,3 +5990,8 @@ FlatscreenTVItem: {
 	DisplayName: Flatscreen T V Item
 	Tooltip: ""
 }
+
+TVRemoteItem: {
+	DisplayName: T V Remote Item
+	Tooltip: ""
+}

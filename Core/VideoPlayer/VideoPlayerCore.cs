@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
@@ -15,18 +17,19 @@ namespace CalRemix.Core.VideoPlayer;
 /// Handles LibVLC media playback, frame capture, and texture management.
 /// Can be used by UI elements, tiles, or any other system that needs video playback.
 /// </summary>
-public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDisposable
+public class VideoPlayerCore : IDisposable
 {
     // Video playback components
     private MediaPlayer _mediaPlayer;
+
     private Media _currentMedia;
     private VideoFrameHandler _frameHandler;
     private Texture2D _videoTexture;
     private readonly TexturePool _texturePool = new();
 
     // Video dimensions
-    private readonly int _videoWidth = videoWidth;
-    private readonly int _videoHeight = videoHeight;
+    private readonly int _videoWidth;
+    private readonly int _videoHeight;
 
     // Playback state
     private bool _isInitialized;
@@ -36,6 +39,11 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
     private bool _isLoading;
     private float _loadingRotation;
     private bool _isPreparing;
+
+    // Video queue for playlists
+    private Queue<string> _videoQueue = new Queue<string>();
+    private bool _autoAdvanceQueue = false;
+    private string _currentlyPlayingUrl = null;
 
     // Session and request tracking
     private Guid _sessionId = Guid.NewGuid();
@@ -47,9 +55,12 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
 
     // Frame rate limiting
     private double _lastFrameTime;
-    private const double TARGET_FRAME_TIME = 1.0 / 30.0; // Limit to 30 FPS for video updates
+    private const double TARGET_FRAME_TIME = 1.0 / 30.0;
 
     private bool _textureNeedsUpdate;
+
+    // Thread safety
+    private readonly object _stateLock = new object();
 
     #region Events
 
@@ -61,6 +72,9 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
     public event EventHandler PlaybackError;
     public event EventHandler<bool> LoadingStateChanged;
 
+    public delegate void AudioDataCallback(byte[] audioData, int sampleRate, int channels, long pts);
+    public event AudioDataCallback OnAudioDataProduced;
+
     #endregion
 
     #region Properties
@@ -70,17 +84,24 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
     public bool IsInitialized => _isInitialized;
     public bool IsLoading => _isLoading;
     public bool IsPreparing => _isPreparing;
+    public int QueuedVideoCount => _videoQueue.Count;
+    public bool HasQueuedVideos => _videoQueue.Count > 0;
     public string CurrentVideoPath => _currentVideoPath;
     public Texture2D CurrentTexture => _videoTexture;
     public int VideoWidth => _videoWidth;
     public int VideoHeight => _videoHeight;
     public float LoadingRotation => _loadingRotation;
     public Guid SessionId => _sessionId;
-    public bool MediaParsed => _currentMedia != null;
 
     #endregion
 
     #region Initialization
+
+    public VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720)
+    {
+        _videoWidth = videoWidth;
+        _videoHeight = videoHeight;
+    }
 
     private async Task EnsureInitializedAsync()
     {
@@ -99,7 +120,6 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
                     _frameHandler = new VideoFrameHandler(_videoWidth, _videoHeight);
                     _mediaPlayer = new MediaPlayer(CalRemix.LibVLCInstance);
                     _frameHandler.SetupMediaPlayer(_mediaPlayer);
-
                     _mediaPlayer.Playing += OnPlaying;
                     _mediaPlayer.Paused += OnPaused;
                     _mediaPlayer.Stopped += OnStopped;
@@ -121,12 +141,15 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
             CalRemix.instance.Logger.Error($"VideoPlayerCore async initialization failed: {ex}");
         }
     }
-
     #endregion
 
     #region Playback Control
 
-    public void Play(string input)
+    /// <summary>
+    /// Play media from any source. By default queues the video.
+    /// </summary>
+    /// <param name="forcePlay">If true, clears queue and plays immediately</param>
+    public void Play(string input, bool forcePlay = true)
     {
         if (!_isInitialized)
         {
@@ -135,44 +158,48 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
         }
 
         if (string.IsNullOrWhiteSpace(input))
-        {
             return;
-        }
 
         try
         {
-            if (_isPlaying || _isPaused)
+            lock (_stateLock)
             {
-                _mediaPlayer?.Stop();
-            }
+                // Check if it's a playlist
+                if (VideoUrlHelper.IsYouTubePlaylist(input))
+                {
+                    PlayPlaylist(input, forcePlay);
+                    return;
+                }
 
-            VideoUrlHelper.CancelRequest(_currentRequestId);
+                // For single videos, add to queue
+                if (forcePlay)
+                {
+                    // Stop current video and clear queue
+                    if (_isPlaying || _isPaused)
+                    {
+                        _mediaPlayer?.Stop();
+                    }
 
-            if (_videoTexture != null)
-            {
-                _texturePool.ReturnTexture(_videoTexture);
-                _videoTexture = null;
-            }
-            _frameHandler?.ClearBuffers();
+                    VideoUrlHelper.CancelRequest(_currentRequestId);
+                    ClearVideoTexture();
 
-            _currentMedia?.Dispose();
+                    _videoQueue.Clear();
+                    _autoAdvanceQueue = false;
+                    _videoQueue.Enqueue(input);
+                    PlayNextInQueue();
+                }
+                else
+                {
+                    // Add to back of queue
+                    _videoQueue.Enqueue(input);
 
-
-            if (VideoUrlHelper.IsYouTubeUrl(input))
-            {
-                PlayYouTubeUrl(input);
-            }
-            else if (IsFilePath(input))
-            {
-                PlayLocalFile(input);
-            }
-            else if (IsMediaLink(input))
-            {
-                PlayMediaUrl(input);
-            }
-            else
-            {
-                PlayYouTubeSearch(input);
+                    // If nothing is playing, start the queue
+                    if (!_isPlaying && !_isLoading && !_isPreparing)
+                    {
+                        _autoAdvanceQueue = false;
+                        PlayNextInQueue();
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -181,7 +208,7 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
         }
     }
 
-    private static bool IsFilePath(string input)
+    public static bool IsFilePath(string input)
     {
         if (System.IO.Path.IsPathRooted(input))
             return true;
@@ -195,7 +222,7 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
         return false;
     }
 
-    private static bool IsMediaLink(string input) => input.Contains(".mp4") || input.Contains(".avi") || input.Contains(".mkv") || input.Contains(".mov");
+    public static bool IsMediaLink(string input) => input.Contains(".mp4") || input.Contains(".avi") || input.Contains(".mkv") || input.Contains(".mov");
 
     private void PlayLocalFile(string filePath)
     {
@@ -213,127 +240,378 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
         _mediaPlayer.Play(_currentMedia);
     }
 
-    private void PlayYouTubeUrl(string url)
+    private void PlayYouTubeUrlInternal(string url)
     {
         _currentRequestId = Guid.NewGuid();
         var requestId = _currentRequestId;
         var sessionId = _sessionId;
 
+        CalRemix.instance.Logger.Info($"PlayYouTubeUrlInternal called for session {_sessionId}, request {requestId}");
+
+        _isPreparing = true;
         SetLoadingState(true);
 
         VideoUrlHelper.ProcessUrlAsync(url, (processedUrl) =>
         {
-            Main.QueueMainThreadAction(() =>
+            try
             {
-                SetLoadingState(false);
-
-                if (_sessionId != sessionId || _currentRequestId != requestId || _isDisposed)
-                    return;
-
-                if (processedUrl == null)
+                Main.QueueMainThreadAction(() =>
                 {
-                    CalRemix.instance.Logger.Error("Failed to extract YouTube URL");
-                    return;
-                }
-
-                try
-                {
-                    if (_videoTexture != null)
+                    try
                     {
-                        _texturePool.ReturnTexture(_videoTexture);
-                        _videoTexture = null;
+                        CalRemix.instance.Logger.Info($"Proccessed url found: {processedUrl}");
+
+                        SetLoadingState(false);
+
+
+                        if (_sessionId != sessionId || _currentRequestId != requestId || _isDisposed)
+                        {
+                            _isPreparing = false;
+                            CalRemix.instance.Logger.Warn($"Invalid Session ID!");
+                            return;
+                        }
+
+                        if (processedUrl == null)
+                        {
+                            CalRemix.instance.Logger.Error("Failed to extract YouTube URL");
+                            _isPreparing = false;
+                            PlayNextInQueue();
+                            return;
+                        }
+
+                        _currentMedia = new Media(CalRemix.LibVLCInstance, processedUrl, FromType.FromLocation);
+                        _currentVideoPath = url;
+                        _mediaPlayer.Play(_currentMedia);
                     }
-                    _frameHandler?.ClearBuffers();
-
-                    _currentMedia?.Dispose();
-
-                    _isPreparing = true;
-                    _currentMedia = new Media(CalRemix.LibVLCInstance, processedUrl, FromType.FromLocation);
-                    _currentVideoPath = url;
-                    _mediaPlayer.Play(_currentMedia);
-                }
-                catch (Exception ex)
-                {
-                    CalRemix.instance.Logger.Error($"Failed to play YouTube URL: {ex.Message}");
-                }
-            });
+                    catch (Exception ex)
+                    {
+                        CalRemix.instance.Logger.Error($"Failed to play YouTube URL: {ex.Message}");
+                        _isPreparing = false;
+                        PlayNextInQueue();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                CalRemix.instance.Logger.Error($"Error in PlayYouTubeUrlInternal callback: {ex.Message}");
+            }
         }, requestId);
     }
 
-    private void PlayMediaUrl(string url)
+    private void PlayMediaUrlInternal(string url)
     {
         SetLoadingState(false);
 
         if (url == null)
         {
-            CalRemix.instance.Logger.Error("Failed to extract YouTube URL");
+            CalRemix.instance.Logger.Error("Invalid media URL");
+            PlayNextInQueue();
             return;
         }
 
         try
         {
-            if (_videoTexture != null)
-            {
-                _texturePool.ReturnTexture(_videoTexture);
-                _videoTexture = null;
-            }
-            _frameHandler?.ClearBuffers();
-
-            _currentMedia?.Dispose();
-
-            _isPreparing = true;
             _currentMedia = new Media(CalRemix.LibVLCInstance, url, FromType.FromLocation);
             _currentVideoPath = url;
             _mediaPlayer.Play(_currentMedia);
         }
         catch (Exception ex)
         {
-            CalRemix.instance.Logger.Error($"Failed to play YouTube URL: {ex.Message}");
+            CalRemix.instance.Logger.Error($"Failed to play media URL: {ex.Message}");
+            PlayNextInQueue();
         }
     }
 
-    private void PlayYouTubeSearch(string query)
+    private void PlayYouTubeSearchInternal(string query, int resultIndex, int maxResults)
     {
         _currentRequestId = Guid.NewGuid();
         var requestId = _currentRequestId;
         var sessionId = _sessionId;
 
+        _isPreparing = true;
         SetLoadingState(true);
 
         VideoUrlHelper.ProcessSearchAsync(query, (processedUrl) =>
         {
-            Main.QueueMainThreadAction(() =>
+            try
             {
-                SetLoadingState(false);
-
-                if (_sessionId != sessionId || _currentRequestId != requestId || _isDisposed)
-                    return;
-
-                if (processedUrl == null)
-                    return;
-
-                try
+                Main.QueueMainThreadAction(() =>
                 {
-                    if (_videoTexture != null)
+                    try
                     {
-                        _texturePool.ReturnTexture(_videoTexture);
-                        _videoTexture = null;
+                        SetLoadingState(false);
+                        if (_sessionId != sessionId || _currentRequestId != requestId || _isDisposed)
+                        {
+                            _isPreparing = false;
+                            return;
+                        }
+
+                        if (processedUrl == null)
+                        {
+                            _isPreparing = false;
+                            PlayNextInQueue();
+                            return;
+                        }
+
+                        _currentMedia = new Media(CalRemix.LibVLCInstance, processedUrl, FromType.FromLocation);
+                        
+                        _currentVideoPath = query;
+                        _mediaPlayer.Play(_currentMedia);
                     }
-                    _frameHandler?.ClearBuffers();
+                    catch (Exception ex)
+                    {
+                        CalRemix.instance.Logger.Error($"Failed to play search result: {ex.Message}");
+                        _isPreparing = false;
+                        PlayNextInQueue();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                CalRemix.instance.Logger.Error($"Error in PlayYouTubeSearchInternal callback: {ex.Message}");
+            }
+        }, requestId, resultIndex, maxResults);
+    }
 
-                    _currentMedia?.Dispose();
+    /// <summary>
+    /// Play a YouTube search with specific result parameters.
+    /// </summary>
+    public void PlayWithSearchParams(string searchQuery, int resultIndex = 0, int maxResults = 10, bool forcePlay = true)
+    {
+        if (!_isInitialized)
+        {
+            Task.Run(() => EnsureInitializedAsync());
+            return;
+        }
 
-                    _isPreparing = true;
-                    _currentMedia = new Media(CalRemix.LibVLCInstance, processedUrl, FromType.FromLocation);
-                    _currentVideoPath = query;
-                    _mediaPlayer.Play(_currentMedia);
-                }
-                catch (Exception ex)
+        if (string.IsNullOrWhiteSpace(searchQuery))
+            return;
+
+        try
+        {
+            lock (_stateLock)
+            {
+                if (forcePlay)
                 {
-                    CalRemix.instance.Logger.Error($"Failed to play search result: {ex.Message}");
+                    if (_isPlaying || _isPaused)
+                    {
+                        _mediaPlayer?.Stop();
+                    }
+
+                    VideoUrlHelper.CancelRequest(_currentRequestId);
+                    ClearVideoTexture();
+
+                    _videoQueue.Clear();
+                    _autoAdvanceQueue = false;
+
+                    PlayYouTubeSearchInternal(searchQuery, resultIndex, maxResults);
                 }
-            });
-        }, requestId);
+                else
+                {
+                    _videoQueue.Enqueue(searchQuery);
+
+                    if (!_isPlaying && !_isLoading && !_isPreparing)
+                    {
+                        _autoAdvanceQueue = false;
+                        PlayNextInQueue();
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"PlayWithSearchParams failed: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Play a YouTube playlist. Queues all videos.
+    /// </summary>
+    private void PlayPlaylist(string playlistUrl, bool forcePlay)
+    {
+        if (forcePlay)
+        {
+            if (_isPlaying || _isPaused)
+            {
+                _mediaPlayer?.Stop();
+            }
+            VideoUrlHelper.CancelRequest(_currentRequestId);
+            ClearVideoTexture();
+        }
+
+        string playlistId = VideoUrlHelper.ExtractPlaylistId(playlistUrl);
+        if (string.IsNullOrEmpty(playlistId))
+        {
+            CalRemix.instance.Logger.Error("Failed to extract playlist ID");
+            return;
+        }
+
+        _currentRequestId = Guid.NewGuid();
+        var requestId = _currentRequestId;
+        var sessionId = _sessionId;
+
+        _isPreparing = true;
+        SetLoadingState(true);
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                var cts = new CancellationTokenSource();
+                List<string> videoUrls = await VideoUrlHelper.GetPlaylistVideosAsync(playlistId, cts.Token);
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    try
+                    {
+                        SetLoadingState(false);
+
+                        if (_sessionId != sessionId || _currentRequestId != requestId || _isDisposed)
+                        {
+                            CalRemix.instance.Logger.Error("Invalid Session");
+                            _isPreparing = false;
+                            return;
+                        }
+
+                        if (videoUrls.Count == 0)
+                        {
+                            CalRemix.instance.Logger.Error("No videos found in playlist");
+                            _isPreparing = false;
+                            return;
+                        }
+
+                        lock (_stateLock)
+                        {
+                            if (forcePlay)
+                            {
+                                _videoQueue.Clear();
+                            }
+
+                            _autoAdvanceQueue = true;
+                            foreach (string videoUrl in videoUrls)
+                            {
+                                _videoQueue.Enqueue(videoUrl);
+                            }
+
+                            Main.NewText($"Loaded playlist: {videoUrls.Count} videos", Color.LightGreen);
+
+                            if (!_isPlaying)
+                            {
+                                PlayNextInQueue();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        CalRemix.instance.Logger.Error($"Error processing playlist results: {ex.Message}");
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                CalRemix.instance.Logger.Error($"Playlist loading failed: {ex.Message}");
+                Main.QueueMainThreadAction(() =>
+                {
+                    _isPreparing = false;
+                    SetLoadingState(false);
+                });
+            }
+        });
+    }
+
+    /// <summary>
+    /// Play a list of video URLs as a playlist.
+    /// Useful when you've already fetched the URLs and want to reorder them.
+    /// </summary>
+    public void PlayPlaylistFromUrls(List<string> videoUrls, bool forcePlay = true)
+    {
+        if (!_isInitialized)
+        {
+            Task.Run(() => EnsureInitializedAsync());
+            return;
+        }
+
+        if (videoUrls == null || videoUrls.Count == 0)
+        {
+            CalRemix.instance.Logger.Warn("PlayPlaylistFromUrls called with empty list");
+            return;
+        }
+
+        try
+        {
+            lock (_stateLock)
+            {
+                if (forcePlay)
+                {
+                    if (_isPlaying || _isPaused)
+                    {
+                        _mediaPlayer?.Stop();
+                    }
+                    VideoUrlHelper.CancelRequest(_currentRequestId);
+                    ClearVideoTexture();
+                    _videoQueue.Clear();
+                }
+
+                _autoAdvanceQueue = true;
+                foreach (string videoUrl in videoUrls)
+                {
+                    _videoQueue.Enqueue(videoUrl);
+                }
+
+                CalRemix.instance.Logger.Info($"Queued {videoUrls.Count} videos from playlist");
+
+                if (!_isPlaying)
+                {
+                    PlayNextInQueue();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"PlayPlaylistFromUrls failed: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Play the next video in the queue.
+    /// </summary>
+    private void PlayNextInQueue()
+    {
+        lock (_stateLock)
+        {
+            if (_videoQueue.Count == 0)
+            {
+                _autoAdvanceQueue = false;
+                _currentlyPlayingUrl = null;
+                CalRemix.instance.Logger.Info("Queue finished");
+                return;
+            }
+
+            string nextVideo = _videoQueue.Dequeue();
+            _currentlyPlayingUrl = nextVideo;
+            CalRemix.instance.Logger.Info($"Playing next in queue ({_videoQueue.Count} remaining): {nextVideo}");
+
+            // Clear old texture BEFORE starting new video
+            ClearVideoTexture();
+
+            // Determine video type and play
+            if (VideoUrlHelper.IsYouTubeUrl(nextVideo))
+            {
+                PlayYouTubeUrlInternal(nextVideo);
+            }
+            else if (IsFilePath(nextVideo))
+            {
+                PlayLocalFile(nextVideo);
+            }
+            else if (IsMediaLink(nextVideo))
+            {
+                PlayMediaUrlInternal(nextVideo);
+            }
+            else
+            {
+                PlayYouTubeSearchInternal(nextVideo, 0, 10);
+            }
+        }
     }
 
     private static string ResolveVideoPath(string filePath)
@@ -380,21 +658,24 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
 
     public void Stop()
     {
-        if (_isLoading)
+        lock (_stateLock)
         {
-            Main.NewText("Loading cancelled", Color.Orange);
-            _isLoading = false;
-        }
+            if (_isLoading)
+            {
+                Main.NewText("Loading cancelled", Color.Orange);
+                _isLoading = false;
+            }
 
-        VideoUrlHelper.CancelRequest(_currentRequestId);
-        _mediaPlayer?.Stop();
+            _isPreparing = false;
+            _autoAdvanceQueue = false;
+            _videoQueue.Clear();
+            _currentlyPlayingUrl = null;
 
-        if (_videoTexture != null)
-        {
-            _texturePool.ReturnTexture(_videoTexture);
-            _videoTexture = null;
+            VideoUrlHelper.CancelRequest(_currentRequestId);
+            _mediaPlayer?.Stop();
+
+            ClearVideoTexture();
         }
-        _frameHandler?.ClearBuffers();
     }
 
     public void Seek(float position)
@@ -407,9 +688,17 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
 
     public void SetVolume(int volume)
     {
-        if (_mediaPlayer != null)
+        if (_mediaPlayer == null || _isDisposed)
+            return;
+
+        try
         {
-            _mediaPlayer.Volume = Math.Clamp(volume, 0, 100);
+            int clampedVolume = Math.Clamp(volume, 0, 100);
+            _mediaPlayer.Volume = clampedVolume;
+        }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"Error setting volume: {ex.Message}");
         }
     }
 
@@ -440,6 +729,17 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
         _isPlaying = true;
         _isPreparing = false;
         _isPaused = false;
+
+        CalRemix.instance.Logger.Info($"  - Track ID: {_mediaPlayer.AudioTrack}");
+        CalRemix.instance.Logger.Info($"[OnPlaying] Found {_mediaPlayer.AudioTrackCount} audio track(s).");
+        foreach (var track in _mediaPlayer.AudioTrackDescription)
+        {
+            CalRemix.instance.Logger.Info($"  - Track ID: {track.Id}, Name: {track.Name}");
+        }
+        bool trackbool = _mediaPlayer.SetAudioTrack(1);
+
+        CalRemix.instance.Logger.Info($"SetAudioTrack Returned: {trackbool}");
+
         PlaybackStarted?.Invoke(this, EventArgs.Empty);
 
         var currentSessionId = _sessionId;
@@ -466,6 +766,7 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
     {
         _isPlaying = false;
         _isPaused = false;
+        _isPreparing = false;
         PlaybackStopped?.Invoke(this, EventArgs.Empty);
     }
 
@@ -473,12 +774,35 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
     {
         _isPlaying = false;
         _isPaused = false;
-        PlaybackEnded?.Invoke(this, EventArgs.Empty);
+        _currentlyPlayingUrl = null;
+
+        // Auto-advance if enabled (playlists) OR if there are queued videos
+        if (_autoAdvanceQueue || _videoQueue.Count > 0)
+        {
+            Main.QueueMainThreadAction(() =>
+            {
+                try
+                {
+                    ClearVideoTexture();
+                    PlayNextInQueue();
+                }
+                catch (Exception ex)
+                {
+                    CalRemix.instance.Logger.Error($"Error advancing queue: {ex.Message}");
+                }
+            });
+        }
+        else
+        {
+            _autoAdvanceQueue = false;
+            PlaybackEnded?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void OnError(object sender, EventArgs e)
     {
         _isPlaying = false;
+        _isPreparing = false;
         PlaybackError?.Invoke(this, EventArgs.Empty);
     }
 
@@ -512,7 +836,7 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
         double currentTime = gameTime.TotalGameTime.TotalSeconds;
         if (currentTime - _lastFrameTime < TARGET_FRAME_TIME)
         {
-            return; // Skip this frame
+            return;
         }
         _lastFrameTime = currentTime;
 
@@ -594,9 +918,26 @@ public class VideoPlayerCore(int videoWidth = 1280, int videoHeight = 720) : IDi
         GC.SuppressFinalize(this);
     }
 
+    private void ClearVideoTexture()
+    {
+        if (_videoTexture != null)
+        {
+            _texturePool.ReturnTexture(_videoTexture);
+            _videoTexture = null;
+        }
+
+        _frameHandler?.ClearBuffers();
+        _currentMedia?.Dispose();
+        _currentMedia = null;
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (_isDisposed) return;
+
+        // Dispose media player first
+        _mediaPlayer?.Dispose();
+        _mediaPlayer = null;
 
         CalRemix.instance.Logger.Info($"Disposing VideoPlayerCore (session {_sessionId})");
 
