@@ -104,7 +104,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public override void AI()
         {
-            NPC.TargetClosest();
+            Main.blockInput = false;
+            NPC.TargetClosest(false);
             Player target = Main.player[NPC.target];
             if (target == null || !target.active || target.dead)
             {
@@ -231,25 +232,114 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         else if (Timer >= finish)
                         {
+                            ChangePhase(PhaseType.SineGas);
                             //ChangePhase(Main.rand.NextBool() ? PhaseType.SineGas : PhaseType.Flamethrower);
-                        }
-
-                        if (Timer < stopLooking)
-                        {
-                            Main.blockInput = true;
-                        }
-                        else
-                        {
-                            Main.blockInput = false;
                         }
                     }
                     break;
                 case PhaseType.SineGas:
                     {
+                        int travelTime = 40;
+                        int wait = travelTime + 20;
+                        int waving = wait + 120;
+                        int waitForBombs = 180;
+
+                        if (Timer < travelTime)
+                        {
+                            if (Timer <= 1)
+                            {
+                                NPC.spriteDirection = NPC.direction = Main.rand.NextBool().ToDirectionInt();
+                                SavePosition = target.Center + Vector2.UnitX * 1000 * NPC.direction;
+                                OldPosition = NPC.Center;
+                            }
+                            else
+                            {
+                                NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(0, travelTime, Timer, true), 1));
+                                EditPoints(new() { new(), new(560 * NPC.direction, -20), new(-260 * NPC.direction, 550), new(0, 900) });
+                            }
+                        }
+                        else if (Timer < wait)
+                        {
+
+                        }
+                        else if (Timer < waving)
+                        {
+                            if (Timer == wait)
+                            {
+                                SavePosition = NPC.Center + Vector2.UnitX * 2000 * -NPC.direction;
+                                OldPosition = NPC.Center;
+                            }
+                            else
+                            {
+                                Vector2 mainPos = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(wait, waving, Timer, true), 1));
+                                NPC.Center = Vector2.Lerp(mainPos, mainPos + Vector2.UnitY * MathF.Sin(Timer * 0.1f) * 300, 0.9f);
+                                NPC.rotation = Utils.AngleLerp(NPC.rotation, MathF.Sin(Timer * 0.1f) * MathHelper.ToRadians(22), 0.3f);
+                                JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(20) + MathF.Cos(Timer * 0.3f) * MathHelper.ToRadians(10), 0.4f);
+                                EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
+                            }
+                        }
+                        else if (Timer < waitForBombs)
+                        {
+                            EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
+                            JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
+                            NPC.velocity *= 0.99f;
+                        }
+                        else if (Timer >= waitForBombs)
+                        {
+                            ChangePhase(PhaseType.Flamethrower);
+                        }
                     }
                     break;
                 case PhaseType.Flamethrower:
                     {
+                        int wait = 20;
+                        int travelTime = wait + 30;
+                        int chargeUp = travelTime + 60;
+                        int firingTime = chargeUp + 150;
+                        int waitEnd = firingTime + 80;
+
+                        float dist = 700;
+
+                        if (Timer < wait)
+                        {
+                            NPC.direction = Main.rand.NextBool().ToDirectionInt();
+                            SavePosition = target.Center + Vector2.UnitX * dist * NPC.direction;
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer < travelTime)
+                        {
+                            NPC.spriteDirection = NPC.direction;
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(wait, travelTime, Timer, true), 1));
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
+                        }
+                        else if (Timer < chargeUp)
+                        {
+                            NPC.Center = Vector2.Lerp(NPC.Center, target.Center + Vector2.UnitX * NPC.direction * dist, 0.1f);
+                            JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(35), 0.05f);
+                        }
+                        else if (Timer < firingTime)
+                        {
+                            if (NPC.velocity.Y > -2f)
+                                NPC.velocity.Y -= 0.05f;
+
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX * -NPC.direction * 30, ProjectileID.CursedFlameHostile, CalRemixHelper.ProjectileDamage(240, 400), 1);
+                            }
+                            JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(40) + MathF.Cos(Timer * 0.5f) * MathHelper.ToRadians(10), 0.4f);
+                        }
+                        else if (Timer < waitEnd)
+                        {
+                            JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
+                            NPC.velocity *= 0.98f;
+                        }
+                        else if (Timer > waitEnd)
+                        {
+                            ChangePhase(PhaseType.Flamethrower);
+                        }
+
+                        if (Timer >= wait)
+                            EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
                     }
                     break;
                 case PhaseType.Knockout:
@@ -339,9 +429,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 spriteBatch.Draw(chain, NPC.Center + offset + points[i] - screenPos, null, norm, points[i].DirectionTo(lastPoint).ToRotation(), chain.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
             }
 
+            float correctJawRotation = NPC.spriteDirection == -1 ? JawRotation : -JawRotation;
             Vector2 jawOrigin = new Vector2(NPC.spriteDirection == 1 ? jaw.Width - 106 : 106, 65);
             spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, norm, NPC.rotation, tex.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
-            spriteBatch.Draw(jaw, NPC.Center - screenPos + offset - (jaw.Size() / 2).RotatedBy(NPC.rotation) + jawOrigin.RotatedBy(NPC.rotation), null, norm, NPC.rotation + JawRotation, jawOrigin, NPC.scale, NPC.FlippedEffects(), 0);
+            spriteBatch.Draw(jaw, NPC.Center - screenPos + offset - (jaw.Size() / 2).RotatedBy(NPC.rotation) + jawOrigin.RotatedBy(NPC.rotation), null, norm, NPC.rotation + correctJawRotation, jawOrigin, NPC.scale, NPC.FlippedEffects(), 0);
             spriteBatch.Draw(eye, NPC.Center - screenPos + offset, null, Color.SeaGreen, NPC.rotation, eye.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
         }
 
