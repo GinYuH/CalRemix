@@ -772,3 +772,5 @@ Chaotrix: {
 	DisplayName: Chaotrix
 	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Abyss.
 }
+
+Foveanator.DisplayName: Foveanator

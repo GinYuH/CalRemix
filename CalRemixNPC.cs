@@ -79,6 +79,7 @@ using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
+using CalRemix.Content.NPCs.Bosses.BossChanges.Twins;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
@@ -307,6 +308,15 @@ namespace CalRemix
                 else
                 {
                     npc.active = false;
+                }
+            }
+            if (npc.type == NPCID.Retinazer)
+            {
+                if (CalRemixWorld.bossAdditions && npc.Calamity().newAI[0] == 0f && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Foveanator>());
+                    npc.Calamity().newAI[0] = 1f;
+                    npc.SyncExtraAI();
                 }
             }
             if (npc.type == NPCType<SepulcherHead>() || npc.type == NPCType<SepulcherBody>() || npc.type == NPCType<SepulcherBodyEnergyBall>() || npc.type == NPCType<SepulcherTail>() || npc.type == NPCType<SepulcherArm>())
