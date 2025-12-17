@@ -129,7 +129,9 @@ namespace CalRemix.Core
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
-            
+            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedRetinazerAI += DisableRevRetinazer;
+            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedSpazmatismAI += DisableRevSpazmatism;
+
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
             schematicEntityHook = new Hook(schematicEntityMethod, RemixSchematicEntities);
@@ -165,6 +167,23 @@ namespace CalRemix.Core
         }
 
         #region Revengeance Master Mode Twins Shenanigans
+
+        public static bool DisableRevSpazmatism(On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.orig_BuffedSpazmatismAI orig, object guy, object mod)
+        {
+            if (CalRemixWorld.bossAdditions)
+                return false;
+            else
+                return orig(guy, mod);
+        }
+
+        public static bool DisableRevRetinazer(On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.orig_BuffedRetinazerAI orig, object guy, object mod)
+        {
+            if (CalRemixWorld.bossAdditions)
+                return false;
+            else
+                return orig(guy, mod);
+        }
+
         public static void TripletsSpawnTextOverride(On_NPC.orig_SpawnBoss orig, int x, int y, int type, int targetPlayerIndex)
         {
             if (CalRemixWorld.bossAdditions && type == NPCID.Retinazer)

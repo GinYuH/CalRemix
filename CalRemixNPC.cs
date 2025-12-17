@@ -310,15 +310,6 @@ namespace CalRemix
                     npc.active = false;
                 }
             }
-            if (npc.type == NPCID.Retinazer)
-            {
-                if (CalRemixWorld.bossAdditions && npc.Calamity().newAI[0] == 0f && Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Foveanator>());
-                    npc.Calamity().newAI[0] = 1f;
-                    npc.SyncExtraAI();
-                }
-            }
             if (npc.type == NPCType<SepulcherHead>() || npc.type == NPCType<SepulcherBody>() || npc.type == NPCType<SepulcherBodyEnergyBall>() || npc.type == NPCType<SepulcherTail>() || npc.type == NPCType<SepulcherArm>())
             {
                 bool sepulcherDead = (!NPC.AnyNPCs(ModContent.NPCType<BrimstoneHeart>()) && !Main.zenithWorld) || CalamityGlobalNPC.SCal < 0 || !Main.npc[CalamityGlobalNPC.SCal].active;
@@ -894,6 +885,37 @@ namespace CalRemix
                 if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()) && !NPC.AnyNPCs(NPCType<SplitChlorinePaladin>()))
                 {
                     SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<ChlorinePaladin>());
+                }
+
+                if (npc.type == NPCID.Retinazer)
+                {
+                    if (CalamityWorld.revenge)
+                    {
+                        TwinsAI.BuffedRetinazerAI(npc, Mod);
+                        return false;
+                    }
+                    else
+                    {
+                        CalamityGlobalNPC.laserEye = npc.whoAmI;
+                        if (npc.Calamity().newAI[0] == 0f && Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Foveanator>());
+                            npc.Calamity().newAI[0] = 1f;
+                            npc.SyncExtraAI();
+                        }
+                    }
+                }
+                if (npc.type == NPCID.Spazmatism)
+                {
+                    if (CalamityWorld.revenge)
+                    {
+                        TwinsAI.BuffedSpazmatismAI(npc, Mod);
+                        return false;
+                    }
+                    else
+                    {
+                        CalamityGlobalNPC.fireEye = npc.whoAmI;
+                    }
                 }
             }
             /*if (npc.type == NPCID.Deerclops)
