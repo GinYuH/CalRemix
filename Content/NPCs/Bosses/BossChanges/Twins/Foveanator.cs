@@ -1,15 +1,19 @@
-﻿using System;
-using System.IO;
+﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.DataStructures;
 using CalamityMod.Events;
+using CalamityMod.NPCs;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.World;
+using CalRemix.Content.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -19,9 +23,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalRemix.Content.Projectiles.Hostile;
-using CalamityMod;
-using CalamityMod.NPCs;
+using Terraria.Social.Base;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
 {
@@ -31,12 +33,29 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
         public static int phase2IconIndex;
 
         public static Asset<Texture2D> GlowTexture;
+        public static Asset<Texture2D> GlowTextureCTP;
+        public static Asset<Texture2D> TextureCTP;
+
+        public static bool CTPActive()
+        {
+            if (Main.netMode == NetmodeID.Server)
+                return false;
+            AssetSourceController aSC = Main.AssetSourceController;
+            IEnumerable<Terraria.IO.ResourcePack> list = aSC.ActiveResourcePackList.EnabledPacks;
+            foreach (Terraria.IO.ResourcePack item in list)
+            {
+                if (item.Name.Equals("Calamity Texture Pack"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public override void Load()
         {
             string phase1IconPath = "CalRemix/Content/NPCs/Bosses/BossChanges/Twins/Foveanator_Head_Boss";
             string phase2IconPath = "CalRemix/Content/NPCs/Bosses/BossChanges/Twins/Foveanator_Phase2_Head_Boss";
-
             phase1IconIndex = Mod.AddBossHeadTexture(phase1IconPath, -1);
             phase2IconIndex = Mod.AddBossHeadTexture(phase2IconPath, -1);
         }
@@ -48,7 +67,11 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, bestiaryData);
 
             if (!Main.dedServ)
+            {
                 GlowTexture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/Twins/FoveanatorGlow", AssetRequestMode.AsyncLoad);
+                GlowTextureCTP = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/Twins/FoveanatorCTPGlow", AssetRequestMode.AsyncLoad);
+                TextureCTP = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/BossChanges/Twins/FoveanatorCTP", AssetRequestMode.AsyncLoad);
+            }
         }
 
         public override void SetDefaults()
@@ -898,9 +921,9 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
             if (NPC.spriteDirection == 1)
                 spriteEffects = SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(TextureAssets.Npc[Type].Value, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, spriteEffects, 0f);
+            spriteBatch.Draw(CTPActive() ? TextureCTP.Value : TextureAssets.Npc[Type].Value, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, spriteEffects, 0f);
 
-            Texture2D glowTexture = GlowTexture.Value;
+            Texture2D glowTexture = CTPActive() ? GlowTextureCTP.Value : GlowTexture.Value;
             spriteBatch.Draw(glowTexture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, spriteEffects, 0f);
 
             return false;
