@@ -58,7 +58,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            NPC.NewNPC(new EntitySource_WorldEvent(), (int)p.Center.X, (int)p.Center.Y + 400, ModContent.NPCType<AnomalyTwo>());
+                            NPC.NewNPC(new EntitySource_WorldEvent(), Main.maxTilesX * 8, Main.maxTilesY * 8 + 1000, ModContent.NPCType<AnomalyTwo>());
                         }
                     }
                 }
