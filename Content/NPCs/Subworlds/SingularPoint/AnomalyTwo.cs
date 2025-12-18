@@ -96,6 +96,14 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             if (target == null || !target.active || target.dead)
             {
                 NPC.active = false;
+                if (DragonHead.active && DragonHead.type == ModContent.NPCType<AnomalyOne>())
+                {
+                    DragonHead.active = false;
+                }
+                if (OrbHead.active && OrbHead.type == ModContent.NPCType<AnomalyThree>())
+                {
+                    OrbHead.active = false;
+                }
                 return;
             }
             if (!DragonHead.active || DragonHead.type != ModContent.NPCType<AnomalyOne>())
@@ -265,6 +273,11 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             spriteBatch.Draw(eye, NPC.Center - screenPos + new Vector2(xOff, yOff) + Vector2.UnitY.RotatedBy(-JawRotation) * eyeYOff + offset, eye.Frame(1, 2, 0, 0), Color.White * NPC.Opacity, -JawRotation, new Vector2(eye.Width / 2, eye.Height / 4), NPC.scale, SpriteEffects.FlipHorizontally, 0);
 
             spriteBatch.Draw(core, NPC.Center - screenPos + offset, null, Color.White * NPC.Opacity, 0, tex.Size() / 2, NPC.scale, 0, 0);
+        }
+
+        public override bool CheckActive()
+        {
+            return !NPC.HasValidTarget;
         }
     }
 }

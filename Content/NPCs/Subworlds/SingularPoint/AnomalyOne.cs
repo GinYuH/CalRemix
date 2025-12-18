@@ -106,7 +106,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public override void AI()
         {
-            Main.blockInput = false;
+            Vector2 arenaCenter = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8f;
             NPC.TargetClosest(false);
             Player target = Main.player[NPC.target];
             if (target == null || !target.active || target.dead)
@@ -154,7 +154,9 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
                         Vector2 arenaPoint = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8 + Vector2.UnitY * 200;
                         Vector2 screenShake = Main.rand.NextVector2Circular(Main.LocalPlayer.Calamity().GeneralScreenShakePower * CalamityClientConfig.Instance.ScreenshakePower, Main.LocalPlayer.Calamity().GeneralScreenShakePower * CalamityClientConfig.Instance.ScreenshakePower);
+                        float arenaCreationWidth = 1200;
 
+                        #region camera stuff
                         if (Timer < roarDuration)
                         {
                             if (Timer < startRise)
@@ -191,6 +193,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             }
                             CameraPanSystem.CameraFocusPoint = NPC.Center;
                         }
+                        #endregion
 
                         if (Timer == 0)
                         {
@@ -236,7 +239,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             JawRotation = 0;
                             EditPoints(new() { new(), new(-560, -20), new(260, 550), new(0, 900) });
                             OldPosition = NPC.Center;
-                            SavePosition = NPC.Center + new Vector2(-1800, -500);
+                            SavePosition = NPC.Center + new Vector2(-arenaCreationWidth, -500);
                         }
                         else if (Timer < travelTime)
                         {
@@ -250,7 +253,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             JawRotation = MathHelper.ToRadians(40) + MathF.Sin(Timer * 1f) * MathHelper.ToRadians(5);
                             if (Timer == travelTime)
                             {
-                                SavePosition = new Vector2(OldPosition.X + 1800, OldPosition.Y - 500);
+                                SavePosition = new Vector2(OldPosition.X + arenaCreationWidth + 400, OldPosition.Y - 500);
                                 OldPosition = NPC.Center;
                             }
                             else
@@ -296,7 +299,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             if (Timer <= 1)
                             {
                                 NPC.spriteDirection = NPC.direction = Main.rand.NextBool().ToDirectionInt();
-                                SavePosition = target.Center + Vector2.UnitX * 1000 * NPC.direction;
+                                SavePosition = arenaCenter + Vector2.UnitX * 1000 * NPC.direction;
                                 OldPosition = NPC.Center;
                             }
                             else
@@ -333,7 +336,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         else if (Timer >= waitForBombs)
                         {
-                            ChangePhase(PhaseType.Flamethrower);
+                            ChangePhase(PhaseType.SineGas);
                         }
                     }
                     break;
@@ -524,6 +527,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             {
                 ctrlPoints[i] = Vector2.Lerp(ctrlPoints[i], points[i], 0.4f);
             }
+        }
+        public override bool CheckActive()
+        {
+            return !NPC.HasValidTarget;
         }
     }
 }

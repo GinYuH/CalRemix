@@ -223,5 +223,9 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 spriteBatch.Draw(eye, pos - screenPos, null, Color.White, NPC.rotation, eye.Size() / 2, NPC.scale, 0, 0);
             }
         }
+        public override bool CheckActive()
+        {
+            return !NPC.HasValidTarget;
+        }
     }
 }
