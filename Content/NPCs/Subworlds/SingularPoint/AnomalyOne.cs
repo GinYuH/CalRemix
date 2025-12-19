@@ -17,6 +17,7 @@ using CalamityMod.NPCs.Abyss;
 using CalRemix.Core.Graphics;
 using CalRemix.Core.Subworlds;
 using CalRemix.Content.Projectiles.Hostile;
+using CalamityMod.Items.Weapons.Ranged;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -139,6 +140,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 ChangePhase(PhaseType.Knockout);
                 NPC.dontTakeDamage = true;
             }
+            SoundStyle GasSound = BetterSoundID.ItemShadowbeamStaff with { Pitch = -1.4f, MaxInstances = 0, Volume = 4 };
             switch (CurrentPhase)
             {
                 case PhaseType.SpawnAnim:
@@ -269,6 +271,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             }
                             if (Main.netMode != NetmodeID.MultiplayerClient && Timer % 4 == 0)
                             {
+                                SoundEngine.PlaySound(GasSound);
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(25)).RotatedByRandom(MathHelper.ToRadians(4)) * 16, ModContent.ProjectileType<VirisiteMist>(), 0, 1, ai0: 2);
                             }
                             SPSky.SkyOpacity = MathHelper.Lerp(0, 1, Utils.GetLerpValue(travelTime, arenaCreationTime, Timer, true));
@@ -340,6 +343,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
                                 if (Timer % 2 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
+                                    if (Timer % 6 == 0)
+                                        SoundEngine.PlaySound(GasSound, NPC.Center);
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Main.rand.NextVector2Circular(30, 30), Vector2.Zero, ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(210, 380), 1);
                                 }
                             }
@@ -395,6 +400,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (Vector2.UnitX * -NPC.direction * 30).RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(240, 400), 1, ai0: 1);
+                            }
+                            if (Timer % 5 == 0)
+                            {
+                                SoundEngine.PlaySound(GasSound, NPC.Center);
                             }
                             JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(40) + MathF.Cos(Timer * 0.5f) * MathHelper.ToRadians(10), 0.4f);
                         }
