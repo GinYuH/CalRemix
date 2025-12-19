@@ -206,7 +206,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
                         if (Timer == 0)
                         {
-                            NPC.Center = target.Center + new Vector2(-400, 500);
+                            NPC.Center = arenaCenter + new Vector2(-400, 500);
                         }
                         if (Timer < startRise)
                         {
@@ -304,15 +304,17 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                     {
                         int travelTime = 40;
                         int wait = travelTime + 20;
-                        int waving = wait + 120;
-                        int waitForBombs = 420;
+                        int waving = wait + 180;
+                        int waitForBombs = 360;
+
+                        float dist = 1300;
 
                         if (Timer < travelTime)
                         {
                             if (Timer <= 1)
                             {
                                 NPC.spriteDirection = NPC.direction = Main.rand.NextBool().ToDirectionInt();
-                                SavePosition = arenaCenter + Vector2.UnitX * 1000 * NPC.direction;
+                                SavePosition = arenaCenter + Vector2.UnitX * dist * NPC.direction - Vector2.UnitY * 140;
                                 OldPosition = NPC.Center;
                                 ExtraOne = Main.rand.NextFloat(0, 120);
                             }
@@ -324,19 +326,18 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         else if (Timer < wait)
                         {
-
                         }
                         else if (Timer < waving)
                         {
                             if (Timer == wait)
                             {
-                                SavePosition = NPC.Center + Vector2.UnitX * 2000 * -NPC.direction;
+                                SavePosition = NPC.Center + Vector2.UnitX * 2 * dist * -NPC.direction;
                                 OldPosition = NPC.Center;
                             }
                             else
                             {
                                 Vector2 mainPos = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(wait, waving, Timer, true), 1));
-                                NPC.Center = Vector2.Lerp(mainPos, mainPos + Vector2.UnitY * MathF.Sin(Timer * 0.1f + ExtraOne) * 300, 0.9f);
+                                NPC.Center = Vector2.Lerp(mainPos, mainPos + Vector2.UnitY * MathF.Sin(Timer * 0.1f + ExtraOne) * 500, 0.7f);
                                 NPC.rotation = Utils.AngleLerp(NPC.rotation, MathF.Sin(Timer * 0.1f) * MathHelper.ToRadians(22), 0.3f);
                                 JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(20) + MathF.Cos(Timer * 0.3f) * MathHelper.ToRadians(10), 0.4f);
                                 EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
@@ -375,10 +376,12 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
                         float dist = 700;
 
+                        Vector2 dest = new Vector2(target.Center.X, arenaCenter.Y) + Vector2.UnitY * 200;
+
                         if (Timer < wait)
                         {
                             NPC.direction = Main.rand.NextBool().ToDirectionInt();
-                            SavePosition = target.Center + Vector2.UnitX * dist * NPC.direction;
+                            SavePosition = dest + Vector2.UnitX * dist * NPC.direction;
                             OldPosition = NPC.Center;
                         }
                         else if (Timer < travelTime)
@@ -389,7 +392,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         else if (Timer < chargeUp)
                         {
-                            NPC.Center = Vector2.Lerp(NPC.Center, target.Center + Vector2.UnitX * NPC.direction * dist, 0.1f);
+                            NPC.Center = Vector2.Lerp(NPC.Center, dest + Vector2.UnitX * NPC.direction * dist, 0.1f);
                             JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(35), 0.05f);
                         }
                         else if (Timer < firingTime)
