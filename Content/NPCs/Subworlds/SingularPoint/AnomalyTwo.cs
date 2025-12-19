@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Terraria.Audio;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -61,6 +62,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             get => (PhaseType)Phase;
             set => Phase = (int)value;
         }
+
+        public static SoundStyle FallSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyFall");
 
         public override void SetStaticDefaults()
         {

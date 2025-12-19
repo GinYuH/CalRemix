@@ -82,6 +82,11 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public List<Vector2> ctrlPoints = new();
 
+        public static SoundStyle RoarSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyOneRoar");
+        public static SoundStyle ShortRoarSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyOneRoarShort");
+        public static SoundStyle SineRoarSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyOneSineRoar");
+        public static SoundStyle MistSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyMist");
+
         public override void SetStaticDefaults()
         {
             NPCID.Sets.MustAlwaysDraw[Type] = true;
@@ -151,7 +156,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         float startShake = 120;
                         float startRise = startShake + 60;
                         float endRise = startRise + 90;
-                        float roarDuration = endRise + 120;
+                        float roarDuration = endRise + 170;
                         float stopLooking = roarDuration + 70;
                         float travelTime = stopLooking + 50;
                         float arenaCreationTime = travelTime + 110;
@@ -234,7 +239,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         {
                             if (Timer == endRise)
                             {
-                                SoundEngine.PlaySound(ReaperShark.EnragedRoarSound with { Pitch = 1 });
+                                SoundEngine.PlaySound(RoarSound);
                             }
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.PiOver4 + MathF.Sin(Timer * 0.4f + 1) * MathHelper.ToRadians(10), 0.1f);
                             JawRotation = MathHelper.ToRadians(40) + MathF.Sin(Timer * 1f) * MathHelper.ToRadians(4);
@@ -255,6 +260,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         else if (Timer < travelTime)
                         {
+                            if (Timer == stopLooking)
+                            {
+                                SoundEngine.PlaySound(ShortRoarSound);
+                            }
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.ToRadians(-70), 0.2f);
                             JawRotation = Utils.AngleLerp(0, MathHelper.ToRadians(40), 0.2f);
                             NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.ExpInEasing(Utils.GetLerpValue(stopLooking, travelTime, Timer, true), 1));
@@ -320,6 +329,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 SavePosition = arenaCenter + Vector2.UnitX * dist * NPC.direction - Vector2.UnitY * 140;
                                 OldPosition = NPC.Center;
                                 ExtraOne = Main.rand.NextFloat(0, 120);
+                                SoundEngine.PlaySound(ShortRoarSound, NPC.Center);
                             }
                             else
                             {
@@ -336,6 +346,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             {
                                 SavePosition = NPC.Center + Vector2.UnitX * 2 * dist * -NPC.direction;
                                 OldPosition = NPC.Center;
+                                SoundEngine.PlaySound(SineRoarSound, NPC.Center);
                             }
                             else
                             {
@@ -347,7 +358,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
                                 if (Timer % 2 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    if (Timer % 6 == 0)
+                                    if (Timer % 10 == 0)
                                         SoundEngine.PlaySound(GasSound, NPC.Center);
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Main.rand.NextVector2Circular(30, 30), Vector2.Zero, ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(210, 380), 1);
                                 }
@@ -357,7 +368,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         {
                             if (Timer == waving)
                             {
-                                NPC.direction = NPC.spriteDirection *= -1;                                
+                                NPC.direction = NPC.spriteDirection *= -1;
+                                SoundEngine.PlaySound(ShortRoarSound, NPC.Center);
                             }
                             EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
                             JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
@@ -373,7 +385,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                     {
                         int wait = 20;
                         int travelTime = wait + 30;
-                        int chargeUp = travelTime + 60;
+                        int chargeUp = travelTime + 20;
                         int firingTime = chargeUp + 150;
                         int waitEnd = firingTime + 80;
 
@@ -397,6 +409,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         {
                             NPC.Center = Vector2.Lerp(NPC.Center, dest + Vector2.UnitX * NPC.direction * dist, 0.1f);
                             JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(35), 0.05f);
+                            if (Timer == travelTime)
+                            {
+                                SoundEngine.PlaySound(MistSound with { Volume = 4, Pitch = 0.4f });
+                            }
                         }
                         else if (Timer < firingTime)
                         {
@@ -407,7 +423,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (Vector2.UnitX * -NPC.direction * 30).RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(240, 400), 1, ai0: 1);
                             }
-                            if (Timer % 5 == 0)
+                            if (Timer % 6 == 0)
                             {
                                 SoundEngine.PlaySound(GasSound, NPC.Center);
                             }
@@ -449,13 +465,17 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         {
                             if (Timer == wait)
                             {
-                                SoundEngine.PlaySound(ReaperShark.EnragedRoarSound with { Pitch = 2 });
+                                SoundEngine.PlaySound(RoarSound with { Pitch = 0.7f });
                             }
                             SavePosition = new Vector2(NPC.Center.X, arenaCenter.Y + 600);
                             OldPosition = NPC.Center;
                         }
                         else if (Timer < fallDuration)
                         {
+                            if (Timer == pauseBeforeFall)
+                            {
+                                SoundEngine.PlaySound(AnomalyTwo.FallSound);
+                            }
                             NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInEasing(Utils.GetLerpValue(pauseBeforeFall, fallDuration, Timer, true), 1));
                         }
                         else if (Timer > finishAnim)
