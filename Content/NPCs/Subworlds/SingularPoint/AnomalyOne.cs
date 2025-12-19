@@ -412,10 +412,12 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 SoundEngine.PlaySound(GasSound, NPC.Center);
                             }
                             JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(40) + MathF.Cos(Timer * 0.5f) * MathHelper.ToRadians(10), 0.4f);
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.spriteDirection * MathHelper.ToRadians(10) + MathF.Cos(Timer * 0.1f) * MathHelper.ToRadians(10), 0.4f);
                         }
                         else if (Timer < waitEnd)
                         {
                             JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
                             NPC.velocity *= 0.98f;
                         }
                         else if (Timer > waitEnd)
@@ -518,6 +520,14 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             Color outlineColor = Color.SeaGreen * NPC.Opacity;
             Vector3 outlineHSL = Main.rgbToHsl(outlineColor);
             float outlineThickness = 2;
+            if (JawRotation != 0 && (CurrentPhase == PhaseType.Flamethrower || CurrentPhase == PhaseType.SineGas))
+            {
+                spriteBatch.EnterShaderRegion(BlendState.Additive);
+                Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
+                spriteBatch.Draw(bloom, NPC.Center - screenPos, null, Color.SeaGreen, 0, bloom.Size() / 2, NPC.scale * 0.2f, 0, 0);
+                spriteBatch.Draw(bloom, NPC.Center - screenPos, null, Color.SeaGreen, 0, bloom.Size() / 2, NPC.scale * 0.2f, 0, 0);
+                spriteBatch.ExitShaderRegion();
+            }
             CalamityUtils.EnterShaderRegion(spriteBatch);
             GameShaders.Misc["CalamityMod:BasicTint"].UseOpacity(1f);
             GameShaders.Misc["CalamityMod:BasicTint"].UseColor(Main.hslToRgb(1 - outlineHSL.X, outlineHSL.Y, outlineHSL.Z));
