@@ -6,7 +6,7 @@ using CalRemix.Content.Tiles.Subworlds.SingularPoint;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.SingularPoint
 {
-    public class Prasinite : ModItem
+    public class Virisite : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -21,7 +21,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.SingularPoint
             Item.autoReuse = true;
             Item.maxStack = 9999;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<PrasinitePlaced>();
+            Item.createTile = ModContent.TileType<VirisitePlaced>();
             Item.width = 12;
             Item.height = 12;
         }

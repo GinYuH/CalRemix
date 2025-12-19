@@ -5985,3 +5985,8 @@ FabergéEgg: {
 		These foes may be related to the acquisition of Cryonic, Perennial, and Scoria Ore...
 		'''
 }
+
+Virisite: {
+	DisplayName: Virisite
+	Tooltip: ""
+}

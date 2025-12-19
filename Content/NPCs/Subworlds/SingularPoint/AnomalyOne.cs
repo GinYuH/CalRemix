@@ -16,6 +16,7 @@ using Terraria.Audio;
 using CalamityMod.NPCs.Abyss;
 using CalRemix.Core.Graphics;
 using CalRemix.Core.Subworlds;
+using CalRemix.Content.Projectiles.Hostile;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -152,9 +153,15 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         float lookDown = arenaCreationTime + 60;
                         float finish = lookDown + 50;
 
+                        bool skip = true;
+                        if (skip && Timer < startRise)
+                        {
+                            Timer = startRise;
+                        }
+
                         Vector2 arenaPoint = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8 + Vector2.UnitY * 200;
                         Vector2 screenShake = Main.rand.NextVector2Circular(Main.LocalPlayer.Calamity().GeneralScreenShakePower * CalamityClientConfig.Instance.ScreenshakePower, Main.LocalPlayer.Calamity().GeneralScreenShakePower * CalamityClientConfig.Instance.ScreenshakePower);
-                        float arenaCreationWidth = 1200;
+                        float arenaCreationWidth = 1000;
 
                         #region camera stuff
                         if (Timer < roarDuration)
@@ -253,12 +260,16 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             JawRotation = MathHelper.ToRadians(40) + MathF.Sin(Timer * 1f) * MathHelper.ToRadians(5);
                             if (Timer == travelTime)
                             {
-                                SavePosition = new Vector2(OldPosition.X + arenaCreationWidth + 400, OldPosition.Y - 500);
+                                SavePosition = new Vector2(OldPosition.X + arenaCreationWidth, OldPosition.Y - 500);
                                 OldPosition = NPC.Center;
                             }
                             else
                             {
                                 NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(travelTime + 1, arenaCreationTime, Timer, true), 1));
+                            }
+                            if (Main.netMode != NetmodeID.MultiplayerClient && Timer % 4 == 0)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(25)).RotatedByRandom(MathHelper.ToRadians(4)) * 16, ModContent.ProjectileType<VirisiteMist>(), 0, 1, ai0: 2);
                             }
                             SPSky.SkyOpacity = MathHelper.Lerp(0, 1, Utils.GetLerpValue(travelTime, arenaCreationTime, Timer, true));
                         }
@@ -282,8 +293,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         {
                             CameraPanSystem.CameraPanInterpolant = 0;
                             NPC.dontTakeDamage = false;
-                            ChangePhase(PhaseType.SineGas);
-                            //ChangePhase(Main.rand.NextBool() ? PhaseType.SineGas : PhaseType.Flamethrower);
+                            ChangePhase(Main.rand.NextBool() ? PhaseType.SineGas : PhaseType.Flamethrower);
                         }
                     }
                     break;
@@ -292,7 +302,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         int travelTime = 40;
                         int wait = travelTime + 20;
                         int waving = wait + 120;
-                        int waitForBombs = 180;
+                        int waitForBombs = 420;
 
                         if (Timer < travelTime)
                         {
@@ -301,6 +311,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 NPC.spriteDirection = NPC.direction = Main.rand.NextBool().ToDirectionInt();
                                 SavePosition = arenaCenter + Vector2.UnitX * 1000 * NPC.direction;
                                 OldPosition = NPC.Center;
+                                ExtraOne = Main.rand.NextFloat(0, 120);
                             }
                             else
                             {
@@ -322,21 +333,30 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             else
                             {
                                 Vector2 mainPos = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(wait, waving, Timer, true), 1));
-                                NPC.Center = Vector2.Lerp(mainPos, mainPos + Vector2.UnitY * MathF.Sin(Timer * 0.1f) * 300, 0.9f);
+                                NPC.Center = Vector2.Lerp(mainPos, mainPos + Vector2.UnitY * MathF.Sin(Timer * 0.1f + ExtraOne) * 300, 0.9f);
                                 NPC.rotation = Utils.AngleLerp(NPC.rotation, MathF.Sin(Timer * 0.1f) * MathHelper.ToRadians(22), 0.3f);
                                 JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(20) + MathF.Cos(Timer * 0.3f) * MathHelper.ToRadians(10), 0.4f);
                                 EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
+
+                                if (Timer % 2 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Main.rand.NextVector2Circular(30, 30), Vector2.Zero, ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(210, 380), 1);
+                                }
                             }
                         }
                         else if (Timer < waitForBombs)
                         {
+                            if (Timer == waving)
+                            {
+                                NPC.direction = NPC.spriteDirection *= -1;                                
+                            }
                             EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
                             JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
                             NPC.velocity *= 0.99f;
                         }
                         else if (Timer >= waitForBombs)
                         {
-                            ChangePhase(PhaseType.SineGas);
+                            ChangePhase(PhaseType.Flamethrower);
                         }
                     }
                     break;
@@ -374,7 +394,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX * -NPC.direction * 30, ProjectileID.CursedFlameHostile, CalRemixHelper.ProjectileDamage(240, 400), 1);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (Vector2.UnitX * -NPC.direction * 30).RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(240, 400), 1, ai0: 1);
                             }
                             JawRotation = Utils.AngleLerp(JawRotation, MathHelper.ToRadians(40) + MathF.Cos(Timer * 0.5f) * MathHelper.ToRadians(10), 0.4f);
                         }
@@ -385,7 +405,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         else if (Timer > waitEnd)
                         {
-                            ChangePhase(PhaseType.Flamethrower);
+                            ChangePhase(PhaseType.SineGas);
                         }
 
                         if (Timer >= wait)
@@ -500,7 +520,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             }
 
             BezierCurve curve = new(ctrlPoints.ToArray());
-            List<Vector2> points = curve.GetPoints(40);
+            List<Vector2> points = curve.GetPoints(60);
             for (int i = 0; i < points.Count; i++)
             {
                 Vector2 lastPoint = i == 0 ? NPC.Center : points[i - 1];
