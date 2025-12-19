@@ -25,6 +25,15 @@ namespace CalRemix.Core.Subworlds
             }
         }
 
+        public const int ArenaWidth = 8000;
+        public const int ArenaHeight = 4000;
+
+        public static Vector2 ArenaCenter => new Vector2(maxTilesX, maxTilesY) * 8f;
+
+        public static Rectangle ArenaArea => Utils.CenteredRectangle(ArenaCenter, new Vector2(ArenaWidth, ArenaHeight));
+
+        public static Rectangle SafeArea => Utils.CenteredRectangle(ArenaCenter, new Vector2(ArenaWidth, ArenaHeight) * 0.33f + new Vector2(100));
+
         public static float SkyOpacity = 0;
 
         public static readonly Color DrawColor = Color.White;
@@ -46,7 +55,7 @@ namespace CalRemix.Core.Subworlds
 
             var shader = GameShaders.Misc["CalRemix:AnomalyBorder"];
             Vector2 center = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8f - Main.screenPosition;
-            Vector2 dimensions = new Vector2(8000, 4000);   
+            Vector2 dimensions = new Vector2(ArenaWidth, ArenaHeight);   
             shader.UseColor(new Color(0, 255, 123));
             shader.Shader.Parameters["rectangle"].SetValue(new Vector4(center.X - dimensions.X / 2, center.Y - dimensions.Y / 2, center.X + dimensions.X / 2, center.Y + dimensions.Y / 2));
             shader.Shader.Parameters["topLeft"].SetValue(dimensions / 3);

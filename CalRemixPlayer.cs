@@ -72,6 +72,7 @@ using CalRemix.UI.Anomaly109;
 using CalamityMod.Projectiles.Melee;
 using Mono.Cecil;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Subworlds.SingularPoint;
 
 namespace CalRemix
 {
@@ -2000,6 +2001,19 @@ namespace CalRemix
             {
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
+            }
+            if (SubworldSystem.IsActive<SingularPointSubworld>())
+            {
+                if (SPSky.SkyOpacity > 0)
+                {
+                    if (!Player.Hitbox.Intersects(SPSky.SafeArea))
+                    {
+                        if (Player.lifeRegen > 0)
+                            Player.lifeRegen = 0;
+                        Player.lifeRegenTime = 0;
+                        Player.lifeRegen -= 200;
+                    }
+                }
             }
             if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
         }
