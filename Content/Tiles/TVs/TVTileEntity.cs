@@ -24,11 +24,10 @@ public class TVTileEntity : ModTileEntity
 
     public bool IsOn { get; set; } = false;
     public int Volume { get; set; } = 100;
+    public Point16 Size { get; set; }
 
-    // Track if we've started the channel
     private bool _hasStartedChannel = false;
 
-    // Channel this TV is tuned to
     public int CurrentChannel
     {
         get => _currentChannel;
@@ -47,7 +46,6 @@ public class TVTileEntity : ModTileEntity
 
     public Point16 TilePosition { get; set; }
 
-    // Get the shared video player for this TV's channel
     public VideoPlayerCore GetVideoPlayer()
     {
         var manager = ModContent.GetInstance<VideoChannelManager>();
@@ -82,24 +80,13 @@ public class TVTileEntity : ModTileEntity
         if (!IsOn) return;
 
         var manager = ModContent.GetInstance<VideoChannelManager>();
-
-        // Check if old channel should be stopped
         manager.StopChannelIfUnused(oldChannel);
 
-        // Start new channel if it's a preset
         if (manager.IsPresetChannel(newChannel))
         {
             manager.StartChannel(newChannel);
             _hasStartedChannel = true;
         }
-    }
-
-    /// <summary>
-    /// Play media on custom channel (not implemented in shared system).
-    /// </summary>
-    public void Play(string input)
-    {
-        CalRemix.instance.Logger.Warn("Direct play not supported in shared channel system");
     }
 
     /// <summary>
@@ -114,6 +101,7 @@ public class TVTileEntity : ModTileEntity
     public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
     {
         TilePosition = new Point16(i, j);
+        Size = ((BaseTVTile)TileLoader.GetTile(type)).GetTVDimensions();
 
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
@@ -136,32 +124,24 @@ public class TVTileEntity : ModTileEntity
         {
             if (_hasStartedChannel)
             {
-                // Check if channel should stop now that THIS TV is off
                 manager.StopChannelIfUnused(CurrentChannel);
                 _hasStartedChannel = false;
             }
             return;
         }
 
-        // TV is ON - start preset channel if not started
         if (manager.IsPresetChannel(CurrentChannel))
         {
             var player = manager.GetChannelPlayer(CurrentChannel);
 
-            // Start channel if it doesn't exist or isn't playing
             if (player == null || (!player.IsPlaying && !player.IsLoading && !player.IsPreparing))
             {
                 manager.StartChannel(CurrentChannel);
                 _hasStartedChannel = true;
             }
             else if (!_hasStartedChannel)
-            {
-                // Channel is already playing (another TV started it), mark as started
                 _hasStartedChannel = true;
-            }
         }
-
-        // Note: Volume is managed by TVVolumeManager based on distance
     }
 
     public override void SaveData(TagCompound tag)
@@ -335,10 +315,8 @@ public class TVTileEntity : ModTileEntity
         return (finalPos, finalSize, staticArea);
     }
 
-    // Cleanup when TV is destroyed
     public override void OnKill()
     {
-        // Check if channel should stop when this TV is destroyed
         var manager = ModContent.GetInstance<VideoChannelManager>();
         manager?.StopChannelIfUnused(CurrentChannel);
 

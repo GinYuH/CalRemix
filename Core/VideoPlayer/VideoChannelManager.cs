@@ -100,10 +100,10 @@ public class VideoChannelManager : ModSystem
     #endregion
 
     // Shared VideoPlayerCore instances (one per channel)
-    private readonly Dictionary<int, VideoPlayerCore> _channelPlayers = new();
+    private readonly Dictionary<int, VideoPlayerCore> _channelPlayers = [];
 
     // Track which entries were last used (to avoid repeats)
-    private readonly Dictionary<int, ContentEntry> _lastPlayedEntry = new();
+    private readonly Dictionary<int, ContentEntry> _lastPlayedEntry = [];
 
     public bool IsPresetChannel(int channelId) =>
         channelId >= MIN_CHANNEL && channelId <= MAX_PRESET_CHANNEL;
@@ -138,11 +138,8 @@ public class VideoChannelManager : ModSystem
             player = new VideoPlayerCore(1280, 720);
             _channelPlayers[channelId] = player;
 
-            // Set up auto-repeat for preset channels
             if (IsPresetChannel(channelId))
-            {
                 player.PlaybackEnded += (sender, e) => OnChannelEnded(channelId);
-            }
 
             CalRemix.instance.Logger.Info($"Created shared player for channel {channelId}");
         }
@@ -163,13 +160,9 @@ public class VideoChannelManager : ModSystem
 
         var player = GetChannelPlayer(channelId);
 
-        // If already playing, don't restart
         if (player != null && (player.IsPlaying || player.IsLoading || player.IsPreparing))
-        {
             return;
-        }
 
-        // Get or create the player
         player = GetOrCreateChannelPlayer(channelId);
         if (player == null) return;
 
@@ -306,15 +299,11 @@ public class VideoChannelManager : ModSystem
         var player = GetChannelPlayer(channelId);
         if (player == null) return;
 
-        // If it was a playlist, it will auto-advance
-        // Otherwise, play next content
         if (!content.IsPlaylist)
-        {
             Main.QueueMainThreadAction(() =>
             {
                 PlayChannelContent(channelId, content, player);
             });
-        }
     }
 
     /// <summary>
@@ -322,7 +311,6 @@ public class VideoChannelManager : ModSystem
     /// </summary>
     public void StopChannelIfUnused(int channelId)
     {
-        // Count how many TVs are currently watching this channel
         int activeTVCount = 0;
 
         foreach (var kvp in Terraria.DataStructures.TileEntity.ByID)
@@ -335,13 +323,11 @@ public class VideoChannelManager : ModSystem
             }
         }
 
-        // Only stop if no TVs are watching
         if (activeTVCount == 0)
         {
             var player = GetChannelPlayer(channelId);
             if (player != null)
             {
-                // Only stop if actually playing something
                 if (player.IsPlaying || player.IsLoading || player.IsPreparing)
                 {
                     player.Stop();
@@ -359,7 +345,6 @@ public class VideoChannelManager : ModSystem
 
     public override void PostUpdateEverything()
     {
-        // Update all active channel players
         foreach (var kvp in _channelPlayers)
         {
             var player = kvp.Value;
@@ -378,11 +363,8 @@ public class VideoChannelManager : ModSystem
 
     public override void OnWorldUnload()
     {
-        // Dispose all channel players
         foreach (var kvp in _channelPlayers)
-        {
             kvp.Value.Dispose();
-        }
 
         _channelPlayers.Clear();
         _lastPlayedEntry.Clear();

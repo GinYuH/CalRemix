@@ -1,12 +1,11 @@
 ﻿using CalRemix.Content.Tiles.TVs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.IO;
 using Terraria.ModLoader;
 
 namespace CalRemix.Core.VideoPlayer;
@@ -36,7 +35,8 @@ public class TVDrawSystem : ModSystem
                 Rectangle tvBounds = new Rectangle(
                     tvEntity.Position.X * 16,
                     tvEntity.Position.Y * 16,
-                    128, 80 // Approximate TV size
+                    tvEntity.Size.X * 16,
+                    tvEntity.Size.Y * 16
                 );
 
                 if (screenBounds.Intersects(tvBounds))
@@ -68,8 +68,15 @@ public class TVDrawSystem : ModSystem
 
         try
         {
-            // Calculate all screen areas first
-            var tvData = new List<(Vector2 Position, Vector2 Size, Rectangle StaticArea, TVTileEntity Entity, bool NeedsStatic)>();
+            // Calculate all screen areas and shader info first
+            var tvData = new List<(
+                Vector2 Position,
+                Vector2 Size,
+                Rectangle StaticArea,
+                TVTileEntity Entity,
+                bool NeedsStatic,
+                Effect Shader
+            )>();
 
             foreach (var tvEntity in _tvsToRender)
             {
@@ -79,33 +86,73 @@ public class TVDrawSystem : ModSystem
                 bool needsStatic = tvEntity.IsOn &&
                     (player == null || (!player.IsPlaying && !player.IsLoading && !player.IsPreparing));
 
-                tvData.Add((position, size, staticArea, tvEntity, needsStatic));
+                // Get shader for this TV type
+                Effect shader = GetShaderForTV(tvEntity);
+
+                tvData.Add((position, size, staticArea, tvEntity, needsStatic, shader));
             }
 
-            // Draw all videos first (no matrix)
+            // Draw all videos (with shaders if applicable)
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer);
 
-            foreach (var (position, size, staticArea, tvEntity, needsStatic) in tvData)
+            foreach (var (position, size, staticArea, tvEntity, needsStatic, shader) in tvData)
             {
                 if (!needsStatic)
                 {
                     try
                     {
+                        // Start spritebatch with shader (or without if null)
+                        if (shader != null)
+                        {
+                            // Configure shader parameters
+                            ConfigureShaderForTV(shader, tvEntity);
+
+                            Main.spriteBatch.Begin(
+                                SpriteSortMode.Immediate,
+                                BlendState.AlphaBlend,
+                                Main.DefaultSamplerState,
+                                DepthStencilState.None,
+                                Main.Rasterizer,
+                                shader
+                            );
+
+                            // Apply shader pass
+                            shader.CurrentTechnique.Passes[0].Apply();
+                        }
+                        else
+                        {
+                            Main.spriteBatch.Begin(
+                                SpriteSortMode.Deferred,
+                                BlendState.AlphaBlend,
+                                Main.DefaultSamplerState,
+                                DepthStencilState.None,
+                                Main.Rasterizer
+                            );
+                        }
+
                         tvEntity.DrawVideoOrLoading(Main.spriteBatch, position, size);
+                        Main.spriteBatch.End();
                     }
                     catch (Exception ex)
                     {
                         CalRemix.instance.Logger.Error($"Error drawing video for TV at {tvEntity.Position}: {ex.Message}");
+                        try { Main.spriteBatch.End(); } catch { }
                     }
                 }
             }
 
             // Then draw all static in one batch (with matrix)
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                BlendState.AlphaBlend,
+                Main.DefaultSamplerState,
+                DepthStencilState.None,
+                Main.Rasterizer,
+                null,
+                Main.GameViewMatrix.TransformationMatrix
+            );
 
-            foreach (var (position, size, staticArea, tvEntity, needsStatic) in tvData)
+            foreach (var (position, size, staticArea, tvEntity, needsStatic, shader) in tvData)
             {
                 if (needsStatic)
                 {
@@ -139,8 +186,15 @@ public class TVDrawSystem : ModSystem
 
         try
         {
-            // Calculate all screen areas first
-            var tvData = new List<(Vector2 Position, Vector2 Size, Rectangle StaticArea, TVTileEntity Entity, bool NeedsStatic)>();
+            // Calculate all screen areas and shader info first
+            var tvData = new List<(
+                Vector2 Position,
+                Vector2 Size,
+                Rectangle StaticArea,
+                TVTileEntity Entity,
+                bool NeedsStatic,
+                Effect Shader
+            )>();
 
             foreach (var tvEntity in _tvsToRender)
             {
@@ -150,33 +204,71 @@ public class TVDrawSystem : ModSystem
                 bool needsStatic = tvEntity.IsOn &&
                     (player == null || (!player.IsPlaying && !player.IsLoading && !player.IsPreparing));
 
-                tvData.Add((position, size, staticArea, tvEntity, needsStatic));
+                // Get shader for this TV type
+                Effect shader = GetShaderForTV(tvEntity);
+
+                tvData.Add((position, size, staticArea, tvEntity, needsStatic, shader));
             }
 
-            // Draw all videos first (no matrix)
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone);
-
-            foreach (var (position, size, staticArea, tvEntity, needsStatic) in tvData)
+            // Draw each video with its shader
+            foreach (var (position, size, staticArea, tvEntity, needsStatic, shader) in tvData)
             {
                 if (!needsStatic)
                 {
                     try
                     {
+                        // Start spritebatch with shader (or without if null)
+                        if (shader != null)
+                        {
+                            // Configure shader parameters
+                            ConfigureShaderForTV(shader, tvEntity);
+
+                            spriteBatch.Begin(
+                                SpriteSortMode.Immediate,
+                                BlendState.AlphaBlend,
+                                SamplerState.LinearClamp,
+                                DepthStencilState.None,
+                                RasterizerState.CullNone,
+                                shader
+                            );
+
+                            // Apply shader pass
+                            shader.CurrentTechnique.Passes[0].Apply();
+                        }
+                        else
+                        {
+                            spriteBatch.Begin(
+                                SpriteSortMode.Deferred,
+                                BlendState.AlphaBlend,
+                                SamplerState.LinearClamp,
+                                DepthStencilState.None,
+                                RasterizerState.CullNone
+                            );
+                        }
+
                         tvEntity.DrawVideoOrLoading(spriteBatch, position, size);
+                        spriteBatch.End();
                     }
                     catch (Exception ex)
                     {
                         CalRemix.instance.Logger.Error($"Error drawing video for TV at {tvEntity.Position}: {ex.Message}");
+                        try { spriteBatch.End(); } catch { }
                     }
                 }
             }
 
-            spriteBatch.End();
-
             // Then draw all static in one batch (with matrix)
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                BlendState.AlphaBlend,
+                SamplerState.LinearClamp,
+                DepthStencilState.None,
+                RasterizerState.CullNone,
+                null,
+                Main.GameViewMatrix.TransformationMatrix
+            );
 
-            foreach (var (position, size, staticArea, tvEntity, needsStatic) in tvData)
+            foreach (var (position, size, staticArea, tvEntity, needsStatic, shader) in tvData)
             {
                 if (needsStatic)
                 {
@@ -201,6 +293,53 @@ public class TVDrawSystem : ModSystem
             {
                 try { spriteBatch.End(); } catch { }
             }
+        }
+    }
+
+    /// <summary>
+    /// Get the shader effect for a TV based on its tile type.
+    /// Returns null if the TV has no shader.
+    /// </summary>
+    private static Effect GetShaderForTV(TVTileEntity tvEntity)
+    {
+        try
+        {
+            int tileType = Main.tile[tvEntity.Position.X, tvEntity.Position.Y].TileType;
+            var modTile = TileLoader.GetTile(tileType);
+
+            if (modTile is BaseTVTile baseTVTile)
+            {
+                Asset<Effect> shaderAsset = baseTVTile.GetShaderEffect();
+                return shaderAsset?.Value;
+            }
+        }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"Error getting shader for TV at {tvEntity.Position}: {ex.Message}");
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Configure shader parameters for a TV.
+    /// Calls the tile's ConfigureShader method if available.
+    /// </summary>
+    private static void ConfigureShaderForTV(Effect shader, TVTileEntity tvEntity)
+    {
+        try
+        {
+            int tileType = Main.tile[tvEntity.Position.X, tvEntity.Position.Y].TileType;
+            var modTile = TileLoader.GetTile(tileType);
+
+            if (modTile is BaseTVTile baseTVTile)
+            {
+                baseTVTile.ConfigureShader(shader, tvEntity);
+            }
+        }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"Error configuring shader for TV at {tvEntity.Position}: {ex.Message}");
         }
     }
 }

@@ -13,9 +13,8 @@ using Terraria.ModLoader;
 namespace CalRemix.Core.VideoPlayer;
 
 /// <summary>
-/// Core video player logic independent of UI.
+/// Core video player logic
 /// Handles LibVLC media playback, frame capture, and texture management.
-/// Can be used by UI elements, tiles, or any other system that needs video playback.
 /// </summary>
 public class VideoPlayerCore : IDisposable
 {
@@ -146,7 +145,7 @@ public class VideoPlayerCore : IDisposable
     #region Playback Control
 
     /// <summary>
-    /// Play media from any source. By default queues the video.
+    /// Play media from any source. Supports YouTube, Twitch, Vimeo, TikTok, and many more platforms.
     /// </summary>
     /// <param name="forcePlay">If true, clears queue and plays immediately</param>
     public void Play(string input, bool forcePlay = true)
@@ -164,21 +163,16 @@ public class VideoPlayerCore : IDisposable
         {
             lock (_stateLock)
             {
-                // Check if it's a playlist
                 if (VideoUrlHelper.IsYouTubePlaylist(input))
                 {
                     PlayPlaylist(input, forcePlay);
                     return;
                 }
 
-                // For single videos, add to queue
                 if (forcePlay)
                 {
-                    // Stop current video and clear queue
                     if (_isPlaying || _isPaused)
-                    {
                         _mediaPlayer?.Stop();
-                    }
 
                     VideoUrlHelper.CancelRequest(_currentRequestId);
                     ClearVideoTexture();
@@ -190,10 +184,8 @@ public class VideoPlayerCore : IDisposable
                 }
                 else
                 {
-                    // Add to back of queue
                     _videoQueue.Enqueue(input);
 
-                    // If nothing is playing, start the queue
                     if (!_isPlaying && !_isLoading && !_isPreparing)
                     {
                         _autoAdvanceQueue = false;
@@ -240,13 +232,17 @@ public class VideoPlayerCore : IDisposable
         _mediaPlayer.Play(_currentMedia);
     }
 
-    private void PlayYouTubeUrlInternal(string url)
+    /// <summary>
+    /// Play video from a supported platform URL.
+    /// Works with YouTube, Twitch, Vimeo, TikTok, Twitter, Reddit, and many more.
+    /// </summary>
+    private void PlayVideoUrlInternal(string url)
     {
         _currentRequestId = Guid.NewGuid();
         var requestId = _currentRequestId;
         var sessionId = _sessionId;
 
-        CalRemix.instance.Logger.Info($"PlayYouTubeUrlInternal called for session {_sessionId}, request {requestId}");
+        CalRemix.instance.Logger.Info($"PlayVideoUrlInternal called for session {_sessionId}, request {requestId}");
 
         _isPreparing = true;
         SetLoadingState(true);
@@ -259,10 +255,9 @@ public class VideoPlayerCore : IDisposable
                 {
                     try
                     {
-                        CalRemix.instance.Logger.Info($"Proccessed url found: {processedUrl}");
+                        CalRemix.instance.Logger.Info($"Processed url found: {processedUrl}");
 
                         SetLoadingState(false);
-
 
                         if (_sessionId != sessionId || _currentRequestId != requestId || _isDisposed)
                         {
@@ -273,7 +268,7 @@ public class VideoPlayerCore : IDisposable
 
                         if (processedUrl == null)
                         {
-                            CalRemix.instance.Logger.Error("Failed to extract YouTube URL");
+                            CalRemix.instance.Logger.Error("Failed to extract video URL");
                             _isPreparing = false;
                             PlayNextInQueue();
                             return;
@@ -285,7 +280,7 @@ public class VideoPlayerCore : IDisposable
                     }
                     catch (Exception ex)
                     {
-                        CalRemix.instance.Logger.Error($"Failed to play YouTube URL: {ex.Message}");
+                        CalRemix.instance.Logger.Error($"Failed to play video URL: {ex.Message}");
                         _isPreparing = false;
                         PlayNextInQueue();
                     }
@@ -293,7 +288,7 @@ public class VideoPlayerCore : IDisposable
             }
             catch (Exception ex)
             {
-                CalRemix.instance.Logger.Error($"Error in PlayYouTubeUrlInternal callback: {ex.Message}");
+                CalRemix.instance.Logger.Error($"Error in PlayVideoUrlInternal callback: {ex.Message}");
             }
         }, requestId);
     }
@@ -591,22 +586,24 @@ public class VideoPlayerCore : IDisposable
             _currentlyPlayingUrl = nextVideo;
             CalRemix.instance.Logger.Info($"Playing next in queue ({_videoQueue.Count} remaining): {nextVideo}");
 
-            // Clear old texture BEFORE starting new video
             ClearVideoTexture();
 
-            // Determine video type and play
-            if (VideoUrlHelper.IsYouTubeUrl(nextVideo))
+            // Check if it's a supported video platform URL (YouTube, Twitch, Vimeo, etc.)
+            if (VideoUrlHelper.IsSupportedVideoUrl(nextVideo))
             {
-                PlayYouTubeUrlInternal(nextVideo);
+                PlayVideoUrlInternal(nextVideo);
             }
+            // Check if it's a local file path
             else if (IsFilePath(nextVideo))
             {
                 PlayLocalFile(nextVideo);
             }
+            // Check if it's a direct media link
             else if (IsMediaLink(nextVideo))
             {
                 PlayMediaUrlInternal(nextVideo);
             }
+            // Otherwise treat as YouTube search query
             else
             {
                 PlayYouTubeSearchInternal(nextVideo, 0, 10);
@@ -776,7 +773,6 @@ public class VideoPlayerCore : IDisposable
         _isPaused = false;
         _currentlyPlayingUrl = null;
 
-        // Auto-advance if enabled (playlists) OR if there are queued videos
         if (_autoAdvanceQueue || _videoQueue.Count > 0)
         {
             Main.QueueMainThreadAction(() =>
@@ -935,7 +931,6 @@ public class VideoPlayerCore : IDisposable
     {
         if (_isDisposed) return;
 
-        // Dispose media player first
         _mediaPlayer?.Dispose();
         _mediaPlayer = null;
 

@@ -5995,3 +5995,8 @@ TVRemoteItem: {
 	DisplayName: T V Remote Item
 	Tooltip: ""
 }
+
+BoxTVItem: {
+	DisplayName: Box T V Item
+	Tooltip: ""
+}

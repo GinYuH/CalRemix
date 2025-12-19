@@ -3,6 +3,8 @@ using CalRemix.Content.Items.Tools;
 using CalRemix.Core.VideoPlayer;
 using CalRemix.UI.VideoPlayer;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -11,12 +13,26 @@ namespace CalRemix.Content.Tiles.TVs;
 
 /// <summary>
 /// Base class for all TV tiles.
-/// Refactored: Each TV now manages its own VideoPlayerCore instance.
 /// </summary>
 public abstract class BaseTVTile : ModTile
 {
-    public abstract Point GetTVDimensions();
+    public abstract Point16 GetTVDimensions();
     public abstract string GetTVStyleName();
+
+    /// <summary>
+    /// Get the shader effect for this TV type.
+    /// Return null for no shader (default).
+    /// </summary>
+    public virtual Asset<Effect> GetShaderEffect() => null;
+
+    /// <summary>
+    /// Optional: Configure shader parameters before drawing.
+    /// Called each frame before the video is rendered with a shader.
+    /// Only called if GetShaderEffect() returns a non-null shader.
+    /// </summary>
+    /// <param name="shader">The shader effect to configure</param>
+    /// <param name="tvEntity">The TV entity being drawn</param>
+    public virtual void ConfigureShader(Effect shader, TVTileEntity tvEntity) { }
 
     public override bool RightClick(int i, int j)
     {
@@ -31,7 +47,6 @@ public abstract class BaseTVTile : ModTile
 
         Player player = Main.LocalPlayer;
 
-        // Check if player is holding a TV Remote
         if (player.HeldItem.type == ModContent.ItemType<TVRemoteItem>())
         {
             ModContent.GetInstance<TVRemoteUISystem>().OpenUI(tvEntity);
@@ -43,7 +58,6 @@ public abstract class BaseTVTile : ModTile
         tvEntity.IsOn = !tvEntity.IsOn;
         Main.NewText($"TV turned {(tvEntity.IsOn ? "ON" : "OFF")}", Color.Cyan);
 
-        // If we just turned OFF, check if channel should stop
         if (wasOn && !tvEntity.IsOn)
         {
             var manager = ModContent.GetInstance<VideoChannelManager>();
@@ -56,8 +70,6 @@ public abstract class BaseTVTile : ModTile
     public override void KillMultiTile(int i, int j, int frameX, int frameY)
     {
         Point16 origin = GetTileOrigin(i, j, GetTVDimensions().X, GetTVDimensions().Y, 16);
-
-        // The TV entity's OnKill will handle disposing its VideoPlayerCore
         ModContent.GetInstance<TVTileEntity>().Kill(origin.X, origin.Y);
     }
 

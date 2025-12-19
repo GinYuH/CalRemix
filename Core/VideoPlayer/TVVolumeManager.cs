@@ -44,7 +44,6 @@ public class TVVolumeManager : ModSystem
         var manager = ModContent.GetInstance<VideoChannelManager>();
         if (manager == null) return;
 
-        // Group TVs by channel and find closest TV per channel
         var channelClosestTV = new Dictionary<int, (TVTileEntity TV, float Distance, int TargetVolume)>();
 
         foreach (var kvp in TileEntity.ByID)
@@ -54,16 +53,13 @@ public class TVVolumeManager : ModSystem
 
             int channelId = tvEntity.CurrentChannel;
 
-            // Calculate distance to this TV
             Vector2 tvCenter = GetTVCenter(tvEntity);
             float distance = Vector2.Distance(player.Center, tvCenter);
 
-            // Calculate what volume this TV would want
             int distanceVolume = CalculateVolumeFromDistance(distance);
             int targetVolume = (int)(distanceVolume * (tvEntity.Volume / 100f));
             targetVolume = Math.Clamp(targetVolume, 0, 100);
 
-            // Is this the closest TV on this channel?
             if (!channelClosestTV.ContainsKey(channelId) ||
                 distance < channelClosestTV[channelId].Distance)
             {
@@ -71,7 +67,6 @@ public class TVVolumeManager : ModSystem
             }
         }
 
-        // Now set volume for each channel based on its closest TV
         foreach (var kvp in channelClosestTV)
         {
             int channelId = kvp.Key;
@@ -83,15 +78,12 @@ public class TVVolumeManager : ModSystem
 
             int currentVolume = channelPlayer.GetVolume();
 
-            // Apply smoothing
             int smoothedVolume = (int)(currentVolume * 0.7f + targetVolume * 0.3f);
 
-            // Only update if change is significant
             if (Math.Abs(smoothedVolume - currentVolume) > 2)
             {
                 channelPlayer.SetVolume(smoothedVolume);
 
-                // Debug info
                 if (_frameCounter % 120 == 0 && smoothedVolume > 0)
                 {
                     CalRemix.instance.Logger.Debug(
@@ -101,18 +93,12 @@ public class TVVolumeManager : ModSystem
                 }
             }
 
-            // Handle mute state
             if (targetVolume > 0)
-            {
                 channelPlayer.SetMute(false);
-            }
             else if (targetVolume == 0)
-            {
                 channelPlayer.SetMute(true);
-            }
         }
 
-        // Mute any channels that have no active TVs
         for (int channelId = VideoChannelManager.MIN_CHANNEL;
              channelId <= VideoChannelManager.MAX_CHANNEL;
              channelId++)

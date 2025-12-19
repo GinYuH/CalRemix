@@ -34,6 +34,7 @@
 
   <ItemGroup>
 	<PackageReference Include="YoutubeExplode" Version="6.5.6" />
+	<PackageReference Include="YoutubeDLSharp" Version="1.1.2" />
   </ItemGroup>
   
 </Project>
