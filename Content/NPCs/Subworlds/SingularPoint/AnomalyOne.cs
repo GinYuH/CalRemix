@@ -18,6 +18,9 @@ using CalRemix.Core.Graphics;
 using CalRemix.Core.Subworlds;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Items.Weapons.Ranged;
+using CalRemix.Content.NPCs.Bosses.Noxus;
+using CalamityMod.Particles;
+using CalRemix.Content.Particles;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -155,7 +158,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         float lookDown = arenaCreationTime + 60;
                         float finish = lookDown + 50;
 
-                        bool skip = true;
+                        bool skip = false;
                         if (skip && Timer < startRise)
                         {
                             Timer = startRise;
@@ -204,10 +207,6 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         #endregion
 
-                        if (Timer == 0)
-                        {
-                            NPC.Center = arenaCenter + new Vector2(-400, 500);
-                        }
                         if (Timer < startRise)
                         {
                             if (Timer >= startShake)
@@ -241,6 +240,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             JawRotation = MathHelper.ToRadians(40) + MathF.Sin(Timer * 1f) * MathHelper.ToRadians(4);
                             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 4;
                             EditPoints(new() { new(), new(-200, 250), new(400, 550), new(0, 900) });
+                            if (Timer % 7 == 0)
+                            {
+                                GeneralParticleHandler.SpawnParticle(new HKShockwave(NPC.Center, Vector2.Zero, Color.SeaGreen * 0.9f, 0.1f, 22f, 20));
+                            }
                         }
                         else if (Timer < stopLooking)
                         {
