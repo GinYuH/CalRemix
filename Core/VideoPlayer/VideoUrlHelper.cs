@@ -485,7 +485,6 @@ public class VideoUrlHelperSystem : ModSystem
 {
     public override void OnModLoad()
     {
-        // Initialize asynchronously without blocking mod load
         Task.Run(async () =>
         {
             await VideoUrlHelper.InitializeAsync();
@@ -500,7 +499,6 @@ public class VideoUrlHelperSystem : ModSystem
 
     public override void OnModUnload()
     {
-        // Clean up
         VideoUrlHelper.ClearCache();
     }
 }

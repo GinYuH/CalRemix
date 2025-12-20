@@ -12,9 +12,14 @@ namespace CalRemix.Core.VideoPlayer;
 
 public class TVDrawSystem : ModSystem
 {
-    private static List<TVTileEntity> _tvsToRender = new();
+    private static List<TVTileEntity> _tvsToRender = [];
 
     public static List<TVTileEntity> GetActiveTVs() => _tvsToRender;
+
+    public override void OnModLoad()
+    {
+        On_Main.DrawNPCs += DrawTVScreens;
+    }
 
     public override void UpdateUI(GameTime gameTime)
     {
@@ -45,11 +50,6 @@ public class TVDrawSystem : ModSystem
                 }
             }
         }
-    }
-
-    public override void OnModLoad()
-    {
-        On_Main.DrawNPCs += DrawTVScreens;
     }
 
     private void DrawTVScreens(On_Main.orig_DrawNPCs orig, Main self, bool behindTiles)

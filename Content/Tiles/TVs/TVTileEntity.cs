@@ -82,7 +82,7 @@ public class TVTileEntity : ModTileEntity
         var manager = ModContent.GetInstance<VideoChannelManager>();
         manager.StopChannelIfUnused(oldChannel);
 
-        if (manager.IsPresetChannel(newChannel))
+        if (VideoChannelManager.IsPresetChannel(newChannel))
         {
             manager.StartChannel(newChannel);
             _hasStartedChannel = true;
@@ -130,7 +130,7 @@ public class TVTileEntity : ModTileEntity
             return;
         }
 
-        if (manager.IsPresetChannel(CurrentChannel))
+        if (!manager.IsOverrideChannelActive() && VideoChannelManager.IsPresetChannel(CurrentChannel))
         {
             var player = manager.GetChannelPlayer(CurrentChannel);
 
