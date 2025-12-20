@@ -54,7 +54,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                 }
                 if (Projectile.Opacity < 1)
                 {
-                    Projectile.Opacity += Projectile.ai[0] == 1 ? 0.4f : 0.05f;
+                    Projectile.Opacity += Projectile.ai[0] == 1 ? 0.4f : 0.2f;
                 }
                 else
                 {

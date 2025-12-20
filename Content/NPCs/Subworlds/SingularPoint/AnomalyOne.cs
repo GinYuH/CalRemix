@@ -421,7 +421,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (Vector2.UnitX * -NPC.direction * 30).RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(240, 400), 1, ai0: 1);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Vector2.UnitX * NPC.direction * 40, (Vector2.UnitX * -NPC.direction * 30).RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(240, 400), 1, ai0: 1);
                             }
                             if (Timer % 6 == 0)
                             {
