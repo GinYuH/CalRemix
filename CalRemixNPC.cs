@@ -73,12 +73,14 @@ using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Potions.Recovery;
+using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
+using CalRemix.Content.NPCs.Bosses.RajahBoss;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
@@ -97,6 +99,7 @@ using CalRemix.UI.Anomaly109;
 using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -214,6 +217,11 @@ namespace CalRemix
             {
                 entity.lifeMax = (int)(entity.lifeMax * 0.5f);
                 entity.Calamity().DR = entity.Calamity().DR * 0.25f;
+            }
+
+            if (IsBunny(entity) && RemixDowned.downedRajahsRevenge)
+            {
+                entity.dontTakeDamage = true;
             }
         }
 
@@ -1240,6 +1248,12 @@ namespace CalRemix
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+            if (npc.type == NPCID.GoldBunny && NPC.downedGolemBoss)
+                npcLoot.AddIf(() => NPC.downedGolemBoss, ItemType<GoldenCarrot>());
+
+            if (IsBunny(npc) && NPC.downedGolemBoss)
+                npcLoot.AddIf(() => NPC.downedGolemBoss, ItemType<GoldenCarrot>(), new Fraction(1, 80));
+
             EnemyLoot(npc, npcLoot);
             MiniBossLoot(npc, npcLoot);
             BossLoot(npc, npcLoot);
@@ -2006,6 +2020,50 @@ namespace CalRemix
                 if (npc.type == NPCType<SepulcherHead>() && NPC.FindFirstNPC(NPCType<SupremeTwin>()) > 0)
                 {
                     SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCType<SupremeSkeletron>());
+                }
+            }
+
+            if (Main.hardMode && IsBunny(npc) && Rajah != -1)
+            {
+                Player player = Main.player[Player.FindClosest(npc.Center, npc.width, npc.height)];
+
+                int bunnyKills = NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
+                if (bunnyKills % 100 == 0 && bunnyKills < 1000)
+                {
+                    if (Main.netMode != 1)
+                    {
+                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.1", new Color(107, 137, 179));
+                    }
+
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound"), npc.Center);
+                    SpawnRajah(player, new Vector2(npc.Center.X, npc.Center.Y - 2000));
+
+                }
+
+                if (bunnyKills % 100 == 0 && bunnyKills >= 1000)
+                {
+                    if (Main.netMode != 1)
+                    {
+                        if (Main.netMode == 0)
+                        {
+                            Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.RajahGlobalInfo.2", player.name.ToUpper()), new Color(107, 137, 179));
+                        }
+                        else if (Main.netMode == 2)
+                        {
+                            ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.RajahGlobalInfo.2", player.name.ToUpper()), new Color(107, 137, 179));
+                        }
+                    }
+
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound"), npc.Center);
+                    SpawnRajah(player, new Vector2(npc.Center.X, npc.Center.Y - 2000));
+                }
+
+                if (bunnyKills % 50 == 0 && bunnyKills % 100 != 0)
+                {
+                    if (Main.netMode != 1)
+                    {
+                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.3", new Color(107, 137, 179));
+                    }
                 }
             }
         }
@@ -3081,6 +3139,27 @@ namespace CalRemix
                 }
             }
             return false;
+        }
+
+        public static void SpawnRajah(Player player, Vector2 npcCenter = default)
+        {
+            if (npcCenter == default)
+            {
+                npcCenter = player.Center;
+            }
+
+            int RajahType = ModContent.NPCType<Rajah>();
+            if (NPC.killCount[NPCID.Bunny] >= 1000)
+            {
+                RajahType = ModContent.NPCType<SupremeRajah>();
+            }
+
+            CalamityUtils.SpawnBossBetter(npcCenter, RajahType);
+        }
+
+        public bool IsBunny(NPC npc)
+        {
+            return npc.type == NPCID.Bunny || npc.type == NPCID.GoldBunny || npc.type == NPCID.BunnySlimed || npc.type == NPCID.BunnyXmas || npc.type == NPCID.PartyBunny;
         }
     }
 }

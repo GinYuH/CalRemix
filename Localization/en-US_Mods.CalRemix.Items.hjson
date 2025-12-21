@@ -6160,3 +6160,13 @@ PlatinumCarrot: {
 	DisplayName: Platinum Carrot
 	Tooltip: ""
 }
+
+RoyalRabbit: {
+	DisplayName: Royal Rabbit
+	Tooltip: ""
+}
+
+RoyalBunnyCage: {
+	DisplayName: Royal Bunny Cage
+	Tooltip: ""
+}

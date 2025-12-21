@@ -130,13 +130,13 @@ DiamondCarrot: {
 
 RajahGlobalInfo: {
 	1: Those who slaughter the innocent must be PUNISHED!
-	2: "YOU HAVE COMMITTED AN UNFORGIVABLE SIN! I SHALL WIPE YOU FROM THIS MORTAL REALM! PREPARE FOR TRUE PAIN AND PUNISHMENT, "
+	2: YOU HAVE COMMITTED AN UNFORGIVABLE SIN! I SHALL WIPE YOU FROM THIS MORTAL REALM! PREPARE FOR TRUE PAIN AND PUNISHMENT, {0}!
 	3: The eyes of a wrathful creature gaze upon you...
 }
 
 RoyalRabbit: {
 	1: Those who slaughter the innocent must be PUNISHED!
-	2: "YOU WILL PAY FOR YOUR SINS, "
+	2: YOU WILL PAY FOR YOUR SINS, {0}!
 }
 
 PrimordialWyrmHead: {
