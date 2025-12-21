@@ -168,6 +168,9 @@ namespace CalRemix
         public static readonly int RenoxPhase2 = Set("Stelliferous");
         public static readonly int RenoxPhase3 = Set("Degenerate");
 
+        public static readonly int Rajah = Set("Bosses/RajahTheme");
+        public static readonly int SupremeRajah = Set("Bosses/SupremeRajah");
+
         // Vanilla Replacement 
         public static readonly int BloodMoonRemix = Set("Misc/VanillaRemix/BloodMoon");
         public static readonly int DesertRemix = Set("Misc/VanillaRemix/Desert");

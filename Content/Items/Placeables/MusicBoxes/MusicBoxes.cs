@@ -465,4 +465,32 @@ namespace CalRemix.Content.Items.Placeables.MusicBoxes
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
     }
+
+    public class RajahMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.Rajah, Type, TileType<Tiles.MusicBoxes.RajahMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.RajahMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
+
+    public class SupremeRajahMusicBox : RemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            MusicLoader.AddMusicBox(Mod, CalRemixMusic.SupremeRajah, Type, TileType<Tiles.MusicBoxes.SupremeRajahMusicBox>());
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = TileType<Tiles.MusicBoxes.SupremeRajahMusicBox>();
+            base.SetDefaults();
+        }
+        public override bool? PrefixChance(int pre, UnifiedRandom rand) => base.PrefixChance(pre, rand);
+    }
 }

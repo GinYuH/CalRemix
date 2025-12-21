@@ -1,6 +1,7 @@
 using CalamityMod;
 using CalamityMod.Items.Potions;
 using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.RajahItems;
 using CalRemix.Content.Items.RajahItems.Supreme;
 using CalRemix.Content.NPCs.Bosses.RajahBoss.Supreme;
@@ -50,7 +51,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             NPC.value = Item.sellPrice(0, 1, 10, 0);
             NPC.boss = true;
             NPC.netAlways = true;
-            Music = MusicLoader.GetMusicSlot(CalRemix.instance, "Assets/Music/Bosses/RajahTheme");// Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/RajahTheme");
+            Music = CalRemixMusic.Rajah;// Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/RajahTheme");
         }
 
         public bool isSupreme = false;
@@ -1105,7 +1106,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //Master
-            npcLoot.DefineConditionalDropSet(DropHelper.RevAndMaster).Add(ItemID.BunnyStatue);
+            npcLoot.DefineConditionalDropSet(DropHelper.RevAndMaster).Add(ModContent.ItemType<RajahRelic>());
 
             //Expert
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<RajahBag>()));
@@ -1258,14 +1259,14 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             NPC.life = 1200000;
             isSupreme = true;
             NPC.value = Item.sellPrice(3, 0, 0, 0);
-            Music = MusicLoader.GetMusicSlot(CalRemix.instance, "Assets/Music/Bosses/SupremeRajah");// Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/RajahTheme");
+            Music = CalRemixMusic.SupremeRajah;// Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/RajahTheme");
         }
         public override string BossHeadTexture => "CalRemix/Content/NPCs/Bosses/RajahBoss/SupremeRajah_Head_Boss";
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //Master
-            npcLoot.DefineConditionalDropSet(DropHelper.RevAndMaster).Add(ItemID.BunnyStatue);
+            npcLoot.DefineConditionalDropSet(DropHelper.RevAndMaster).Add(ModContent.ItemType<SupremeRajahRelic>());
 
             //Expert
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<RajahCache>()));
