@@ -457,3 +457,63 @@ FriendshipBuff: {
 	DisplayName: The Power of Friendship
 	Description: Yeah!!!!
 }
+
+Impaled: {
+	DisplayName: Impaled
+	Description: Mods.CalRemix.Buffs.Impaled.Description
+}
+
+InfinityOverload: {
+	DisplayName: Infinity Overload
+	Description: Mods.CalRemix.Buffs.InfinityOverload.Description
+}
+
+RabbitcopterSoldier: {
+	DisplayName: Rabbitcopter Soldier
+	Description: Mods.CalRemix.Buffs.RabbitcopterSoldier.Description
+}
+
+RoyalRabbit: {
+	DisplayName: Royal Rabbit
+	Description: Mods.CalRemix.Buffs.RoyalRabbit.Description
+}
+
+SpearStuck: {
+	DisplayName: Spear Stuck
+	Description: Mods.CalRemix.Buffs.SpearStuck.Description
+}
+
+BaronBuff: {
+	DisplayName: Baron Buff
+	Description: Mods.CalRemix.Buffs.BaronBuff.Description
+}
+
+CBoost1: {
+	DisplayName: C Boost1
+	Description: Mods.CalRemix.Buffs.CBoost1.Description
+}
+
+CBoost2: {
+	DisplayName: C Boost2
+	Description: Mods.CalRemix.Buffs.CBoost2.Description
+}
+
+CBoost3: {
+	DisplayName: C Boost3
+	Description: Mods.CalRemix.Buffs.CBoost3.Description
+}
+
+DroneCool: {
+	DisplayName: Drone Cool
+	Description: Mods.CalRemix.Buffs.DroneCool.Description
+}
+
+RageBuff: {
+	DisplayName: Rage Buff
+	Description: Mods.CalRemix.Buffs.RageBuff.Description
+}
+
+RageCool: {
+	DisplayName: Rage Cool
+	Description: Mods.CalRemix.Buffs.RageCool.Description
+}

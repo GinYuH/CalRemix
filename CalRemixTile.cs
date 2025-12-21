@@ -20,6 +20,7 @@ using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
@@ -322,6 +323,17 @@ namespace CalRemix
                                 WorldGen.PlaceTile(i, j - 1, ModContent.TileType<BabySealedPuppetPlaced>(), true);
                             }
                         }
+                    }
+                }
+            }
+
+            if (Main.tile[i, j].TileType == TileID.Grass && Main.hardMode)
+            {
+                if (!Framing.GetTileSafely(i, j - 1).IsTileSolid() && Main.rand.NextBool(800))
+                {
+                    if (WorldGen.PlaceObject(i, j - 1, TileType<Carrot>(), false, 0))
+                    {
+                        NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<Carrot>(), 0, 0, -1, -1);
                     }
                 }
             }

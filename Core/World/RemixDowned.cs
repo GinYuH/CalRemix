@@ -88,6 +88,10 @@ namespace CalRemix.Core.World
 
         public static bool downedGale;
 
+        public static bool downedRajah;
+
+        public static bool downedRajahsRevenge;
+
         public void ResetBools()
         {
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Static | BindingFlags.Public);

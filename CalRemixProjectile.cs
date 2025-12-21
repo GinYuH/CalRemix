@@ -33,7 +33,7 @@ using Terraria.ModLoader;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
-namespace CalRemix.Content.Projectiles
+namespace CalRemix
 {
     public class CalRemixProjectile : GlobalProjectile
     {

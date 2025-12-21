@@ -89,6 +89,56 @@ Yharon: {
 	End: I can't believe it, you are even stronger than me. Nice job!
 }
 
+Rajah: {
+	1: JUSTICE CANNOT BE CHEATED
+	2: Justice has been served...
+	3: Coward.
+	4: You win this time, murderer...but I will avenge those you've mercilessly slain...
+	5: THIS ISN'T THE END, {0}! RIVALS CLASH TILL THE VERY END!
+	6: And stay down.
+	7: Well fought, {0}. Take your reward.
+}
+
+SupremeRajah: {
+	Chat: Rajah glows with furious energy as he attacks, strengthening his defenses
+
+	Defeat: {
+		1: Rgh...
+		2: ...so...
+		3: Even when I'm at my most powerful...
+		4: ...I still can't beat you.
+		5: ...Terrarian...maybe...
+		6: Perhaps this is all just a sign that...maybe my time as protector...
+		7: ...is finally up. It might be time to pass on the baton.
+		8: ...I forgive you for every rabbit you've killed, but in return...I want you to take my place...
+		9: ...as their champion. Their protector.
+		10: I only want the best for the creatures of this world...and if you're stronger than I am...
+		11: "Who better to take my place than you, "
+		12: Be the one the innocent can look to in their time of need.
+		13: Think about it.
+		14: And if you ever want to spar...use one of those special carrots. I'd be glad to earn my honor back.
+		15: ...See ya, kiddo.
+		16: Rajah Rabbit's speech warms your heart. You no longer have the will to harm rabbits. Do him proud.
+		Elipse: ...
+	}
+}
+
+DiamondCarrot: {
+	1: GRAVE MISTAKE, TERRARIAN!
+	2: "Show me what you got, "
+}
+
+RajahGlobalInfo: {
+	1: Those who slaughter the innocent must be PUNISHED!
+	2: "YOU HAVE COMMITTED AN UNFORGIVABLE SIN! I SHALL WIPE YOU FROM THIS MORTAL REALM! PREPARE FOR TRUE PAIN AND PUNISHMENT, "
+	3: The eyes of a wrathful creature gaze upon you...
+}
+
+RoyalRabbit: {
+	1: Those who slaughter the innocent must be PUNISHED!
+	2: "YOU WILL PAY FOR YOUR SINS, "
+}
+
 PrimordialWyrmHead: {
 	1: You are foolish to think you can invade our lands, mortal.
 	2: Oh? So you are stronger than I thought... this will be fun. Have you come to take that little artifact we have guarded for all of eternity?

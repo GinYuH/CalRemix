@@ -137,6 +137,7 @@ namespace CalRemix
         public float shadowHit = 1;
         public static int wulfyrm = -1;
         public static int pyrogen = -1;
+        public static int Rajah = 0;
         public static int hypnos = -1;
         public static int aspidCount = 0;
         public bool guardRage, guardOver, yharRage = false;
@@ -148,6 +149,7 @@ namespace CalRemix
         public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
         public int shadeStacks = 0;
+        public bool Spear = false;
         public override bool InstancePerEntity => true;
 
         public List<int> BossSlimes = new List<int>
@@ -2120,6 +2122,9 @@ namespace CalRemix
                 witherDebuff = false;
             if (!witherDebuff)
                 wither = 0;
+
+            if (!npc.HasBuff<SpearStuck>())
+                Spear = false;
 
             if (!Main.dedServ && npc.Hitbox.Intersects(ScreenHelperManager.screenRect))
             {

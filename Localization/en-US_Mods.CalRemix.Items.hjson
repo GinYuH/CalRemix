@@ -5975,3 +5975,188 @@ FriendshipPotion: {
 	DisplayName: Potion of Friendship
 	Tooltip: Unleashes the true power of friendship
 }
+
+CarrotBooster: {
+	DisplayName: Carrot Booster
+	Tooltip: ""
+}
+
+Carrot: {
+	DisplayName: Carrot
+	Tooltip: ""
+}
+
+ChampionChestplate: {
+	DisplayName: Champion Chestplate
+	Tooltip: ""
+}
+
+ChampionGreaves: {
+	DisplayName: Champion Greaves
+	Tooltip: ""
+}
+
+ChampionHeaddress: {
+	DisplayName: Champion Headdress
+	Tooltip: ""
+}
+
+ChampionHelmet: {
+	DisplayName: Champion Helmet
+	Tooltip: ""
+}
+
+ChampionHood: {
+	DisplayName: Champion Hood
+	Tooltip: ""
+}
+
+ChampionMask: {
+	DisplayName: Champion Mask
+	Tooltip: ""
+}
+
+HoodlumHood: {
+	DisplayName: Hoodlum Hood
+	Tooltip: ""
+}
+
+HoodlumPants: {
+	DisplayName: Hoodlum Pants
+	Tooltip: ""
+}
+
+HoodlumShirt: {
+	DisplayName: Hoodlum Shirt
+	Tooltip: ""
+}
+
+RajahMask: {
+	DisplayName: Rajah Mask
+	Tooltip: ""
+}
+
+BaneOfTheBunny: {
+	DisplayName: Bane Of The Bunny
+	Tooltip: ""
+}
+
+Bunzooka: {
+	DisplayName: Bunzooka
+	Tooltip: ""
+}
+
+CarrotFarmer: {
+	DisplayName: Carrot Farmer
+	Tooltip: ""
+}
+
+CottonCane: {
+	DisplayName: Cotton Cane
+	Tooltip: ""
+}
+
+Punisher: {
+	DisplayName: Punisher
+	Tooltip: ""
+}
+
+RabbitcopterEars: {
+	DisplayName: Rabbitcopter Ears
+	Tooltip: ""
+}
+
+RajahBag: {
+	DisplayName: Rajah Bag
+	Tooltip: ""
+}
+
+RajahCape: {
+	DisplayName: Rajah Cape
+	Tooltip: ""
+}
+
+RajahPelt: {
+	DisplayName: Rajah Pelt
+	Tooltip: ""
+}
+
+RajahSash: {
+	DisplayName: Rajah Sash
+	Tooltip: ""
+}
+
+RajahTrophy: {
+	DisplayName: Rajah Trophy
+	Tooltip: ""
+}
+
+RoyalScepter: {
+	DisplayName: Royal Scepter
+	Tooltip: ""
+}
+
+BaneOfTheBunnyEX: {
+	DisplayName: Bane Of The Bunny E X
+	Tooltip: ""
+}
+
+BunzookaEX: {
+	DisplayName: Bunzooka E X
+	Tooltip: ""
+}
+
+ChampionPlate: {
+	DisplayName: Champion Plate
+	Tooltip: ""
+}
+
+CottonCaneEX: {
+	DisplayName: Cotton Cane E X
+	Tooltip: ""
+}
+
+Excalihare: {
+	DisplayName: Excalihare
+	Tooltip: ""
+}
+
+FluffyFury: {
+	DisplayName: Fluffy Fury
+	Tooltip: ""
+}
+
+PunisherEX: {
+	DisplayName: Punisher E X
+	Tooltip: ""
+}
+
+RabbitsWrath: {
+	DisplayName: Rabbits Wrath
+	Tooltip: ""
+}
+
+RajahCache: {
+	DisplayName: Rajah Cache
+	Tooltip: ""
+}
+
+RoyalScepterEX: {
+	DisplayName: Royal Scepter E X
+	Tooltip: ""
+}
+
+DiamondCarrot: {
+	DisplayName: Diamond Carrot
+	Tooltip: ""
+}
+
+GoldenCarrot: {
+	DisplayName: Golden Carrot
+	Tooltip: ""
+}
+
+PlatinumCarrot: {
+	DisplayName: Platinum Carrot
+	Tooltip: ""
+}
