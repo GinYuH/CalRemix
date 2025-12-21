@@ -80,6 +80,7 @@ using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
+using CalRemix.Content.NPCs.Bosses.BossChanges.Twins;
 using CalRemix.Content.NPCs.Bosses.RajahBoss;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Eclipse;
@@ -894,6 +895,37 @@ namespace CalRemix
                 if (npc.type == NPCType<SlimeGodCore>() && npc.life >= npc.lifeMax && !NPC.AnyNPCs(NPCType<ChlorinePaladin>()) && !NPC.AnyNPCs(NPCType<SplitChlorinePaladin>()))
                 {
                     SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<ChlorinePaladin>());
+                }
+
+                if (npc.type == NPCID.Retinazer)
+                {
+                    if (CalamityWorld.revenge)
+                    {
+                        TwinsAI.BuffedRetinazerAI(npc, Mod);
+                        return false;
+                    }
+                    else
+                    {
+                        CalamityGlobalNPC.laserEye = npc.whoAmI;
+                        if (npc.Calamity().newAI[0] == 0f && Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Foveanator>());
+                            npc.Calamity().newAI[0] = 1f;
+                            npc.SyncExtraAI();
+                        }
+                    }
+                }
+                if (npc.type == NPCID.Spazmatism)
+                {
+                    if (CalamityWorld.revenge)
+                    {
+                        TwinsAI.BuffedSpazmatismAI(npc, Mod);
+                        return false;
+                    }
+                    else
+                    {
+                        CalamityGlobalNPC.fireEye = npc.whoAmI;
+                    }
                 }
             }
             /*if (npc.type == NPCID.Deerclops)

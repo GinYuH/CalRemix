@@ -46,6 +46,10 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Items.Weapons.Melee;
 using CalRemix.Content.Items.Materials;
 using CalamityMod.NPCs.Cryogen;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Chaotrix;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix;
 
 namespace CalRemix
 {
@@ -325,6 +329,21 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "Dendritiator", 16.73f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "MaserPhage", 16.74f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "CrimsonKaiju", 20.5f, () => RemixDowned.downedRed, NPCType<CrimsonKaiju>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "Cryonix", 8.6f, () => RemixDowned.downedCryonix, NPCType<Cryonix>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
+            });
+            bc.Call("LogMiniBoss", Mod, "Vernix", 12.08f, () => RemixDowned.downedVernix, NPCType<Vernix>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
+            });
+            bc.Call("LogMiniBoss", Mod, "Chaotrix", 13.1f, () => RemixDowned.downedChaotrix, NPCType<Chaotrix>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
+            });
             // Events
             bc.Call("LogEvent", Mod, "PandemicPanic", 16.71f, () => RemixDowned.downedPathogen, new List<int> { NPCType<Malignant>(), NPCType<Ecolium>(), NPCType<Basilius>(), NPCType<Tobasaia>(), NPCType<MaserPhage>(), NPCType<WhiteBloodCell>(), NPCType<Platelet>(), NPCType<RedBloodCell>(), NPCType<Eosinine>(), NPCType<Dendritiator>() }, new Dictionary<string, object>());
             bc.Call("LogEvent", Mod, "GaleforceDay", 11.749f, () => RemixDowned.downedGale, new List<int> { NPCID.Dandelion, NPCType<FloatingBiomass>() }, new Dictionary<string, object>());

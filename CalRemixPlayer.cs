@@ -77,6 +77,14 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using static CalRemix.CalRemixHelper;
+using CalRemix.Core.Retheme;
+using CalRemix.Content.NPCs.Eclipse;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalRemix.UI.Anomaly109;
+using CalamityMod.Projectiles.Melee;
+using Mono.Cecil;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Subworlds.SingularPoint;
 using static CalRemix.ChampionNPC;
 using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using static Terraria.ModLoader.ModContent;
@@ -2080,6 +2088,19 @@ namespace CalRemix
             {
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
+            }
+            if (SubworldSystem.IsActive<SingularPointSubworld>())
+            {
+                if (SPSky.SkyOpacity > 0)
+                {
+                    if (!Player.Hitbox.Intersects(SPSky.SafeArea))
+                    {
+                        if (Player.lifeRegen > 0)
+                            Player.lifeRegen = 0;
+                        Player.lifeRegenTime = 0;
+                        Player.lifeRegen -= 200;
+                    }
+                }
             }
             if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
         }

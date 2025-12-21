@@ -756,6 +756,24 @@ BeachedGolem.DisplayName: Beached Golem
 Grabler.DisplayName: Grabler
 Echinoderion.DisplayName: Echinoderion
 Distortix.DisplayName: Distortix
+LargeStinkbug.DisplayName: Large Stinkbug
+
+Cryonix: {
+	DisplayName: Cryonix
+	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Tundra.
+}
+
+Vernix: {
+	DisplayName: Vernix
+	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Jungle.
+}
+
+Chaotrix: {
+	DisplayName: Chaotrix
+	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Abyss.
+}
+
+Foveanator.DisplayName: Foveanator
 Chaotrix.DisplayName: Chaotrix
 Cryonix.DisplayName: Cryonix
 Vernix.DisplayName: Vernix

@@ -88,6 +88,12 @@ namespace CalRemix.Core.World
 
         public static bool downedGale;
 
+        public static bool downedCryonix;
+
+        public static bool downedVernix;
+
+        public static bool downedChaotrix;
+
         public static bool downedRajah;
 
         public static bool downedRajahsRevenge;
@@ -118,7 +124,8 @@ namespace CalRemix.Core.World
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Static | BindingFlags.Public);
             foreach (FieldInfo field in fields)
             {
-                tag[field.Name.Replace("downed", "")] = field.GetValue(null);
+                string key = field.Name;
+                tag[key] = field.GetValue(null);
             }
         }
 
@@ -127,7 +134,8 @@ namespace CalRemix.Core.World
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Static | BindingFlags.Public);
             foreach (FieldInfo field in fields)
             {
-                if (tag.TryGet<bool>(field.Name.Replace("downed", ""), out var boolValue))
+                string key = field.Name;
+                if (tag.TryGet<bool>(key, out var boolValue))
                 {
                     field.SetValue(null, boolValue);
                 }
