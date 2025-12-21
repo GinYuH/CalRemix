@@ -9,8 +9,7 @@ namespace CalRemix.Content.Items.RajahItems
 		public override void SetStaticDefaults()
 		{
             // DisplayName.SetDefault("Rabbitcopter Ears");
-            /* Tooltip.SetDefault(@"Allows flight and slow fall
-'Yeah that's not how rabbit ears work but whatever, it works.'"); */
+            /* Tooltip.SetDefault(@"'"); */
         }
 
 		public override void SetDefaults()

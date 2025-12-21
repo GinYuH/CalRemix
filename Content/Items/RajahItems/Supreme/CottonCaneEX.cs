@@ -12,8 +12,8 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
     {
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Rajah's Rage");
-            //Tooltip.SetDefault(@"Summons a Royal Rabbit to fight with you");
+            //DisplayName.SetDefault("");
+            //Tooltip.SetDefault(@"");
         }
 
         public override void SetDefaults()

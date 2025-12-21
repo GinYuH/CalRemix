@@ -9,7 +9,7 @@ namespace CalRemix.Content.Buffs
 		public override void SetStaticDefaults()
 		{
 			//DisplayName.SetDefault("Speared");
-			//Description.SetDefault("There's a spear stuck in you. Ouch.");
+			//Description.SetDefault("");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

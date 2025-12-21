@@ -6083,58 +6083,90 @@ ChampionMask: {
 }
 
 HoodlumHood: {
-	DisplayName: Hoodlum Hood
-	Tooltip: ""
+	DisplayName: Hopping Hoodlum Hood
+	Tooltip:
+		'''
+		18% increased melee & minion Damage
+		Enemies are more likely to target you
+		Hopping Mad.
+		'''
+	Bonus: Reaching below half heath multiplies your movement speed, melee damage, and minion damage by 50%
 }
 
 HoodlumPants: {
-	DisplayName: Hoodlum Pants
-	Tooltip: ""
+	DisplayName: Hopping Hoodlum Paws
+	Tooltip:
+		'''
+		10% increased movement speed
+		9% increased melee critical strike chance
+		+1 Max Minion\nEnemies are more likely to target you
+		Hopping Mad.
+		'''
 }
 
 HoodlumShirt: {
-	DisplayName: Hoodlum Shirt
-	Tooltip: ""
+	DisplayName: Hopping Hoodlum Shirt
+	Tooltip:
+		'''
+		10% increased melee speed
+		+1 max minion
+		Enemies are more likely to target you
+		Hopping Mad.
+		'''
 }
 
 RajahMask: {
-	DisplayName: Rajah Mask
+	DisplayName: Rajah Rabbit Mask
 	Tooltip: ""
 }
 
 BaneOfTheBunny: {
 	DisplayName: Bane Of The Bunny
-	Tooltip: ""
+	Tooltip:
+		'''
+		Right click to use as a spear
+		Left click to use as a javelin
+		Throwing Javelins right after a spear thrust throws javelins faster for a moment
+		'''
 }
 
 Bunzooka: {
 	DisplayName: Bunzooka
-	Tooltip: ""
+	Tooltip: Fires Rabbit Rockets
 }
 
 CarrotFarmer: {
 	DisplayName: Carrot Farmer
-	Tooltip: ""
+	Tooltip: 
+		'''
+		Spins a Carrot Scythe around you that shreds through enemies
+		Scythes fire off carrots while spun
+		Grants 1 soul essence on direct hit
+		'''
 }
 
 CottonCane: {
 	DisplayName: Cotton Cane
-	Tooltip: ""
+	Tooltip: Summons a Rabbitcopter Soldier to fight with you
 }
 
 Punisher: {
-	DisplayName: Punisher
+	DisplayName: The Punisher
 	Tooltip: ""
 }
 
 RabbitcopterEars: {
 	DisplayName: Rabbitcopter Ears
-	Tooltip: ""
+	Tooltip:
+		'''
+		Allows flight and slow fall
+		'Yeah that's not how rabbit ears work but whatever, it works.'
+		'''
 }
 
 RajahBag: {
-	DisplayName: Rajah Bag
-	Tooltip: ""
+	DisplayName: Treasure Bag (Rajah Rabbit)
+	Tooltip: Right Click to open
 }
 
 RajahCape: {
@@ -6144,12 +6176,19 @@ RajahCape: {
 
 RajahPelt: {
 	DisplayName: Rajah Pelt
-	Tooltip: ""
+	Tooltip: Surpisingly durable for a pelt of fur
 }
 
 RajahSash: {
-	DisplayName: Rajah Sash
-	Tooltip: ""
+	DisplayName: Rajah Rabbit's Sash of Vengeance
+	Tooltip:
+		'''
+		Every 10% of health lost gives you 8% extra attack power to your highest damage type boost
+		40% increased movement speed
+		Increased Jump Height and Speed
+		Grants Autojump
+		Immunity to fall damage
+		'''
 }
 
 RajahTrophy: {
@@ -6159,27 +6198,38 @@ RajahTrophy: {
 
 RoyalScepter: {
 	DisplayName: Royal Scepter
-	Tooltip: ""
+	Tooltip: Shoots a spread of three carrots
 }
 
 BaneOfTheBunnyEX: {
-	DisplayName: Bane Of The Bunny E X
-	Tooltip: ""
+	DisplayName: Bane of the Slaughterer
+	Tooltip:
+		'''
+		Right click to use as a spear
+		Left click to use as a javelin
+		Throwing Javelins right after a spear thrust throws javelins faster for a moment
+		Bane of the Bunny EX
+		'''
 }
 
 BunzookaEX: {
-	DisplayName: Bunzooka E X
-	Tooltip: ""
+	DisplayName: RPG
+	Tooltip:
+		'''
+		`Rabbit Propelled Grenade`
+		Fires Rabbit Rockets
+		Bunnyzooka EX
+		'''
 }
 
 ChampionPlate: {
 	DisplayName: Champion Plate
-	Tooltip: ""
+	Tooltip: Forged from Champium
 }
 
 CottonCaneEX: {
-	DisplayName: Cotton Cane E X
-	Tooltip: ""
+	DisplayName: Rajah's Rage
+	Tooltip: Summons a Royal Rabbit to fight with you
 }
 
 Excalihare: {
@@ -6189,47 +6239,59 @@ Excalihare: {
 
 FluffyFury: {
 	DisplayName: Fluffy Fury
-	Tooltip: ""
+	Tooltip:
+		'''
+		Converts arrows into splitting Carrows
+		Potential lag warning
+		'''
 }
 
 PunisherEX: {
-	DisplayName: Punisher E X
-	Tooltip: ""
+	DisplayName: The Avenger
+	Tooltip: The Punisher EX
 }
 
 RabbitsWrath: {
-	DisplayName: Rabbits Wrath
-	Tooltip: ""
+	DisplayName: Rabbit's Wrath
+	Tooltip: Drops razor sharp carrots on your foes
 }
 
 RajahCache: {
-	DisplayName: Rajah Cache
-	Tooltip: ""
+	DisplayName: Treasure Cache (Rajah Rabbit, Champion of the Innocent)
+	Tooltip: Right Click to open
 }
 
 RoyalScepterEX: {
-	DisplayName: Royal Scepter E X
-	Tooltip: ""
+	DisplayName: Royal Staff
+	Tooltip:
+		'''
+		Shoots a spread of five golden carrots
+		Royal Scepter EX
+		'''
 }
 
 DiamondCarrot: {
-	DisplayName: Diamond Carrot
-	Tooltip: ""
+	DisplayName: Ten Carat Carrot
+	Tooltip:
+		'''
+		The fury of the Raging Rajah can be felt radiating from this ornate carrot...
+		Non-consumable
+		'''
 }
 
 GoldenCarrot: {
-	DisplayName: Golden Carrot
-	Tooltip: ""
+	DisplayName: Ten Karat Carrot
+	Tooltip: Summons the Pouncing Punisher himself
 }
 
 PlatinumCarrot: {
-	DisplayName: Platinum Carrot
-	Tooltip: ""
+	DisplayName: Ten Karat Carrot
+	Tooltip: Summons the Pouncing Punisher himself
 }
 
 RoyalRabbit: {
 	DisplayName: Royal Rabbit
-	Tooltip: ""
+	Tooltip: Under direct protection by the Pouncing Punisher
 }
 
 RoyalBunnyCage: {

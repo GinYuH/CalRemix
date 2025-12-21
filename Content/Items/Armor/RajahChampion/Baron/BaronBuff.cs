@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion.Baron
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Baron Bunny");
-            // Description.SetDefault("Baron Bunny protects you");
+            // Description.SetDefault("");
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }

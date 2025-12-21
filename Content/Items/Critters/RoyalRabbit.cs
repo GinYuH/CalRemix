@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Critters
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Royal Rabbit");
-            // Tooltip.SetDefault("Under direct protection by the Pouncing Punisher");
+            // Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()

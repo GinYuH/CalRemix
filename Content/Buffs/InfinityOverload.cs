@@ -8,8 +8,8 @@ namespace CalRemix.Content.Buffs
 	{
 		public override void SetStaticDefaults()
 		{
-			//DisplayName.SetDefault("Elemental Overload");
-			//Description.SetDefault("The elements lash out against your very being");
+			//DisplayName.SetDefault("");
+			//Description.SetDefault("");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
 	{
 		public override void SetStaticDefaults()
 		{
-            //DisplayName.SetDefault("Bane of the Slaughterer");
-            //Tooltip.SetDefault(@"Right click to use as a spear\nLeft click to use as a javelin\nThrowing Javelins right after a spear thrust throws javelins faster for a moment\nBane of the Bunny EX");
+            //DisplayName.SetDefault("");
+            //Tooltip.SetDefault(@"");
 		}
 
 		public override void SetDefaults()

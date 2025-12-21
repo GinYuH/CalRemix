@@ -7,7 +7,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion.Carrot
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Champion Boost");
+            // DisplayName.SetDefault("");
             // Description.SetDefault("Increased stats");
             Main.buffNoSave[Type] = true;
         }

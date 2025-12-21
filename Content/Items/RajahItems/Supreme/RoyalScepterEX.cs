@@ -32,8 +32,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Royal Staff");
-            /* Tooltip.SetDefault(@"Shoots a spread of five golden carrots
-Royal Scepter EX"); */
+            /* Tooltip.SetDefault(@""); */
             Item.staff[Item.type] = true;
         }
 

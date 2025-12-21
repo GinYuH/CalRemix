@@ -9,7 +9,7 @@ namespace CalRemix.Content.Items.RajahItems
 	{
 		public override void SetStaticDefaults()
 		{
-            //Tooltip.SetDefault(@"Right click to use as a spear\nLeft click to use as a javelin\nThrowing Javelins right after a spear thrust throws javelins faster for a moment");
+            //Tooltip.SetDefault(@"");
 		}
 
 		public override void SetDefaults()

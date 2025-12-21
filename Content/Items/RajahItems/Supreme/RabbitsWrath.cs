@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Rabbit's Wrath");
-            // Tooltip.SetDefault("Drops razor sharp carrots on your foes");
+            // Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()

@@ -11,12 +11,8 @@ namespace CalRemix.Content.Items.RajahItems
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Rajah Rabbit's Sash of Vengeance");
-            /* Tooltip.SetDefault(@"Every 10% of health lost gives you 8% extra attack power to your highest damage type boost
-40% increased movement speed
-Increased Jump Height and Speed
-Grants Autojump
-Immunity to fall damage"); */
+            // DisplayName.SetDefault("");
+            /* Tooltip.SetDefault(@""); */
         }
 
         public override void SetDefaults()

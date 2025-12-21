@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.RajahItems
         public override void SetStaticDefaults()
         {
             //DisplayName.SetDefault("Cotton Cane");
-            //Tooltip.SetDefault(@"Summons a Rabbitcopter Soldier to fight with you");
+            //Tooltip.SetDefault(@"");
         }
 
         public override void SetDefaults()

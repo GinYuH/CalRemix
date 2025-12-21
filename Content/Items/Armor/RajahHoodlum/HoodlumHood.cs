@@ -11,8 +11,8 @@ namespace CalRemix.Content.Items.Armor.RajahHoodlum
 
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Hopping Hoodlum Hood");
-            //Tooltip.SetDefault(@"18% increased melee & minion Damage\nEnemies are more likely to target you\nHopping Mad.");
+            //DisplayName.SetDefault("");
+            //Tooltip.SetDefault(@"");
         }
 
         public override void SetDefaults()
@@ -31,7 +31,7 @@ namespace CalRemix.Content.Items.Armor.RajahHoodlum
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.AAMod.Common.HoodlumHoodBonus");
+            player.setBonus = Language.GetTextValue("Mods.CalRemix.Items.HoodlumHood.Bonus");
             if (player.statLife <= player.statLifeMax2 * .5f)
             {
                 player.moveSpeed += .5f;

@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Armor.RajahHoodlum
 	{
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Hopping Hoodlum Shirt");
-            //Tooltip.SetDefault(@"10% increased melee speed\n+1 max minion\nEnemies are more likely to target you\nHopping Mad.");
+            //DisplayName.SetDefault("");
+            //Tooltip.SetDefault(@"");
         }
 
 

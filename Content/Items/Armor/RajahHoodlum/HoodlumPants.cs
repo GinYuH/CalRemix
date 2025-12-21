@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.Armor.RajahHoodlum
 	{
 		public override void SetStaticDefaults()
 		{
-			//DisplayName.SetDefault("Hopping Hoodlum Paws");
-            //Tooltip.SetDefault(@"10% increased movement speed\n9% increased melee critical strike chance\n+1 Max Minion\nEnemies are more likely to target you\nHopping Mad.");
+			//DisplayName.SetDefault("");
+            //Tooltip.SetDefault(@"");
         }
 
 		public override void SetDefaults()

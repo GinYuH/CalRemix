@@ -11,7 +11,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
 	{
         public override void SetStaticDefaults()
         {
-            //Tooltip.SetDefault(@"Converts arrows into splitting Carrows \nPotential lag warning");
+            //Tooltip.SetDefault(@"");
         }
 
         public override void SetDefaults()

@@ -12,7 +12,7 @@ namespace CalRemix.Content.Items.RajahItems
     {
         public override void SetStaticDefaults()
         {
-            //Tooltip.SetDefault("Fires Rabbit Rockets");
+            //Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()

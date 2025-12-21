@@ -12,9 +12,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("RPG");
-            /* Tooltip.SetDefault(@"`Rabbit Propelled Grenade`
-Fires Rabbit Rockets
-Bunnyzooka EX"); */
+            /* Tooltip.SetDefault(@""); */
         }
 
         public override void SetDefaults()

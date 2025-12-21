@@ -7,7 +7,7 @@ namespace CalRemix.Content.Buffs
 	{
 		public override void SetStaticDefaults()
 		{
-			//Description.SetDefault("Summons a Royal Rabbit to fight for you");
+			//Description.SetDefault("");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

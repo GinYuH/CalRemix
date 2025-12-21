@@ -12,9 +12,9 @@ namespace CalRemix.Content.Items.SummonItems
     {
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Ten Karat Carrot");
+            //DisplayName.SetDefault("");
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13; // This helps sort inventory know this is a boss summoning item.
-            //Tooltip.SetDefault(@"Summons the Pouncing Punisher himself");
+            //Tooltip.SetDefault(@"");
         }
 
         public override void SetDefaults()

@@ -460,47 +460,47 @@ FriendshipBuff: {
 
 Impaled: {
 	DisplayName: Impaled
-	Description: Mods.CalRemix.Buffs.Impaled.Description
+	Description: Ouch!
 }
 
 InfinityOverload: {
-	DisplayName: Infinity Overload
-	Description: Mods.CalRemix.Buffs.InfinityOverload.Description
+	DisplayName: Elemental Overload
+	Description: The elements lash out against your very being
 }
 
 RabbitcopterSoldier: {
 	DisplayName: Rabbitcopter Soldier
-	Description: Mods.CalRemix.Buffs.RabbitcopterSoldier.Description
+	Description: Summons a Rabbitcopter Soldier to fight for you
 }
 
 RoyalRabbit: {
 	DisplayName: Royal Rabbit
-	Description: Mods.CalRemix.Buffs.RoyalRabbit.Description
+	Description: Summons a Royal Rabbit to fight for you
 }
 
 SpearStuck: {
-	DisplayName: Spear Stuck
-	Description: Mods.CalRemix.Buffs.SpearStuck.Description
+	DisplayName: Speared
+	Description: There's a spear stuck in you. Ouch.
 }
 
 BaronBuff: {
-	DisplayName: Baron Buff
-	Description: Mods.CalRemix.Buffs.BaronBuff.Description
+	DisplayName: Baron Bunny
+	Description: Baron Bunny protects you
 }
 
 CBoost1: {
-	DisplayName: C Boost1
-	Description: Mods.CalRemix.Buffs.CBoost1.Description
+	DisplayName: Champion Boost
+	Description: Increased stats
 }
 
 CBoost2: {
-	DisplayName: C Boost2
-	Description: Mods.CalRemix.Buffs.CBoost2.Description
+	DisplayName: Champion Boost
+	Description: Increased stats
 }
 
 CBoost3: {
-	DisplayName: C Boost3
-	Description: Mods.CalRemix.Buffs.CBoost3.Description
+	DisplayName: Champion Boost
+	Description: Increased stats
 }
 
 DroneCool: {
@@ -509,11 +509,11 @@ DroneCool: {
 }
 
 RageBuff: {
-	DisplayName: Rage Buff
-	Description: Mods.CalRemix.Buffs.RageBuff.Description
+	DisplayName: Defender's Rage
+	Description: A champion of Terraria never backs down
 }
 
 RageCool: {
-	DisplayName: Rage Cool
-	Description: Mods.CalRemix.Buffs.RageCool.Description
+	DisplayName: Rajah's Rage
+	Description: A champion of Terraria never backs down
 }

@@ -2140,9 +2140,10 @@ namespace CalRemix
                 drawInfo.DustCache.Add(index);
             }
 
-            int cbuff = Player.GetModPlayer<CalRemixPlayer>().CarrotBuff;
+            if (!Player.HasBuff(BuffType<CBoost1>()) && !Player.HasBuff(BuffType<CBoost2>()) && !Player.HasBuff(BuffType<CBoost3>()))
+                CarrotBuff = 0;
 
-            if (cbuff > 0)
+            if (CarrotBuff > 0)
             {
                 Texture2D Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahChampion/Carrot/CBoost1Aura").Value;
                 if (Player.HasBuff(BuffType<CBoost2>()))

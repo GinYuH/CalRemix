@@ -9,8 +9,8 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
         
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("The Avenger");
-            //Tooltip.SetDefault(@"The Punisher EX");
+            //DisplayName.SetDefault("");
+            //Tooltip.SetDefault(@"");
         }
 
         public override void SetDefaults()

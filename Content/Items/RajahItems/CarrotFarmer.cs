@@ -14,7 +14,7 @@ namespace CalRemix.Content.Items.RajahItems
 		{
 			//crossoverModName = "ThoriumMod";
             //DisplayName.SetDefault("Carrot Farmer");
-            //Tooltip.SetDefault(@"Spins a Carrot Scythe around you that shreds through enemies\nScythes fire off carrots while spun\nGrants 1 soul essence on direct hit");			
+            //Tooltip.SetDefault(@"");			
 		}
 
 		public override void SetDefaults()

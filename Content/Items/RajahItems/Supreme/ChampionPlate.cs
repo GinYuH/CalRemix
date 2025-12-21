@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Champion Plate");
-            // Tooltip.SetDefault("Forged from Champium");
+            // Tooltip.SetDefault("");
         }
         public override void SetDefaults()
         {

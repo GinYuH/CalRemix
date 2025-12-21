@@ -7,8 +7,8 @@ namespace CalRemix.Content.Items.Armor.RajahChampion
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Defender's Rage");
-            // Description.SetDefault("A champion of Terraria never backs down");
+            // DisplayName.SetDefault("");
+            // Description.SetDefault("");
             Main.buffNoSave[Type] = true;
         }
 

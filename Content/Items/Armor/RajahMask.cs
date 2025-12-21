@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Armor
 		public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            // DisplayName.SetDefault("Rajah Rabbit Mask");
+            // DisplayName.SetDefault("");
 		}
 
         public override void SetDefaults()

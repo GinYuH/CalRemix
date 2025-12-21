@@ -16,9 +16,9 @@ namespace CalRemix.Content.Items.SummonItems
     {
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Ten Carat Carrot");
+            //DisplayName.SetDefault("");
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13; // This helps sort inventory know this is a boss summoning item.
-            //Tooltip.SetDefault(@"The fury of the Raging Rajah can be felt radiating from this ornate carrot...\nNon-consumable");
+            //Tooltip.SetDefault(@"");
         }
 
         public override void SetDefaults()
