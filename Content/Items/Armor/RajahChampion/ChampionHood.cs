@@ -11,12 +11,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Champion Hood");
-            /* Tooltip.SetDefault(@"32% increased Magic damage
-10% increased non-magic damage
-25% increased Magic critical strike chance
-25% reduced Mana consumption
-150 increased maximum mana
-The armor of a champion feared across the land"); */
+            /* Tooltip.SetDefault(@""); */
         }
 
         public override void SetDefaults()
@@ -47,7 +42,7 @@ The armor of a champion feared across the land"); */
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.CalRemix.Equipset.ChampionHoodBonus");
+            player.setBonus = Language.GetTextValue("Mods.CalRemix.Items.ChampionHood.Bonus");
 
             CalRemixPlayer mplayer = player.GetModPlayer<CalRemixPlayer>();
 

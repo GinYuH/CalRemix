@@ -11,10 +11,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Champion Greathelm");
-            /* Tooltip.SetDefault(@"35% increased Melee damage & critical strike chance
-10% increased non-melee damage
-18% increased melee speed
-The armor of a champion feared across the land"); */
+            /* Tooltip.SetDefault(@""); */
         }
 
         public override void SetDefaults()
@@ -45,7 +42,7 @@ The armor of a champion feared across the land"); */
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.CalRemix.Equipset.ChampionHelmetBonus");
+            player.setBonus = Language.GetTextValue("Mods.CalRemix.Items.ChampionHelmet.Bonus");
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             modPlayer.ChampionMe = true;
         }

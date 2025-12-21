@@ -8,7 +8,7 @@ namespace CalRemix.Content.Items.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-			//Tooltip.SetDefault("Good for your eyesight");
+			//Tooltip.SetDefault("");
 		}
 		
 		public override void SetDefaults()

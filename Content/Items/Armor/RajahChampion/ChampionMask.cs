@@ -11,11 +11,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Champion Mask");
-            /* Tooltip.SetDefault(@"55% increased ranged damage
-44% increased ranged critical strike chance
-10% increased non-ranged damage
-25% reduced ammo consumption
-The armor of a champion feared across the land"); */
+            /* Tooltip.SetDefault(@""); */
         }
 
         public override void SetDefaults()
@@ -46,7 +42,7 @@ The armor of a champion feared across the land"); */
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.CalRemix.Equipset.ChampionMaskBonus");
+            player.setBonus = Language.GetTextValue("Mods.CalRemix.Items.ChampionMask.Bonus");
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             modPlayer.ChampionRa = true;
         }

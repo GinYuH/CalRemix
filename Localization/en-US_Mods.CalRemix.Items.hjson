@@ -5978,42 +5978,108 @@ FriendshipPotion: {
 
 CarrotBooster: {
 	DisplayName: Carrot Booster
-	Tooltip: ""
+	Tooltip: Etheral, but crunchy.
 }
 
 Carrot: {
 	DisplayName: Carrot
-	Tooltip: ""
+	Tooltip: Good for your eyesight
 }
 
 ChampionChestplate: {
 	DisplayName: Champion Chestplate
-	Tooltip: ""
+	Tooltip:
+		'''
+		15% increased damage
+		The armor of a champion feared across the land
+		'''
 }
 
 ChampionGreaves: {
 	DisplayName: Champion Greaves
-	Tooltip: ""
+	Tooltip:
+		'''
+		50% increased movement speed
+		15% increased damage
+		The armor of a champion feared across the land
+		'''
 }
 
 ChampionHeaddress: {
 	DisplayName: Champion Headdress
-	Tooltip: ""
+	Tooltip:
+		'''
+		70% increased minion damage
+		10% increased non-minion damage
+		+7 maximum Minions
+		+2 maximum sentries 
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Baron Bunny fights by your side as an ally to rabbit kind
+		As you lose health, Baron Bunny's will to fight becomes stronger.
+		'''
 }
 
 ChampionHelmet: {
 	DisplayName: Champion Helmet
-	Tooltip: ""
+	Tooltip:
+		'''
+		35% increased Melee damage & critical strike chance
+		10% increased non-melee damage
+		18% increased melee speed
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		You are the wall that protects the innocent
+		Pressing the armor ability hotkey gives you the 'Defender's Rage' Buff.
+		While enraged, you gain more defense as your life gets lower.
+		'Defender's Rage' Lasts longer the less health you have
+		'Defender's Rage' has a longer cooldown the less health you have
+		During Cooldown, your defense is slightly lowered, but your speed is increased
+		'''
 }
 
 ChampionHood: {
 	DisplayName: Champion Hood
-	Tooltip: ""
+	Tooltip:
+		'''
+		32% increased Magic damage
+		10% increased non-magic damage
+		25% increased Magic critical strike chance
+		25% reduced Mana consumption
+		150 increased maximum mana
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Energy Eminates from your body...
+		Striking enemies has a chance to spawn an energy carrot from them
+		Each energy carrot picked up boosts your damage, mana regen, and health regen
+		Stacks up to 3 times
+		Each level increases the boosts of these stats
+		'''
 }
 
 ChampionMask: {
 	DisplayName: Champion Mask
-	Tooltip: ""
+	Tooltip:
+		'''
+		55% increased ranged damage
+		44% increased ranged critical strike chance
+		10% increased non-ranged damage
+		25% reduced ammo consumption
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Time to hunt the hunters...
+		Pressing the armor ability hotkey summons a R.A.B.I.T. Drone for 8 seconds
+		R.A.B.I.T. Drone has a 15 second cooldown
+		During Cooldown, your ranged damage and critical chance are increased by 15%
+		'''
 }
 
 HoodlumHood: {

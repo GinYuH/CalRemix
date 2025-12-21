@@ -24,7 +24,9 @@ using CalRemix.Content.Buffs;
 using CalRemix.Content.Cooldowns;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Armor.RajahChampion;
 using CalRemix.Content.Items.Armor.RajahChampion.Carrot;
+using CalRemix.Content.Items.Armor.RajahChampion.Drone;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Critters;
 using CalRemix.Content.Items.Materials;
@@ -76,6 +78,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using static CalRemix.CalRemixHelper;
 using static CalRemix.ChampionNPC;
+using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
@@ -688,6 +691,40 @@ namespace CalRemix
             {
                 var grabCount = ItemGrabListener.BEING_GRABBED_BY.Count(x => x == Player.whoAmI);
                 Player.GetDamage(DamageClass.Generic) *= 1f + 0.05f * grabCount;
+            }
+
+            if (ChampionMe &&  CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(ModContent.BuffType<RageCool>()))
+            {
+                int BuffLength = 240;
+                if (Player.statLife < (int)(Player.statLifeMax2 * .75f))
+                {
+                    BuffLength = 360;
+                }
+                if (Player.statLife < (int)(Player.statLifeMax2 * .5f))
+                {
+                    BuffLength = 480;
+                }
+                if (Player.statLife < (int)(Player.statLifeMax2 * .25f))
+                {
+                    BuffLength = 600;
+                }
+                Player.AddBuff(ModContent.BuffType<RageBuff>(), BuffLength);
+                int RageCooldown = BuffLength * 4;
+                Player.AddBuff(ModContent.BuffType<RageCool>(), RageCooldown);
+            }
+
+            if (Player.HasBuff(ModContent.BuffType<RageBuff>()))
+            {
+                Player.armorEffectDrawShadowLokis = true;
+            }
+
+            if (ChampionRa && CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(BuffType<DroneCool>()) &&
+                !CalamityUtils.AnyProjectiles(ProjectileType<RajahDrone>()))
+            {
+                Vector2 vector2;
+                vector2.X = Main.mouseX + Main.screenPosition.X;
+                vector2.Y = Main.mouseY + Main.screenPosition.Y;
+                Projectile.NewProjectile(Player.GetSource_ReleaseEntity(), vector2.X, vector2.Y, 0, 0, ProjectileType<RajahDrone>(), (int)(Player.GetDamage(DamageClass.Ranged).ApplyTo(100)), 2, Main.myPlayer, 0f, 0f);
             }
         }
 
@@ -1655,6 +1692,15 @@ namespace CalRemix
             {
 	            npc.AddBuff(BuffID.Dazed, 5 * 60);
             }
+
+            if (ChampionMa)
+            {
+                if (Main.rand.Next(30) == 0)
+                {
+                    int i = Item.NewItem(npc.GetSource_OnHurt(Player), npc.Hitbox, ItemType<CarrotBooster>(), 1, false, 0, true);
+                    Main.item[i].velocity = new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
+                }
+            }
         }
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
         {
@@ -1732,6 +1778,15 @@ namespace CalRemix
                 TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
                 target.AddBuff(BuffType<Wither>(), 120);
                 target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
+            }
+
+            if (ChampionMa)
+            {
+                if (Main.rand.Next(30) == 0)
+                {
+                    int i = Item.NewItem(target.GetSource_OnHurt(Player), target.Hitbox, ItemType<CarrotBooster>(), 1, false, 0, true);
+                    Main.item[i].velocity = new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
+                }
             }
         }
 
@@ -2089,14 +2144,14 @@ namespace CalRemix
 
             if (cbuff > 0)
             {
-                Texture2D Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahArmor/Carrot/CBoost1").Value;
+                Texture2D Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahChampion/Carrot/CBoost1Aura").Value;
                 if (Player.HasBuff(BuffType<CBoost2>()))
                 {
-                    Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahArmor/Carrot/CBoost2").Value;
+                    Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahChampion/Carrot/CBoost2Aura").Value;
                 }
                 if (Player.HasBuff(BuffType<CBoost3>()))
                 {
-                    Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahArmor/Carrot/CBoost3").Value;
+                    Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahChampion/Carrot/CBoost3Aura").Value;
                 }
                 BaseDrawing.DrawTexture(Main.spriteBatch, Shield, 0, Player.position, Player.width, Player.height, 1f, Main.GlobalTimeWrappedHourly, 0, 1, new Rectangle(0, 0, Shield.Width, Shield.Height), Main.DiscoColor, true);
             }

@@ -11,11 +11,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Champion Headdress");
-            /* Tooltip.SetDefault(@"70% increased minion damage
-10% increased non-minion damage
-+7 maximum Minions
-+2 maximum sentries 
-The armor of a champion feared across the land"); */
+            /* Tooltip.SetDefault(@""); */
         }
 
         public override void SetDefaults()
@@ -47,7 +43,7 @@ The armor of a champion feared across the land"); */
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.CalRemix.Equipset.ChampionHeaddressBonus");
+            player.setBonus = Language.GetTextValue("Mods.CalRemix.Items.ChampionHeaddress.Bonus");
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             modPlayer.Baron = true;
             modPlayer.ChampionSu = true;

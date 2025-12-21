@@ -94,7 +94,8 @@ namespace CalRemix.Content.Items.Armor.RajahChampion.Drone
         public void Target()
         {
             Vector2 startPos = Projectile.Center;
-            if (target != null && !CanTarget(target, startPos)) target = null;
+            if (target != null && !CanTarget(target, startPos)) 
+                target = null;
             if (target == null)
             {
                 target = Projectile.FindTargetWithinRange(800f, true);
