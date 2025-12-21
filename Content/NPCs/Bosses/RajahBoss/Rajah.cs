@@ -50,7 +50,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             NPC.value = Item.sellPrice(0, 1, 10, 0);
             NPC.boss = true;
             NPC.netAlways = true;
-            Music = MusicLoader.GetMusicSlot(CalRemix.instance, "CalRemix/Assets/Music/Bosses/RajahTheme");// Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/RajahTheme");
+            Music = MusicLoader.GetMusicSlot(CalRemix.instance, "Assets/Music/Bosses/RajahTheme");// Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/RajahTheme");
         }
 
         public bool isSupreme = false;
@@ -206,18 +206,19 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                             Name = Main.LocalPlayer.name;
                         }
                     }
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         if (Main.netMode == 0)
                         {
                             Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.Rajah.5", Name.ToUpper()), new Color(107, 137, 179));
                         }
-                        else if (Main.netMode == 2 || Main.netMode == 1)
+                        else if (Main.netMode == 2)
                         {
                             ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.Rajah.5", Name.ToUpper()), new Color(107, 137, 179));
                         }
                     }
-                    Music = MusicLoader.GetMusicSlot(CalRemix.instance, "CalRemix/Assets/Music/Bosses/LastStand");
+                    //Porting Note: THere is no LastStand music in the AA repo so this doesn't do anything atm...
+                    //Music = MusicLoader.GetMusicSlot(CalRemix.instance, "Assets/Music/Bosses/LastStand");
                 }
             }
 
@@ -651,31 +652,31 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
         {
             if (NPC.ai[3] == 1) //Bunzooka
             {
-                return "NPCs/Bosses/Rajah/RajahArmsB";
+                return "CalRemix/Content/NPCs/Bosses/RajahBoss/RajahArmsB";
             }
             else if (NPC.ai[3] == 2) //Scepter
             {
-                return "NPCs/Bosses/Rajah/RajahArmsR";
+                return "CalRemix/Content/NPCs/Bosses/RajahBoss/RajahArmsR";
             }
             else if (NPC.ai[3] == 3 && internalAI[3] <= (isSupreme ? 40 : 60)) //Javelin
             {
-                return "NPCs/Bosses/Rajah/RajahArmsS";
+                return "CalRemix/Content/NPCs/Bosses/RajahBoss/RajahArmsS";
             }
             else if (NPC.ai[3] == 4) //Excalihare
             {
-                return "NPCs/Bosses/Rajah/Supreme/Excalihare";
+                return "CalRemix/Content/NPCs/Bosses/RajahBoss/Supreme/Excalihare";
             }
             else if (NPC.ai[3] == 5) //Fluffy Fury
             {
-                return "NPCs/Bosses/Rajah/Supreme/FluffyFury";
+                return "CalRemix/Content/NPCs/Bosses/RajahBoss/Supreme/FluffyFury";
             }
             else if (NPC.ai[3] == 6) //Rabbits Wrath
             {
-                return "NPCs/Bosses/Rajah/Supreme/RabbitsWrath";
+                return "CalRemix/Content/NPCs/Bosses/RajahBoss/Supreme/RabbitsWrath";
             }
             else
             {
-                return "BlankTex";
+                return "CalamityMod/Projectiles/InvisibleProj";
             }
         }
 
@@ -1042,9 +1043,9 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
         {
             if (isSupreme)
             {
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity, Mod.Find<ModGore>("Gores/SupremeRajahHelmet1").Type, 1f);
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity, Mod.Find<ModGore>("Gores/SupremeRajahHelmet2").Type, 1f);
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity, Mod.Find<ModGore>("Gores/SupremeRajahHelmet3").Type, 1f);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity, Mod.Find<ModGore>("SupremeRajahHelmet1").Type, 1f);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity, Mod.Find<ModGore>("SupremeRajahHelmet2").Type, 1f);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity, Mod.Find<ModGore>("SupremeRajahHelmet3").Type, 1f);
                 if (!RemixDowned.downedRajahsRevenge)
                 {
                     int n = NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<SupremeRajahDefeat>());
@@ -1144,17 +1145,17 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             string Supreme = isSupreme ? "Supreme/Supreme" : "";
             if (internalAI[1] == 0)
             {
-                RajahTex = ModContent.Request<Texture2D>("NPCs/Bosses/Rajah/" + Supreme + "Rajah" + IsRoaring + "_Fly").Value;
-                Glow = ModContent.Request<Texture2D>("Glowmasks/Rajah" + IsRoaring + "_Fly_Glow").Value;
-                SupremeGlow = ModContent.Request<Texture2D>("Glowmasks/SupremeRajah" + IsRoaring + "_Fly_Glow").Value;
-                SupremeEyes = ModContent.Request<Texture2D>("Glowmasks/SupremeRajah" + IsRoaring + "_Fly_Eyes").Value;
+                RajahTex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/" + Supreme + "Rajah" + IsRoaring + "_Fly").Value;
+                Glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/Rajah" + IsRoaring + "_Fly_Glow").Value;
+                SupremeGlow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/Supreme/SupremeRajah" + IsRoaring + "_Fly_Glow").Value;
+                SupremeEyes = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/Supreme/SupremeRajah" + IsRoaring + "_Fly_Eyes").Value;
             }
             else
             {
-                RajahTex = ModContent.Request<Texture2D>("NPCs/Bosses/Rajah/" + Supreme + "Rajah" + IsRoaring).Value;
-                Glow = ModContent.Request<Texture2D>("Glowmasks/Rajah" + IsRoaring + "_Glow").Value;
-                SupremeGlow = ModContent.Request<Texture2D>("Glowmasks/SupremeRajah" + IsRoaring + "_Glow").Value;
-                SupremeEyes = ModContent.Request<Texture2D>("Glowmasks/SupremeRajah" + IsRoaring + "_Eyes").Value;
+                RajahTex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/" + Supreme + "Rajah" + IsRoaring).Value;
+                Glow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/Rajah" + IsRoaring + "_Glow").Value;
+                SupremeGlow = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/Supreme/SupremeRajah" + IsRoaring + "_Glow").Value;
+                SupremeEyes = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/Supreme/SupremeRajah" + IsRoaring + "_Eyes").Value;
             }
         }
         public float auraPercent = 0f;
@@ -1189,7 +1190,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             BaseDrawing.DrawTexture(spriteBatch, RajahTex, 0, NPC.position, NPC.width, NPC.height, NPC.scale, NPC.rotation, NPC.direction, 8, NPC.frame, drawColor, true);
             if (NPC.ai[3] == 6) //If Rabbits Wrath
             {
-                ArmTex = ModContent.Request<Texture2D>("NPCs/Bosses/Rajah/Supreme/RabbitsWrath").Value;
+                ArmTex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/Supreme/RabbitsWrath").Value;
                 Rectangle WeaponRectangle = new Rectangle(0, WeaponFrame, 300, 220);
                 BaseDrawing.DrawTexture(spriteBatch, ArmTex, 0, NPC.position, NPC.width, NPC.height, NPC.scale, NPC.rotation, NPC.direction, 8, WeaponRectangle, drawColor, true);
             }
@@ -1257,7 +1258,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             NPC.life = 1200000;
             isSupreme = true;
             NPC.value = Item.sellPrice(3, 0, 0, 0);
-            Music = MusicLoader.GetMusicSlot(CalRemix.instance, "CalRemix/Assets/Music/Bosses/RajahTheme");// Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/RajahTheme");
+            Music = MusicLoader.GetMusicSlot(CalRemix.instance, "Assets/Music/Bosses/SupremeRajah");// Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/RajahTheme");
         }
         public override string BossHeadTexture => "CalRemix/Content/NPCs/Bosses/RajahBoss/SupremeRajah_Head_Boss";
 
