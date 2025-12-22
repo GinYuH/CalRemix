@@ -469,4 +469,34 @@ namespace CalRemix.Content.Tiles.MusicBoxes
             base.MouseOver(i, j);
         }
     }
+
+    public class RajahMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.RajahMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.RajahMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
+
+    public class SupremeRajahMusicBox : PlacedRemixMusicBox
+    {
+        public override void SetStaticDefaults()
+        {
+            RegisterItemDrop(ItemType<Items.Placeables.MusicBoxes.SupremeRajahMusicBox>());
+            base.SetStaticDefaults();
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ItemType<Items.Placeables.MusicBoxes.SupremeRajahMusicBox>();
+            base.MouseOver(i, j);
+        }
+    }
 }

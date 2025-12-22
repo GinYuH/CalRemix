@@ -5990,3 +5990,326 @@ Virisite: {
 	DisplayName: Virisite
 	Tooltip: ""
 }
+
+CarrotBooster: {
+	DisplayName: Carrot Booster
+	Tooltip: Etheral, but crunchy.
+}
+
+Carrot: {
+	DisplayName: Carrot
+	Tooltip: Good for your eyesight
+}
+
+ChampionChestplate: {
+	DisplayName: Champion Chestplate
+	Tooltip:
+		'''
+		15% increased damage
+		The armor of a champion feared across the land
+		'''
+}
+
+ChampionGreaves: {
+	DisplayName: Champion Greaves
+	Tooltip:
+		'''
+		50% increased movement speed
+		15% increased damage
+		The armor of a champion feared across the land
+		'''
+}
+
+ChampionHeaddress: {
+	DisplayName: Champion Headdress
+	Tooltip:
+		'''
+		70% increased minion damage
+		10% increased non-minion damage
+		+7 maximum Minions
+		+2 maximum sentries 
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Baron Bunny fights by your side as an ally to rabbit kind
+		As you lose health, Baron Bunny's will to fight becomes stronger.
+		'''
+}
+
+ChampionHelmet: {
+	DisplayName: Champion Helmet
+	Tooltip:
+		'''
+		35% increased Melee damage & critical strike chance
+		10% increased non-melee damage
+		18% increased melee speed
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		You are the wall that protects the innocent
+		Pressing the armor ability hotkey gives you the 'Defender's Rage' Buff.
+		While enraged, you gain more defense as your life gets lower.
+		'Defender's Rage' Lasts longer the less health you have
+		'Defender's Rage' has a longer cooldown the less health you have
+		During Cooldown, your defense is slightly lowered, but your speed is increased
+		'''
+}
+
+ChampionHood: {
+	DisplayName: Champion Hood
+	Tooltip:
+		'''
+		32% increased Magic damage
+		10% increased non-magic damage
+		25% increased Magic critical strike chance
+		25% reduced Mana consumption
+		150 increased maximum mana
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Energy Eminates from your body...
+		Striking enemies has a chance to spawn an energy carrot from them
+		Each energy carrot picked up boosts your damage, mana regen, and health regen
+		Stacks up to 3 times
+		Each level increases the boosts of these stats
+		'''
+}
+
+ChampionMask: {
+	DisplayName: Champion Mask
+	Tooltip:
+		'''
+		55% increased ranged damage
+		44% increased ranged critical strike chance
+		10% increased non-ranged damage
+		25% reduced ammo consumption
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Time to hunt the hunters...
+		Pressing the armor ability hotkey summons a R.A.B.I.T. Drone for 8 seconds
+		R.A.B.I.T. Drone has a 15 second cooldown
+		During Cooldown, your ranged damage and critical chance are increased by 15%
+		'''
+}
+
+HoodlumHood: {
+	DisplayName: Hopping Hoodlum Hood
+	Tooltip:
+		'''
+		18% increased melee & minion Damage
+		Enemies are more likely to target you
+		Hopping Mad.
+		'''
+	Bonus: Reaching below half heath multiplies your movement speed, melee damage, and minion damage by 50%
+}
+
+HoodlumPants: {
+	DisplayName: Hopping Hoodlum Paws
+	Tooltip:
+		'''
+		10% increased movement speed
+		9% increased melee critical strike chance
+		+1 Max Minion\nEnemies are more likely to target you
+		Hopping Mad.
+		'''
+}
+
+HoodlumShirt: {
+	DisplayName: Hopping Hoodlum Shirt
+	Tooltip:
+		'''
+		10% increased melee speed
+		+1 max minion
+		Enemies are more likely to target you
+		Hopping Mad.
+		'''
+}
+
+RajahMask: {
+	DisplayName: Rajah Rabbit Mask
+	Tooltip: ""
+}
+
+BaneOfTheBunny: {
+	DisplayName: Bane Of The Bunny
+	Tooltip:
+		'''
+		Right click to use as a spear
+		Left click to use as a javelin
+		Throwing Javelins right after a spear thrust throws javelins faster for a moment
+		'''
+}
+
+Bunzooka: {
+	DisplayName: Bunzooka
+	Tooltip: Fires Rabbit Rockets
+}
+
+CarrotFarmer: {
+	DisplayName: Carrot Farmer
+	Tooltip: 
+		'''
+		Spins a Carrot Scythe around you that shreds through enemies
+		Scythes fire off carrots while spun
+		Grants 1 soul essence on direct hit
+		'''
+}
+
+CottonCane: {
+	DisplayName: Cotton Cane
+	Tooltip: Summons a Rabbitcopter Soldier to fight with you
+}
+
+Punisher: {
+	DisplayName: The Punisher
+	Tooltip: ""
+}
+
+RabbitcopterEars: {
+	DisplayName: Rabbitcopter Ears
+	Tooltip:
+		'''
+		Allows flight and slow fall
+		'Yeah that's not how rabbit ears work but whatever, it works.'
+		'''
+}
+
+RajahBag: {
+	DisplayName: Treasure Bag (Rajah Rabbit)
+	Tooltip: Right Click to open
+}
+
+RajahCape: {
+	DisplayName: Rajah Cape
+	Tooltip: ""
+}
+
+RajahPelt: {
+	DisplayName: Rajah Pelt
+	Tooltip: Surpisingly durable for a pelt of fur
+}
+
+RajahSash: {
+	DisplayName: Rajah Rabbit's Sash of Vengeance
+	Tooltip:
+		'''
+		Every 10% of health lost gives you 8% extra attack power to your highest damage type boost
+		40% increased movement speed
+		Increased Jump Height and Speed
+		Grants Autojump
+		Immunity to fall damage
+		'''
+}
+
+RajahTrophy: {
+	DisplayName: Rajah Trophy
+	Tooltip: ""
+}
+
+RoyalScepter: {
+	DisplayName: Royal Scepter
+	Tooltip: Shoots a spread of three carrots
+}
+
+BaneOfTheBunnyEX: {
+	DisplayName: Bane of the Slaughterer
+	Tooltip:
+		'''
+		Right click to use as a spear
+		Left click to use as a javelin
+		Throwing Javelins right after a spear thrust throws javelins faster for a moment
+		Bane of the Bunny EX
+		'''
+}
+
+BunzookaEX: {
+	DisplayName: RPG
+	Tooltip:
+		'''
+		`Rabbit Propelled Grenade`
+		Fires Rabbit Rockets
+		Bunnyzooka EX
+		'''
+}
+
+ChampionPlate: {
+	DisplayName: Champion Plate
+	Tooltip: Forged from Champium
+}
+
+CottonCaneEX: {
+	DisplayName: Rajah's Rage
+	Tooltip: Summons a Royal Rabbit to fight with you
+}
+
+Excalihare: {
+	DisplayName: Excalihare
+	Tooltip: ""
+}
+
+FluffyFury: {
+	DisplayName: Fluffy Fury
+	Tooltip:
+		'''
+		Converts arrows into splitting Carrows
+		Potential lag warning
+		'''
+}
+
+PunisherEX: {
+	DisplayName: The Avenger
+	Tooltip: The Punisher EX
+}
+
+RabbitsWrath: {
+	DisplayName: Rabbit's Wrath
+	Tooltip: Drops razor sharp carrots on your foes
+}
+
+RajahCache: {
+	DisplayName: Treasure Cache (Rajah Rabbit, Champion of the Innocent)
+	Tooltip: Right Click to open
+}
+
+RoyalScepterEX: {
+	DisplayName: Royal Staff
+	Tooltip:
+		'''
+		Shoots a spread of five golden carrots
+		Royal Scepter EX
+		'''
+}
+
+DiamondCarrot: {
+	DisplayName: Ten Carat Carrot
+	Tooltip:
+		'''
+		The fury of the Raging Rajah can be felt radiating from this ornate carrot...
+		Non-consumable
+		'''
+}
+
+GoldenCarrot: {
+	DisplayName: Ten Karat Carrot
+	Tooltip: Summons the Pouncing Punisher himself
+}
+
+PlatinumCarrot: {
+	DisplayName: Ten Karat Carrot
+	Tooltip: Summons the Pouncing Punisher himself
+}
+
+RoyalRabbit: {
+	DisplayName: Royal Rabbit
+	Tooltip: Under direct protection by the Pouncing Punisher
+}
+
+RoyalBunnyCage: {
+	DisplayName: Royal Bunny Cage
+	Tooltip: ""
+}
