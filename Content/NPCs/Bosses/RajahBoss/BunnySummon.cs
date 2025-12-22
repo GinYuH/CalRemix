@@ -52,6 +52,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
 
             int Minion = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, MinionType, 0);
             Main.npc[Minion].netUpdate2 = true;
+            Main.npc[Minion].friendly = Projectile.Remix().friendlyRajahProj;
             Projectile.active = false;
             Projectile.netUpdate2 = true;
         }
@@ -132,6 +133,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
 
             int Minion = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, MinionType, 0);
             Main.npc[Minion].netUpdate2 = true;
+            Main.npc[Minion].friendly = Projectile.Remix().friendlyRajahProj;
             Projectile.active = false;
             Projectile.netUpdate2 = true;
         }
@@ -212,6 +214,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
 
             int Minion = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, MinionType, 0);
             Main.npc[Minion].netUpdate2 = true;
+            Main.npc[Minion].friendly = Projectile.Remix().friendlyRajahProj;
             Projectile.active = false;
             Projectile.netUpdate2 = true;
         }

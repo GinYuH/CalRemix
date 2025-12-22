@@ -1,6 +1,8 @@
 using CalamityMod;
 using CalamityMod.Items.Potions;
+using CalamityMod.Projectiles.Typeless;
 using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.RajahItems;
 using CalRemix.Content.Items.RajahItems.Supreme;
@@ -223,8 +225,60 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 }
             }
 
-            Player player = Main.player[NPC.target];
-            if (NPC.target >= 0 && Main.player[NPC.target].dead)
+            if (NPC.friendly)
+            {
+                if (NPC.target <= -1 || NPC.target >= 255 || !Main.npc[NPC.target].active || Main.npc[NPC.target].friendly || !Main.npc[NPC.target].chaseable)
+                {
+                    NPC potTarget = CalamityUtils.MinionHoming(NPC.Center, 60000, Main.LocalPlayer);
+                    if (potTarget != null)
+                    {
+                        NPC.target = potTarget.whoAmI;
+                        NPC.Calamity().newAI[0] = 0;
+                    }
+                    else
+                    {
+                        NPC.target = -1;
+                    }
+                }
+                if (NPC.Calamity().newAI[0] > 300)
+                {
+                    NPC.active = false;
+                }
+
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (n.whoAmI != NPC.whoAmI && n.chaseable && !n.friendly && !n.dontTakeDamage)
+                    {
+                        if (n.Hitbox.Intersects(NPC.Hitbox))
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), n.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), NPC.damage, 2.5f, Main.myPlayer, n.whoAmI);
+                        }
+                    }
+                }
+            }
+            Entity target;
+            if (NPC.friendly)
+            {
+                if (NPC.target > -1 && NPC.target < 200)
+                {
+                    target = Main.npc[NPC.target];
+                }
+                else
+                {
+                    target = null;
+                }
+                if (target == null)
+                {
+                    NPC.Calamity().newAI[0]++;
+                    NPC.velocity = Vector2.Zero;
+                    return;
+                }
+            }
+            else
+            {
+                target = Main.player[NPC.target];
+            }
+            if (NPC.target >= 0 && Main.player[NPC.target].dead && !NPC.friendly)
             {
                 NPC.TargetClosest(true);
                 if (Main.player[NPC.target].dead)
@@ -252,10 +306,10 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 }
             }
 
-            if (Math.Abs(NPC.Center.X - Main.player[NPC.target].Center.X) + Math.Abs(NPC.Center.Y - Main.player[NPC.target].Center.Y) > 10000)
+            /*if (Math.Abs(NPC.Center.X - target.Center.X) + Math.Abs(NPC.Center.Y - target.Center.Y) > 10000 && !NPC.friendly)
             {
                 NPC.TargetClosest(true);
-                if (Math.Abs(NPC.Center.X - Main.player[NPC.target].Center.X) + Math.Abs(NPC.Center.Y - Main.player[NPC.target].Center.Y) > 10000)
+                if (Math.Abs(NPC.Center.X - target.Center.X) + Math.Abs(NPC.Center.Y - target.Center.Y) > 10000)
                 {
                     if (Main.netMode != 1) CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.Rajah.3", new Color(107, 137, 179));
                     if (Main.netMode != 1)
@@ -274,10 +328,10 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     NPC.netUpdate = true;
                     return;
                 }
-            }
+            }*/
 
 
-            if (player.Center.X < NPC.Center.X)
+            if (target.Center.X < NPC.Center.X)
             {
                 NPC.direction = 1;
             }
@@ -288,7 +342,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
 
             if (internalAI[4] == 0)
             {
-                if(player.Center.Y + player.height / 2 < NPC.Center.Y + NPC.height / 2 - 30f || Math.Abs(NPC.Center.X - Main.player[NPC.target].Center.X) + Math.Abs(NPC.Center.Y - Main.player[NPC.target].Center.Y) > 2000 || isDashing)
+                if(target.Center.Y + target.height / 2 < NPC.Center.Y + NPC.height / 2 - 30f || Math.Abs(NPC.Center.X - target.Center.X) + Math.Abs(NPC.Center.Y - target.Center.Y) > 2000 || isDashing)
                 {
                     NPC.noTileCollide = true;
                     NPC.noGravity = true;
@@ -309,7 +363,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 NPC.noTileCollide = true;
                 NPC.noGravity = true;
                 isDashing = false;
-                if (player.Center.Y + player.height / 2 <= NPC.Center.Y + NPC.height / 2 + 20f) 
+                if (target.Center.Y + target.height / 2 <= NPC.Center.Y + NPC.height / 2 + 20f) 
                 {
                     if(NPC.collideY && NPC.velocity.Y > 0)
                     {
@@ -334,7 +388,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     NPC.netUpdate = true;
                     return;
                 }
-                if(Math.Abs(NPC.Center.Y - Main.player[NPC.target].Center.Y) > 1000)
+                if(Math.Abs(NPC.Center.Y - target.Center.Y) > 1000)
                 {
                     NPC.noTileCollide = true;
                     NPC.noGravity = true;
@@ -347,7 +401,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 NPC.noTileCollide = true;
                 NPC.noGravity = true;
                 FlyAI();
-                if(Math.Abs(NPC.Center.X - player.Center.X) < 50f && player.position.Y > NPC.Center.Y + NPC.height / 2)
+                if(Math.Abs(NPC.Center.X - target.Center.X) < 50f && target.position.Y > NPC.Center.Y + NPC.height / 2)
                 {
                     internalAI[4] = 3f;
                     NPC.netUpdate = true;
@@ -358,13 +412,13 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 NPC.noTileCollide = true;
                 NPC.noGravity = true;
                 isDashing = true;
-                if(player.velocity.X == 0)
+                if(target.velocity.X == 0)
                 {
-                    NPC.velocity = (player.Center - NPC.Center) * .06f;
+                    NPC.velocity = (target.Center - NPC.Center) * .06f;
                 }
                 else
                 {
-                    NPC.velocity = (player.Center + new Vector2(100f * (player.velocity.X > 0? 1 : -1), 0) - NPC.Center) * .06f;
+                    NPC.velocity = (target.Center + new Vector2(100f * (target.velocity.X > 0? 1 : -1), 0) - NPC.Center) * .06f;
                 }
                 NPC.velocity = Vector2.Normalize(NPC.velocity) * 26f;
                 if(NPC.velocity.X > 10f) NPC.velocity.X = 10f;
@@ -376,16 +430,26 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 NPC.noTileCollide = true;
                 NPC.noGravity = false;
                 isDashing = false;
-                if (player.Center.Y + player.height / 2 <= NPC.Center.Y + NPC.height / 2 + 20f) 
+                if (target.Center.Y + target.height / 2 <= NPC.Center.Y + NPC.height / 2 + 20f) 
                 {
                     internalAI[0] = 0f;
                     internalAI[4] = 1f;
                 }
             }
 
-            if (NPC.target <= 0 || NPC.target == 255 || Main.player[NPC.target].dead)
+            if (!NPC.friendly)
             {
-                NPC.TargetClosest(true);
+                Player player = Main.player[NPC.target];
+                if (NPC.target <= 0 || NPC.target == 255 || player.dead)
+                {
+                    NPC.TargetClosest(true);
+                }
+            }
+            else
+            {
+                NPC.boss = false;
+                NPC.dontTakeDamage = true;
+                NPC.chaseable = false;
             }
 
             if (Main.netMode != 1)
@@ -493,7 +557,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     {
                         internalAI[3] = 0;
                         int Rocket = isSupreme ? ModContent.ProjectileType<RajahRocketEXR>() : ModContent.ProjectileType<RajahRocket>();
-                        Vector2 dir = Vector2.Normalize(player.Center - WeaponPos);
+                        Vector2 dir = Vector2.Normalize(target.Center - WeaponPos);
                         dir *= ProjSpeed();
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), WeaponPos.X, WeaponPos.Y, dir.X, dir.Y, Rocket, damage, 5, Main.myPlayer);
                         NPC.netUpdate = true;
@@ -504,7 +568,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     int carrots = isSupreme ? 5 : 3;
                     int carrotType = isSupreme ? Mod.Find<ModProjectile>("CarrotEXR").Type : Mod.Find<ModProjectile>("CarrotHostile").Type;
                     float spread = 45f * 0.0174f * .5f;
-                    Vector2 dir = Vector2.Normalize(player.Center - WeaponPos);
+                    Vector2 dir = Vector2.Normalize(target.Center - WeaponPos);
                     dir *= ProjSpeed() + (isSupreme? 3 : 1);
                     float baseSpeed = (float)Math.Sqrt((dir.X * dir.X) + (dir.Y * dir.Y));
                     double startAngle = Math.Atan2(dir.X, dir.Y) - .1d;
@@ -525,8 +589,8 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     int Javelin = isSupreme ? ModContent.ProjectileType<BaneTEXR>() : ModContent.ProjectileType<BaneR>();
                     if (internalAI[3] == (isSupreme ? 40 : 60))
                     {
-                        float time = (player.Center - WeaponPos).Length() / ProjSpeed();
-                        Vector2 dir = Vector2.Normalize(player.Center + (isSupreme? player.velocity * time : Vector2.Zero) - WeaponPos);
+                        float time = (target.Center - WeaponPos).Length() / ProjSpeed();
+                        Vector2 dir = Vector2.Normalize(target.Center + (isSupreme? target.velocity * time : Vector2.Zero) - WeaponPos);
                         dir *= ProjSpeed();
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), WeaponPos.X, WeaponPos.Y, dir.X, dir.Y, Javelin, damage, 5, Main.myPlayer);
                     }
@@ -541,7 +605,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     if (internalAI[3] > 20)
                     {
                         internalAI[3] = 0;
-                        Vector2 dir = Vector2.Normalize(player.Center - WeaponPos);
+                        Vector2 dir = Vector2.Normalize(target.Center - WeaponPos);
                         dir *= ProjSpeed() + 3f;
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), WeaponPos.X, WeaponPos.Y, dir.X, dir.Y, ModContent.ProjectileType<ExcalihareR>(), damage, 5, Main.myPlayer);
                         NPC.netUpdate = true;
@@ -551,8 +615,8 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 {
                     int Arrows = Main.rand.Next(2, 4);
                     float spread = 45f * 0.0174f * .3f;
-                    float time = (player.Center - WeaponPos).Length() / ProjSpeed();
-                    Vector2 dir = Vector2.Normalize(player.Center + (isSupreme? player.velocity * time : Vector2.Zero) - WeaponPos);
+                    float time = (target.Center - WeaponPos).Length() / ProjSpeed();
+                    Vector2 dir = Vector2.Normalize(target.Center + (isSupreme? target.velocity * time : Vector2.Zero) - WeaponPos);
                     dir *= ProjSpeed() + (isSupreme? 3 : 1);
                     float baseSpeed = (float)Math.Sqrt((dir.X * dir.X) + (dir.Y * dir.Y));
                     double startAngle = Math.Atan2(dir.X, dir.Y) - .1d;
@@ -574,11 +638,11 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     if (internalAI[3] > 5)
                     {
                         internalAI[3] = 0;
-                        Vector2 vector12 = new Vector2(player.Center.X, player.Center.Y);
+                        Vector2 vector12 = new Vector2(target.Center.X, target.Center.Y);
                         float num75 = 14f;
                         for (int num120 = 0; num120 < 3; num120++)
                         {
-                            Vector2 vector2 = player.Center + new Vector2(-(float)Main.rand.Next(0, 401) * player.direction, -600f);
+                            Vector2 vector2 = target.Center + new Vector2(-(float)Main.rand.Next(0, 401) * target.direction, -600f);
                             vector2.Y -= 120 * num120;
                             Vector2 vector13 = vector12 - vector2;
                             if (vector13.Y < 0f)
@@ -683,6 +747,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
 
         public void JumpAI()
         {
+            Entity target = NPC.friendly ? Main.npc[NPC.target] : Main.player[NPC.target];
             internalAI[1] = 1;
             if (NPC.ai[0] == 0f)
             {
@@ -718,7 +783,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                             internalAI[2] += 2;
                         }
                     }
-                    if (Math.Abs(NPC.Center.X - Main.player[NPC.target].Center.X) > 800f)
+                    if (Math.Abs(NPC.Center.X - target.Center.X) > 800f)
                     {
                         internalAI[2] = -1f;
                     }
@@ -729,7 +794,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     else if (internalAI[2] == -1f)
                     {
                         NPC.TargetClosest(true);
-                        float longth = Math.Abs(NPC.Center.X - Main.player[NPC.target].Center.X);
+                        float longth = Math.Abs(NPC.Center.X - target.Center.X);
                         NPC.velocity.X = (6 + longth * .01f) * NPC.direction;
                         NPC.velocity.Y = -12.1f;
                         NPC.ai[0] = 1f;
@@ -758,7 +823,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 else
                 {
                     NPC.TargetClosest(true);
-                    if (NPC.position.X < Main.player[NPC.target].position.X && NPC.position.X + NPC.width > Main.player[NPC.target].position.X + Main.player[NPC.target].width)
+                    if (NPC.position.X < target.position.X && NPC.position.X + NPC.width > target.position.X + target.width)
                     {
                         NPC.velocity.X = NPC.velocity.X * 0.9f;
                         NPC.velocity.Y = NPC.velocity.Y + 0.4f;
@@ -767,12 +832,12 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     {
                         
                         float num626 = 3f;
-                        float longth = Math.Abs(NPC.Center.X - Main.player[NPC.target].Center.X);
+                        float longth = Math.Abs(NPC.Center.X - target.Center.X);
                         num626 = 3f + longth * .056f;
                         
-                        if (Main.player[NPC.target].velocity.X != 0)
+                        if (target.velocity.X != 0)
                         {
-                            num626 += Math.Abs(Main.player[NPC.target].velocity.X);
+                            num626 += Math.Abs(target.velocity.X);
                         }
 
                         if (NPC.direction < 0)
@@ -795,15 +860,15 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     }
                 }
 
-                Player player = Main.player[NPC.target];
-                if(player.Center.Y + player.height / 2 <= NPC.Center.Y + NPC.height / 2 + 20f && NPC.velocity.Y > 0)
+                Entity target2 = NPC.friendly ? Main.npc[NPC.target] : Main.player[NPC.target];
+                if(target2.Center.Y + target2.height / 2 <= NPC.Center.Y + NPC.height / 2 + 20f && NPC.velocity.Y > 0)
                 {
                     internalAI[4] = 4f;
                     NPC.ai[0] = 0;
                     NPC.netUpdate = true;
                     return;
                 }
-                else if(Math.Abs(NPC.Center.X - player.Center.X) < 50f && player.position.Y > NPC.Center.Y + NPC.height / 2)
+                else if(Math.Abs(NPC.Center.X - target2.Center.X) < 50f && target2.position.Y > NPC.Center.Y + NPC.height / 2)
                 {
                     internalAI[4] = 3f;
                     NPC.ai[0] = 0;
@@ -816,10 +881,11 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
         bool isDashing = false;
         public void FlyAI()
         {
+            Entity target = NPC.friendly ? Main.npc[NPC.target] : Main.player[NPC.target];
             float speed = 14f;
             if (isSupreme)
             {
-                if (Math.Abs(NPC.Center.X - Main.player[NPC.target].Center.X) + Math.Abs(NPC.Center.Y - Main.player[NPC.target].Center.Y) > 1000)
+                if (Math.Abs(NPC.Center.X - target.Center.X) + Math.Abs(NPC.Center.Y - target.Center.Y) > 1000)
                 {
                     speed = 50f;
                     isDashing = true;
@@ -854,20 +920,21 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             {
                 speed = 20f;
             }
-            AISpaceOctopus(NPC, Main.player[NPC.target].Center, .35f, speed, 300);
+            AISpaceOctopus(NPC, target.Center, .35f, speed, 300);
             internalAI[1] = 0;
         }
 
         public static void AISpaceOctopus(NPC npc, Vector2 targetCenter = default(Vector2), float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f)
-		{
+        {
+            Entity target = npc.friendly ? Main.npc[npc.target] : Main.player[npc.target];
             float pos = 200f;
-            if(Main.player[npc.target].velocity.X == 0)
+            if(target.velocity.X == 0)
             {
                 pos = 0;
             }
             else
             {
-                pos = (Main.player[npc.target].velocity.X > 0? 1f: -1f) * 200f;
+                pos = (target.velocity.X > 0? 1f: -1f) * 200f;
             }
 			Vector2 wantedVelocity = targetCenter - npc.Center + new Vector2(pos, -hoverDistance);
 			float dist = (float)Math.Sqrt(wantedVelocity.X * wantedVelocity.X + wantedVelocity.Y * wantedVelocity.Y);
@@ -1126,6 +1193,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     ModContent.ItemType<RoyalScepter>(),
                     ModContent.ItemType<Punisher>(),
                     ModContent.ItemType<RabbitcopterEars>(),
+                    ModContent.ItemType<BagofCarrots>(),
                 };
                 normalOnly.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, weapons));
             }

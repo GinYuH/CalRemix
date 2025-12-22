@@ -48,6 +48,7 @@ namespace CalRemix
         public bool whipGonged = false;
         public int taintSummon = 0;
         public int deflectedEnemy = -1;
+        public bool friendlyRajahProj = false;
         public override bool InstancePerEntity => true;
         public int[] baronStraitTiles =
         {
@@ -143,7 +144,11 @@ namespace CalRemix
                 projectile.frame = 0;
 
             }
-
+            if (friendlyRajahProj)
+            {
+                projectile.friendly = true;
+                projectile.hostile = false;
+            }
             if (CalRemixWorld.oxydayTime > 0 && projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == WallID.None && (projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f || projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
             {
                 projectile.velocity.X += Main.windSpeedCurrent * Main.windPhysicsStrength;
@@ -562,6 +567,24 @@ namespace CalRemix
                     if (!projectile.hostile)
                     {
                         projectile.DamageType = GetInstance<StormbowDamageClass>();
+                    }
+                }
+            }
+
+            if (source is EntitySource_Parent par)
+            {
+                if (par.Entity is NPC rajah)
+                {
+                    if (rajah.friendly)
+                    {
+                        friendlyRajahProj = true;
+                    }
+                }
+                if (par.Entity is Projectile rajahe)
+                {
+                    if (rajahe.GetGlobalProjectile<CalRemixProjectile>().friendlyRajahProj)
+                    {
+                        friendlyRajahProj = true;
                     }
                 }
             }

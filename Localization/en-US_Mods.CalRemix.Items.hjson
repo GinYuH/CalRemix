@@ -2737,6 +2737,15 @@ Weapons: {
 				Stealth strikes home
 				'''
 		}
+
+		BagofCarrots: {
+			DisplayName: Bag of Carrots
+			Tooltip:
+				'''
+				Throws out bags of carrots which attract Rajah Rabbit
+				Stealth strikes attract The Champion of the Innocent
+				'''
+		}
 	}
 }
 
