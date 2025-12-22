@@ -759,24 +759,21 @@ Distortix.DisplayName: Distortix
 LargeStinkbug.DisplayName: Large Stinkbug
 
 Cryonix: {
-	DisplayName: Cryonix
 	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Tundra.
+	DisplayName: Cryonix
 }
 
 Vernix: {
-	DisplayName: Vernix
 	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Jungle.
+	DisplayName: Vernix
 }
 
 Chaotrix: {
-	DisplayName: Chaotrix
 	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Abyss.
+	DisplayName: Chaotrix
 }
 
 Foveanator.DisplayName: Foveanator
-Chaotrix.DisplayName: Chaotrix
-Cryonix.DisplayName: Cryonix
-Vernix.DisplayName: Vernix
 BunnyBattler.DisplayName: Bunny Battler
 BunnyBattler2.DisplayName: Bunny Battler
 BunnyBrawler.DisplayName: Bunny Brawler

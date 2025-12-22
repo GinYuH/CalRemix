@@ -21,6 +21,7 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using CalamityMod.Particles;
 using CalRemix.Content.Particles;
+using MonoMod.Logs;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -78,6 +79,9 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             get => (PhaseType)Phase;
             set => Phase = (int)value;
         }
+
+        public bool FinishedAttack = false;
+
         public ref float JawRotation => ref NPC.Calamity().newAI[2];
 
         public List<Vector2> ctrlPoints = new();
@@ -360,7 +364,9 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 {
                                     if (Timer % 10 == 0)
                                         SoundEngine.PlaySound(GasSound, NPC.Center);
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Main.rand.NextVector2Circular(30, 30), Vector2.Zero, ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(210, 380), 1);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Main.rand.NextVector2Circular(30, 30), Vector2.Zero, ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(210, 380), 1);
+                                    Main.projectile[p].timeLeft = (int)(Main.projectile[p].timeLeft * 1.4f);
+                                    NetMessage.SendData(MessageID.SyncProjectile, number: p);
                                 }
                             }
                         }
@@ -377,16 +383,16 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         else if (Timer >= waitForBombs)
                         {
-                            ChangePhase(PhaseType.Flamethrower);
+                            PhaseCheck(PhaseType.Flamethrower);
                         }
                     }
                     break;
                 case PhaseType.Flamethrower:
                     {
                         int wait = 20;
-                        int travelTime = wait + 30;
+                        int travelTime = wait + (PhaseTwo ? 90 : 30);
                         int chargeUp = travelTime + 20;
-                        int firingTime = chargeUp + 150;
+                        int firingTime = chargeUp + (PhaseTwo ? 190 : 150);
                         int waitEnd = firingTime + 80;
 
                         float dist = 700;
@@ -434,11 +440,11 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         {
                             JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
-                            NPC.velocity *= 0.98f;
+                            NPC.velocity *= 0.96f;
                         }
                         else if (Timer > waitEnd)
                         {
-                            ChangePhase(PhaseType.SineGas);
+                            PhaseCheck(PhaseType.SineGas);
                         }
 
                         if (Timer >= wait)
@@ -483,7 +489,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             NPC.Opacity = 0;
                             if (MainHead.type == ModContent.NPCType<AnomalyTwo>())
                             {
-                                MainHead.ModNPC<AnomalyTwo>().ChangePhase(AnomalyTwo.PhaseType.PhaseTwo);
+                                if (MainHead.ModNPC<AnomalyTwo>().CurrentPhase == AnomalyTwo.PhaseType.PhaseOne)
+                                    MainHead.ModNPC<AnomalyTwo>().ChangePhase(AnomalyTwo.PhaseType.PhaseTwo);
                             }
                             else
                             {
@@ -503,6 +510,24 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             Timer++;
         }
 
+        public void PhaseCheck(PhaseType change)
+        {
+            FinishedAttack = true;
+            bool canChange = true;
+            if (MainHead.ModNPC != null)
+            {
+                if (MainHead.ModNPC is AnomalyTwo atwo)
+                {
+                    if (atwo.CurrentPhase >= AnomalyTwo.PhaseType.IdleBehaviour)
+                        canChange = false;
+                }
+            }
+            if (canChange)
+            {
+                ChangePhase(change);
+            }
+        }
+
         public void ChangePhase(PhaseType phase)
         {
             CurrentPhase = phase;
@@ -510,6 +535,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             ExtraTwo = 0;
             Timer = 0;
             NPC.netUpdate = true;
+            FinishedAttack = false;
         }
 
 
@@ -522,6 +548,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             writer.Write(NPC.Calamity().newAI[1]);
             writer.Write(NPC.Calamity().newAI[2]);
             writer.WriteVector2(OldPosition);
+            writer.Write(FinishedAttack);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -533,6 +560,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             NPC.Calamity().newAI[1] = reader.ReadSingle();
             NPC.Calamity().newAI[2] = reader.ReadSingle();
             OldPosition = reader.ReadVector2();
+            FinishedAttack = reader.ReadBoolean();
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

@@ -1,14 +1,23 @@
-﻿using CalRemix.Core.Biomes;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using CalamityMod;
+﻿using CalamityMod;
+using CalamityMod.Particles;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalRemix.Content.Particles;
+using CalRemix.Content.Projectiles.Hostile;
+using CalRemix.Core.Biomes;
+using CalRemix.Core.Graphics;
+using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
-using System.IO;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.ComponentModel;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
-using System;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -32,6 +41,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 NPC.Calamity().newAI[1] = value.Y;
             }
         }
+
+        public Vector2 OldPosition = new();
 
         public ref float EyeRotation => ref NPC.Calamity().newAI[2];
 
@@ -67,6 +78,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             set => Phase = (int)value;
         }
 
+        public bool FinishedAttack = false;
+
         public override void SetStaticDefaults()
         {
             NPCID.Sets.MustAlwaysDraw[Type] = true;
@@ -96,6 +109,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public override void AI()
         {
+            Vector2 arenaCenter = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8f;
             NPC.TargetClosest();
             Player target = Main.player[NPC.target];
             if (target == null || !target.active || target.dead)
@@ -122,28 +136,297 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 }
             }
             float phaseGate = 0.7f;
-            if (!PhaseTwo && NPC.life < (NPC.lifeMax * phaseGate))
+            if (!PhaseTwo && NPC.life < (NPC.lifeMax * phaseGate) && CurrentPhase != PhaseType.Knockout)
             {
                 ChangePhase(PhaseType.Knockout);
+                NPC.dontTakeDamage = true;
             }
             switch (CurrentPhase)
             {
                 case PhaseType.SpawnAnim:
                     {
+
+                        float startShake = 120;
+                        float startRise = startShake + 60;
+                        float endRise = startRise + 90;
+                        float roarDuration = endRise + 170;
+                        float stopLooking = roarDuration + 70;
+                        float finish = stopLooking + 50;
+
+                        bool skip = false;
+                        if (skip && Timer < startRise)
+                        {
+                            Timer = startRise;
+                        }
+
+                        Vector2 arenaPoint = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8 + Vector2.UnitY * 200;
+                        Vector2 screenShake = Main.rand.NextVector2Circular(Main.LocalPlayer.Calamity().GeneralScreenShakePower * CalamityClientConfig.Instance.ScreenshakePower, Main.LocalPlayer.Calamity().GeneralScreenShakePower * CalamityClientConfig.Instance.ScreenshakePower);
+                        float arenaCreationWidth = 1000;
+
+                        #region camera stuff
+                        if (Timer < roarDuration)
+                        {
+                            if (Timer < startRise)
+                            {
+                                CameraPanSystem.CameraPanInterpolant = CalamityUtils.SineInEasing(Utils.GetLerpValue(0, startRise, Timer, true), 1);
+                            }
+                            else
+                            {
+                                CameraPanSystem.CameraPanInterpolant = 1;
+                            }
+                            CameraPanSystem.CameraFocusPoint = arenaPoint + screenShake;
+                        }
+                        else
+                        {
+                            if (Timer < finish)
+                            {
+                                CameraPanSystem.CameraPanInterpolant = CalamityUtils.SineInEasing(Utils.GetLerpValue(finish, stopLooking, Timer, true), 1);
+                            }
+                            else
+                            {
+                                CameraPanSystem.CameraPanInterpolant = 0;
+                            }
+                            CameraPanSystem.CameraFocusPoint = NPC.Center;
+                        }
+                        #endregion
+
+                        if (Timer < startRise)
+                        {
+                            if (Timer >= startShake)
+                            {
+                                Main.LocalPlayer.Calamity().GeneralScreenShakePower = MathHelper.Lerp(1, 10, Utils.GetLerpValue(startShake, startRise, Timer, true));
+                            }
+                        }
+                        else if (Timer < endRise)
+                        {
+                            NPC.Opacity = 1;
+                            if (Timer == startRise)
+                            {
+                                Main.LocalPlayer.Calamity().GeneralScreenShakePower = 30;
+                                SavePosition = NPC.Center - Vector2.UnitY * 900;
+                                OldPosition = NPC.Center;
+                            }
+                            else
+                            {
+                                NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.ExpInEasing(Utils.GetLerpValue(startRise, endRise, Timer, true), 1));
+                            }
+                        }
+                        else if (Timer < roarDuration)
+                        {
+                            if (Timer == endRise)
+                            {
+                                SoundEngine.PlaySound(AnomalyOne.RoarSound with { Pitch = -0.5f });
+                            }
+                            Main.LocalPlayer.Calamity().GeneralScreenShakePower = 4;
+                            if (Timer % 7 == 0)
+                            {
+                                GeneralParticleHandler.SpawnParticle(new HKShockwave(NPC.Center, Vector2.Zero, Color.SeaGreen * 0.9f, 0.1f, 22f, 20));
+                            }
+                        }
+                        else if (Timer < stopLooking)
+                        {
+                            OldPosition = NPC.Center;
+                            SavePosition = NPC.Center + new Vector2(-arenaCreationWidth, -500);
+                        }
+                        else if (Timer >= finish)
+                        {
+                            CameraPanSystem.CameraPanInterpolant = 0;
+                            NPC.dontTakeDamage = false;
+                            ChangePhase(Main.rand.NextBool() ? PhaseType.Orbitals : PhaseType.BouncyBalls);
+                        }
                     }
                     break;
                 case PhaseType.BouncyBalls:
                     {
+                        int orbRate = 90;
+                        int reposition = 40;
+                        int spawnOrbs = reposition + 30;
+                        int stopOrbs = spawnOrbs + (orbRate * 3);
+                        int waitDuration = PhaseTwo ? 180 : 360;
+                        int wait = stopOrbs + waitDuration;
+
+                        if (Timer < reposition)
+                        {
+                            if (Timer <= 1)
+                            {
+                                SavePosition = arenaCenter - Vector2.UnitY * 100;
+                                OldPosition = NPC.Center;
+                            }
+                            else
+                            {
+                                NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInEasing(Utils.GetLerpValue(0, reposition, Timer, true), 1));
+                            }
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(0, 40, Utils.GetLerpValue(0, reposition, Timer, true)) / 60f);
+                        }
+                        else if (Timer < spawnOrbs)
+                        {
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(40, 180, Utils.GetLerpValue(reposition, spawnOrbs, Timer, true)) / 60f);
+                        }
+                        else if (Timer < stopOrbs)
+                        {
+                            float localTimer = Timer % orbRate;
+                            if (localTimer % orbRate == 0)
+                            {
+                                SoundEngine.PlaySound(AnomalyDisciple3.BurstSound, NPC.Center);
+                                int projAmt = 6;
+                                float randomOff = Main.rand.NextFloat(MathHelper.PiOver4);
+                                for (int i = 0; i < projAmt; i++)
+                                {
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedBy(randomOff + MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)projAmt)) * 10, ModContent.ProjectileType<AnomalyOrbuleBoss>(), CalRemixHelper.ProjectileDamage(300, 510), 1f, ai0: 1, ai2: NPC.whoAmI);
+                                        if (PhaseTwo)
+                                        {
+                                            Main.projectile[p].timeLeft /= 2;
+                                        }
+                                    }
+                                }
+                                Vector2 dest = arenaCenter + Main.rand.NextVector2Circular(200, 200);
+                                NPC.velocity = (dest - NPC.Center).ClampMagnitude(0, 10);
+                            }
+                            else
+                            {
+                                NPC.velocity *= 0.95f;
+                            }
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(180, 260, Utils.GetLerpValue(spawnOrbs, spawnOrbs + 60, Timer, true)) / 60f);
+                        }
+                        else if (Timer < wait)
+                        {
+                            NPC.velocity *= 0.95f;
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(260, 0, Utils.GetLerpValue(stopOrbs, wait, Timer, true)) / 60f);
+                        }
+                        else if (Timer >= wait)
+                        {
+                            PhaseCheck(PhaseType.Orbitals);
+                        }
                     }
                     break;
                 case PhaseType.Orbitals:
                     {
+                        int reposition = 30;
+                        int spawnOrbs = reposition + 40;
+                        int startMoving = spawnOrbs + 60;
+                        int moveTime = startMoving + 300;
+                        int wait = moveTime + (PhaseTwo ? 30 : 90);
+                        if (Timer < reposition)
+                        {
+                            if (Timer <= 1)
+                            {
+                                NPC.direction = Main.rand.NextBool().ToDirectionInt();
+                                OldPosition = NPC.Center;
+                                SavePosition = arenaCenter + Vector2.UnitX * 1000 * NPC.direction;
+                            }
+                            else
+                            {
+                                NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInEasing(Utils.GetLerpValue(0, reposition, Timer, true), 1));
+                            }
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(0, 40, Utils.GetLerpValue(0, reposition, Timer, true)) / 60f);
+                        }
+                        else if (Timer < spawnOrbs)
+                        {
+                            if (Timer == reposition)
+                            {
+                                SoundEngine.PlaySound(AnomalyDisciple3.BurstSound, NPC.Center);
+                                int orbCountMain = 8;
+                                for (int i = 0; i < orbCountMain; i++)
+                                {
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AnomalyOrbuleBoss>(), CalRemixHelper.ProjectileDamage(280, 390), 1f, ai2: NPC.whoAmI);
+                                    Main.projectile[p].localAI[1] = MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)orbCountMain);
+                                    Main.projectile[p].localAI[2] = 600;
+                                    Main.projectile[p].direction = 1;
+                                    Main.projectile[p].netUpdate = true;
+                                    NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, p);
+                                }
+                                int orbCountSmall = 6;
+                                for (int i = 0; i < orbCountSmall; i++)
+                                {
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AnomalyOrbuleBoss>(), CalRemixHelper.ProjectileDamage(280, 390), 1f, ai2: NPC.whoAmI);
+                                    Main.projectile[p].localAI[1] = MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)orbCountSmall);
+                                    Main.projectile[p].localAI[2] = 300;
+                                    Main.projectile[p].direction = -1;
+                                    Main.projectile[p].netUpdate = true;
+                                    NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, p);
+                                }
+                            }
+                            if (Timer == reposition + 10)
+                            {
+                                SoundEngine.PlaySound(AnomalyDisciple3.BurstSound, NPC.Center);
+                            }
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(40, 120, Utils.GetLerpValue(reposition, spawnOrbs, Timer, true)) / 60f);
+                        }
+                        else if (Timer < startMoving)
+                        {
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(120, 40, Utils.GetLerpValue(spawnOrbs, startMoving, Timer, true)) / 60f);
+                        }
+                        else if (Timer < moveTime)
+                        {
+                            if (Timer == startMoving)
+                            {
+                                OldPosition = NPC.Center;
+                                SavePosition = arenaCenter + Vector2.UnitX * 1000 * NPC.direction;
+                            }
+                            else
+                            {
+                                NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(startMoving, moveTime, Timer, true), 1));
+                            }
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(40, 180, Utils.GetLerpValue(startMoving, startMoving + 60, Timer, true)) / 60f);
+                        }
+                        else if (Timer < wait)
+                        {
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(120, 0, Utils.GetLerpValue(moveTime, wait, Timer, true)) / 60f);
+                        }
+                        else
+                        {
+                            PhaseCheck(PhaseType.BouncyBalls);
+                        }
                     }
                     break;
                 case PhaseType.Knockout:
                     {
                         NPC.dontTakeDamage = true;
                         NPC.velocity = Vector2.Zero;
+
+                        int wait = 0;
+                        int pauseBeforeFall = wait + 60;
+                        int fallDuration = pauseBeforeFall + 60;
+                        int finishAnim = fallDuration + 90;
+
+                        PhaseTwo = true;
+
+                        if (Timer < wait)
+                        {
+
+                        }
+                        else if (Timer < pauseBeforeFall)
+                        {
+                            if (Timer == wait)
+                            {
+                                SoundEngine.PlaySound(AnomalyOne.RoarSound with { Pitch = 0.2f });
+                            }
+                            SavePosition = new Vector2(NPC.Center.X, arenaCenter.Y + 600);
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer < fallDuration)
+                        {
+                            if (Timer == pauseBeforeFall)
+                            {
+                                SoundEngine.PlaySound(AnomalyTwo.FallSound);
+                            }
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInEasing(Utils.GetLerpValue(pauseBeforeFall, fallDuration, Timer, true), 1));
+                        }
+                        else if (Timer > finishAnim)
+                        {
+                            NPC.Opacity = 0;
+                            if (MainHead.type == ModContent.NPCType<AnomalyTwo>())
+                            {
+                                if (MainHead.ModNPC<AnomalyTwo>().CurrentPhase == AnomalyTwo.PhaseType.PhaseTwo)
+                                    MainHead.ModNPC<AnomalyTwo>().ChangePhase(AnomalyTwo.PhaseType.Rise);
+                            }
+                            else
+                            {
+                                Mod.Logger.Error("Main head not found!");
+                            }
+                        }
                     }
                     break;
             }
@@ -156,6 +439,24 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             ExtraOne = 0;
             ExtraTwo = 0;
             Timer = 0;
+            FinishedAttack = false;
+        }
+        public void PhaseCheck(PhaseType change)
+        {
+            FinishedAttack = true;
+            bool canChange = true;
+            if (MainHead.ModNPC != null)
+            {
+                if (MainHead.ModNPC is AnomalyTwo atwo)
+                {
+                    if (atwo.CurrentPhase >= AnomalyTwo.PhaseType.IdleBehaviour)
+                        canChange = false;
+                }
+            }
+            if (canChange)
+            {
+                ChangePhase(change);
+            }
         }
 
 
@@ -167,6 +468,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             writer.Write(NPC.Calamity().newAI[0]);
             writer.Write(NPC.Calamity().newAI[1]);
             writer.Write(NPC.Calamity().newAI[2]);
+            writer.WriteVector2(OldPosition);
+            writer.Write(FinishedAttack);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -177,6 +480,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             NPC.Calamity().newAI[0] = reader.ReadSingle();
             NPC.Calamity().newAI[1] = reader.ReadSingle();
             NPC.Calamity().newAI[2] = reader.ReadSingle();
+            OldPosition = reader.ReadVector2();
+            FinishedAttack = reader.ReadBoolean();
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

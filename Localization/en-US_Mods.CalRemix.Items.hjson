@@ -6152,7 +6152,7 @@ Bunzooka: {
 
 CarrotFarmer: {
 	DisplayName: Carrot Farmer
-	Tooltip: 
+	Tooltip:
 		'''
 		Spins a Carrot Scythe around you that shreds through enemies
 		Scythes fire off carrots while spun
@@ -6311,5 +6311,25 @@ RoyalRabbit: {
 
 RoyalBunnyCage: {
 	DisplayName: Royal Bunny Cage
+	Tooltip: ""
+}
+
+RajahMusicBox: {
+	DisplayName: Rajah Music Box
+	Tooltip: ""
+}
+
+SupremeRajahMusicBox: {
+	DisplayName: Supreme Rajah Music Box
+	Tooltip: ""
+}
+
+RajahRelic: {
+	DisplayName: Rajah Relic
+	Tooltip: ""
+}
+
+SupremeRajahRelic: {
+	DisplayName: Supreme Rajah Relic
 	Tooltip: ""
 }

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -188,12 +189,42 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         }
                         else if (Timer >= startFight)
                         {
+                            DragonHead.Opacity = 1;
+                            OrbHead.Opacity = 1;
+                            DragonHead.dontTakeDamage = false;
+                            OrbHead.dontTakeDamage = false;
+                            DragonHead.ModNPC<AnomalyOne>().ChangePhase(Main.rand.NextBool() ? AnomalyOne.PhaseType.SineGas : AnomalyOne.PhaseType.Flamethrower);
+                            OrbHead.ModNPC<AnomalyThree>().ChangePhase(Main.rand.NextBool() ? AnomalyThree.PhaseType.BouncyBalls : AnomalyThree.PhaseType.Orbitals);
                             ChangePhase(PhaseType.IdleBehaviour);
                         }
                     }
                     break;
                 case PhaseType.IdleBehaviour:
                     {
+                        bool orbFinished = false;
+                        bool serpentFinished = false;
+                        if (OrbHead.ModNPC != null)
+                        {
+                            if (OrbHead.ModNPC is AnomalyThree athree)
+                            {
+                                if (athree.FinishedAttack)
+                                    orbFinished = true;
+                            }
+                        }
+                        if (DragonHead.ModNPC != null)
+                        {
+                            if (DragonHead.ModNPC is AnomalyOne aone)
+                            {
+                                if (aone.FinishedAttack)
+                                    serpentFinished = true;
+                            }
+                        }
+
+                        if (orbFinished && serpentFinished)
+                        {
+                            DragonHead.ModNPC<AnomalyOne>().ChangePhase(Main.rand.NextBool() ? AnomalyOne.PhaseType.SineGas : AnomalyOne.PhaseType.Flamethrower);
+                            OrbHead.ModNPC<AnomalyThree>().ChangePhase(Main.rand.NextBool() ? AnomalyThree.PhaseType.BouncyBalls : AnomalyThree.PhaseType.Orbitals);
+                        }
                     }
                     break;
                 case PhaseType.Enrage:
