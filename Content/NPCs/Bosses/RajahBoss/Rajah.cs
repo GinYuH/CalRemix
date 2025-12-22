@@ -259,6 +259,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             Entity target;
             if (NPC.friendly)
             {
+                NPC.boss = false;
                 if (NPC.target > -1 && NPC.target < 200)
                 {
                     target = Main.npc[NPC.target];
