@@ -176,7 +176,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             }
                             CameraPanSystem.CameraFocusPoint = arenaPoint + screenShake;
                         }
-                        else
+                        else if (Timer > stopLooking)
                         {
                             if (Timer < finish)
                             {
@@ -186,7 +186,12 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             {
                                 CameraPanSystem.CameraPanInterpolant = 0;
                             }
-                            CameraPanSystem.CameraFocusPoint = NPC.Center;
+                            CameraPanSystem.CameraFocusPoint = arenaPoint + screenShake;
+                        }
+                        else if (Timer <= stopLooking && Timer >= roarDuration)
+                        {
+                            CameraPanSystem.CameraFocusPoint = arenaPoint + screenShake;
+                            CameraPanSystem.CameraPanInterpolant = 1;
                         }
                         #endregion
 
@@ -205,6 +210,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 Main.LocalPlayer.Calamity().GeneralScreenShakePower = 30;
                                 SavePosition = NPC.Center - Vector2.UnitY * 900;
                                 OldPosition = NPC.Center;
+                                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyThreeRise"));
                             }
                             else
                             {
@@ -218,15 +224,19 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 SoundEngine.PlaySound(AnomalyOne.RoarSound with { Pitch = -0.5f });
                             }
                             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 4;
+                            NPC.rotation = MathF.Sin(Timer * 3f) * 0.05f;
                             if (Timer % 7 == 0)
                             {
                                 GeneralParticleHandler.SpawnParticle(new HKShockwave(NPC.Center, Vector2.Zero, Color.SeaGreen * 0.9f, 0.1f, 22f, 20));
                             }
+                            EyeRotation += 0.2f;
                         }
                         else if (Timer < stopLooking)
                         {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.2f);
                             OldPosition = NPC.Center;
                             SavePosition = NPC.Center + new Vector2(-arenaCreationWidth, -500);
+                            EyeRotation += MathHelper.Lerp(0.2f, 0, Utils.GetLerpValue(roarDuration, stopLooking, Timer, true));
                         }
                         else if (Timer >= finish)
                         {
@@ -268,6 +278,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             if (localTimer % orbRate == 0)
                             {
                                 SoundEngine.PlaySound(AnomalyDisciple3.BurstSound, NPC.Center);
+                                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyThreeRadial"));
                                 int projAmt = 6;
                                 float randomOff = Main.rand.NextFloat(MathHelper.PiOver4);
                                 for (int i = 0; i < projAmt; i++)
@@ -282,18 +293,18 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                     }
                                 }
                                 Vector2 dest = arenaCenter + Main.rand.NextVector2Circular(200, 200);
-                                NPC.velocity = (dest - NPC.Center).ClampMagnitude(0, 10);
+                                NPC.velocity = (dest - NPC.Center).ClampMagnitude(0, 20);
                             }
                             else
                             {
-                                NPC.velocity *= 0.95f;
+                                NPC.velocity *= 0.92f;
                             }
-                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(180, 260, Utils.GetLerpValue(spawnOrbs, spawnOrbs + 60, Timer, true)) / 60f);
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(180, 620, Utils.GetLerpValue(spawnOrbs, spawnOrbs + 60, Timer, true)) / 60f);
                         }
                         else if (Timer < wait)
                         {
                             NPC.velocity *= 0.95f;
-                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(260, 0, Utils.GetLerpValue(stopOrbs, wait, Timer, true)) / 60f);
+                            EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(620, 0, Utils.GetLerpValue(stopOrbs, wait, Timer, true)) / 60f);
                         }
                         else if (Timer >= wait)
                         {
@@ -348,10 +359,6 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                     NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, p);
                                 }
                             }
-                            if (Timer == reposition + 10)
-                            {
-                                SoundEngine.PlaySound(AnomalyDisciple3.BurstSound, NPC.Center);
-                            }
                             EyeRotation += MathHelper.ToRadians(MathHelper.Lerp(40, 120, Utils.GetLerpValue(reposition, spawnOrbs, Timer, true)) / 60f);
                         }
                         else if (Timer < startMoving)
@@ -386,25 +393,32 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         NPC.dontTakeDamage = true;
                         NPC.velocity = Vector2.Zero;
 
-                        int wait = 0;
-                        int pauseBeforeFall = wait + 60;
+                        int pauseBeforeFall = 60;
                         int fallDuration = pauseBeforeFall + 60;
                         int finishAnim = fallDuration + 90;
 
                         PhaseTwo = true;
 
-                        if (Timer < wait)
+                        if (Timer < pauseBeforeFall)
                         {
-
-                        }
-                        else if (Timer < pauseBeforeFall)
-                        {
-                            if (Timer == wait)
+                            if (Timer <= 1)
                             {
                                 SoundEngine.PlaySound(AnomalyOne.RoarSound with { Pitch = 0.2f });
+                                SavePosition = new Vector2(NPC.Center.X, arenaCenter.Y + 600);
+                                OldPosition = NPC.Center;
+                                int orbType = ModContent.ProjectileType<AnomalyOrbuleBoss>();
+                                foreach (Projectile p in Main.ActiveProjectiles)
+                                {
+                                    if (p.type == orbType)
+                                    {
+                                        p.Kill();
+                                    }
+                                }
                             }
-                            SavePosition = new Vector2(NPC.Center.X, arenaCenter.Y + 600);
-                            OldPosition = NPC.Center;
+                            else
+                            {
+                                NPC.Center = OldPosition + Main.rand.NextVector2Circular(8, 8);
+                            }
                         }
                         else if (Timer < fallDuration)
                         {
