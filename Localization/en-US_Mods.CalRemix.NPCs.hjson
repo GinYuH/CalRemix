@@ -749,8 +749,18 @@ Noone.DisplayName: Noone
 Nothing.DisplayName: Nothing
 LionDogMoth.DisplayName: Lion Dog Repulsor Moth
 Lobotomite.DisplayName: Lobotomite
+
+AnomalyTwo: {
+	DisplayName: Solvation Anomaly
+
+	BossChecklistIntegration: {
+		EntryName: Anomaly
+		SpawnInfo: Rests at the center platform of the Singular Point subworld.
+		DespawnMessage: "[c/3beb9b:The Anomaly sinks back into the Virisite basin.]"
+	}
+}
+
 AnomalyOne.DisplayName: Convection Anomaly
-AnomalyTwo.DisplayName: Solvation Anomaly
 AnomalyThree.DisplayName: Structure Anomaly
 BeachedGolem.DisplayName: Beached Golem
 Grabler.DisplayName: Grabler

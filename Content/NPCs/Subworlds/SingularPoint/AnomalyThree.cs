@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalamityMod.Items.Potions;
 using CalamityMod.Particles;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Content.Particles;
@@ -601,6 +602,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return false;
+        }
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ModContent.ItemType<SupremeHealingPotion>();
         }
     }
 }

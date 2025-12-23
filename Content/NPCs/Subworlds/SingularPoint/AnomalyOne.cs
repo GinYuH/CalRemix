@@ -22,6 +22,7 @@ using CalRemix.Content.NPCs.Bosses.Noxus;
 using CalamityMod.Particles;
 using CalRemix.Content.Particles;
 using MonoMod.Logs;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -719,6 +720,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return false;
+        }
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ModContent.ItemType<SupremeHealingPotion>();
         }
     }
 }

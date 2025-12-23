@@ -1,9 +1,11 @@
 ﻿using CalamityMod;
+using CalamityMod.Items.Potions;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Summon;
 using CalRemix.Content.Particles;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Graphics;
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Stubble.Core.Tokens;
@@ -296,6 +298,12 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             DragonHead.ModNPC<AnomalyOne>().ChangePhase(Main.rand.NextBool() ? AnomalyOne.PhaseType.SineGas : AnomalyOne.PhaseType.Flamethrower);
                             OrbHead.ModNPC<AnomalyThree>().ChangePhase(Main.rand.NextBool() ? AnomalyThree.PhaseType.BouncyBalls : AnomalyThree.PhaseType.Orbitals);
                         }
+
+                        if (!OrbHead.active && !DragonHead.active)
+                        {
+                            NPC.dontTakeDamage = false;
+                            ChangePhase(PhaseType.Enrage);
+                        }
                     }
                     break;
                 case PhaseType.Enrage:
@@ -390,6 +398,17 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return false;
+        }
+
+        public override void OnKill()
+        {
+            RemixDowned.downedAnomaly = true;
+            CalRemixWorld.UpdateWorldBool();
+        }
+
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ModContent.ItemType<SupremeHealingPotion>();
         }
     }
 }

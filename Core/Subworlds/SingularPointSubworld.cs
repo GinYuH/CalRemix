@@ -1,23 +1,25 @@
-﻿using System.Collections.Generic;
-using Terraria;
+﻿using CalamityMod;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Subworlds.Nowhere;
+using CalRemix.Content.NPCs.Subworlds.SingularPoint;
+using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.Nowhere;
+using CalRemix.Content.Tiles.Subworlds.SingularPoint;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
 using SubworldLibrary;
-using Terraria.WorldBuilding;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
-using Terraria.Graphics.Effects;
-using CalRemix.Content.Tiles.Subworlds.Nowhere;
-using System;
-using CalRemix.Content.NPCs.Subworlds.Nowhere;
+using Terraria.ModLoader.IO;
 using Terraria.Utilities;
-using CalRemix.Content.Tiles.Subworlds.SingularPoint;
-using CalamityMod;
-using Terraria.ID;
-using Terraria.DataStructures;
-using CalRemix.Content.NPCs.Subworlds.SingularPoint;
+using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -40,6 +42,27 @@ namespace CalRemix.Core.Subworlds
                 color = Color.DarkSeaGreen.ToVector3();
             return false;
         }
+        public static void SaveData(string world)
+        {
+            TagCompound savedWorldData = CalRemixHelper.SaveCommonSubworldBools();
+            CalRemixHelper.MakeTag(ref savedWorldData, "Anomaly", RemixDowned.downedAnomaly);
+
+            SubworldSystem.CopyWorldData("RemixCommonBools_" + world, savedWorldData);
+        }
+
+        public static void LoadData(string world)
+        {
+            TagCompound savedWorldData = CalRemixHelper.LoadCommonSubworldBools(world);
+            RemixDowned.downedAnomaly = savedWorldData.GetBool("Anomaly");
+        }
+
+        public override void CopyMainWorldData() => SaveData("Main");
+
+        public override void ReadCopiedMainWorldData() => LoadData("Main");
+
+        public override void CopySubworldData() => SaveData("SP");
+
+        public override void ReadCopiedSubworldData() => LoadData("SP");
 
         public override void OnEnter()
         {
