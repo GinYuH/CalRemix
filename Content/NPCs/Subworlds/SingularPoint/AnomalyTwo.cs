@@ -313,5 +313,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         {
             return !NPC.HasValidTarget;
         }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
+        }
     }
 }
