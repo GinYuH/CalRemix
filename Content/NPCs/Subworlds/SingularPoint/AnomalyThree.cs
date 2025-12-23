@@ -69,7 +69,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             SpawnAnim = 0,
             BouncyBalls = 1,
             Orbitals = 2,
-            Knockout = 3
+            Knockout = 3,
+            Respawn = 4
         }
 
         public PhaseType CurrentPhase
@@ -110,7 +111,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         public override void AI()
         {
             Vector2 arenaCenter = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8f;
-            NPC.TargetClosest();
+            NPC.TargetClosest(false);
             Player target = Main.player[NPC.target];
             if (target == null || !target.active || target.dead)
             {
@@ -255,12 +256,20 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         int waitDuration = PhaseTwo ? 180 : 360;
                         int wait = stopOrbs + waitDuration;
 
+                        Vector2 anchor = arenaCenter - Vector2.UnitY * 100;
+                        if (PhaseTwo)
+                        {
+                            anchor += Vector2.UnitX * 600 * NPC.direction;
+                        }
+
                         if (Timer < reposition)
                         {
                             if (Timer <= 1)
                             {
-                                SavePosition = arenaCenter - Vector2.UnitY * 100;
+                                SavePosition = anchor;
                                 OldPosition = NPC.Center;
+                                if (NPC.direction == 0)
+                                    NPC.direction = Main.rand.NextBool().ToDirectionInt();
                             }
                             else
                             {
@@ -292,7 +301,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                         }
                                     }
                                 }
-                                Vector2 dest = arenaCenter + Main.rand.NextVector2Circular(200, 200);
+                                Vector2 dest = anchor + Main.rand.NextVector2Circular(200, 200);
                                 NPC.velocity = (dest - NPC.Center).ClampMagnitude(0, 20);
                             }
                             else
@@ -370,7 +379,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             if (Timer == startMoving)
                             {
                                 OldPosition = NPC.Center;
-                                SavePosition = arenaCenter + Vector2.UnitX * 1000 * NPC.direction;
+                                SavePosition = arenaCenter + Vector2.UnitX * 1000 * -NPC.direction;
                             }
                             else
                             {
@@ -440,6 +449,48 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             {
                                 Mod.Logger.Error("Main head not found!");
                             }
+                        }
+                    }
+                    break;
+                case PhaseType.Respawn:
+                    {
+                        NPC.Opacity = 1;
+                        Vector2 basePosition = arenaCenter + new Vector2(560, 600);
+
+                        int riseDuration = 40;
+                        int roarDuration = riseDuration + 170;
+
+                        if (Timer < riseDuration)
+                        {
+                            if (Timer <= 1)
+                            {
+                                NPC.Center = basePosition;
+                                OldPosition = NPC.Center;
+                                SavePosition = NPC.Center - Vector2.UnitY * 750;
+                                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyThreeRise"));
+                            }
+                            else
+                            {
+                                NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.ExpInEasing(Utils.GetLerpValue(0, riseDuration, Timer, true), 1));
+                            }
+                        }
+                        else if (Timer < roarDuration)
+                        {
+                            if (Timer % 7 == 0)
+                            {
+                                GeneralParticleHandler.SpawnParticle(new HKShockwave(NPC.Center, Vector2.Zero, Color.SeaGreen * 0.6f, 0.1f, 22f, 20));
+                            }
+                            if (Timer == riseDuration)
+                            {
+                                SoundEngine.PlaySound(AnomalyOne.RoarSound with { Pitch = -0.5f });
+                            }
+                            NPC.rotation = MathF.Sin(Timer * 3f) * 0.05f;
+
+                            EyeRotation += 0.2f;
+                        }
+                        else
+                        {
+                            NPC.dontTakeDamage = false;
                         }
                     }
                     break;
