@@ -599,12 +599,15 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         {
             FinishedAttack = true;
             bool canChange = true;
-            if (MainHead.ModNPC != null)
+            if (NPC.AnyNPCs(ModContent.NPCType<AnomalyThree>()))
             {
-                if (MainHead.ModNPC is AnomalyTwo atwo)
+                if (MainHead.ModNPC != null)
                 {
-                    if (atwo.CurrentPhase >= AnomalyTwo.PhaseType.IdleBehaviour)
-                        canChange = false;
+                    if (MainHead.ModNPC is AnomalyTwo atwo)
+                    {
+                        if (atwo.CurrentPhase >= AnomalyTwo.PhaseType.IdleBehaviour)
+                            canChange = false;
+                    }
                 }
             }
             if (canChange)

@@ -405,7 +405,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
                         if (Timer <= 1)
                         {
-                            SavePosition = NPC.Center - Vector2.UnitY * 40;
+                            SavePosition = NPC.Center - Vector2.UnitY * 80;
                             OldPosition = NPC.Center;
                         }
                         if (Timer < endRoar)
