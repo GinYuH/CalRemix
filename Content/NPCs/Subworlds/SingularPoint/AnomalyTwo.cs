@@ -4,6 +4,7 @@ using CalamityMod.Particles;
 using CalamityMod.Projectiles.Summon;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Particles;
+using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Graphics;
 using CalRemix.Core.World;
@@ -76,6 +77,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         }
 
         public static SoundStyle FallSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyFall");
+        public static SoundStyle RoarSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyTwoRoar");
+        public static SoundStyle ShortRoarSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyTwoRoarShort");
 
         public override void SetStaticDefaults()
         {
@@ -257,7 +260,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             Main.LocalPlayer.Calamity().GeneralScreenShakePower = 8;
                             if (Timer == endRise)
                             {
-                                SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyTwoRoar"));
+                                SoundEngine.PlaySound(RoarSound);
                             }
                             JawRotation = Utils.AngleLerp(JawRotation, -MathHelper.ToRadians(50) + MathF.Sin(Timer * 0.6f) * MathHelper.ToRadians(35 / 2f), 0.3f);
                             if (Timer % 7 == 0)
@@ -274,6 +277,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         else if (Timer >= beginFight)
                         {
                             ChangePhase(PhaseType.IdleBehaviour);
+                            Timer = 270;
                             DragonHead.ModNPC<AnomalyOne>().ChangePhase(Main.rand.NextBool() ? AnomalyOne.PhaseType.SineGas : AnomalyOne.PhaseType.Flamethrower);
                             OrbHead.ModNPC<AnomalyThree>().ChangePhase(Main.rand.NextBool() ? AnomalyThree.PhaseType.BouncyBalls : AnomalyThree.PhaseType.Orbitals);
                         }
@@ -287,6 +291,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                     break;
                 case PhaseType.IdleBehaviour:
                     {
+                        #region Control other heads
                         bool orbFinished = false;
                         bool serpentFinished = false;
                         if (OrbHead.ModNPC != null)
@@ -316,15 +321,154 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         {
                             NPC.dontTakeDamage = false;
                             ChangePhase(PhaseType.Enrage);
+                            int spit = ModContent.ProjectileType<VirisiteDrop>();
+                            foreach (Projectile p in Main.ActiveProjectiles)
+                            {
+                                if (p.type == spit)
+                                {
+                                    p.Kill();
+                                }
+                            }
+                        }
+                        #endregion
+
+                        int idleTime = 420;
+                        int waking = idleTime + 180;
+                        int stopFiring = waking + 90;
+                        int close = stopFiring + 30;
+
+                        float localTimer = Timer % close;
+
+                        if (localTimer < idleTime)
+                        {
+                            JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
+                        }
+                        else if (localTimer < waking)
+                        {
+                            NPC.frame.Y = 1;
+                        }
+                        else if (localTimer < stopFiring)
+                        {
+                            if (localTimer == waking)
+                            {
+                                SoundEngine.PlaySound(ShortRoarSound, NPC.Center);
+                            }
+                            JawRotation = Utils.AngleLerp(JawRotation, -MathHelper.ToRadians(30) + MathF.Sin(Timer * 0.6f) * MathHelper.ToRadians(20 / 2f), 0.3f);
+                            NPC.frame.Y = 1;
+
+                            if (localTimer % 2 == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Vector2 shootVel = -Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(15)) * Main.rand.NextFloat(12f, 16f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 60, shootVel, ModContent.ProjectileType<VirisiteDrop>(), CalRemixHelper.ProjectileDamage(160, 260), 1f, Main.myPlayer);
+                                }
+                            }
+                        }
+                        else if (localTimer < close)
+                        {
+                            JawRotation = Utils.AngleLerp(JawRotation, 0, CalamityUtils.SineInEasing(Utils.GetLerpValue(stopFiring, close, localTimer, true), 1));
+                            NPC.frame.Y = 0;
                         }
                     }
                     break;
                 case PhaseType.Enrage:
                     {
+                        float endRoar = 260;
+                        float beginFight = endRoar + 90;
+                        Vector2 arenaPoint = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8 + Vector2.UnitY * 200;
+                        Vector2 screenShake = Main.rand.NextVector2Circular(Main.LocalPlayer.Calamity().GeneralScreenShakePower * CalamityClientConfig.Instance.ScreenshakePower, Main.LocalPlayer.Calamity().GeneralScreenShakePower * CalamityClientConfig.Instance.ScreenshakePower);
+
+
+                        #region camera stuff
+                        if (Timer < endRoar)
+                        {
+                            if (Timer < endRoar)
+                            {
+                                CameraPanSystem.CameraPanInterpolant = CalamityUtils.SineInEasing(Utils.GetLerpValue(0, endRoar, Timer, true), 1);
+                            }
+                            else
+                            {
+                                CameraPanSystem.CameraPanInterpolant = 1;
+                            }
+                            CameraPanSystem.CameraFocusPoint = arenaPoint + screenShake;
+                        }
+                        else if (Timer >= endRoar)
+                        {
+                            if (Timer < beginFight)
+                            {
+                                CameraPanSystem.CameraPanInterpolant = CalamityUtils.SineInEasing(Utils.GetLerpValue(beginFight, endRoar, Timer, true), 1);
+                            }
+                            CameraPanSystem.CameraFocusPoint = arenaPoint + screenShake;
+                        }
+                        #endregion
+
+                        if (Timer <= 1)
+                        {
+                            SavePosition = NPC.Center - Vector2.UnitY * 40;
+                            OldPosition = NPC.Center;
+                        }
+                        if (Timer < endRoar)
+                        {
+                            Main.LocalPlayer.Calamity().GeneralScreenShakePower = 8;
+                            if (Timer <= 1)
+                            {
+                                SoundEngine.PlaySound(RoarSound);
+                            }
+                            JawRotation = Utils.AngleLerp(JawRotation, -MathHelper.ToRadians(40) + MathF.Sin(Timer * 0.6f) * MathHelper.ToRadians(35 / 2f), 0.3f);
+                            if (Timer % 7 == 0)
+                            {
+                                GeneralParticleHandler.SpawnParticle(new HKShockwave(NPC.Center - Vector2.UnitY * 100, Vector2.Zero, Color.SeaGreen * 0.8f, 0.1f, 22f, 20));
+                            }
+                            NPC.frame.Y = 1;
+
+                            if (Timer > 1)
+                                NPC.Center = Vector2.Lerp(OldPosition, SavePosition, Utils.GetLerpValue(0, 40, Timer, true));
+                        }
+                        else if (Timer < beginFight)
+                        {
+                            JawRotation = Utils.AngleLerp(JawRotation, -MathHelper.ToRadians(15), 0.1f);
+                        }
+                        else if (Timer >= beginFight)
+                        {
+                            ChangePhase(PhaseType.Desperation);
+                        }
                     }
                     break;
                 case PhaseType.Desperation:
                     {
+                        int idleTime = 300;
+                        int stopFiring = idleTime + 300;
+
+                        float localTimer = Timer % stopFiring;
+
+                        if (localTimer < idleTime)
+                        {
+                            JawRotation = Utils.AngleLerp(JawRotation, -MathHelper.ToRadians(20) + MathF.Sin(Timer * 0.1f) * MathHelper.ToRadians(10 / 2f), 0.3f);
+                        }
+                        else if (localTimer < stopFiring)
+                        {
+                            Main.LocalPlayer.Calamity().GeneralScreenShakePower = 6;
+                            if (localTimer == idleTime)
+                            {
+                                SoundEngine.PlaySound(RoarSound);
+                            }
+                            JawRotation = Utils.AngleLerp(JawRotation, -MathHelper.ToRadians(60) + MathF.Sin(Timer * 0.6f) * MathHelper.ToRadians(20 / 2f), 0.3f);
+                            NPC.frame.Y = 1;
+
+                            if (localTimer % 2 == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Vector2 shootVel = -Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(30)) * Main.rand.NextFloat(12f, 16f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 60, shootVel, ModContent.ProjectileType<VirisiteDrop>(), CalRemixHelper.ProjectileDamage(160, 260), 1f, Main.myPlayer);
+                                }
+                            }
+                        }
+                        if (localTimer == stopFiring - 1)
+                        {
+                            SoundEngine.PlaySound(ShortRoarSound, NPC.Center);
+                        }
                     }
                     break;
             }
