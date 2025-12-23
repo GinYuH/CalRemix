@@ -22,7 +22,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
-    // [AutoloadBossHead]
+    [AutoloadBossHead]
     public class AnomalyThree : ModNPC
     {
         public ref float Phase => ref NPC.ai[0];
@@ -107,6 +107,17 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             NPC.behindTiles = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
+        }
+        public override void BossHeadSlot(ref int index)
+        {
+            if (NPC.Opacity >= 1)
+            {
+                index = ModContent.GetModBossHeadSlot(BossHeadTexture);
+            }
+            else
+            {
+                index = -1;
+            }
         }
 
         public override void AI()

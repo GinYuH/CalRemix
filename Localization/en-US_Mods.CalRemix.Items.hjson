@@ -6342,3 +6342,8 @@ SupremeRajahRelic: {
 	DisplayName: Supreme Rajah Relic
 	Tooltip: ""
 }
+
+AnomalyRelic: {
+	DisplayName: Anomaly Relic
+	Tooltip: ""
+}

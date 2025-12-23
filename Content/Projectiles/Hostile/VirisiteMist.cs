@@ -15,7 +15,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 100;
+            Projectile.width = Projectile.height = 400;
             Projectile.hostile = true;
             Projectile.timeLeft = 240;
             Projectile.scale = 0.2f;

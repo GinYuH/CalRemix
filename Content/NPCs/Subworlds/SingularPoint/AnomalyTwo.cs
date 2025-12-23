@@ -2,6 +2,7 @@
 using CalamityMod.Items.Potions;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Summon;
+using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Particles;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Graphics;
@@ -21,7 +22,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
-   // [AutoloadBossHead]
+    [AutoloadBossHead]
     public class AnomalyTwo : ModNPC
     {
         public ref float Phase => ref NPC.ai[0];
@@ -101,6 +102,18 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             NPC.behindTiles = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
+        }
+
+        public override void BossHeadSlot(ref int index)
+        {
+            if (NPC.Opacity >= 1)
+            {
+                index = ModContent.GetModBossHeadSlot(BossHeadTexture);
+            }
+            else
+            {
+                index = -1;
+            }
         }
 
         public override void AI()
@@ -404,6 +417,11 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         {
             RemixDowned.downedAnomaly = true;
             CalRemixWorld.UpdateWorldBool();
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.RevAndMaster, ModContent.ItemType<AnomalyRelic>()));
         }
 
         public override void BossLoot(ref int potionType)

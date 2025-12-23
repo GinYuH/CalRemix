@@ -18,8 +18,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "CalRemix/Content/NPCs/Subworlds/SingularPoint/AnomalyThree_Segment";
         public override void SetDefaults()
         {
-            Projectile.width = 18;
-            Projectile.height = 18;
+            Projectile.width = Projectile.height = 30;
             Projectile.hostile = true;
             Projectile.timeLeft = 420;
             Projectile.tileCollide = false;
