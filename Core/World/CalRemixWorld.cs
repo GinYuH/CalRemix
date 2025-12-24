@@ -35,6 +35,7 @@ using CalRemix.Core.Subworlds;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
 using CalRemix.UI.ElementalSystem;
+using CalRemix.UI.Title;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System;
@@ -334,6 +335,8 @@ namespace CalRemix.Core.World
             worldFullyStarted = false;
             worldLoadCounter = 0;
             hydrogenLocation = Vector2.Zero;
+            if (!Main.dedServ)
+                CalRemixMenu.MenuHealth = 1000;
         }
 
         public override void SaveWorldData(TagCompound tag)
