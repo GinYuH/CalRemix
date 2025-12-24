@@ -90,6 +90,13 @@ namespace CalRemix.UI.Title
                 Vector2 velocity = DetermineVelocity(randomSide).RotatedByRandom(MathHelper.ToRadians(135f));
                 float rotate = MathHelper.ToRadians(1f + Main.rand.NextFloat(2f));
                 Texture2D texturePath = (Texture2D)TextureAssets.Item[CalRemixAddon.Items[Main.rand.Next(CalRemixAddon.Items.Count)].Type];
+                if(MenuHealth <= 0)
+                {
+                    if (Main.rand.NextBool(1000))
+                    {
+                        texturePath = goreTextures[Main.rand.Next(9)].Value;
+                    }
+                }
                 MenuItems.Add(new MenuItem(600, Main.rand.NextBool() ? -1 : 1, rotate, position, velocity, texturePath));
             }
             for (int j = 0; j < MenuItems.Count; j++)
@@ -104,7 +111,19 @@ namespace CalRemix.UI.Title
             MenuItems.RemoveAll((MenuItem m) => m.time >= 600 && ((m.center.X < -m.texture.Width && m.center.X < -m.texture.Height) || (m.center.X > Main.screenWidth + m.texture.Width && m.center.X > Main.screenWidth + m.texture.Height) || (m.center.Y < -m.texture.Width && m.center.Y < -m.texture.Height) || (m.center.Y > Main.screenHeight + m.texture.Width && m.center.Y > Main.screenHeight + m.texture.Height)));
             for (int k = 0; k < MenuItems.Count; k++)
             {
-                spriteBatch.Draw(MenuItems[k].texture, MenuItems[k].center, null, Color.White, MenuItems[k].rotation, MenuItems[k].texture.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
+                float scale = 1f;
+                if (MenuHealth <= 0)
+                {
+                    foreach (var v in goreTextures)
+                    {
+                        if (MenuItems[k].texture == v.Value)
+                        {
+                            scale = 0.45f;
+                            break;
+                        }
+                    }
+                }
+                spriteBatch.Draw(MenuItems[k].texture, MenuItems[k].center, null, Color.White, MenuItems[k].rotation, MenuItems[k].texture.Size() * 0.5f, scale, SpriteEffects.None, 0f);
             }
 
             // Logo and Final Stuff
