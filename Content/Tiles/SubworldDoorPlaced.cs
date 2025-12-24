@@ -113,7 +113,7 @@ namespace CalRemix.Content.Tiles
             {
                 Texture2D tex = PreviewTex.Value;
                 Vector2 tileSize = new Vector2(32, 54);
-                Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Color.White, 0, Vector2.Zero, tileSize / tex.Size(), 0);
+                Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Lighting.GetColor(i, j), 0, Vector2.Zero, tileSize / tex.Size(), 0);
             }
             Main.EntitySpriteDraw(TextureAssets.Tile[Type].Value, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, new Rectangle(t.TileFrameX, t.TileFrameY, 16, 16), Lighting.GetColor(i, j, DoorColor), 0, Vector2.Zero, 1, 0);
 
