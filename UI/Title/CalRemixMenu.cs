@@ -129,7 +129,7 @@ namespace CalRemix.UI.Title
 
             Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
             Rectangle titleHitbox = new Rectangle((int)(Main.screenWidth / 2f - (Logo.Value.Width * 0.45f) / 2f), (int)(111f - (Logo.Value.Height * 0.45f) / 2f), (int)(Logo.Value.Width * 0.45f), (int)(Logo.Value.Height * 0.45f));
-            
+
             Vector2 menuOffset = Vector2.Zero;
             if (maus.Intersects(titleHitbox) && MenuHealth > 0)
             {
@@ -137,7 +137,7 @@ namespace CalRemix.UI.Title
                 {
                     SoundEngine.PlaySound(CommonCalamitySounds.ExoHitSound with { PitchVariance = 1 });
                     MenuHealth -= 50;
-                    float shakeAmt = MathHelper.Lerp(4, 50, MenuHealth / 1000f);
+                    float shakeAmt = MathHelper.Lerp(50, 8, MenuHealth / 1000f);
                     menuOffset = Main.rand.NextVector2CircularEdge(shakeAmt, shakeAmt);
                     if (MenuHealth <= 0)
                     {
