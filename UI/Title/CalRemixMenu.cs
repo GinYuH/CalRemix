@@ -36,7 +36,7 @@ namespace CalRemix.UI.Title
         public override Asset<Texture2D> SunTexture => blankTexture;
         public override Asset<Texture2D> MoonTexture => blankTexture;
         public override Asset<Texture2D> Logo => logoTexture;
-        public override int Music => CalRemixMusic.Menu;
+        public override int Music => MenuHealth > 0 ? CalRemixMusic.Menu : CalRemixMusic.Nothing;
         public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<MenuBgStyle>();
         public override string DisplayName => CalRemixHelper.LocalText("UI.Title.1").Value;
         public class MenuItem

@@ -186,6 +186,7 @@ namespace CalRemix
         public static readonly int TrueStory = Set("Misc/TrueStory");
         public static readonly int PlasticOracle = Set("Misc/PlasticOracle");
         public static readonly int Generator = Set("Misc/Generator");
+        public static readonly int Nothing = Set("Nothing");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }
