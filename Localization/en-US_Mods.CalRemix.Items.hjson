@@ -6347,3 +6347,8 @@ AnomalyRelic: {
 	DisplayName: Anomaly Relic
 	Tooltip: ""
 }
+
+IronWizard: {
+	DisplayName: Iron Wizard
+	Tooltip: Instantly kills the Wizard
+}
