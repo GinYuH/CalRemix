@@ -8,6 +8,7 @@ using CalRemix.Content.Particles;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Graphics;
+using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -561,6 +562,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         public override void OnKill()
         {
             RemixDowned.downedAnomaly = true;
+            SingularPointSubworld.dontSpawnAnomaly = true;
             CalRemixWorld.UpdateWorldBool();
         }
 

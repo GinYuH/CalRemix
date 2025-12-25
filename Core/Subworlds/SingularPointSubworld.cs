@@ -64,24 +64,30 @@ namespace CalRemix.Core.Subworlds
 
         public override void ReadCopiedSubworldData() => LoadData("SP");
 
+        public static bool dontSpawnAnomaly = false;
+
         public override void OnEnter()
         {
             base.OnEnter();
+            dontSpawnAnomaly = false;
         }
 
         public override void Update()
         {
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:SPSky", true);
             SkyManager.Instance.Activate("CalRemix:SPSky", Main.LocalPlayer.position);
-            foreach (Player p in Main.ActivePlayers)
+            if (!dontSpawnAnomaly)
             {
-                if (Math.Abs(p.Center.X - Main.maxTilesX * 16 * 0.5f) < 50)
+                foreach (Player p in Main.ActivePlayers)
                 {
-                    if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyTwo>()))
+                    if (Math.Abs(p.Center.X - Main.maxTilesX * 16 * 0.5f) < 50)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyTwo>()))
                         {
-                            NPC.NewNPC(new EntitySource_WorldEvent(), Main.maxTilesX * 8, Main.maxTilesY * 8 + 1000, ModContent.NPCType<AnomalyTwo>());
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                NPC.NewNPC(new EntitySource_WorldEvent(), Main.maxTilesX * 8, Main.maxTilesY * 8 + 1000, ModContent.NPCType<AnomalyTwo>());
+                            }
                         }
                     }
                 }
