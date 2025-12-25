@@ -72,7 +72,7 @@ namespace CalRemix.Content.Items.Weapons
                 .AddIngredient(ModContent.ItemType<Mikado>())
                 .AddIngredient(ModContent.ItemType<ArchRaptierre>())
                 .AddIngredient(ModContent.ItemType<CarnelianWoodSword>())
-                .AddIngredient(ModContent.ItemType<RuinousSoul>(), 10)
+                .AddIngredient(ModContent.ItemType<VirisiteTear>(), 10)
                 .AddIngredient(ModContent.ItemType<VoidInfusedTurnipFruit>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

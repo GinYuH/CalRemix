@@ -68,7 +68,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 				//Projectile.velocity *= 6;
 			}
 
-			if (Main.masterMode && CalamityWorld.revenge)
+			if (CalamityWorld.death)
 			{
 				Projectile.ai[2]++;
 				if (Projectile.ai[2] > 120 && Projectile.ai[2] % 60 == 0)
@@ -110,7 +110,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override void PostDraw(Color lightColor)
         {
-			if (Main.masterMode && CalamityWorld.revenge)
+			if (Main.zenithWorld)
 			{
 				Texture2D tex = endo.Value;
 

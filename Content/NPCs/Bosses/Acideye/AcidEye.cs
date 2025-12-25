@@ -608,7 +608,6 @@ namespace CalRemix.Content.NPCs.Bosses.Acideye
                 ModContent.ItemType<CorrosiveEyeStaff>(),
                 ModContent.ItemType<RazorTeeth>()
             };
-            mainRule.Add(ModContent.ItemType<DeterioratingLens>());
             mainRule.Add(DropHelper.CalamityStyle(DropHelper.NormalWeaponDropRateFraction, itemIDs));
             npcLoot.Add(ModContent.ItemType<AcidsighterTrophy>(), 10);
             npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<AcidsighterRelic>());

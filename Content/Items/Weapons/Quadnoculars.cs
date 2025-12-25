@@ -26,6 +26,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.value = CalamityGlobalItem.RarityYellowBuyPrice;
             Item.rare = ItemRarityID.Yellow;
             Item.shoot = ModContent.ProjectileType<QuadLaser>();
+            Item.expert = true;
             Item.shootSpeed = 44;
         }
         public override void HoldItem(Player player)

@@ -9,6 +9,7 @@ using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
+using CalRemix.Content.Items.Materials;
 namespace CalRemix.Content.Items.Weapons
 {
     public class WrathoftheEldritch : ModItem
@@ -45,6 +46,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             CreateRecipe().
                 AddIngredient<WrathoftheAncients>(1).
+                AddIngredient(ModContent.ItemType<VirisiteTear>(), 5).
                 AddIngredient(ItemID.LunarBar, 10).
                 AddIngredient(ItemID.FragmentNebula, 12).
                 AddIngredient(ModContent.ItemType<ExodiumCluster>(), 15).

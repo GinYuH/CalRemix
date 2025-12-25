@@ -2,6 +2,7 @@
 using CalamityMod.Items.Potions;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Summon;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Particles;
 using CalRemix.Content.Projectiles.Hostile;
@@ -566,6 +567,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.RevAndMaster, ModContent.ItemType<AnomalyRelic>()));
+            npcLoot.AddNormalOnly(ModContent.ItemType<VirisiteTear>(), 1, 20, 35);
         }
 
         public override void BossLoot(ref int potionType)

@@ -7,6 +7,7 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Rarities;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons
 {
@@ -50,7 +51,7 @@ namespace CalRemix.Content.Items.Weapons
             CreateRecipe().
                 AddIngredient<Shellshooter>().
                 AddIngredient(ItemID.SliceOfCake, 12).
-                AddIngredient<RuinousSoul>(14).
+                AddIngredient<VirisiteTear>(14).
                 AddIngredient(ItemID.BambooBlock, 64).
                 AddTile(TileID.MythrilAnvil).
                 Register();

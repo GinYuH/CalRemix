@@ -404,10 +404,6 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
             LeadingConditionRule lastLivingPoly = new(new LastPolyBeaten());
             npcLoot.Add(lastLivingPoly);
 
-            LeadingConditionRule normal = new LeadingConditionRule(new Conditions.IsExpert());
-            normal.AddFail(ModContent.ItemType<Quadnoculars>(), 1, hideLootReport: Main.expertMode);
-            lastLivingPoly.Add(normal);
-
             IItemDropRule dropItem = new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Nystagmus>(), 1, 1, 1, null);
             lastLivingPoly.OnSuccess(dropItem);
 

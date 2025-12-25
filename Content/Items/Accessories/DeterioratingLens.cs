@@ -19,6 +19,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.value = CalamityGlobalItem.RarityBlueBuyPrice;
             Item.rare = ItemRarityID.Blue;
             Item.accessory = true;
+            Item.expert = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
