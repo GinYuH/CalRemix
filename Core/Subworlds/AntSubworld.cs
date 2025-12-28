@@ -13,7 +13,7 @@ using CalamityMod.Tiles.FurnitureAshen;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class AntSubworld : Subworld
+    public class AntSubworld : Subworld, IDisableBuilding
     {
         public override int Height => 222;
         public override int Width => 822;

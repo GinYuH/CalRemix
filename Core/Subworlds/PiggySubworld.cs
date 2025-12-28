@@ -12,7 +12,7 @@ using CalamityMod.Schematics;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class PiggySubworld : Subworld, IDisableSpawnsSubworld, IFixDrawBlack, IDisableOcean
+    public class PiggySubworld : Subworld, IDisableSpawnsSubworld, IFixDrawBlack, IDisableOcean, IDisableBuilding
     {
 
         public override int Height => 200;

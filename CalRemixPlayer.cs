@@ -688,9 +688,13 @@ namespace CalRemix
 		        Player.GetCritChance(DamageClass.Generic) += crit;
 	        }
 
-            if (SubworldSystem.IsActive<PiggySubworld>())
+            if (SubworldSystem.Current != null)
             {
-                //Player.noBuilding = true;
+                if (SubworldSystem.Current is IDisableBuilding)
+                {
+                    Player.noBuilding = true;
+                    Player.AddBuff(BuffID.NoBuilding, 60);
+                }
             }
         }
         public override void PostUpdate()
@@ -946,6 +950,14 @@ namespace CalRemix
             if (Main.hardMode && fifteenMinutesSinceHardmode > 0)
             {
                 fifteenMinutesSinceHardmode--;
+            }
+
+            if (SubworldSystem.Current != null)
+            {
+                if (SubworldSystem.Current is IInfiniteFlight)
+                {
+                    Player.Calamity().infiniteFlight = true;
+                }
             }
         }
 
