@@ -23,7 +23,7 @@ using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class SingularPointSubworld : Subworld, IDisableSpawnsSubworld, IDisableOcean
+    public class SingularPointSubworld : Subworld, IDisableSpawnsSubworld, IDisableOcean, IInfiniteFlight, IDisableBuilding
     {
         public override int Height => 300;
         public override int Width => 1400;

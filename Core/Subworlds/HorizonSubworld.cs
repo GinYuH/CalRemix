@@ -18,7 +18,7 @@ using CalRemix.Content.NPCs.Bosses.Carcinogen;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class HorizonSubworld : Subworld, IDisableSpawnsSubworld, IDisableOcean
+    public class HorizonSubworld : Subworld, IDisableSpawnsSubworld, IDisableOcean, IDisableBuilding, IInfiniteFlight
     {
         public override int Height => 700;
         public override int Width => 2000;

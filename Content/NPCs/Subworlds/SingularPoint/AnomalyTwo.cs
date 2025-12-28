@@ -2,8 +2,10 @@
 using CalamityMod.Items.Potions;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Summon;
+using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Content.Items.Placeables.Subworlds.SingularPoint;
 using CalRemix.Content.Particles;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
@@ -568,8 +570,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<AnomalyBag>());
             npcLoot.Add(ItemDropRule.ByCondition(DropHelper.RevAndMaster, ModContent.ItemType<AnomalyRelic>()));
             npcLoot.AddNormalOnly(ModContent.ItemType<VirisiteTear>(), 1, 20, 35);
+            npcLoot.AddNormalOnly(ModContent.ItemType<Virisite>(), 1, 100, 200);
         }
 
         public override void BossLoot(ref int potionType)

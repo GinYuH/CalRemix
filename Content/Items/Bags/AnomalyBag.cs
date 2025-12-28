@@ -1,15 +1,16 @@
-﻿using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using CalamityMod;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using CalRemix.Content.Items.Weapons;
-using CalRemix.Content.Items.Accessories;
-using CalRemix.Content.Items.Weapons.Stormbow;
+﻿using CalamityMod;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Rarities;
+using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables.Subworlds.SingularPoint;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Stormbow;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -53,6 +54,7 @@ namespace CalRemix.Content.Items.Bags
         {
             itemLoot.Add(ModContent.ItemType<XenoxApparatus>());
             itemLoot.Add(ModContent.ItemType<VirisiteTear>(), 1, 25, 40);
+            itemLoot.Add(ModContent.ItemType<Virisite>(), 1, 100, 200);
             //itemLoot.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, ModContent.ItemType<Pigeon>(), ModContent.ItemType<FrilledShark>(), ModContent.ItemType<RemoraDart>(), ModContent.ItemType<Laevateinn>(), ModContent.ItemType<XiphactinusGun>(), ModContent.ItemType<LivyatanadoStaff>()));
             itemLoot.AddRevBagAccessories();
         }
