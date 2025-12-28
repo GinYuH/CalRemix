@@ -754,6 +754,10 @@ namespace CalRemix
         }
 		public override void PreUpdate()
         {
+            if (xApparatus)
+            {
+                Player.Calamity().PreUpdate();
+            }
             if (Main.myPlayer == Player.whoAmI)
             {
                 Anomaly109ClientUpdates();
@@ -1080,6 +1084,10 @@ namespace CalRemix
 
         public override void PostUpdateMiscEffects()
         {
+            if (xApparatus)
+            {
+                Player.Calamity().PostUpdateMiscEffects();
+            }
             if (Main.myPlayer == Player.whoAmI)
             {
                 if (Main.mouseItem.type == ItemType<ShardofGlass>())
