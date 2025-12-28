@@ -1031,10 +1031,20 @@ namespace CalRemix
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
+            CalRemixPlayer modplayer = player.GetModPlayer<CalRemixPlayer>();
+            if (modplayer.xApparatus)
+            {
+                if (item.type != ItemType<Content.Items.Accessories.XenoxApparatus>())
+                {
+                    if (item.ModItem != null)
+                    {
+                        ItemLoader.GetItem(item.type).UpdateAccessory(player, hideVisual);
+                    }
+                }
+            }
             if (!CalRemixWorld.accReworks)
                 return;
             CalamityPlayer calplayer = player.GetModPlayer<CalamityPlayer>();
-            CalRemixPlayer modplayer = player.GetModPlayer<CalRemixPlayer>();
             if (item.type == ItemType<GrandGelatin>())
             {
                 modplayer.miragel = true;

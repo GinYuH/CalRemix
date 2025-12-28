@@ -204,6 +204,7 @@ namespace CalRemix
         public bool fungiStone;
         public bool fungiStone2;
         public bool woodEmblem;
+        public bool xApparatus;
 
         public bool miragel;
         public bool elastigel;
@@ -1521,6 +1522,7 @@ namespace CalRemix
 			blaze = false;
 			pearl = false;
 			astralEye = false;
+            xApparatus = false;
 			bananaClown = false;
 			twistedNetherite = false;
 			twistedNetheriteBoots = false;

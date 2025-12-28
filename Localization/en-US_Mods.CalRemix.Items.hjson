@@ -6362,3 +6362,12 @@ VirisiteTear: {
 	DisplayName: Virisite Tear
 	Tooltip: Corrosive plasmic element with dark properties
 }
+
+XenoxApparatus: {
+	DisplayName: Xenox Apparatus
+	Tooltip: 
+		'''
+		Doubles some of the effects of accessories placed in slots below this one
+		'Inconsistently consistent'
+		'''
+}
