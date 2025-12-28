@@ -6352,3 +6352,13 @@ IronWizard: {
 	DisplayName: Iron Wizard
 	Tooltip: Instantly kills the Wizard
 }
+
+AnomalyBag: {
+	DisplayName: Treasure Bag (Anomaly)
+	Tooltip: ""
+}
+
+VirisiteTear: {
+	DisplayName: Virisite Tear
+	Tooltip: Corrosive plasmic element with dark properties
+}
