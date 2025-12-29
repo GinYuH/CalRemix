@@ -271,11 +271,6 @@ Klepticoin: {
 	Tooltip: The change of the gods
 }
 
-CoreofBabil: {
-	DisplayName: Core of Babil
-	Tooltip: ""
-}
-
 CoyoteVenom: {
 	DisplayName: Coyote Venom
 	Tooltip: Try not to drink it
@@ -3506,11 +3501,6 @@ DiviningRod: {
 		In the event there are multiple sources, it will home in on the one most approachable for your current progression
 		'''
 	DisplayName: Divining Rod
-}
-
-CoreofRend: {
-	DisplayName: Core of Rend
-	Tooltip: ""
 }
 
 EssenceofRend: {

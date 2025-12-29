@@ -297,19 +297,19 @@ namespace CalRemix
                 if (recipe.HasResult(ItemType<CoreofCalamity>()))
                 {
                     recipe.RemoveIngredient(ItemType<AshesofCalamity>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
-                    recipe.AddIngredient(ItemType<CoreofRend>(), 3);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 3);
+                    recipe.AddIngredient(ItemType<EssenceofRend>(), 3);
                     recipe.AddIngredient(ItemType<UnholyCore>());
                 }
                 if (recipe.HasResult(ItemType<AngelicShotgun>()))
                 {
                     recipe.RemoveIngredient(ItemType<CoreofSunlight>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 7);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 7);
                 }
                 if (recipe.HasResult(ItemType<TwistingThunder>()))
                 {
                     recipe.RemoveIngredient(ItemType<CoreofSunlight>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 5);
                 }
                 if (recipe.HasResult(ItemID.NightsEdge))
                 {
@@ -446,15 +446,15 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ItemType<EmpyreanMask>()))
                 {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 2);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 2);
                 }
                 if (recipe.HasResult(ItemType<EmpyreanCloak>()))
                 {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 5);
                 }
                 if (recipe.HasResult(ItemType<EmpyreanCuisses>()))
                 {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 3);
                 }
                 if (recipe.HasResult(ItemType<ClaretCannon>()))
                 {
