@@ -19,7 +19,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<SPDoor>();
+            Item.createTile = ModContent.TileType<TheGrayDoor>();
             Item.placeStyle = Main.rand.Next(0, 3);
         }
     }

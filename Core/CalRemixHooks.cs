@@ -14,6 +14,7 @@ using CalRemix.Content.NPCs.Bosses.Hydrogen;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Prefixes;
+using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
 using CalRemix.Core.Scenes;
@@ -119,10 +120,12 @@ namespace CalRemix.Core
             On_Main.DrawBlack += FixSubworldDrawBlack;
             On_WorldGen.oceanDepths += DisableOceanSubworld;
             On_Main.DrawPlayers_AfterProjectiles += DrawGrass;
-            On_Item.Prefix += FolvsPrefix; 
+            //On_Item.Prefix += FolvsPrefix; 
             On_NPC.SpawnBoss += TripletsSpawnTextOverride;
             On_NPC.DoDeathEvents_BeforeLoot += PreventFoveanatorDefeatMessageIfNotKilledLast;
             On_NPC.DoDeathEvents_CelebrateBossDeath += TripletsDefeatTextOverride;
+            //On_Lighting.AddLight_int_int_float_float_float += CustomLight;
+            //On_Lighting.AddLight_int_int_int_float += CustomLight2;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
@@ -142,6 +145,16 @@ namespace CalRemix.Core
         {
             loadStoneHook = null;
             drawHook = null;
+        }
+
+        public static void CustomLight2(On_Lighting.orig_AddLight_int_int_int_float orig, int i, int j, int lightType, float lightAmount)
+        {
+            orig(i, j, lightType, lightAmount);
+        }
+
+        public static void CustomLight(On_Lighting.orig_AddLight_int_int_float_float_float orig, int i, int j, float r, float g, float b)
+        {
+            orig(i, j, r, g, b);
         }
 
         public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)

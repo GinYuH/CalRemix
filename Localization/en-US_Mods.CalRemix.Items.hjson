@@ -6355,9 +6355,24 @@ VirisiteTear: {
 
 XenoxApparatus: {
 	DisplayName: Xenox Apparatus
-	Tooltip: 
+	Tooltip:
 		'''
 		Doubles some of the effects of accessories placed in slots below this one
 		'Inconsistently consistent'
 		'''
+}
+
+BlueMazeBrick: {
+	DisplayName: Blue Maze Brick
+	Tooltip: ""
+}
+
+QuestionSoil: {
+	DisplayName: ??? Soil
+	Tooltip: ""
+}
+
+YellowMazeBrick: {
+	DisplayName: Yellow Maze Brick
+	Tooltip: ""
 }

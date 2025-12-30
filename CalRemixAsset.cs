@@ -70,6 +70,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:Disilphia"] = new DisilphiaSky();
                 Filters.Scene["CalRemix:HorizonSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
                 SkyManager.Instance["CalRemix:HorizonSky"] = new HorizonSky();
+                Filters.Scene["CalRemix:TheGraySky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
+                SkyManager.Instance["CalRemix:TheGraySky"] = new TheGraySky();
             }
 
             AssetRepository remixAsset = Mod.Assets;
