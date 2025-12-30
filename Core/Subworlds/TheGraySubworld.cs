@@ -39,7 +39,7 @@ namespace CalRemix.Core.Subworlds
         float ICustomSpawnSubworld.SpawnMult { get => 5f; }
 
         public bool OverrideVanilla => false;
-        public override int Height => 700;
+        public override int Height => 300;
         public override int Width => 2000;
         public override List<GenPass> Tasks => new List<GenPass>()
         {
@@ -92,18 +92,21 @@ namespace CalRemix.Core.Subworlds
 
             int soil = ModContent.TileType<QuestionSoilPlaced>();
 
+            float groundRatio = 0.6f;
+            
+
             for (int i = 0; i < Main.maxTilesX; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
-                    if (j > (int)(Main.maxTilesY * 0.9f))
+                    if (j > (int)(Main.maxTilesY * groundRatio))
                     {
                         WorldGen.PlaceTile(i, j, soil);
                     }
                 }
             }
 
-            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.9f), Main.maxTilesX, (int)(Main.maxTilesY * 0.1f)), soil, variance: 13);
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * groundRatio) - 2, Main.maxTilesX, (int)(Main.maxTilesY * (1f - groundRatio))), soil, variance: 13);
 
             Main.spawnTileX = (int)(Main.maxTilesX / 2f);
             for (int i = 0; i < Main.maxTilesY; i++)

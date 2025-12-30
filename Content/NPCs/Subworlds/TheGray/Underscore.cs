@@ -95,7 +95,7 @@ namespace CalRemix.Content.NPCs.Subworlds.TheGray
                 float dist = Main.player[NPC.target].Distance(NPC.Center);
                 if (NPC.ai[0] == 0)
                 {
-                    eyePosition += NPC.DirectionTo(Main.player[NPC.target].Center) * MathHelper.Lerp(0, 8, Utils.GetLerpValue(0, 400, dist, true));
+                    eyePosition += (eyePosition + screenPos).DirectionTo(Main.player[NPC.target].Center) * MathHelper.Lerp(0, 8, Utils.GetLerpValue(0, 100, dist, true));
                 }
             }
             spriteBatch.Draw(eye, eyePosition, null, Color.White, NPC.rotation, new Vector2(eye.Width / 2, eye.Height / 2), NPC.scale, 0, 0);
