@@ -36,7 +36,7 @@ namespace CalRemix.Core.Subworlds
         }
 
         int ICustomSpawnSubworld.MaxSpawns { get => 24; }
-        float ICustomSpawnSubworld.SpawnMult { get => 5f; }
+        float ICustomSpawnSubworld.SpawnMult { get => 0.2f; }
 
         public bool OverrideVanilla => false;
         public override int Height => 300;
