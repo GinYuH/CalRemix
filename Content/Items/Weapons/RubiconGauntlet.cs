@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.autoReuse = true;
-            Item.UseSound = ScorchedEarth.ShootSound;
+            Item.UseSound = ContentSamples.ItemsByType[ModContent.ItemType<ScorchedEarth>()].UseSound;
             Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
             Item.damage = 187;
             Item.knockBack = 10f;

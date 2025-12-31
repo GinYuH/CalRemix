@@ -132,8 +132,8 @@ namespace CalRemix.Core
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
-            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedRetinazerAI += DisableRevRetinazer;
-            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedSpazmatismAI += DisableRevSpazmatism;
+            //On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedRetinazerAI += DisableRevRetinazer;
+            //On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedSpazmatismAI += DisableRevSpazmatism;
 
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);

@@ -28,7 +28,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             get
             {
-                float swordRotation = InitialRotation + (!SwingingUp ? SwingDown(SwingCompletion) : SwingUp(SwingCompletion)) * Projectile.spriteDirection + MathHelper.PiOver4;
+                float swordRotation = InitialRotation + (!SwingingUp ? SwingDown(SwingCompletion, Vector2.Zero) : SwingUp(SwingCompletion, Vector2.Zero)) * Projectile.spriteDirection + MathHelper.PiOver4;
                 if (Projectile.spriteDirection == 1)
                     swordRotation += MathHelper.PiOver2;
                 if (SwingingUp)
@@ -254,14 +254,14 @@ namespace CalRemix.Content.Projectiles.Weapons
                 return false;
             float point = 0f;
 
-            Vector2 attackRotation = (InitialRotation + SwingDown(SwingCompletion)).ToRotationVector2();
+            Vector2 attackRotation = (InitialRotation + SwingDown(SwingCompletion, Vector2.Zero)).ToRotationVector2();
             if (Projectile.ai[2] == 2)
             {
-                attackRotation = (InitialRotation + SwingUp(SwingCompletion)).ToRotationVector2();
+                attackRotation = (InitialRotation + SwingUp(SwingCompletion, Vector2.Zero)).ToRotationVector2();
             }
             else if (Projectile.ai[2] == 3)
             {
-                attackRotation = (InitialRotation + SwingBing(SwingCompletion)).ToRotationVector2();
+                attackRotation = (InitialRotation + SwingBing(SwingCompletion, Vector2.Zero)).ToRotationVector2();
             }
 
             Vector2 direction = attackRotation * new Vector2(Projectile.spriteDirection, 1f);

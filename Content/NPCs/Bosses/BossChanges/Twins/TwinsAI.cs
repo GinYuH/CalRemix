@@ -350,7 +350,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             bool shootLaser = npc.ai[1] % 20f == 0f;
-                            int type = shootLaser ? ProjectileID.DeathLaser : ModContent.ProjectileType<ScavengerLaser>();
+                            int type = shootLaser ? ProjectileID.DeathLaser : ModContent.ProjectileType<HomingLaserDart>();
                             int damage = 120;
 
                             // Reduce mech boss projectile damage depending on the new ore progression changes
@@ -654,7 +654,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         float laserDartSpeed = (death ? 9f : 6f) * (spazAlive ? 1f : 1.5f);
-                                        int type = ModContent.ProjectileType<ScavengerLaser>();
+                                        int type = ModContent.ProjectileType<HomingLaserDart>();
                                         int damage = 120;
 
                                         // Reduce mech boss projectile damage depending on the new ore progression changes
