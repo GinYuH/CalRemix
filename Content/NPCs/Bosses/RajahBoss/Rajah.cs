@@ -181,7 +181,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 if (NPC.ai[3] != 0 && !DefenseLine && !RemixDowned.downedRajahsRevenge && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     DefenseLine = true;
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Chat", Color.MediumPurple);
+                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Chat", Color.MediumPurple);
 
                 }
                 if (NPC.life <= NPC.lifeMax / 7 && !SayLine && Main.netMode != 1)
@@ -286,7 +286,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 {
                     if (isSupreme)
                     {
-                        if (Main.netMode != 1) CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.Rajah.6", new Color(107, 137, 179));
+                        if (Main.netMode != 1) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.6", new Color(107, 137, 179));
                         if (Main.netMode != 1)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<SupremeRajahBookIt>(), damage, 0, Main.myPlayer);
@@ -294,7 +294,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     }
                     else
                     {
-                        if (Main.netMode != 1) CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.Rajah.2", new Color(107, 137, 179));
+                        if (Main.netMode != 1) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.2", new Color(107, 137, 179));
                         if (Main.netMode != 1)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<RajahBookIt>(), damage, 0, Main.myPlayer);
@@ -312,7 +312,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 NPC.TargetClosest(true);
                 if (Math.Abs(NPC.Center.X - target.Center.X) + Math.Abs(NPC.Center.Y - target.Center.Y) > 10000)
                 {
-                    if (Main.netMode != 1) CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.Rajah.3", new Color(107, 137, 179));
+                    if (Main.netMode != 1) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.3", new Color(107, 137, 179));
                     if (Main.netMode != 1)
                     {
                         if (isSupreme)
@@ -1152,7 +1152,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 int bunnyKills = NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
                 if (bunnyKills >= 100)
                 {
-                    if (Main.netMode != 1) CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.Rajah.4", new Color(107, 137, 179));
+                    if (Main.netMode != 1) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.4", new Color(107, 137, 179));
                 }
                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<RajahBookIt>(), 100, 0, Main.myPlayer);
             }

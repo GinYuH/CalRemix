@@ -176,7 +176,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                         Main.EntitySpriteDraw(ornament, ornamentPosition - screenPos, null, Lighting.GetColor(ornamentPosition.ToTileCoordinates()) * pinkOpacity, (right.ToDirectionInt() * -MathHelper.PiOver4) + NPC.rotation + right.ToDirectionInt() * 0.2f * MathF.Sin(Main.GlobalTimeWrappedHourly) - dirOff, !right ? new Vector2(0, ornament.Height) : new Vector2(ornament.Width, ornament.Height), NPC.scale, !right ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
                     }
                 }
-                PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f) => 50 * (1 - f), (float f) => Color.Lerp(Color.PaleGoldenrod, Color.Tan * 0.1f, f)));
+                PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => 50 * (1 - f), (float f, Vector2 v) => Color.Lerp(Color.PaleGoldenrod, Color.Tan * 0.1f, f)));
 
                 Texture2D ornamental = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/HellbenderTailOrnamentFinal").Value;
                 Main.EntitySpriteDraw(ornamental, ribbonDrawPositions[^1] - screenPos, null, Lighting.GetColor(ribbonDrawPositions[^1].ToTileCoordinates()) * pinkOpacity, NPC.rotation - MathHelper.PiOver2, new Vector2(ornamental.Width / 2, 0), NPC.scale, SpriteEffects.None);

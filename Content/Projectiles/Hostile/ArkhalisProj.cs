@@ -62,7 +62,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
 			if (Projectile.velocity.Y > 0)
 			{
-				PrimitiveRenderer.RenderTrail(Projectile.oldPos, new((float f) => 4 * (1 - f), (float f) => Color.LightCyan * f * 0.3f, new((float f) => Projectile.Size * 0.5f)));
+				PrimitiveRenderer.RenderTrail(Projectile.oldPos, new((float f, Vector2 v) => 4 * (1 - f), (float f, Vector2 v) => Color.LightCyan * f * 0.3f, new((float f, Vector2 v) => Projectile.Size * 0.5f)));
 			}
 
 			return false;

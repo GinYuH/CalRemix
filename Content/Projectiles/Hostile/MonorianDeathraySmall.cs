@@ -141,9 +141,9 @@ namespace CalRemix.Content.Projectiles.Hostile
 
             Color back = Time > TelegraphTime ? Color.Lerp(Color.Cyan, Color.LightCyan, 0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 22)) : Color.Cyan;
 
-            PrimitiveRenderer.RenderTrail(points, new((float f) => width, (float f) => back * Projectile.Opacity, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
+            PrimitiveRenderer.RenderTrail(points, new((float f, Vector2 v) => width, (float f, Vector2 v) => back * Projectile.Opacity, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
             if (Time > TelegraphTime)
-                PrimitiveRenderer.RenderTrail(points, new((float f) => width * 0.33f, (float f) => Color.White * Projectile.Opacity, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
+                PrimitiveRenderer.RenderTrail(points, new((float f, Vector2 v) => width * 0.33f, (float f, Vector2 v) => Color.White * Projectile.Opacity, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
 
             Main.spriteBatch.ExitShaderRegion();
 

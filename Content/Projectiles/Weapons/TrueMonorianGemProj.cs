@@ -65,7 +65,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override bool PreDraw(ref Color lightColor)
         {
-            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new((float f) => 8 * (1 - f), (float f) => Color.Cyan * (1 - f)));
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new((float f, Vector2 v) => 8 * (1 - f), (float f, Vector2 v) => Color.Cyan * (1 - f)));
             return true;
         }
     }

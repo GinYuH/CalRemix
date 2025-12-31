@@ -58,9 +58,9 @@ namespace CalRemix.Content.Projectiles.Weapons
         public static CurveSegment Piece2Big => new(EasingType.PolyIn, 0.7f, Piece1Big.EndingHeight, 2f, 1);
         public static CurveSegment Piece3Big => new(EasingType.PolyOut, 0.8f, Piece2Big.EndingHeight, 0.97f, 3);
 
-        public static float SwingDown(float completion) => PiecewiseAnimation(completion, Piece1, Piece2, Piece3);
-        public static float SwingUp(float completion) => PiecewiseAnimation(completion, Piece1Up, Piece2Up, Piece3Up);
-        public static float SwingBing(float completion) => PiecewiseAnimation(completion, Piece1Big, Piece2Big, Piece3Big);
+        public static float SwingDown(float completion, Vector2 v) => PiecewiseAnimation(completion, Piece1, Piece2, Piece3);
+        public static float SwingUp(float completion, Vector2 v) => PiecewiseAnimation(completion, Piece1Up, Piece2Up, Piece3Up);
+        public static float SwingBing(float completion, Vector2 v) => PiecewiseAnimation(completion, Piece1Big, Piece2Big, Piece3Big);
 
         public bool SwingingUp => Projectile.ai[2] == 2;
         public bool Spinning => false;// Projectile.ai[2] == 3;

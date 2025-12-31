@@ -80,7 +80,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 Projectile.FloatingPetAI(false, 0.02f);
                 Projectile.localAI[0] = 0;
             }
-            CalamityUtils.MinionAntiClump(Projectile);
+            CalRemixHelper.MinionAntiClump(Projectile);
 
             if (Projectile.frameCounter++ % 8 == 0)
             {

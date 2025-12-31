@@ -29,7 +29,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.damage = 3000;
             Item.value = Item.sellPrice(gold: 5);
             Item.shoot = ModContent.ProjectileType<CombosamaSlash>();
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
         }
 
         public override bool AltFunctionUse(Player player)

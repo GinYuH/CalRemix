@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {
-    public class KrakenTentacleFlail : BaseWhipProjectile
+    public class KrakenTentacleFlail : BaseFlailProjectile
     {
         public override void SetDefaults()
         {

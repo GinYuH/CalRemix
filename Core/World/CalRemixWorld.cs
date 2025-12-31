@@ -907,7 +907,7 @@ namespace CalRemix.Core.World
                         ThreadPool.QueueUserWorkItem(_ => AstralShrine.GenerateAstralShrine(), this);
 
                         Color messageColor = Color.Magenta;
-                        CalamityUtils.DisplayLocalizedText("Shrines appear within the newly spread infections!", messageColor);
+                        CalamityUtils.BroadcastLocalizedText("Shrines appear within the newly spread infections!", messageColor);
                         if (CalRemixAddon.CalVal != null && astralBlight)
                         {
                             ThreadPool.QueueUserWorkItem(_ => AstralBlightBiome.GenerateBlight(), this);

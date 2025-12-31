@@ -324,13 +324,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                         spriteBatch.Draw(TextureAssets.MagicPixel.Value, segPos - screenPos, wingSedRect, Color.PaleGoldenrod * 0.1f * NPC.Opacity, 0, wingSedRect.Size() / 2, 1, 0, 0);
                     }
-                    PrimitiveRenderer.RenderTrail(wingPoints, new((float f) => (1 - f) * windWidth + 4, (float f) => Color.DarkGoldenrod * NPC.Opacity));
-                    PrimitiveRenderer.RenderTrail(wingPoints, new((float f) => (1 - f) * windWidth, (float f) => Color.PaleGoldenrod * NPC.Opacity));
+                    PrimitiveRenderer.RenderTrail(wingPoints, new((float f, Vector2 v) => (1 - f) * windWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
+                    PrimitiveRenderer.RenderTrail(wingPoints, new((float f, Vector2 v) => (1 - f) * windWidth, (float f, Vector2 v) => Color.PaleGoldenrod * NPC.Opacity));
                 }
             }
 
-            PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f) => (1 - f) * startWidth + 4, (float f) => Color.DarkGoldenrod * NPC.Opacity));
-            PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f) => (1 - f) * startWidth, (float f) => Color.PaleGoldenrod * NPC.Opacity));
+            PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
+            PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth, (float f, Vector2 v) => Color.PaleGoldenrod * NPC.Opacity));
 
             spriteBatch.Draw(tex, NPC.Center - screenPos, null, Color.White * NPC.Opacity, NPC.rotation, tex.Size() / 2, NPC.scale, 0, 0);
             spriteBatch.Draw(bloom, eyePos, null, new Color(194, 175, 189) * NPC.Opacity, NPC.rotation, bloom.Size() / 2, NPC.scale * 1.6f * eyeScale, 0, 0);
@@ -373,7 +373,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             spriteBatch.Draw(bloom, ribPos - screenPos, null, new Color(254, 152, 232) * NPC.Opacity, 0, bloom.Size() / 2, NPC.scale * 0.8f, 0, 0);
                         }
                     }
-                    PrimitiveRenderer.RenderTrail(poses, new((float f) => 3, (float f) => Color.DarkGoldenrod * NPC.Opacity));
+                    PrimitiveRenderer.RenderTrail(poses, new((float f, Vector2 v) => 3, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
                 }
             }
 

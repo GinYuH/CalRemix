@@ -419,7 +419,7 @@ namespace CalRemix.UI.ModeIndicatorAdditive
                     if (Difficulties[i].Enabled)
                     {
                         if (Difficulties[i].DeactivationTextKey != string.Empty)
-                            DisplayLocalizedText(Difficulties[i].DeactivationTextKey, Difficulties[i].ChatTextColor);
+                            BroadcastLocalizedText(Difficulties[i].DeactivationTextKey, Difficulties[i].ChatTextColor);
 
                         Difficulties[i].Enabled = false;
                     }
@@ -437,7 +437,7 @@ namespace CalRemix.UI.ModeIndicatorAdditive
             }
 
             if (mode.ActivationTextKey != string.Empty)
-                DisplayLocalizedText(mode.ActivationTextKey, mode.ChatTextColor);
+                BroadcastLocalizedText(mode.ActivationTextKey, mode.ChatTextColor);
 
             mode.Enabled = true;
 

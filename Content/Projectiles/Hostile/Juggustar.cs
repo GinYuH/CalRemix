@@ -83,7 +83,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
             Vector2 trailOffset = Projectile.Size * 0.5f;
             trailOffset += (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
-            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => trailOffset, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 61);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_, _) => trailOffset, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 61);
 
             Main.spriteBatch.ExitShaderRegion();
             return false;
@@ -97,9 +97,9 @@ namespace CalRemix.Content.Projectiles.Hostile
             }
             return true;
         }
-        public float FlameTrailWidthFunction(float completionRatio) => MathHelper.SmoothStep(12f * Projectile.scale, 8f * Projectile.scale, completionRatio);
+        public float FlameTrailWidthFunction(float completionRatio, Vector2 v) => MathHelper.SmoothStep(12f * Projectile.scale, 8f * Projectile.scale, completionRatio);
 
-        public Color FlameTrailColorFunction(float completionRatio)
+        public Color FlameTrailColorFunction(float completionRatio, Vector2 v)
         {
             float trailOpacity = Utils.GetLerpValue(0.8f, 0.27f, completionRatio, true) * Utils.GetLerpValue(0f, 0.067f, completionRatio, true);
             return Color.PaleGoldenrod * trailOpacity;

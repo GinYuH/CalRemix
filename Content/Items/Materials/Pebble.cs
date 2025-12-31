@@ -1,5 +1,7 @@
 ﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.Astral;
+using CalamityMod.Items.Placeables.Crags;
 using CalamityMod.Items.Placeables.Furniture.Trophies;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using Terraria;

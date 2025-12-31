@@ -49,8 +49,8 @@ namespace CalRemix.Content.Projectiles.Weapons
                 {
                     float scaleFactor6 = 1f;
 
-                    if (Owner.ActiveItem().shoot == Projectile.type)
-                        scaleFactor6 = Owner.ActiveItem().shootSpeed * Projectile.scale;
+                    if (Owner.HeldItem.shoot == Projectile.type)
+                        scaleFactor6 = Owner.HeldItem.shootSpeed * Projectile.scale;
 
                     Vector2 slashDirection = Main.MouseWorld - Owner.RotatedRelativePoint(Owner.MountedCenter, true);
                     slashDirection.Normalize();

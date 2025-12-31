@@ -2,7 +2,6 @@
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.AstrumDeus;
-using CalamityMod.NPCs.CalamityAIs.CalamityBossAIs;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Summon.SmallAresArms;
@@ -203,7 +202,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         if (localTimer == telegraphTime)
                         {
-                            SoundEngine.PlaySound(ScorchedEarth.ShootSound with { Volume = 0.8f }, target.Center);
+                            SoundEngine.PlaySound(ContentSamples.ItemsByType[ModContent.ItemType<ScorchedEarth>()].UseSound.Value with { Volume = 0.8f }, target.Center);
                         }
                     }
                     break;

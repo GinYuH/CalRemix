@@ -10,6 +10,7 @@ using Terraria.WorldBuilding;
 using CalamityMod.BiomeManagers;
 using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Placeables.Banners;
+using CalamityMod.Items.Placeables.Crags;
 
 namespace CalRemix.Content.NPCs.TheGoodStuff
 {
@@ -401,7 +402,7 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<DemonicBoneAsh>());
+            npcLoot.Add(ModContent.ItemType<ScorchedBone>());
             npcLoot.Add(ModContent.ItemType<OldLordClaymore>(), 30);
         }
 

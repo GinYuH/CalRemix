@@ -216,7 +216,7 @@ namespace CalRemix.Core
 
                 AchievementsHelper.CheckMechaMayhem();
 
-                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.TripletsBossText", new Color(175, 75, 255));
+                CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.TripletsBossText", new Color(175, 75, 255));
                 return;
             }
             else

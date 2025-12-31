@@ -108,7 +108,7 @@ namespace CalRemix.Content.NPCs.Minibosses.Echinoderion
                     end.X *= NPC.spriteDirection;
                     frille.Add(NPC.Center + tentacleBase + Vector2.Lerp(start, end, i / (float)(ptAmt - 1)));
                 }
-                PrimitiveRenderer.RenderTrail(frille.ToArray(), new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f) => 3), new PrimitiveSettings.VertexColorFunction((float f) => new Color(100, 175, 140) * 0.8f), shader: GameShaders.Misc["CalamityMod:TeslaTrail"]));
+                PrimitiveRenderer.RenderTrail(frille.ToArray(), new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f, Vector2 v) => 3), new PrimitiveSettings.VertexColorFunction((float f, Vector2 v) => new Color(100, 175, 140) * 0.8f), shader: GameShaders.Misc["CalamityMod:TeslaTrail"]));
             }
             Main.spriteBatch.ExitShaderRegion();
 
