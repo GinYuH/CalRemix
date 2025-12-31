@@ -197,7 +197,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 packet.Write((byte)RemixMessageType.StartPandemicPanic);
                 packet.Send();
             }
-            CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.PandemicPanicBegin", Color.Red);
+            CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.PandemicPanicBegin", Color.Red);
         }
 
         public static void EndEvent()
@@ -213,7 +213,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             string winner = InvadersWinning ? "BadEnd" : DefendersWinning ? "GoodEnd" : "NeutralEnd";
             Color c = InvadersWinning ? Color.Red : DefendersWinning? Color.Lime : Color.Ivory;
 
-            CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.PandemicPanic" + winner, c);
+            CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.PandemicPanic" + winner, c);
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {

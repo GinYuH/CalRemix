@@ -52,15 +52,15 @@ namespace CalRemix.Content.Tiles
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
 
-        public string MapChestName(string name, int i, int j) => CalamityUtils.GetMapChestName(name, i, j);
+        public string MapChestName(string name, int i, int j) => FurnitureCommon.GetMapChestName(name, i, j);
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
         {
             int option = frameX / 36;
             return this.GetLocalization("MapEntry" + option);
         }
-        public override void MouseOver(int i, int j) => CalamityUtils.ChestMouseOver<FrigidChest>(i, j);
-        public override void MouseOverFar(int i, int j) => CalamityUtils.ChestMouseFar<FrigidChest>(i, j);
+        public override void MouseOver(int i, int j) => FurnitureCommon.ChestMouseOver<FrigidChest>(i, j);
+        public override void MouseOverFar(int i, int j) => FurnitureCommon.ChestMouseFar<FrigidChest>(i, j);
         public override void KillMultiTile(int i, int j, int frameX, int frameY) => Chest.DestroyChest(i, j);
 
         // Locked Chest stuff
@@ -88,7 +88,7 @@ namespace CalRemix.Content.Tiles
             {
                 top--;
             }
-            return CalamityUtils.LockedChestRightClick(IsLockedChest(left, top), left, top, i, j);
+            return FurnitureCommon.LockedChestRightClick(IsLockedChest(left, top), left, top, i, j);
         }
     }
 }

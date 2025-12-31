@@ -72,11 +72,6 @@ namespace CalRemix.Content.Projectiles.Weapons
                     projectile.netUpdate = true;
                 }
             }
-            if (Main.player[Projectile.owner].Calamity().killSpikyBalls)
-            {
-               Projectile.active = false;
-               Projectile.netUpdate = true;
-            }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

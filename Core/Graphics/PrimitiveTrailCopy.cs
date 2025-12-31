@@ -12,11 +12,11 @@ namespace CalRemix.Core.Graphics
     {
         internal Matrix? PerspectiveMatrixMultiplier;
 
-        public delegate float VertexWidthFunction(float completionRatio);
+        public delegate float VertexWidthFunction(float completionRatio, Vector2 v);
 
-        public delegate Vector2 VertexOffsetFunction(float completionRatio);
+        public delegate Vector2 VertexOffsetFunction(float completionRatio, Vector2 v);
 
-        public delegate Color VertexColorFunction(float completionRatio);
+        public delegate Color VertexColorFunction(float completionRatio, Vector2 v);
 
         public VertexWidthFunction WidthFunction;
 
@@ -78,7 +78,7 @@ namespace CalRemix.Core.Graphics
                 {
                     Vector2 offset = generalOffset;
                     if (OffsetFunction != null)
-                        offset += OffsetFunction(i / (float)(basePoints.Count - 1f));
+                        offset += OffsetFunction(i / (float)(basePoints.Count - 1f), Vector2.Zero);
 
                     endPoints.Add(basePoints[i] + offset);
                 }
@@ -96,7 +96,7 @@ namespace CalRemix.Core.Graphics
                 float completionRatio = i / (float)originalPositions.Count();
                 Vector2 offset = generalOffset;
                 if (OffsetFunction != null)
-                    offset += OffsetFunction(completionRatio);
+                    offset += OffsetFunction(completionRatio, Vector2.Zero);
                 controlPoints.Add(originalPositions.ElementAt(i) + offset);
             }
             List<Vector2> points = new();
@@ -152,8 +152,8 @@ namespace CalRemix.Core.Graphics
             for (int i = 0; i < trailPoints.Count - 1; i++)
             {
                 float completionRatio = i / (float)trailPoints.Count;
-                float widthAtVertex = WidthFunction(completionRatio);
-                Color vertexColor = ColorFunction(completionRatio);
+                float widthAtVertex = WidthFunction(completionRatio, Vector2.Zero);
+                Color vertexColor = ColorFunction(completionRatio, Vector2.Zero);
 
                 Vector2 currentPosition = trailPoints[i];
                 Vector2 positionAhead = trailPoints[i + 1];

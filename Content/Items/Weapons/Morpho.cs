@@ -26,7 +26,7 @@ public class Morpho : ModItem
         Item.useStyle = ItemUseStyleID.Swing;
         Item.noMelee = false;
         Item.knockBack = 2.5f;
-        Item.rare = ModContent.RarityType<Violet>();
+        Item.rare = ModContent.RarityType<BurnishedAuric>();
         Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         Item.UseSound = SoundID.Item39 with { Pitch = 0.5f };
         Item.autoReuse = true;

@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
 using Terraria;
 using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Food;
 
 namespace CalRemix.Content.Items.Placeables
 {

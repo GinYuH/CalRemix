@@ -34,7 +34,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.noMelee = true;
             Item.knockBack = 5f;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.UseSound = SoundID.Item105;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<AstralStarMagic>();
@@ -72,7 +72,7 @@ namespace CalRemix.Content.Items.Weapons
                 }
                 else
                 {
-                    type = Main.rand.Next(new int[] { ModContent.ProjectileType<ClamorNoctusStar>(), ProjectileID.HallowStar });
+                    type = Main.rand.Next(new int[] { ModContent.ProjectileType<AlphaDraconisStar>(), ProjectileID.HallowStar });
                 }
                 if (type == ModContent.ProjectileType<Noxling>())
                 {
@@ -106,7 +106,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<ClamorNoctus>().
+                AddIngredient<AlphaDraconis>().
                 AddIngredient<Starmada>().
                 AddIngredient<ExoPrism>(10).
                 AddTile<DraedonsForge>().

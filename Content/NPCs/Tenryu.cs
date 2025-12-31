@@ -13,6 +13,7 @@ using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Projectiles.Melee;
 using Terraria.Audio;
+using CalamityMod.Projectiles.Typeless;
 
 namespace CalRemix.Content.NPCs
 {
@@ -59,7 +60,7 @@ namespace CalRemix.Content.NPCs
             if (NPC.ai[3] >= 180 && wait && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 SoundEngine.PlaySound(SoundID.Item84, NPC.Center);
-                Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), org, org.DirectionTo(Target.Center) * 12f, ModContent.ProjectileType<GalileosPlanet>(), NPC.damage, 6f);
+                Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), org, org.DirectionTo(Target.Center) * 12f, ModContent.ProjectileType<StratusBlackHole>(), NPC.damage, 6f);
                 proj.friendly = false;
                 proj.hostile = true;
                 proj.tileCollide = false;

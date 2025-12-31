@@ -33,7 +33,7 @@ namespace CalRemix.Content.Items.Tools
             Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.value = Item.sellPrice(gold: 20);
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.UseSound = SoundID.Item23;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<HeavenPiercerProj>();

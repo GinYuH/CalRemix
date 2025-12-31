@@ -54,7 +54,7 @@ namespace CalRemix.Content.NPCs.Eclipse
         {
             NPC.Remix().GreenAI[0]++;
             {
-                CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
+                NPC.aiStyle = NPCAIStyleID.Herpling;
                 if (NPC.HasPlayerTarget)
                 {
                     if (Collision.CanHitLine(NPC.Center, 1, 1, Main.player[NPC.target].Center, 1, 1))

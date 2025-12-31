@@ -30,7 +30,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.width = 42;
             Item.height = 36;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.accessory = true;
         }
 
@@ -38,7 +38,7 @@ namespace CalRemix.Content.Items.Accessories
         {
             CalamityPlayer modPlayer = player.Calamity();
             ModContent.GetModItem(ModContent.ItemType<ElementalGauntlet>()).UpdateAccessory(player, hideVisual);
-            ModContent.GetModItem(ModContent.ItemType<WarbanneroftheSun>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<WarbanneroftheRighteous>()).UpdateAccessory(player, hideVisual);
             ModContent.GetModItem(ModContent.ItemType<BadgeofBravery>()).UpdateAccessory(player, hideVisual);
             player.kbGlove = true;
             player.autoReuseGlove = true;
@@ -54,7 +54,7 @@ namespace CalRemix.Content.Items.Accessories
             CreateRecipe().
                 AddIngredient<ElementalGauntlet>(1).
                 AddIngredient(ItemID.YoyoBag).
-                AddIngredient<WarbanneroftheSun>(1).
+                AddIngredient<WarbanneroftheRighteous>(1).
                 AddIngredient<BadgeofBravery>(1).
                 AddIngredient<AshesofAnnihilation>(5).
                 AddTile<CosmicAnvil>().

@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void SetDefaults()
         {
-            NPC.aiStyle = -1;
+            NPC.aiStyle = NPCAIStyleID.Retinazer;
             NPC.width = 30;
             NPC.height = 32;
             NPC.lifeMax = 200;
@@ -35,7 +35,6 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void AI()
         {
-            CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedRetinazerAI(NPC, Mod);
             NPC.dontTakeDamage = true;
             if (!NPC.AnyNPCs(ModContent.NPCType<Fleshmullet>()))
             {

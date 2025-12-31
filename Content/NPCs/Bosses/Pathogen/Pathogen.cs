@@ -506,7 +506,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.AddNormalOnly(ModContent.ItemType<BloodSample>(), 1, 8, 10);
+            npcLoot.AddNormalOnly(ItemID.TissueSample, 1, 8, 10);
             npcLoot.Add(ItemID.CorruptionKey, 3);
             npcLoot.Add(ItemID.CrimsonKey, 3);
             npcLoot.Add(ModContent.ItemType<PathogenTrophy>(), 10);

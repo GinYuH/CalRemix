@@ -139,11 +139,11 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     break;
                 case OverallRarity.DarkBlue:
                     Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-                    Item.rare = ModContent.RarityType<DarkBlue>();
+                    Item.rare = ModContent.RarityType<CosmicPurple>();
                     break;
                 case OverallRarity.Violet:
                     Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-                    Item.rare = ModContent.RarityType<Violet>();
+                    Item.rare = ModContent.RarityType<BurnishedAuric>();
                     break;
                 case OverallRarity.HotPink:
                     Item.value = CalamityGlobalItem.RarityHotPinkBuyPrice;

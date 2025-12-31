@@ -27,7 +27,7 @@ namespace CalRemix.Content.Items.Ammo
 			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.knockBack = 11f;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.value = Item.buyPrice(silver:1);
 			Item.shoot = ModContent.ProjectileType<HornetShot>();
 			Item.shootSpeed = 11f;

@@ -32,7 +32,7 @@ public class Hyperion : ModItem
         Item.useAnimation = 17;
         Item.useStyle = ItemUseStyleID.Swing;
         Item.knockBack = 6;
-        Item.rare = ModContent.RarityType<DarkBlue>();
+        Item.rare = ModContent.RarityType<CosmicPurple>();
         Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
         Item.UseSound = UseSound;
         Item.useTurn = true;

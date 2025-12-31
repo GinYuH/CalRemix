@@ -49,12 +49,12 @@ namespace CalRemix.Content.Projectiles.Accessories
                 }
             }
         }
-        internal Color ColorFunction(float completionRatio)
+        internal Color ColorFunction(float completionRatio, Vector2 v)
         {
             return Color.Lerp(Color.Blue, Color.LightBlue, 0.8f) * 0.8f;
         }
 
-        internal float WidthFunction(float completionRatio)
+        internal float WidthFunction(float completionRatio, Vector2 v)
         {
             float expansionCompletion = (float)Math.Pow(1 - completionRatio, 1);
             return MathHelper.Lerp(0f, 20 * Projectile.scale, expansionCompletion);
@@ -66,7 +66,7 @@ namespace CalRemix.Content.Projectiles.Accessories
             Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition, null, Color.Blue, Projectile.rotation, tex.Size() / 2f, Projectile.scale, SpriteEffects.None, 0);
 
             GameShaders.Misc["CalamityMod:TrailStreak"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
-            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, (_) => Projectile.Size, shader: GameShaders.Misc["CalamityMod:TrailStreak"]), 10);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, (_, _) => Projectile.Size, shader: GameShaders.Misc["CalamityMod:TrailStreak"]), 10);
 
 
             return false;

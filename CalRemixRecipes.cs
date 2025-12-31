@@ -50,16 +50,17 @@ using System;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.UI.Anomaly109;
 using CalamityMod.Items.Tools;
+using CalamityMod.Items.Placeables.FurnitureNavystone.FurnitureAncientNavystone;
+using CalamityMod.Items.Weapons.Typeless;
 
 namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyExoMechMusicBox, AnyCritter;
+        public static RecipeGroup EvilBar, T4Bar, HMT1Bar, AnyExoMechMusicBox, AnyCritter;
         public static readonly MethodInfo CreateRecipeLookups = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Unload()
         {
-            GreaterEvil = null;
             EvilBar = null;
             T4Bar = null;
             HMT1Bar = null;
@@ -68,8 +69,6 @@ namespace CalRemix
         public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(CalRemixHelper.LocalText($"RecipeGroups.{s}"));
         public override void AddRecipeGroups()
         {
-            GreaterEvil = new RecipeGroup(() => GroupName("GreaterEvil"), ItemType<RottenMatter>(), ItemType<BloodSample>());
-            RecipeGroup.RegisterGroup("CalRemix:GreaterEvil", GreaterEvil);
             EvilBar = new RecipeGroup(() => GroupName("EvilBar"), ItemID.DemoniteBar, ItemID.CrimtaneBar);
             RecipeGroup.RegisterGroup("CalRemix:EvilBar", EvilBar);
             T4Bar = new RecipeGroup(() => GroupName("T4Bar"), ItemID.GoldBar, ItemID.PlatinumBar);
@@ -231,7 +230,7 @@ namespace CalRemix
             AlcoholRecipe(ItemType<CinnamonRoll>(), ItemType<Everclear>(), ItemType<Whiskey>(), ItemID.BeetleHusk, 5, 1);
             AlcoholRecipe(ItemType<Everclear>(), ItemType<Margarita>(), ItemID.Hay, ItemType<AureusCell>(), 10, 1);
             AlcoholRecipe(ItemType<EvergreenGin>(), ItemType<Vodka>(), ItemID.PineTreeBlock, ItemType<LivingShard>(), 20, 2);
-            AlcoholRecipe(ItemType<Fireball>(), ItemID.Ale, ItemType<BloodOrange>(), ItemID.UnicornHorn, 40, 1);
+            AlcoholRecipe(ItemType<Fireball>(), ItemID.Ale, ItemType<SanguineTangerine>(), ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ItemType<GrapeBeer>(), ItemID.Ale, ItemID.GrapeJuice, ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ItemType<Margarita>(), ItemType<Vodka>(), ItemID.Starfruit, ItemType<LivingShard>(), 20, 1);
             AlcoholRecipe(ItemType<Moonshine>(), ItemType<Everclear>(), ItemID.Ale, ItemID.BeetleHusk, 5, 1);
@@ -239,7 +238,7 @@ namespace CalRemix
             AlcoholRecipe(ItemType<OldFashioned>(), ItemType<Whiskey>(), ItemID.BambooBlock, ItemType<LivingShard>(), 20, 1);
             AlcoholRecipe(ItemType<RedWine>(), ItemID.Ale, ItemID.Grapes, ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ItemType<Rum>(), ItemID.Ale, ItemID.BambooBlock, ItemID.UnicornHorn, 40, 20);
-            AlcoholRecipe(ItemType<Screwdriver>(), ItemType<PurpleHaze>(), ItemType<BloodOrange>(), ItemType<HallowedOre>(), 30, 1);
+            AlcoholRecipe(ItemType<Screwdriver>(), ItemType<PurpleHaze>(), ItemType<SanguineTangerine>(), ItemType<HallowedOre>(), 30, 1);
             AlcoholRecipe(ItemType<StarBeamRye>(), ItemType<Margarita>(), ItemID.Hay, ItemType<AureusCell>(), 10, 20);
             AlcoholRecipe(ItemType<Tequila>(), ItemID.Ale, ItemID.Hay, ItemID.UnicornHorn, 40, 20);
             AlcoholRecipe(ItemType<TequilaSunrise>(), ItemType<Everclear>(), ItemType<Tequila>(), ItemID.BeetleHusk, 5, 1);
@@ -277,12 +276,12 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ItemType<AngelicShotgun>()))
                 {
-                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
+                    recipe.RemoveIngredient(ItemType<EssenceofSunlight>());
                     recipe.AddIngredient(ItemType<CoreofBabil>(), 7);
                 }
                 if (recipe.HasResult(ItemType<TwistingThunder>()))
                 {
-                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
+                    recipe.RemoveIngredient(ItemType<EssenceofSunlight>());
                     recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
                 }
                 if (recipe.HasResult(ItemID.NightsEdge))
@@ -378,10 +377,6 @@ namespace CalRemix
                 {
                     Replace(recipe, ItemID.WaterBolt, ItemType<SaltWaterBolt>());
                     recipe.AddIngredient(ItemType<PlasmaflashBolt>());
-                }
-                if (recipe.HasResult(ItemType<CoreofEleum>()) || recipe.HasResult(ItemType<CoreofHavoc>()) || recipe.HasResult(ItemType<CoreofSunlight>()))
-                {
-                    Replace(recipe, ItemID.Ectoplasm, ItemID.HallowedBar);
                 }
                 if (!recipe.HasResult(ItemType<HauntedBar>()) && recipe.HasIngredient(ItemType<RuinousSoul>()))
                 {
@@ -511,7 +506,7 @@ namespace CalRemix
                 }
                 #endregion
                 #region Anomaly Recipes
-                if (recipe.HasResult(ItemType<Elderberry>()))
+                if (recipe.HasResult(ItemType<TaintedCloudberry>()))
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("Elderberry"), () => !CalRemixWorld.permanenthealth));
                 }
@@ -519,11 +514,11 @@ namespace CalRemix
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("MiracleFruit"), () => !CalRemixWorld.permanenthealth));
                 }
-                if (recipe.HasResult(ItemType<Dragonfruit>()))
+                if (recipe.HasResult(ItemType<SacredStrawberry>()))
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("Dragonfruit"), () => !CalRemixWorld.permanenthealth));
                 }
-                if (recipe.HasResult(ItemType<BloodOrange>()))
+                if (recipe.HasResult(ItemType<SanguineTangerine>()))
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("BloodOrange"), () => !CalRemixWorld.permanenthealth));
                 }
@@ -589,7 +584,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ItemType<TheAbsorber>()))
                 {
-                    recipe.AddIngredient<Regenator>();
+                    recipe.AddIngredient<Regenerator>();
                 }
                 if (recipe.HasResult(ItemType<TheSponge>()))
                 {
@@ -597,18 +592,18 @@ namespace CalRemix
                     recipe.AddIngredient<AquaticHeart>();
                     recipe.AddIngredient<FlameLickedShell>();
                     recipe.AddIngredient<TrinketofChi>();
-                    recipe.AddIngredient<AmidiasSpark>();
+                    recipe.AddIngredient<IlmerisSpark>();
                     recipe.AddIngredient<UrsaSergeant>();
                     recipe.AddIngredient<PermafrostsConcoction>();
                 }
                 if (recipe.HasResult(ItemType<RampartofDeities>()))
                 {
-                    recipe.AddIngredient<RustyMedallion>();
+                    recipe.AddIngredient<ScionsCurio>();
                     recipe.AddIngredient<AmidiasPendant>();
                 }
-                if (recipe.HasResult(ItemType<TracersElysian>()))
+                if (recipe.HasResult(ItemType<VoidStriders>()))
                 {
-                    recipe.AddIngredient<GravistarSabaton>();
+                    recipe.AddIngredient<InterstellarStompers>();
                     recipe.AddIngredient<Microxodonta>();
                 }
                 if (recipe.HasResult(ItemType<AmbrosialAmpoule>()))
@@ -625,7 +620,7 @@ namespace CalRemix
                     recipe.AddIngredient<AquaticEmblem>();
                     recipe.AddIngredient<SpelunkersAmulet>();
                     recipe.AddIngredient<AlluringBait>();
-                    recipe.AddIngredient<LumenousAmulet>();
+                    recipe.AddIngredient<DiamondOfTheDeep>();
                 }
                 if (recipe.HasResult(ItemType<TheAmalgam>()))
                 {

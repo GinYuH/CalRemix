@@ -17,7 +17,7 @@ namespace CalRemix.Content.Items.Tools
         {
             Item.width = 26;
             Item.height = 26;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.useAnimation = 30;
             Item.useTime = 45;
             Item.useStyle = ItemUseStyleID.HoldUp;

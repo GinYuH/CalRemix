@@ -135,7 +135,7 @@ namespace CalRemix.Content.Projectiles.Accessories
 
                     if (Projectile.localAI[1] >= 90)
                     {
-                        SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.GaussWeaponFire, npc.Center);
+                        SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ExoHitSound with { Pitch = 0.4f }, npc.Center);
                         for (int i = 0; i < 12; i++)
                         {
                             double deg = 30 * i;
@@ -175,8 +175,8 @@ namespace CalRemix.Content.Projectiles.Accessories
                     {
                         if (Projectile.localAI[1] % 20 == 0)
                         {
-                            int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(npc.Center.X + Main.rand.Next(-64, 64), npc.Center.Y + 200), new Vector2(Main.rand.Next(-20, 20), -40f), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DNA>(), (int)(Projectile.damage * 0.2f), 0, Main.myPlayer, 0f, 0f);
-                            int p2 = Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(npc.Center.X + Main.rand.Next(-16, 16), npc.Center.Y + 200), new Vector2(Main.rand.Next(-20, 20), -40f), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DNA>(), (int)(Projectile.damage * 0.2f), 0, Main.myPlayer, 0f, 0f);
+                            int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(npc.Center.X + Main.rand.Next(-64, 64), npc.Center.Y + 200), new Vector2(Main.rand.Next(-20, 20), -40f), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.LucreciaDNATrailCreator>(), (int)(Projectile.damage * 0.2f), 0, Main.myPlayer, 0f, 0f);
+                            int p2 = Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(npc.Center.X + Main.rand.Next(-16, 16), npc.Center.Y + 200), new Vector2(Main.rand.Next(-20, 20), -40f), ModContent.ProjectileType<CalamityMod.Projectiles.Melee.LucreciaDNATrailCreator>(), (int)(Projectile.damage * 0.2f), 0, Main.myPlayer, 0f, 0f);
                             if (Main.projectile.IndexInRange(p))
                                 Main.projectile[p].originalDamage = Projectile.originalDamage;
                             if (Main.projectile.IndexInRange(p2))
@@ -252,7 +252,7 @@ namespace CalRemix.Content.Projectiles.Accessories
                         dest.Normalize();
                         Vector2 laserVel = dest * 10;
                         Vector2 spawnloc = new Vector2(Projectile.Center.X + 120 * -Projectile.spriteDirection, Projectile.Center.Y - 60);
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnloc, laserVel, ModContent.ProjectileType<CalamityMod.Projectiles.Melee.GalileosPlanet>(), Projectile.damage * 2, 0f, Projectile.owner);
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnloc, laserVel, ModContent.ProjectileType<CalamityMod.Projectiles.Typeless.StratusBlackHole>(), Projectile.damage * 2, 0f, Projectile.owner);
                         if (Main.projectile.IndexInRange(p))
                             Main.projectile[p].originalDamage = Projectile.originalDamage;
                         Main.projectile[p].DamageType = DamageClass.Summon;

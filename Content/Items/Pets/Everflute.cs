@@ -21,7 +21,7 @@ namespace CalRemix.Content.Items.Pets
             Item.DefaultToVanitypet(ModContent.ProjectileType<WeirdBird>(), ModContent.BuffType<WeirdBirdBuff>());
             Item.width = 28;
             Item.height = 20;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.value = Item.sellPrice(0, 5);
         }
 

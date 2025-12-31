@@ -152,7 +152,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                             if (Main.rand.NextBool(2))
                             {
                                 Vector2 center = (Projectile.direction < 0) ? Projectile.TopLeft : Projectile.TopRight;
-                                int type = Main.rand.Next(new int[] { ModContent.ProjectileType<LaserRifleShot>(), ModContent.ProjectileType<PulsePistolShot>(), });
+                                int type = Main.rand.NextBool() ? ModContent.ProjectileType<PhalanxSurgeLaser>() : ModContent.ProjectileType<PulsePistolShot>();
                                 SoundEngine.PlaySound(PulseRifle.FireSound with { Volume = CalamityMod.Sounds.CommonCalamitySounds.LaserCannonSound.Volume - 0.1f }, Projectile.Center);
                                 int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), center, center.DirectionTo(target.Center) * 5f, type, Projectile.damage * 3, Projectile.knockBack, Owner.whoAmI, target.whoAmI, 0f);
                                 if (p.WithinBounds(Main.maxProjectiles))

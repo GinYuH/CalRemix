@@ -32,7 +32,7 @@ public class AergianTechnistaff : ModItem
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.noMelee = true;
         Item.knockBack = 0;
-        Item.rare = ModContent.RarityType<Violet>();
+        Item.rare = ModContent.RarityType<BurnishedAuric>();
         Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         Item.UseSound = BetterSoundID.ItemDeadlySphereVroom;
         Item.autoReuse = true;

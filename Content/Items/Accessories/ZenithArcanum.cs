@@ -33,7 +33,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.width = 42;
             Item.height = 36;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = RarityType<Violet>();
+            Item.rare = RarityType<BurnishedAuric>();
             Item.accessory = true;
         }
 
@@ -59,14 +59,14 @@ namespace CalRemix.Content.Items.Accessories
             CalamityPlayer caPlayer = player.Calamity();
             caPlayer.howlTrio = true;
             caPlayer.howlsHeart = true;
-            caPlayer.brimstoneWaifu = true;
-            caPlayer.sirenWaifu = true;
-            caPlayer.sandWaifu = true;
-            caPlayer.sandBoobWaifu = true;
-            caPlayer.cloudWaifu = true;
+            caPlayer.brimElemental = true;
+            caPlayer.waterElemental = true;
+            caPlayer.sandElemental = true;
+            caPlayer.rareSandElemental = true;
+            caPlayer.cloudElemental = true;
             caPlayer.MutatedTruffleBool = true;
             caPlayer.miniOldDuke = true;
-            caPlayer.allWaifus = true;
+            caPlayer.allElementals = true;
             caPlayer.elementalHeart = true;
             caPlayer.virili = true;
 

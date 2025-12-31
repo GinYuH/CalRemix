@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.Projectiles;
 using Terraria.Audio;
+using CalamityMod.Systems.Collections;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {
@@ -23,7 +24,6 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.timeLeft = 120;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.extraUpdates = 1;
-            Projectile.Calamity().pointBlankShotDuration = CalamityGlobalProjectile.DefaultPointBlankDuration;
             if (CalRemixAddon.Thorium != null)
             {
                 Projectile.DamageType = CalRemixAddon.Thorium.Find<DamageClass>("BardDamage");
@@ -63,7 +63,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 return;
             }
 
-            int randAmt = (CalamityPlayer.areThereAnyDamnBosses || CalamityLists.AquaticScourgeIDs.Contains(target.type)) ? 8 : 10;
+            int randAmt = (CalamityPlayer.areThereAnyDamnBosses || CalamityNPCTypeSets.AquaticScourge.Contains(target.type)) ? 8 : 10;
             int nullBuff = Main.rand.Next(randAmt);
             //if (!target.boss)
             {

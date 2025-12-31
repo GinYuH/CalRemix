@@ -105,14 +105,14 @@ namespace CalRemix.Content.Items.Mounts
             GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"].Apply();
 
 
-            PrimitiveRenderer.RenderTrail(trailPoints, new((float comp) => 6, (float comp) => Color.Lime, (_) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
-            PrimitiveRenderer.RenderTrail(trailPoints, new((float comp) => 2, (float comp) => Color.White, (_) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
-            PrimitiveRenderer.RenderTrail(trailPoints2, new((float comp) => 6, (float comp) => Color.Lime, (_) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
-            PrimitiveRenderer.RenderTrail(trailPoints2, new((float comp) => 2, (float comp) => Color.White, (_) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
+            PrimitiveRenderer.RenderTrail(trailPoints, new((float comp, Vector2 v) => 6, (float comp, Vector2 v) => Color.Lime, (_, _) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
+            PrimitiveRenderer.RenderTrail(trailPoints, new((float comp, Vector2 v) => 2, (float comp, Vector2 v) => Color.White, (_, _) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
+            PrimitiveRenderer.RenderTrail(trailPoints2, new((float comp, Vector2 v) => 6, (float comp, Vector2 v) => Color.Lime, (_, _) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
+            PrimitiveRenderer.RenderTrail(trailPoints2, new((float comp, Vector2 v) => 2, (float comp, Vector2 v) => Color.White, (_, _) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
 
 
-            PrimitiveRenderer.RenderTrail(circlePoints, new((float comp) => 6, (float comp) => Color.Lime, (_) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
-            PrimitiveRenderer.RenderTrail(circlePoints, new((float comp) => 2, (float comp) => Color.White, (_) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
+            PrimitiveRenderer.RenderTrail(circlePoints, new((float comp, Vector2 v) => 6, (float comp, Vector2 v) => Color.Lime, (_, _) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
+            PrimitiveRenderer.RenderTrail(circlePoints, new((float comp, Vector2 v) => 2, (float comp, Vector2 v) => Color.White, (_, _) => drawPlayer.Center, shader: GameShaders.Misc["CalamityMod:HeavenlyGaleLightningArc"]), 80);
 
             return true;
         }

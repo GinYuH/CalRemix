@@ -61,7 +61,6 @@ namespace CalRemix.Core.Retheme
             { NPCType<HiveTumor>(), "HiveMind/HiveTumor" },
             { NPCType<DankCreeper>(), "HiveMind/DankCreeper" },
             { NPCType<HiveBlob>(), "HiveMind/HiveBlob" },
-            { NPCType<HiveBlob2>(), "HiveMind/HiveBlob" },
             { NPCType<DarkHeart>(), "HiveMind/DarkHeart" },
             { NPCType<HiveMind>(), "HiveMind/HiveMind" },
             #region Perfs
@@ -104,9 +103,9 @@ namespace CalRemix.Core.Retheme
             #endregion
             #region Godseeker Mode
             { NPCType<Providence>(), "Providence/Providence" },
-            { NPCType<Bumblefuck>(), "Birb/Birb" },
-            { NPCType<Bumblefuck2>(), "Birb/Birb2" },
-            { NPCType<WildBumblefuck>(), "Birb/Birb2" },
+            { NPCType<Dragonfolly>(), "Birb/Birb" },
+            { NPCType<DraconicSwarmer>(), "Birb/Birb2" },
+            { NPCType<WildBumblebirb>(), "Birb/Birb2" },
             { NPCType<Yharon>(), "Yharon/Yharon" },
             #endregion
         };
@@ -130,7 +129,7 @@ namespace CalRemix.Core.Retheme
             { NPCType<AstrumAureus>(), "Plague/Map" },
             { NPCType<RavagerBody>(), "RavagerMap" },
             { NPCType<AstrumDeusHead>(), "AD/Map" },
-            { NPCType<Bumblefuck>(), "Birb/Map" },
+            { NPCType<Dragonfolly>(), "Birb/Map" },
         };
         */
         internal static Dictionary<int, string> Items = new()
@@ -175,7 +174,6 @@ namespace CalRemix.Core.Retheme
             #endregion
             #region Hive Mind
             { ItemType<HiveMindBag>(), "HiveMind/Bag" },
-            { ItemType<RottenMatter>(), "HiveMind/RottenMatter" },
             { ItemType<Teratoma>(), "HiveMind/Teratoma" },
             { ItemType<RottenBrain>(), "HiveMind/RottenBrain" },
             { ItemType<FilthyGlove>(), "HiveMind/FilthyGlove" },
@@ -187,7 +185,6 @@ namespace CalRemix.Core.Retheme
             #endregion
             #region Perfs
             { ItemType<PerforatorBag>(), "Perfs/Bag" },
-            { ItemType<BloodSample>(), "Perfs/BloodSample" },
             { ItemType<BloodyWormFood>(), "Perfs/BloodyWormFood" },
             { ItemType<BloodyWormTooth>(), "Perfs/BloodyWormTooth" },
             { ItemType<BloodstainedGlove>(), "Perfs/BloodstainedGlove" },
@@ -216,7 +213,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<AnahitasArpeggio>(), "Levi/AnahitasArpeggio" },
             { ItemType<Atlantis>(), "Levi/Atlantis" },
             { ItemType<GastricBelcherStaff>(), "Levi/GastricBelcherStaff" },
-            { ItemType<BrackishFlask>(), "Levi/BrackishFlask" },
+            { ItemType<Whitewater>(), "Levi/BrackishFlask" },
             { ItemType<LeviathanAmbergris>(), "Levi/LeviathanAmbergris" },
             #endregion
             #region Plague Aureus
@@ -350,11 +347,11 @@ namespace CalRemix.Core.Retheme
         internal static List<int> NPCNames =
         [
             NPCType<BrimstoneElemental>(),
-            NPCType<ThiccWaifu>(),
+            NPCType<CloudElemental>(),
             NPCType<AstrumAureus>(),
             NPCType<Draedon>(),
             NPCType<BrimstoneHeart>(),
-            NPCType<WITCH>(),
+            NPCType<BrimstoneWitch>(),
             NPCType<Cnidrion>(),
             NPCType<Anahita>()
         ];

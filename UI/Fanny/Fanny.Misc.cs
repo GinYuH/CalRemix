@@ -54,16 +54,16 @@ namespace CalRemix.UI
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().ionDialogue > 0);
 
             HelperMessage.New("Tangerine", "Have you ever heard of the Sanguine Tangerine? Also going by other names such as Hemagrape or Blood Orange, this rare fruit can only be found by submerging an Apple into water during the Blood Moon. It's like comparing apples to oranges! or converting rather.",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.Calamity().bOrange && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && Main.bloodMoon && Main.LocalPlayer.ZonePurity).AddItemDisplay(ModContent.ItemType<BloodOrange>());
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.Calamity().sTangerine && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && Main.bloodMoon && Main.LocalPlayer.ZonePurity).AddItemDisplay(ModContent.ItemType<SanguineTangerine>());
 
             HelperMessage.New("MiracleFruitNOTBoy", "Hey there, sky-gazer! You’ve been around long enough to know about those little planetoids up in space, right? Well, something miraculous has started sprouting on the Jungle ones! Maybe take a little trip up there and see if you can find something fruity to boost your vitality! Just don’t let gravity ruin your snack time!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.Calamity().mFruit && NPC.downedGolemBoss && Main.LocalPlayer.ZoneSkyHeight).AddItemDisplay(ModContent.ItemType<MiracleFruit>());
 
             HelperMessage.New("Oldberry", "Hey there, plant barterer! You know how you can trade those Strange Plants for dyes right? Well did you know the Dye Trader’s got more than just fashion sense? Hand over a few more, and you might just get something elderly… but in a good way! Boosting your health never looked so stylish!",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.Calamity().eBerry && DownedBossSystem.downedProvidence && Main.LocalPlayer.ZonePurity).AddItemDisplay(ModContent.ItemType<Elderberry>());
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.Calamity().tCloudberry && DownedBossSystem.downedProvidence && Main.LocalPlayer.ZonePurity).AddItemDisplay(ModContent.ItemType<TaintedCloudberry>());
 
             HelperMessage.New("Dargonfruit", "Hey there, angler extraordinaire! Sky Lakes have some pretty cool treasures, but if you’re after something legendary for your health, you’ll need a little extra flair! Try fishing while a Wyvern is soaring around—those crates seem to like a little bit of danger! Just don’t let the big noodle knock you out before you can reel in your prize!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.Calamity().dFruit && DownedBossSystem.downedYharon && Main.LocalPlayer.ZoneSkyHeight && Main.rand.NextBool(6000)).AddItemDisplay(ModContent.ItemType<Dragonfruit>());
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.Calamity().sStrawberry && DownedBossSystem.downedYharon && Main.LocalPlayer.ZoneSkyHeight && Main.rand.NextBool(6000)).AddItemDisplay(ModContent.ItemType<SacredStrawberry>());
 
             HelperMessage.New("Ethcore", "If you’re looking to boost your mana, the Astral Beacon might be the key. All you need is something special to trigger it—maybe a certain bloody item? If you’ve got the right one, it’ll open the door to something ethereal. Just be cautious; you’re dealing with powerful forces.",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.Calamity().eCore && Main.LocalPlayer.ZoneTowerNebula).AddItemDisplay(ModContent.ItemType<EtherealCore>());

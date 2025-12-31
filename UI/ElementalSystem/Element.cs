@@ -58,7 +58,12 @@ namespace CalRemix.UI.ElementalSystem
             foreach (var entry in list) 
             {
                 if (mod.TryFind(entry.Key, out ModItem item))
-                    newList.Add(item.Type, entry.Value);
+                {
+                    if (!newList.ContainsKey(item.Type))
+                        newList.Add(item.Type, entry.Value);
+                    else
+                        Console.WriteLine($"Gasp! {entry.Key} from {mod.DisplayName} was a duplicate!");
+                }
                 else
                     Console.WriteLine($"Gasp! {entry.Key} not found in {mod.DisplayName}!");
             }

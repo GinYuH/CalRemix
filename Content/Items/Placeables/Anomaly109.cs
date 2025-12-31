@@ -6,6 +6,7 @@ using CalamityMod.Rarities;
 using CalamityMod.Items.Potions;
 using CalamityMod;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Potions.Food;
 
 namespace CalRemix.Content.Items.Placeables
 {

@@ -86,19 +86,19 @@ namespace CalRemix.Content.Projectiles.Hostile
             return true;
         }
 
-        internal float WidthFunction(float completionRatio)
+        internal float WidthFunction(float completionRatio, Vector2 v)
         {
             return Projectile.ai[2] > 60 ? 0.4f : 0.2f;
         }
 
-        internal Color ColorFunction(float completionRatio)
+        internal Color ColorFunction(float completionRatio, Vector2 v)
         {
             return new Color(174, 227, 244);
         }
 
-        internal float BackgroundWidthFunction(float completionRatio) => WidthFunction(completionRatio) * 4f;
+        internal float BackgroundWidthFunction(float completionRatio, Vector2 v) => WidthFunction(completionRatio, v) * 4f;
 
-        internal Color BackgroundColorFunction(float completionRatio)
+        internal Color BackgroundColorFunction(float completionRatio, Vector2 v)
         {
             return Projectile.ai[2] > 60 ? Color.Yellow * 0.6f : Color.LightBlue * 0.4f;
         }

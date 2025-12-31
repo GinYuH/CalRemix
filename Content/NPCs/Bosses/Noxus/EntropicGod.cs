@@ -587,7 +587,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             Target.wingTime = Target.wingTimeMax;
 
             // Disable rain.
-            CalamityMod.CalamityMod.StopRain();
+            CalamityWorld.StopRain();
 
             // Set the global NPC instance.
             Myself = NPC;

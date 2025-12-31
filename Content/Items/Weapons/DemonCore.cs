@@ -62,7 +62,6 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient<HardenedHoneycomb>(999).
                 AddIngredient<InfernalKris>(999).
                 AddIngredient<BundleBones>(999).
-                AddRecipeGroup("CalRemix:GreaterEvil", 15).
                 AddIngredient<PurifiedGel>(30).
                 AddTile(TileID.DemonAltar).
                 Register();
@@ -71,7 +70,6 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient<HardenedHoneycomb>(999).
                 AddIngredient<InfernalKris>(999).
                 AddIngredient<BundleBones>(999).
-                AddRecipeGroup("CalRemix:GreaterEvil", 15).
                 AddIngredient<PurifiedGel>(30).
                 AddTile(TileID.DemonAltar).
                 Register();

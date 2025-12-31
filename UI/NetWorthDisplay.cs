@@ -300,7 +300,7 @@ namespace CalRemix.UI
              { ItemID.MinecartPowerup, Item.buyPrice(gold: 69, silver:42, copper:23) },
              { ItemType<VoidofCalamity>(), Item.buyPrice(gold: 83, silver:21, copper:42) },
              { ItemID.SporeSac, Item.buyPrice(gold: 89, silver:46, copper:8) },
-             { ItemType<GravistarSabaton>(), Item.buyPrice(gold: 94, silver:27, copper:16) },
+             { ItemType<InterstellarStompers>(), Item.buyPrice(gold: 94, silver:27, copper:16) },
              { ItemType<LeviathanAmbergris>(), Item.buyPrice(gold: 97, silver:13, copper:93) },
              { ItemID.ShinyStone, Item.buyPrice(platinum: 1) },
 

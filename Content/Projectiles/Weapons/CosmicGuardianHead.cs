@@ -12,7 +12,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     // HUGE credit to Dozezoze for lending his worm projectile code
     public class CosmicGuardianHead : ModProjectile
     {
-        public override string Texture => "CalamityMod/NPCs/DevourerofGods/CosmicGuardianHead";
+        public override string Texture => "CalamityMod/Projectiles/Summon/VoidEaterMarionetteHead";
         Dictionary<int, Projectile> segments = new Dictionary<int, Projectile>();
         public override void SetStaticDefaults()
         {

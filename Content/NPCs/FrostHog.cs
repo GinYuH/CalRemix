@@ -14,6 +14,7 @@ using CalRemix.Content.Items.Potions;
 using CalamityMod.Items.Weapons.Summon;
 using CalRemix.Core.World;
 using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Food;
 
 namespace CalRemix.Content.NPCs
 {
@@ -27,7 +28,7 @@ namespace CalRemix.Content.NPCs
 
         public override void SetDefaults()
         {
-            NPC.aiStyle = -1;
+            NPC.aiStyle = NPCAIStyleID.Herpling;
             NPC.damage = 150;
             NPC.width = 42;
             NPC.height = 38;
@@ -45,7 +46,6 @@ namespace CalRemix.Content.NPCs
 
         public override void AI()
         {
-           CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
             NPC.spriteDirection = -NPC.velocity.X.DirectionalSign();
         }
 

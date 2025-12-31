@@ -27,7 +27,7 @@ namespace CalRemix.Content.NPCs
 
         public override void SetDefaults()
         {
-            NPC.aiStyle = -1;
+            NPC.aiStyle = NPCAIStyleID.Herpling;
             NPC.damage = 150;
             NPC.width = 32;
             NPC.height = 36;
@@ -45,7 +45,6 @@ namespace CalRemix.Content.NPCs
 
         public override void AI()
         {
-            CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
             NPC.spriteDirection = -NPC.velocity.X.DirectionalSign();
         }
 

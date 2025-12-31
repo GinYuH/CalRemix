@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using CalamityMod.Projectiles.Ranged;
+using CalamityMod.Projectiles.Rogue;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {

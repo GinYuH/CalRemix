@@ -33,7 +33,7 @@ public class TitanTides : ModItem
         Item.noMelee = true;
         Item.noUseGraphic = true;
         Item.knockBack = 2;
-        Item.rare = ModContent.RarityType<DarkBlue>();
+        Item.rare = ModContent.RarityType<CosmicPurple>();
         Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
         Item.UseSound = null;
         Item.autoReuse = true;

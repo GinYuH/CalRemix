@@ -26,7 +26,7 @@ namespace CalRemix.Content.Items.Ammo
             Item.maxStack = 1;
             Item.consumable = false;
             Item.knockBack = 8f;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.value = Item.buyPrice(silver: 1);
             Item.shoot = ModContent.ProjectileType<CursedBullet>();
             Item.shootSpeed = 21f;

@@ -33,7 +33,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.noMelee = true;
             Item.knockBack = 2f;
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.UseSound = AcceloRingSpikeSound with { Volume = 0.1f };
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<AcceloRingProjectile>();

@@ -33,6 +33,7 @@ using CalamityMod.Particles;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Cryogen;
 using CalRemix.World;
+using CalamityMod.Items.Potions.Food;
 
 namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 {
@@ -1476,9 +1477,9 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
         public override void OnKill()
         {
-            if (!NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
+            if (!NPC.AnyNPCs(ModContent.NPCType<BrimstoneWitch>()))
             {
-                CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<WITCH>());
+                CalRemixHelper.SpawnNewNPC(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<BrimstoneWitch>());
             }
             int rad = 4;
             Point p = NPC.Center.ToTileCoordinates();

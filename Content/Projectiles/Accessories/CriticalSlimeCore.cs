@@ -110,7 +110,7 @@ namespace CalRemix.Content.Projectiles.Accessories
             }
             else
             {
-                CalamityUtils.FloatingPetAI(Projectile, false, 0);
+                CalRemixHelper.FloatingPetAI(Projectile, false, 0);
                 Projectile.localAI[0] = 0;
                 Projectile.localAI[1] = 0;
             }

@@ -106,9 +106,9 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override Color? GetAlpha(Color lightColor) => Color.White;
 
-        internal float WidthFunction(float completionRatio) => Projectile.scale * 24f * (1f - Utils.GetLerpValue(0.7f, 1f, completionRatio, true)) + 1f;
+        internal float WidthFunction(float completionRatio, Vector2 v) => Projectile.scale * 24f * (1f - Utils.GetLerpValue(0.7f, 1f, completionRatio, true)) + 1f;
 
-        internal Color ColorFunction(float completionRatio)
+        internal Color ColorFunction(float completionRatio, Vector2 v)
         {
             float hue = (Projectile.identity % 9f / 9f + completionRatio * 0.7f) % 1f;
             return Color.Purple * Projectile.Opacity;
@@ -128,7 +128,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Main.spriteBatch.EnterShaderRegion();
             GameShaders.Misc["CalamityMod:PrismaticStreak"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
 
-            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, (_) => Projectile.Size * 0.5f + generalOffset, shader: GameShaders.Misc["CalamityMod:PrismaticStreak"]), 65);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, (_, _) => Projectile.Size * 0.5f + generalOffset, shader: GameShaders.Misc["CalamityMod:PrismaticStreak"]), 65);
             Main.spriteBatch.ExitShaderRegion();
             return true;
         }

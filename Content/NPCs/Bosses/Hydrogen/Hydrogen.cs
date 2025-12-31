@@ -30,6 +30,7 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Weapons;
+using CalamityMod.Items.Placeables.SunkenSea;
 
 namespace CalRemix.Content.NPCs.Bosses.Hydrogen
 {

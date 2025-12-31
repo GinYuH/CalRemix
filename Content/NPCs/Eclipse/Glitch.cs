@@ -112,7 +112,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                     points.Add(destination);
 
 
-                    PrimitiveRenderer.RenderTrail(points, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => trailOffset, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 61);
+                    PrimitiveRenderer.RenderTrail(points, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_, _) => trailOffset, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 61);
 
                     Main.spriteBatch.ExitShaderRegion();
                 }
@@ -128,9 +128,9 @@ namespace CalRemix.Content.NPCs.Eclipse
                 target.AddBuff(BuffID.Cursed, CalamityUtils.SecondsToFrames(25));
             target.AddBuff(ModContent.BuffType<Vaporfied>(), CalamityUtils.SecondsToFrames(4));
         }
-        public float FlameTrailWidthFunction(float completionRatio) => MathHelper.SmoothStep(12f * NPC.scale, 8f * NPC.scale, completionRatio);
+        public float FlameTrailWidthFunction(float completionRatio, Vector2 v) => MathHelper.SmoothStep(12f * NPC.scale, 8f * NPC.scale, completionRatio);
 
-        public Color FlameTrailColorFunction(float completionRatio)
+        public Color FlameTrailColorFunction(float completionRatio, Vector2 v)
         {
             return Main.DiscoColor * completionRatio;
         }

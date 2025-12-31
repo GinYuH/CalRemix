@@ -529,7 +529,7 @@ namespace CalRemix.Content.Projectiles
             {
                 if (projectile.type == ProjectileType<CryonicShield>())
                     return Color.Magenta;
-                if (uniproj && (projectile.type == ProjectileType<GalileosPlanet>()
+                if (uniproj && (projectile.type == ProjectileType<StratusBlackHole>()
                     || projectile.type == ProjectileType<CosmicBlast>()
                     || projectile.type == ProjectileType<EndoIceShard>()))
                     return Color.HotPink;

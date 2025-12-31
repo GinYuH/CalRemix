@@ -188,7 +188,7 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient<YharimsGift>().
                 AddIngredient<OccultSkullCrown>().
                 AddIngredient<HolyMantle>().
-                AddIngredient<CalamityMod.Items.Accessories.Wings.TracersSeraph>().
+                AddIngredient<CalamityMod.Items.Accessories.Wings.SeraphTracers>().
                 AddIngredient<TheCommunity>().
                 AddIngredient<CalamitousSoulArtifact>().
                 AddIngredient<AmbrosialAmpoule>().
@@ -217,7 +217,7 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient<YharimsGift>().
                 AddIngredient<OccultSkullCrown>().
                 AddIngredient<HolyMantle>().
-                AddIngredient<CalamityMod.Items.Accessories.Wings.TracersSeraph>().
+                AddIngredient<CalamityMod.Items.Accessories.Wings.SeraphTracers>().
                 AddIngredient<ShatteredCommunity>().
                 AddIngredient<CalamitousSoulArtifact>().
                 AddIngredient<AmbrosialAmpoule>().

@@ -12,8 +12,10 @@ using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Placeables.FurnitureAbyss;
+using CalamityMod.Items.Placeables.SunkenSea;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Potions.Alcohol;
+using CalamityMod.Items.Potions.Food;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.Items.TreasureBags.MiscGrabBags;
@@ -92,7 +94,7 @@ namespace CalRemix
             ItemType<AstralTorch>(),
             ItemType<SulphurousTorch>(),
             ItemType<GloomTorch>(),
-            ItemType<AbyssTorch>(),
+            ItemType<VoidTorch>(),
             ItemType<AlgalPrismTorch>(),
             ItemType<NavyPrismTorch>(),
             ItemType<RefractivePrismTorch>()
@@ -173,7 +175,7 @@ namespace CalRemix
             }
             else if (item.type == ItemType<CosmiliteBar>())
             {
-                item.rare = CalRemixWorld.cosmislag ? ItemRarityID.Purple : RarityType<DarkBlue>();
+                item.rare = CalRemixWorld.cosmislag ? ItemRarityID.Purple : RarityType<CosmicPurple>();
             }
             if (CalRemixWorld.fearmonger)
             {
@@ -247,11 +249,6 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.CrystalPiercer>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.DraedonsArsenal.FrequencyManipulator>())
-                {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.FreqManip>();
-                    item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
-                }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ScourgeoftheSeas>())
                 {
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.ScourgeSea>();
@@ -292,7 +289,7 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.RealityRapture>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.NightsGaze>())
+                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.Vega>())
                 {
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.NightsGaze>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
@@ -493,7 +490,7 @@ namespace CalRemix
         {
             if (CalRemixWorld.permanenthealth)
             {
-                if (item.type == ItemType<Elderberry>() && item.stack > 1)
+                if (item.type == ItemType<TaintedCloudberry>() && item.stack > 1)
                 {
                     item.stack = 1;
                 }
@@ -619,11 +616,11 @@ namespace CalRemix
                 {
                     if (item.wet && !item.lavaWet && Main.bloodMoon && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
                     {
-                        item.SetDefaults(ItemType<BloodOrange>());
+                        item.SetDefaults(ItemType<SanguineTangerine>());
                         item.stack++;
                     }
                 }
-                if (item.type == ItemType<Elderberry>() && item.stack > 1)
+                if (item.type == ItemType<TaintedCloudberry>() && item.stack > 1)
                 {
                     item.stack = 1;
                 }
@@ -681,8 +678,8 @@ namespace CalRemix
         {
             if (item.type == ItemID.FloatingIslandFishingCrate || item.type == ItemID.FloatingIslandFishingCrateHard)
             {
-                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().dFruit && CalRemixWorld.permanenthealth, ItemType<Dragonfruit>(), 1);
-                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().dFruit && CalRemixWorld.permanenthealth, ItemType<Dragonfruit>(), 20);
+                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().sStrawberry && CalRemixWorld.permanenthealth, ItemType<SacredStrawberry>(), 1);
+                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().sStrawberry && CalRemixWorld.permanenthealth, ItemType<SacredStrawberry>(), 20);
             }
             else if (item.type == ItemID.DungeonFishingCrate || item.type == ItemID.DungeonFishingCrateHard && Main.rand.NextBool(4))
             {
@@ -806,7 +803,7 @@ namespace CalRemix
             {
 
             }
-            else if (item.type == ItemType<BrimstoneWaifuBag>())
+            else if (item.type == ItemType<BrimstoneElementalBag>())
             {
 
             }
@@ -961,7 +958,7 @@ namespace CalRemix
             {
                 if (!hideVisual)
                 {
-                    calplayer.regenator = true;
+                    calplayer.regenerator = true;
                 }
 
                 modplayer.elastigel = true;
@@ -974,10 +971,10 @@ namespace CalRemix
                 if (item.type != ItemType<TheSponge>())
                     GetModItem(ItemType<TheSponge>()).UpdateAccessory(player, hideVisual);
                 if (!hideVisual)
-                    GetModItem(ItemType<Regenator>()).UpdateAccessory(player, hideVisual);
+                    GetModItem(ItemType<Regenerator>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<UrsaSergeant>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<TrinketofChi>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<AmidiasSpark>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<IlmerisSpark>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<FlameLickedShell>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<PermafrostsConcoction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AquaticHeart>()).UpdateAccessory(player, hideVisual);
@@ -993,7 +990,7 @@ namespace CalRemix
             }
             if (item.type == ItemType<AbyssalDivingSuit>() || item.type == ItemType<TheGodfather>() || item.type == ItemType<TheVerbotenOne>())
             {
-                GetModItem(ItemType<LumenousAmulet>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<DiamondOfTheDeep>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AquaticEmblem>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AlluringBait>()).UpdateAccessory(player, hideVisual);
                 if (!hideVisual)

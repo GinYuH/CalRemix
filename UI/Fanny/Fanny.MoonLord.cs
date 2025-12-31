@@ -23,7 +23,7 @@ namespace CalRemix.UI
 
 
             HelperMessage.New("ML3", "A priority you should take care of immediately is harvesting Unholy Essence from some new, fearsome creatures that have appeared in the Underworld and Hallow. You can then use the essence to make the Rune of Kos and summon the Rune of Kos bosses.",
-                "FannyIdle", HelperMessage.AlwaysShow, 6).AddItemDisplay(ModContent.ItemType<RuneofKos>()).ChainAfter(startMessage);
+                "FannyIdle", HelperMessage.AlwaysShow, 6).AddItemDisplay(ModContent.ItemType<MarkofProvidence>()).ChainAfter(startMessage);
 
 
             HelperMessage.New("ML4", "You can find 3 different types of cosmic remains if you search the sky, one of them is the remains of the Moon guy you just defeated! Second one is some exotic clusters used for some artifacts! Third one is the distorted remains of Cosmos itself.",
