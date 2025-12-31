@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.width = 42;
             Item.height = 36;
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.accessory = true;
         }
 
@@ -66,7 +66,7 @@ namespace CalRemix.Content.Items.Accessories
             Tile groundTile = CalamityMod.CalamityUtils.ParanoidTileRetrieval(x, y + 1);
             bool groundTileIsSolid = groundTile.HasUnactuatedTile && (Main.tileSolid[groundTile.TileType] || Main.tileSolidTop[groundTile.TileType]);
             if (groundTileIsSolid && player.gravDir == 1f)
-                calPlayer.BloomStoneRegen = true;
+                calPlayer.bloomStone = true;
 
             // Grow chid
             if (player.whoAmI == Main.myPlayer && player.velocity.Y == 0f && player.grappling[0] == -1)

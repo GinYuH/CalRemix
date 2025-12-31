@@ -30,7 +30,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.noMelee = true;
             Item.knockBack = 6f;
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<GodSlayerPulse>();
             Item.shootSpeed = 12f;

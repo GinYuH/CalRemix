@@ -1673,11 +1673,11 @@ namespace CalRemix
         {
 			if (CalamityMod.DownedBossSystem.downedProvidence && CalRemixWorld.permanenthealth)
 			{
-				if (CalamityMod.DownedBossSystem.downedProvidence && !Player.Calamity().eBerry)
+				if (CalamityMod.DownedBossSystem.downedProvidence && !Player.Calamity().tCloudberry)
 				{
 					rewardPool.Clear();
 				}
-				rewardPool.Add(ItemType<Elderberry>());
+				rewardPool.Add(ItemType<TaintedCloudberry>());
 			}
         }
 		public override void OnHitNPC(NPC npc, NPC.HitInfo hit, int damageDone)
@@ -1924,7 +1924,7 @@ namespace CalRemix
             }
 
             int roll = Main.rand.Next(100);
-            if (attempt.bobberType == ProjectileType<TyrantBobber>() && Player.ActiveItem().type == ItemType<TheCodseeker>() && Main.rand.NextBool(100))
+            if (attempt.bobberType == ProjectileType<TyrantBobber>() && Player.HeldItem.type == ItemType<TheCodseeker>() && Main.rand.NextBool(100))
             {
                 if (Main.myPlayer == Player.whoAmI)
                     SoundEngine.PlaySound(SoundID.ScaryScream);
@@ -2267,7 +2267,7 @@ namespace CalRemix
                     Console.WriteLine(e);
                 }
                 if (npc is null)
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
+                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
                 else
                 {
                     string f = CalRemixHelper.LocalText("StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);

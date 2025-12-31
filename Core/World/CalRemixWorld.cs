@@ -56,6 +56,10 @@ using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
+using Terraria.Localization;
+using System.Linq;
+using CalRemix.Content.Items.Misc;
+using CalamityMod.Tiles.SunkenSea.Ambient;
 
 namespace CalRemix.Core.World
 {
@@ -208,14 +212,10 @@ namespace CalRemix.Core.World
             TileType<CoralPileLarge>(),
             TileType<SmallWideCoral>(),
             TileType<SmallWideCoral2>(),
-            TileType<SunkenStalactite1>(),
-            TileType<SunkenStalactite2>(),
-            TileType<SunkenStalactite3>(),
-            TileType<SunkenStalactitesSmall>(),
-            TileType<SunkenStalagmite1>(),
-            TileType<SunkenStalagmite2>(),
-            TileType<SunkenStalagmite3>(),
-            TileType<SunkenStalagmitesSmall>(),
+            TileType<SunkenStalactites>(),
+            TileType<SunkenStalagmites>(),
+            TileType<SmallSunkenStalactites>(),
+            TileType<SmallSunkenStalagmites>(),
             TileType<Navystone>(),
             TileType<EutrophicSand>(),
             TileType<HardenedEutrophicSand>(),
@@ -718,7 +718,7 @@ namespace CalRemix.Core.World
                     RemoveLoot(NPCType<DevourerofGodsHead>(), ItemType<CosmiliteBar>(), true);
                 }
                 RemoveLoot(NPCType<DesertScourgeHead>(), ItemType<PearlShard>(), true);
-                RemoveLoot(NPCType<Bumblefuck>(), ItemType<EffulgentFeather>(), true);
+                RemoveLoot(NPCType<Dragonfolly>(), ItemType<EffulgentFeather>(), true);
                 Recipes.MassModifyIngredient(!yharimBars, Recipes.yharimBarCrafts);
                 Recipes.MassModifyIngredient(!alloyBars, Recipes.alloyBarCrafts);
                 Recipes.MassModifyIngredient(!essenceBars, Recipes.essenceBarCrafts);
@@ -774,7 +774,7 @@ namespace CalRemix.Core.World
                         packet.Write(oxTime);
                         packet.Send();
                     }
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.SkyBlue);
+                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.SkyBlue);
                 }
             }
             if (oxydayTime > 0)
@@ -786,7 +786,7 @@ namespace CalRemix.Core.World
                 // roughly once per 6 minutes
                 if (Main.rand.NextBool(22222))
                 {
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.BiomassMigration", Color.DeepSkyBlue);
+                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.BiomassMigration", Color.DeepSkyBlue);
                     int amt = 22;
                     for (int i = 0; i < amt; i++)
                     {
@@ -808,7 +808,7 @@ namespace CalRemix.Core.World
                         packet.Write(0);
                         packet.Send();
                     }
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
+                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
                     RemixDowned.downedGale = true;
                     UpdateWorldBool();
                 }

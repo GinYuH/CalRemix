@@ -45,7 +45,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<WrathoftheAncients>(1).
+                AddIngredient(ItemID.MagnetSphere).
                 AddIngredient(ModContent.ItemType<VirisiteTear>(), 5).
                 AddIngredient(ItemID.LunarBar, 10).
                 AddIngredient(ItemID.FragmentNebula, 12).

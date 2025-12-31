@@ -856,7 +856,7 @@ namespace CalRemix.UI.ElementalSystem
             { "ProfanedGuardianDefender", new Tuple<Element[], Element[]>(new Element[]{ Element.Magic, Element.Unholy, Element.Impact, Element.Machine }, new Element[]{ Element.Holy, Element.Fire, Element.Dark }) },
             { "ProfanedGuardianHealer", new Tuple<Element[], Element[]>(new Element[]{ Element.Magic, Element.Unholy, Element.Impact, Element.Machine }, new Element[]{ Element.Holy, Element.Fire, Element.Dark }) },
             { "Providence", new Tuple<Element[], Element[]>(new Element[]{ Element.Magic, Element.Unholy, Element.Machine }, new Element[]{ Element.Holy, Element.Fire, Element.Dark }) },
-            { "Bumblefuck", new Tuple<Element[], Element[]>(new Element[]{ Element.Magic, Element.Dark, Element.Poison }, new Element[]{ Element.Holy, Element.Fire }) },
+            { "Dragonfolly", new Tuple<Element[], Element[]>(new Element[]{ Element.Magic, Element.Dark, Element.Poison }, new Element[]{ Element.Holy, Element.Fire }) },
             { "CeaselessVoid", new Tuple<Element[], Element[]>(new Element[]{ Element.Slash }, new Element[]{ Element.Magic, Element.Dark }) },
             { "StormWeaverHead", new Tuple<Element[], Element[]>(new Element[]{ Element.Stab }, new Element[]{ Element.Magic, Element.Cold, Element.Water }) },
             { "StormWeaverBody", new Tuple<Element[], Element[]>(new Element[]{ Element.Stab }, new Element[]{ Element.Magic, Element.Cold, Element.Water }) },

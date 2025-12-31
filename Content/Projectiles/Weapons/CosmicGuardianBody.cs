@@ -9,7 +9,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     // HUGE credit to Dozezoze for lending his worm projectile code
     public class CosmicGuardianBody : ModProjectile
     {
-        public override string Texture => "CalamityMod/NPCs/DevourerofGods/CosmicGuardianBody";
+        public override string Texture => "CalamityMod/Projectiles/Summon/VoidEaterMarionetteBody";
         public int segmentIndex = 1;
 
         public override void SetDefaults()

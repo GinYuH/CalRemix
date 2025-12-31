@@ -30,7 +30,7 @@ namespace CalRemix.Content.Items.Weapons
 		{
 			Item.width = 116;
 			Item.height = 36;
-			Item.rare = ModContent.RarityType<Violet>();
+			Item.rare = ModContent.RarityType<BurnishedAuric>();
 			Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.useTime = 13; 
 			Item.useAnimation = 39;
@@ -104,7 +104,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             CreateRecipe().
                 AddIngredient<SuperradiantSlaughterer>(1).
-                AddIngredient<ClockGatlignum>(1).
+                AddIngredient(ItemID.VenusMagnum).
                 AddIngredient<TyrannysEnd>(1).
                 AddIngredient<Infinity>(1).
                 AddIngredient<Karasawa>(1).

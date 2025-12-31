@@ -8,7 +8,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     // HUGE credit to Dozezoze for lending his worm projectile code
     public class CosmicGuardianTail : ModProjectile
     {
-        public override string Texture => "CalamityMod/NPCs/DevourerofGods/CosmicGuardianTail";
+        public override string Texture => "CalamityMod/Projectiles/Summon/VoidEaterMarionetteTail";
         public int segmentIndex = 1;
 
         public override void SetDefaults()

@@ -51,7 +51,7 @@ namespace CalRemix.Content.Items.Materials
             ItemID.TwinsBossBag,
             ModContent.ItemType<AquaticScourgeBag>(),
             ItemID.DestroyerBossBag,
-            ModContent.ItemType<BrimstoneWaifuBag>(),
+            ModContent.ItemType<BrimstoneElementalBag>(),
             ItemID.SkeletronPrimeBossBag,
 
         };

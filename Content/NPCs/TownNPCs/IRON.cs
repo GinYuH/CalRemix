@@ -167,16 +167,16 @@ namespace CalRemix.Content.NPCs.TownNPCs
             PrimitiveRenderer.RenderTrail(points, new(WidthFunction, ColorFunction, smoothen: false), 90);
             return false;
         }
-        internal float WidthFunction(float completionRatio)
+        internal float WidthFunction(float completionRatio, Vector2 v)
         {
             return completionRatio;
         }
 
-        internal float BackgroundWidthFunction(float completionRatio) => WidthFunction(completionRatio) * 4f;
+        internal float BackgroundWidthFunction(float completionRatio, Vector2 v) => WidthFunction(completionRatio, v) * 4f;
 
-        public Color BackgroundColorFunction(float completionRatio) => Color.CornflowerBlue * 0.4f;
+        public Color BackgroundColorFunction(float completionRatio, Vector2 v) => Color.CornflowerBlue * 0.4f;
 
-        internal Color ColorFunction(float completionRatio)
+        internal Color ColorFunction(float completionRatio, Vector2 v)
         {
             Color baseColor1 = Color.Yellow;
             Color baseColor2 = Color.Yellow;

@@ -35,7 +35,6 @@ namespace CalRemix.Content.Items.Weapons
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<IcicleArrowProj>();
             Item.shootSpeed = 16f;
-            Item.Calamity().canFirePointBlankShots = true;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

@@ -38,7 +38,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             ItemID.Sets.AnimatesAsSoul[Type] = true;
 
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.shoot = ModContent.ProjectileType<NanomachinesSon>();
         }
 

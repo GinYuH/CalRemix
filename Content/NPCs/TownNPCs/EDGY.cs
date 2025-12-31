@@ -38,8 +38,8 @@ namespace CalRemix.Content.NPCs.TownNPCs
             NPC.Happiness
                 .SetBiomeAffection<BrimstoneCragsBiome>(AffectionLevel.Like)
                 .SetBiomeAffection<SnowBiome>(AffectionLevel.Dislike)
-                .SetNPCAffection(ModContent.NPCType<DILF>(), AffectionLevel.Like)
-                .SetNPCAffection(ModContent.NPCType<WITCH>(), AffectionLevel.Love)
+                .SetNPCAffection(ModContent.NPCType<Archmage>(), AffectionLevel.Like)
+                .SetNPCAffection(ModContent.NPCType<BrimstoneWitch>(), AffectionLevel.Love)
 
                 .SetNPCAffection(NPCID.Golfer, AffectionLevel.Dislike)
                 .SetNPCAffection(NPCID.BestiaryGirl, AffectionLevel.Hate)
@@ -126,7 +126,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             {
                 dialogue.Add("It unnerves me how cold the underworld is today. Is this a single odd event, or a sign of things to come?");
             }
-            int witch = NPC.FindFirstNPC(ModContent.NPCType<WITCH>());
+            int witch = NPC.FindFirstNPC(ModContent.NPCType<BrimstoneWitch>());
             if (witch != -1)
             {
                 dialogue.Add("I may owe my existence to the witch's power, but I wish she would stop shooting me hateful glances");

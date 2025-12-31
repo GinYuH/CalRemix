@@ -7,7 +7,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 {
     public class CarolWave : ModProjectile
     {
-        public override string Texture => "CalamityMod/Projectiles/Typeless/ChlorophyteLifePulse"; 
+        public override string Texture => "CalamityMod/Particles/HollowCircleSoftEdge"; 
         public const int Lifetime = 300;
         public float LifetimeCompletion => 1f - Projectile.timeLeft / (float)Lifetime;
         public override void SetDefaults()

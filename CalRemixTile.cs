@@ -117,9 +117,9 @@ namespace CalRemix
             }
             if (type == TileType<WulfrumLure>() && player.HeldItem.type == ItemType<DraedonPowerCell>())
             {
-                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
+                CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
             }
-            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<WifeinaBottle>()) || player.HasItem(ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ItemType<RoseStone>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
+            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<ElementalinaBottle>()) || player.HasItem(ItemType<RareElementalinaBottle>()) || player.HasItem(ItemType<RoseStone>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
             if (type == TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
@@ -366,7 +366,7 @@ namespace CalRemix
                         if (type == OnyxExcavatorTile && RemixDowned.downedEarthElemental)
                         {
                             Player player = Main.LocalPlayer;
-                            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<WifeinaBottle>()) || player.HasItem(ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
+                            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<ElementalinaBottle>()) || player.HasItem(ItemType<RareElementalinaBottle>()) || player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
                             if (e)
                                 KinsmanMessage.ActivateMessage();
                         }
@@ -474,7 +474,7 @@ namespace CalRemix
                     {
                         CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);                       
                         
-                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
+                        CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
                         CalRemixWorld.generatedGrime = true;
                         CalRemixWorld.UpdateWorldBool();
                     }
@@ -498,7 +498,7 @@ namespace CalRemix
             {
                  if (!effectOnly && !fail && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
                  {
-                     CalamityGlobalTile.GetTreeBottom(i, j, out int treeX, out int treeY);
+                     WorldGen.GetTreeBottom(i, j, out int treeX, out int treeY);
                      TreeTypes treeType = WorldGen.GetTreeType(Main.tile[treeX, treeY].TileType);
                      if (treeType != TreeTypes.None)
                      {
@@ -519,19 +519,19 @@ namespace CalRemix
             {
                 if (type == TileType<Navystone>())
                 {
-                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.Navystone>());
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.SunkenSea.Navystone>());
                 }
                 if (type == TileType<EutrophicSand>())
                 {
-                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.EutrophicSand>());
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.SunkenSea.EutrophicSand>());
                 }
                 if (type == TileType<HardenedEutrophicSand>())
                 {
-                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.HardenedEutrophicSand>());
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.SunkenSea.HardenedEutrophicSand>());
                 }
                 if (type == TileType<SeaPrism>())
                 {
-                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.SeaPrism>());
+                    Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.SunkenSea.SeaPrism>());
                 }
             }
             if (type == TileID.Chandeliers && Main.tile[i, j].TileFrameX == 72 && Main.tile[i, j].TileFrameY % 54 == 0)

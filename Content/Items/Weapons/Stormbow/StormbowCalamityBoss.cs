@@ -104,7 +104,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override int damage => 54;
         public override int crit => 12;
         public override int useTime => 18;
-        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<BrimstoneHomer>() };
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<BrimstoneDartMinion>() };
         public override int arrowAmount => 5;
         public override OverallRarity overallRarity => OverallRarity.Lime;
     }

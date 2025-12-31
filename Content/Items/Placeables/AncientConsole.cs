@@ -29,8 +29,8 @@ namespace CalRemix.Content.Items.Placeables
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Item.buyPrice(0, 0, 0, 0);
-            Item.rare = ModContent.RarityType<Violet>();
-            Item.createTile = ModContent.TileType<Tiles.AncientConsole>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
+            Item.createTile = ModContent.TileType<Content.Tiles.AncientConsole>();
         }
 
         public override void AddRecipes()

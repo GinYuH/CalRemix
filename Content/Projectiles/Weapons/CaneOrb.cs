@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Weapons
@@ -10,7 +11,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public ref float Time => ref Projectile.ai[0];
         public ref float Image => ref Projectile.ai[1];
-        public override string Texture => "CalamityMod/Projectiles/Rogue/NychthemeronOrb";
+        public override string Texture => "Terraria/Images/Item_" + ItemID.DarkShard;
         public override void SetStaticDefaults() 
         {
 			// DisplayName.SetDefault("CaneOrb");
@@ -37,7 +38,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            string pick = (Image == 0) ? "CalamityMod/Projectiles/Rogue/NychthemeronOrb" : "CalamityMod/Projectiles/Rogue/NychthemeronOrb2";
+            string pick = (Image == 0) ? "Terraria/Images/Item_" + ItemID.DarkShard : "Terraria/Images/Item_" + ItemID.LightShard;
             Texture2D texture = ModContent.Request<Texture2D>(pick).Value;
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, Vector2.Zero, Projectile.scale, (Projectile.spriteDirection != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
             return false;

@@ -31,6 +31,7 @@ using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Weapons;
 using Terraria.Localization;
+using CalamityMod.Items.Placeables.SunkenSea;
 
 namespace CalRemix.Content.NPCs.Bosses.Hydrogen
 {

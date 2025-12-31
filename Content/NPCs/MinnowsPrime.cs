@@ -48,7 +48,7 @@ namespace CalRemix.Content.NPCs
 
         public override void AI()
         {
-            CalamityMod.NPCs.CalamityAIs.CalamityRegularEnemyAIs.CalamityRegularEnemyAI.PassiveSwimmingAI(NPC, Mod, 3, 150f, 0.25f, 0.15f, 6f, 6f, 0.05f);
+            CalamityMod.NPCs.NormalNPCs.CalamityRegularEnemyAI.PassiveSwimmingAI(NPC, Mod, 3, 150f, 0.25f, 0.15f, 6f, 6f, 0.05f);
             NPC.noGravity = true;
             bool flag14 = false;
             if (NPC.direction == 0)

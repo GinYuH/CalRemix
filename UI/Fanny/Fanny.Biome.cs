@@ -13,6 +13,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.World;
+using System.Reflection;
+using System;
+using CalamityMod.Items.Tools;
+using CalamityMod.Items.Placeables.FurnitureMonolith;
 
 namespace CalRemix.UI
 {
@@ -49,7 +53,7 @@ namespace CalRemix.UI
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneUnderworldHeight && !ModLoader.HasMod("TheDepths"));
 
             HelperMessage.New("ShimmerNothing", "You should consider throwing that item you're holding in Shimmer! You may get something powerful!",
-                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneShimmer && !Main.LocalPlayer.ActiveItem().CanShimmer(), onlyPlayOnce: false, cooldown: 600);
+                "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneShimmer && !Main.LocalPlayer.HeldItem.CanShimmer(), onlyPlayOnce: false, cooldown: 600);
 
             HelperMessage.New("Meteore", "A Fallen Star!",
                 "FannyAwe", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ZoneMeteor && !ModLoader.HasMod("CatalystMod")).AddItemDisplay(ItemID.FallenStar);

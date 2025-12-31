@@ -82,7 +82,7 @@ namespace CalRemix.UI
              "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<ProfanedGuardianCommander>())).SpokenByEvilFanny(true);
 
             HelperMessage.New("GfbBirb", "Oh, look who decided to show up in this pathetic game! Our little draconic offshoot has had a makeover, or should I say a 'downgrade.' Now, it shrieks like a demented parakeet on steroids and thinks it's cute to summon its wimpy babies only for them to EXPLODE into lightning. What a low tier boss.",
-             "EvilFannyDisgusted", (ScreenHelperSceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Bumblefuck>())).SpokenByEvilFanny(true);
+             "EvilFannyDisgusted", (ScreenHelperSceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Dragonfolly>())).SpokenByEvilFanny(true);
 
             HelperMessage.New("GfbProvidence", "Only god can help you here.",
              "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.zenithWorld && scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<Providence>())).SpokenByEvilFanny(true);

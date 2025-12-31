@@ -24,6 +24,7 @@ using CalamityMod.Projectiles.Boss;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.Core.World;
+using CalamityMod.Items.Placeables.Crags;
 
 namespace CalRemix.Content.NPCs.Minibosses
 {
@@ -47,7 +48,6 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<BrimstoneFlames>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<VulnerabilityHex>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<WeakBrimstoneFlames>()] = true;
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<RancorBurn>()] = true;
         }
         public override bool SpecialOnKill()
         {
@@ -364,7 +364,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ModContent.ItemType<BrimstoneSlag>(), 1, 25, 35);
+            npcLoot.Add(ModContent.ItemType<BrimstoneSlab>(), 1, 25, 35);
             npcLoot.AddIf(() => Main.hardMode, ModContent.ItemType<MolluskHusk>(), 1, 8, 15);
             npcLoot.AddIf(() => Main.hardMode, ModContent.ItemType<EyeofDesolation>());
             int[] itemIDs = new int[5]

@@ -107,7 +107,7 @@ namespace CalRemix.Content.NPCs
                     continue;
                 if (npc.Hitbox.Intersects(NPC.Hitbox) && npc.life > 0)
                 {
-                    DeathAshParticle.CreateAshesFromNPC(npc);
+                    DeathAshParticle.CreateAshesFromNPC(npc, Vector2.Zero);
                     NPC.HitInfo hi = npc.CalculateHitInfo(0, 0, knockBack: 0);
                     hi.InstantKill = true;
                     npc.StrikeNPC(hi);

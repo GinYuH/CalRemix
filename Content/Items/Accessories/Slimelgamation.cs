@@ -46,7 +46,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.height = 34;
             Item.accessory = true;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -64,7 +64,7 @@ namespace CalRemix.Content.Items.Accessories
                     if (player.whoAmI == Main.myPlayer)
                     {
                         int damage = (int)player.GetBestClassDamage().ApplyTo(300);
-                        Projectile rain = CalamityUtils.ProjectileRain(source, player.Center, 400f, 100f, 500f, 800f, 22f, ProjectileType<AuraRain>(), damage, 2f, player.whoAmI);
+                        Projectile rain = CalamityUtils.ProjectileRain(source, player.Center, 400f, 100f, 500f, 800f, 22f, ProjectileType<Shaderain>(), damage, 2f, player.whoAmI);
                         if (rain.whoAmI.WithinBounds(Main.maxProjectiles))
                         {
                             rain.DamageType = DamageClass.Generic;

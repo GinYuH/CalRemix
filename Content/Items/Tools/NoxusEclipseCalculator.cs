@@ -29,7 +29,7 @@ namespace CalRemix.Content.Items.Tools
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = null;
             Item.value = 0;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
         }
 
         public override bool? UseItem(Player player)
