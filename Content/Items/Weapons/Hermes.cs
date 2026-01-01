@@ -23,7 +23,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.useAnimation = 72;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = true;
-            Item.UseSound = ContentSamples.ItemsByType[ModContent.ItemType<ScorchedEarth>()].UseSound.Value with { Pitch = -0.4f };
+            Item.UseSound = GildedGauntlet.RocketSound with { Pitch = -0.4f };
             Item.DamageType = DamageClass.Ranged;
             Item.damage = 340;
             Item.knockBack = 12f;

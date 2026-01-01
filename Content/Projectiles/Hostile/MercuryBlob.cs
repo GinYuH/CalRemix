@@ -1,4 +1,5 @@
 ﻿using CalamityMod.Items.Weapons.Ranged;
+using CalRemix.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -40,7 +41,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                     Projectile.ai[1]++;
                     if (Projectile.ai[1] == 120)
                     {
-                        SoundEngine.PlaySound(ContentSamples.ItemsByType[ModContent.ItemType<ScorchedEarth>()].UseSound.Value with { Volume = 0.8f }, Projectile.Center);
+                        SoundEngine.PlaySound(GildedGauntlet.RocketSound with { Volume = 0.8f }, Projectile.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(n.GetSource_FromThis(), n.Center, n.Center.DirectionTo(Projectile.Center) * 35, ModContent.ProjectileType<MercuryRocket>(), Projectile.damage, 1, ai0: Projectile.whoAmI);

@@ -9,11 +9,13 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Ranged;
+using Terraria.Audio;
 
 namespace CalRemix.Content.Items.Weapons
 {
     public class GildedGauntlet : RogueWeapon
     {
+        public static SoundStyle RocketSound = new SoundStyle("CalRemix/Assets/Sounds/ScorchedEarthShot", 3);
         public override void SetDefaults()
         {
             Item.width = 1;
@@ -24,7 +26,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.useAnimation = 23;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.autoReuse = true;
-            Item.UseSound = ContentSamples.ItemsByType[ModContent.ItemType<ScorchedEarth>()].UseSound;
+            Item.UseSound = RocketSound;
             Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
             Item.damage = 114;
             Item.knockBack = 8f;
