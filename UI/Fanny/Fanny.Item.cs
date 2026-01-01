@@ -26,6 +26,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CalRemix.Content.Items.Potions;
 
 namespace CalRemix.UI
 {

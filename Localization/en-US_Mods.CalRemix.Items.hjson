@@ -6376,3 +6376,8 @@ YellowMazeBrick: {
 	DisplayName: Yellow Maze Brick
 	Tooltip: ""
 }
+
+Flann: {
+	DisplayName: Flann
+	Tooltip: ""
+}

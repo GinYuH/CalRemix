@@ -17,6 +17,8 @@ using System.Reflection;
 using System;
 using CalamityMod.Items.Tools;
 using CalamityMod.Items.Placeables.FurnitureMonolith;
+using CalRemix.Content.Items.Potions;
+using Terraria.DataStructures;
 
 namespace CalRemix.UI
 {
@@ -114,6 +116,9 @@ namespace CalRemix.UI
 
             HelperMessage.New("Ogslime", "This place seems new! Oh! It has a new type of wood too! Maybe you can hit one of those new Wandering Eye things while wearing it for a new Ogscule!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral).AddItemDisplay(ModContent.ItemType<AstralMonolith>());
+
+            HelperMessage.New("Flanny", "A climactic fight that has ended many journeys is near my friend, so I've decided to make this little gift for you. Take it! My own home-made Fanny the Flame Flann!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.Calamity().ZoneAstral && NPC.downedAncientCultist).AddItemDisplay(ModContent.ItemType<Flann>()).AddEndEvent(() => Main.LocalPlayer.QuickSpawnItem(new EntitySource_Misc(""), ModContent.ItemType<Flann>()));
 
             HelperMessage.New("Home", "Oh hey, this garden seems familiar to me! I don't know why, though... Just, uh, give me a moment, ok?",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => CrossModBiome("NoxusBoss", "EternalGardenBiome")).SetHoverTextOverride("Ok, take your time, Fanny!");
