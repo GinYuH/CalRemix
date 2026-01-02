@@ -56,6 +56,8 @@ using CalamityMod.NPCs.SulphurousSea;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
+using CalamityMod.NPCs.VanillaNPCAIOverrides;
+using CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.BrainOfCthulhu;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Sounds;
@@ -225,6 +227,13 @@ namespace CalRemix
             if (IsBunny(entity) && RemixDowned.downedRajahsRevenge)
             {
                 entity.dontTakeDamage = true;
+            }
+            if (entity.type == NPCID.Retinazer || entity.type == NPCID.Spazmatism)
+            {
+                if (CalamityUtils.AIOverrideNPC(entity) != null)
+                {
+                    CalamityUtils.AIOverrideNPC(entity).AIOverride = null;
+                }
             }
         }
 
