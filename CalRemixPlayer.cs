@@ -89,6 +89,7 @@ using static CalRemix.ChampionNPC;
 using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.NPCs.ExoMechs;
+using CalamityMod.World;
 
 namespace CalRemix
 {
@@ -661,7 +662,7 @@ namespace CalRemix
             {
                 modifiers.SourceDamage *= 0f;
             }
-            if (NPC.AnyNPCs(NPCType<DevourerofGodsHead>()) || NPC.AnyNPCs(NPCType<Draedon>()))
+            if ((NPC.AnyNPCs(NPCType<DevourerofGodsHead>()) && !DownedBossSystem.downedDoG) || (NPC.AnyNPCs(NPCType<Draedon>()) && !DownedBossSystem.downedExoMechs))
             {
                 float damageMult = MathHelper.Lerp(0.02f, 0.4f, CalamityUtils.SineOutEasing(Player.statLife / (float)Player.statLifeMax2, 1));
                 modifiers.FinalDamage *= damageMult;;
@@ -2132,7 +2133,7 @@ namespace CalRemix
                 }
             }
             if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
-            if (NPC.AnyNPCs(NPCType<DevourerofGodsHead>()) || NPC.AnyNPCs(NPCType<Draedon>()))
+            if ((NPC.AnyNPCs(NPCType<DevourerofGodsHead>()) && !DownedBossSystem.downedDoG) || (NPC.AnyNPCs(NPCType<Draedon>()) && !DownedBossSystem.downedExoMechs))
             {
                 if (Player.statLife < Player.statLifeMax2 * 0.25f)
                 {
