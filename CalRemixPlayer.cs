@@ -88,6 +88,7 @@ using CalRemix.Content.NPCs.Subworlds.SingularPoint;
 using static CalRemix.ChampionNPC;
 using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using static Terraria.ModLoader.ModContent;
+using CalamityMod.NPCs.ExoMechs;
 
 namespace CalRemix
 {
@@ -659,7 +660,12 @@ namespace CalRemix
             if (taintedGills && Player.IsUnderwater() && Player.breath > 0)
             {
                 modifiers.SourceDamage *= 0f;
-            }			
+            }
+            if (NPC.AnyNPCs(NPCType<DevourerofGodsHead>()) || NPC.AnyNPCs(NPCType<Draedon>()))
+            {
+                float damageMult = MathHelper.Lerp(0.02f, 0.4f, CalamityUtils.SineOutEasing(Player.statLife / (float)Player.statLifeMax2, 1));
+                modifiers.FinalDamage *= damageMult;;
+            }
         }
 
         private int stoolBoost;
@@ -1867,7 +1873,8 @@ namespace CalRemix
             {
                 npc.damage *= 2;
             }
-		}
+
+        }
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
 		{
 			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
@@ -2125,6 +2132,16 @@ namespace CalRemix
                 }
             }
             if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
+            if (NPC.AnyNPCs(NPCType<DevourerofGodsHead>()) || NPC.AnyNPCs(NPCType<Draedon>()))
+            {
+                if (Player.statLife < Player.statLifeMax2 * 0.25f)
+                {
+                    if (Player.lifeRegen < 0)
+                    {
+                        Player.lifeRegen = (int)MathHelper.Lerp(-4, Player.lifeRegen, Player.statLife / (float)Player.statLifeMax2);
+                    }
+                }
+            }
         }
 
         public override void UpdateLifeRegen()
