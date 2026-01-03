@@ -6376,3 +6376,13 @@ YellowMazeBrick: {
 	DisplayName: Yellow Maze Brick
 	Tooltip: ""
 }
+
+WulfrumCactusBanner: {
+	DisplayName: Wulfrum Cactus Banner
+	Tooltip: ""
+}
+
+GrablerBanner: {
+	DisplayName: Grabler Banner
+	Tooltip: ""
+}
