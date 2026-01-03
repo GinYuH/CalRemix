@@ -6381,3 +6381,13 @@ Flann: {
 	DisplayName: Flann
 	Tooltip: ""
 }
+
+WulfrumCactusBanner: {
+	DisplayName: Wulfrum Cactus Banner
+	Tooltip: ""
+}
+
+GrablerBanner: {
+	DisplayName: Grabler Banner
+	Tooltip: ""
+}
