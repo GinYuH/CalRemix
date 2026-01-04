@@ -9,11 +9,8 @@ using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod.Items.Fishing.AstralCatches;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
-using CalamityMod.Items.Placeables.FurnitureAbyss;
 using CalamityMod.Items.Placeables.SunkenSea;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.Potions.Alcohol;
 using CalamityMod.Items.Potions.Food;
 using CalamityMod.Items.SummonItems;
@@ -46,7 +43,6 @@ using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.Prefixes;
-using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
@@ -419,7 +415,7 @@ namespace CalRemix
         public override void HoldItem(Item item, Player player)
         {
             if (player.HasBuff<BrimstoneMadness>() && item != null && !item.IsAir && item.damage > 0)
-            {   
+            {
                 if (item.CountsAsClass<SummonDamageClass>() && !item.IsWhip())
                     player.Calamity().cursedSummonsEnchant = true;
                 if (!item.CountsAsClass<SummonDamageClass>() && !item.IsWhip())
@@ -534,12 +530,12 @@ namespace CalRemix
                 if (player.Distance(16 * (new Vector2((player.SpawnX == -1 ? Main.spawnTileX : player.SpawnX), (player.SpawnY == -1 ? Main.spawnTileY : player.SpawnY)))) > 2000)
                 {
                     if (Main.rand.NextBool(50 /* ContentSamples.ItemsByType[item.type].useAnimation*/))
-                    if (!NPC.AnyNPCs(ModContent.NPCType<CarrierHead>()))
-                    {
-                        SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Gortok"), player.Center);
-                        Vector2 spawnPos = player.Center + new Vector2(Main.rand.NextBool().ToDirectionInt() * Main.rand.Next(2000, 3000), Main.rand.Next(-300, 300));
-                        NPC.NewNPC(player.GetSource_FromThis(), (int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<CarrierHead>(), ai0: player.whoAmI);
-                    }
+                        if (!NPC.AnyNPCs(ModContent.NPCType<CarrierHead>()))
+                        {
+                            SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Gortok"), player.Center);
+                            Vector2 spawnPos = player.Center + new Vector2(Main.rand.NextBool().ToDirectionInt() * Main.rand.Next(2000, 3000), Main.rand.Next(-300, 300));
+                            NPC.NewNPC(player.GetSource_FromThis(), (int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<CarrierHead>(), ai0: player.whoAmI);
+                        }
                 }
             }
             return null;
@@ -606,7 +602,7 @@ namespace CalRemix
                     }
                 }
             }
-            if (item.type == ItemID.CellPhone || 
+            if (item.type == ItemID.CellPhone ||
                 item.type == ItemID.Shellphone ||
                 item.type == ItemID.ShellphoneDummy ||
                 item.type == ItemID.ShellphoneHell ||
@@ -679,14 +675,14 @@ namespace CalRemix
 
                 bool infMusk = item.useAmmo == AmmoID.Bullet && player.HasItem(ItemID.EndlessMusketPouch);
                 bool infAr = item.useAmmo == AmmoID.Arrow && player.HasItem(ItemID.EndlessQuiver);
-                    
+
                 if (!infMusk && !infAr)
                     Projectile.NewProjectile(source, position, velocity.RotatedBy(-Main.rand.NextFloat(-0.022f, 0.022f)), type, damage, knockback, player.whoAmI);
             }
             if (item.type == ItemType<ArkoftheCosmos>() && CalRemixWorld.weaponReworks)
             {
                 if (player.ownedProjectileCounts[ProjectileType<Ark>()] <= 0)
-                Projectile.NewProjectile(source, position, velocity, ProjectileType<Ark>(), damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, position, velocity, ProjectileType<Ark>(), damage, knockback, player.whoAmI);
                 return false;
             }
             return true;
@@ -864,7 +860,7 @@ namespace CalRemix
             {
 
             }
-            
+
             // hm
             else if (item.type == ItemID.QueenSlimeBossBag)
             {
@@ -1119,7 +1115,7 @@ namespace CalRemix
                 if (!hideVisual)
                     GetModItem(ItemType<EnchantedPearl>()).UpdateAccessory(player, hideVisual);
                 if (!hideVisual)
-                GetModItem(ItemType<SpelunkersAmulet>()).UpdateAccessory(player, hideVisual);
+                    GetModItem(ItemType<SpelunkersAmulet>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<OceanCrest>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AquaticEmblem>()).UpdateAccessory(player, hideVisual);
             }
@@ -1145,7 +1141,7 @@ namespace CalRemix
                 GetModItem(ItemType<CorrosiveSpine>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<LeviathanAmbergris>()).UpdateAccessory(player, hideVisual);
                 if (!hideVisual)
-                GetModItem(ItemType<OldDukeScales>()).UpdateAccessory(player, hideVisual);
+                    GetModItem(ItemType<OldDukeScales>()).UpdateAccessory(player, hideVisual);
                 player.sporeSac = true;
                 GetModItem(ItemType<Abaddon>()).UpdateAccessory(player, hideVisual);
                 player.magmaStone = true;

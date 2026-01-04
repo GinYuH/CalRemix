@@ -1,14 +1,10 @@
 ﻿using CalamityMod;
+using CalamityMod.CalPlayer;
 using CalamityMod.DataStructures;
+using CalamityMod.Projectiles.Summon;
 using CalamityMod.World;
 using CalRemix.Content.Items.Ammo;
-using CalRemix.Content.NPCs.Bosses.Phytogen;
-using CalRemix.Content.Projectiles;
 using CalRemix.UI;
-using CalRemix.UI.Anomaly109;
-using CalamityMod.CalPlayer;
-using CalamityMod.Projectiles.Summon;
-using CalRemix.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -73,7 +69,7 @@ namespace CalRemix
         /// </summary>
         public static void ConsumeStack(this Player player, int itemType, int stackNum)
         {
-            for(int i = 0; i < 58; i++)
+            for (int i = 0; i < 58; i++)
             {
                 ref Item item = ref player.inventory[i];
                 if (player.HasStack(itemType, stackNum)) item.stack -= stackNum;
@@ -1015,7 +1011,7 @@ namespace CalRemix
         public static void GiveCoins(int coinValue, Player player)
         {
             int[] coinsList = { ItemID.CopperCoin, ItemID.SilverCoin, ItemID.GoldCoin, ItemID.PlatinumCoin, ModContent.ItemType<CosmiliteCoin>(), ModContent.ItemType<Klepticoin>() };
-            for(int i = 5; i >= 0; i--)
+            for (int i = 5; i >= 0; i--)
             {
                 if (coinValue >= Math.Pow(100, i))
                 {

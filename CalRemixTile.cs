@@ -13,14 +13,11 @@ using CalamityMod.Tiles.Ores;
 using CalamityMod.Tiles.SunkenSea;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using CalRemix.Content.NPCs.Bosses.Ionogen;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Tiles;
-using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
@@ -30,11 +27,9 @@ using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
@@ -42,8 +37,8 @@ using static Terraria.ModLoader.ModContent;
 namespace CalRemix
 {
     public class CalRemixTile : GlobalTile
-	{
-		private int berryCount;
+    {
+        private int berryCount;
         private int cosmicCount;
         public static HelperMessage roxm;
         public static HelperMessage KinsmanMessage;
@@ -103,10 +98,10 @@ namespace CalRemix
             {
                 SoundEngine.PlaySound(SoundID.Item9, player.Center);
                 if (!player.Calamity().eCore)
-					Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ItemType<EtherealCore>());
-				else if (Main.rand.NextBool(20))
-					Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ItemType<EtherealCore>());
-			}
+                    Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ItemType<EtherealCore>());
+                else if (Main.rand.NextBool(20))
+                    Item.NewItem(new EntitySource_TileBreak(i, j), player.getRect(), ItemType<EtherealCore>());
+            }
             if (type == TileType<LabHologramProjector>() && player.HeldItem.type == ItemType<BloodyVein>() && !NPC.AnyNPCs(NPCType<CyberDraedon>()))
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
@@ -472,8 +467,8 @@ namespace CalRemix
                 {
                     if (type == TileID.ShadowOrbs)
                     {
-                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);                       
-                        
+                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
+
                         CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
                         CalRemixWorld.generatedGrime = true;
                         CalRemixWorld.UpdateWorldBool();
@@ -496,24 +491,24 @@ namespace CalRemix
             Player player = Main.LocalPlayer;
             if (player.ZoneJungle && !NPC.AnyNPCs(NPCType<Phytogen>()))
             {
-                 if (!effectOnly && !fail && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
-                 {
-                     WorldGen.GetTreeBottom(i, j, out int treeX, out int treeY);
-                     TreeTypes treeType = WorldGen.GetTreeType(Main.tile[treeX, treeY].TileType);
-                     if (treeType != TreeTypes.None)
-                     {
-                         treeY--;
-                         while (treeY > 10 && Main.tile[treeX, treeY].HasTile && TileID.Sets.IsShakeable[Main.tile[treeX, treeY].TileType])
-                             treeY--;
+                if (!effectOnly && !fail && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
+                {
+                    WorldGen.GetTreeBottom(i, j, out int treeX, out int treeY);
+                    TreeTypes treeType = WorldGen.GetTreeType(Main.tile[treeX, treeY].TileType);
+                    if (treeType != TreeTypes.None)
+                    {
+                        treeY--;
+                        while (treeY > 10 && Main.tile[treeX, treeY].HasTile && TileID.Sets.IsShakeable[Main.tile[treeX, treeY].TileType])
+                            treeY--;
 
-                         treeY++;
+                        treeY++;
 
-                         if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
-                         {
+                        if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
+                        {
                             SpawnClientBossRandomPos(NPCType<Phytogen>(), new Vector2(i, j) * 16);
-                         }
-                     }
-                 }
+                        }
+                    }
+                }
             }
             if (!fail && !effectOnly)
             {

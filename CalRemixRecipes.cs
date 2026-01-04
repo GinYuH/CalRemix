@@ -1,57 +1,55 @@
-using static Terraria.ModLoader.ModContent;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using CalRemix.Content.Items.Accessories;
-using CalamityMod.Items.Armor.Empyrean;
-using CalamityMod.Items.Armor.Plaguebringer;
-using CalamityMod.Items.Placeables.Furniture;
-using CalamityMod.Items.Fishing.AstralCatches;
-using CalamityMod.Items.Potions;
-using CalamityMod.Items.Placeables.Ores;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Placeables;
+using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Potions.Alcohol;
-using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Items.Materials;
 using CalamityMod.Items.Accessories.Wings;
+using CalamityMod.Items.Armor.DesertProwler;
+using CalamityMod.Items.Armor.Empyrean;
+using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Items.Armor.Plaguebringer;
+using CalamityMod.Items.Armor.PlagueReaper;
+using CalamityMod.Items.Armor.Prismatic;
+using CalamityMod.Items.Armor.Silva;
+using CalamityMod.Items.Armor.Umbraphile;
+using CalamityMod.Items.Fishing.AstralCatches;
+using CalamityMod.Items.Fishing.FishingRods;
+using CalamityMod.Items.LoreItems;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.PermanentBoosters;
+using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.Furniture;
+using CalamityMod.Items.Placeables.FurnitureNavystone.FurnitureAncientNavystone;
+using CalamityMod.Items.Placeables.FurnitureStratus;
+using CalamityMod.Items.Placeables.Ores;
+using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Alcohol;
+using CalamityMod.Items.SummonItems;
+using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Items.SummonItems;
-using CalamityMod.Items.Fishing.FishingRods;
-using CalamityMod.Items.Placeables.Furniture.CraftingStations;
-using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Rogue;
-using CalRemix.Content.Items.Weapons;
 using CalamityMod.Items.Weapons.Summon;
-using CalamityMod.Items.Armor.PlagueReaper;
-using CalamityMod.Items.Armor.Fearmonger;
-using CalamityMod.Items.Armor.Umbraphile;
+using CalamityMod.Items.Weapons.Typeless;
+using CalamityMod.Rarities;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Items.Critters;
+using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Placeables.MusicBoxes;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
+using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.NPCs.TownNPCs;
+using CalRemix.Core.World;
+using CalRemix.UI.Anomaly109;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CalamityMod.Items.Placeables.FurnitureStratus;
-using CalamityMod.Items.LoreItems;
-using CalamityMod;
-using CalRemix.Content.NPCs.TownNPCs;
-using CalRemix.Core.World;
-using CalRemix.Content.Items.Critters;
-using CalRemix.Content.Items.Lore;
-using CalRemix.Content.Items.Ammo;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
-using CalamityMod.Items.Placeables;
-using CalamityMod.Items.Armor.DesertProwler;
-using CalamityMod.Items.Armor.Prismatic;
-using CalamityMod.Items.Armor.Silva;
-using System;
-using CalRemix.Content.Items.Placeables.Trophies;
-using CalRemix.UI.Anomaly109;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalamityMod.Rarities;
-using CalamityMod.Items.Tools;
-using CalamityMod.Items.Placeables.FurnitureNavystone.FurnitureAncientNavystone;
-using CalamityMod.Items.Weapons.Typeless;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {
@@ -361,7 +359,7 @@ namespace CalRemix
                         recipe.AddIngredient(ItemID.Feather);
                     }
                 }
-                
+
                 #region Replacement
                 if (recipe.HasResult(ItemType<DesertProwlerHat>()) || recipe.HasResult(ItemType<DesertProwlerShirt>()) || recipe.HasResult(ItemType<DesertProwlerPants>()))
                 {

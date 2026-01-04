@@ -170,7 +170,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
             StaffPos = new Vector2(NPC.Center.X + (NPC.direction == 1 ? 78 : -78), NPC.Center.Y - 9);
             if (Roaring) roarTimer--;
 
-            if (Main.netMode != 1 && NPC.type == ModContent.NPCType<SupremeRajah>() && isSupreme == false)
+            if (Main.netMode != NetmodeID.MultiplayerClient && NPC.type == ModContent.NPCType<SupremeRajah>() && isSupreme == false)
             {
                 isSupreme = true;
                 NPC.netUpdate = true;
@@ -184,7 +184,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Chat", Color.MediumPurple);
 
                 }
-                if (NPC.life <= NPC.lifeMax / 7 && !SayLine && Main.netMode != 1)
+                if (NPC.life <= NPC.lifeMax / 7 && !SayLine && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     SayLine = true;
                     string Name;
@@ -211,11 +211,11 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     }
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (Main.netMode == 0)
+                        if (Main.netMode == NetmodeID.SinglePlayer)
                         {
                             Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.Rajah.5", Name.ToUpper()), new Color(107, 137, 179));
                         }
-                        else if (Main.netMode == 2)
+                        else if (Main.netMode == NetmodeID.Server)
                         {
                             ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.Rajah.5", Name.ToUpper()), new Color(107, 137, 179));
                         }
@@ -286,16 +286,16 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 {
                     if (isSupreme)
                     {
-                        if (Main.netMode != 1) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.6", new Color(107, 137, 179));
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.6", new Color(107, 137, 179));
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<SupremeRajahBookIt>(), damage, 0, Main.myPlayer);
                         }
                     }
                     else
                     {
-                        if (Main.netMode != 1) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.2", new Color(107, 137, 179));
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.2", new Color(107, 137, 179));
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<RajahBookIt>(), damage, 0, Main.myPlayer);
                         }
@@ -373,7 +373,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                         {
                             for (int num623 = 0; num623 < 4; num623++)
                             {
-                                int num624 = Dust.NewDust(new Vector2(NPC.position.X - 20f, NPC.position.Y + NPC.height), NPC.width + 20, 4, 31, 0f, 0f, 100);
+                                int num624 = Dust.NewDust(new Vector2(NPC.position.X - 20f, NPC.position.Y + NPC.height), NPC.width + 20, 4, DustID.Smoke, 0f, 0f, 100);
                                 Main.dust[num624].velocity *= 0.2f;
                             }
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), num622 - 20, NPC.position.Y + NPC.height - 8f, 0, 0, ModContent.ProjectileType<RajahStomp>(), damage, 6, Main.myPlayer, 0, 0);
@@ -453,7 +453,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 NPC.chaseable = false;
             }
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[2]++;
                 internalAI[3]++;
@@ -471,7 +471,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 {
                     Roar(roarTimerMax);
                 }
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     internalAI[3] = 0;
                     NPC.ai[2] = 0;
@@ -494,7 +494,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 NPC.netUpdate = true;
             }
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (NPC.ai[3] == 0) //Minion Phase
                 {
@@ -814,7 +814,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     {
                         for (int num623 = 0; num623 < 4; num623++)
                         {
-                            int num624 = Dust.NewDust(new Vector2(NPC.position.X - 20f, NPC.position.Y + NPC.height), NPC.width + 20, 4, 31, 0f, 0f, 100);
+                            int num624 = Dust.NewDust(new Vector2(NPC.position.X - 20f, NPC.position.Y + NPC.height), NPC.width + 20, 4, DustID.Smoke, 0f, 0f, 100);
                             Main.dust[num624].velocity *= 0.2f;
                         }
                         int num625 = Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(num622 - 20, NPC.position.Y + NPC.height - 8f), default, Main.rand.Next(61, 64), 1f);
@@ -1123,7 +1123,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 else
                 {
                     string Name;
-                    if (Main.netMode != 0)
+                    if (Main.netMode != NetmodeID.SinglePlayer)
                     {
                         Name = "Terrarians";
                     }
@@ -1131,13 +1131,13 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     {
                         Name = Main.LocalPlayer.name;
                     }
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (Main.netMode == 0)
+                        if (Main.netMode == NetmodeID.SinglePlayer)
                         {
                             Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.Rajah.7", Name), new Color(107, 137, 179));
                         }
-                        else if (Main.netMode == 2 || Main.netMode == 1)
+                        else if (Main.netMode == NetmodeID.Server || Main.netMode == NetmodeID.MultiplayerClient)
                         {
                             ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.Rajah.7", Name), new Color(107, 137, 179));
                         }
@@ -1152,7 +1152,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 int bunnyKills = NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
                 if (bunnyKills >= 100)
                 {
-                    if (Main.netMode != 1) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.4", new Color(107, 137, 179));
+                    if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.4", new Color(107, 137, 179));
                 }
                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<RajahBookIt>(), 100, 0, Main.myPlayer);
             }

@@ -37,7 +37,7 @@ namespace CalRemix
     public partial class Recipes
     {
         public static List<(int, int, int)> alloyBarCrafts = new List<(int, int, int)> { };
-        public static List<(int, int, int)> essenceBarCrafts = new List<(int, int, int)>{};
+        public static List<(int, int, int)> essenceBarCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> yharimBarCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> crocodileCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> venomCrafts = new List<(int, int, int)> { };

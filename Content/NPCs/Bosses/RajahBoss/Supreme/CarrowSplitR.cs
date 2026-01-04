@@ -17,7 +17,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss.Supreme
             Projectile.DamageType = DamageClass.Melee;
 			Projectile.width = 10; 
 			Projectile.height = 10; 
-			Projectile.aiStyle = 1;   
+			Projectile.aiStyle = ProjAIStyleID.Arrow;   
 			Projectile.friendly = false; 
 			Projectile.hostile = true;  
 			Projectile.penetrate = -1;  

@@ -1,6 +1,5 @@
 using CalamityMod;
 using CalamityMod.Items.DraedonMisc;
-using CalamityMod.Items.Fishing.SulphurCatches;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.NPCs.Abyss;
@@ -15,6 +14,7 @@ using CalamityMod.Tiles.FurnitureStratus;
 using CalamityMod.Tiles.FurnitureVoid;
 using CalamityMod.Tiles.Plates;
 using CalamityMod.Tiles.SunkenSea;
+using CalamityMod.Tiles.SunkenSea.Ambient;
 using CalamityMod.Walls;
 using CalamityMod.World;
 using CalRemix.Content.Items.Lore;
@@ -34,7 +34,6 @@ using CalRemix.Core.Scenes;
 using CalRemix.Core.Subworlds;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
-using CalRemix.UI.ElementalSystem;
 using CalRemix.UI.Title;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
@@ -56,10 +55,6 @@ using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
-using Terraria.Localization;
-using System.Linq;
-using CalRemix.Content.Items.Misc;
-using CalamityMod.Tiles.SunkenSea.Ambient;
 
 namespace CalRemix.Core.World
 {
@@ -103,7 +98,7 @@ namespace CalRemix.Core.World
         public static int voidTiles;
         public static int plumestoneTiles;
 
-        public static int ShrineTimer = -20; 
+        public static int ShrineTimer = -20;
         public static int RoachCountdown = 0;
         public static int roachDuration = 0;
         public static int vigorDialogueLevel = 0;
@@ -507,7 +502,7 @@ namespace CalRemix.Core.World
         public static void GetData(ref bool baseVar, string path, TagCompound tag)
         {
             if (tag.ContainsKey(path))
-            {                
+            {
                 baseVar = tag.Get<bool>(path);
             }
         }
@@ -896,7 +891,7 @@ namespace CalRemix.Core.World
                 }
             }
             if (!guideHasExisted)
-            if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
+                if (NPC.AnyNPCs(NPCID.Guide)) guideHasExisted = true;
             if (!SubworldSystem.AnyActive())
             {
                 if (shrinetoggle)
@@ -1231,10 +1226,11 @@ namespace CalRemix.Core.World
                     }
                 )
             );
-            
+
             int GraniteIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
-            int SnowIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome")); 
-            tasks.Insert(SnowIndex + 1, new PassLegacy("Frozen Stronghold", (progress, config) => {
+            int SnowIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome"));
+            tasks.Insert(SnowIndex + 1, new PassLegacy("Frozen Stronghold", (progress, config) =>
+            {
                 progress.Message = "Building a Wintery Castle";
                 FrozenStronghold.GenerateFrozenStronghold();
             }));
@@ -1329,7 +1325,8 @@ namespace CalRemix.Core.World
                     hydrogenLocation = center * 16;
                     generatedHydrogen = true;
                 }));
-                tasks.Insert(FinalIndex, new PassLegacy("Subworld Doors", (progress, config) => {
+                tasks.Insert(FinalIndex, new PassLegacy("Subworld Doors", (progress, config) =>
+                {
 
                     progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.RandomDoors");
                     RandomSubworldDoors.GenerateRandomSubworldDoors();
@@ -1337,45 +1334,45 @@ namespace CalRemix.Core.World
                 tasks.Insert(tasks.FindIndex(x => x.Name.Equals("Planetoids")) + 1, new PassLegacy("ItGetsDeeper", (progress, config) =>
                 {
                     progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.ItGetsDeeper");
-                    
+
                     // lol replace ores in planetoids
                     for (var x = 0; x < Main.maxTilesX; x++)
-                    for (var y = 0; y < 200; y++)
-                    {
-                        // replace iron with granite and lead marble
-                        var tile = CalamityUtils.ParanoidTileRetrieval(x, y);
-                        if (!tile.HasTile)
+                        for (var y = 0; y < 200; y++)
                         {
-                            continue;
-                        }
+                            // replace iron with granite and lead marble
+                            var tile = CalamityUtils.ParanoidTileRetrieval(x, y);
+                            if (!tile.HasTile)
+                            {
+                                continue;
+                            }
 
-                        if (tile.TileType is TileID.Iron or TileID.Lead)
-                        {
-                            tile.TileType = WorldGen.genRand.NextBool() ? (ushort)TileType<GranitePlaced>() : TileID.Marble;
+                            if (tile.TileType is TileID.Iron or TileID.Lead)
+                            {
+                                tile.TileType = WorldGen.genRand.NextBool() ? (ushort)TileType<GranitePlaced>() : TileID.Marble;
+                            }
                         }
-                    }
 
                     // wrap any amethyst in layers of calcite
                     for (var i = 0; i < Main.maxTilesX; i++)
-                    for (var j = 0; j < Main.maxTilesY; j++)
-                    {
-                        var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
-
-                        if (tile is { HasTile: true, TileType: TileID.Amethyst })
+                        for (var j = 0; j < Main.maxTilesY; j++)
                         {
-                            for (var x = -1; x <= 1; x++)
-                            for (var y = -1; y <= 1; y++)
-                            {
-                                var surroundingTile = CalamityUtils.ParanoidTileRetrieval(i + x, j + y);
+                            var tile = CalamityUtils.ParanoidTileRetrieval(i, j);
 
-                                if (surroundingTile is { HasTile: true, TileType: TileID.Stone or TileID.Dirt })
-                                {
-                                    surroundingTile.TileType = (ushort)TileType<CalcitePlaced>();
-                                }
+                            if (tile is { HasTile: true, TileType: TileID.Amethyst })
+                            {
+                                for (var x = -1; x <= 1; x++)
+                                    for (var y = -1; y <= 1; y++)
+                                    {
+                                        var surroundingTile = CalamityUtils.ParanoidTileRetrieval(i + x, j + y);
+
+                                        if (surroundingTile is { HasTile: true, TileType: TileID.Stone or TileID.Dirt })
+                                        {
+                                            surroundingTile.TileType = (ushort)TileType<CalcitePlaced>();
+                                        }
+                                    }
                             }
                         }
-                    }
-                    
+
                     var seed = WorldGen.genRand.Next(0, int.MaxValue);
 
                     for (var i = 0; i < Main.maxTilesX; i++)
@@ -1398,7 +1395,8 @@ namespace CalRemix.Core.World
                     return;
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Paying Respects to Legends Lost Too Soon", (progress, config) => { HallOfLegends.GenerateHallOfLegends(); }));
-                tasks.Insert(FinalIndex, new PassLegacy("Switching things up", (progress, config) => {
+                tasks.Insert(FinalIndex, new PassLegacy("Switching things up", (progress, config) =>
+                {
                     bool oneGenerated = false;
                     int half = (int)(Main.maxTilesX * 0.5f);
                     for (int i = 200; i < Main.maxTilesX - 200; i++)

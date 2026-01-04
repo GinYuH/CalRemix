@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.RajahItems.Supreme
@@ -15,7 +16,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
             Item.width = 20;
             Item.height = 20;
 			Item.maxStack = 99;
-            Item.rare = 11;
+            Item.rare = ItemRarityID.Purple;
         }
 
         public override void ModifyTooltips(System.Collections.Generic.List<TooltipLine> list)

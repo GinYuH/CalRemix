@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Armor.RajahChampion
@@ -21,7 +22,7 @@ The armor of a champion feared across the land"); */
             Item.height = 18;
             Item.value = Item.sellPrice(3, 0, 0, 0);
             Item.defense = 30;
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
             //AARarity = 14;
         }
 

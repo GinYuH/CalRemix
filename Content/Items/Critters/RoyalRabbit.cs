@@ -25,10 +25,10 @@ namespace CalRemix.Content.Items.Critters
             Item.height = 30;
             Item.maxStack = 999;
             Item.value = Item.sellPrice(0, 5, 0, 0);
-            Item.rare = 8;
+            Item.rare = ItemRarityID.Yellow;
             Item.useAnimation = 30;
             Item.useTime = 30;
-            Item.useStyle = 4;
+            Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = true;
             Item.makeNPC = (short)ModContent.NPCType<NPCs.RoyalRabbit>();
         }
@@ -41,7 +41,7 @@ namespace CalRemix.Content.Items.Critters
                 int bunnyKills = ++NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
                 if (bunnyKills % 100 == 0 && bunnyKills < 1000)
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.RoyalRabbit.1", new Color(107, 137, 179));
                     }
@@ -53,13 +53,13 @@ namespace CalRemix.Content.Items.Critters
 
                 if (bunnyKills % 100 == 0 && bunnyKills >= 1000)
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (Main.netMode == 0)
+                        if (Main.netMode == NetmodeID.SinglePlayer)
                         {
                             Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.RoyalRabbit.2", player.name.ToUpper()), new Color(107, 137, 179));
                         }
-                        else if (Main.netMode == 2)
+                        else if (Main.netMode == NetmodeID.Server)
                         {
                             ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.RoyalRabbit.2", player.name.ToUpper()), new Color(107, 137, 179));
                         }

@@ -2,13 +2,15 @@ using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Crabulon;
 using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.OldDuke;
 using CalamityMod.NPCs.PlaguebringerGoliath;
-using CalamityMod.NPCs.CeaselessVoid;
+using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.ZAccessories;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Acideye;
@@ -28,6 +30,8 @@ using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.OutboundCompatibility;
 using CalRemix.Core.World;
+using CalRemix.UI;
+using CalRemix.UI.Anomaly109;
 using CalRemix.UI.Title;
 using System;
 using System.Collections.Generic;
@@ -40,10 +44,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using CalRemix.UI.Anomaly109;
-using CalRemix.Content.Items.Weapons;
-using CalRemix.UI;
-using CalRemix.Content.Buffs;
 
 namespace CalRemix
 {
@@ -102,7 +102,7 @@ namespace CalRemix
                     }
                 case RemixMessageType.Anomaly109Unlock:
                     {
-                        int optionIndex = reader.ReadInt32(); 
+                        int optionIndex = reader.ReadInt32();
                         Anomaly109Manager.options[optionIndex].unlocked = true;
                         CalRemixWorld.UpdateWorldBool();
                         break;
@@ -245,7 +245,7 @@ namespace CalRemix
                 ModItem item = ItemLoader.GetItem(i);
                 if (item.Type == ItemType<WulfrumMetalScrap>())
                     continue;
-                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone || item is BouncyRogue || item is StickyRogue || item is AutoloadedLegendPortraitItem || item is LegendMemorialItem || item is LegendPromoItem )
+                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone || item is BouncyRogue || item is StickyRogue || item is AutoloadedLegendPortraitItem || item is LegendMemorialItem || item is LegendPromoItem)
                     continue;
                 CalRemixAddon.Items.Add(item);
             }

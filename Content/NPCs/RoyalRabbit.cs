@@ -28,7 +28,7 @@ namespace CalRemix.Content.NPCs
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.5f;
             NPC.npcSlots = 0f;
-            NPC.aiStyle = 7;
+            NPC.aiStyle = NPCAIStyleID.Passive;
             AIType = NPCID.Bunny;  //npc behavior
             AnimationType = NPCID.Bunny;
             NPC.dontTakeDamageFromHostiles = false;
@@ -44,7 +44,7 @@ namespace CalRemix.Content.NPCs
             int bunnyKills = NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
             if (bunnyKills % 100 == 0 && bunnyKills < 1000)
             {
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.RoyalRabbit.1", new Color(107, 137, 179));
                 }
@@ -56,13 +56,13 @@ namespace CalRemix.Content.NPCs
 
             if (bunnyKills % 100 == 0 && bunnyKills >= 1000)
             {
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    if (Main.netMode == 0)
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                     {
                         Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.RoyalRabbit.2", player.name.ToUpper()), new Color(107, 137, 179));
                     }
-                    else if (Main.netMode == 2)
+                    else if (Main.netMode == NetmodeID.Server)
                     {
                         ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.RoyalRabbit.2", player.name.ToUpper()), new Color(107, 137, 179));
                     }

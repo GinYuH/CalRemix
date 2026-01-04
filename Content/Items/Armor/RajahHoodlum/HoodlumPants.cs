@@ -19,7 +19,7 @@ namespace CalRemix.Content.Items.Armor.RajahHoodlum
             Item.height = 16;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.defense = 17;
-            Item.rare = 8;
+            Item.rare = ItemRarityID.Yellow;
         }
 
         public override void UpdateEquip(Player player)

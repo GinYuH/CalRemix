@@ -16,9 +16,9 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
 			Item.height = 80;
 			Item.useTime = 27;
 			Item.useAnimation = 27;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
             Item.value = Item.sellPrice(0, 50, 0, 0);
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 			Item.shoot = Mod.Find<ModProjectile>("Excalihare").Type;

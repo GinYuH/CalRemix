@@ -1,3 +1,4 @@
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Armor
@@ -15,7 +16,7 @@ namespace CalRemix.Content.Items.Armor
         {
             Item.width = 30;
             Item.height = 26;
-            Item.rare = 2;
+            Item.rare = ItemRarityID.Green;
             Item.vanity = true;
         }
     }

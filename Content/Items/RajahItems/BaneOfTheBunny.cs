@@ -22,13 +22,13 @@ namespace CalRemix.Content.Items.RajahItems
             Item.noUseGraphic = true;
             Item.channel = true;
             Item.useAnimation = 20;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useTime = 20;
             Item.knockBack = 4f;
             Item.value = Item.sellPrice(0, 30, 0, 0);
             Item.shoot = ModContent.ProjectileType<BaneS>();
             Item.shootSpeed = 4f;
-            Item.rare = 8;
+            Item.rare = ItemRarityID.Yellow;
         }
 
         public override bool AltFunctionUse(Player player)
@@ -43,7 +43,7 @@ namespace CalRemix.Content.Items.RajahItems
                 Item.useTime = 15;
                 Item.useAnimation = 15;
                 Item.UseSound = SoundID.Item1;
-                Item.useStyle = 5;
+                Item.useStyle = ItemUseStyleID.Shoot;
                 Item.shoot = ModContent.ProjectileType<BaneS>();
                 Item.shootSpeed = 10f;
                 Item.autoReuse = true;
@@ -53,7 +53,7 @@ namespace CalRemix.Content.Items.RajahItems
                 Item.useAnimation = 13;
                 Item.useTime = 13;
                 Item.UseSound = SoundID.Item1;
-                Item.useStyle = 1;
+                Item.useStyle = ItemUseStyleID.Swing;
                 Item.shoot = ModContent.ProjectileType<BaneT>();
                 Item.shootSpeed = 10f;
                 Item.autoReuse = true;

@@ -1,11 +1,9 @@
 ﻿using CalamityMod;
 using CalamityMod.Events;
 using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.TownNPCs;
-using CalamityMod.World;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.ZAccessories;
@@ -14,7 +12,6 @@ using CalRemix.Content.NPCs.Bosses.Hydrogen;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Prefixes;
-using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
 using CalRemix.Core.Scenes;
@@ -37,7 +34,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks.Dataflow;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -158,7 +154,7 @@ namespace CalRemix.Core
         }
 
         public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)
-        {            
+        {
             if (!CalRemixWorld.folvsPrefix)
             {
                 return orig(self, pfx);
@@ -264,14 +260,14 @@ namespace CalRemix.Core
                 return;
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
             int grass = TileType<HorizonGrass>();
-            
+
             foreach (Player p in Main.ActivePlayers)
             {
                 int checkRange = 3;
                 Point pos = p.Bottom.ToTileCoordinates();
                 for (int i = pos.X - checkRange; i < pos.X + checkRange; i++)
                 {
-                    for (int j =  pos.Y - checkRange;  j < pos.Y + checkRange; j++)
+                    for (int j = pos.Y - checkRange; j < pos.Y + checkRange; j++)
                     {
                         Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                         if (t.TileType == grass)
@@ -1226,7 +1222,7 @@ namespace CalRemix.Core
         private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
         private static bool DoGMusicDeath(On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase1MusicScene self) => false;
         private static bool DoGMusicDeath2(On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase2MusicScene self) => false;
-        
+
         private static void ReplaceWorldSelectionSizeDescriptions(ILContext il)
         {
             var c = new ILCursor(il);
@@ -1234,7 +1230,7 @@ namespace CalRemix.Core
             c.GotoNext(MoveType.After, x => x.MatchLdstr("UI.WorldDescriptionSizeMedium"));
             c.EmitPop();
             c.EmitLdstr("Mods.CalRemix.UI.MediumWorldWarning");
-            
+
             c.GotoNext(MoveType.After, x => x.MatchLdstr("UI.WorldDescriptionSizeLarge"));
             c.EmitPop();
             c.EmitLdstr("Mods.CalRemix.UI.LargeWorldGreening");

@@ -1,13 +1,13 @@
 ﻿using CalamityMod;
 using CalamityMod.Projectiles.Summon;
+using CalRemix.Content.Buffs;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Buffs;
-using System;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
 
 namespace CalRemix.Content.Projectiles.Accessories
 {
@@ -131,7 +131,7 @@ namespace CalRemix.Content.Projectiles.Accessories
                         {
                             Projectile.velocity.Y -= num414;
                         }
-                    }                    
+                    }
 
                     if (Projectile.localAI[1] >= 90)
                     {
@@ -165,7 +165,7 @@ namespace CalRemix.Content.Projectiles.Accessories
                     {
                         Projectile.localAI[1] = 0;
                     }
-                    
+
                     Projectile.localAI[1]++;
                     Projectile.frame = 0;
                     float lerpx = MathHelper.Lerp(Projectile.position.X, npc.position.X + 500 * idealpos, 0.1f);
