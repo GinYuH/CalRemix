@@ -121,7 +121,7 @@ namespace CalRemix
 
     public class CalRemixPlayer : ModPlayer
 	{
-		private sealed class SoRetroSceneEffect : ModSceneEffect
+        private sealed class SoRetroSceneEffect : ModSceneEffect
 		{
 			public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh + 10;
 
@@ -965,6 +965,10 @@ namespace CalRemix
                 {
                     Player.Calamity().infiniteFlight = true;
                 }
+                else if (SubworldSystem.Current is IDisableFlight)
+                {
+                    Player.wingTimeMax = 0;
+                }
             }
         }
 
@@ -1160,7 +1164,7 @@ namespace CalRemix
                 {
                     Player.buffImmune[BuffID.Darkness] = true;
                     Player.buffImmune[BuffID.Obstructed] = true;
-                    Player.Calamity().externalAbyssLight += 50;
+                    Player.Calamity().abyssPlayerGlowMultiplier = 100;
                 }
             }
             if (Player.HasCooldown(ParadiseHealCooldown.ID) || (Player.HasCooldown(ComboCooldown.ID) && !(Player.controlUp && muraregen)))
