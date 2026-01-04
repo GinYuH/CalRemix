@@ -256,6 +256,8 @@ namespace CalRemix.Content.Projectiles.Accessories
                         if (Main.projectile.IndexInRange(p))
                             Main.projectile[p].originalDamage = Projectile.originalDamage;
                         Main.projectile[p].DamageType = DamageClass.Summon;
+                        Main.projectile[p].penetrate = 5;
+                        Main.projectile[p].timeLeft = 300;
                         Main.projectile[p].tileCollide = false;
                         Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().uniproj = true;
                         Projectile.netUpdate = true;
