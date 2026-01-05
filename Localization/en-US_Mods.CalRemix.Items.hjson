@@ -6391,3 +6391,8 @@ GrablerBanner: {
 	DisplayName: Grabler Banner
 	Tooltip: ""
 }
+
+SharkPotion: {
+	DisplayName: Shark Potion
+	Tooltip: Causes sharks to rain from the sky
+}
