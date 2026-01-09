@@ -341,17 +341,17 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "CrimsonKaiju", 20.5f, () => RemixDowned.downedRed, NPCType<CrimsonKaiju>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "Cryonix", 8.6f, () => RemixDowned.downedCryonix, NPCType<Cryonix>(), new Dictionary<string, object>()
             {
-                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnItems"] = ItemType<FabergeEgg>(),
                 ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
             });
             bc.Call("LogMiniBoss", Mod, "Vernix", 12.08f, () => RemixDowned.downedVernix, NPCType<Vernix>(), new Dictionary<string, object>()
             {
-                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnItems"] = ItemType<FabergeEgg>(),
                 ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
             });
             bc.Call("LogMiniBoss", Mod, "Chaotrix", 13.1f, () => RemixDowned.downedChaotrix, NPCType<Chaotrix>(), new Dictionary<string, object>()
             {
-                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnItems"] = ItemType<FabergeEgg>(),
                 ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
             });
             // Events
