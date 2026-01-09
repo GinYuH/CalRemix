@@ -5975,7 +5975,7 @@ FriendshipPotion: {
 	Tooltip: Unleashes the true power of friendship
 }
 
-FabergéEgg: {
+FabergeEgg: {
 	DisplayName: Fabergé Egg
 	Tooltip:
 		'''
