@@ -1609,7 +1609,7 @@ namespace CalRemix
                 hm.Add(ItemType<ClamChowder>(), 2);
                 npcLoot.Add(hm);
             }
-            if (npc.type == NPCType<Horse>())
+            if (npc.type == NPCType<EarthElemental>())
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<RockStone>(), 5, 3));
             }
@@ -2002,7 +2002,7 @@ namespace CalRemix
                     Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, Vector2.Zero, ProjectileType<CalHeart>(), 0, 0, Main.myPlayer);
                 }
             }
-            if (npc.type == NPCType<Horse>())
+            if (npc.type == NPCType<EarthElemental>())
                 RemixDowned.downedEarthElemental = true;
             if (!Main.dedServ)
             {
