@@ -2460,7 +2460,7 @@ WindTurbineBlade: {
 }
 
 Wind: {
-	Tooltip: ""
+	Tooltip: Pushes and causes enemies to be prone to movement effects
 	DisplayName: Wind
 }
 
@@ -4513,6 +4513,11 @@ BloodredReactiveEssence: {
 	Tooltip: ""
 }
 
+Blood: {
+	Tooltip: Bleeds enemies out, reducing healing efficiency
+	DisplayName: Blood
+}
+
 NocticReactiveEssence: {
 	DisplayName: Noctic Reactive Essence
 	Tooltip: ""
@@ -6385,4 +6390,14 @@ WulfrumCactusBanner: {
 GrablerBanner: {
 	DisplayName: Grabler Banner
 	Tooltip: ""
+}
+
+Bomb: {
+	Tooltip: Combusts and reduces damage reduction
+	DisplayName: Bomb
+}
+
+Adhesive: {
+	Tooltip: Sticks to enemies, dealing more damage over time
+	DisplayName: Adhesive
 }
