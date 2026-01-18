@@ -5,8 +5,26 @@ using CalRemix.Content.Tiles;
 
 namespace CalRemix.Content.Items.Placeables
 {
+    [Autoload(false)]
     public class SubworldDoor : ModItem
     {
+        protected override bool CloneNewInstances => true;
+        public override string Texture => "CalRemix/Content/Items/Placeables/SubworldDoor";
+        public override string Name => NameOverride;
+
+        public string NameOverride;
+
+        public int TileID;
+
+        public int PlaceStyle;
+
+        public SubworldDoor(ModTile tile, int placeStyle = -1)
+        {
+            TileID = tile.Type;
+            PlaceStyle = placeStyle;
+            NameOverride = tile.Name.Replace("Placed", "");
+        }
+
         public override void SetDefaults()
         {
             Item.width = 20;
@@ -19,8 +37,8 @@ namespace CalRemix.Content.Items.Placeables
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<TheGrayDoor>();
-            Item.placeStyle = Main.rand.Next(0, 3);
+            Item.createTile = TileID;
+            Item.placeStyle = PlaceStyle == -1 ? Main.rand.Next(0, 3) : PlaceStyle;
         }
     }
 }

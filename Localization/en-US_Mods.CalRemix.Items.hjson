@@ -6401,3 +6401,58 @@ Adhesive: {
 	Tooltip: Sticks to enemies, dealing more damage over time
 	DisplayName: Adhesive
 }
+
+AntDoor: {
+	DisplayName: Ant Subworld Door
+	Tooltip: ""
+}
+
+DeformityDoor: {
+	DisplayName: Deformity Subworld Door
+	Tooltip: ""
+}
+
+ExosphereDoor: {
+	DisplayName: Exosphere Subworld Door
+	Tooltip: ""
+}
+
+GrandSeaDoor: {
+	DisplayName: Grand Sea Subworld Door
+	Tooltip: ""
+}
+
+HorizonDoor: {
+	DisplayName: Horizon Subworld Door
+	Tooltip: ""
+}
+
+NowhereDoor: {
+	DisplayName: Nowhere Subworld Door
+	Tooltip: ""
+}
+
+PiggyDoor: {
+	DisplayName: Piggy Subworld Door
+	Tooltip: ""
+}
+
+ScreamDoor: {
+	DisplayName: Screaming Corridor Subworld Door
+	Tooltip: ""
+}
+
+SealedDoor: {
+	DisplayName: Sealed Subworld Door
+	Tooltip: ""
+}
+
+SPDoor: {
+	DisplayName: Singular Point Subworld Door
+	Tooltip: ""
+}
+
+TheGrayDoor: {
+	DisplayName: The Gray Subworld Door
+	Tooltip: ""
+}
