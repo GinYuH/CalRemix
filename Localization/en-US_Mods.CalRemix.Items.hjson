@@ -2460,7 +2460,7 @@ WindTurbineBlade: {
 }
 
 Wind: {
-	Tooltip: ""
+	Tooltip: Pushes and causes enemies to be prone to movement effects
 	DisplayName: Wind
 }
 
@@ -4534,6 +4534,11 @@ BloodredReactiveEssence: {
 	Tooltip: ""
 }
 
+Blood: {
+	Tooltip: Bleeds enemies out, reducing healing efficiency
+	DisplayName: Blood
+}
+
 NocticReactiveEssence: {
 	DisplayName: Noctic Reactive Essence
 	Tooltip: ""
@@ -6415,4 +6420,69 @@ DeadeyeRevolver: {
 		Fires an innacurate triple shot of congealed flesh orbs that bounce once
 		Hitting enemies after a bounce will result in a guaranteed critical strike
 		'''
+}
+
+Bomb: {
+	Tooltip: Combusts and reduces damage reduction
+	DisplayName: Bomb
+}
+
+Adhesive: {
+	Tooltip: Sticks to enemies, dealing more damage over time
+	DisplayName: Adhesive
+}
+
+AntDoor: {
+	DisplayName: Ant Subworld Door
+	Tooltip: ""
+}
+
+DeformityDoor: {
+	DisplayName: Deformity Subworld Door
+	Tooltip: ""
+}
+
+ExosphereDoor: {
+	DisplayName: Exosphere Subworld Door
+	Tooltip: ""
+}
+
+GrandSeaDoor: {
+	DisplayName: Grand Sea Subworld Door
+	Tooltip: ""
+}
+
+HorizonDoor: {
+	DisplayName: Horizon Subworld Door
+	Tooltip: ""
+}
+
+NowhereDoor: {
+	DisplayName: Nowhere Subworld Door
+	Tooltip: ""
+}
+
+PiggyDoor: {
+	DisplayName: Piggy Subworld Door
+	Tooltip: ""
+}
+
+ScreamDoor: {
+	DisplayName: Screaming Corridor Subworld Door
+	Tooltip: ""
+}
+
+SealedDoor: {
+	DisplayName: Sealed Subworld Door
+	Tooltip: ""
+}
+
+SPDoor: {
+	DisplayName: Singular Point Subworld Door
+	Tooltip: ""
+}
+
+TheGrayDoor: {
+	DisplayName: The Gray Subworld Door
+	Tooltip: ""
 }

@@ -14,8 +14,7 @@ namespace CalRemix.Content.Buffs
     {
         public override void Unload()
         {
-            if (TextureAssets.Npc[NPCID.Deerclops] == ModContent.Request<Texture2D>("CalRemix/Assets/Textures/Cheerclops"))
-                TextureAssets.Npc[NPCID.Deerclops] = ModContent.Request<Texture2D>("Terraria/Images/NPC_668");
+            TextureAssets.Npc[NPCID.Deerclops] = ModContent.Request<Texture2D>("Terraria/Images/NPC_668");
         }
     }
     public class RealityBearerForClopsBuff : ModBuff
