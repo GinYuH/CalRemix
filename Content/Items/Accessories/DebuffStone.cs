@@ -13,12 +13,12 @@ using Terraria.ModLoader;
 namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of cheat mods
 {
     [Autoload(false)]
-    public class DebuffStone : ModItem, ILocalizedModType
+    public class DebuffStone(int type) : ModItem, ILocalizedModType
     {
         public override string LocalizationCategory => "Stones";
 
-        public int debuffType;
-        public Color? debuffColor;
+        public int debuffType = type;
+        public Color? debuffColor = null;
         protected override bool CloneNewInstances => true;
 
         public override string Name => debuffType < BuffID.Count ? debuffType + "Stone" : BuffLoader.GetBuff(debuffType).Mod.Name + "/" + BuffLoader.GetBuff(debuffType).Name + "Stone";
@@ -30,15 +30,6 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
 
         public override LocalizedText Tooltip => Language.GetText("Mods.CalRemix.DebuffStone.Tooltip").WithFormatArgs(DebuffName);
 
-        public DebuffStone(int type)
-        {
-            debuffType = type;
-        }
-
-        public override void SetStaticDefaults()
-        {
-        }
-
         public override void SetDefaults()
         {
             Item.width = 42;
@@ -48,43 +39,43 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
             Item.accessory = true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-        }
-
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (!player.GetModPlayer<DebuffStonePlayer>().debuffStones.ContainsKey(debuffType))
-            {
-                player.GetModPlayer<DebuffStonePlayer>()?.debuffStones.Add(debuffType, false);
-            }
+            player.GetModPlayer<DebuffStonePlayer>().debuffStones.Add(debuffType);
             player.buffImmune[debuffType] = true;
-            player.GetModPlayer<DebuffStonePlayer>().debuffStones[debuffType] = true;
         }
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            Texture2D debuff = TextureAssets.Buff[debuffType].Value;
-            if (debuffColor == null)
+            if (debuffColor is null)
             {
-                Color[,] color = debuff.GetColorsFromTexture();
-                Color mid = color[16, 16];
-                int atts = 5;
-                // if the color is too dark, attempt finding a brighter one
-                for (int i = -atts; i < atts; i++)
+                Texture2D texture = TextureAssets.Buff[debuffType].Value;
+                debuffColor = Color.White;
+                if (texture.Width > 1 && texture.Height > 1)
                 {
-                    if ((mid.R + mid.G + mid.B) < 255f)
+                    Color[,] color = texture.GetColorsFromTexture();
+                    Color mid = color[texture.Width / 2, texture.Height / 2];
+                    int atts = 5;
+                    // if the color is too dark, attempt finding a brighter one 
+                    for (int i = -atts; i < atts; i++)
                     {
-                        mid = color[16 + i * 2, 16];
+                        if ((mid.R + mid.G + mid.B) < 255f)
+                        {
+                            mid = color[16 + i * 2, 16];
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-                    else
-                    {
-                        break;
-                    }
+                    debuffColor = mid;
                 }
-                debuffColor = mid;
+                else if (texture.Width == 1 && texture.Height == 1)
+                {
+                    debuffColor = texture.GetColorsFromTexture()[0, 0];
+                }
             }
-            spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, (debuffColor == null) ? Color.White : debuffColor.Value, 0, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, debuffColor.Value, 0, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
 
@@ -104,24 +95,15 @@ namespace CalRemix.Content.Items.ZAccessories // Shove them to the bottom of che
 
     public class DebuffStonePlayer : ModPlayer
     {
-        public Dictionary<int, bool> debuffStones = new Dictionary<int, bool> { };
+        public HashSet<int> debuffStones = [];
 
-        public override void ResetEffects()
-        {
-            for (int i = 0; i < debuffStones.Count; i++) 
-            {
-                debuffStones[i] = false;
-            }
-        }
+        public override void ResetEffects() => debuffStones.Clear();
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             foreach (var kvp in debuffStones)
             {
-                if (kvp.Value)
-                {
-                    target.AddBuff(kvp.Key, 180);
-                }
+                target.AddBuff(kvp, 180);
             }
         }
     }

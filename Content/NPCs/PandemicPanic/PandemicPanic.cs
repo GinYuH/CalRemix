@@ -434,6 +434,13 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     }
                     PandemicPanic.InvadersKilled = killCount;
                 }
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    ModPacket packet = CalRemix.instance.GetPacket();
+                    packet.Write((byte)RemixMessageType.KillInvader);
+                    packet.Write(PandemicPanic.InvadersKilled);
+                    packet.Send();
+                }
             }
             if (PandemicPanic.DefenderNPCs.Contains(npc.type))
             {
@@ -446,23 +453,14 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     }
                     PandemicPanic.DefendersKilled = killCount;
                 }
-            }
-            if (Main.netMode == NetmodeID.Server)
-            {
+                if (Main.netMode == NetmodeID.Server)
                 {
                     ModPacket packet = CalRemix.instance.GetPacket();
                     packet.Write((byte)RemixMessageType.KillDefender);
                     packet.Write(PandemicPanic.DefendersKilled);
                     packet.Send();
                 }
-                {
-                    ModPacket packet = CalRemix.instance.GetPacket();
-                    packet.Write((byte)RemixMessageType.KillInvader);
-                    packet.Write(PandemicPanic.InvadersKilled);
-                    packet.Send();
-                }
             }
-            CalRemixWorld.UpdateWorldBool();
         }
 
         public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers)

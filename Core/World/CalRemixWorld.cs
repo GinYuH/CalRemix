@@ -526,52 +526,6 @@ namespace CalRemix.Core.World
             writer.Write(metNoxus);
             writer.Write(vigorDialogueLevel);
 
-            writer.Write(alloyBars);
-            writer.Write(essenceBars);
-            writer.Write(yharimBars);
-            writer.Write(shimmerEssences);
-            writer.Write(meldGunk);
-            writer.Write(cosmislag);
-            writer.Write(reargar);
-            writer.Write(sidegar);
-            writer.Write(frontgar);
-            writer.Write(crocodile);
-            writer.Write(permanenthealth);
-            writer.Write(starbuster);
-            writer.Write(plaguetoggle);
-            writer.Write(shrinetoggle);
-            writer.Write(lifeoretoggle);
-            writer.Write(itemChanges);
-            writer.Write(npcChanges);
-            writer.Write(bossdialogue);
-            writer.Write(grimesandToggle);
-            writer.Write(clowns);
-            writer.Write(aspids);
-            writer.Write(clamitas);
-            writer.Write(wolfvenom); ;
-            writer.Write(fearmonger);
-            writer.Write(seafood);
-            writer.Write(laruga);
-            writer.Write(acidsighter);
-            writer.Write(greenDemon);
-            writer.Write(remixJump);
-            writer.Write(hydrogenBomb);
-            writer.Write(baronStrait);
-            writer.Write(dyeStats);
-            writer.Write(champions);
-            writer.Write(astralBlight);
-            writer.Write(mullet);
-            writer.Write(deliciousMeat);
-            writer.Write(profanedDesert);
-            writer.Write(hypothetical);
-            writer.Write(savedAPicture);
-            writer.Write(sneakerheadMode);
-            writer.Write(weaponReworks);
-            writer.Write(musicPitch);
-            writer.Write(bossAdditions);
-            writer.Write(accReworks);
-            writer.Write(folvsPrefix);
-
             writer.Write(ionQuestLevel);
             writer.Write(wizardDisabled);
             writer.Write(hydrogenLocation.X);
@@ -580,14 +534,6 @@ namespace CalRemix.Core.World
             writer.Write(timeSinceYharonMurdered);
             writer.Write(postGenUpdate);
             writer.Write(shadeQuestLevel);
-
-            writer.Write(ScreenHelperManager.screenHelpersEnabled);
-            writer.Write(ScreenHelperManager.fannyTimesFrozen);
-            writer.Write(Anomaly109Manager.helpUnlocked);
-            for (int i = 0; i < Anomaly109Manager.options.Count; i++)
-            {
-                writer.Write(Anomaly109Manager.options[i].unlocked);
-            }
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -609,52 +555,6 @@ namespace CalRemix.Core.World
             metNoxus = reader.ReadBoolean();
             vigorDialogueLevel = reader.ReadInt32();
 
-            alloyBars = reader.ReadBoolean();
-            essenceBars = reader.ReadBoolean();
-            yharimBars = reader.ReadBoolean();
-            shimmerEssences = reader.ReadBoolean();//.Get<bool>("109essenceshimmer");// = shimmerEssences;
-            meldGunk = reader.ReadBoolean();//.Get<bool>("109meldgunk");// = meldGunk;
-            cosmislag = reader.ReadBoolean();//.Get<bool>("109cosmilite");// = cosmislag;
-            reargar = reader.ReadBoolean();//.Get<bool>("109reargar");// = reargar;
-            sidegar = reader.ReadBoolean();//.Get<bool>("109sidegar");// = sidegar;
-            frontgar = reader.ReadBoolean();//.Get<bool>("109frontgar");// = frontgar;
-            crocodile = reader.ReadBoolean();//.Get<bool>("109crocodile");// = crocodile;
-            permanenthealth = reader.ReadBoolean();//.Get<bool>("109permanenthealth");// = permanenthealth;
-            starbuster = reader.ReadBoolean();//.Get<bool>("109starbuster");// = starbuster;
-            plaguetoggle = reader.ReadBoolean();//.Get<bool>("109plague");// = plaguetoggle;
-            shrinetoggle = reader.ReadBoolean();//.Get<bool>("109shrine");// = shrinetoggle;
-            lifeoretoggle = reader.ReadBoolean();//.Get<bool>("109lifeore");// = lifeoretoggle;
-            itemChanges = reader.ReadBoolean();//.Get<bool>("109resprites");// = resprites;
-            npcChanges = reader.ReadBoolean();//.Get<bool>("109renames");// = renames;
-            bossdialogue = reader.ReadBoolean();//.Get<bool>("109dialogue");// = bossdialogue;
-            grimesandToggle = reader.ReadBoolean();//.Get<bool>("109grime");// = grimesand;
-            clowns = reader.ReadBoolean();//.Get<bool>("109clowns");// = clowns;
-            aspids = reader.ReadBoolean();//.Get<bool>("109aspids");// = aspids;
-            clamitas = reader.ReadBoolean();//.Get<bool>("109clamitas");// = clamitas;
-            wolfvenom = reader.ReadBoolean();//.Get<bool>("109coyotevenom");// = wolfvenom;
-            fearmonger = reader.ReadBoolean();//.Get<bool>("109fearmonger");// = fearmonger;
-            seafood = reader.ReadBoolean();//.Get<bool>("109seafood");// = seafood;
-            laruga = reader.ReadBoolean();//.Get<bool>("109laruga");// = laruga;
-            acidsighter = reader.ReadBoolean();
-            greenDemon = reader.ReadBoolean();
-            remixJump = reader.ReadBoolean();
-            hydrogenBomb = reader.ReadBoolean();
-            baronStrait = reader.ReadBoolean();
-            dyeStats = reader.ReadBoolean();
-            champions = reader.ReadBoolean();
-            astralBlight = reader.ReadBoolean();
-            mullet = reader.ReadBoolean();
-            deliciousMeat = reader.ReadBoolean();
-            profanedDesert = reader.ReadBoolean();
-            hypothetical = reader.ReadBoolean();
-            savedAPicture = reader.ReadBoolean();
-            sneakerheadMode = reader.ReadBoolean();
-            weaponReworks = reader.ReadBoolean();
-            musicPitch = reader.ReadBoolean();
-            bossAdditions = reader.ReadBoolean();
-            accReworks = reader.ReadBoolean();
-            folvsPrefix = reader.ReadBoolean();
-
             ionQuestLevel = reader.ReadInt32();
             wizardDisabled = reader.ReadBoolean();
             hydrogenLocation.X = reader.ReadSingle();
@@ -663,14 +563,6 @@ namespace CalRemix.Core.World
             timeSinceYharonMurdered = reader.ReadInt32();
             postGenUpdate = reader.ReadBoolean();
             shadeQuestLevel = reader.ReadInt32();
-
-            ScreenHelperManager.screenHelpersEnabled = reader.ReadBoolean();
-            ScreenHelperManager.fannyTimesFrozen = reader.ReadInt32();
-            Anomaly109Manager.helpUnlocked = reader.ReadBoolean();
-            for (int i = 0; i < Anomaly109Manager.options.Count; i++)
-            {
-                Anomaly109Manager.options[i].unlocked = reader.ReadBoolean();
-            }
         }
 
         public override void PreUpdateWorld()
