@@ -244,7 +244,7 @@ namespace CalRemix
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<LeviathanAmbergris>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemID.SporeSac, 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<TheCamper>(), 1));
-            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<AlchemicalFlask>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<AlchemicalDecanter>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<ToxicHeart>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<DynamoStemCells>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<BlazingCore>(), 1));

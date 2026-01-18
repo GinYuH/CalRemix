@@ -659,7 +659,7 @@ namespace CalRemix
                 {
                     recipe.AddIngredient<ArchaicPowder>();
                     recipe.AddIngredient<HoneyDew>();
-                    recipe.AddRecipeGroup(new RecipeGroup(() => "Any Evil Flask", ModContent.ItemType<CorruptFlask>(), ModContent.ItemType<CrimsonFlask>()));
+                    recipe.AddRecipeGroup(new RecipeGroup(() => "Any Evil Tonic", ModContent.ItemType<UnholyTonic>(), ModContent.ItemType<ViciousTonic>()));
                 }
                 if (recipe.HasResult(ItemType<Nanotech>()))
                 {
@@ -701,7 +701,7 @@ namespace CalRemix
                     recipe.AddIngredient<LeviathanAmbergris>();
                     recipe.AddIngredient(ItemID.SporeSac);
                     recipe.AddIngredient<TheCamper>();
-                    recipe.AddIngredient<AlchemicalFlask>();
+                    recipe.AddIngredient<AlchemicalDecanter>();
                     recipe.AddIngredient<ToxicHeart>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();

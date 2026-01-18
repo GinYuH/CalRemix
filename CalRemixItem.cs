@@ -1078,8 +1078,8 @@ namespace CalRemix
             {
                 GetModItem(ItemType<ArchaicPowder>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<HoneyDew>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<CorruptFlask>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<CrimsonFlask>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<UnholyTonic>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<ViciousTonic>()).UpdateAccessory(player, hideVisual);
             }
             if (item.type == ItemType<AsgardsValor>() || item.type == ItemType<AsgardianAegis>() || item.type == ItemType<TheVerbotenOne>())
             {
@@ -1135,7 +1135,7 @@ namespace CalRemix
                 GetModItem(ItemType<TheBee>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<NecklaceofVexation>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<ToxicHeart>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<AlchemicalFlask>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<AlchemicalDecanter>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<TheEvolution>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<Affliction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<CorrosiveSpine>()).UpdateAccessory(player, hideVisual);
