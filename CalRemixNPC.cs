@@ -1366,6 +1366,7 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<InvigoratingJelly>(), 7, 5));
             }
+
             #endregion
             #region Hardmode
             if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
@@ -1673,7 +1674,9 @@ namespace CalRemix
             }
             else if (npc.type == NPCID.EyeofCthulhu)
             {
-
+                npcLoot.AddNormalOnly(ItemType<Eyesickle>(), 10);
+                npcLoot.AddNormalOnly(ItemType<LookerBook>(), 10);
+                npcLoot.AddNormalOnly(ItemType<DeadeyeRevolver>(), 10);
             }
             else if (npc.type == NPCType<Crabulon>())
             {

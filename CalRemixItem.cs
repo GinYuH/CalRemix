@@ -822,7 +822,9 @@ namespace CalRemix
             }
             else if (item.type == ItemID.EyeOfCthulhuBossBag)
             {
-
+                itemLoot.Add(ItemType<Eyesickle>(), 10);
+                itemLoot.Add(ItemType<LookerBook>(), 10);
+                itemLoot.Add(ItemType<DeadeyeRevolver>(), 10);
             }
             else if (item.type == ItemType<CrabulonBag>())
             {
