@@ -2741,6 +2741,27 @@ Weapons: {
 				Stealth strikes attract The Champion of the Innocent
 				'''
 		}
+
+		Eyesickle: {
+			DisplayName: Eyesickle
+			Tooltip:
+				'''
+				Tosses a returning bone sickle
+				The sickle spins faster at the furthest extent of its range, hitting multiple times
+				Stealth strikes will make the sickle travel further and faster, and hit enemies more frequently
+				'''
+		}
+
+		LookerBook: {
+			DisplayName: Looker Book
+			Tooltip:
+				'''
+				Throws a living tome that fires bone fragments at enemies
+				The tome's contact damage benefits from ranged damage bonuses
+				Can be thrown with insufficient mana for bonus contact damage, but it doesn't shoot
+				Uses 40 mana
+				'''
+		}
 	}
 }
 
@@ -6400,6 +6421,15 @@ GrablerBanner: {
 SharkPotion: {
 	DisplayName: Shark Potion
 	Tooltip: Causes sharks to rain from the sky
+}
+
+DeadeyeRevolver: {
+	DisplayName: Deadeye Revolver
+	Tooltip:
+		'''
+		Fires an innacurate triple shot of congealed flesh orbs that bounce once
+		Hitting enemies after a bounce will result in a guaranteed critical strike
+		'''
 }
 
 Bomb: {
