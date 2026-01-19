@@ -12,6 +12,7 @@ using Terraria.Audio;
 using CalamityMod.Particles;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria.DataStructures;
+using CalRemix.Content.Items.Placeables.Subworlds.TheGray;
 
 namespace CalRemix.Content.NPCs.Subworlds.TheGray
 {
@@ -120,6 +121,13 @@ namespace CalRemix.Content.NPCs.Subworlds.TheGray
         {
             for (int i = 0; i < 50; i++)
                 GeneralParticleHandler.SpawnParticle(new SquareParticle(Main.rand.NextVector2FromRectangle(NPC.Hitbox), Main.rand.NextVector2Circular(20, 20), false, 60, Main.rand.NextFloat(1f, 3f), Color.Red));
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ModContent.ItemType<YellowMazeBrick>(), 1, 20, 40);
+            npcLoot.Add(ModContent.ItemType<BlueMazeBrick>(), 1, 20, 40);
+            npcLoot.Add(ModContent.ItemType<QuestionSoil>(), 1, 30, 60);
         }
     }
 }

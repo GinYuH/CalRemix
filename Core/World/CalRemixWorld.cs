@@ -29,6 +29,7 @@ using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.PlaguedJungle;
 using CalRemix.Content.Tiles.Plates;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
+using CalRemix.Content.Walls;
 using CalRemix.Core.Backgrounds.Plague;
 using CalRemix.Core.Scenes;
 using CalRemix.Core.Subworlds;
@@ -569,24 +570,13 @@ namespace CalRemix.Core.World
         {
             /*if (Main.LocalPlayer.controlUseItem)
             {
-                bool oneGenerated = false;
-                int half = (int)(Main.maxTilesX * 0.5f);
-                for (int i = 200; i < Main.maxTilesX - 200; i++)
+                Point maus = Main.MouseWorld.ToTileCoordinates();
+                for (int i = maus.X - 5; i < maus.X + 5; i++)
                 {
-                    for (int j = 0; j < Main.worldSurface + 200; j++)
+                    for (int j = maus.Y - 5; j < maus.Y + 5; j++)
                     {
                         Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                        Tile tA = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
-                        if (t.HasTile && Main.tileSolid[t.TileType] && !tA.HasTile && tA.LiquidAmount <= 0)
-                        {
-                            if (WorldGen.genRand.NextBool(200) || (i == half && !oneGenerated))
-                            {
-                                t.Slope = 0;
-                                WorldGen.PlaceTile(i, j - 1, TileID.Switches);
-                                Main.LocalPlayer.position = new Vector2(i, j) * 16;
-                            }
-                            break;
-                        }
+                        t.WallType = (ushort)ModContent.WallType<BlueMazeBrickWallPlaced>();
                     }
                 }
             }*/

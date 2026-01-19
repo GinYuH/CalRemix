@@ -1885,6 +1885,13 @@ namespace CalRemix
                     modifiers.SourceDamage *= 0.5f;
                 }
             }
+            if (SubworldSystem.Current == GetInstance<TheGraySubworld>())
+            {
+                if (proj.type == ProjectileID.Explosives)
+                {
+                    modifiers.SourceDamage *= 600;
+                }
+            }
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

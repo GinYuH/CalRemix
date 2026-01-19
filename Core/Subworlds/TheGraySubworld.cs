@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalamityMod.Schematics;
 using CalamityMod.Tiles.FurnitureAshen;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
@@ -9,6 +10,7 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
 using CalRemix.Content.Tiles.Subworlds.TheGray;
+using CalRemix.Content.Walls;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
@@ -22,6 +24,7 @@ using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
@@ -49,6 +52,12 @@ namespace CalRemix.Core.Subworlds
         public override void OnEnter()
         {
             base.OnEnter();
+        }
+
+        public override bool GetLight(Tile tile, int x, int y, ref FastRandom rand, ref Vector3 color)
+        {
+            color = Vector3.Zero;
+            return true;
         }
 
         public override void Update()
@@ -115,6 +124,50 @@ namespace CalRemix.Core.Subworlds
                 {
                     Main.spawnTileY = i - 1;
                     break;
+                }
+            }
+
+            for (int l = 0; l < 2; l++)
+            {
+                int spawnX = (int)MathHelper.Lerp((int)(Main.maxTilesX / 8f), (int)(Main.maxTilesX * 0.875f), l / 1f) + WorldGen.genRand.Next(-30, 30);
+                int spawnY = 0;
+                for (int i = 0; i < Main.maxTilesY; i++)
+                {
+                    if (CalamityUtils.ParanoidTileRetrieval(Main.spawnTileX, i).HasTile)
+                    {
+                        spawnY = i;
+                        break;
+                    }
+                }
+                if (spawnX % 2 != 0)
+                    spawnX++;
+                if (spawnY % 2 != 0)
+                    spawnY--;
+                bool _ = false;
+                SchematicManager.PlaceSchematic<Action<Chest>>("Gray Temple", new Point(spawnX, spawnY), SchematicAnchor.BottomLeft, ref _);
+            }
+
+            int brick = ModContent.TileType<BlueMazeBrickPlaced>();
+            int wall = ModContent.WallType<BlueMazeBrickWallPlaced>();
+            int ybrick = ModContent.TileType<YellowMazeBrickPlaced>();
+            int ywall = ModContent.WallType<YellowMazeBrickWallPlaced>();
+
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    if ((i % 4 < 2 && j % 4 >= 2) || (j % 4 < 2 && i % 4 >= 2))
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        if (t.TileType == brick)
+                        {
+                            t.TileType = (ushort)ybrick;
+                        }
+                        if (t.WallType == wall)
+                        {
+                            t.WallType = (ushort)ywall;
+                        }
+                    }
                 }
             }
 

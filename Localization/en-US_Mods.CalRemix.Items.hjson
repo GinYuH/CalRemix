@@ -6496,3 +6496,13 @@ TheGrayDoor: {
 	DisplayName: The Gray Subworld Door
 	Tooltip: ""
 }
+
+BlueMazeBrickWall: {
+	DisplayName: Blue Maze Brick Wall
+	Tooltip: ""
+}
+
+YellowMazeBrickWall: {
+	DisplayName: Yellow Maze Brick Wall
+	Tooltip: ""
+}
