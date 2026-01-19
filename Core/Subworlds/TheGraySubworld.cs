@@ -1,6 +1,11 @@
 ﻿using CalamityMod;
+using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Schematics;
 using CalamityMod.Tiles.FurnitureAshen;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
+using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalRemix.Content.NPCs.Subworlds.Nowhere;
@@ -144,7 +149,7 @@ namespace CalRemix.Core.Subworlds
                 if (spawnY % 2 != 0)
                     spawnY--;
                 bool _ = false;
-                SchematicManager.PlaceSchematic<Action<Chest>>("Gray Temple", new Point(spawnX, spawnY), SchematicAnchor.BottomLeft, ref _);
+                SchematicManager.PlaceSchematic("Gray Temple", new Point(spawnX, spawnY), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillGrayChest));
             }
 
             int brick = ModContent.TileType<BlueMazeBrickPlaced>();
@@ -172,6 +177,39 @@ namespace CalRemix.Core.Subworlds
             }
 
             RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<TheGrayDoor>());
+        }
+        public static void FillGrayChest(Chest c, int Type, bool place)
+        {
+            List<(int, int, int)> lootfr = new()
+            {
+                { (ModContent.ItemType<SealedBlackSand>(), 40, 80) },
+                { (ModContent.ItemType<RotPearl>(), 8, 19) },
+                { (ModContent.ItemType<FrozenSealedTear>(), 3, 9) },
+                { (ModContent.ItemType<Delirious>(), 1, 2) },
+                { (ModContent.ItemType<Forknife>(), 1, 2) },
+                { (ModContent.ItemType<SoftScarf>(), 1, 2) },
+                { (ModContent.ItemType<Murasama>(), 1, 2) },
+                { (ModContent.ItemType<Delirium>(), 1, 2) },
+                { (ModContent.ItemType<MonorianGem>(), 1, 2) },
+            };
+            (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
+            for (int i = 0; i < loot.Length; i++)
+            {
+                if (i == 0)
+                {
+                    c.item[i].SetDefaults(ModContent.ItemType<RoyalGuardianSword>());
+                }
+                else if (i == 1)
+                {
+                    c.item[i].SetDefaults(ModContent.ItemType<VoidWings>());
+                }
+                else
+                {
+                    Item item = c.item[i];
+                    item.SetDefaults(loot[i].Item1);
+                    item.stack = WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
+                }
+            }
         }
     }
 }

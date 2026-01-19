@@ -24,6 +24,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.value = CalamityGlobalItem.RarityRedBuyPrice;
             Item.rare = ItemRarityID.Red;
             Item.accessory = true;
+            Item.defense = 15;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

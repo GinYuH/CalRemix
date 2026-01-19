@@ -6506,3 +6506,8 @@ YellowMazeBrickWall: {
 	DisplayName: Yellow Maze Brick Wall
 	Tooltip: ""
 }
+
+RoyalGuardianSword: {
+	DisplayName: Royal Guardian Sword
+	Tooltip: "'A grandious sword that originates from a dangerous zone'"
+}
