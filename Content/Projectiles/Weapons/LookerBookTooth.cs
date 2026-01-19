@@ -35,6 +35,14 @@ namespace CalRemix.Content.Projectiles.Weapons
                 Projectile.Kill();
             }
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Projectile.penetrate == 1)
+            {
+                modifiers.FinalDamage *= 0.4f;
+            }
+        }
         public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 3; i++)

@@ -142,7 +142,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             {
                 returning = true;
             }
-            SoundEngine.PlaySound(SoundID.Item49, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item49 with { Pitch = Main.rand.Next(9, 12) / 10f }, Projectile.Center);
 
             if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
             {
@@ -158,6 +158,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            SoundEngine.PlaySound(SoundID.Item49 with { Pitch = Main.rand.Next(80,106) / 100f }, Projectile.Center);
             if (!returning && !speedySpin)
             {
                 Projectile.velocity *= -1;
