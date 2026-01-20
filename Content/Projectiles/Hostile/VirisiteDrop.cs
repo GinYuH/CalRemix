@@ -42,6 +42,8 @@ namespace CalRemix.Content.Projectiles.Hostile
                 }
             }
             Projectile.Opacity += 0.05f;
+            if (Projectile.velocity.Y < 0 && Projectile.Opacity > 0.4f)
+                Projectile.Opacity = 0.8f;
 
             if (Projectile.frame >= 2)
             {
