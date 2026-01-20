@@ -83,6 +83,14 @@ namespace CalRemix.Content.Projectiles.Hostile
                         {
                             Projectile.localAI[1]--;
                         }
+                        if (Projectile.timeLeft > 60)
+                        {
+                            Projectile.Opacity = Utils.GetLerpValue(0, 5, Projectile.ai[1], true);
+                        }
+                        else
+                        {
+                            Projectile.Opacity = Utils.GetLerpValue(0, 60, Projectile.timeLeft, true);
+                        }
                     }
                     break;
             }
@@ -97,9 +105,9 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomCircle").Value;
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
-            Main.EntitySpriteDraw(bloom, Projectile.Center - Main.screenPosition, null, Color.SeaGreen * 0.6f, 0, bloom.Size() / 2, Projectile.scale * 0.6f, 0);
+            Main.EntitySpriteDraw(bloom, Projectile.Center - Main.screenPosition, null, Color.SeaGreen * 0.6f * Projectile.Opacity, 0, bloom.Size() / 2, Projectile.scale * 0.6f, 0);
             Main.spriteBatch.ExitShaderRegion();
-            Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition, null, Color.White, 0, TextureAssets.Projectile[Type].Value.Size() / 2, Projectile.scale, 0);
+            Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition, null, Color.White * Projectile.Opacity, 0, TextureAssets.Projectile[Type].Value.Size() / 2, Projectile.scale, 0);
             return false;
         }
 
