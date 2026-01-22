@@ -3,6 +3,7 @@ using CalamityMod.Items.Potions;
 using CalamityMod.Projectiles.Typeless;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Bags;
+using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.RajahItems;
 using CalRemix.Content.Items.RajahItems.Supreme;
@@ -1201,6 +1202,8 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
 
             //Always
             npcLoot.Add(ModContent.ItemType<RajahTrophy>(), 10);
+
+            npcLoot.AddConditionalPerPlayer(() => !RemixDowned.downedRajah, ModContent.ItemType<KnowledgeRajah>(), desc: DropHelper.FirstKillText);
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
