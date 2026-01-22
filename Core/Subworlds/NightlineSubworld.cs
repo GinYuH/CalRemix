@@ -10,16 +10,18 @@ using Terraria.ID;
 using CalRemix.Core.World;
 using CalRemix.Content.Tiles;
 using CalamityMod.Tiles.FurnitureAshen;
+using CalRemix.Content.NPCs.Subworlds;
+using Terraria.DataStructures;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class AntSubworld : Subworld, IDisableBuilding, IDisableSpawnsSubworld
+    public class NightlineSubworld : Subworld, IDisableBuilding, IDisableOcean, IDisableFlight, IDisableSpawnsSubworld
     {
-        public override int Height => 222;
-        public override int Width => 822;
+        public override int Height => 300;
+        public override int Width => 2000;
         public override List<GenPass> Tasks => new List<GenPass>()
         {
-            new AntGeneration()
+            new NightlineGeneration()
         };
 
         public override void OnEnter()
@@ -30,6 +32,15 @@ namespace CalRemix.Core.Subworlds
         public override void Update()
         {
             base.Update();
+            Main.dayTime = false;
+            Main.time = Main.nightLength / 2;
+            if (!NPC.AnyNPCs(ModContent.NPCType<Car>()))
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC.NewNPC(new EntitySource_WorldEvent(), (Main.spawnTileX + 22) * 16, (Main.spawnTileY - 1) * 16, ModContent.NPCType<Car>());
+                }
+            }
         }
 
         public override void DrawMenu(GameTime gameTime)
@@ -44,37 +55,39 @@ namespace CalRemix.Core.Subworlds
 
         }
     }
-    public class AntGeneration : GenPass
+    public class NightlineGeneration : GenPass
     {
-        public AntGeneration() : base("Terrain", 1) { }
+        public NightlineGeneration() : base("Terrain", 1) { }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Generating terrain"; // Sets the text displayed for this pass
-            Main.worldSurface = Main.maxTilesY - 42; // Hides the underground layer just out of bounds
+            Main.worldSurface = Main.maxTilesY - 142; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
+            int concrete = 60;
 
             for (int i = 0; i < Main.maxTilesX; i++)
             {
-                for (int j = 0; j < Main.maxTilesY; j++)
+                for (int j = (int)Main.worldSurface; j < Main.maxTilesY; j++)
                 {
-                    WorldGen.PlaceWall(i, j, WallID.DiamondGemspark);
-
-                    if (j > (int)(Main.maxTilesY * 0.8f))
+                    if (i <= concrete && j < Main.worldSurface + 5)
                     {
-                        WorldGen.PlaceTile(i, j, TileID.DiamondGemspark);
+                        Main.tile[i, j].ResetToType(TileID.StoneSlab);
+                    }
+                    else
+                    {
+                        Main.tile[i, j].ResetToType(TileID.Asphalt);
                     }
                 }
             }
 
-            WorldGen.PlaceTile(Main.spawnTileX, Main.spawnTileY - 22, (ushort)ModContent.TileType<Ant>());
+            Main.spawnTileX = concrete - 3;
+            Main.spawnTileY = (int)Main.worldSurface - 1;
 
-            for (int i = -1; i < 1; i++)
-            {
-                WorldGen.PlaceTile(Main.spawnTileX + i, Main.spawnTileY + 1, (ushort)ModContent.TileType<AshenPlatform>());
-            }
+            WorldGen.PlaceObject((int)Main.spawnTileX - 10, (int)Main.spawnTileY, TileID.Lampposts);
+            WorldGen.PlaceObject((int)Main.spawnTileX - 6, (int)Main.spawnTileY, TileID.Benches);
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<AntDoor>());
+            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<NightlineDoor>());
         }
     }
 }

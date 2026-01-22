@@ -18,9 +18,11 @@ namespace CalRemix.Content.Items.Placeables
 
         public int PlaceStyle;
 
+        public ModTile door;
+
         public SubworldDoor(ModTile tile, int placeStyle = -1)
         {
-            TileID = tile.Type;
+            door = tile;
             PlaceStyle = placeStyle;
             NameOverride = tile.Name.Replace("Placed", "");
         }
@@ -37,7 +39,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = TileID;
+            Item.createTile = door.Type;
             Item.placeStyle = PlaceStyle == -1 ? Main.rand.Next(0, 3) : PlaceStyle;
         }
     }

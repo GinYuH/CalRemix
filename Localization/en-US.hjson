@@ -274,7 +274,7 @@ Mods: {
 
 				DialogueSpeed: {
 					Label: Helper Dialogue Speed
-					Tooltip: 
+					Tooltip:
 						'''
 						A multiplier for how long time-sensitive helper text lasts. 
 						A value of 10 will make text last 10 times as long.

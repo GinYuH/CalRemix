@@ -271,6 +271,16 @@ namespace CalRemix.Content.Tiles
 
         public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
+    public class NightlineDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/Car";
+        public override Subworld BoundSubworld => ModContent.GetInstance<NightlineSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.IndianRed;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
+    }
 
     public class EdisDoor : SubworldDoorPlaced
     {

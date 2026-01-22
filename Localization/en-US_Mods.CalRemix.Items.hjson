@@ -6511,3 +6511,10 @@ RoyalGuardianSword: {
 	DisplayName: Royal Guardian Sword
 	Tooltip: "'A grandious sword that originates from a dangerous zone'"
 }
+
+KnowledgeRajah.DisplayName: Rajah Rabbit
+
+NightlineDoor: {
+	DisplayName: Nightline Subworld Door
+	Tooltip: ""
+}
