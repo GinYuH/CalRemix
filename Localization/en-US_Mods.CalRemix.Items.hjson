@@ -5754,7 +5754,7 @@ NullBeacon: {
 }
 
 VoidWings: {
-	DisplayName: Void Wings
+	DisplayName: Condensed Void Wings
 	Tooltip:
 		'''
 		Horizontal speed: 13
