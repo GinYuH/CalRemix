@@ -1622,7 +1622,7 @@ namespace CalRemix.UI
             cooldownDuration = (int)(cooldown * 60);
             CooldownTime = 0;
 
-            messageDuration = (int)(duration * 60);
+            messageDuration = (int)(duration * 60 * CalRemixConfig.Instance.DialogueSpeed);
             TimeLeft = 0;
 
             DisplayOutsideInventory = displayOutsideInventory;
