@@ -38,14 +38,27 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void AI()
         {
-            //controlling timers
             Projectile.ai[0]++;
-            
+            if (Projectile.ai[1] == 1 && Projectile.ai[0] == 2)
+            {
+                Projectile.velocity *= 1.2f;
+                Projectile.velocity.Y -= 2.6f;
+            }
             if (Projectile.ai[0] == 20)
             {
-                readyToShoot = true;
+                {
+                    readyToShoot = true;
+                }
+                if (Projectile.ai[1] == 0)
+                {
+                    readyToShoot = true;
+                }
+                else
+                {
+                    Projectile.velocity *= 0.8f;
+                }
             }
-            if (readyToShoot)
+            if (readyToShoot && Projectile.ai[1] == 0)
             {
                 Projectile.ai[2]++;
                 Projectile.velocity *= 0.95f;
@@ -92,7 +105,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                     {
                         Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center,
                             Main.rand.Next(5,16) * Projectile.Center.DirectionTo(Main.MouseWorld).RotatedByRandom(MathHelper.ToRadians(14)),
-                            ModContent.ProjectileType<LookerBookTooth>(), 10, 1f, Main.myPlayer);
+                            ModContent.ProjectileType<LookerBookTooth>(), Projectile.damage / 4, 1f, Main.myPlayer);
                     }
                     Projectile.ai[2] = 0;
                     ending = true;
@@ -107,7 +120,8 @@ namespace CalRemix.Content.Projectiles.Weapons
 
             if (Projectile.ai[1] == 1)
             {
-                Projectile.rotation += 0.01f;
+                Projectile.rotation += 0.1f;
+                Projectile.velocity.Y += 0.1f;
             }
 
         }
@@ -122,6 +136,17 @@ namespace CalRemix.Content.Projectiles.Weapons
             {
                 Projectile.velocity.Y = -oldVelocity.Y;
             }
+            if (Projectile.ai[1] == 1)
+            {
+                if (readyToShoot)
+                {
+                    Projectile.Kill();
+                }
+                else
+                {
+                    Projectile.velocity.Y *= 1.1f;
+                }
+            }
             readyToShoot = true;
             return false;
         }
@@ -129,6 +154,17 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity *= -1;
+            if (Projectile.ai[1] == 1)
+            {
+                if (readyToShoot)
+                {
+                    Projectile.Kill();
+                }
+                else
+                {
+                    Projectile.velocity.Y *= 1.3f;
+                }
+            }
             readyToShoot = true;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

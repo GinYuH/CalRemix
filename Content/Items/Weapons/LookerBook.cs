@@ -11,7 +11,7 @@ using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class LookerBook : RogueWeapon
+	public class LookerBook : ModItem
 	{
         public override void SetDefaults() 
 		{
@@ -19,13 +19,13 @@ namespace CalRemix.Content.Items.Weapons
 			Item.height = 26;
             Item.rare = ItemRarityID.Green;
             Item.value = CalamityGlobalItem.RarityGreenBuyPrice;
-            Item.useTime = 30; 
-			Item.useAnimation = 15;
+            Item.useTime = 40; 
+			Item.useAnimation = 40;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 28;
+			Item.damage = 38;
 			Item.knockBack = 4.5f;
 			Item.noMelee = true;
             Item.noUseGraphic = true;

@@ -2751,17 +2751,6 @@ Weapons: {
 				Stealth strikes will make the sickle travel further and faster, and hit enemies more frequently
 				'''
 		}
-
-		LookerBook: {
-			DisplayName: Looker Book
-			Tooltip:
-				'''
-				Throws a living tome that fires bone fragments at enemies
-				The tome's contact damage benefits from ranged damage bonuses
-				Can be thrown with insufficient mana for bonus contact damage, but it doesn't shoot
-				Uses 40 mana
-				'''
-		}
 	}
 }
 
@@ -6522,3 +6511,15 @@ NightlineDoor: {
 	DisplayName: Nightline Subworld Door
 	Tooltip: ""
 }
+
+LookerBook: {
+	DisplayName: Looker Book
+	Tooltip:
+		'''
+		Uses 40 mana
+		Throws a living tome that fires bone fragments at enemies
+		The tome's contact damage benefits from ranged damage bonuses
+		Can be thrown with insufficient mana for bonus contact damage, but it doesn't shoot
+		'''
+}
+
