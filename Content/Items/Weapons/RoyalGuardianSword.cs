@@ -19,8 +19,8 @@ namespace CalRemix.Content.Items.Weapons
             Item.height = 64;
             Item.damage = 750;
             Item.DamageType = DamageClass.MeleeNoSpeed;
-            Item.useAnimation = 10;
-            Item.useTime = 10;
+            Item.useAnimation = 16;
+            Item.useTime = 16;
             Item.useTurn = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 8008.135f;
@@ -34,6 +34,26 @@ namespace CalRemix.Content.Items.Weapons
         public override void UseItemFrame(Player player)
         {
             player.itemLocation = (Vector2)player.HandPosition;
+        }
+
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
+
+        public override bool? UseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                Item.autoReuse = false;
+                Item.useTime = Item.useAnimation = 2;
+            }
+            else
+            {
+                Item.autoReuse = true;
+                Item.useTime = Item.useAnimation = 16;
+            }
+            return null;
         }
     }
 }
