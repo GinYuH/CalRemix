@@ -497,6 +497,13 @@ namespace CalRemix.Core
                 orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, (byte)SpriteEffects.FlipVertically);
             else if (Main.LocalPlayer.name == "jeb_")
                 orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, Main.DiscoColor, originX, originY, rotationSin, rotationCos, depth, effects);
+            else if (Main.LocalPlayer.name.ToLower().Contains("fabsol"))
+            {
+                Texture2D bloom = Request<Texture2D>("CalamityMod/Particles/LargeBloom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                if (destinationW + destinationH < 2000)
+                    orig(self, bloom, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, Color.White with { A = 0 }, originX, originY, rotationSin, rotationCos, depth, effects);
+                orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, effects);
+            }
             else
                 orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, effects);
         }
