@@ -12,7 +12,7 @@ namespace CalRemix.Core.VideoPlayer;
 
 public class TVDrawSystem : ModSystem
 {
-    private static List<TVTileEntity> _tvsToRender = [];
+    private static readonly List<TVTileEntity> _tvsToRender = [];
 
     public static List<TVTileEntity> GetActiveTVs() => _tvsToRender;
 

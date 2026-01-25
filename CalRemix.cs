@@ -230,6 +230,16 @@ namespace CalRemix
             LibVLCInstance?.Dispose();
             LibVLCInstance = null;
             _coreInitialized = false;
+
+            string tempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "TerrariaVideos", Name);
+            if (System.IO.Directory.Exists(tempDir))
+            {
+                try
+                {
+                    System.IO.Directory.Delete(tempDir, true);
+                }
+                catch { /* Ignore cleanup errors */ }
+            }
         }
 
         public override void PostSetupContent()

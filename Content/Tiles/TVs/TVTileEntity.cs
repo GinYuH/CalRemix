@@ -28,6 +28,8 @@ public class TVTileEntity : ModTileEntity
 
     private bool _hasStartedChannel = false;
 
+    private bool loadedIn = false;
+
     public int CurrentChannel
     {
         get => _currentChannel;
@@ -46,8 +48,13 @@ public class TVTileEntity : ModTileEntity
 
     public Point16 TilePosition { get; set; }
 
+    public Point16 MediaPlayerPosition { get; set; } = Point16.Zero;
+
     public VideoPlayerCore GetVideoPlayer()
     {
+        if(MediaPlayerPosition != Point16.Zero && TileEntity.TryGet<MediaPlayerEntity>(MediaPlayerPosition.X, MediaPlayerPosition.Y, out var entity))
+            return entity.player;
+
         var manager = ModContent.GetInstance<VideoChannelManager>();
         return manager?.GetChannelPlayer(CurrentChannel);
     }
@@ -55,22 +62,6 @@ public class TVTileEntity : ModTileEntity
     public string GetDebugInfo() =>
         $"TV Entity ID: {ID}, Position: {Position}, TilePosition: {TilePosition}, " +
         $"Channel: {CurrentChannel}, IsOn: {IsOn}, Volume: {Volume}";
-
-    /// <summary>
-    /// Switch to a different channel.
-    /// </summary>
-    public void SetChannel(int channelId)
-    {
-        if (channelId < VideoChannelManager.MIN_CHANNEL ||
-            channelId > VideoChannelManager.MAX_CHANNEL)
-        {
-            Main.NewText($"Invalid channel: {channelId}", Color.Red);
-            return;
-        }
-
-        CurrentChannel = channelId;
-        Main.NewText($"Switched to channel {channelId}", Color.Cyan);
-    }
 
     /// <summary>
     /// Handle channel change.
@@ -117,8 +108,31 @@ public class TVTileEntity : ModTileEntity
 
     public override void Update()
     {
+        if (!IsTileValidForEntity(Position.X, Position.Y))
+        {
+            Kill(Position.X, Position.Y);
+            return;
+        }
+
+        if (!loadedIn)
+        {
+            if (!TileEntity.TryGet<MediaPlayerEntity>(MediaPlayerPosition.X, MediaPlayerPosition.Y, out var entity))
+                MediaPlayerPosition = Point16.Zero;
+            else if (!entity.ConnectedTVs.Contains(Position))
+                entity.ConnectedTVs.Add(Position);
+
+            loadedIn = true;
+        }
+
         var manager = ModContent.GetInstance<VideoChannelManager>();
         if (manager == null) return;
+
+        if(MediaPlayerPosition != Point16.Zero)
+        {
+            Tile tile = Main.tile[MediaPlayerPosition];
+            if (!tile.HasTile || ModContent.GetModTile(tile.TileType) is not BaseMediaPlayerTile)
+                MediaPlayerPosition = Point16.Zero;
+        }
 
         if (!IsOn)
         {
@@ -130,7 +144,7 @@ public class TVTileEntity : ModTileEntity
             return;
         }
 
-        if (!manager.IsOverrideChannelActive() && VideoChannelManager.IsPresetChannel(CurrentChannel))
+        if (MediaPlayerPosition == Point16.Zero && !manager.IsOverrideChannelActive() && VideoChannelManager.IsPresetChannel(CurrentChannel))
         {
             var player = manager.GetChannelPlayer(CurrentChannel);
 
@@ -151,6 +165,8 @@ public class TVTileEntity : ModTileEntity
         tag["posY"] = TilePosition.Y;
         tag["isOn"] = IsOn;
         tag["volume"] = Volume;
+        tag["playerX"] = MediaPlayerPosition.X;
+        tag["playerY"] = MediaPlayerPosition.Y;
     }
 
     public override void LoadData(TagCompound tag)
@@ -159,6 +175,9 @@ public class TVTileEntity : ModTileEntity
         TilePosition = new Point16(tag.GetShort("posX"), tag.GetShort("posY"));
         IsOn = tag.GetBool("isOn");
         Volume = tag.GetInt("volume");
+        MediaPlayerPosition = new Point16(tag.GetShort("playerX"), tag.GetShort("playerY"));
+
+        loadedIn = false;
     }
 
     public override bool IsTileValidForEntity(int x, int y)
@@ -319,7 +338,5 @@ public class TVTileEntity : ModTileEntity
     {
         var manager = ModContent.GetInstance<VideoChannelManager>();
         manager?.StopChannelIfUnused(CurrentChannel);
-
-        base.OnKill();
     }
 }

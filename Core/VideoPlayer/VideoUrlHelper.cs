@@ -99,9 +99,6 @@ public static class VideoUrlHelper
             "reddit.com",
             "dailymotion.com",
             "facebook.com", "fb.watch",
-            
-            // Direct video files
-            ".mp4", ".webm", ".mkv", ".avi", ".mov", ".flv", ".m3u8"
         };
 
         string lowerUrl = url.ToLower();

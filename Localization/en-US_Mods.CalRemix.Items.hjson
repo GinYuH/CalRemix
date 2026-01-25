@@ -6000,3 +6000,25 @@ BoxTVItem: {
 	DisplayName: Box T V Item
 	Tooltip: ""
 }
+
+CordBundle: {
+	DisplayName: Cord Bundle
+	Tooltip: ""
+}
+
+CassettePlayerItem: {
+	DisplayName: Cassette Player Item
+	Tooltip: ""
+}
+
+Cassettes: {
+	PortedHimCassette: {
+		DisplayName: Ported Him Cassette
+		Tooltip: ""
+	}
+
+	HubrisCassette: {
+		DisplayName: Hubris Cassette
+		Tooltip: ""
+	}
+}

@@ -1,10 +1,14 @@
-﻿using CalRemix.Content.Tiles.TVs;
+﻿using CalamityMod;
+using CalRemix.Content.Tiles.TVs;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Channels;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using YoutubeExplode.Channels;
 
 namespace CalRemix.Core.VideoPlayer;
 
@@ -43,22 +47,13 @@ public class TVVolumeManager : ModSystem
     private void UpdateChannelVolumes(Player player)
     {
         var manager = ModContent.GetInstance<VideoChannelManager>();
-        if (manager == null) return;
+        if (manager == null) 
+            return;
 
-        // Check if override channel is active
-        bool overrideActive = manager.IsOverrideChannelActive();
-
-        if (overrideActive)
-        {
-            // When override is active, find the closest TV (any TV, regardless of channel)
-            // and use that distance to set the override channel volume
+        if (manager.IsOverrideChannelActive())
             UpdateOverrideChannelVolume(player, manager);
-        }
         else
-        {
-            // Normal channel volume management
             UpdateRegularChannelVolumes(player, manager);
-        }
     }
 
     /// <summary>
@@ -66,13 +61,73 @@ public class TVVolumeManager : ModSystem
     /// </summary>
     private void UpdateOverrideChannelVolume(Player player, VideoChannelManager manager)
     {
+        TVTileEntity closestTV = FindClosestTV(player, tvEntity => tvEntity.IsOn);
+
+        var overridePlayer = manager.GetChannelPlayer(VideoChannelManager.DEFAULT_CHANNEL);
+        if (overridePlayer == null || !overridePlayer.IsPlaying)
+            return;
+
+        if (closestTV != null)
+        {
+            float closestDistance = Vector2.Distance(player.Center, GetTVCenter(closestTV));
+            ApplyVolumeToPlayer(overridePlayer, closestTV, closestDistance, "Override Channel");
+        }
+        else
+            overridePlayer.SetMute(true);
+    }
+
+    /// <summary>
+    /// Update volume for regular channels (when override is NOT active).
+    /// </summary>
+    private void UpdateRegularChannelVolumes(Player player, VideoChannelManager manager)
+    {
+        var channelClosestTV = FindClosestTVPerChannel(player, tvEntity => tvEntity.IsOn);
+
+        foreach (var kvp in channelClosestTV)
+        {
+            int channelId = kvp.Key;
+            var (closestTV, distance) = kvp.Value;
+
+            var channelPlayer = manager.GetChannelPlayer(channelId);
+            if (channelPlayer == null || !channelPlayer.IsPlaying)
+                continue;
+
+            ApplyVolumeToPlayer(channelPlayer, closestTV, distance, $"Channel {channelId}");
+        }
+
+        // Mute channels that don't have any TVs on
+        MuteInactiveChannels(manager, channelClosestTV);
+
+        foreach(TileEntity te in TileEntity.ByID.Values)
+        {
+            if (te is not MediaPlayerEntity mpe)
+                continue;
+
+            if (!mpe.player.IsPlaying)
+                continue;
+
+            var closestTV = FindClosestTV(player, (TVTileEntity e) => e.MediaPlayerPosition == mpe.Position);
+            if (closestTV == null)
+            {
+                mpe.player.SetMute(true);
+                continue;
+            }
+            float closestDistance = Vector2.Distance(player.Center, GetTVCenter(closestTV));
+            ApplyVolumeToPlayer(mpe.player, closestTV, closestDistance, $"Media Player at {mpe.Position}");
+        }
+    }
+
+    /// <summary>
+    /// Find the closest TV that matches the filter condition.
+    /// </summary>
+    private static TVTileEntity FindClosestTV(Player player, Func<TVTileEntity, bool> filter)
+    {
         TVTileEntity closestTV = null;
         float closestDistance = float.MaxValue;
 
-        // Find the closest ON TV (any channel)
         foreach (var kvp in TileEntity.ByID)
         {
-            if (kvp.Value is not TVTileEntity tvEntity || !tvEntity.IsOn)
+            if (kvp.Value is not TVTileEntity tvEntity || !filter(tvEntity))
                 continue;
 
             Vector2 tvCenter = GetTVCenter(tvEntity);
@@ -85,116 +140,76 @@ public class TVVolumeManager : ModSystem
             }
         }
 
-        // Get the override channel player
-        var overridePlayer = manager.GetChannelPlayer(VideoChannelManager.DEFAULT_CHANNEL); // Will return override if active
-        if (overridePlayer == null || !overridePlayer.IsPlaying)
-            return;
-
-        if (closestTV != null)
-        {
-            int distanceVolume = CalculateVolumeFromDistance(closestDistance);
-            int targetVolume = (int)(distanceVolume * (closestTV.Volume / 100f));
-            targetVolume = Math.Clamp(targetVolume, 0, 100);
-
-            int currentVolume = overridePlayer.GetVolume();
-            int smoothedVolume = (int)(currentVolume * 0.7f + targetVolume * 0.3f);
-
-            if (Math.Abs(smoothedVolume - currentVolume) > 2)
-            {
-                overridePlayer.SetVolume(smoothedVolume);
-
-                if (_frameCounter % 120 == 0 && smoothedVolume > 0)
-                {
-                    CalRemix.instance.Logger.Debug(
-                        $"Override Channel: Volume {smoothedVolume}% " +
-                        $"(closest TV at {closestDistance:F0} units)"
-                    );
-                }
-            }
-
-            if (targetVolume > 0)
-                overridePlayer.SetMute(false);
-            else if (targetVolume == 0)
-                overridePlayer.SetMute(true);
-        }
-        else
-        {
-            // No TVs on, mute the override channel
-            overridePlayer.SetMute(true);
-        }
+        return closestTV;
     }
 
     /// <summary>
-    /// Update volume for regular channels (when override is NOT active).
+    /// Find the closest TV for each channel.
     /// </summary>
-    private void UpdateRegularChannelVolumes(Player player, VideoChannelManager manager)
+    private static Dictionary<int, (TVTileEntity TV, float Distance)> FindClosestTVPerChannel(Player player, Func<TVTileEntity, bool> filter)
     {
-        var channelClosestTV = new Dictionary<int, (TVTileEntity TV, float Distance, int TargetVolume)>();
+        var channelClosestTV = new Dictionary<int, (TVTileEntity TV, float Distance)>();
 
         foreach (var kvp in TileEntity.ByID)
         {
-            if (kvp.Value is not TVTileEntity tvEntity || !tvEntity.IsOn)
+            if (kvp.Value is not TVTileEntity tvEntity || !filter(tvEntity))
                 continue;
 
             int channelId = tvEntity.CurrentChannel;
-
             Vector2 tvCenter = GetTVCenter(tvEntity);
             float distance = Vector2.Distance(player.Center, tvCenter);
 
-            int distanceVolume = CalculateVolumeFromDistance(distance);
-            int targetVolume = (int)(distanceVolume * (tvEntity.Volume / 100f));
-            targetVolume = Math.Clamp(targetVolume, 0, 100);
+            if (!channelClosestTV.TryGetValue(channelId, out (TVTileEntity TV, float Distance) value) || distance < value.Distance)
+                channelClosestTV[channelId] = (tvEntity, distance);
+        }
 
-            if (!channelClosestTV.ContainsKey(channelId) ||
-                distance < channelClosestTV[channelId].Distance)
+        return channelClosestTV;
+    }
+
+    /// <summary>
+    /// Calculate and apply volume to a media player based on TV distance and settings.
+    /// </summary>
+    private void ApplyVolumeToPlayer(VideoPlayerCore player, TVTileEntity tv, float distance, string debugLabel)
+    {
+        int distanceVolume = CalculateVolumeFromDistance(distance);
+
+        int targetVolume = (int)(distanceVolume * (tv.Volume / 100f) * CalamityUtils.CircOutEasing(Main.soundVolume, 1));
+        targetVolume = Math.Clamp(targetVolume, 0, 100);
+
+        int currentVolume = player.GetVolume();
+        int smoothedVolume = (int)(currentVolume * 0.7f + targetVolume * 0.3f);
+
+        if (Math.Abs(smoothedVolume - currentVolume) > 2)
+        {
+            player.SetVolume(smoothedVolume);
+
+            if (_frameCounter % 120 == 0 && smoothedVolume > 0)
             {
-                channelClosestTV[channelId] = (tvEntity, distance, targetVolume);
+                CalRemix.instance.Logger.Debug(
+                    $"{debugLabel}: Volume {smoothedVolume}% " +
+                    $"(closest TV at {distance:F0} units)"
+                );
             }
         }
 
-        foreach (var kvp in channelClosestTV)
+        if (targetVolume > 0)
+            player.SetMute(false);
+        else
+            player.SetMute(true);
+    }
+
+    /// <summary>
+    /// Mute all channels that don't have active TVs.
+    /// </summary>
+    private static void MuteInactiveChannels(VideoChannelManager manager, Dictionary<int, (TVTileEntity TV, float Distance)> activeChannels)
+    {
+        for (int channelId = VideoChannelManager.MIN_CHANNEL; channelId <= VideoChannelManager.MAX_CHANNEL; channelId++)
         {
-            int channelId = kvp.Key;
-            var (closestTV, distance, targetVolume) = kvp.Value;
-
-            var channelPlayer = manager.GetChannelPlayer(channelId);
-            if (channelPlayer == null || !channelPlayer.IsPlaying)
-                continue;
-
-            int currentVolume = channelPlayer.GetVolume();
-
-            int smoothedVolume = (int)(currentVolume * 0.7f + targetVolume * 0.3f);
-
-            if (Math.Abs(smoothedVolume - currentVolume) > 2)
-            {
-                channelPlayer.SetVolume(smoothedVolume);
-
-                if (_frameCounter % 120 == 0 && smoothedVolume > 0)
-                {
-                    CalRemix.instance.Logger.Debug(
-                        $"Channel {channelId}: Volume {smoothedVolume}% " +
-                        $"(closest TV at {distance:F0} units)"
-                    );
-                }
-            }
-
-            if (targetVolume > 0)
-                channelPlayer.SetMute(false);
-            else if (targetVolume == 0)
-                channelPlayer.SetMute(true);
-        }
-
-        for (int channelId = VideoChannelManager.MIN_CHANNEL;
-             channelId <= VideoChannelManager.MAX_CHANNEL;
-             channelId++)
-        {
-            if (!channelClosestTV.ContainsKey(channelId))
+            if (!activeChannels.ContainsKey(channelId))
             {
                 var channelPlayer = manager.GetChannelPlayer(channelId);
                 if (channelPlayer != null && channelPlayer.IsPlaying)
-                {
                     channelPlayer.SetMute(true);
-                }
             }
         }
     }
@@ -204,9 +219,7 @@ public class TVVolumeManager : ModSystem
     /// </summary>
     private static Vector2 GetTVCenter(TVTileEntity tvEntity)
     {
-        if (TVTileEntity.TileData.TryGetValue(
-            Main.tile[tvEntity.Position.X, tvEntity.Position.Y].TileType,
-            out var tileInfo))
+        if (TVTileEntity.TileData.TryGetValue(Main.tile[tvEntity.Position.X, tvEntity.Position.Y].TileType, out var tileInfo))
         {
             return new Vector2(
                 (tvEntity.Position.X + tileInfo.TileSize.X / 2f) * 16f,
@@ -231,8 +244,7 @@ public class TVVolumeManager : ModSystem
         if (distance >= MAX_HEARING_DISTANCE)
             return 0;
 
-        float t = (distance - FULL_VOLUME_DISTANCE) /
-                 (MAX_HEARING_DISTANCE - FULL_VOLUME_DISTANCE);
+        float t = (distance - FULL_VOLUME_DISTANCE) / (MAX_HEARING_DISTANCE - FULL_VOLUME_DISTANCE);
 
         return (int)(100 * (1 - t));
     }

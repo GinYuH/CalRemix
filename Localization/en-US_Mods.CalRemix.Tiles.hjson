@@ -65,5 +65,6 @@ MincerPlaced.MapEntry: Mincer
 BabySealedPuppetPlaced.MapEntry: Baby Sealed Puppet
 ArmorPolisherPlaced.MapEntry: Armor Polisher Placed
 NowhereBlock.MapEntry: Nowhere Block
-FlatscreenTVTile.MapEntry: Flatscreen T V Tile
-BoxTVTile.MapEntry: Box T V Tile
+FlatscreenTVTile.MapEntry: Flatscreen TV Tile
+BoxTVTile.MapEntry: Box TV Tile
+CassettePlayer.MapEntry: Cassette Player

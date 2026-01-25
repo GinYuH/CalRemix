@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -22,6 +23,7 @@ public class VideoPlayerCore : IDisposable
     private MediaPlayer _mediaPlayer;
 
     private Media _currentMedia;
+
     private VideoFrameHandler _frameHandler;
     private Texture2D _videoTexture;
     private readonly TexturePool _texturePool = new();
@@ -213,23 +215,106 @@ public class VideoPlayerCore : IDisposable
 
         return false;
     }
-
-    public static bool IsMediaLink(string input) => input.Contains(".mp4") || input.Contains(".avi") || input.Contains(".mkv") || input.Contains(".mov");
+    
+    public static bool IsMediaLink(string input) => input.Contains(".mp4") || input.Contains(".avi") || input.Contains(".mkv") || input.Contains(".mov") || input.Contains(".flv") || input.Contains(".m3u8");
 
     private void PlayLocalFile(string filePath)
     {
         string resolvedPath = ResolveVideoPath(filePath);
-
         if (resolvedPath == null)
         {
             CalRemix.instance.Logger.Error($"Video file not found: {filePath}");
             return;
         }
-
         _isPreparing = true;
         _currentMedia = new Media(CalRemix.LibVLCInstance, resolvedPath, FromType.FromPath);
         _currentVideoPath = filePath;
         _mediaPlayer.Play(_currentMedia);
+    }
+
+    private static string ResolveVideoPath(string filePath)
+    {
+        if (System.IO.Path.IsPathRooted(filePath))
+        {
+            return System.IO.File.Exists(filePath) ? filePath : null;
+        }
+
+        string[] extensionsToTry = filePath.Contains('.')
+            ? [""]
+            : [".mp4", ".avi", ".mkv", ".mov"];
+
+        foreach (string ext in extensionsToTry)
+        {
+            string testPath = filePath + ext;
+
+            // Try to extract mod name from path (e.g., "ModName/path/to/video.mp4")
+            string[] pathParts = testPath.Split('/');
+            if (pathParts.Length > 1)
+            {
+                string modName = pathParts[0];
+                if (ModLoader.TryGetMod(modName, out Mod source))
+                {
+                    string relativePath = string.Join("/", pathParts.Skip(1));
+                    if (source.FileExists(relativePath))
+                    {
+                        // Extract to temp file since VLC needs a real file path
+                        return ExtractModFileToTemp(source, relativePath);
+                    }
+                }
+            }
+
+            // Check if it's in the current mod
+            if (CalRemix.instance.FileExists(testPath))
+            {
+                return ExtractModFileToTemp(CalRemix.instance, testPath);
+            }
+
+            // Try ModSources folder (for development)
+            string fullPath = ModLoader.ModPath.Replace("Mods", "ModSources") +
+                             System.IO.Path.DirectorySeparatorChar + testPath.Replace('/', '\\');
+            if (System.IO.File.Exists(fullPath))
+            {
+                return fullPath;
+            }
+
+            // Try as absolute path
+            if (System.IO.File.Exists(testPath))
+            {
+                return System.IO.Path.GetFullPath(testPath);
+            }
+        }
+        return null;
+    }
+
+    private static string ExtractModFileToTemp(Mod mod, string internalPath)
+    {
+        try
+        {
+            // Create a temp directory for extracted videos
+            string tempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "TerrariaVideos", mod.Name);
+            System.IO.Directory.CreateDirectory(tempDir);
+
+            // Create temp file path
+            string fileName = System.IO.Path.GetFileName(internalPath);
+            string tempPath = System.IO.Path.Combine(tempDir, fileName);
+
+            // Extract if not already extracted or if file is outdated
+            if (!System.IO.File.Exists(tempPath))
+            {
+                using (var stream = mod.GetFileStream(internalPath))
+                using (var fileStream = System.IO.File.Create(tempPath))
+                {
+                    stream.CopyTo(fileStream);
+                }
+            }
+
+            return tempPath;
+        }
+        catch (Exception ex)
+        {
+            CalRemix.instance.Logger.Error($"Failed to extract video file: {ex.Message}");
+            return null;
+        }
     }
 
     /// <summary>
@@ -590,65 +675,20 @@ public class VideoPlayerCore : IDisposable
 
             // Check if it's a supported video platform URL (YouTube, Twitch, Vimeo, etc.)
             if (VideoUrlHelper.IsSupportedVideoUrl(nextVideo))
-            {
                 PlayVideoUrlInternal(nextVideo);
-            }
             // Check if it's a local file path
             else if (IsFilePath(nextVideo))
-            {
                 PlayLocalFile(nextVideo);
-            }
             // Check if it's a direct media link
             else if (IsMediaLink(nextVideo))
-            {
                 PlayMediaUrlInternal(nextVideo);
-            }
             // Otherwise treat as YouTube search query
             else
-            {
                 PlayYouTubeSearchInternal(nextVideo, 0, 10);
-            }
         }
     }
 
-    private static string ResolveVideoPath(string filePath)
-    {
-        if (System.IO.Path.IsPathRooted(filePath))
-        {
-            return System.IO.File.Exists(filePath) ? filePath : null;
-        }
-
-        string[] extensionsToTry = filePath.Contains(".")
-            ? new[] { "" }
-            : new[] { ".mp4", ".avi", ".mkv", ".mov" };
-
-        foreach (string ext in extensionsToTry)
-        {
-            string testPath = filePath + ext;
-
-            string modPath = System.IO.Path.Combine(CalRemix.instance.GetType().Namespace, testPath);
-            string fullModPath = ModLoader.ModPath.Replace("Mods", "ModSources") +
-                                System.IO.Path.DirectorySeparatorChar + modPath;
-
-            if (System.IO.File.Exists(fullModPath))
-            {
-                return fullModPath;
-            }
-
-            string contentPath = System.IO.Path.Combine(ModLoader.ModPath, CalRemix.instance.Name, testPath);
-            if (System.IO.File.Exists(contentPath))
-            {
-                return contentPath;
-            }
-
-            if (System.IO.File.Exists(testPath))
-            {
-                return System.IO.Path.GetFullPath(testPath);
-            }
-        }
-
-        return null;
-    }
+    public void ClearVideoQueue() => _videoQueue.Clear();
 
     public void Pause() => _mediaPlayer?.SetPause(true);
     public void Resume() => _mediaPlayer?.SetPause(false);
