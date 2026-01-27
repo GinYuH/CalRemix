@@ -6498,7 +6498,7 @@ YellowMazeBrickWall: {
 
 RoyalGuardianSword: {
 	DisplayName: Royal Guardian Sword
-	Tooltip: 
+	Tooltip:
 		'''
 		<right> to swing as fast as you can click
 		'A grandious sword that originates from a dangerous zone'
@@ -6523,3 +6523,12 @@ LookerBook: {
 		'''
 }
 
+PrisonOpal: {
+	DisplayName: Prison Opal
+	Tooltip:
+		'''
+		Throw one at an NPC, even hostile ones, to store them inside
+		If an NPC is already stored, throwing it at a block will release it
+		Stored NPCs retain their health and some of their behaviour directly before being captured
+		'''
+}
