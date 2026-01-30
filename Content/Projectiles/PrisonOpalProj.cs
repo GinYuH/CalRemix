@@ -14,8 +14,6 @@ namespace CalRemix.Content.Projectiles
     {
         public override string Texture => "CalRemix/Content/Items/Tools/PrisonOpal";
 
-        public Player Owner => Main.player[Projectile.owner];
-
         public int NPCID = -1;
         public string NPCMod = "";
         public string ModNPCName = "";
