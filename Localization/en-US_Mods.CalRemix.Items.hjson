@@ -6486,3 +6486,8 @@ LookerBook: {
 		Can be thrown with insufficient mana for bonus contact damage, but it doesn't shoot
 		'''
 }
+
+RunnersEmblem: {
+	DisplayName: Runner's Emblem
+	Tooltip: Increases movement speed by 15%
+}

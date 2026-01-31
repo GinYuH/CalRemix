@@ -1721,6 +1721,7 @@ namespace CalRemix
             {
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CorruptionKey);
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CrimsonKey);
+                npcLoot.AddNormalOnly(ItemType<RunnersEmblem>(), 25);
             }
 
             // him
