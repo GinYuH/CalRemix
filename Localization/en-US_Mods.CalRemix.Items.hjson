@@ -3874,54 +3874,54 @@ Tooltips: {
 	Lightmix: Lightmix Dedicated Item
 	Stormbow: Stormbow
 	StormbowTip: Shoots arrows from the sky
-	CryoKeyRemix: Drops from Primal Aspids
-	EyeofDesolationRemix: Drops from Clamitas
+	CryoKey: Drops from Primal Aspids
+	EyeofDesolation: Drops from Clamitas
 	AbombinationOld: the Jungle
 	AbombinationNew: the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]
 	TorchRemix: Can be used as ammo for the Driftorcher
 	Minceable: Can be minced at the Mincer
-	PhantomicSoulArtifact: Judgement
-	GrandGelatinRemix:
+	PhantomicArtifact: Judgement
+	GrandGelatin:
 		'''
 		Reduces stealth costs by 3%
 		Increases wing flight time by 10%
 		Activating Rage will deal 50% of your health as damage
 		Activating Adrenaline will defile your soul
 		'''
-	AbsorberRemix: Your health is capped at 50% while the accessory is visable
-	SpongeRemix:
+	TheAbsorber: Your health is capped at 50% while the accessory is visable
+	TheSponge:
 		'''
 		Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi
 		Your health is capped at 50% while the accessory is visable
 		'''
-	AmbrosiaRemix: Effects of Honew Dew, Corrupt and Crimson Flasks, and increased mining speed and defense while underground
-	DivingGearRemix: Pacifies all normal ocean enemies
-	DivingSuitRemix:
+	AmbrosialAmpoule: Effects of Honew Dew, Corrupt and Crimson Flasks, and increased mining speed and defense while underground
+	AbyssalDivingGear: Pacifies all normal ocean enemies
+	AbyssalDivingSuit:
 		'''
 		Effects of Lumenous Amulet and Aquatic Emblem
 		Effects of Alluring Bait and Enchanted pearl while the accessory is visible
 		Reveals treasure while the accessory is visible
 		'''
-	AmalgamRemix:
+	TheAmalgam:
 		'''
 		Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution
 		You passively rain down brimstone flames and leave behind a trail of gas and bees
 		Attacks inflict Mushy
 		Mana Overloader effect while the accessory is visible
 		'''
-	CotbgRemix: Effects of Bloody Worm Scarf, Flesh Totem, and Bloodflare Core
-	NanotechRemix:
+	ChaliceOfTheBloodGod: Effects of Bloody Worm Scarf, Flesh Totem, and Bloodflare Core
+	Nanotech:
 		'''
 		Effects of Vampiric Talisman
 		22% increased luck
 		'''
-	AsgardRemix: Effects of Shield of the Ocean, Frost Barrier, and Marnite Repulsion Shield
-	VoidExtinctRemix: Effects of The Bee, Void of Calamity, Slagsplitter Pauldron, and Necklace of Vexation
-	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
-	HadalStewRemix: Grants a handful of combat buffs
-	SoulofCryogenRemix: Boosts Cold damage
-	MetalMonstrosityRemix: \'Just looking at it makes you feel ill...\'
-	WormholePotionRemix: "[c/B87333:Requires a fee of 5 copper!]"
+	AsgardsValor: Effects of Shield of the Ocean, Frost Barrier, and Marnite Repulsion Shield
+	VoidofExtinction: Effects of The Bee, Void of Calamity, Slagsplitter Pauldron, and Necklace of Vexation
+	DesertMedallion: Drops from Cnidrions after defeating the Wulfrum Excavator
+	HadalStew: Grants a handful of combat buffs
+	SoulofCryogen: Boosts Cold damage
+	MetalMonstrosity: \'Just looking at it makes you feel ill...\'
+	WormholePotion: "[c/B87333:Requires a fee of 5 copper!]"
 }
 
 DyeStats: {

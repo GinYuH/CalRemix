@@ -51,6 +51,7 @@ using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -1265,12 +1266,22 @@ namespace CalRemix
             return pfx == -1 ? PrefixType<FolvsPrefix>() : rand.NextBool(2) ? PrefixType<FolvsPrefix>() : pfx;
         }
 
+        public void AddRemixTooltip(Item i, int type, List<TooltipLine> tooltips)
+        {
+            if (i.type != type)
+                return;
+            string key = "Items.Tooltips.";
+            string name = ContentSamples.ItemsByType[type].ModItem.Name;
+            var line = new TooltipLine(Mod, name, LocalText(key + name).Value);
+            tooltips.Add(line);
+        }
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             string key = "Items.Tooltips.";
             if (devItem != string.Empty)
             {
-                string text = CalamityUtils.ColorMessage($"- {CalRemixHelper.LocalText($"{key}Lightmix")} ", Color.Crimson);
+                string text = CalamityUtils.ColorMessage($"- {LocalText($"{key}Lightmix")} ", Color.Crimson);
                 text += CalamityUtils.ColorMessage((devItem.Equals("Remix")) ? " " : $": {devItem} ", Color.Gold);
                 text += CalamityUtils.ColorMessage("-", Color.Crimson);
                 TooltipLine tip = new(Mod, "CalRemix:Dev", text);
@@ -1278,25 +1289,17 @@ namespace CalRemix
             }
             if (CalRemixWorld.aspids)
             {
-                if (item.type == ItemType<CryoKey>())
-                {
-                    var line = new TooltipLine(Mod, "CryoKeyRemix", CalRemixHelper.LocalText($"{key}CryoKeyRemix").Value);
-                    tooltips.Add(line);
-                }
+                AddRemixTooltip(item, ItemType<CryoKey>(), tooltips);
             }
             if (CalRemixWorld.clamitas)
             {
-                if (item.type == ItemType<EyeofDesolation>())
-                {
-                    var line = new TooltipLine(Mod, "EyeofDesolationRemix", CalRemixHelper.LocalText($"{key}EyeofDesolationRemix").Value);
-                    tooltips.Add(line);
-                }
+                AddRemixTooltip(item, ItemType<EyeofDesolation>(), tooltips);
             }
             if (CalRemixWorld.plaguetoggle)
             {
                 if (item.type == ItemType<Abombination>())
                 {
-                    tooltips.FindAndReplace(CalRemixHelper.LocalText($"{key}AbombinationOld").Value, CalRemixHelper.LocalText($"{key}AbombinationNew").Value);
+                    tooltips.FindAndReplace(LocalText($"{key}AbombinationOld").Value, LocalText($"{key}AbombinationNew").Value);
                 }
             }
             if (CalRemixWorld.fearmonger)
@@ -1342,97 +1345,44 @@ namespace CalRemix
             }
             if (Torch.Contains(item.type))
             {
-                var line = new TooltipLine(Mod, "TorchRemix", CalRemixHelper.LocalText($"{key}TorchRemix").Value);
+                var line = new TooltipLine(Mod, "TorchRemix", LocalText($"{key}TorchRemix").Value);
                 line.OverrideColor = Color.OrangeRed;
                 tooltips.Add(line);
             }
             if (MincerTE.minceables.ContainsKey(item.type))
             {
-                var line = new TooltipLine(Mod, "Minceable", CalRemixHelper.LocalText($"{key}Minceable").Value);
+                var line = new TooltipLine(Mod, "Minceable", LocalText($"{key}Minceable").Value);
                 line.OverrideColor = Color.IndianRed;
                 tooltips.Add(line);
             }
             if (item.type == ItemID.WormholePotion)
             {
-                var line = new TooltipLine(Mod, "WormholePotionRemix", CalRemixHelper.LocalText($"{key}WormholePotionRemix").Value);
+                var line = new TooltipLine(Mod, "WormholePotionRemix", LocalText($"{key}WormholePotionRemix").Value);
                 tooltips.Add(line);
             }
             if (CalRemixWorld.accReworks)
             {
-                if (item.type == ItemType<PhantomicArtifact>())
-                {
-                    var line = new TooltipLine(Mod, "PhantomicSoulArtifact", CalRemixHelper.LocalText($"{key}PhantomicSoulArtifact").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<Nanotech>())
-                {
-                    var line = new TooltipLine(Mod, "NanotechRemix", CalRemixHelper.LocalText($"{key}NanotechRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<ChaliceOfTheBloodGod>())
-                {
-                    var line = new TooltipLine(Mod, "CotbgRemix", CalRemixHelper.LocalText($"{key}CotbgRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<VoidofExtinction>())
-                {
-                    var line = new TooltipLine(Mod, "VoidExtinctRemix", CalRemixHelper.LocalText($"{key}VoidExtinctRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<GrandGelatin>())
-                {
-                    var line = new TooltipLine(Mod, "GrandGelatinRemix", CalRemixHelper.LocalText($"{key}GrandGelatinRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<TheAbsorber>())
-                {
-                    var line = new TooltipLine(Mod, "AbsorberRemix", CalRemixHelper.LocalText($"{key}AbsorberRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<TheSponge>())
-                {
-                    var line = new TooltipLine(Mod, "SpongeRemix", CalRemixHelper.LocalText($"{key}SpongeRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<AmbrosialAmpoule>())
-                {
-                    var line = new TooltipLine(Mod, "AmbrosiaRemix", CalRemixHelper.LocalText($"{key}AmbrosiaRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<AbyssalDivingGear>())
-                {
-                    var line = new TooltipLine(Mod, "DivingGearRemix", CalRemixHelper.LocalText($"{key}DivingGearRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<AbyssalDivingSuit>())
-                {
-                    var line = new TooltipLine(Mod, "DivingSuitRemix", CalRemixHelper.LocalText($"{key}DivingSuitRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<TheAmalgam>())
-                {
-                    var line = new TooltipLine(Mod, "AmalgamRemix", CalRemixHelper.LocalText($"{key}AmalgamRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<DesertMedallion>())
-                {
-                    var line = new TooltipLine(Mod, "MedallionRemix", CalRemixHelper.LocalText($"{key}MedallionRemix").Value);
-                    tooltips.Add(line);
-                }
-                if (item.type == ItemType<AsgardsValor>())
-                {
-                    var line = new TooltipLine(Mod, "AsgardnRemix", CalRemixHelper.LocalText($"{key}AsgardRemix").Value);
-                    tooltips.Add(line);
-                }
+                AddRemixTooltip(item, ItemType<PhantomicArtifact>(), tooltips);
+                AddRemixTooltip(item, ItemType<Nanotech>(), tooltips);
+                AddRemixTooltip(item, ItemType<ChaliceOfTheBloodGod>(), tooltips);
+                AddRemixTooltip(item, ItemType<VoidofExtinction>(), tooltips);
+                AddRemixTooltip(item, ItemType<GrandGelatin>(), tooltips);
+                AddRemixTooltip(item, ItemType<TheAbsorber>(), tooltips);
+                AddRemixTooltip(item, ItemType<TheSponge>(), tooltips);
+                AddRemixTooltip(item, ItemType<AmbrosialAmpoule>(), tooltips);
+                AddRemixTooltip(item, ItemType<AbyssalDivingGear>(), tooltips);
+                AddRemixTooltip(item, ItemType<AbyssalDivingSuit>(), tooltips);
+                AddRemixTooltip(item, ItemType<TheAmalgam>(), tooltips);
+                AddRemixTooltip(item, ItemType<DesertMedallion>(), tooltips);
+                AddRemixTooltip(item, ItemType<AsgardsValor>(), tooltips);
             }
             if (item.type == ItemType<HadalStew>())
             {
-                var line = new TooltipLine(Mod, "HadalStewRemix", CalRemixHelper.LocalText($"{key}HadalStewRemix").Value);
-                tooltips.Add(line);
+                AddRemixTooltip(item, ItemType<HadalStew>(), tooltips);
             }
             if (item.type == ItemType<SoulofCryogen>())
             {
-                var line = new TooltipLine(Mod, "SoulofCryogenRemix", CalamityUtils.ColorMessage(CalRemixHelper.LocalText($"{key}SoulofCryogenRemix").Value, Color.LightSkyBlue));
+                var line = new TooltipLine(Mod, "SoulofCryogenRemix", CalamityUtils.ColorMessage(LocalText($"{key}SoulofCryogenRemix").Value, Color.LightSkyBlue));
                 tooltips.Add(line);
             }
             if (item.type == ItemType<MetalMonstrosity>())
@@ -1450,54 +1400,53 @@ namespace CalRemix
                     }
                 }
 
-                var line = new TooltipLine(Mod, "MetalMonstrosityRemix", CalRemixHelper.LocalText($"{key}MetalMonstrosityRemix").Value);
-                tooltips.Insert(idx, line);
+                AddRemixTooltip(item, ItemType<MetalMonstrosity>(), tooltips);
             }
             if (CalRemixPlayer.dyeStats.ContainsKey(item.type) && CalRemixWorld.dyeStats)
             {
                 DyeStats stats = CalRemixPlayer.dyeStats[item.type];
                 string ret = "";
                 if (stats.red != 0)
-                    ret += $"[c/ff0000:{CalRemixHelper.LocalText($"Items.DyeStats.Red").Format(WhichIncrement(stats.red), Math.Abs(stats.red))}]\n";
+                    ret += $"[c/ff0000:{LocalText($"Items.DyeStats.Red").Format(WhichIncrement(stats.red), Math.Abs(stats.red))}]\n";
                 if (stats.orange != 0)
-                    ret += $"[c/ffa200:{CalRemixHelper.LocalText($"Items.DyeStats.Orange").Format(WhichIncrement(stats.orange), Math.Abs(stats.orange))}]\n";
+                    ret += $"[c/ffa200:{LocalText($"Items.DyeStats.Orange").Format(WhichIncrement(stats.orange), Math.Abs(stats.orange))}]\n";
                 if (stats.yellow != 0)
-                    ret += $"[c/ffff00:{CalRemixHelper.LocalText($"Items.DyeStats.Yellow").Format(WhichIncrement(stats.yellow), Math.Abs(stats.yellow))}]\n";
+                    ret += $"[c/ffff00:{LocalText($"Items.DyeStats.Yellow").Format(WhichIncrement(stats.yellow), Math.Abs(stats.yellow))}]\n";
                 if (stats.lime != 0)
-                    ret += $"[c/a2ff00:{CalRemixHelper.LocalText($"Items.DyeStats.Lime").Format(WhichIncrement(stats.lime), Math.Abs(stats.lime))}]\n";
+                    ret += $"[c/a2ff00:{LocalText($"Items.DyeStats.Lime").Format(WhichIncrement(stats.lime), Math.Abs(stats.lime))}]\n";
                 if (stats.green != 0)
-                    ret += $"[c/00ff00:{CalRemixHelper.LocalText($"Items.DyeStats.Green").Format(WhichIncrement(stats.green), Math.Abs(stats.green))}]\n";
+                    ret += $"[c/00ff00:{LocalText($"Items.DyeStats.Green").Format(WhichIncrement(stats.green), Math.Abs(stats.green))}]\n";
                 if (stats.cyan != 0)
-                    ret += $"[c/00ffff:{CalRemixHelper.LocalText($"Items.DyeStats.Cyan").Format(WhichIncrement(stats.cyan), Math.Abs(stats.cyan))}]\n";
+                    ret += $"[c/00ffff:{LocalText($"Items.DyeStats.Cyan").Format(WhichIncrement(stats.cyan), Math.Abs(stats.cyan))}]\n";
                 if (stats.teal != 0)
-                    ret += $"[c/008080:{CalRemixHelper.LocalText($"Items.DyeStats.Teal").Format(WhichIncrement(stats.teal), Math.Abs(stats.teal))}]\n";
+                    ret += $"[c/008080:{LocalText($"Items.DyeStats.Teal").Format(WhichIncrement(stats.teal), Math.Abs(stats.teal))}]\n";
                 if (stats.skyblue != 0)
-                    ret += $"[c/66a3ff:{CalRemixHelper.LocalText($"Items.DyeStats.SkyBlue").Format(WhichIncrement(stats.skyblue), Math.Abs(stats.skyblue) * 10)}]\n";
+                    ret += $"[c/66a3ff:{LocalText($"Items.DyeStats.SkyBlue").Format(WhichIncrement(stats.skyblue), Math.Abs(stats.skyblue) * 10)}]\n";
                 if (stats.blue != 0)
-                    ret += $"[c/0000ff:{CalRemixHelper.LocalText($"Items.DyeStats.Blue").Format(WhichIncrement(stats.blue), Math.Abs(stats.blue))}]\n";
+                    ret += $"[c/0000ff:{LocalText($"Items.DyeStats.Blue").Format(WhichIncrement(stats.blue), Math.Abs(stats.blue))}]\n";
                 if (stats.purple != 0)
-                    ret += $"[c/9400cf:{CalRemixHelper.LocalText($"Items.DyeStats.Purple").Format(WhichIncrement(stats.purple), Math.Abs(stats.purple))}]\n";
+                    ret += $"[c/9400cf:{LocalText($"Items.DyeStats.Purple").Format(WhichIncrement(stats.purple), Math.Abs(stats.purple))}]\n";
                 if (stats.violet != 0)
-                    ret += $"[c/ff00b7:{CalRemixHelper.LocalText($"Items.DyeStats.Violet").Format(WhichIncrement(stats.violet), Math.Abs(stats.violet))}]\n";
+                    ret += $"[c/ff00b7:{LocalText($"Items.DyeStats.Violet").Format(WhichIncrement(stats.violet), Math.Abs(stats.violet))}]\n";
                 if (stats.pink != 0)
-                    ret += $"[c/ff45a2:{CalRemixHelper.LocalText($"Items.DyeStats.Pink").Format(WhichIncrement(stats.pink), Math.Abs(stats.pink))}]\n";
+                    ret += $"[c/ff45a2:{LocalText($"Items.DyeStats.Pink").Format(WhichIncrement(stats.pink), Math.Abs(stats.pink))}]\n";
                 if (stats.brown != 0)
-                    ret += $"[c/7a4b00:{CalRemixHelper.LocalText($"Items.DyeStats.Brown").Format(WhichIncrement(stats.brown), Math.Abs(stats.brown))}]\n";
+                    ret += $"[c/7a4b00:{LocalText($"Items.DyeStats.Brown").Format(WhichIncrement(stats.brown), Math.Abs(stats.brown))}]\n";
                 if (stats.silver != 0)
-                    ret += $"[c/ffffff:{CalRemixHelper.LocalText($"Items.DyeStats.Silver").Format(WhichIncrement(stats.silver), Math.Abs(stats.silver))}]\n";
+                    ret += $"[c/ffffff:{LocalText($"Items.DyeStats.Silver").Format(WhichIncrement(stats.silver), Math.Abs(stats.silver))}]\n";
                 if (stats.black != 0)
-                    ret += $"[c/000000:{CalRemixHelper.LocalText($"Items.DyeStats.Black").Format(WhichIncrement(stats.black), Math.Abs(stats.black))}]\n";
+                    ret += $"[c/000000:{LocalText($"Items.DyeStats.Black").Format(WhichIncrement(stats.black), Math.Abs(stats.black))}]\n";
                 tooltips.Add(new TooltipLine(Mod, "DyeStats", ret));
             }
         }
         public static string WhichIncrement(int stat)
         {
             if (stat > 0)
-                return CalRemixHelper.LocalText("Items.DyeStats.Increment").Value;
+                return LocalText("Items.DyeStats.Increment").Value;
             else if (stat < 0)
-                return CalRemixHelper.LocalText("Items.DyeStats.Decrement").Value;
+                return LocalText("Items.DyeStats.Decrement").Value;
             else
-                return CalRemixHelper.LocalText("Items.DyeStats.NoChange").Value;
+                return LocalText("Items.DyeStats.NoChange").Value;
         }
     }
 }
