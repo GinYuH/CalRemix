@@ -22,7 +22,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.friendly = true;
             Projectile.timeLeft = 600;
             Projectile.extraUpdates = 1;
-            Projectile.penetrate = 2;
+            Projectile.penetrate = Main.rand.Next(1,3);
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
         }

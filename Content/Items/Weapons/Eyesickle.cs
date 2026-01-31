@@ -25,13 +25,14 @@ namespace CalRemix.Content.Items.Weapons
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
-			Item.damage = 28;
+			Item.damage = 42;
 			Item.knockBack = 4.5f; 
 			Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.shoot = ModContent.ProjectileType<EyesickleProj>();
-            Item.shootSpeed = 6;
+            Item.shootSpeed = 7.5f;
         }
+        public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] <= 0;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             CalamityPlayer calamityPlayer = player.Calamity();
