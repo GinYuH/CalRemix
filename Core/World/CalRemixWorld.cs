@@ -568,18 +568,10 @@ namespace CalRemix.Core.World
 
         public override void PreUpdateWorld()
         {
-            /*if (Main.LocalPlayer.controlUseItem)
+            if (Main.mouseLeft && Main.mouseLeftRelease)
             {
-                Point maus = Main.MouseWorld.ToTileCoordinates();
-                for (int i = maus.X - 5; i < maus.X + 5; i++)
-                {
-                    for (int j = maus.Y - 5; j < maus.Y + 5; j++)
-                    {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                        t.WallType = (ushort)ModContent.WallType<BlueMazeBrickWallPlaced>();
-                    }
-                }
-            }*/
+               // Fannetoids();
+            }
             if (worldLoadCounter < 180)
                 worldLoadCounter++;
             else
@@ -1071,6 +1063,13 @@ namespace CalRemix.Core.World
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
             var shiniesIndex = tasks.FindIndex(x => x.Name.Equals("Shinies"));
+            if (WorldGen.currentWorldSeed.ToLower() == "fanny")
+            {
+                tasks.Insert(tasks.FindIndex(x => x.Name.Equals("Grass")) - 1, new PassLegacy("Fanetoids", (progress, config) =>
+                {
+                    FannySeed.GenerateFannySeed();
+                }));
+            }
             tasks.Insert(
                 shiniesIndex + 1,
                 new PassLegacy(
@@ -1157,7 +1156,7 @@ namespace CalRemix.Core.World
                 }
                 AsbestosBiome.GenerateAllHouses();
             }));
-            int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
+            int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Sulphur Sea 2"));
             if (FinalIndex != -1)
             {
                 if (!stratusDungeonDisabled)
