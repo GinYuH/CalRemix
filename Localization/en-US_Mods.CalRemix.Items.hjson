@@ -6532,3 +6532,8 @@ PrisonOpal: {
 		Stored NPCs retain their health and some of their behaviour directly before being captured
 		'''
 }
+
+RunnersEmblem: {
+	DisplayName: Runner's Emblem
+	Tooltip: Increases movement speed by 15%
+}

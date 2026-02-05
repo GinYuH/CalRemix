@@ -861,7 +861,7 @@ namespace CalRemix
             }
             else if (item.type == ItemID.WallOfFleshBossBag)
             {
-
+                itemLoot.Add(ItemType<RunnersEmblem>(), 3);
             }
 
             // hm

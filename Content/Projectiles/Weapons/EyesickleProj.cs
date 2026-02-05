@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CalamityMod.Particles;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {
@@ -37,11 +38,11 @@ namespace CalRemix.Content.Projectiles.Weapons
             targetPos = Main.MouseWorld;
             if (Projectile.velocity.X >= 0)
             {
-                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(-30));
+                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(-60));
             }
             else
             {
-                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(30));
+                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(60));
             }
             
         }
@@ -56,6 +57,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             if (Projectile.velocity.LengthSquared() < 1 && !returning)
             {
                 returning = true;
+                Projectile.tileCollide = false;
             }
             if (Projectile.velocity.LengthSquared() < 7 && !speedySpin)
             {
@@ -109,7 +111,14 @@ namespace CalRemix.Content.Projectiles.Weapons
                 else
                 {
                     targetPos = Main.player[Projectile.owner].Center;
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.Center.AngleTo(targetPos).ToRotationVector2() * Projectile.velocity.Length(), 0.06f);
+                    if (Projectile.timeLeft < 200)
+                    {
+                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.Center.AngleTo(targetPos).ToRotationVector2() * Projectile.velocity.Length(), 0.15f);
+                    }
+                    else
+                    {
+                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.Center.AngleTo(targetPos).ToRotationVector2() * Projectile.velocity.Length(), 0.06f);
+                    }    
                 }
             }
             if (!returning && Projectile.velocity.LengthSquared() > 1)
@@ -141,6 +150,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             if (!returning)
             {
                 returning = true;
+                Projectile.tileCollide = false;
             }
             SoundEngine.PlaySound(SoundID.Item49 with { Pitch = Main.rand.Next(9, 12) / 10f }, Projectile.Center);
 
@@ -158,11 +168,11 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            SoundEngine.PlaySound(SoundID.Item49 with { Pitch = Main.rand.Next(80,106) / 100f }, Projectile.Center);
             if (!returning && !speedySpin)
             {
                 Projectile.velocity *= -1;
                 returning = true;
+                Projectile.tileCollide = false;
             }
             //hitstop thing
             if (speedySpin && Projectile.ai[1] == 0 && !isPaused)
@@ -170,6 +180,13 @@ namespace CalRemix.Content.Projectiles.Weapons
                 speedPrePause = Projectile.velocity;
                 Projectile.velocity = Vector2.Zero;
                 isPaused = true;
+                SoundEngine.PlaySound(SoundID.Item143 with { Pitch = Main.rand.Next(80, 106) / 100f }, Projectile.Center);
+                Particle spark2 = new GlowSparkParticle(Projectile.Center, new Vector2(0.1f, 0.1f).RotatedByRandom(MathHelper.ToRadians(360)), false, 12, Main.rand.NextFloat(0.05f, 0.09f), Color.LightYellow * 0.7f, new Vector2(1f, 0.1f), true);
+                GeneralParticleHandler.SpawnParticle(spark2);
+            }
+            else
+            {
+                SoundEngine.PlaySound(SoundID.Item49 with { Pitch = Main.rand.Next(80, 106) / 100f }, Projectile.Center);
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

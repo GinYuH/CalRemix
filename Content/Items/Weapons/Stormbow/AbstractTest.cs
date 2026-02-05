@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using CalamityMod;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
 using System;
@@ -76,7 +77,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             ));
             */
             //MinistructureList.WoodenLamppost.Place(point);
-            PlaceWIPCave(point);
+            //PlaceWIPCave(point);
+            PlaceRuin(point);
             //PlaceOtherSpiritModThing(point);
             //PlaceFish_Flying(point);
 
@@ -421,6 +423,50 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
 
                 }
             }
+        }
+
+        public static void PlaceRuin(Point location) 
+        {
+            // set up area to gen in
+            ShapeData ruinShapeData = new ShapeData();
+            int ruinRadius = Main.rand.Next(8, 12);
+            WorldUtils.Gen(location, new Shapes.Circle(ruinRadius), new Actions.Blank().Output(ruinShapeData));
+
+            // place bricks
+            WorldUtils.Gen(location, new ModShapes.All(ruinShapeData), Actions.Chain(
+                new Actions.Custom((i, j, args) => {
+                    if (!Main.tile[i, j - 1].HasTile && Main.tile[i, j].IsTileSolid() && !Main.rand.NextBool(5))
+                    {
+                        if (Main.rand.NextBool(4))
+                            Main.tile[i, j].TileType = TileID.CrackedBlueDungeonBrick;
+                        else
+                            Main.tile[i, j].TileType = TileID.BlueDungeonBrick;
+                        SquareTileFrame(i, j);
+                    }
+                    return true;
+                })
+            ));
+
+            // place pots
+            WorldUtils.Gen(location, new ModShapes.All(ruinShapeData), Actions.Chain(
+                new Actions.Custom((i, j, args) => { // i forgot if theres a better way to do this
+                    if (!Main.tile[i, j - 1].HasTile &&
+                    !Main.tile[i + 1, j - 1].HasTile &&
+                    !Main.tile[i, j - 2].HasTile &&
+                    !Main.tile[i + 1, j - 2].HasTile &&
+                    Main.tile[i, j].IsTileSolid() &&
+                    Main.tile[i + 1, j].IsTileSolid() &&
+                    Main.tile[i, j].Slope == SlopeType.Solid &&
+                    Main.rand.NextBool(3))
+                    {
+                        PlaceObject(i, j - 1, TileID.FishingCrate);
+                    }
+                    return true;
+                })
+            ));
+
+            // place third thing
+
         }
 
         public static void PlaceWIPCave(Point origin)
