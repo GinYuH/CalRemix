@@ -1011,7 +1011,7 @@ namespace CalRemix
                 GetModItem(ItemType<VoidofExtinction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<ToxicHeart>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<AlchemicalFlask>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<AlchemicalDecanter>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<TheEvolution>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<Affliction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<CorrosiveSpine>()).UpdateAccessory(player, hideVisual);

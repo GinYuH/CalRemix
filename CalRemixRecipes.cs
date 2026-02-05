@@ -632,7 +632,7 @@ namespace CalRemix
                     recipe.AddIngredient<LeviathanAmbergris>();
                     recipe.AddIngredient(ItemID.SporeSac);
                     recipe.AddIngredient<TheCamper>();
-                    recipe.AddIngredient<AlchemicalFlask>();
+                    recipe.AddIngredient<AlchemicalDecanter>();
                     recipe.AddIngredient<ToxicHeart>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();
