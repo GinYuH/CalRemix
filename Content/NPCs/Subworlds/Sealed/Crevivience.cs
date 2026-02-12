@@ -37,6 +37,7 @@ using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalamityMod.Physics;
 using System.Linq;
 using Steamworks;
+using ReLogic.Content;
 
 // So like, technically she's not in the Sealed Dimension, but Horizon is a mechanical extension of it so...
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
@@ -159,11 +160,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.velocity = Main.MouseWorld - NPC.Center;
             if (NPC.velocity.X > 0)
             {
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.ToRadians(15), 0.2f);
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.ToRadians(45), 0.2f);
             }
             else if (NPC.velocity.X < 0)
             {
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.ToRadians(15), 0.2f);
+                NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.ToRadians(45), 0.2f);
             }
             else
             {
@@ -274,6 +275,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
         {
             Texture2D tex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Crevivience").Value;
+            Asset<Texture2D> test = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceBodyTest");
             Texture2D sigils = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceBodySigils").Value;
             Texture2D ring = Request<Texture2D>("CalamityMod/Particles/BloomRing").Value;
             Texture2D bloom = Request<Texture2D>("CalamityMod/Particles/Light").Value;
@@ -290,7 +292,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             for (int i = 0; i < 12; i++)
             {
                 float ribbonCompletionRatio = i / 12f;
-                float wrappedAngularOffset = MathHelper.WrapAngle(NPC.oldRot[i + 1] - currentSegmentRotation) * 0.1f;
+                float wrappedAngularOffset = MathHelper.WrapAngle(NPC.oldRot[i + 1] - currentSegmentRotation) * 0.3f;
 
                 Vector2 ribbonSegmentOffset = Vector2.UnitY.RotatedBy(currentSegmentRotation) * ribbonCompletionRatio * 500;
                 ribbonDrawPositions.Add(NPC.Center + ribbonSegmentOffset + ribbonOffset);
@@ -303,7 +305,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             Vector2 startPos = NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * 120;
             Vector2 endPos = ribbonDrawPositions[^2];
-
             for (int i = 0; i < 3; i++)
             {
                 for (int j = -1; j <= 1; j += 2)
@@ -322,15 +323,43 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
                         Rectangle wingSedRect = new Rectangle(0, 0, wingSize, wingSize);
 
-                        spriteBatch.Draw(TextureAssets.MagicPixel.Value, segPos - screenPos, wingSedRect, Color.PaleGoldenrod * 0.1f * NPC.Opacity, 0, wingSedRect.Size() / 2, 1, 0, 0);
+                        //spriteBatch.Draw(TextureAssets.MagicPixel.Value, segPos - screenPos, wingSedRect, Color.PaleGoldenrod * 0.1f * NPC.Opacity, 0, wingSedRect.Size() / 2, 1, 0, 0);
                     }
-                    PrimitiveRenderer.RenderTrail(wingPoints, new((float f, Vector2 v) => (1 - f) * windWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
-                    PrimitiveRenderer.RenderTrail(wingPoints, new((float f, Vector2 v) => (1 - f) * windWidth, (float f, Vector2 v) => Color.PaleGoldenrod * NPC.Opacity));
+                    //PrimitiveRenderer.RenderTrail(wingPoints, new((float f, Vector2 v) => (1 - f) * windWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
+                    //PrimitiveRenderer.RenderTrail(wingPoints, new((float f, Vector2 v) => (1 - f) * windWidth, (float f, Vector2 v) => Color.PaleGoldenrod * NPC.Opacity));
                 }
             }
 
-            PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
-            PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth, (float f, Vector2 v) => Color.PaleGoldenrod * NPC.Opacity));
+            //PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
+
+
+            // Set shader parameters.
+            Vector2 segmentAreaTopLeft = Vector2.One * 999999f;
+            Vector2 segmentAreaTopRight = Vector2.Zero;
+            Vector2[] segmentPositions = ribbonDrawPositions.ToArray();
+
+            for (int i = 0; i < segmentPositions.Length; i++)
+            {
+                if (segmentAreaTopLeft.X > segmentPositions[i].X)
+                    segmentAreaTopLeft.X = segmentPositions[i].X;
+                if (segmentAreaTopLeft.Y > segmentPositions[i].Y)
+                    segmentAreaTopLeft.Y = segmentPositions[i].Y;
+
+                if (segmentAreaTopRight.X < segmentPositions[i].X)
+                    segmentAreaTopRight.X = segmentPositions[i].X;
+                if (segmentAreaTopRight.Y < segmentPositions[i].Y)
+                    segmentAreaTopRight.Y = segmentPositions[i].Y;
+            }
+            Vector2 primitiveArea = new Vector2(test.Value.Width, 0);
+            GameShaders.Misc["CalamityMod:PrimitiveTexture"].SetShaderTexture(test);
+            GameShaders.Misc["CalamityMod:PrimitiveTexture"].Shader.Parameters["uPrimitiveSize"].SetValue(primitiveArea);
+            //GameShaders.Misc["CalamityMod:PrimitiveTexture"].Shader.Parameters["flipVertically"].SetValue(NPC.velocity.X > 0f);
+            Main.instance.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((_, _) => 60, (_, _) => Color.White, pixelate: false, shader: GameShaders.Misc["CalamityMod:PrimitiveTexture"]), 80);
+
+
+            //PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
+            //PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth, (float f, Vector2 v) => Color.PaleGoldenrod * NPC.Opacity));
 
             spriteBatch.Draw(tex, NPC.Center - screenPos, null, Color.White * NPC.Opacity, NPC.rotation, tex.Size() / 2, NPC.scale, 0, 0);
             spriteBatch.Draw(bloom, eyePos, null, new Color(194, 175, 189) * NPC.Opacity, NPC.rotation, bloom.Size() / 2, NPC.scale * 1.6f * eyeScale, 0, 0);
@@ -355,7 +384,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 };
                 Vector2 finalPos = Vector2.Lerp(startPos, endPos, i / 6f);
                 Vector2 upPos = Vector2.Lerp(startPos, endPos, i / 6f - 0.2f);
-                spriteBatch.Draw(sigils, finalPos - screenPos, newR, Color.White * NPC.Opacity, finalPos.DirectionTo(upPos).ToRotation() + MathHelper.PiOver2, newR.Size() / 2, NPC.scale, 0, 0);
+                //spriteBatch.Draw(sigils, finalPos - screenPos, newR, Color.White * NPC.Opacity, finalPos.DirectionTo(upPos).ToRotation() + MathHelper.PiOver2, newR.Size() / 2, NPC.scale, 0, 0);
             }
             spriteBatch.ExitShaderRegion();
             if (NPC.Opacity > 0)
@@ -370,10 +399,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         poses.Add(ribPos);
                         if (j == handle.SegmentCount - 1)
                         {
-                            spriteBatch.Draw(bloom, ribPos - screenPos, null, new Color(254, 152, 232) * NPC.Opacity, 0, bloom.Size() / 2, NPC.scale * 0.8f, 0, 0);
+                            //spriteBatch.Draw(bloom, ribPos - screenPos, null, new Color(254, 152, 232) * NPC.Opacity, 0, bloom.Size() / 2, NPC.scale * 0.8f, 0, 0);
                         }
                     }
-                    PrimitiveRenderer.RenderTrail(poses, new((float f, Vector2 v) => 3, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
+                    //PrimitiveRenderer.RenderTrail(poses, new((float f, Vector2 v) => 3, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
                 }
             }
 
