@@ -6548,12 +6548,12 @@ Aeroluminescence: {
 		'''
 }
 
-LuckyHorseshackle: {
-	DisplayName: Lucky Horseshackle
+IronHorseshoe: {
+	DisplayName: Iron Horseshoe
 	Tooltip:
 		'''
 		Negates fall damage
-		'Said to bring good fortune and keep 1 or less damage at bay'
+		'Said to bring good fortune and keep around 0.5 damage at bay'
 		'''
 }
 

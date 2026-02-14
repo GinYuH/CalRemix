@@ -5,7 +5,7 @@ using CalamityMod.Items;
 
 namespace CalRemix.Content.Items.Accessories
 {
-    public class LuckyHorseshackle : ModItem
+    public class IronHorseshoe : ModItem
     {
         public override void SetDefaults()
         {
