@@ -5243,7 +5243,7 @@ NeonDust: {
 
 Veinroot: {
 	DisplayName: Veinroot
-	Tooltip: As much of a delicacy as it is a useful fillament
+	Tooltip: As much of a delicacy as it is a useful filament
 }
 
 CritterChip: {
@@ -5263,12 +5263,12 @@ MonorianGemShards: {
 
 MonorianGem: {
 	DisplayName: Monorian Gem
-	Tooltip: Fires monorian gemstones at extremely fast speeds
+	Tooltip: Fires monorian gemstones at extremely high speeds
 }
 
 NauseatingPowder: {
 	DisplayName: Nauseating Powder
-	Tooltip: An assortment of powders that can make many go mad
+	Tooltip: An assortment of powders that could make many go mad
 }
 
 Delirium: {
@@ -5282,7 +5282,7 @@ SoftScarf: {
 		'''
 		Causes Rage to always generate
 		Rage is automatically activated when at max
-		Rage duration is decremented at a slower rate
+		Rage is decremented at a slower rate while in use
 		'''
 }
 
@@ -5295,8 +5295,8 @@ ArchRaptierre: {
 	DisplayName: Arch Raptierre
 	Tooltip:
 		'''
-		Strikes downwards 5 icicles for each swing
-		<right> to freeze nearby enemies
+		Calls down 5 icicles for each swing
+		Press <right> to freeze nearby enemies
 		'''
 }
 
@@ -5304,8 +5304,8 @@ ArcticRapier: {
 	DisplayName: Arctic Rapier
 	Tooltip:
 		'''
-		Strikes downwards 5 icicles for each swing
-		<right> to freeze nearby enemies
+		Calls down 5 icicles for each swing
+		Press <right> to freeze nearby enemies
 		'''
 }
 
@@ -5313,8 +5313,8 @@ HeavenReaper: {
 	DisplayName: Heaven Reaper
 	Tooltip:
 		'''
-		Flings out a spread of auric probes which slow down to a stop
-		Hitting a probe with another weapon's projectile causes the probe to detonate into a massive explosion
+		Flings out a spread of auric probes which slow to a stop
+		Hitting a probe with a friendly projectile causes it to explode violently
 		'''
 }
 
@@ -5325,7 +5325,7 @@ Astrogel: {
 
 Gastrogel: {
 	DisplayName: Gastrogel
-	Tooltip: Splatters of Gastropod hide that works as an adhesive
+	Tooltip: Splatters of Gastropod hide that work as an adhesive
 }
 
 GastropodEye: {
@@ -6536,4 +6536,37 @@ PrisonOpal: {
 RunnersEmblem: {
 	DisplayName: Runner's Emblem
 	Tooltip: Increases movement speed by 15%
+}
+
+Aeroluminescence: {
+	DisplayName: Aeroluminescence
+	Tooltip:
+		'''
+		Increases movement speed, flight time and acceleration
+		You slowly recover flight time while in the air if you are not flying or gliding
+		Provides light when worn
+		'''
+}
+
+LuckyHorseshackle: {
+	DisplayName: Lucky Horseshackle
+	Tooltip:
+		'''
+		Negates fall damage
+		'Said to bring good fortune and keep 1 or less damage at bay'
+		'''
+}
+
+Resmellinator: {
+	DisplayName: Resmellinator
+	Tooltip:
+		'''
+		Enemies are less likely to target you
+		5% increased damage and critical strike chance
+		Your health cannot exceed 50% of its maximum
+		Increases length of invincibility after taking damage
+		Provides powerful special life regen to heal you for 7.5 HP/s
+		All normal life regen is negated and converted into damage
+		Current damage boost..? Who knows!
+		'''
 }
