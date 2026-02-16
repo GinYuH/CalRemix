@@ -13,7 +13,6 @@ namespace CalRemix.Content.Projectiles.Hostile
 {
 	public class ArkhalisProj : ModProjectile
 	{
-		private bool stopeh = false;
 		public override string Texture => $"Terraria/Images/Item_{ItemID.Arkhalis}";
 
         public override void SetStaticDefaults()
@@ -29,7 +28,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = false;
 			Projectile.hostile = true;
-			Projectile.aiStyle = 2;
+			Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
 			Projectile.alpha = 150;
 			Projectile.timeLeft = 600;
 			AIType = ProjectileID.ThrowingKnife;

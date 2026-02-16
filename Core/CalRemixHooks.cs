@@ -1,53 +1,59 @@
-﻿using static Terraria.ModLoader.ModContent;
-using Terraria;
-using Terraria.ModLoader;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
-using System.Reflection;
-using CalRemix.Core.Subworlds;
-using CalRemix.UI;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using ReLogic.Utilities;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.UI;
-using CalamityMod;
+﻿using CalamityMod;
+using CalamityMod.Events;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.NPCs.Cryogen;
+using CalamityMod.NPCs.HiveMind;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.TownNPCs;
+using CalamityMod.World;
+using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.ZAccessories;
+using CalRemix.Content.NPCs.Bosses.BossChanges.Twins;
 using CalRemix.Content.NPCs.Bosses.Hydrogen;
 using CalRemix.Content.NPCs.Eclipse;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
-using CalRemix.Core.World;
-using Terraria.GameContent.UI.States;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader.UI;
-using System.IO;
-using CalRemix.UI.Anomaly109;
-using CalamityMod.NPCs.HiveMind;
-using CalamityMod.Events;
-using CalamityMod.NPCs.TownNPCs;
-using CalamityMod.NPCs.Perforator;
-using CalRemix.UI.Title;
-using CalRemix.Core.Scenes;
-using CalRemix.World;
-using MonoMod.RuntimeDetour;
-using CalRemix.Content.Items.ZAccessories;
-using CalamityMod.Items.Weapons.Rogue;
-using CalRemix.Content.Items.Weapons;
-using System.Diagnostics;
-using Terraria.GameContent.Liquid;
-using Terraria.Graphics.Light;
-using SubworldLibrary;
-using CalRemix.Content.Tiles;
-using CalRemix.Content.Items.Armor;
-using CalRemix.Content.Tiles.Subworlds.Horizon;
-using System.Threading.Tasks.Dataflow;
-using CalRemix.Content.Prefixes;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
+using CalRemix.Content.Prefixes;
+using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.Horizon;
+using CalRemix.Core.Scenes;
+using CalRemix.Core.Subworlds;
+using CalRemix.Core.World;
+using CalRemix.UI;
+using CalRemix.UI.Anomaly109;
+using CalRemix.UI.Title;
+using CalRemix.World;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using MonoMod.RuntimeDetour;
+using ReLogic.Utilities;
+using SubworldLibrary;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks.Dataflow;
+using Terraria;
+using Terraria.Audio;
+using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Achievements;
+using Terraria.GameContent.Liquid;
+using Terraria.GameContent.UI.Elements;
+using Terraria.GameContent.UI.States;
+using Terraria.Graphics.Light;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.UI;
+using Terraria.UI;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Core
 {
@@ -95,7 +101,7 @@ namespace CalRemix.Core
 
             IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
             IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
-            
+
             IL_UIWorldCreation.AddWorldSizeOptions += ReplaceWorldSelectionSizeDescriptions;
             //IL_NPC.SpawnNPC += NewSpawnNPC;
 
@@ -113,14 +119,19 @@ namespace CalRemix.Core
             On_Main.DrawBlack += FixSubworldDrawBlack;
             On_WorldGen.oceanDepths += DisableOceanSubworld;
             On_Main.DrawPlayers_AfterProjectiles += DrawGrass;
-            On_Item.Prefix += FolvsPrefix;
+            On_Item.Prefix += FolvsPrefix; 
+            On_NPC.SpawnBoss += TripletsSpawnTextOverride;
+            On_NPC.DoDeathEvents_BeforeLoot += PreventFoveanatorDefeatMessageIfNotKilledLast;
+            On_NPC.DoDeathEvents_CelebrateBossDeath += TripletsDefeatTextOverride;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
-            
+            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedRetinazerAI += DisableRevRetinazer;
+            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedSpazmatismAI += DisableRevSpazmatism;
+
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
             schematicEntityHook = new Hook(schematicEntityMethod, RemixSchematicEntities);
@@ -154,6 +165,84 @@ namespace CalRemix.Core
             }
             return self.prefix == PrefixType<FolvsPrefix>() ? true : ret;
         }
+
+        #region Revengeance Master Mode Twins Shenanigans
+
+        public static bool DisableRevSpazmatism(On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.orig_BuffedSpazmatismAI orig, object guy, object mod)
+        {
+            if (CalRemixWorld.bossAdditions)
+                return false;
+            else
+                return orig(guy, mod);
+        }
+
+        public static bool DisableRevRetinazer(On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.orig_BuffedRetinazerAI orig, object guy, object mod)
+        {
+            if (CalRemixWorld.bossAdditions)
+                return false;
+            else
+                return orig(guy, mod);
+        }
+
+        public static void TripletsSpawnTextOverride(On_NPC.orig_SpawnBoss orig, int x, int y, int type, int targetPlayerIndex)
+        {
+            if (CalRemixWorld.bossAdditions && type == NPCID.Retinazer)
+            {
+                int retinazerIndex = NPC.NewNPC(NPC.GetBossSpawnSource(targetPlayerIndex), x, y, type, 1);
+                if (retinazerIndex == 200)
+                {
+                    return;
+                }
+                Main.npc[retinazerIndex].target = targetPlayerIndex;
+                Main.npc[retinazerIndex].timeLeft *= 20;
+
+                if (Main.dedServ && retinazerIndex < 200)
+                {
+                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, retinazerIndex);
+                }
+
+                AchievementsHelper.CheckMechaMayhem();
+
+                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.TripletsBossText", new Color(175, 75, 255));
+                return;
+            }
+            else
+            {
+                orig(x, y, type, targetPlayerIndex);
+            }
+        }
+
+        public static void PreventFoveanatorDefeatMessageIfNotKilledLast(On_NPC.orig_DoDeathEvents_BeforeLoot orig, NPC self, Player closestPlayer)
+        {
+            if (CalRemixWorld.bossAdditions && self.type == ModContent.NPCType<Foveanator>() && (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)))
+            {
+                self.value = 0f;
+                self.boss = false;
+                return;
+            }
+            else
+            {
+                orig(self, closestPlayer);
+            }
+        }
+
+        public static void TripletsDefeatTextOverride(On_NPC.orig_DoDeathEvents_CelebrateBossDeath orig, NPC self, string typeName)
+        {
+            bool correctNPCType = self.type == NPCID.Retinazer || self.type == NPCID.Spazmatism || self.type == ModContent.NPCType<Foveanator>();
+            if (CalRemixWorld.bossAdditions && correctNPCType)
+            {
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue("Announcement.HasBeenDefeated_Plural", CalRemixHelper.LocalText("StatusText.TripletsDefeatName").Value), 175, 75, 255);
+                else if (Main.dedServ)
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasBeenDefeated_Plural", NetworkText.FromKey("Mods.CalRemix.StatusText.TripletsDefeatName")), new Color(175, 75, 255));
+                return;
+            }
+            else
+            {
+                orig(self, typeName);
+            }
+        }
+        #endregion
 
         public static void DrawGrass(On_Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
         {
@@ -307,7 +396,7 @@ namespace CalRemix.Core
                             bool notBrightEnough = brightness <= brightnessThreshold && (liquidAmount < 250 || WorldGen.SolidTile(tile) || (liquidAmount >= 200 && brightness == 0f));
                             bool opaqueTile = tile.HasTile && Main.tileBlockLight[tile.TileType] && (!tile.IsTileInvisible || showInvisibleWalls);
                             bool opaqueWall = !WallID.Sets.Transparent[tile.WallType] && (!tile.IsWallInvisible || showInvisibleWalls);
-                            if (!notBrightEnough || (!opaqueWall && !opaqueTile) || (!Main.drawToScreen && LiquidRenderer.Instance.HasFullWater(j, i) && tile.WallType == 0 && !tile.IsHalfBlock && !((double)i <= Main.worldSurface)))
+                            if (!notBrightEnough || (!opaqueWall && !opaqueTile) || (!Main.drawToScreen && LiquidRenderer.Instance.HasFullWater(j, i) && tile.WallType == WallID.None && !tile.IsHalfBlock && !((double)i <= Main.worldSurface)))
                             {
                                 break;
                             }
@@ -466,7 +555,7 @@ namespace CalRemix.Core
             {
                 return;
             }
-            bool itemVisibleAnyways = armorItem.wingSlot > 0 || armorItem.type == ItemID.FlyingCarpet || armorItem.type == ItemID.PortableStool || armorItem.type == 5126 || armorItem.type == ItemID.UnicornHornHat || armorItem.type == ItemID.AngelHalo;
+            bool itemVisibleAnyways = armorItem.wingSlot > 0 || armorItem.type == ItemID.FlyingCarpet || armorItem.type == ItemID.PortableStool || armorItem.type == ItemID.HandOfCreation || armorItem.type == ItemID.UnicornHornHat || armorItem.type == ItemID.AngelHalo;
             bool hiddenFunctional = isNotInVanitySlot && isSetToHidden;
             bool shouldDyeWork = false;
             if (armorItem.shieldSlot > 0 && armorItem.shieldSlot < ArmorIDs.Shield.Count && (self.cShieldFallback == -1 || !hiddenFunctional))
@@ -569,7 +658,7 @@ namespace CalRemix.Core
             {
                 shouldDyeWork = true;
             }
-            if (armorItem.type == ItemID.PortableStool || armorItem.type == 5126)
+            if (armorItem.type == ItemID.PortableStool || armorItem.type == ItemID.HandOfCreation)
             {
                 shouldDyeWork = true;
             }
@@ -827,7 +916,12 @@ namespace CalRemix.Core
         {
             if (Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer crp))
             {
+                float addedPitch = 0;
                 if (crp.oxygenSoul)
+                    addedPitch += 1;
+                if (crp.friendship)
+                    addedPitch += 1;
+                if (addedPitch > 0)
                 {
                     SoundUpdateCallback updateCallback2 = updateCallback;
                     if (Main.dedServ)
@@ -848,7 +942,7 @@ namespace CalRemix.Core
                         return Main.RunOnMainThread(() => PlayInerr(in styleCopy, position, updateCallback2)).GetAwaiter().GetResult();
                     }
                     SoundStyle newst = new SoundStyle();
-                    newst = style with { Pitch = 1f };
+                    newst = style with { Pitch = style.Pitch + addedPitch };
                     return PlayInerr(in newst, position, updateCallback2);
                 }
                 return orig(self, ref style, position, updateCallback);

@@ -13,11 +13,14 @@ using CalamityMod.Tiles.Ores;
 using CalamityMod.Tiles.SunkenSea;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Content.NPCs.Bosses.Ionogen;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
@@ -27,9 +30,11 @@ using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
@@ -106,7 +111,7 @@ namespace CalRemix
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
                 SoundEngine.PlaySound(DecryptionComputer.InstallSound, player.Center);
-                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<CyberDraedon>());
+                SpawnClientBoss(NPCType<CyberDraedon>(), new Vector2(i, j) * 16, false);
                 DestroyTile(i, j, noItem: true);
                 player.ConsumeItem(ItemType<BloodyVein>());
             }
@@ -118,13 +123,13 @@ namespace CalRemix
             if (type == TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
-                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<OnyxKinsman>());
+                SpawnClientBoss(NPCType<OnyxKinsman>(), new Vector2(i, j) * 16, false);
                 DestroyTile(i, j);
             }
             if (type == TileType<CodebreakerTile>() && Main.LocalPlayer.HeldItem.type == ItemType<BloodyVein>() && NPC.CountNPCS(NPCType<HypnosDraedon>()) <= 0)
             {
                 SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.CodebreakerUI.BloodSound, Main.LocalPlayer.Center);
-                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), (int)player.Center.X, (int)(player.Center.Y - 1200), NPCType<HypnosDraedon>());
+                SpawnClientBoss(NPCType<HypnosDraedon>(), player.Center - Vector2.UnitY * 1200, false);
             }
             if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ItemType<BloodyVein>() && !PandemicPanic.IsActive)
             {
@@ -321,6 +326,17 @@ namespace CalRemix
                     }
                 }
             }
+
+            if (Main.tile[i, j].TileType == TileID.Grass && Main.hardMode)
+            {
+                if (!Framing.GetTileSafely(i, j - 1).IsTileSolid() && Main.rand.NextBool(800))
+                {
+                    if (WorldGen.PlaceObject(i, j - 1, TileType<Carrot>(), false, 0))
+                    {
+                        NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<Carrot>(), 0, 0, -1, -1);
+                    }
+                }
+            }
         }
 
         public override void NearbyEffects(int i, int j, int type, bool closer)
@@ -494,7 +510,7 @@ namespace CalRemix
 
                          if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
                          {
-                            SpawnNPCOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
+                            SpawnClientBossRandomPos(NPCType<Phytogen>(), new Vector2(i, j) * 16);
                          }
                      }
                  }

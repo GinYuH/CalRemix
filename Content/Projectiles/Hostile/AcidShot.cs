@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         {
             Projectile.width = 10;
 			Projectile.height = 10;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.hostile = true;
             AIType = ProjectileID.WoodenArrowFriendly;
         }

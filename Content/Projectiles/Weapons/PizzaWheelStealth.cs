@@ -128,7 +128,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                         spawnPos.Y += Main.rand.Next(-40, 40);
                         int p = Projectile.NewProjectile(Projectile.GetSource_OnHit(target), spawnPos, spawnPos.DirectionTo(target.Center).X * Vector2.UnitX * Main.rand.NextFloat(6, 9), ModContent.ProjectileType<PizzaWheelProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ai2: 1);
                         Main.projectile[p].aiStyle = -1;
-                        Main.projectile[p].ModProjectile.AIType = 0;
+                        Main.projectile[p].ModProjectile.AIType = ProjectileID.None;
                         Main.projectile[p].tileCollide = false;
                         Main.projectile[p].timeLeft = 300;
                         Main.projectile[p].penetrate = 3;

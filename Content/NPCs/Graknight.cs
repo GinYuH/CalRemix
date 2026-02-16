@@ -53,7 +53,7 @@ namespace CalRemix.Content.NPCs
                 flag47 = true;
                 flag45 = true;
             }
-            else if (Main.netMode != 1 && NPC.target >= 0 && NPC.target < 255)
+            else if (Main.netMode != NetmodeID.MultiplayerClient && NPC.target >= 0 && NPC.target < 255)
             {
                 int num1355 = 4800;
                 if (NPC.timeLeft < NPC.activeTime && Vector2.Distance(NPC.Center, Main.player[NPC.target].Center) < (float)num1355)
@@ -61,7 +61,7 @@ namespace CalRemix.Content.NPCs
                     NPC.timeLeft = NPC.activeTime;
                 }
             }
-            if (NPC.localAI[0] == 0f && Main.netMode != 1)
+            if (NPC.localAI[0] == 0f && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.localAI[0] = 1f;
             }
@@ -71,7 +71,7 @@ namespace CalRemix.Content.NPCs
             int num1359 = 0;
             for (int num1360 = 0; num1360 < 200; num1360++)
             {
-                if (Main.npc[num1360].active && Main.npc[num1360].aiStyle == 52)
+                if (Main.npc[num1360].active && Main.npc[num1360].aiStyle == NPCAIStyleID.PlanteraHook)
                 {
                     num1357 += Main.npc[num1360].Center.X;
                     num1358 += Main.npc[num1360].Center.Y;
@@ -161,7 +161,7 @@ namespace CalRemix.Content.NPCs
             {
                 num1370 *= 2;
             }
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 return;
             }

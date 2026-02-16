@@ -8,7 +8,6 @@ namespace CalRemix.Content.Buffs
 {
     public class Deplatformed : ModBuff
     {
-        NPC pyro;
         public override void SetStaticDefaults()
         {
             Main.debuff[Type] = true;

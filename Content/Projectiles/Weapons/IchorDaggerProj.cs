@@ -22,8 +22,8 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.penetrate = 3;
             Projectile.timeLeft = 600;
             Projectile.DamageType = ModContent.GetInstance<RogueDamageClass>();
-            Projectile.aiStyle = 2;
-            AIType = 48;
+            Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
+            AIType = ProjectileID.ThrowingKnife;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
             Projectile.friendly = true;

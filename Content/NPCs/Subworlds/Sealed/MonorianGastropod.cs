@@ -186,5 +186,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             npcLoot.Add(ModContent.ItemType<Gastrogel>(), 1, 15, 25);
             npcLoot.Add(ModContent.ItemType<MonorianGemShards>(), 1, 6, 12);
         }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Terraria.Audio;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
@@ -62,6 +63,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             set => Phase = (int)value;
         }
 
+        public static SoundStyle FallSound = new SoundStyle("CalRemix/Assets/Sounds/Anomaly/AnomalyFall");
+
         public override void SetStaticDefaults()
         {
             NPCID.Sets.MustAlwaysDraw[Type] = true;
@@ -96,6 +99,14 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             if (target == null || !target.active || target.dead)
             {
                 NPC.active = false;
+                if (DragonHead.active && DragonHead.type == ModContent.NPCType<AnomalyOne>())
+                {
+                    DragonHead.active = false;
+                }
+                if (OrbHead.active && OrbHead.type == ModContent.NPCType<AnomalyThree>())
+                {
+                    OrbHead.active = false;
+                }
                 return;
             }
             if (!DragonHead.active || DragonHead.type != ModContent.NPCType<AnomalyOne>())
@@ -120,19 +131,16 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             {
                 case PhaseType.PhaseOne:
                     {
-                        if (Timer > 120)
+                        if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyOne>()))
                         {
-                            if (!NPC.AnyNPCs(ModContent.NPCType<AnomalyOne>()))
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
-                                {
-                                    DragonHead = NPC.QuickSpawnNPC(ModContent.NPCType<AnomalyOne>());
-                                }
+                                DragonHead = NPC.QuickSpawnNPC(ModContent.NPCType<AnomalyOne>());
                             }
                         }
-                        if (DragonHead.active)
+                        if (DragonHead.active && DragonHead.type == ModContent.NPCType<AnomalyOne>())
                         {
-                            if (DragonHead.ai[0] == 3)
+                            if (DragonHead.ModNPC<AnomalyOne>().CurrentPhase == AnomalyOne.PhaseType.Knockout)
                             {
                                 ChangePhase(PhaseType.PhaseTwo);
                             }
@@ -151,9 +159,9 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 }
                             }
                         }
-                        if (OrbHead.active)
+                        if (OrbHead.active && DragonHead.type == ModContent.NPCType<AnomalyThree>())
                         {
-                            if (OrbHead.ai[0] == 3)
+                            if (OrbHead.ModNPC<AnomalyThree>().CurrentPhase == AnomalyThree.PhaseType.Knockout)
                             {
                                 ChangePhase(PhaseType.Rise);
                             }
@@ -247,7 +255,6 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public void DrawGuy(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Vector2 offset = default, Color overrideColor = default)
         {
-            JawRotation = NPC.Center.DirectionTo(Main.MouseWorld).ToRotation();
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D jaw = ModContent.Request<Texture2D>(Texture + "_Jaw").Value;
             Texture2D eye = ModContent.Request<Texture2D>(Texture + "_Eye").Value;
@@ -269,6 +276,11 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             spriteBatch.Draw(eye, NPC.Center - screenPos + new Vector2(xOff, yOff) + Vector2.UnitY.RotatedBy(-JawRotation) * eyeYOff + offset, eye.Frame(1, 2, 0, 0), Color.White * NPC.Opacity, -JawRotation, new Vector2(eye.Width / 2, eye.Height / 4), NPC.scale, SpriteEffects.FlipHorizontally, 0);
 
             spriteBatch.Draw(core, NPC.Center - screenPos + offset, null, Color.White * NPC.Opacity, 0, tex.Size() / 2, NPC.scale, 0, 0);
+        }
+
+        public override bool CheckActive()
+        {
+            return !NPC.HasValidTarget;
         }
     }
 }

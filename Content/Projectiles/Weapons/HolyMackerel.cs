@@ -30,8 +30,8 @@ namespace CalRemix.Content.Projectiles.Weapons
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.minionSlots = 0.5f;
 			Projectile.penetrate = -1;
-			Projectile.aiStyle = 54;
-			AIType = 317;
+			Projectile.aiStyle = ProjAIStyleID.Raven;
+			AIType = ProjectileID.Raven;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 6;
         }

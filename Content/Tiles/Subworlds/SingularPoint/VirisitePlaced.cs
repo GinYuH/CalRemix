@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Tiles.Subworlds.SingularPoint
 {
-    public class PrasinitePlaced : ModTile
+    public class VirisitePlaced : ModTile
     {
         public static Asset<Texture2D> glow;
         public override void Load()

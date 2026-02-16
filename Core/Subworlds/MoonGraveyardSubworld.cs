@@ -76,7 +76,6 @@ namespace CalRemix.Core.Subworlds
         public static void GenerateBasicTerrain_PlateausAndPlateausOnly()
         {
             TerrainFeatureType terrainFeatureType = TerrainFeatureType.Plateau;
-            int terrainFeatureChangeTimer = 0;
 
             // making a bunch of vassal variables to contain temp stuff and be modified
             double surfaceVassal = (double)Main.maxTilesY * 0.5;

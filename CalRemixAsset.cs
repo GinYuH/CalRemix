@@ -18,8 +18,8 @@ namespace CalRemix
 {
     public class CalRemixAsset : ModSystem
     {
-        internal static Effect SlendermanShader;
-        internal static Effect ShieldShader;
+        internal static Asset<Effect> SlendermanShader;
+        internal static Asset<Effect> ShieldShader;
 
         public static Asset<Texture2D> sunOG = null;
         public static Asset<Texture2D> sunReal = null;
@@ -73,7 +73,7 @@ namespace CalRemix
             }
 
             AssetRepository remixAsset = Mod.Assets;
-            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
+            Asset<Effect> LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad);
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
             ShieldShader = LoadShader("HoloShield");
@@ -92,16 +92,14 @@ namespace CalRemix
             Filters.Scene[prefixedRegistrationName] = new Filter(passReg, priority);
             Filters.Scene[prefixedRegistrationName].Load();
         }
-        private static void RegisterScreenShader(Effect shader, string passName, string registrationName, EffectPriority priority = EffectPriority.High)
+        private static void RegisterScreenShader(Asset<Effect> shader, string passName, string registrationName, EffectPriority priority = EffectPriority.High)
         {
-            Ref<Effect> shaderPointer = new(shader);
-            ScreenShaderData passParamRegistration = new(shaderPointer, passName);
+            ScreenShaderData passParamRegistration = new(shader, passName);
             RegisterSceneFilter(passParamRegistration, registrationName, priority);
         }
-        private static void RegisterMiscShader(Effect shader, string passName, string registrationName)
+        private static void RegisterMiscShader(Asset<Effect> shader, string passName, string registrationName)
         {
-            Ref<Effect> shaderPointer = new(shader);
-            MiscShaderData passParamRegistration = new(shaderPointer, passName);
+            MiscShaderData passParamRegistration = new(shader, passName);
             GameShaders.Misc["CalRemix/" + registrationName] = passParamRegistration;
         }
     }
@@ -169,6 +167,9 @@ namespace CalRemix
 
         public static readonly int RenoxPhase2 = Set("Stelliferous");
         public static readonly int RenoxPhase3 = Set("Degenerate");
+
+        public static readonly int Rajah = Set("Bosses/RajahTheme");
+        public static readonly int SupremeRajah = Set("Bosses/SupremeRajah");
 
         // Vanilla Replacement 
         public static readonly int BloodMoonRemix = Set("Misc/VanillaRemix/BloodMoon");

@@ -40,7 +40,7 @@ namespace CalRemix.Content.Items.SummonItems
         {
             CreateRecipe()
                 .AddIngredient<Gastrogel>(10)
-                .AddIngredient<GildedShard>(5)
+                .AddIngredient<WaterMesh>(5)
                 .AddIngredient<LightResidue>(50)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

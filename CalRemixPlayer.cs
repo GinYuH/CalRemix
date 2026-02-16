@@ -1,16 +1,20 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.Buffs.StatBuffs;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.CalPlayer;
 using CalamityMod.Events;
+using CalamityMod.Graphics.Renderers;
 using CalamityMod.Items.Dyes;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Boss;
+using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Summon.Umbrella;
 using CalamityMod.Projectiles.Typeless;
@@ -20,6 +24,9 @@ using CalRemix.Content.Buffs;
 using CalRemix.Content.Cooldowns;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Armor;
+using CalRemix.Content.Items.Armor.RajahChampion;
+using CalRemix.Content.Items.Armor.RajahChampion.Carrot;
+using CalRemix.Content.Items.Armor.RajahChampion.Drone;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Critters;
 using CalRemix.Content.Items.Materials;
@@ -27,11 +34,16 @@ using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Tools;
 using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs.Bosses.BossScule;
 using CalRemix.Content.NPCs.Bosses.Hydrogen;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
+using CalRemix.Content.NPCs.Bosses.RajahBoss;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Hostile;
@@ -39,31 +51,31 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Walls;
 using CalRemix.Core;
 using CalRemix.Core.Biomes;
+using CalRemix.Core.Retheme;
+using CalRemix.Core.Retheme.Sneakers;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
+using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static Terraria.ModLoader.ModContent;
-using CalamityMod.NPCs.ExoMechs.Ares;
-using System.Threading.Tasks;
-using CalRemix.Content.Items.Weapons.Stormbow;
-using CalamityMod.Buffs.StatBuffs;
-using Terraria.GameContent;
 using static CalRemix.CalRemixHelper;
 using CalRemix.Core.Retheme;
 using CalRemix.Content.NPCs.Eclipse;
@@ -72,6 +84,10 @@ using CalRemix.UI.Anomaly109;
 using CalamityMod.Projectiles.Melee;
 using Mono.Cecil;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Subworlds.SingularPoint;
+using static CalRemix.ChampionNPC;
+using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {
@@ -260,6 +276,11 @@ namespace CalRemix
         public bool voidArmor;
         public bool lightArmor;
         public int sealedCooldown = 0;
+        public bool ChampionSu;
+        public bool ChampionMe;
+        public bool ChampionMa;
+        public bool ChampionRa;
+        public int CarrotBuff = 0;
 
         // Minions
         public bool soldier;
@@ -276,6 +297,8 @@ namespace CalRemix
         public bool cSlime3;
         public bool cultacean;
         public bool nowhereDragons;
+        public bool Rabbitcopter;
+        public bool RabbitcopterR;
 
         // Pets
         public bool nothing;
@@ -285,6 +308,11 @@ namespace CalRemix
         public int calamitizedCounter;
         public int calamitizedHitCooldown;
         public bool stratusBeverage;
+        public bool friendship;
+        public bool Baron;
+        public bool infinityOverload;
+        public bool Spear;
+
         // Tainted
         public bool taintedAmmo;
         public bool taintedArchery;
@@ -410,7 +438,7 @@ namespace CalRemix
 		        return;
 	        }
 
-	        var value = TextureAssets.Extra[102].Value;
+	        var value = TextureAssets.Extra[ExtrasID.PortableStool].Value;
 	        var position = new Vector2(
 		        (int)(drawinfo.Position.X - Main.screenPosition.X + drawinfo.drawPlayer.width / 2f),
 		        (int)(drawinfo.Position.Y - Main.screenPosition.Y + drawinfo.drawPlayer.height + drawinfo.drawPlayer.portableStoolInfo.HeightBoost)
@@ -671,6 +699,40 @@ namespace CalRemix
             {
                 var grabCount = ItemGrabListener.BEING_GRABBED_BY.Count(x => x == Player.whoAmI);
                 Player.GetDamage(DamageClass.Generic) *= 1f + 0.05f * grabCount;
+            }
+
+            if (ChampionMe &&  CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(ModContent.BuffType<RageCool>()))
+            {
+                int BuffLength = 240;
+                if (Player.statLife < (int)(Player.statLifeMax2 * .75f))
+                {
+                    BuffLength = 360;
+                }
+                if (Player.statLife < (int)(Player.statLifeMax2 * .5f))
+                {
+                    BuffLength = 480;
+                }
+                if (Player.statLife < (int)(Player.statLifeMax2 * .25f))
+                {
+                    BuffLength = 600;
+                }
+                Player.AddBuff(ModContent.BuffType<RageBuff>(), BuffLength);
+                int RageCooldown = BuffLength * 4;
+                Player.AddBuff(ModContent.BuffType<RageCool>(), RageCooldown);
+            }
+
+            if (Player.HasBuff(ModContent.BuffType<RageBuff>()))
+            {
+                Player.armorEffectDrawShadowLokis = true;
+            }
+
+            if (ChampionRa && CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(BuffType<DroneCool>()) &&
+                !CalamityUtils.AnyProjectiles(ProjectileType<RajahDrone>()))
+            {
+                Vector2 vector2;
+                vector2.X = Main.mouseX + Main.screenPosition.X;
+                vector2.Y = Main.mouseY + Main.screenPosition.Y;
+                Projectile.NewProjectile(Player.GetSource_ReleaseEntity(), vector2.X, vector2.Y, 0, 0, ProjectileType<RajahDrone>(), (int)(Player.GetDamage(DamageClass.Ranged).ApplyTo(100)), 2, Main.myPlayer, 0f, 0f);
             }
         }
 
@@ -1432,7 +1494,9 @@ namespace CalRemix
 			neuron = false;
             soldier = false;
             nowhereDragons = false;
-			corrosiveEye = false;
+            Rabbitcopter = false;
+            RabbitcopterR = false;
+            corrosiveEye = false;
             onyxFist = false;
 			astEffigy = false;
 			halEffigy = false;
@@ -1467,11 +1531,19 @@ namespace CalRemix
             sealedCooldown = 0;
             voidArmor = false;
             lightArmor = false;
+            ChampionMe = false;
+            ChampionSu = false;
+            ChampionMa = false;
+            ChampionRa = false;
             wormMeal = false;
 			invGar = false;
 			hayFever = false;
             stratusBeverage = false;
-            taintedAmmo= false;
+            friendship = false;
+            Baron = false;
+            infinityOverload = false;
+            Spear = false;
+            taintedAmmo = false;
             taintedArchery= false;
             taintedBattle= false;
             taintedBuilder= false;
@@ -1628,6 +1700,15 @@ namespace CalRemix
             {
 	            npc.AddBuff(BuffID.Dazed, 5 * 60);
             }
+
+            if (ChampionMa)
+            {
+                if (Main.rand.Next(30) == 0)
+                {
+                    int i = Item.NewItem(npc.GetSource_OnHurt(Player), npc.Hitbox, ItemType<CarrotBooster>(), 1, false, 0, true);
+                    Main.item[i].velocity = new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
+                }
+            }
         }
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
         {
@@ -1705,6 +1786,15 @@ namespace CalRemix
                 TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
                 target.AddBuff(BuffType<Wither>(), 120);
                 target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
+            }
+
+            if (ChampionMa)
+            {
+                if (Main.rand.Next(30) == 0)
+                {
+                    int i = Item.NewItem(target.GetSource_OnHurt(Player), target.Hitbox, ItemType<CarrotBooster>(), 1, false, 0, true);
+                    Main.item[i].velocity = new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
+                }
             }
         }
 
@@ -1999,6 +2089,19 @@ namespace CalRemix
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
             }
+            if (SubworldSystem.IsActive<SingularPointSubworld>())
+            {
+                if (SPSky.SkyOpacity > 0)
+                {
+                    if (!Player.Hitbox.Intersects(SPSky.SafeArea))
+                    {
+                        if (Player.lifeRegen > 0)
+                            Player.lifeRegen = 0;
+                        Player.lifeRegenTime = 0;
+                        Player.lifeRegen -= 200;
+                    }
+                }
+            }
             if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
         }
 
@@ -2056,6 +2159,23 @@ namespace CalRemix
             {
                 int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.JungleSpore, Scale: Main.rand.NextFloat(1f, 2f));
                 drawInfo.DustCache.Add(index);
+            }
+
+            if (!Player.HasBuff(BuffType<CBoost1>()) && !Player.HasBuff(BuffType<CBoost2>()) && !Player.HasBuff(BuffType<CBoost3>()))
+                CarrotBuff = 0;
+
+            if (CarrotBuff > 0)
+            {
+                Texture2D Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahChampion/Carrot/CBoost1Aura").Value;
+                if (Player.HasBuff(BuffType<CBoost2>()))
+                {
+                    Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahChampion/Carrot/CBoost2Aura").Value;
+                }
+                if (Player.HasBuff(BuffType<CBoost3>()))
+                {
+                    Shield = Request<Texture2D>("CalRemix/Content/Items/Armor/RajahChampion/Carrot/CBoost3Aura").Value;
+                }
+                BaseDrawing.DrawTexture(Main.spriteBatch, Shield, 0, Player.position, Player.width, Player.height, 1f, Main.GlobalTimeWrappedHourly, 0, 1, new Rectangle(0, 0, Shield.Width, Shield.Height), Main.DiscoColor, true);
             }
         }
 
@@ -2371,6 +2491,36 @@ namespace CalRemix
         public bool HasStock(string stock)
         {
             return stocks.ContainsKey(stock) && stocks[stock] > 0;
+        }
+
+        public void CarrotLevelup()
+        {
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                for (int i = 0; i < 22; i++)
+                {
+                    if (Player.buffType[i] == BuffType<CBoost1>() ||
+                        Player.buffType[i] == BuffType<CBoost2>() ||
+                        Player.buffType[i] == BuffType<CBoost3>())
+                    {
+                        Player.DelBuff(i);
+                    }
+                }
+                CarrotBuff = (int)MathHelper.Clamp(CarrotBuff + 1, 0f, 3f);
+                switch (CarrotBuff)
+                {
+                    case 1:
+                        Player.AddBuff(BuffType<CBoost1>(), 480, true);
+                        break;
+                    case 2:
+                        Player.AddBuff(BuffType<CBoost2>(), 480, true);
+                        break;
+                    case 3:
+                        Player.AddBuff(BuffType<CBoost3>(), 480, true);
+                        break;
+                }
+                return;
+            }
         }
     }
 }

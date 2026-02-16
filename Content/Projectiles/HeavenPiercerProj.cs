@@ -1,3 +1,4 @@
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles
@@ -12,7 +13,7 @@ namespace CalRemix.Content.Projectiles
         {
             Projectile.width = 120;
             Projectile.height = 120;
-            Projectile.aiStyle = 20;
+            Projectile.aiStyle = ProjAIStyleID.Drill;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;

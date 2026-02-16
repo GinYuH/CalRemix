@@ -81,29 +81,6 @@ namespace CalRemix.Content.Projectiles.Hostile
                     Projectile.Opacity = Utils.GetLerpValue(0, 30, Projectile.timeLeft);
                 }
             }
-            else if (Projectile.ai[0] == 3)
-            {
-                // nvm this sucks
-                return;
-                int gem = NPC.FindFirstNPC(ModContent.NPCType<MonorianGemBoss>());
-                if (gem != -1)
-                {
-                    if (Projectile.Distance(Main.npc[gem].Center) < 40)
-                    {
-                        int boltAmount = 6;
-
-                        for (int i = 0; i < boltAmount; i++)
-                        {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / (float)boltAmount)) * 14, Type, Projectile.damage, 1);
-                            }
-                        }
-                        SoundEngine.PlaySound(CommonCalamitySounds.ExoPlasmaExplosionSound, Projectile.Center);
-                        Projectile.Kill();
-                    }
-                }
-            }
         }
 
 

@@ -13,7 +13,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 {
     public class Dendritiator : ModNPC
     {
-        Entity target = null;
         public Entity targeto = null;
 
         public override void SetStaticDefaults()

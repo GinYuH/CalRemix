@@ -13,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.width = 32;
             Projectile.height = 40;
             Projectile.friendly = true;
-            Projectile.aiStyle = 1;
+            Projectile.aiStyle = ProjAIStyleID.Arrow;
             Projectile.penetrate = 3;
             Projectile.DamageType = ModContent.GetInstance<StormbowDamageClass>();
         }

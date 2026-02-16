@@ -181,7 +181,6 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            EyeRotation += Main.LocalPlayer.selectedItem * 0.05f;
             Texture2D chain = ModContent.Request<Texture2D>(Texture + "_Segment").Value;
             if (MainHead.active)
             {
@@ -223,6 +222,10 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                 Vector2 pos = NPC.Center - Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 3f)).RotatedBy(EyeRotation) * 50;
                 spriteBatch.Draw(eye, pos - screenPos, null, Color.White, NPC.rotation, eye.Size() / 2, NPC.scale, 0, 0);
             }
+        }
+        public override bool CheckActive()
+        {
+            return !NPC.HasValidTarget;
         }
     }
 }

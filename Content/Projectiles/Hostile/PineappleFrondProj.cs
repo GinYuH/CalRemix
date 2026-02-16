@@ -132,7 +132,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
             Projectile.rotation += 22f;
 
-            if ((Projectile.localAI[0] > 60 && Collision.IsWorldPointSolid(Projectile.Center)) || (Projectile.localAI[0] > 90 && Main.tile[(int)(Segments[(int)Projectile.ai[0]].position.X / 16), (int)(Segments[(int)Projectile.ai[0]].position.Y / 16)].WallType > 0))
+            if ((Projectile.localAI[0] > 60 && Collision.IsWorldPointSolid(Projectile.Center)) || (Projectile.localAI[0] > 90 && Main.tile[(int)(Segments[(int)Projectile.ai[0]].position.X / 16), (int)(Segments[(int)Projectile.ai[0]].position.Y / 16)].WallType > WallID.None))
             {
                 Projectile.velocity = Vector2.Zero;
                 Projectile.netUpdate = true;

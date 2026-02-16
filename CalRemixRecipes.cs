@@ -48,6 +48,7 @@ using System;
 using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.UI.Anomaly109;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
+using CalamityMod.Rarities;
 
 namespace CalRemix
 {
@@ -288,6 +289,8 @@ namespace CalRemix
         public static string LockedRecipe(string s) => CalRemixHelper.LocalText("Condition.Locked").Format(CalRemixHelper.LocalText($"Condition.{s}"));
         public override void PostAddRecipes()
         {
+            int arsRarity = ModContent.RarityType<DarkOrange>();
+            List<Recipe> harderRecipes = new();
             for (int i = 0; i < Recipe.numRecipes; i++)
             {
                 Recipe recipe = Main.recipe[i];
@@ -722,7 +725,26 @@ namespace CalRemix
                     recipe.AddIngredient(ItemType<ExodiumCluster>(), 25);
                     recipe.AddTile(TileID.DemonAltar);
                 }
+                if (recipe.createItem.rare >= ItemRarityID.Cyan)
+                {
+                    bool isRogue = false;
+                    if (recipe.createItem.ModItem != null)
+                    {
+                        if (recipe.createItem.ModItem is StickyRogue || recipe.createItem.ModItem is BouncyRogue)
+                        {
+                            isRogue = true;
+                        }
+                    }
+                    if (!isRogue && recipe.createItem.rare != arsRarity)
+                        harderRecipes.Add(recipe);
+                }
                 #endregion
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                Recipe randomRecipe = harderRecipes[Main.rand.Next(0, harderRecipes.Count - 1)];
+                randomRecipe.AddIngredient(ItemType<NerveEndingBundle>(), 99);
             }
 
             string wiz = NPCShopDatabase.GetShopNameFromVanillaIndex(7); // wizard index

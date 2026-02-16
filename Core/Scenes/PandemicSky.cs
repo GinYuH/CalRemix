@@ -29,7 +29,6 @@ namespace CalRemix.Core.Scenes
     }
     public class PandemicSky : CustomSky
     {
-        private bool _isActive;
         public float BackgroundIntensity;
         public float LightningIntensity;
         public List<BloodCell> cells = new List<BloodCell>();
@@ -112,18 +111,15 @@ namespace CalRemix.Core.Scenes
 
         public override void Activate(Vector2 position, params object[] args)
         {
-            _isActive = true;
         }
 
         public override void Deactivate(params object[] args)
         {
-            _isActive = false;
             cells.Clear();
         }
 
         public override void Reset()
         {
-            _isActive = false;
             cells.Clear();
         }
 

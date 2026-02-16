@@ -589,21 +589,7 @@ namespace CalRemix.UI.Anomaly109
             options.Add(new Anomaly109Option("babilzot", "shimmer_essences", "Toggles Shimmer Essences from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.shimmerEssences, Recipes.shimmerEssenceCrafts); CalRemixWorld.shimmerEssences = !CalRemixWorld.shimmerEssences; }, () => CalRemixWorld.shimmerEssences));
             options.Add(new Anomaly109Option("leviathan", "crocodile_scales", "Toggles Crocodile Scales from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.crocodile, Recipes.crocodileCrafts); CalRemixWorld.crocodile = !CalRemixWorld.crocodile; }, () => CalRemixWorld.crocodile));
             options.Add(new Anomaly109Option("ceaselessvoid", "coyote_venom", "Toggles Coyote Venom from recipes", () => { Recipes.MassModifyIngredient(CalRemixWorld.wolfvenom, Recipes.venomCrafts); CalRemixWorld.wolfvenom = !CalRemixWorld.wolfvenom; }, () => CalRemixWorld.wolfvenom));
-            options.Add(new Anomaly109Option("flashdrive", "rear_gars", "Toggles Rear Gars and Uelibloom Ore removal", () =>
-            {
-                CalRemixWorld.reargar = !CalRemixWorld.reargar;
-                if (CalRemixWorld.reargar)
-                {
-                    CalRemixWorld.RemoveLoot(ItemID.JungleFishingCrate, ModContent.ItemType<UelibloomOre>(), false);
-                    CalRemixWorld.RemoveLoot(ItemID.JungleFishingCrateHard, ModContent.ItemType<UelibloomOre>(), false);
-                    CalRemixWorld.RemoveLoot(ItemID.JungleFishingCrate, ModContent.ItemType<UelibloomBar>(), false);
-                    CalRemixWorld.RemoveLoot(ItemID.JungleFishingCrateHard, ModContent.ItemType<UelibloomBar>(), false);
-                }
-                else
-                {
-                    CalRemixWorld.AddLootDynamically(ItemID.JungleFishingCrate);
-                }
-            }, () => CalRemixWorld.reargar));
+            options.Add(new Anomaly109Option("flashdrive", "rear_gars", "Toggles Rear Gars and Uelibloom Ore removal", () => CalRemixWorld.reargar = !CalRemixWorld.reargar, () => CalRemixWorld.reargar));
             options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal", () => { CalRemixWorld.sidegar = !CalRemixWorld.sidegar; }, () => CalRemixWorld.sidegar));
             options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () =>
             {
@@ -611,12 +597,10 @@ namespace CalRemix.UI.Anomaly109
                 if (CalRemixWorld.frontgar)
                 {
                     CalRemixWorld.RemoveLoot(ModContent.NPCType<ReaperShark>(), ModContent.ItemType<ReaperTooth>(), true);
-                    CalRemixWorld.RemoveLoot(ModContent.ItemType<SulphurousCrate>(), ModContent.ItemType<ReaperTooth>(), false);
                 }
                 else
                 {
                     CalRemixWorld.AddLootDynamically(ModContent.NPCType<ReaperShark>(), true);
-                    CalRemixWorld.AddLootDynamically(ModContent.ItemType<SulphurousCrate>());
                 }
             }, () => CalRemixWorld.frontgar));
             options.Add(new Anomaly109Option("passive", "seafood", "Toggles Seafood becoming a normal food item", () => { CalRemixWorld.seafood = !CalRemixWorld.seafood; }, () => CalRemixWorld.seafood));

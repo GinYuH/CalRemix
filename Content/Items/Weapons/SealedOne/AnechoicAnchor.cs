@@ -57,7 +57,7 @@ namespace CalRemix.Content.Items.Weapons.SealedOne
         public override void AI()
         {
             // Spawn some dust visuals
-            var dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 172, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 1.5f);
+            var dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.DungeonWater, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 1.5f);
             dust.noGravity = true;
             dust.velocity /= 2f;
 

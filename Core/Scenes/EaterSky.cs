@@ -30,7 +30,6 @@ namespace CalRemix.Core.Scenes
     }
     public class EaterSky : CustomSky
     {
-        private bool _isActive;
         public float BackgroundIntensity;
         public float LightningIntensity;
         public List<Eater> worms = new List<Eater>();
@@ -120,18 +119,15 @@ namespace CalRemix.Core.Scenes
 
         public override void Activate(Vector2 position, params object[] args)
         {
-            _isActive = true;
         }
 
         public override void Deactivate(params object[] args)
         {
-            _isActive = false;
             worms.Clear();
         }
 
         public override void Reset()
         {
-            _isActive = false;
             worms.Clear();
         }
 

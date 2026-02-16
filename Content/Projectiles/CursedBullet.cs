@@ -1,9 +1,10 @@
-﻿using Terraria;
-using Terraria.ModLoader;
+﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.GameContent;
-using CalamityMod;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles
 {
@@ -11,6 +12,8 @@ namespace CalRemix.Content.Projectiles
     {
         public override void SetDefaults()
         {
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 4;
             Projectile.tileCollide = false;

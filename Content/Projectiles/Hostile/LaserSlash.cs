@@ -13,7 +13,6 @@ namespace CalRemix.Content.Projectiles.Hostile
 	public class LaserSlash : ModProjectile
 	{
         public override string Texture => "CalamityMod/Projectiles/Melee/MurasamaSlash";
-        private int frameX;
 		public override void SetStaticDefaults() 
         {
             Main.projFrames[Type] = 7;
@@ -70,7 +69,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override bool PreDraw(ref Color lightColor) 
         {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
-            Rectangle rect = texture.Frame(1, 14, frameX, Projectile.frame);
+            Rectangle rect = texture.Frame(1, 14, 0, Projectile.frame);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, rect, Color.White, Projectile.rotation, rect.Size() / 2f, Projectile.scale, (Projectile.spriteDirection != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
             return false;
 		}

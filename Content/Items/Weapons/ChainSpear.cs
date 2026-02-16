@@ -15,7 +15,6 @@ namespace CalRemix.Content.Items.Weapons
 {
     public class ChainSpear : ModItem
 	{
-        private int spread = 0;
         public override void SetStaticDefaults() 
 		{
             Item.ResearchUnlockCount = 1;

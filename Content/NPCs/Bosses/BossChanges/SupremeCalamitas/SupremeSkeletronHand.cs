@@ -17,8 +17,6 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         public ref float LeftOrRight => ref NPC.ai[2];
         public ref float Owner => ref NPC.ai[3];
         public ref float Timer => ref NPC.localAI[0];
-
-        private bool isMouthOpen = false;
         public List<VerletSimulatedSegment> Segments;
         int segmentCount = 27;
         public override void SetStaticDefaults()

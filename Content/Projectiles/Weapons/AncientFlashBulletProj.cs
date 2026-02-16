@@ -20,7 +20,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             Projectile.width = 8;
             Projectile.height = 8;
-            Projectile.aiStyle = 1;
+            Projectile.aiStyle = ProjAIStyleID.Arrow;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 1;
@@ -34,7 +34,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.1f / 255f, (255 - Projectile.alpha) * 0.1f / 255f, (255 - Projectile.alpha) * 0.1f / 255f);
             if (Main.rand.NextBool(3))
             {
-                int num137 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 1, 1, 264, 0f, 0f, 0, default, 0.5f);
+                int num137 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 1, 1, DustID.PortalBoltTrail, 0f, 0f, 0, default, 0.5f);
                 Main.dust[num137].alpha = Projectile.alpha;
                 Main.dust[num137].velocity *= 0f;
                 Main.dust[num137].noGravity = true;
@@ -62,7 +62,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
             for (int k = 0; k < 5; k++)
             {
-                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, 264, Projectile.oldVelocity.X * 0.5f, Projectile.oldVelocity.Y * 0.5f);
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.PortalBoltTrail, Projectile.oldVelocity.X * 0.5f, Projectile.oldVelocity.Y * 0.5f);
             }
         }
     }

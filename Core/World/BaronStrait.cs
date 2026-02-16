@@ -119,7 +119,7 @@ namespace CalRemix.Core.World
                             map[i, j] = false;
                         }
                         // No matter what, add Banished Plating Walls
-                        if (t.WallType == 0)
+                        if (t.WallType == WallID.None)
                             t.WallType = (ushort)WallType<BanishedPlatingWallPlaced>();
 
                         // If there are more than 4 Baronsands nearby, replace any Plating with Sand
@@ -320,7 +320,7 @@ namespace CalRemix.Core.World
                     if (WorldGen.InWorld(i, j))
                     {
                         // All tiles take after the tile type at the very top of the world
-                        if (Main.tile[i, 0].TileType != 0)
+                        if (Main.tile[i, 0].TileType != TileID.Dirt)
                             Main.tile[i, j].ResetToType(Main.tile[i, 0].TileType);
                         else
                             Main.tile[i, j].ClearTile();

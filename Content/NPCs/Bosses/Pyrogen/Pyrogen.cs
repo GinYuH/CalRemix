@@ -40,7 +40,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
     public class Pyrogen : ModNPC
     {
         public ref float Phase => ref NPC.ai[0];
-        private int currentPhase = 1;
         private int biomeEnrageTimer = CalamityMod.NPCs.CalamityGlobalNPC.biomeEnrageTimerMax;
         private double rotation;
         private double rotationIncrement;
@@ -432,8 +431,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             playerXDist *= playerDistance;
                             playerYDist *= playerDistance;
 
-                            float inertia = 25f;
-
                             Vector2 predictiveVector = player.Center + player.velocity * 20f - NPC.Center;
 
                             if (AttackTimer == 2) //reset position immediately to prep charge
@@ -543,7 +540,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             int stop2 = 170;
                             int dash = 91;
                             int flareRate = 10;
-                            bool canShootFlares = false;
                             int endPhase = 170;
 
                             if (AttackTimer == 1)
@@ -599,7 +595,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
                             if (NPC.ai[1] >= endPhase)
                             {
-                                canShootFlares = false;
                                 SelectNextAttack();
                             }
                         }
@@ -801,9 +796,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 case (int)PyroPhaseType.PonceSpin: //spins around the player and leaves stationary fireballs to trap the player in, then relentlessly pursues them while leaving a trail that forces awkward movement
                 {
                         int flareRate = 10;
-                        int timeToCharge = 300;
-                        int chargingTime = 0;
-                        float chargeVelocity = 35; //stays the same
                         int circleRadius = 500;
                         AttackTimer++;
 
@@ -837,8 +829,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         }
                         if (AttackTimer >= 15 && AttackTimer <= 70) //create a border of flares
                         {
-                            int spintimer = 65;
-
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                  NPC.Center = player.Center + new Vector2(500, 0).RotatedBy(rotation);
@@ -1509,7 +1499,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             CalRemixWorld.UpdateWorldBool();
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ModContent.ItemType<SupremeHealingPotion>();
         }

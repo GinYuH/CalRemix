@@ -552,7 +552,6 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             {
                 return MathHelper.Clamp(baseRotation, NPC.spriteDirection * max + flipRot, NPC.spriteDirection * min + flipRot);
             }
-            return MathHelper.Clamp(baseRotation, NPC.spriteDirection * min + flipRot, NPC.spriteDirection * max + flipRot);
         }
 
         public LimbCollection handIK = new LimbCollection(new CyclicCoordinateDescentUpdateRule(0.07f, MathHelper.ToRadians(60)), 96f, 142f);
@@ -684,7 +683,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             });
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ModContent.ItemType<SupremeHealingPotion>();
         }

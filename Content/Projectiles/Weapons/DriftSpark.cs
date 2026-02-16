@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             Projectile.width = 10;
             Projectile.height = 10;
-            Projectile.aiStyle = 2;
+            Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.alpha = 255;

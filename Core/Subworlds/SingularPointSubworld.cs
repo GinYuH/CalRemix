@@ -58,7 +58,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            NPC.NewNPC(new EntitySource_WorldEvent(), (int)p.Center.X, (int)p.Center.Y, ModContent.NPCType<AnomalyTwo>());
+                            NPC.NewNPC(new EntitySource_WorldEvent(), Main.maxTilesX * 8, Main.maxTilesY * 8 + 1000, ModContent.NPCType<AnomalyTwo>());
                         }
                     }
                 }
@@ -91,7 +91,7 @@ namespace CalRemix.Core.Subworlds
 
             float surfaceLevel = 0.6f;
             int surfaceHeight = (int)(Main.maxTilesY * surfaceLevel);
-            CalRemixHelper.PerlinSurface(new Rectangle(0, surfaceHeight, Main.maxTilesX, Main.maxTilesY - surfaceHeight), ModContent.TileType<PrasinitePlaced>());
+            CalRemixHelper.PerlinSurface(new Rectangle(0, surfaceHeight, Main.maxTilesX, Main.maxTilesY - surfaceHeight), ModContent.TileType<VirisitePlaced>());
 
             float arenaRatio = 0.7f;
             float halfArenaRatio = arenaRatio * 0.5f;
@@ -121,7 +121,7 @@ namespace CalRemix.Core.Subworlds
                     if (CalRemixHelper.WithinElipse(i, j, arenaArea.Center.X, arenaArea.Center.Y, arenaArea.Width / 2, arenaArea.Height / 2))
                     {
                         Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                        t.ResetToType((ushort)ModContent.TileType<PrasinitePlaced>());
+                        t.ResetToType((ushort)ModContent.TileType<VirisitePlaced>());
                     }
                 }
             }

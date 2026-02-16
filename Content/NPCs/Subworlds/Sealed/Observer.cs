@@ -13,7 +13,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
     {
         public override void SetDefaults()
         {
-            NPC.aiStyle = 0;
+            NPC.aiStyle = NPCAIStyleID.FaceClosestPlayer;
             NPC.width = 60;
             NPC.height = 134;
             NPC.lifeMax = 1000;
