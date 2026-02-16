@@ -189,7 +189,7 @@ namespace CalRemix.Core.World
                             case WallID.GreenDungeonTile:
                                 {
                                     int radii = WorldGen.GetWorldSize() + 2;
-                                    if (Main.tile[i + radii, j].WallType > 0 || Main.tile[i - radii, j].WallType > 0 || j > Main.worldSurface) // keep the surface pillars intact for the cultists. remove whenever we fuck up the cultist spawn
+                                    if (Main.tile[i + radii, j].WallType > WallID.None || Main.tile[i - radii, j].WallType > WallID.None || j > Main.worldSurface) // keep the surface pillars intact for the cultists. remove whenever we fuck up the cultist spawn
                                         t.WallType = (ushort)WallType<StratusWallRemix>();
                                 }
                                 break;

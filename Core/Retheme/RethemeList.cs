@@ -40,7 +40,6 @@ using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
-using Terraria.ID;
 using CalamityMod.Items.Ammo;
 using CalamityMod.Items.Potions;
 
@@ -151,6 +150,8 @@ namespace CalRemix.Core.Retheme
             { ItemType<Earth>(), "Garth" },
             { ItemType<IcicleArrow>(), "IcicleArrow" },
             { ItemType<AnechoicCoating>(), "AnechoicCoating" },
+            { ItemType<ExoPrism>(), "ExoPrism" },
+            { ItemType<BloodOrb>(), "BloodOrb" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },

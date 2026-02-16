@@ -11,17 +11,14 @@ using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using CalRemix.Content.Items.Lore;
 using Terraria.GameContent.Bestiary;
 using System.IO;
-using Newtonsoft.Json.Linq;
 
 namespace CalRemix.Content.NPCs.Bosses.BossScule
 {

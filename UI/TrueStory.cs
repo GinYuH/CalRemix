@@ -24,7 +24,7 @@ public class TrueStory : ModSystem
         if (!Main.gameMenu && Main.LocalPlayer != null)
         {
             Player player = Main.LocalPlayer;
-            if (player.TryGetModPlayer(out CalRemixPlayer p) && !CalRemixWorld.playerSawTrueStory.Contains(Main.clientUUID))
+            if (player.TryGetModPlayer(out CalRemixPlayer p) && !CalRemixWorld.playerSawTrueStory.Contains(player.name))
             {
                 if (p.trueStory > 180 && p.trueStory < 240)
                     strength += (1 / 60f);

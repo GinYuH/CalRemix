@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
@@ -18,7 +17,6 @@ namespace CalRemix.Content.NPCs
         public ref float State => ref NPC.ai[1];
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
             NPCID.Sets.TrailCacheLength[Type] = 1;
             NPCID.Sets.TrailingMode[Type] = 1;
             this.HideFromBestiary();

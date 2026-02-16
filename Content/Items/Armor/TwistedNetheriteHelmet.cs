@@ -49,7 +49,7 @@ namespace CalRemix.Content.Items.Armor
         {
             CreateRecipe().
                 AddIngredient<TwistedNetheriteBar>(5).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

@@ -31,7 +31,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             NPC.height = 54;
             NPC.defense = 20;
             NPC.LifeMaxNERB(4000, 5000, 70000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = false;
@@ -190,7 +190,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             }
 
             Tile t = CalamityUtils.ParanoidTileRetrieval((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
-            if (Collision.IsWorldPointSolid(NPC.Center) || t.WallType > 0 || BossRushEvent.BossRushActive || NPC.ai[2] > 300)
+            if (Collision.IsWorldPointSolid(NPC.Center) || t.WallType > WallID.None || BossRushEvent.BossRushActive || NPC.ai[2] > 300)
             {
                 if (NPC.ai[2] > 60)
                 {

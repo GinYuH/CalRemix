@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Terraria.ID;
-using Terraria.IO;
+﻿using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 using Terraria;
 using Microsoft.Xna.Framework;
 
@@ -30,7 +22,7 @@ namespace CalRemix.Content.Tiles
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(95, 194, 239), name);
 
-            DustType = 84;
+            DustType = DustID.Platinum;
             HitSound = SoundID.Tink;
             MineResist = 4f;
             MinPick = 200;

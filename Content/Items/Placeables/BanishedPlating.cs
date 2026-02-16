@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Tiles;
 using CalamityMod.Items;
+using CalRemix.Content.Tiles.Subworlds.Horizon;
 
 namespace CalRemix.Content.Items.Placeables
 {
@@ -22,7 +23,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.autoReuse = true;
             Item.maxStack = 9999;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<BanishedPlatingPlaced>();
+            Item.createTile = ModContent.TileType<HorizonGrassSafe>();
             Item.width = 12;
             Item.height = 12;
             Item.value = CalamityGlobalItem.RarityYellowBuyPrice;

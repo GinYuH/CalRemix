@@ -1,6 +1,4 @@
 ﻿using CalamityMod.Items.Ammo;
-using CalamityMod.Projectiles.Ranged;
-using CalRemix;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +28,7 @@ namespace CalRemix.Content.Items.Ammo
             Item.consumable = true;
             Item.knockBack = 1.15f;
             Item.value = 250;
-            Item.rare = 1;
+            Item.rare = ItemRarityID.Blue;
             Item.shoot = ModContent.ProjectileType<AncientFlashBulletProj>();
             Item.shootSpeed = 12f;
             Item.ammo = 97;

@@ -1,7 +1,5 @@
 ﻿using CalamityMod;
-using CalamityMod.Items.Potions;
 using CalRemix.Content.Buffs.Tainted;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 

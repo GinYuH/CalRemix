@@ -9,13 +9,18 @@ using CalamityMod.Tiles.Astral;
 using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.Tiles.DraedonSummoner;
 using CalamityMod.Tiles.Furniture;
+using CalamityMod.Tiles.Ores;
 using CalamityMod.Tiles.SunkenSea;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Bosses.Hypnos;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Content.NPCs.Bosses.Ionogen;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
@@ -25,9 +30,11 @@ using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
@@ -43,8 +50,22 @@ namespace CalRemix
         public static HelperMessage MineMessage;
         public static HelperMessage GrimeMessage;
 
+        public static int IonCubePlaced = -1;
+        public static int RoxTile = -1;
+        public static int OnyxExcavatorTile = -1;
+        public static int GrimesandPlaced = -1;
+        public static int UelibloomOre = -1;
+        public static int RustedPipes = -1;
+
+
         public override void SetStaticDefaults()
         {
+            IonCubePlaced = ModContent.TileType<IonCubePlaced>();
+            RoxTile = ModContent.TileType<RoxTile>();
+            OnyxExcavatorTile = ModContent.TileType<OnyxExcavatorTile>();
+            GrimesandPlaced = ModContent.TileType<GrimesandPlaced>();
+            UelibloomOre = ModContent.TileType<UelibloomOre>();
+            RustedPipes = ModContent.TileType<RustedPipes>();
             if (Main.dedServ)
                 return;
             roxm = HelperMessage.New("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "FannyAwooga")
@@ -90,7 +111,7 @@ namespace CalRemix
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
                 SoundEngine.PlaySound(DecryptionComputer.InstallSound, player.Center);
-                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<CyberDraedon>());
+                SpawnClientBoss(NPCType<CyberDraedon>(), new Vector2(i, j) * 16, false);
                 DestroyTile(i, j, noItem: true);
                 player.ConsumeItem(ItemType<BloodyVein>());
             }
@@ -102,13 +123,13 @@ namespace CalRemix
             if (type == TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
-                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), i * 16, j * 16, NPCType<OnyxKinsman>());
+                SpawnClientBoss(NPCType<OnyxKinsman>(), new Vector2(i, j) * 16, false);
                 DestroyTile(i, j);
             }
             if (type == TileType<CodebreakerTile>() && Main.LocalPlayer.HeldItem.type == ItemType<BloodyVein>() && NPC.CountNPCS(NPCType<HypnosDraedon>()) <= 0)
             {
                 SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.CodebreakerUI.BloodSound, Main.LocalPlayer.Center);
-                SpawnNewNPC(NPC.GetBossSpawnSource(player.whoAmI), (int)player.Center.X, (int)(player.Center.Y - 1200), NPCType<HypnosDraedon>());
+                SpawnClientBoss(NPCType<HypnosDraedon>(), player.Center - Vector2.UnitY * 1200, false);
             }
             if (TileID.Sets.CountsAsWaterSource[type] && Main.LocalPlayer.HeldItem.type == ItemType<BloodyVein>() && !PandemicPanic.IsActive)
             {
@@ -277,12 +298,51 @@ namespace CalRemix
                     }
                 }
             }
+            if (Main.rand.NextBool(500))
+            {
+                if (SubworldSystem.IsActive<SealedSubworld>())
+                {
+                    if (tile.TileType == TileID.Beds || TileID.Sets.CanBeSleptIn[tile.TileType])
+                    {
+                        bool conveyor = false;
+                        for (int l = i - 5; l < i + 5; l++)
+                        {
+                            if (TileID.Sets.ConveyorDirection[Main.tile[l, j + 1].TileType] != 0)
+                            {
+                                int p = Item.NewItem(new EntitySource_TileUpdate(i, j), new Vector2(l, j) * 16, ModContent.ItemType<BabySealedPuppet>());
+                                Main.item[p].velocity = Vector2.Zero;
+                                conveyor = true;
+                                break;
+                            }
+                        }
+                        if (!conveyor)
+                        {
+                            Tile above = Main.tile[i, j - 1];
+                            if (!above.HasTile && tile2.HasTile)
+                            {
+                                WorldGen.PlaceTile(i, j - 1, ModContent.TileType<BabySealedPuppetPlaced>(), true);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (Main.tile[i, j].TileType == TileID.Grass && Main.hardMode)
+            {
+                if (!Framing.GetTileSafely(i, j - 1).IsTileSolid() && Main.rand.NextBool(800))
+                {
+                    if (WorldGen.PlaceObject(i, j - 1, TileType<Carrot>(), false, 0))
+                    {
+                        NetMessage.SendObjectPlacement(-1, i, j - 1, TileType<Carrot>(), 0, 0, -1, -1);
+                    }
+                }
+            }
         }
 
         public override void NearbyEffects(int i, int j, int type, bool closer)
         {
             Tile t = Main.tile[i, j];
-            if (type == TileType<IonCubePlaced>() && t.TileFrameX == 0 && t.TileFrameY == 0)
+            if (type == IonCubePlaced && t.TileFrameX == 0 && t.TileFrameY == 0)
             {
                 IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
                 if (cube == null)
@@ -296,14 +356,14 @@ namespace CalRemix
                 {
                     if (!roxm.alreadySeen)
                     {
-                        if (type == TileType<RoxTile>())
+                        if (type == RoxTile)
                         {
                             roxm.ActivateMessage();
                         }
                     }
                     if (!KinsmanMessage.alreadySeen)
                     {
-                        if (type == TileType<OnyxExcavatorTile>() && RemixDowned.downedEarthElemental)
+                        if (type == OnyxExcavatorTile && RemixDowned.downedEarthElemental)
                         {
                             Player player = Main.LocalPlayer;
                             bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<WifeinaBottle>()) || player.HasItem(ItemType<WifeinaBottlewithBoobs>()) || player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
@@ -313,7 +373,7 @@ namespace CalRemix
                     }
                     if (!GrimeMessage.alreadySeen)
                     {
-                        if (type == TileType<GrimesandPlaced>())
+                        if (type == GrimesandPlaced)
                         {
                             GrimeMessage.ActivateMessage();
                         }
@@ -321,7 +381,7 @@ namespace CalRemix
                 }
                 if (CalRemixWorld.reargar)
                 {
-                    if (type == TileType<CalamityMod.Tiles.Ores.UelibloomOre>())
+                    if (type == UelibloomOre)
                     {
                         Main.tile[i, j].TileType = (ushort)TileID.Mud;
                     }
@@ -329,7 +389,7 @@ namespace CalRemix
             }
             // Exosphere portal
             // Since the subworld isn't done right now, it just tells you you're banned then kicks you out
-            if (t.TileType == TileType<RustedPipes>())
+            if (t.TileType == RustedPipes)
             {
                 if (!Main.tile[i + 1, j + 1].HasTile)
                 {
@@ -340,7 +400,7 @@ namespace CalRemix
                         {
                             if (k == i || k == i + 3 || l == j || l == j + 4)
                             {
-                                if (Main.tile[k, l].TileType != TileType<RustedPipes>())
+                                if (Main.tile[k, l].TileType != RustedPipes)
                                     travelPossible = false;
                             }
                         }
@@ -450,7 +510,7 @@ namespace CalRemix
 
                          if (WorldGen.IsTileALeafyTreeTop(treeX, treeY) && !Collision.SolidTiles(treeX - 2, treeX + 2, treeY - 2, treeY + 2))
                          {
-                            SpawnNPCOnPlayer(Main.LocalPlayer.whoAmI, NPCType<Phytogen>());
+                            SpawnClientBossRandomPos(NPCType<Phytogen>(), new Vector2(i, j) * 16);
                          }
                      }
                  }
@@ -472,6 +532,13 @@ namespace CalRemix
                 if (type == TileType<SeaPrism>())
                 {
                     Item.NewItem(new EntitySource_TileBreak(i, j), new Rectangle(i * 16, j * 16, 16, 16), ItemType<CalamityMod.Items.Placeables.SeaPrism>());
+                }
+            }
+            if (type == TileID.Chandeliers && Main.tile[i, j].TileFrameX == 72 && Main.tile[i, j].TileFrameY % 54 == 0)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, (j + 1) * 16 + 8), Vector2.Zero, ProjectileType<FallingChandelier>(), ProjectileDamage(20, 40), 1, ai0: Main.tile[i, j].TileFrameY);
                 }
             }
         }

@@ -392,7 +392,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
             proj.timeLeft = 1200;
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             if (NPC.AnyNPCs(ModContent.NPCType<Cataractacomb>()) || NPC.AnyNPCs(ModContent.NPCType<Exotrexia>()) || NPC.AnyNPCs(ModContent.NPCType<Astigmageddon>()))
                 potionType = ItemID.None;

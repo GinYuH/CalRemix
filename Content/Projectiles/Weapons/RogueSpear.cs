@@ -1,19 +1,12 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Dusts;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Projectiles.BaseProjectiles;
 using CalamityMod.Projectiles.DraedonsArsenal;
 using CalamityMod.Projectiles.Rogue;
-using CalamityMod.Projectiles.Typeless;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using System;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Projectiles.Weapons

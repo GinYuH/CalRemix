@@ -3,8 +3,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using CalamityMod.Items.Weapons.Rogue;
 
-using Terraria.Graphics.Effects;
-
 namespace CalRemix.Content.Items.Accessories
 {
     [AutoloadEquip(EquipType.Head)]
@@ -18,7 +16,6 @@ namespace CalRemix.Content.Items.Accessories
                 return;
 
             // Add equip textures
-            EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Head}", EquipType.Head, this);
             EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Body}", EquipType.Body, this);
             EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Legs}", EquipType.Legs, this);
         }

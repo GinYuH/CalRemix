@@ -1,0 +1,7 @@
+most of the assets within this file are based on or directly ripped from the Reborn Mod for Terraria 1.1.2
+thanks to its license, we can use it as long as we provide credit and a link to the mod
+all credit for the assets used goes to HERO, the owner of Reborn Mod, and the Reborn Mod team
+mod link:
+https://web.archive.org/web/20121129032324/http://www.terrariaonline.com/threads/wip-reborn-mod.82941/
+
+todo: is there a bigger credits area? add this here too

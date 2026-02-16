@@ -1,5 +1,4 @@
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Projectiles.Hostile;
@@ -29,7 +28,6 @@ namespace CalRemix.Content.NPCs.Minibosses
             Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.BlueSlime];
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
 
             if (Main.dedServ)
                 return;

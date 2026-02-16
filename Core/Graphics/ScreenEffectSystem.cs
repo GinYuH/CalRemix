@@ -5,10 +5,8 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using static System.MathF;
 using static Terraria.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
-using static CalRemix.CalRemixHelper;
 
 namespace CalRemix.Core.Graphics
 {
@@ -41,7 +39,7 @@ namespace CalRemix.Core.Graphics
         /// <param name="lifetime">How long the effect should last</param>
         public static void SetBlurEffect(Vector2 position, float intensity, int lifetime)
         {
-            if (CalamityConfig.Instance.ScreenshakePower <= 0 || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
+            if (CalamityClientConfig.Instance.ScreenshakePower <= 0 || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
                 return;
 
             BlurPosition = position;
@@ -75,7 +73,7 @@ namespace CalRemix.Core.Graphics
         /// <param name="lifetime">How long the effect should last</param>
         public static void SetFlashEffect(Vector2 position, float intensity, int lifetime)
         {
-            if (CalamityConfig.Instance.ScreenshakePower <= 0 || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
+            if (CalamityClientConfig.Instance.ScreenshakePower <= 0 || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
                 return;
 
             FlashPosition = position;
@@ -101,7 +99,7 @@ namespace CalRemix.Core.Graphics
 
         public static void SetChromaticAberrationEffect(Vector2 position, float intensity, int lifetime)
         {
-            if (CalamityConfig.Instance.ScreenshakePower <= 0 || AberrationLifetimeRatio > 0f || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
+            if (CalamityClientConfig.Instance.ScreenshakePower <= 0 || AberrationLifetimeRatio > 0f || /*CalRemixConfig.instance.VisualOverlayIntensity*/ 1 <= 0f)
                 return;
 
             AberrationPosition = position;
@@ -130,7 +128,7 @@ namespace CalRemix.Core.Graphics
         }
 
         // The purpose of this is to make these all work together and apply in the correct order.
-        private void EndCaptureManager(Terraria.Graphics.Effects.On_FilterManager.orig_EndCapture orig, FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
+        private void EndCaptureManager(On_FilterManager.orig_EndCapture orig, FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
         {
             // Draw the screen effects first.
             screenTarget1 = DrawBlurEffect(screenTarget1);

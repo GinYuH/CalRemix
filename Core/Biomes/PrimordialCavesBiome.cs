@@ -1,0 +1,44 @@
+﻿using CalRemix.Core.Subworlds;
+using Microsoft.Xna.Framework;
+using SubworldLibrary;
+using Terraria;
+using Terraria.Graphics.Capture;
+using Terraria.ModLoader;
+
+namespace CalRemix.Core.Biomes
+{
+    // Shows setting up two basic biomes. For a more complicated example, please request.
+    public class PrimordialCavesBiome : ModBiome
+    {
+        //public override bool IsPrimaryBiome =>false; // Allows this biome to impact NPC prices
+
+        public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
+
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("CalRemix/PrimordialWater");
+
+        // Populate the Bestiary Filter
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/PrimordialCavesIcon";
+        public override string BackgroundPath => "Terraria/Images/MapBG32";
+        public override Color? BackgroundColor => Color.DarkGray;
+
+        public override string MapBackground => BackgroundPath;
+
+        public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
+
+        // Use SetStaticDefaults to assign the display name
+        public override void SetStaticDefaults()
+        {
+            // DisplayName.SetDefault("Asbestos Caves");
+        }
+
+        // Calculate when the biome is active.
+        public override bool IsBiomeActive(Player player)
+        {
+            return SubworldSystem.IsActive<GreatSeaSubworld>() && player.position.Y > GrandSeaGeneration.caveBottom * Main.maxTilesY * 16;
+        }
+
+        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
+
+        public override int Music => CalRemixMusic.AsbestosCaves;
+    }
+}

@@ -24,7 +24,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Maser Phage");
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
                 Position = new Vector2(0, -120),
@@ -63,7 +63,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             float speed = 5f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            bool slowDown = false;
             if (target != null && target.active && !(target is NPC ne && ne.life <= 0))
             {
                 NPC.direction = target.position.X - NPC.position.X > 0 ? 1 : -1;
@@ -79,12 +78,11 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 }
                 else if (Phase == 1f)
                 {
-                    slowDown = true;
                     FireRate += 1f;
                     if (FireRate % 5f == 0f)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 60, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 60, NPC.DirectionTo(target.Center) * 8, ProjectileID.DeathLaser, CalRemixHelper.ProjectileDamage(100, 200), 0f, Main.myPlayer);
                     }
                     if (FireRate >= 180f)
                     {
@@ -95,7 +93,6 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 else if (Phase == 2f)
                 {
                     {
-                        slowDown = true;
                         FireRate += 1f;
                         if (FireRate == 22)
                         {
@@ -108,7 +105,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
 
                                 if (Main.netMode != NetmodeID.Server)
                                 { 
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 40, dir, ModContent.ProjectileType<MaserDeathray>(), (int)(NPC.damage * 0.75f), 0f);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center - Vector2.UnitY * 40, dir, ModContent.ProjectileType<MaserDeathray>(), CalRemixHelper.ProjectileDamage(140, 280), 0f);
                                     Main.projectile[p].ModProjectile<MaserDeathray>().NPCOwner = NPC.whoAmI;
                                 }
                             }

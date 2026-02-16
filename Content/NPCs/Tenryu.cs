@@ -3,7 +3,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
 using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
@@ -24,7 +23,6 @@ namespace CalRemix.Content.NPCs
         private bool wait = false;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Nightwither>()] = true;
             NPCID.Sets.TrailingMode[Type] = 1;
         }

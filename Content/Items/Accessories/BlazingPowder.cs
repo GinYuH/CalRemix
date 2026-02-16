@@ -29,7 +29,7 @@ namespace CalRemix.Content.Items.Accessories
             CreateRecipe().
                 AddIngredient<AshesofCalamity>(10).
                 AddIngredient<StarblightSoot>(5).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

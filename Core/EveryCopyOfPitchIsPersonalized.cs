@@ -1,7 +1,5 @@
 using System;
-using System.Reflection;
 using CalRemix.Core.World;
-using Microsoft.Xna.Framework.Audio;
 
 using Terraria;
 using Terraria.Audio;

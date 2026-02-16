@@ -417,3 +417,103 @@ BabyNoxusBuff: {
 	DisplayName: Noxus
 	Description: He's a smol lad now
 }
+
+WeirdBirdBuff: {
+	DisplayName: Weird Bird Buff
+	Description: Some weird bird has identified you as its mother
+}
+
+Springlocked: {
+	DisplayName: Springlocked
+	Description: The springlocks rapidly crunch your bones
+}
+
+WarlockBuff: {
+	DisplayName: Warlock
+	Description: It's kinda comfy in here
+}
+
+DepthGliderBuff: {
+	DisplayName: Depth Glider
+	Description: Time to krak some kens apart
+}
+
+CultaceanBuff: {
+	DisplayName: Cultacean
+	Description: Who are these guys???
+}
+
+RealityBearerForClopsBuff: {
+	DisplayName: Reality Bearer For Clops Buff
+	Description: Mods.CalRemix.Buffs.RealityBearerForClopsBuff.Description
+}
+
+NowhereDragonBuff: {
+	DisplayName: Rift Dragons
+	Description: Seems they're going nowhere
+}
+
+FriendshipBuff: {
+	DisplayName: The Power of Friendship
+	Description: Yeah!!!!
+}
+
+Impaled: {
+	DisplayName: Impaled
+	Description: Ouch!
+}
+
+InfinityOverload: {
+	DisplayName: Elemental Overload
+	Description: The elements lash out against your very being
+}
+
+RabbitcopterSoldier: {
+	DisplayName: Rabbitcopter Soldier
+	Description: Summons a Rabbitcopter Soldier to fight for you
+}
+
+RoyalRabbit: {
+	DisplayName: Royal Rabbit
+	Description: Summons a Royal Rabbit to fight for you
+}
+
+SpearStuck: {
+	DisplayName: Speared
+	Description: There's a spear stuck in you. Ouch.
+}
+
+BaronBuff: {
+	DisplayName: Baron Bunny
+	Description: Baron Bunny protects you
+}
+
+CBoost1: {
+	DisplayName: Champion Boost
+	Description: Increased stats
+}
+
+CBoost2: {
+	DisplayName: Champion Boost
+	Description: Increased stats
+}
+
+CBoost3: {
+	DisplayName: Champion Boost
+	Description: Increased stats
+}
+
+DroneCool: {
+	DisplayName: Drone Cool
+	Description: Mods.CalRemix.Buffs.DroneCool.Description
+}
+
+RageBuff: {
+	DisplayName: Defender's Rage
+	Description: A champion of Terraria never backs down
+}
+
+RageCool: {
+	DisplayName: Rajah's Rage
+	Description: A champion of Terraria never backs down
+}

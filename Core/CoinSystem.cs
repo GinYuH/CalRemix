@@ -963,7 +963,7 @@ internal sealed class CoinSystem : ModSystem
             for (var i = 0; i < cInv.Length; i++)
             {
                 array2[i] = -1;
-                if (cInv[i].stack < 1 || cInv[i].type < 1)
+                if (cInv[i].stack < 1 || cInv[i].type < ItemID.IronPickaxe)
                 {
                     list2.Add(i);
                     cInv[i] = new Item();
@@ -971,19 +971,19 @@ internal sealed class CoinSystem : ModSystem
                 if (cInv[i] != null && cInv[i].stack > 0)
                 {
                     var num2 = 0;
-                    if (cInv[i].type == 71)
+                    if (cInv[i].type == ItemID.CopperCoin)
                     {
                         num2 = 1;
                     }
-                    if (cInv[i].type == 72)
+                    if (cInv[i].type == ItemID.SilverCoin)
                     {
                         num2 = 2;
                     }
-                    if (cInv[i].type == 73)
+                    if (cInv[i].type == ItemID.GoldCoin)
                     {
                         num2 = 3;
                     }
-                    if (cInv[i].type == 74)
+                    if (cInv[i].type == ItemID.PlatinumCoin)
                     {
                         num2 = 4;
                     }
@@ -1014,19 +1014,19 @@ internal sealed class CoinSystem : ModSystem
                 if (j != 58 && pInv[j] != null && pInv[j].stack > 0 && !pInv[j].favorited)
                 {
                     var num3 = 0;
-                    if (pInv[j].type == 71)
+                    if (pInv[j].type == ItemID.CopperCoin)
                     {
                         num3 = 1;
                     }
-                    if (pInv[j].type == 72)
+                    if (pInv[j].type == ItemID.SilverCoin)
                     {
                         num3 = 2;
                     }
-                    if (pInv[j].type == 73)
+                    if (pInv[j].type == ItemID.GoldCoin)
                     {
                         num3 = 3;
                     }
-                    if (pInv[j].type == 74)
+                    if (pInv[j].type == ItemID.PlatinumCoin)
                     {
                         num3 = 4;
                     }
@@ -1057,7 +1057,7 @@ internal sealed class CoinSystem : ModSystem
             }
             for (var l = 0; l < 40; l++)
             {
-                if (array2[l] < 0 || cInv[l].type != 0)
+                if (array2[l] < 0 || cInv[l].type != ItemID.None)
                 {
                     continue;
                 }
@@ -1074,15 +1074,15 @@ internal sealed class CoinSystem : ModSystem
                     array[num5] -= cInv[num4].stack;
                     array2[l] = -1;
                 }
-                if (Main.netMode == 1 && Main.player[Main.myPlayer].chest > -1)
+                if (Main.netMode == NetmodeID.MultiplayerClient && Main.player[Main.myPlayer].chest > -1)
                 {
-                    NetMessage.SendData(32, -1, -1, null, Main.player[Main.myPlayer].chest, num4);
+                    NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, Main.player[Main.myPlayer].chest, num4);
                 }
                 list2.Remove(num4);
             }
             for (var m = 0; m < 40; m++)
             {
-                if (array2[m] < 0 || cInv[m].type != 0)
+                if (array2[m] < 0 || cInv[m].type != ItemID.None)
                 {
                     continue;
                 }
@@ -1107,9 +1107,9 @@ internal sealed class CoinSystem : ModSystem
                         num7--;
                     }
                 }
-                if (Main.netMode == 1 && Main.player[Main.myPlayer].chest > -1)
+                if (Main.netMode == NetmodeID.MultiplayerClient && Main.player[Main.myPlayer].chest > -1)
                 {
-                    NetMessage.SendData(32, -1, -1, null, Main.player[Main.myPlayer].chest, num6);
+                    NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, Main.player[Main.myPlayer].chest, num6);
                 }
                 list2.Remove(num6);
             }
@@ -1135,9 +1135,9 @@ internal sealed class CoinSystem : ModSystem
                         num9--;
                     }
                 }
-                if (Main.netMode == 1 && Main.player[Main.myPlayer].chest > -1)
+                if (Main.netMode == NetmodeID.MultiplayerClient && Main.player[Main.myPlayer].chest > -1)
                 {
-                    NetMessage.SendData(32, -1, -1, null, Main.player[Main.myPlayer].chest, list2[0]);
+                    NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, Main.player[Main.myPlayer].chest, list2[0]);
                 }
                 list2.RemoveAt(0);
             }
@@ -1303,7 +1303,7 @@ internal sealed class CoinSystem : ModSystem
             var num4 = 0;
             for (var j = 0; j < 58; j++)
             {
-                if (((inventory[j].type >= 71 && inventory[j].type <= 74) || ItemLoader.GetItem(inventory[j].type) is Coin) && inventory[j].stack > 0)
+                if (((inventory[j].type >= ItemID.CopperCoin && inventory[j].type <= ItemID.PlatinumCoin) || ItemLoader.GetItem(inventory[j].type) is Coin) && inventory[j].stack > 0)
                 {
                     num4++;
                 }
@@ -1314,7 +1314,7 @@ internal sealed class CoinSystem : ModSystem
             }
             for (var k = 0; k < 58; k++)
             {
-                if (((inventory[k].type >= 71 && inventory[k].type <= 74) || ItemLoader.GetItem(inventory[k].type) is Coin) && inventory[k].stack > 0)
+                if (((inventory[k].type >= ItemID.CopperCoin && inventory[k].type <= ItemID.PlatinumCoin) || ItemLoader.GetItem(inventory[k].type) is Coin) && inventory[k].stack > 0)
                 {
                     inventory[k].TurnToAir();
                 }

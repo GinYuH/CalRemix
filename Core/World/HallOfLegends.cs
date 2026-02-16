@@ -1,11 +1,8 @@
 ﻿using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.Schematics;
-using CalamityMod;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ObjectData;
 using Terraria.Localization;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,11 +11,7 @@ using MonoMod.RuntimeDetour;
 using System.Reflection;
 using CalamityMod.World;
 using Terraria.WorldBuilding;
-using System.IO;
-using Terraria.Modules;
-using System.Threading;
 using CalRemix.UI;
-using System.Linq;
 
 namespace CalRemix.Core.World
 {

@@ -11,15 +11,13 @@ using Terraria.Audio;
 using CalamityMod.Dusts;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.NPCs.SupremeCalamitas;
+using CalRemix.Content.Items.Placeables.Banners;
+using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
     public class CuboidCurse : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Cuboid Curse");
@@ -36,6 +34,8 @@ namespace CalRemix.Content.NPCs.Eclipse
             NPC.value = Item.buyPrice(gold: 15);
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CuboidCurseBanner>();
         }
 
         public override void AI()
@@ -90,7 +90,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             if (i == 0)
                                 continue;
                             float spacing = 16 * 6;
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Top + Vector2.UnitX * i * spacing, Vector2.Zero, ModContent.ProjectileType<RedstonePillar>(), NPC.damage, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Top + Vector2.UnitX * i * spacing, Vector2.Zero, ModContent.ProjectileType<RedstonePillar>(), CalRemixHelper.ProjectileDamage(90, 140), 0f, Main.myPlayer);
                         }
                     }
                 }
@@ -125,7 +125,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                     SoundEngine.PlaySound(SupremeCalamitas.HellblastSound, NPC.position);                        
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int firebol = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Main.player[NPC.target].Center) * 10, ModContent.ProjectileType<RedstoneFireball>(), NPC.damage / 2, 0f, Main.myPlayer);
+                        int firebol = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Main.player[NPC.target].Center) * 10, ModContent.ProjectileType<RedstoneFireball>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
                         Main.projectile[firebol].timeLeft = 300;
                         NPC.localAI[0] = 0f;
                     }                    
@@ -148,12 +148,13 @@ namespace CalRemix.Content.NPCs.Eclipse
             if (!DownedBossSystem.downedDoG)
                 return 0f;
 
-            return SpawnCondition.SolarEclipse.Chance * 0.4f;
+            return SpawnCondition.SolarEclipse.Chance * 0.2f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), 1, 1, 3);
+            npcLoot.Add(ModContent.ItemType<GuardiansWrath>(), 10);
         }
     }
 }

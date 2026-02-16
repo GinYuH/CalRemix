@@ -22,7 +22,7 @@ namespace CalRemix.Content.NPCs
         {
             NPC.width = 22;
             NPC.height = 22;
-            NPC.aiStyle = 7;
+            NPC.aiStyle = NPCAIStyleID.Passive;
             NPC.damage = 0;
             NPC.defense = 0;
             NPC.lifeMax = 5;
@@ -39,10 +39,10 @@ namespace CalRemix.Content.NPCs
             NPC.chaseable = false;
             SpawnModBiomes = new int[] { GetInstance<ArsenalLabBiome>().Type };
         }
-        public override void SetBestiary(Terraria.GameContent.Bestiary.BestiaryDatabase database, Terraria.GameContent.Bestiary.BestiaryEntry bestiaryEntry)
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.UIInfoProvider = new Terraria.GameContent.Bestiary.CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
-            bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }

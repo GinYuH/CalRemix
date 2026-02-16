@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using CalamityMod.Items;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Rarities;
 using CalRemix.Content.DamageClasses;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
-using Mono.Cecil;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
@@ -29,7 +20,9 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public virtual int useTime => 32;
         public virtual SoundStyle useSound => SoundID.Item5;
         public virtual List<int> projsToShoot => new List<int>() { ProjectileID.WoodenArrowFriendly };
+        public virtual Vector2 extraSpeed => Vector2.Zero;
         public virtual int arrowAmount => 3;
+        public virtual bool disableArrowRainNoise => false;
         public enum OverallRarity
         {
             Gray = -1,
@@ -163,20 +156,18 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             // add funny noise to arrow shoot amount
-            int arrowAmountNoisy = arrowAmount;
-            if (Main.rand.NextBool(3))
-            {
+            int arrowAmountNoisy = (int)(arrowAmount + Item.Remix().arrowAmount);
+            if (!disableArrowRainNoise && Main.rand.NextBool(3))
                 arrowAmountNoisy++;
-            }
 
-            ShootArrowsLikeStormbow(player, source, arrowAmountNoisy, projsToShoot);
+            ShootArrowsLikeStormbow(player, source, arrowAmountNoisy, projsToShoot, extraSpeed);
 
             return false;
         }
 
-        public void ShootArrowsFromPoint(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 idealLocation, Vector2 extraSpeed)
+        public void ShootArrowsFromPoint(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 idealLocation, Vector2 extraSpeed = default)
         {
-            for (int i = 0; i < arrowAmount; i++)
+            for (int i = 0; i < arrowAmount + Item.Remix().arrowAmount; i++)
             {
                 Vector2 speed = new(Main.rand.Next(-60, 91) * 0.02f, Main.rand.Next(-60, 91) * 0.02f);
                 speed += extraSpeed;
@@ -188,7 +179,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 int projectile = Projectile.NewProjectile(source, idealLocation.X, idealLocation.Y, speed.X, speed.Y, Item.shoot, Item.damage, Item.knockBack, player.whoAmI);
             }
         }
-        public void ShootArrowsLikeStormbow(Player player, EntitySource_ItemUse_WithAmmo source, int arrowAmount, List<int> projToShoot)
+        public void ShootArrowsLikeStormbow(Player player, EntitySource_ItemUse_WithAmmo source, int arrowAmount, List<int> projToShoot, Vector2 extraSpeed = default)
         {
             // TODO: clean up
             for (int i = 0; i < arrowAmount; i++)
@@ -216,9 +207,10 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 pointPoisition.X += Main.rand.Next(-50, 51);
 
                 int projType = projToShoot[Main.rand.Next(0, projsToShoot.Count)];
-                int shotProj = Projectile.NewProjectile(source, pointPoisition.X, pointPoisition.Y, speedX, speedY, projType, damage, 3.5f, player.whoAmI);
+                int shotProj = Projectile.NewProjectile(source, pointPoisition.X, pointPoisition.Y, speedX + extraSpeed.X, speedY + extraSpeed.Y, projType, damage, 3.5f, player.whoAmI);
                 Main.projectile[shotProj].noDropItem = true;
             }
         }
+        public override bool WeaponPrefix() => true;
     }
 }

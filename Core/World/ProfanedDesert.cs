@@ -45,7 +45,7 @@ namespace CalRemix.World
         public const int flashTotal = flashPause + 240;
 
         //Only generates in singleplayer in non cloud save worlds, and only if the player's world didn't already get desert-ed once
-        bool CanGenerate => !gotJumpscared &&!Main.ActiveWorldFileData.IsCloudSave && Main.netMode == NetmodeID.SinglePlayer;
+        bool CanGenerate => !gotJumpscared && !Main.ActiveWorldFileData.IsCloudSave && Main.netMode == NetmodeID.SinglePlayer;
 
         public override void Load()
         {
@@ -211,11 +211,11 @@ namespace CalRemix.World
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = Main.tile[i, j];
-                    t.WallType = 0;
+                    t.WallType = WallID.None;
                     t.LiquidAmount = 0;
                     t.IsActuated = false;
                     t.Slope = SlopeType.Solid;
-                    t.TileColor = 0;
+                    t.TileColor = PaintID.None;
                     t.IsTileInvisible = false;
                     t.IsTileFullbright = false;
                     t.HasActuator = false;

@@ -4,15 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.BiomeManagers;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using System;
-using CalRemix.UI;
-using System.Linq;
-using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs
 {

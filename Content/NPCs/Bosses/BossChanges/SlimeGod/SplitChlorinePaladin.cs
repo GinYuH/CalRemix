@@ -1,19 +1,11 @@
-﻿using System;
-using Terraria;
-using Terraria.GameContent.Bestiary;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using Terraria.GameContent.ItemDropRules;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Critters;
 using Microsoft.Xna.Framework;
-using CalamityMod.NPCs;
 using Terraria.Audio;
 using CalamityMod.Events;
 using CalamityMod.World;
-using CalamityMod.NPCs.SlimeGod;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod.Particles;
@@ -34,7 +26,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod
         {
             NPC.Calamity().canBreakPlayerDefense = true;
             NPC.LifeMaxNERB(2000, 2400, 110000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.BossBar = Main.BigBossProgressBar.NeverValid;
             NPC.damage = 100;

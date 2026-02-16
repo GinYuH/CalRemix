@@ -63,7 +63,7 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                         {
                             SoundEngine.PlaySound(SoundID.Item20 with { Volume = 0.2f, Pitch = 0.4f }, NPC.Center);
                             Vector2 square = new Vector2(Main.rand.Next((int)NPC.position.X, (int)NPC.position.X + NPC.width), Main.rand.Next((int)NPC.position.Y, (int)NPC.position.Y + NPC.height));
-                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-cinderSpeed, cinderSpeed), Main.rand.Next(-cinderSpeed, 0)), ModContent.ProjectileType<CigarCinder>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), square, new Vector2(Main.rand.Next(-cinderSpeed, cinderSpeed), Main.rand.Next(-cinderSpeed, 0)), ModContent.ProjectileType<CigarCinder>(), CalRemixHelper.ProjectileDamage(20, 50), 0f, Main.myPlayer);
                             Main.projectile[p].scale = Main.rand.NextFloat(1f, 2f);
                         }
                     }

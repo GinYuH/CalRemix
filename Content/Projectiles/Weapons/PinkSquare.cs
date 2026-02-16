@@ -35,7 +35,6 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
             else
                 Projectile.Kill();
-
         }
         public override bool PreDraw(ref Color lightColor)
         {

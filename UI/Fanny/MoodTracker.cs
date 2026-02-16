@@ -1,7 +1,6 @@
 ﻿using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.OldDuke;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Acideye;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
@@ -14,7 +13,6 @@ using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -189,9 +187,11 @@ namespace CalRemix.UI
 
             //Helper moods, reverse order so that rarer helpers take precedence
             FannyMood.New("100% Electric!", (ScreenHelperSceneMetrics metrics) => ScreenHelpersUIState.Renault5.Speaking,
-              PriorityClass.OtherHelperMood, 0f, false, Color.Black, Color.White);
+               PriorityClass.OtherHelperMood, 0f, false, Color.Black, Color.White);
             FannyMood.New("Wonderful!", (ScreenHelperSceneMetrics metrics) => ScreenHelpersUIState.WonderFlower.Speaking,
-              PriorityClass.OtherHelperMood, 0f, false);
+               PriorityClass.OtherHelperMood, 0f, false);
+            FannyMood.New("Awake!", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.GetModPlayer<FluxPlayer>().currentFluxMode == (int)FluxPlayer.FluxState.WakingUp,
+               PriorityClass.OtherHelperMood, 0f, false, Color.Chartreuse, Color.DarkOliveGreen);
             FannyMood.New("Kawaii!", (ScreenHelperSceneMetrics metrics) => ScreenHelpersUIState.TrapperBulbChan.Speaking,
                PriorityClass.OtherHelperMood, 0f, false);
             FannyMood.New("Fresh!", (ScreenHelperSceneMetrics metrics) => ScreenHelpersUIState.CrimSon.Speaking,

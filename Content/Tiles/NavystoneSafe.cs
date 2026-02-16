@@ -20,7 +20,7 @@ public class NavystoneSafe : ModTile
         CalamityUtils.MergeWithDesert(Type);
 
         TileID.Sets.ChecksForMerge[Type] = true;
-        DustType = 96;
+        DustType = DustID.BlueMoss;
         AddMapEntry(new Color(31, 92, 114));
         HitSound = SoundID.Tink;
         RegisterItemDrop(ModContent.ItemType<Navystone>());

@@ -1,7 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Buffs.Summon;
-using CalamityMod.CalPlayer;
-using CalRemix.Content.Buffs;
+﻿using CalRemix.Content.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

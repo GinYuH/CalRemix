@@ -33,7 +33,7 @@ using Terraria.ModLoader;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
-namespace CalRemix.Content.Projectiles
+namespace CalRemix
 {
     public class CalRemixProjectile : GlobalProjectile
     {
@@ -48,7 +48,6 @@ namespace CalRemix.Content.Projectiles
         public bool whipGonged = false;
         public int taintSummon = 0;
         public int deflectedEnemy = -1;
-        NPC exc;
         public override bool InstancePerEntity => true;
         public int[] baronStraitTiles =
         {
@@ -139,19 +138,13 @@ namespace CalRemix.Content.Projectiles
                     }
                 }
             }
-            if (projectile.type == ProjectileType<MurasamaSlash>())
-            {
-                projectile.scale = 4f;
-                projectile.width = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].width * 4;
-                projectile.height = ContentSamples.ProjectilesByType[ProjectileType<MurasamaSlash>()].height * 4;
-            }
             if (projectile.type == ProjectileType<MutatedTruffleMinion>())
             {
                 projectile.frame = 0;
 
             }
 
-            if (CalRemixWorld.oxydayTime > 0 && projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == 0 && (projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f || projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
+            if (CalRemixWorld.oxydayTime > 0 && projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == WallID.None && (projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f || projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
             {
                 projectile.velocity.X += Main.windSpeedCurrent * Main.windPhysicsStrength;
                 MathHelper.Clamp(projectile.velocity.X, -222f, 222f);
@@ -603,7 +596,7 @@ namespace CalRemix.Content.Projectiles
                 float drawRotation = projectile.rotation + (projectile.spriteDirection == -1 && m.State != 0 ? MathHelper.Pi : 0f);
                 SpriteEffects effects = projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-                if (CalamityConfig.Instance.Afterimages && (projectile.ai[0] == 1 || projectile.ai[0] == 3))
+                if (CalamityClientConfig.Instance.Afterimages && (projectile.ai[0] == 1 || projectile.ai[0] == 3))
                 {
                     for (int i = 0; i < projectile.oldPos.Length; i++)
                     {

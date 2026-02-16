@@ -10,7 +10,7 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using CalRemix.UI;
 using Terraria.ModLoader.Default;
-using System.Linq;
+using Terraria.Localization;
 
 namespace CalRemix.Content.Items.Accessories
 {
@@ -48,7 +48,7 @@ namespace CalRemix.Content.Items.Accessories
             player.GetModPlayer<CalRemixPlayer>().timeSmoked++;
             if (player.GetModPlayer<CalRemixPlayer>().timeSmoked > CalamityUtils.SecondsToFrames(MaxSmokeTime))
             {
-                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + "'s lungs were replaced by nicotine."), 10142, 0);
+                player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.CarcinogenSoul").Format(player.name))), 10142, 0);
                 player.GetModPlayer<CalRemixPlayer>().timeSmoked = 0;
             }
             if (!hideVisual)

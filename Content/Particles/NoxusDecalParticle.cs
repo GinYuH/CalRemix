@@ -5,10 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using Terraria;
 using Terraria.Graphics.Shaders;
-using static System.MathF;
 using static Terraria.Utils;
-using static Microsoft.Xna.Framework.MathHelper;
-using static CalRemix.CalRemixHelper;
 
 namespace CalRemix.Content.Particles
 {

@@ -1,12 +1,7 @@
-﻿using System;
-using CalamityMod.Items;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables;
+﻿using CalamityMod.Items;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Particles;
-using CalamityMod.Projectiles.Magic;
 using CalRemix.Content.DamageClasses;
-using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

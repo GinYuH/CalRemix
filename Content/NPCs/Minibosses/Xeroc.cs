@@ -1,7 +1,6 @@
 ﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -9,13 +8,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
-using CalamityMod.Graphics.Primitives;
 using Terraria.Audio;
-using CalRemix.Core.World;
 using CalRemix.Content.Items.Materials;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using CalamityMod.Projectiles.Boss;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Items.Fishing;
 //using CalamityMod.CalPlayer;
@@ -74,10 +70,6 @@ namespace CalRemix.Content.NPCs.Minibosses
             }
             bool flag8 = true;
             int num3 = 30;
-            int num4 = 30;
-            int num5 = 30;
-            int num6 = 35;
-            int num7 = 65;
             if (flag)
             {
                 num56 = 60;
@@ -86,10 +78,6 @@ namespace CalRemix.Content.NPCs.Minibosses
                 num2 = 60;
                 num67 = 65;
                 num3 = 35;
-                num4 = 35;
-                num5 = 35;
-                num6 = 40;
-                num7 = 30;
             }
             num56 = NPC.GetAttackDamage_ForProjectiles(num56, num3);
             num78 = NPC.GetAttackDamage_ForProjectiles(num56, num3);
@@ -122,7 +110,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                     if (NPC.ai[1] == 0f)
                     {
                         NPC.velocity = new Vector2(0f, 5f);
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + new Vector2(0f, -80f), Vector2.Zero, ProjectileID.HallowBossDeathAurora, 0, 0f, Main.myPlayer);
                         }
@@ -392,11 +380,11 @@ namespace CalRemix.Content.NPCs.Minibosses
                             {
                                 vector28 = new Vector2(0f, -10f).RotatedBy((float)Math.PI * 2f * Main.rand.NextFloat());
                             }
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + vector26, vector28, ModContent.ProjectileType<XerocBloodShot>(), num78, 0f, Main.myPlayer, NPC.target);
                             }
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int num91 = (int)(NPC.ai[1] / (float)num90);
                                 for (int num92 = 0; num92 < 255; num92++)
@@ -502,11 +490,11 @@ namespace CalRemix.Content.NPCs.Minibosses
                                     vector23 = center4 - Vector2.Normalize(vector24) * num84;
                                 }
                                 Vector2 v3 = vector37 - vector23;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), vector23, vector23.DirectionFrom(NPC.Center) * 4, ProjectileType<XerocBloodShot>(), num56, 0f, Main.myPlayer, ai2: 1);
                                 }
-                                if (Main.netMode == 1)
+                                if (Main.netMode == NetmodeID.MultiplayerClient)
                                 {
                                     continue;
                                 }
@@ -575,7 +563,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                             {
                                 float num63 = num62;
                                 Vector2 vector13 = Vector2.UnitY.RotatedBy((float)Math.PI / 2f + (float)Math.PI * 2f * num63 + num61);
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), vector11 + vector13.RotatedBy(-1.5707963705062866) * 30f, vector13 * 8f, ProjectileType<XerocBloodShot>(), num88, 0f, Main.myPlayer, NPC.target);
                                 }
@@ -616,9 +604,9 @@ namespace CalRemix.Content.NPCs.Minibosses
                                 float num25 = (num24 + num22 * 0.5f + (float)num19 * num22 * 0.5f) % 1f;
                                 float ai = (float)Math.PI * 2f * (num25 + (float)num20);
                                 // sun dance
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), vector34, Vector2.Zero, 923, num2, 0f, Main.myPlayer, ai, NPC.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), vector34, Vector2.Zero, ProjectileID.FairyQueenSunDance, num2, 0f, Main.myPlayer, ai, NPC.whoAmI);
                                 }
                             }
                         }
@@ -716,7 +704,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                                         v2 = Vector2.Lerp(vector18, value2, 0.75f).SafeNormalize(Vector2.UnitY);
                                     }
                                     float ai2 = num79;
-                                    if (Main.netMode != 1)
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         Projectile.NewProjectile(NPC.GetSource_FromThis(), origin, origin.DirectionTo(Main.player[NPC.target].Center), ProjectileType<XerocBloodShot>(), num67, 0f, Main.myPlayer, ai2: 1);
                                     }
@@ -854,11 +842,11 @@ namespace CalRemix.Content.NPCs.Minibosses
                                     vector6 = center2 - Vector2.Normalize(vector7) * num57;
                                 }
                                 Vector2 v = vector35 - vector6;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), vector6, vector6.DirectionTo(Main.player[NPC.target].Center), ProjectileType<XerocBloodShot>(), num56, 0f, Main.myPlayer, ai2: 1);
                                 }
-                                if (Main.netMode == 1)
+                                if (Main.netMode == NetmodeID.MultiplayerClient)
                                 {
                                     continue;
                                 }
@@ -925,11 +913,11 @@ namespace CalRemix.Content.NPCs.Minibosses
                         {
                             _ = NPC.ai[1] / 60f;
                             Vector2 vector32 = (vector32 = new Vector2(0f, -10f).RotatedBy((float)Math.PI * 2f * num16));
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + vector31, vector32, ProjectileType<XerocBloodShot>(), num78, 0f, Main.myPlayer, NPC.target);
                             }
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int num17 = (int)(NPC.ai[1] % (float)num15);
                                 for (int j = 0; j < 255; j++)
@@ -1015,9 +1003,9 @@ namespace CalRemix.Content.NPCs.Minibosses
                         if (NPC.alpha == 255)
                         {
                             NPC.active = false;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                NetMessage.SendData(23, -1, -1, null, NPC.whoAmI);
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, NPC.whoAmI);
                             }
                             return;
                         }
@@ -1163,9 +1151,9 @@ namespace CalRemix.Content.NPCs.Minibosses
             NPC.velocity = Vector2.Lerp(vector.SafeNormalize(Vector2.Zero) * num, vector / 6f, lerpValue);
         }
 
-        public override void SetBestiary(Terraria.GameContent.Bestiary.BestiaryDatabase database, Terraria.GameContent.Bestiary.BestiaryEntry bestiaryEntry)
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon,
                 new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value),
             });

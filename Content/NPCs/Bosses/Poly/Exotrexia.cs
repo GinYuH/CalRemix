@@ -6,7 +6,6 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalamityMod;
 using CalRemix.Core.World;
 using CalamityMod.Events;
@@ -344,7 +343,7 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
                 proj.timeLeft = 1200;
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             if (NPC.AnyNPCs(ModContent.NPCType<Cataractacomb>()) || NPC.AnyNPCs(ModContent.NPCType<Astigmageddon>()) || NPC.AnyNPCs(ModContent.NPCType<Conjunctivirus>()))
                 potionType = ItemID.None;

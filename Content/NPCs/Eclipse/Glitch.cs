@@ -10,15 +10,15 @@ using Microsoft.Xna.Framework;
 using CalamityMod.Items.Materials;
 using Terraria.Audio;
 using CalamityMod.Buffs.DamageOverTime;
+using CalRemix.Content.Items.Pets;
+using Terraria.Graphics.Shaders;
+using CalamityMod.Graphics.Primitives;
+using System.Collections.Generic;
 
 namespace CalRemix.Content.NPCs.Eclipse
 {
     public class Glitch : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Glitch");
@@ -78,10 +78,44 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<DarksunFragment>(), 1, 4, 6);
+            npcLoot.Add(ModContent.ItemType<Everflute>(), 20);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            foreach (NPC n in Main.ActiveNPCs)
+            {
+                if (n.type == ModContent.NPCType<Corruption>() && n.active)
+                {
+                    Main.spriteBatch.EnterShaderRegion();
+
+                    // Prepare the flame trail shader with its map texture.
+                    GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
+                    Vector2 trailOffset = NPC.Size * 0.5f;
+                    trailOffset += (NPC.rotation + MathHelper.PiOver2).ToRotationVector2();
+
+                    List<Vector2> points = new List<Vector2>();
+
+                    Vector2 destination = n.Center;
+                    Vector2 start = NPC.Center;
+
+                    Vector2 dist = destination - start;
+
+                    points.Add(start);
+
+                    for (int i = 1; i < 30; i++)
+                    {
+                        points.Add(start + dist / 30f * i);
+                    }
+
+                    points.Add(destination);
+
+
+                    PrimitiveRenderer.RenderTrail(points, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => trailOffset, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 61);
+
+                    Main.spriteBatch.ExitShaderRegion();
+                }
+            }
             Vector2 npcOffset = NPC.Center - screenPos;
             spriteBatch.Draw(TextureAssets.Npc[Type].Value, npcOffset, null, NPC.GetAlpha(Color.White), 0f, TextureAssets.Npc[Type].Size() / 2, 1f, SpriteEffects.None, 1f);
             return false;
@@ -92,6 +126,12 @@ namespace CalRemix.Content.NPCs.Eclipse
             if (Main.rand.NextBool(4))
                 target.AddBuff(BuffID.Cursed, CalamityUtils.SecondsToFrames(25));
             target.AddBuff(ModContent.BuffType<Vaporfied>(), CalamityUtils.SecondsToFrames(4));
+        }
+        public float FlameTrailWidthFunction(float completionRatio) => MathHelper.SmoothStep(12f * NPC.scale, 8f * NPC.scale, completionRatio);
+
+        public Color FlameTrailColorFunction(float completionRatio)
+        {
+            return Main.DiscoColor * completionRatio;
         }
     }
 }

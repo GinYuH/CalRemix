@@ -1,6 +1,4 @@
-﻿using CalRemix.Content.Items;
-using Terraria;
-using Terraria.DataStructures;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -20,7 +18,7 @@ namespace CalRemix.Content.Tiles.Trophies
             TileObjectData.addTile(Type);
 
             AddMapEntry(new(120, 85, 60), Language.GetText("MapObject.Trophy"));
-            DustType = 7;
+            DustType = DustID.WoodFurniture;
         }
     }
 }

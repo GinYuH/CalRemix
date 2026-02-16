@@ -28,7 +28,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.minion = true;
             Projectile.minionSlots = 0;
             Projectile.scale = 0.75f;
-            Projectile.aiStyle = 54;
+            Projectile.aiStyle = ProjAIStyleID.Raven;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
         }

@@ -12,13 +12,14 @@ using CalRemix.Core.Subworlds;
 using Terraria.GameContent;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using CalRemix.Core.Biomes.Subworlds;
 
 namespace CalRemix
 {
     public class CalRemixAsset : ModSystem
     {
-        internal static Effect SlendermanShader;
-        internal static Effect ShieldShader;
+        internal static Asset<Effect> SlendermanShader;
+        internal static Asset<Effect> ShieldShader;
 
         public static Asset<Texture2D> sunOG = null;
         public static Asset<Texture2D> sunReal = null;
@@ -33,8 +34,9 @@ namespace CalRemix
                 Filters.Scene["CalRemix:AcidSight"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/AcidSight"), "AcidPass"), EffectPriority.VeryHigh);
                 Filters.Scene["CalRemix:LeanVision"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/LeanVision"), "LeanPass"), EffectPriority.VeryHigh);
                 Filters.Scene["CalRemix:PyrogenHeat"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/PyrogenHeat"), "PyroPass"), EffectPriority.VeryHigh);
-                Filters.Scene["CalRemix:PandemicPanic"] = new Filter(new PandemicPanicScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
                 Filters.Scene["CalRemix:Slenderman"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0f), EffectPriority.VeryHigh);
+                Filters.Scene["CalRemix:NormalDraw"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/NormalDraw"), "NormalDrawPass"), EffectPriority.VeryHigh);
+                Filters.Scene["CalRemix:VoidColors"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/VoidColors"), "VoidPass"), EffectPriority.VeryHigh);
 
                 Filters.Scene["CalRemix:PlagueBiome"] = new Filter(new PlagueSkyData("FilterMiniTower").UseColor(Color.Green).UseOpacity(0.15f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:PlagueBiome"] = new PlagueSky();
@@ -46,11 +48,32 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:Fanny"] = new FannySky();
                 Filters.Scene["CalRemix:Asbestos"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.Gray).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:Asbestos"] = new CarcinogenSky();
+                Filters.Scene["CalRemix:PandemicPanic"] = new Filter(new PandemicPanicScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
                 SkyManager.Instance["CalRemix:PandemicPanic"] = new PandemicSky();
+                Filters.Scene["CalRemix:ScreamingFaceSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:ScreamingFaceSky"] = new ScreamingFaceSky();
+                Filters.Scene["CalRemix:ClownWorldSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ClownWorldSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:ClownWorldSky"] = new ClownWorldSky();
+                Filters.Scene["CalRemix:EaterSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:EaterSky"] = new EaterSky();
+                Filters.Scene["CalRemix:NowhereSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:NowhereSky"] = new NowhereSky();
+                Filters.Scene["CalRemix:EdisSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(EdisSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:EdisSky"] = new EdisSky();
+                Filters.Scene["CalRemix:SPSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
+                SkyManager.Instance["CalRemix:SPSky"] = new SPSky();
+
+
+                Filters.Scene["CalRemix:Sealed"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
+                SkyManager.Instance["CalRemix:Sealed"] = new SealedSky();
+                Filters.Scene["CalRemix:Disilphia"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
+                SkyManager.Instance["CalRemix:Disilphia"] = new DisilphiaSky();
+                Filters.Scene["CalRemix:HorizonSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
+                SkyManager.Instance["CalRemix:HorizonSky"] = new HorizonSky();
             }
 
             AssetRepository remixAsset = Mod.Assets;
-            Effect LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad).Value;
+            Asset<Effect> LoadShader(string path) => remixAsset.Request<Effect>("Assets/Effects/" + path, AssetRequestMode.ImmediateLoad);
             SlendermanShader = LoadShader("SlendermanStatic");
             RegisterMiscShader(SlendermanShader, "StaticPass", "SlendermanStaticShader");
             ShieldShader = LoadShader("HoloShield");
@@ -69,16 +92,14 @@ namespace CalRemix
             Filters.Scene[prefixedRegistrationName] = new Filter(passReg, priority);
             Filters.Scene[prefixedRegistrationName].Load();
         }
-        private static void RegisterScreenShader(Effect shader, string passName, string registrationName, EffectPriority priority = EffectPriority.High)
+        private static void RegisterScreenShader(Asset<Effect> shader, string passName, string registrationName, EffectPriority priority = EffectPriority.High)
         {
-            Ref<Effect> shaderPointer = new(shader);
-            ScreenShaderData passParamRegistration = new(shaderPointer, passName);
+            ScreenShaderData passParamRegistration = new(shader, passName);
             RegisterSceneFilter(passParamRegistration, registrationName, priority);
         }
-        private static void RegisterMiscShader(Effect shader, string passName, string registrationName)
+        private static void RegisterMiscShader(Asset<Effect> shader, string passName, string registrationName)
         {
-            Ref<Effect> shaderPointer = new(shader);
-            MiscShaderData passParamRegistration = new(shaderPointer, passName);
+            MiscShaderData passParamRegistration = new(shader, passName);
             GameShaders.Misc["CalRemix/" + registrationName] = passParamRegistration;
         }
     }
@@ -88,6 +109,8 @@ namespace CalRemix
 
         // Subworlds
         public static readonly int Exosphere = Set("Biomes/Subworlds/Exosphere");
+        public static readonly int ClownWorld = Set("Biomes/Subworlds/ClownWorld");
+        public static readonly int Edis = Set("needs replacement/edistemp");
 
         // Biomes
         public static readonly int AsbestosCaves = Set("Biomes/AsbestosCaves");
@@ -144,6 +167,18 @@ namespace CalRemix
 
         public static readonly int RenoxPhase2 = Set("Stelliferous");
         public static readonly int RenoxPhase3 = Set("Degenerate");
+
+        public static readonly int Rajah = Set("Bosses/RajahTheme");
+        public static readonly int SupremeRajah = Set("Bosses/SupremeRajah");
+
+        // Vanilla Replacement 
+        public static readonly int BloodMoonRemix = Set("Misc/VanillaRemix/BloodMoon");
+        public static readonly int DesertRemix = Set("Misc/VanillaRemix/Desert");
+        public static readonly int DesertRemixles = Set("Misc/VanillaRemix/DesertVanilla");
+        public static readonly int QueenSlimeRemix = Set("Misc/VanillaRemix/QueenSlime");
+        public static readonly int ShimmerRemix = Set("Misc/VanillaRemix/Shimmer");
+        public static readonly int SulphSeaDayRemix = Set("Misc/VanillaRemix/probably-not-wasteland-by-dm-dokuro-unlisted-on-my-channel-for-my-playlists-and-such-128-ytshorts.savetube.me");
+        public static readonly int GoblinArmyRemix = Set("Misc/VanillaRemix/GoblinArmy");
 
         // Misc
         public static readonly int Menu = Set("Misc/Menu");

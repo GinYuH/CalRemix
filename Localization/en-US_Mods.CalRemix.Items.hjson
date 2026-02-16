@@ -30,6 +30,8 @@ HolyMantle: {
 	DisplayName: Holy Mantle
 	Tooltip:
 		'''
+		Effects of Ascendant Insignia
+		Effects of Wulfrum Acrobatics Pack while visible
 		Delirious thoughts...
 		Horizontal speed: 14
 		Acceleration multiplier: 3.2
@@ -349,15 +351,6 @@ Meth: {
 	Tooltip: These fine crystals feel very powerful
 }
 
-NotFabsolVodka: {
-	DisplayName: Fluorescent Vodka
-	Tooltip:
-		'''
-		Boosts all damage stats by 8% but lowers defense by 10%
-		Increases immune time after being struck
-		'''
-}
-
 AcesLow: {
 	DisplayName: Ace's Low
 	Tooltip: Fires a string of piercing spade cards when musket balls are used as ammo
@@ -402,6 +395,11 @@ ButterflyStaff: {
 		Only 3 can be summoned at a time
 		'The oldest in butterfly technology'
 		'''
+}
+
+Butter: {
+	DisplayName: Butter
+	Tooltip: ""
 }
 
 ChainSaw: {
@@ -1891,7 +1889,11 @@ Warstaff: {
 
 WaraxeReloaded: {
 	DisplayName: Waraxe: Reloaded
-	Tooltip: Casts a ball of gray energy that breaks enemy defense on hit
+	Tooltip:
+		'''
+		Performs a four swing combo followed by a circular swing
+		Breaks in Hardmode
+		'''
 }
 
 Sandrat: {
@@ -2678,6 +2680,62 @@ Weapons: {
 		SylvanSlasher: {
 			DisplayName: Sylvan Slasher
 			Tooltip: ""
+		}
+
+		PizzaWheel: {
+			DisplayName: Pizza Wheel
+			Tooltip:
+				'''
+				Throws a pizza boomerang that summons rolling pizzas on enemy hits
+				Stealth strikes throw a larger pizza that summons even more rolling pizzas
+				'''
+		}
+
+		RemoraDart: {
+			DisplayName: Remora Dart
+			Tooltip:
+				'''
+				Throws fast remoras which suck on enemies. 
+				Stealth strikes throw 10 homing remoras.
+				'''
+		}
+
+		Pliobrine: {
+			DisplayName: Pliobrine
+			Tooltip:
+				'''
+				Explodes into anti-gravity bubbles
+				Stealth strikes create more large bubbles which have random sizes
+				'''
+		}
+
+		Delirious: {
+			DisplayName: Delirious
+			Tooltip:
+				'''
+				Blinds the user while held
+				'It's rogue because it deviates from other rogue weapons!'
+				'''
+		}
+
+		GildedGauntlet: {
+			DisplayName: Gilded Gauntlet
+			Tooltip:
+				'''
+				Fires rocket powered fists which explode on contact
+				Doubles movement speed and maximum jump height while held
+				Stealth strikes home
+				'''
+		}
+
+		RubiconGauntlet: {
+			DisplayName: Rubicon Gauntlet
+			Tooltip:
+				'''
+				Fires rocket powered fists which explode on contact
+				Triples movement speed and maximum jump height and increases flight time by 20% while held
+				Stealth strikes home
+				'''
 		}
 	}
 }
@@ -3812,6 +3870,7 @@ Tooltips: {
 	AbombinationOld: the Jungle
 	AbombinationNew: the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]
 	TorchRemix: Can be used as ammo for the Driftorcher
+	Minceable: Can be minced at the Mincer
 	PhantomicSoulArtifact: Judgement
 	GrandGelatinRemix:
 		'''
@@ -3826,11 +3885,12 @@ Tooltips: {
 		Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi
 		Your health is capped at 50% while the accessory is visable
 		'''
-	AmbrosiaRemix: Effects of Honew Dew, and increased mining speed and defense while underground
+	AmbrosiaRemix: Effects of Honew Dew, Corrupt and Crimson Flasks, and increased mining speed and defense while underground
 	DivingGearRemix: Pacifies all normal ocean enemies
 	DivingSuitRemix:
 		'''
-		Effects of Lumenous Amulet, Alluring Bait, and Aquatic Emblem
+		Effects of Lumenous Amulet and Aquatic Emblem
+		Effects of Alluring Bait and Enchanted pearl while the accessory is visible
 		Reveals treasure while the accessory is visible
 		'''
 	AmalgamRemix:
@@ -3840,10 +3900,19 @@ Tooltips: {
 		Attacks inflict Mushy
 		Mana Overloader effect while the accessory is visible
 		'''
+	CotbgRemix: Effects of Bloody Worm Scarf, Flesh Totem, and Bloodflare Core
+	NanotechRemix:
+		'''
+		Effects of Vampiric Talisman
+		22% increased luck
+		'''
+	AsgardRemix: Effects of Shield of the Ocean, Frost Barrier, and Marnite Repulsion Shield
+	VoidExtinctRemix: Effects of The Bee, Void of Calamity, Slagsplitter Pauldron, and Necklace of Vexation
 	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
 	HadalStewRemix: Grants a handful of combat buffs
 	SoulofCryogenRemix: Boosts Cold damage
 	MetalMonstrosityRemix: \'Just looking at it makes you feel ill...\'
+	WormholePotionRemix: "[c/B87333:Requires a fee of 5 copper!]"
 }
 
 DyeStats: {
@@ -4232,7 +4301,7 @@ NoxusMusicBox: {
 }
 
 ReaverSharkWaitNVM: {
-	DisplayName: Reaver Shark Wait N V M
+	DisplayName: Reaver Shark Wait NVM
 	Tooltip: ""
 }
 
@@ -4278,6 +4347,1971 @@ BarPlanter: {
 Farmixer: {
 	DisplayName: Farmixer
 	Tooltip: Used for specialized crafting
+}
+
+TheBeacon: {
+	DisplayName: The Beacon
+	Tooltip: ""
+}
+
+RedWulfrumFrogCannon: {
+	DisplayName: Red Wulfrum Frog Cannon
+	Tooltip:
+		'''
+		Fires Wulfrum Frogs
+		Uses normal Frogs as ammo
+		'''
+}
+
+EssenceOfMerge: {
+	DisplayName: Essence Of Merge
+	Tooltip: ""
+}
+
+ScaryMicrophone: {
+	DisplayName: Scary Microphone
+	Tooltip: Plays a random jumpscare when used
+}
+
+CuboidCurseBanner: {
+	DisplayName: Cuboid Curse Banner
+	Tooltip: ""
+}
+
+CuboidCurseBannerAlt: {
+	DisplayName: Cuboid Curse Banner Alt
+	Tooltip: ""
+}
+
+EvilAnimatronicBanner: {
+	DisplayName: Evil Animatronic Banner
+	Tooltip: ""
+}
+
+GlitchBanner: {
+	DisplayName: Glitch Banner
+	Tooltip: ""
+}
+
+RodenttmodBanner: {
+	DisplayName: Rodenttmod Banner
+	Tooltip: ""
+}
+
+TallManBanner: {
+	DisplayName: Tall Man Banner
+	Tooltip: ""
+}
+
+WaterloggedEffigyBanner: {
+	DisplayName: Waterlogged Effigy Banner
+	Tooltip: ""
+}
+
+AcceloRing: {
+	DisplayName: Accelo Ring
+	Tooltip: Summons dimensional rings around the cursor which protrude large wooden spikes inwards
+}
+
+Everflute: {
+	DisplayName: Everflute
+	Tooltip: Summons a powerful bird type monster
+}
+
+RedWings: {
+	DisplayName: Red Wings
+	Tooltip:
+		'''
+		Horizontal speed: 15
+		Acceleration multiplier: 3
+		Great vertical speed
+		Flight time: 190
+		20% increased movement speed
+		'''
+}
+
+BlankStare: {
+	DisplayName: Blank Stare
+	Tooltip: Scrubs the features off of one's face
+}
+
+GuardiansWrath: {
+	DisplayName: Guardians Wrath
+	Tooltip:
+		'''
+		<left> to thrust like a normal spear
+		<right> to throw the spear, sticking into hit tiles or enemies
+		<right> again while a spear is stuck to strike it with lightning and return it to you
+		The spear cannot be used while it is stuck, however other weapons may be used
+		'''
+}
+
+SalvageLegs: {
+	DisplayName: Salvage Legs
+	Tooltip:
+		'''
+		9% increased rogue velocity
+		5% increased movement speed
+		'''
+}
+
+SalvageMask: {
+	DisplayName: Salvage Mask
+	Tooltip: 22% increased rogue critical strike chance
+	SetBonus:
+		'''
+		87% increased rogue damage
+		28% increased rogue critical strike chance
+		Using a stealth strike near enemies emits a scream that stuns them
+		Smaller enemies take 5 times as much damage
+		Taking over 100 damage from a hit, entering liquid, or being out in the rain inflicts the wearer with Springlocked
+		Springlocked rapidly damages the wearer until they hit 1 health
+		'''
+}
+
+SalvageSuit: {
+	DisplayName: Salvage Suit
+	Tooltip: 23% increased rogue damage
+}
+
+CursedCartridge: {
+	DisplayName: Cursed Cartridge
+	Tooltip: Contains an infinite amount of bullets which move in a grid-like pattern
+}
+
+Glockarina: {
+	DisplayName: Glockarina
+	Tooltip: Fires homing bolts which distort enemy stats
+}
+
+GodKillerEX: {
+	DisplayName: God Killer EX
+	Tooltip: Fires a devastating blue heat ray which irradiates enemies
+}
+
+SignoftheOperator: {
+	DisplayName: Sign of the Operator
+	Tooltip: Holds out a tome which rapidly unleashes several short ranged whips
+}
+
+BadEgg: {
+	DisplayName: Bad Egg
+	Tooltip: "'Hey this egg is actually quite bad'"
+}
+
+VigorBlock: {
+	DisplayName: Vigor Block
+	Tooltip: ""
+}
+
+AccidatedReactiveEssence: {
+	DisplayName: Accidated Reactive Essence
+	Tooltip: ""
+}
+
+BloodredReactiveEssence: {
+	DisplayName: Bloodred Reactive Essence
+	Tooltip: ""
+}
+
+NocticReactiveEssence: {
+	DisplayName: Noctic Reactive Essence
+	Tooltip: ""
+}
+
+WaterfreezeReactiveEssence: {
+	DisplayName: Waterfreeze Reactive Essence
+	Tooltip: ""
+}
+
+FrigidChest: {
+	DisplayName: Frigid Chest
+	Tooltip: ""
+}
+
+RedRelic: {
+	DisplayName: Crimson Kaiju Relic
+	Tooltip: ""
+}
+
+RedTrophy: {
+	DisplayName: Crimson Kaiju Trophy
+	Tooltip: ""
+}
+
+ActivatedHealingPotion: {
+	DisplayName: Activated Healing Potion
+	Tooltip: ""
+}
+
+SeedyCD: {
+	DisplayName: Seedy CD
+	Tooltip: Summons an ugly grey creature to carry you around
+}
+
+SubworldDoor: {
+	DisplayName: Subworld Door
+	Tooltip: ""
+}
+
+Plagueifier: {
+	DisplayName: Plagueifier
+	Tooltip: Makes the plague
+}
+
+FunnyBalloon: {
+	DisplayName: Funny Balloon
+	Tooltip: ""
+}
+
+CALVoucher: {
+	DisplayName: CAL Voucher
+	Tooltip: Use to redeem one free CAL stock
+}
+
+TraderTablet: {
+	DisplayName: Trader Tablet
+	Tooltip: ""
+}
+
+BigCherry: {
+	DisplayName: Big Cherry
+	Tooltip: ""
+}
+
+BigCitrus: {
+	DisplayName: Big Citrus
+	Tooltip: ""
+}
+
+BigFruit: {
+	DisplayName: Big Fruit
+	Tooltip: ""
+}
+
+BrimstoneHeartTrophy: {
+	DisplayName: Brimstone Heart Trophy
+	Tooltip: ""
+}
+
+FlinstoneGangsterTrophy: {
+	DisplayName: Whispering Maelstrom Trophy
+	Tooltip: ""
+}
+
+SepulcherBodyTrophy: {
+	DisplayName: Sepulcher Body Trophy
+	Tooltip: ""
+}
+
+SepulcherOrbTrophy: {
+	DisplayName: Sepulcher Orb Trophy
+	Tooltip: ""
+}
+
+SepulcherTailTrophy: {
+	DisplayName: Sepulcher Tail Trophy
+	Tooltip: ""
+}
+
+SepulcherTrophy: {
+	DisplayName: Sepulcher Trophy
+	Tooltip: ""
+}
+
+SoulSeekerTrophy: {
+	DisplayName: Soul Seeker Trophy
+	Tooltip: ""
+}
+
+Moonstone: {
+	DisplayName: Moonstone
+	Tooltip: ""
+}
+
+FreddyCheckersBoard: {
+	DisplayName: Freddy Checkers Board
+	Tooltip: ""
+}
+
+AstralEyeBlock: {
+	DisplayName: Glittering Astral Eye Block
+	Tooltip: Summons a Depth Glider when a torch is placed on top
+}
+
+AstralPearlBlock: {
+	DisplayName: Astral Pearl Block
+	Tooltip: ""
+}
+
+Chert: {
+	DisplayName: Chert
+	Tooltip: ""
+}
+
+Darkstone: {
+	DisplayName: Darkstone
+	Tooltip: ""
+}
+
+Schist: {
+	DisplayName: Schist
+	Tooltip: ""
+}
+
+Syringodium: {
+	DisplayName: Syringodium
+	Tooltip: ""
+}
+
+CreeperBag: {
+	DisplayName: Treasure Bag (Creeper)
+	Tooltip: ""
+}
+
+EaterOfWorldsBodyBag: {
+	DisplayName: Treasure Bag (Eater Of Worlds Body)
+	Tooltip: ""
+}
+
+EaterOfWorldsTailBag: {
+	DisplayName: Treasure Bag (Eater Of Worlds Tail)
+	Tooltip: ""
+}
+
+MourningWoodBag: {
+	DisplayName: Treasure Bag (Mourning Wood)
+	Tooltip: ""
+}
+
+KrakenTooth: {
+	DisplayName: Kraken Tooth
+	Tooltip: "'It's got cavities'"
+}
+
+KetchupSqueezie: {
+	DisplayName: Ketchup Squeezie
+	Tooltip:
+		'''
+		Propels the user away from the cursor when used
+		Passively grants the Exquisitely Stuffed buff while being held
+		'EZPZ Ketchup Squeezie'
+		'''
+}
+
+FrilledShark: {
+	DisplayName: Frilled Shark
+	Tooltip:
+		'''
+		Vomits up spreads of pellets which quickly slow down.
+		Deals more damage the lower in the world the user is.
+		'''
+}
+
+Laevateinn: {
+	DisplayName: Laevateinn
+	Tooltip:
+		'''
+		Creates danmaku projectiles while used
+		Direct hits with the weapon cause a small pattern of danmaku to erupt outwards
+		'''
+}
+
+LivyatanadoStaff: {
+	DisplayName: Livyatanado Staff
+	Tooltip: Summons Cultaceans which fire Livyatanadoes at enemies
+}
+
+XiphactinusGun: {
+	DisplayName: Xiphactinus Gun
+	Tooltip: Fires a xiphactinus head that latches onto enemies
+}
+
+LivyatanBag: {
+	DisplayName: Treasure Bag (Livyatan)
+	Tooltip: ""
+}
+
+LivyatanTrophy: {
+	DisplayName: Livyatan Trophy
+	Tooltip: ""
+}
+
+LightningStaff: {
+	DisplayName: Lightning Staff
+	Tooltip: The name says it all really
+}
+
+AmalgamatedRain: {
+	DisplayName: Amalgamated Rain
+	Tooltip:
+		'''
+		Shoots shadowdrops and ichor from the sky
+		'For budget purposes, both evils were combined into one item'
+		'''
+}
+
+AprilShowers: {
+	DisplayName: April Showers
+	Tooltip: Summons angry trappers from the sky
+}
+
+BoilingSkies: {
+	DisplayName: Boiling Skies
+	Tooltip: Shoots exploding fireballs from the sky
+}
+
+ClamSlamSupremeSpecial: {
+	DisplayName: Clam Slam Supreme Special
+	Tooltip: Causes heavy clams to fall from the sky which rebound on collision
+}
+
+DukeFishrod: {
+	DisplayName: Duke Fishrod
+	Tooltip: Shoots sharkrons from the sky
+}
+
+IcarusStormbow: {
+	DisplayName: Icarus Stormbow
+	Tooltip: Shoots crystal fireballs from the sky
+}
+
+LastStand: {
+	DisplayName: Last Stand
+	Tooltip: Knocks UFOs out of the sky
+}
+
+Legendscribe: {
+	DisplayName: Legendscribe
+	Tooltip: Shoots giant chunks of sandstone from the sky
+}
+
+LihzahrdianSunMask: {
+	DisplayName: Lihzahrdian Sun Mask
+	Tooltip: Shoots bouncy fireballs from the sky
+}
+
+Moonfall: {
+	DisplayName: Moonfall
+	Tooltip: Makes the moon fall down
+}
+
+Mutation: {
+	DisplayName: Mutation
+	Tooltip: Shoots bouncy mushrooms from the sky
+}
+
+OldtideCrawcaster: {
+	DisplayName: Oldtide Crawcaster
+	Tooltip: Summons fearless crab warriors from the sky
+}
+
+Scatteract: {
+	DisplayName: Scatteract
+	Tooltip: Rains acid from the sky
+}
+
+SnowStorme: {
+	DisplayName: Snow Storme
+	Tooltip: Shake to ruffle up the snow of the world
+}
+
+TheQueensKnees: {
+	DisplayName: The Queen's Knees
+	Tooltip: Shoots a lot of bees from the sky
+}
+
+Warmbow: {
+	DisplayName: Warmbow
+	Tooltip: Shoots spiky balls from the sky
+}
+
+WulfrumExcavator: {
+	DisplayName: Wulfrum Excavator
+	Tooltip: Shoots slowing wulfrum bolts from the sky
+}
+
+Squidzooka: {
+	DisplayName: Squidzooka
+	Tooltip:
+		'''
+		Fires ink bolts which summon attack squids on collision
+		Attack squids deal summon damage
+		'''
+}
+
+KrakenTentacle: {
+	DisplayName: Kraken Tentacle
+	Tooltip:
+		'''
+		Launches a tentacle outwards
+		Hitting an enemy with the tip of the tentacle while near its apex launches the user forward
+		This hit deals 20 times the amount of damage
+		During this launch, the user is invincible
+		'''
+}
+
+PurpleShavedIce: {
+	DisplayName: Purple Shaved Ice
+	Tooltip: "'Tastes like a grape-flavored popsicle'"
+}
+
+PurpleShavedIceEdible: {
+	DisplayName: Purple Shaved Ice Edible
+	Tooltip: "'Tastes like a grape-flavored popsicle'"
+}
+
+Pigeon: {
+	DisplayName: Pigeon
+	Tooltip: "'Some will get it'"
+}
+
+Edentulism: {
+	DisplayName: Edentulism
+	Tooltip: Holds out a bull shark head whose teeth fall out from above the screen and onto enemies
+}
+
+BlubberNugget: {
+	DisplayName: Blubber Nugget
+	Tooltip:
+		'''
+		Defense increased by 50
+		Damage resistance increased by 20%
+		Maximum life increased by 200
+		Protects the wearer from cold damage
+		Makes jumping and flying more annoying due to how heavy it is
+		'''
+}
+
+LivyatanRelic: {
+	DisplayName: Livyatan Relic
+	Tooltip: ""
+}
+
+StickBlock: {
+	DisplayName: Stick Block
+	Tooltip: ""
+}
+
+StickWall: {
+	DisplayName: Stick Wall
+	Tooltip: ""
+}
+
+StrawBlock: {
+	DisplayName: Straw Block
+	Tooltip: ""
+}
+
+StrawWall: {
+	DisplayName: Straw Wall
+	Tooltip: ""
+}
+
+Slingshot: {
+	DisplayName: Slingshot
+	Tooltip: ""
+}
+
+ActivePlumestone: {
+	DisplayName: Active Plumestone
+	Tooltip: ""
+}
+
+Badrock: {
+	DisplayName: Badrock
+	Tooltip: ""
+}
+
+CarnelianDirt: {
+	DisplayName: Carnelian Dirt
+	Tooltip: ""
+}
+
+CarnelianDirtWall: {
+	DisplayName: Carnelian Dirt Wall
+	Tooltip: ""
+}
+
+CarnelianiteOre: {
+	DisplayName: Carnelianite Ore
+	Tooltip: ""
+}
+
+CarnelianStone: {
+	DisplayName: Carnelian Stone
+	Tooltip: ""
+}
+
+CarnelianStoneWall: {
+	DisplayName: Carnelian Stone Wall
+	Tooltip: ""
+}
+
+CarnelianWood: {
+	DisplayName: Carnelian Wood
+	Tooltip: ""
+}
+
+CarnelianWoodWall: {
+	DisplayName: Carnelian Wood Wall
+	Tooltip: ""
+}
+
+Darnwood: {
+	DisplayName: Darnwood
+	Tooltip: ""
+}
+
+DarnwoodWall: {
+	DisplayName: Darnwood Wall
+	Tooltip: ""
+}
+
+Desoilite: {
+	DisplayName: Desoilite
+	Tooltip: ""
+}
+
+FrozenSealedTearOre: {
+	DisplayName: Frozen Sealed Tear Ore
+	Tooltip: ""
+}
+
+FrozenSealedTear: {
+	DisplayName: Frozen Sealed Tear
+	Tooltip: Very cold, and very durable
+}
+
+InactivePlumestone: {
+	DisplayName: Inactive Plumestone
+	Tooltip: ""
+}
+
+MonoriumOre: {
+	DisplayName: Monorium Ore
+	Tooltip: ""
+}
+
+PeatOre: {
+	DisplayName: Peat Ore
+	Tooltip: ""
+}
+
+PorswineManure: {
+	DisplayName: Porswine Manure
+	Tooltip: ""
+}
+
+RichMud: {
+	DisplayName: Rich Mud
+	Tooltip: ""
+}
+
+SealedBlackSand: {
+	DisplayName: Sealed Black Sand
+	Tooltip: ""
+}
+
+SealedBrick: {
+	DisplayName: Sealed Brick
+	Tooltip: ""
+}
+
+SealedDirt: {
+	DisplayName: Sealed Dirt
+	Tooltip: ""
+}
+
+SealedDirtWall: {
+	DisplayName: Sealed Dirt Wall
+	Tooltip: ""
+}
+
+SealedIce: {
+	DisplayName: Sealed Ice
+	Tooltip: ""
+}
+
+SealedLamp: {
+	DisplayName: Sealed Lamp
+	Tooltip: ""
+}
+
+SealedStone: {
+	DisplayName: Sealed Stone
+	Tooltip: ""
+}
+
+SealedStoneBrick: {
+	DisplayName: Sealed Stone Brick
+	Tooltip: ""
+}
+
+SealedStoneWall: {
+	DisplayName: Sealed Stone Wall
+	Tooltip: ""
+}
+
+SealedWood: {
+	DisplayName: Sealed Wood
+	Tooltip: ""
+}
+
+SealedWoodWall: {
+	DisplayName: Sealed Wood Wall
+	Tooltip: ""
+}
+
+TurnipFlesh: {
+	DisplayName: Turnip Flesh
+	Tooltip: ""
+}
+
+TurnipFruit: {
+	DisplayName: Turnip Fruit
+	Tooltip: Highly sought after for its high fiber contents
+}
+
+TurnipLeaf: {
+	DisplayName: Turnip Leaf
+	Tooltip: ""
+}
+
+TurnipMesh: {
+	DisplayName: Turnip Mesh
+	Tooltip: ""
+}
+
+VoidInfusedStone: {
+	DisplayName: Void Infused Stone
+	Tooltip: ""
+}
+
+VoidInfusedStoneWall: {
+	DisplayName: Void Infused Stone Wall
+	Tooltip: ""
+}
+
+GreenFabricWall: {
+	DisplayName: Green Fabric Wall
+	Tooltip: ""
+}
+
+GreenFabric: {
+	DisplayName: Green Fabric
+	Tooltip: ""
+}
+
+CarnelianRose: {
+	DisplayName: Carnelian Rose
+	Tooltip: "'The last species that survived from a darker time'"
+}
+
+CookieTower: {
+	DisplayName: Cookie Tower
+	Tooltip:
+		'''
+		Grows upwards over time
+		Can be harvested for Chocolate Chip Cookies
+		'''
+}
+
+LightColumn: {
+	DisplayName: Light Column
+	Tooltip:
+		'''
+		Grows upwards over time
+		Can be harvested for Light Residue
+		'''
+}
+
+LightResidue: {
+	DisplayName: Light Residue
+	Tooltip: Chunks of dimming yellow light
+}
+
+Neoncane: {
+	DisplayName: Neoncane
+	Tooltip: Grows upwards over time
+}
+
+PeatSpire: {
+	DisplayName: Peat Spire
+	Tooltip:
+		'''
+		Grows upwards over time
+		Can be harvested for Peat Ore
+		'''
+}
+
+Brightstone: {
+	DisplayName: Brightstone
+	Tooltip: ""
+}
+
+RunicBrightstone: {
+	DisplayName: Runic Brightstone
+	Tooltip: ""
+}
+
+SealedBush: {
+	DisplayName: Sealed Bush
+	Tooltip: ""
+}
+
+CarnelianWoodChestplate: {
+	DisplayName: Carnelian Wood Chestplate
+	Tooltip:
+		'''
+		Damage increased by 10%
+		Critical strike chance increased by 5%
+		'''
+}
+
+CarnelianWoodHelmet: {
+	DisplayName: Carnelian Wood Helmet
+	Tooltip:
+		'''
+		Damage increased by 20%
+		Critical strike chance increased by 10%
+		'''
+}
+
+CarnelianWoodLeggings: {
+	DisplayName: Carnelian Wood Leggings
+	Tooltip:
+		'''
+		Damage increased by 2%
+		Movement speed increased by 12%
+		'''
+}
+
+SealedFruit: {
+	DisplayName: Sealed Fruit
+	Tooltip: ""
+}
+
+CarnelianWoodHammer: {
+	DisplayName: Carnelian Wood Hammer
+	Tooltip: ""
+}
+
+CarnelianWoodBow: {
+	DisplayName: Carnelian Wood Bow
+	Tooltip: ""
+}
+
+CarnelianWoodSword: {
+	DisplayName: Carnelian Wood Sword
+	Tooltip: ""
+}
+
+CarnelianWoodStormbow: {
+	DisplayName: Carnelian Wood Stormbow
+	Tooltip: ""
+}
+
+RefinedCarnelianite: {
+	DisplayName: Refined Carnelianite
+	Tooltip: A shining red gemstone that has luminescent properties
+}
+
+RottedTendril: {
+	DisplayName: Rotted Tendril
+	Tooltip: A tentacle severed from a Sealed entity
+}
+
+NeonDust: {
+	DisplayName: Neon Dust
+	Tooltip: Dangerous powder with nauseating potential
+}
+
+Veinroot: {
+	DisplayName: Veinroot
+	Tooltip: As much of a delicacy as it is a useful fillament
+}
+
+CritterChip: {
+	DisplayName: Critter Chip
+	Tooltip: "'High in silicon content'"
+}
+
+FriedCritterChip: {
+	DisplayName: Fried Critter Chip
+	Tooltip: "'Lacking in silicon content'"
+}
+
+MonorianGemShards: {
+	DisplayName: Monorian Gem Shards
+	Tooltip: Contains loose amounts of power of a great soul
+}
+
+MonorianGem: {
+	DisplayName: Monorian Gem
+	Tooltip: Fires monorian gemstones at extremely fast speeds
+}
+
+NauseatingPowder: {
+	DisplayName: Nauseating Powder
+	Tooltip: An assortment of powders that can make many go mad
+}
+
+Delirium: {
+	DisplayName: Delirium
+	Tooltip: Right click to inflict all nearby enemies with a slew of debuffs
+}
+
+SoftScarf: {
+	DisplayName: Soft Scarf
+	Tooltip:
+		'''
+		Causes Rage to always generate
+		Rage is automatically activated when at max
+		Rage duration is decremented at a slower rate
+		'''
+}
+
+Mercury: {
+	DisplayName: Mercury
+	Tooltip: Solid, heat-resistant mercury
+}
+
+ArchRaptierre: {
+	DisplayName: Arch Raptierre
+	Tooltip:
+		'''
+		Strikes downwards 5 icicles for each swing
+		<right> to freeze nearby enemies
+		'''
+}
+
+ArcticRapier: {
+	DisplayName: Arctic Rapier
+	Tooltip:
+		'''
+		Strikes downwards 5 icicles for each swing
+		<right> to freeze nearby enemies
+		'''
+}
+
+HeavenReaper: {
+	DisplayName: Heaven Reaper
+	Tooltip:
+		'''
+		Flings out a spread of auric probes which slow down to a stop
+		Hitting a probe with another weapon's projectile causes the probe to detonate into a massive explosion
+		'''
+}
+
+Astrogel: {
+	DisplayName: Astral Gel
+	Tooltip: Sickly gel with cosmic potential
+}
+
+Gastrogel: {
+	DisplayName: Gastrogel
+	Tooltip: Splatters of Gastropod hide that works as an adhesive
+}
+
+GastropodEye: {
+	DisplayName: Gastropod Eye
+	Tooltip: ""
+}
+
+GastropodHide: {
+	DisplayName: Gastropod Hide
+	Tooltip: Somewhat hardy mollusk leather
+}
+
+GildedShard: {
+	DisplayName: Gilded Shard
+	Tooltip: Bright flakes of yellow light that can pierce the moon
+}
+
+MercuryCoatedSubcinium: {
+	DisplayName: Mercury Coated Subcinium
+	Tooltip: "'Smells like pancake batter'"
+}
+
+VoidSingularity: {
+	DisplayName: Void Singularity
+	Tooltip: Material Void in its purest form
+}
+
+AstrogelBlock: {
+	DisplayName: Astral Gel Block
+	Tooltip: ""
+}
+
+GastrogelBlock: {
+	DisplayName: Gastrogel Block
+	Tooltip: ""
+}
+
+GildedHardlightBlock: {
+	DisplayName: Gilded Hardlight Block
+	Tooltip: ""
+}
+
+VoidInfusedTurnipFruit: {
+	DisplayName: Void Infused Turnip Fruit
+	Tooltip: A highly focused source of void
+}
+
+CornSquare: {
+	DisplayName: Corn Square
+	Tooltip: ""
+}
+
+GroundFleshBlock: {
+	DisplayName: Ground Flesh Block
+	Tooltip: ""
+}
+
+Pebble: {
+	DisplayName: Pebble
+	Tooltip: A mundane stone
+}
+
+PebbleAstral: {
+	DisplayName: Astral Pebble
+	Tooltip: Contains a large amount of Astral essence
+}
+
+PebbleBrimstone: {
+	DisplayName: Brimstone Pebble
+	Tooltip: Contains a large amount of Brimstone essence
+}
+
+PebbleCarnelian: {
+	DisplayName: Carnelian Pebble
+	Tooltip: Contains a large amount of Carnelian essence
+}
+
+PebbleFlake: {
+	DisplayName: Pebble Flake
+	Tooltip: A mundane flake of stone that can be tainted with different forces
+}
+
+PebbleSealed: {
+	DisplayName: Sealed Pebble
+	Tooltip: Contains a large amount of Sealed essence
+}
+
+PebbleShardAstral: {
+	DisplayName: Astral Pebble Flake
+	Tooltip: Contains a small amount of Astral essence
+}
+
+PebbleShardBrimstone: {
+	DisplayName: Brimstone Pebble Flake
+	Tooltip: Contains a small amount of Brimstone essence
+}
+
+PebbleShardCarnelian: {
+	DisplayName: Carnelian Pebble Flake
+	Tooltip: Contains a small amount of Carnelian essence
+}
+
+PebbleShardSealed: {
+	DisplayName: Sealed Pebble Flake
+	Tooltip: Contains a small amount of Sealed essence
+}
+
+LargeSealedFruit: {
+	DisplayName: Large Sealed Fruit
+	Tooltip: ""
+}
+
+SepulcherBodyAltTrophy: {
+	DisplayName: Sepulcher Alternate Body Trophy
+	Tooltip: ""
+}
+
+SepulcherHandTrophy: {
+	DisplayName: Sepulcher Arm Trophy
+	Tooltip: ""
+}
+
+WalkingBirdBanner: {
+	DisplayName: Bumper Banner
+	Tooltip: ""
+}
+
+TheBealed: {
+	DisplayName: Baligulas
+	Tooltip: ""
+}
+
+BalimbaaBanner: {
+	DisplayName: Balimbaa Banner
+	Tooltip: ""
+}
+
+BlimpaaBanner: {
+	DisplayName: Blimpaa Banner
+	Tooltip: ""
+}
+
+BoneDogBanner: {
+	DisplayName: Bone Dog Banner
+	Tooltip: ""
+}
+
+ChronodileBanner: {
+	DisplayName: Chronodile Banner
+	Tooltip: ""
+}
+
+CyclopsBanner: {
+	DisplayName: Cyclops Banner
+	Tooltip: ""
+}
+
+KoboldBanner: {
+	DisplayName: Kobold Banner
+	Tooltip: ""
+}
+
+PenguinCommanderBanner: {
+	DisplayName: Penguin Commander Banner
+	Tooltip: ""
+}
+
+SuccubusBanner: {
+	DisplayName: Succubus Banner
+	Tooltip: ""
+}
+
+CloseToYou: {
+	DisplayName: Close To You
+	Tooltip:
+		'''
+		'You're never too far from me.'
+		'J. T.'
+		'''
+}
+
+Mincer: {
+	DisplayName: Mincer
+	Tooltip: Can be used to grind items into other items
+}
+
+TrubblingItem: {
+	DisplayName: Trubbling
+	Tooltip: ""
+}
+
+Grakit: {
+	DisplayName: Grakit
+	Tooltip:
+		'''
+		Fires granite energy bolts which curve around the cursor
+		While curving, the bolts deal 5x damage
+		'''
+}
+
+WoodenEmblem: {
+	DisplayName: Wooden Emblem
+	Tooltip:
+		'''
+		Increases the damage of white, blue, green, and orange weapons by 25%
+		Does not ignore modifiers
+		'''
+}
+
+WoodBag: {
+	DisplayName: Wood Bag
+	Tooltip: Right Click to open
+}
+
+SealToken: {
+	DisplayName: Seal Token
+	Tooltip: "'Probably not worth much as currency'"
+}
+
+SealloyBar: {
+	DisplayName: Sealloy Bar
+	Tooltip: A strange alloy that can make even stranger things
+}
+
+MysteriousGraySlab: {
+	DisplayName: Mysterious Gray Slab
+	Tooltip: Does not reduce mining speed when consumed
+}
+
+PinkSlab: {
+	DisplayName: Pink Slab
+	Tooltip: Increases mining speed when consumed
+}
+
+BabySealedPuppet: {
+	DisplayName: Baby Sealed Puppet
+	Tooltip: ""
+}
+
+ElementalWood: {
+	DisplayName: Elemental Wood
+	Tooltip: ""
+}
+
+FireApple: {
+	DisplayName: Fire Apple
+	Tooltip: Provides fire immunity when consumed
+}
+
+BurntButter: {
+	DisplayName: Burnt Butter
+	Tooltip: Provides fire immunity when consumed
+}
+
+Doubler: {
+	DisplayName: Doubler
+	Tooltip: Doubles movement speed while held
+}
+
+Drabbler: {
+	DisplayName: Drabbler
+	Tooltip:
+		'''
+		Triples movement speed while held
+		Heals 10 life on enemy hits
+		'''
+}
+
+RustedShard: {
+	DisplayName: Rusted Shard
+	Tooltip: Can deal damage to certain otherwise invincible quest NPCs
+}
+
+SkullKarrver: {
+	DisplayName: Skull Karrver
+	Tooltip: Heals 10 life on enemy hits
+}
+
+Mikado: {
+	DisplayName: Mikado
+	Tooltip: ""
+}
+
+Umbren: {
+	DisplayName: Umbren
+	Tooltip: Can destroy _s
+}
+
+AbnormalEye: {
+	DisplayName: Abnormal Eye
+	Tooltip: "'The eye of a temporal beast'"
+}
+
+RotPearl: {
+	DisplayName: Rot Pearl
+	Tooltip: Icky pearls that have lost their luster
+}
+
+ExtremelyStrangePuppet: {
+	DisplayName: Extremely Strange Puppet
+	Tooltip:
+		'''
+		Summons Faux Surrogate of Eight Cold Panels
+		'The bad time'
+		'''
+}
+
+StrangePuppet: {
+	DisplayName: Strange Puppet
+	Tooltip: Summons a Sealed Puppet
+}
+
+AbnormalSample: {
+	DisplayName: Abnormal Sample
+	Tooltip: ...
+}
+
+NullHolder: {
+	DisplayName: Null Holder
+	Tooltip: One piece of the Null Beacon
+}
+
+NullOrb: {
+	DisplayName: Null Orb
+	Tooltip: One piece of the Null Beacon
+}
+
+NullPedestal: {
+	DisplayName: Null Pedestal
+	Tooltip: One piece of the Null Beacon
+}
+
+WaterMesh: {
+	DisplayName: Water Mesh
+	Tooltip: Strong liquidy fibers containing elemental energy
+}
+
+WaterSeeds: {
+	DisplayName: Water Seeds
+	Tooltip: "'Not actually plantable'"
+}
+
+AbnormalRecord: {
+	DisplayName: Abnormal Record
+	Tooltip: Plays the abomination's music on the go
+}
+
+HataqausLashes: {
+	DisplayName: Hataqau's Lashes
+	Tooltip: Unleashes 3 lashes imbued with ancient water particles
+}
+
+SealedLashes: {
+	DisplayName: Sealed Lashes
+	Tooltip: Unleashes 3 rotted tentacles
+}
+
+ElementalChestplate: {
+	DisplayName: Elemental Chestplate
+	Tooltip: 25% increased damage
+}
+
+ElementalHelmet: {
+	DisplayName: Elemental Helmet
+	Tooltip: 25% increased critical strike chance
+}
+
+ElementalLeggings: {
+	DisplayName: Elemental Leggings
+	Tooltip: 14% increased movement speed
+}
+
+SealedChestplate: {
+	DisplayName: Sealed Chestplate
+	Tooltip: 24% increased damage
+}
+
+SealedHelmet: {
+	DisplayName: Sealed Helmet
+	Tooltip: 10% increased critical strike chance
+}
+
+SealedLeggings: {
+	DisplayName: Sealed Leggings
+	Tooltip: 20% increased movement speed
+}
+
+Gastrosequence: {
+	DisplayName: Gastrosequence
+	Tooltip:
+		'''
+			Summons the Ascended Monorian Gastropod
+			Must be used in the Void Forest
+		'''
+}
+
+AwokenGastropodEye: {
+	DisplayName: Awoken Gastropod Eye
+	Tooltip: Fires gastropod eyes at extremely fast speeds which set enemies ablaze
+}
+
+ObserverMask: {
+	DisplayName: Observer Mask
+	Tooltip: Provides immunity to most fire debuffs
+}
+
+ObserverEye: {
+	DisplayName: Observer Eye
+	Tooltip: ""
+}
+
+NullBeacon: {
+	DisplayName: Null Beacon
+	Tooltip: Summons Void
+}
+
+VoidWings: {
+	DisplayName: Void Wings
+	Tooltip:
+		'''
+		Horizontal speed: 13
+		Acceleration multiplier: 2.5
+		Great vertical speed
+		Flight time: 170
+		Infinite flight while wearing Condensed Void armor
+		'''
+}
+
+VoidChestplate: {
+	DisplayName: Condensed Void Chestplate
+	Tooltip: 26% increased damage
+}
+
+VoidHelmet: {
+	DisplayName: Condensed Void Helmet
+	Tooltip: 14% increased critical strike chance
+}
+
+VoidLeggings: {
+	DisplayName: Condensed Void Leggings
+	Tooltip: 25% increased movement speed
+}
+
+MassBlaster: {
+	DisplayName: Mass Blaster
+	Tooltip: Fires a fast, precise, irritating spread of explosive infected orbs
+}
+
+YellowLightChestplate: {
+	DisplayName: Yellow Light Chestplate
+	Tooltip: 12% increased damage
+}
+
+YellowLightHelmet: {
+	DisplayName: Yellow Light Helmet
+	Tooltip: 5% increased critical strike chance
+}
+
+YellowLightLeggings: {
+	DisplayName: Yellow Light Leggings
+	Tooltip: 5% increased movement speed
+}
+
+DoctorsRemote: {
+	DisplayName: Doctors Remote
+	Tooltip: Summons Disilphia
+}
+
+ShadeSingularity: {
+	DisplayName: Shade Singularity [DEBUG]
+	Tooltip: Resets all Sealed Dimension quests
+}
+
+DraedonRelic: {
+	DisplayName: True Draedon Relic
+	Tooltip: ""
+}
+
+TurnipSprout: {
+	DisplayName: Turnip Sprout
+	Tooltip: Draedon might be interested in this...
+}
+
+PusSac: {
+	DisplayName: Pus Sac
+	Tooltip: A gross organ allegedly ripped off of a monster
+}
+
+TanMatter: {
+	DisplayName: Tan Matter
+	Tooltip: It appears that brain rot has turned the gray matter tan
+}
+
+EnchantedSealedLeggings: {
+	DisplayName: Enchanted Sealed Leggings
+	Tooltip: 30% increased movement speed
+}
+
+EnchantedYellowLightLeggings: {
+	DisplayName: Enchanted Yellow Light Leggings
+	Tooltip: 10% increased movement speed
+}
+
+ArmorPolisher: {
+	DisplayName: Armor Polisher
+	Tooltip: Can enchant Yellow Light Leggings and Sealed Leggings
+}
+
+BrokenHeroGem: {
+	DisplayName: Broken Hero Gem
+	Tooltip: ""
+}
+
+InfinityPebble: {
+	DisplayName: Infinity Pebble
+	Tooltip:
+		'''
+		Fires a large beam which channels energy across different dimensions
+		After firing for a second, homing dimensional energy-infused Monorian Bolts fire outwards
+		'''
+}
+
+TrueMonorianGem: {
+	DisplayName: True Monorian Gem
+	Tooltip: Fires ascended monorian gemstones which summon lightning as they travel
+}
+
+ParadiseBlade: {
+	DisplayName: Paradise Blade
+	Tooltip:
+		'''
+		<right> to spawn a light orb at the cursor
+		These orbs bypass special darkness mechanics
+		'A blade which can fend off shadow in even the greatest darknesses'
+		'''
+}
+
+ShadesBane: {
+	DisplayName: Shades Bane
+	Tooltip:
+		'''
+		Increases maximum health by 100 while held
+		Fires spreads of shade bolts
+		Every first and third swing fires a large homing spread
+		Every third and fourth swing fires a tighter spread with increased damage
+		Hitting enemies with the blade stacks shades on them
+		Hitting an enemy with four stacks with the weapon's fifth, larger swing causes a devastating shade explosion
+		'''
+}
+
+NamelessMurasama: {
+	DisplayName: Nameless Murasama
+	Tooltip:
+		'''
+		An ultra high-frequency blade whirling with energy from multiple worlds
+		Ignores 50% of enemy defense and damage reduction
+		<right> to charge up and release gusts of energy
+		Press [KEY] to dash towards the cursor. This applies Chaos State.
+		'''
+}
+
+ParadiseInfusedMurasama: {
+	DisplayName: Paradise Infused Murasama
+	Tooltip:
+		'''
+		A serene blade which emits small low frequency waves
+		Right click to heal 20% of your health
+		This has a 60 second cooldown, during this, speed is greatly increased
+		Disables unique darkness mechanics while held
+		'''
+}
+
+Combosama: {
+	DisplayName: Combosama
+	Tooltip:
+		'''
+		An amalgamated blade twisting with dimensional, furious, and serene energy
+		Ignores 50% of enemy defense and damage reduction
+		<right> to charge up and release gusts of energy trailed by slashes
+		Hold UP while charging to slow movement down greatly while increasing life regeneration
+		Press [KEY] to dash towards the cursor, trailed by slashes. This applies Chaos State.
+		While Chaos State is active, movement speed is greatly increased 
+		This is cancelled by entering regeneration mode
+		Disables unique darkness mechanics while held
+		'''
+}
+
+Forknife: {
+	DisplayName: Forknife
+	Tooltip: Thrusts forward three times before performing a spin
+}
+
+Hermes: {
+	DisplayName: Hermes
+	Tooltip: Fires mercury rockets which create large smoky explosions
+}
+
+SilverWater: {
+	DisplayName: Silver Water
+	Tooltip: Barrages enemies with mercury rockets
+}
+
+AnechoicAnchor: {
+	DisplayName: Anechoic Anchor
+	Tooltip: ""
+}
+
+LionDogMoth: {
+	DisplayName: Lion Dog Repulsor Moth
+	Tooltip: ""
+}
+
+NowhereStaff: {
+	DisplayName: Nowhere Staff
+	Tooltip:
+		'''
+		Summons the Light and Dark Rift Dragons to fight for you
+		The dragons grow in size and damage based on how many minion slots the user has remaining
+		Use the weapon while the dragons are out to summon an aura on your cursor
+		Enemies caught within the aura take 70% more damage
+		This has a 25 second cooldown
+		'Not for the heartless'
+		'''
+}
+
+Prasinite: {
+	DisplayName: Prasinite
+	Tooltip: ""
+}
+
+NerveEndingBundle: {
+	DisplayName: Nerve Ending Bundle
+	Tooltip: Often finds itself in places that it shouldn't be
+}
+
+Grablerscalibur: {
+	DisplayName: Grablerscalibur
+	Tooltip:
+		'''
+		Flings chunks of putrid god-flesh. 
+		Close-range strikes will inflict the enemy with a terrible curse
+		'''
+}
+
+HydrothermalHurl: {
+	DisplayName: Hydrothermal Hurl
+	Tooltip: ""
+}
+
+FlashFreeze: {
+	DisplayName: Flash Freeze
+	Tooltip: ""
+}
+
+BlossomBlast: {
+	DisplayName: Blossom Blast
+	Tooltip: ""
+}
+
+FriendshipPotion: {
+	DisplayName: Potion of Friendship
+	Tooltip: Unleashes the true power of friendship
+}
+
+FabergéEgg: {
+	DisplayName: Fabergé Egg
+	Tooltip:
+		'''
+		An ancient egg laid by the Fabergé Hen of Aerospec
+		When used in different areas, it may summon unique foes...
+		These foes may be related to the acquisition of Cryonic, Perennial, and Scoria Ore...
+		'''
+}
+
+Virisite: {
+	DisplayName: Virisite
+	Tooltip: ""
+}
+
+CarrotBooster: {
+	DisplayName: Carrot Booster
+	Tooltip: Etheral, but crunchy.
+}
+
+Carrot: {
+	DisplayName: Carrot
+	Tooltip: Good for your eyesight
+}
+
+ChampionChestplate: {
+	DisplayName: Champion Chestplate
+	Tooltip:
+		'''
+		15% increased damage
+		The armor of a champion feared across the land
+		'''
+}
+
+ChampionGreaves: {
+	DisplayName: Champion Greaves
+	Tooltip:
+		'''
+		50% increased movement speed
+		15% increased damage
+		The armor of a champion feared across the land
+		'''
+}
+
+ChampionHeaddress: {
+	DisplayName: Champion Headdress
+	Tooltip:
+		'''
+		70% increased minion damage
+		10% increased non-minion damage
+		+7 maximum Minions
+		+2 maximum sentries 
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Baron Bunny fights by your side as an ally to rabbit kind
+		As you lose health, Baron Bunny's will to fight becomes stronger.
+		'''
+}
+
+ChampionHelmet: {
+	DisplayName: Champion Helmet
+	Tooltip:
+		'''
+		35% increased Melee damage & critical strike chance
+		10% increased non-melee damage
+		18% increased melee speed
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		You are the wall that protects the innocent
+		Pressing the armor ability hotkey gives you the 'Defender's Rage' Buff.
+		While enraged, you gain more defense as your life gets lower.
+		'Defender's Rage' Lasts longer the less health you have
+		'Defender's Rage' has a longer cooldown the less health you have
+		During Cooldown, your defense is slightly lowered, but your speed is increased
+		'''
+}
+
+ChampionHood: {
+	DisplayName: Champion Hood
+	Tooltip:
+		'''
+		32% increased Magic damage
+		10% increased non-magic damage
+		25% increased Magic critical strike chance
+		25% reduced Mana consumption
+		150 increased maximum mana
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Energy Eminates from your body...
+		Striking enemies has a chance to spawn an energy carrot from them
+		Each energy carrot picked up boosts your damage, mana regen, and health regen
+		Stacks up to 3 times
+		Each level increases the boosts of these stats
+		'''
+}
+
+ChampionMask: {
+	DisplayName: Champion Mask
+	Tooltip:
+		'''
+		55% increased ranged damage
+		44% increased ranged critical strike chance
+		10% increased non-ranged damage
+		25% reduced ammo consumption
+		The armor of a champion feared across the land
+		'''
+	Bonus:
+		'''
+		Time to hunt the hunters...
+		Pressing the armor ability hotkey summons a R.A.B.I.T. Drone for 8 seconds
+		R.A.B.I.T. Drone has a 15 second cooldown
+		During Cooldown, your ranged damage and critical chance are increased by 15%
+		'''
+}
+
+HoodlumHood: {
+	DisplayName: Hopping Hoodlum Hood
+	Tooltip:
+		'''
+		18% increased melee & minion Damage
+		Enemies are more likely to target you
+		Hopping Mad.
+		'''
+	Bonus: Reaching below half heath multiplies your movement speed, melee damage, and minion damage by 50%
+}
+
+HoodlumPants: {
+	DisplayName: Hopping Hoodlum Paws
+	Tooltip:
+		'''
+		10% increased movement speed
+		9% increased melee critical strike chance
+		+1 Max Minion\nEnemies are more likely to target you
+		Hopping Mad.
+		'''
+}
+
+HoodlumShirt: {
+	DisplayName: Hopping Hoodlum Shirt
+	Tooltip:
+		'''
+		10% increased melee speed
+		+1 max minion
+		Enemies are more likely to target you
+		Hopping Mad.
+		'''
+}
+
+RajahMask: {
+	DisplayName: Rajah Rabbit Mask
+	Tooltip: ""
+}
+
+BaneOfTheBunny: {
+	DisplayName: Bane Of The Bunny
+	Tooltip:
+		'''
+		Right click to use as a spear
+		Left click to use as a javelin
+		Throwing Javelins right after a spear thrust throws javelins faster for a moment
+		'''
+}
+
+Bunzooka: {
+	DisplayName: Bunzooka
+	Tooltip: Fires Rabbit Rockets
+}
+
+CarrotFarmer: {
+	DisplayName: Carrot Farmer
+	Tooltip: 
+		'''
+		Spins a Carrot Scythe around you that shreds through enemies
+		Scythes fire off carrots while spun
+		Grants 1 soul essence on direct hit
+		'''
+}
+
+CottonCane: {
+	DisplayName: Cotton Cane
+	Tooltip: Summons a Rabbitcopter Soldier to fight with you
+}
+
+Punisher: {
+	DisplayName: The Punisher
+	Tooltip: ""
+}
+
+RabbitcopterEars: {
+	DisplayName: Rabbitcopter Ears
+	Tooltip:
+		'''
+		Allows flight and slow fall
+		'Yeah that's not how rabbit ears work but whatever, it works.'
+		'''
+}
+
+RajahBag: {
+	DisplayName: Treasure Bag (Rajah Rabbit)
+	Tooltip: Right Click to open
+}
+
+RajahCape: {
+	DisplayName: Rajah Cape
+	Tooltip: ""
+}
+
+RajahPelt: {
+	DisplayName: Rajah Pelt
+	Tooltip: Surpisingly durable for a pelt of fur
+}
+
+RajahSash: {
+	DisplayName: Rajah Rabbit's Sash of Vengeance
+	Tooltip:
+		'''
+		Every 10% of health lost gives you 8% extra attack power to your highest damage type boost
+		40% increased movement speed
+		Increased Jump Height and Speed
+		Grants Autojump
+		Immunity to fall damage
+		'''
+}
+
+RajahTrophy: {
+	DisplayName: Rajah Trophy
+	Tooltip: ""
+}
+
+RoyalScepter: {
+	DisplayName: Royal Scepter
+	Tooltip: Shoots a spread of three carrots
+}
+
+BaneOfTheBunnyEX: {
+	DisplayName: Bane of the Slaughterer
+	Tooltip:
+		'''
+		Right click to use as a spear
+		Left click to use as a javelin
+		Throwing Javelins right after a spear thrust throws javelins faster for a moment
+		Bane of the Bunny EX
+		'''
+}
+
+BunzookaEX: {
+	DisplayName: RPG
+	Tooltip:
+		'''
+		`Rabbit Propelled Grenade`
+		Fires Rabbit Rockets
+		Bunnyzooka EX
+		'''
+}
+
+ChampionPlate: {
+	DisplayName: Champion Plate
+	Tooltip: Forged from Champium
+}
+
+CottonCaneEX: {
+	DisplayName: Rajah's Rage
+	Tooltip: Summons a Royal Rabbit to fight with you
+}
+
+Excalihare: {
+	DisplayName: Excalihare
+	Tooltip: ""
+}
+
+FluffyFury: {
+	DisplayName: Fluffy Fury
+	Tooltip:
+		'''
+		Converts arrows into splitting Carrows
+		Potential lag warning
+		'''
+}
+
+PunisherEX: {
+	DisplayName: The Avenger
+	Tooltip: The Punisher EX
+}
+
+RabbitsWrath: {
+	DisplayName: Rabbit's Wrath
+	Tooltip: Drops razor sharp carrots on your foes
+}
+
+RajahCache: {
+	DisplayName: Treasure Cache (Rajah Rabbit, Champion of the Innocent)
+	Tooltip: Right Click to open
+}
+
+RoyalScepterEX: {
+	DisplayName: Royal Staff
+	Tooltip:
+		'''
+		Shoots a spread of five golden carrots
+		Royal Scepter EX
+		'''
+}
+
+DiamondCarrot: {
+	DisplayName: Ten Carat Carrot
+	Tooltip:
+		'''
+		The fury of the Raging Rajah can be felt radiating from this ornate carrot...
+		Non-consumable
+		'''
+}
+
+GoldenCarrot: {
+	DisplayName: Ten Karat Carrot
+	Tooltip: Summons the Pouncing Punisher himself
+}
+
+PlatinumCarrot: {
+	DisplayName: Ten Karat Carrot
+	Tooltip: Summons the Pouncing Punisher himself
+}
+
+RoyalRabbit: {
+	DisplayName: Royal Rabbit
+	Tooltip: Under direct protection by the Pouncing Punisher
+}
+
+RoyalBunnyCage: {
+	DisplayName: Royal Bunny Cage
+	Tooltip: ""
 }
 
 DraePhone15: {

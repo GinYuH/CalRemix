@@ -62,7 +62,8 @@ namespace CalRemix.Core.World
                                         Vector2 schematicSize = new Vector2(RemixSchematics.TileMaps["Ion Altar"].GetLength(0), RemixSchematics.TileMaps["Ion Altar"].GetLength(1));
                                         CalamityUtils.AddProtectedStructure(new Rectangle(i, j, (int)schematicSize.X, (int)schematicSize.Y), 4);
                                         shouldBreak = true;
-                                        break;
+                                        if (shouldBreak)
+                                            break;
                                     }
                                 }
                             }

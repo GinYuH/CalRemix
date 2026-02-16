@@ -1,0 +1,389 @@
+BrightMind: {
+	Intro: {
+		0: OOOOHOOO! bobobobobo!
+		1: Babonya! bo oooaaa oaoaa!
+		2: ...
+		3:
+			'''
+			FETCH ME !   THE    SHARDS !
+			Monorian Gem Shards !!!!
+			'''
+	}
+
+	Gastrosludge: {
+		0: YES YES YES! THE SHARDS!
+		1:
+			'''
+			I NOW REQUIRE   GASTROPOD HIDE.
+			FIND IN VOID FOREST.
+			'''
+	}
+
+	GastroEye: {
+		0: THE HIDE!!! THE HIDE!!!
+		1: BUT...
+		2: EVERY HIDE NEEDS AN EYE!
+		3:
+			'''
+			FIGHT AGAIN, SLUG BUT EMPOWERED
+			GET GASTROPOD EYE!
+			'''
+	}
+
+	End: {
+		0: ALL COMPONENTS GATHERED.
+		1: IT IS TIME     .
+	}
+
+	Hurt1.0: OW
+	Hurt2.0: NO NO NO
+	Hurt3.0: STOP IT!!!
+	Hurt4.0: OUCH
+	Hurt5.0: THAT HURT!!!
+	Hurt6.0: YOU  ARE   EVILLL!!!!!
+	Hurt7.0: GAH!
+	Hurt8.0: NOOOO
+	Hurt9.0: MY SHIN!
+	Hurt10.0: AHHHHH
+}
+
+RubyWarrior: {
+	Intro: {
+		0: Goooood morning!
+		1:
+			'''
+			Or night, or whatever time it is
+			Time is a bit stale down here.
+			'''
+		2:
+			'''
+			I am the Ruby Warrior!
+			Great Warrior of the West!
+			Much better than the one of the East!
+			'''
+		3:
+			'''
+			I'm a bit hungry right now though...
+			Get me some butter!
+			'''
+	}
+
+	IntroRepeat.0:
+		'''
+		I'm a bit hungry right now...
+		Get me some butter!
+		'''
+
+	Cookie: {
+		0: I love butter.
+		1: You might actually be helpful!
+		2:
+			'''
+			You see, I can't really move around much
+			these days, one of my hair bones are broken.
+			'''
+		3:
+			'''
+			Well enough trauma-dumping.
+			I'm still hungry!
+			I request you bring me a chocolate chip cookie!
+			'''
+	}
+
+	Rapier: {
+		0: Perfect! Just unlike Mother Sealed's old cookies...
+		1:
+			'''
+			Now you may be thinking
+			that I'm going to request more food right?
+			'''
+		2: Correct!
+		3:
+			'''
+			Kill that bastard witch that has
+			been haunting these caverns.
+			'''
+		4: Bring me their weapon.
+	}
+
+	End: {
+		0: Yey! New food!
+		1: Thank you for all of your help!
+		2: I am NO longer hungry!
+		3: Ok, you may go now, byebye!
+	}
+
+	Hurt.0: EEEEEEEEEEEEEEEEEEEEE
+}
+
+DreadonFriendly: {
+	Intro: {
+		0:
+			'''
+			...What is this? 
+			Someone other than those arrogant brats?
+			'''
+		1:
+			'''
+			Well hello there! 
+			I am Draedon! Great Fabricator of Many Things.
+			'''
+		2:
+			'''
+			Though, these days I just spend my
+			time locked up in this moldy tent...
+			'''
+		3:
+			'''
+			Say, you seem a bit more well versed
+			in how the world currently is.
+			'''
+		4:
+			'''
+			I would like to make a request.
+			In the past there was a small field of turnips.
+			My hypothesis at the time was that they could 
+			grow to great sizes!
+			'''
+		5:
+			'''
+			Though I was never able to confirm this...
+			This is why I need YOU to get me one to grow down here!
+			'''
+		6:
+			'''
+			Mesh some Turnip Mesh and their favorite nutrient,
+			Frozen Sealed Tears, together to make a sprout.
+			Then bring the sprout to me.
+			'''
+	}
+
+	FightIntro: {
+		0: A real turnip sprout, it has been so long...
+		1:
+			'''
+			Well, that's all I needed really.
+			... At least in terms of items...
+			'''
+		2:
+			'''
+			In the many years I've spent down here,
+			I've been developing my greatest inventions...
+			Four powerful mechs! 
+			'''
+		3:
+			'''
+			Conveniently you arrived just as I was finishing them!
+			Now please be a good quest to them!
+			'''
+	}
+
+	End: {
+		0: Well that was... unsuccessful...
+		1:
+			'''
+			Eh? To experiment is to fail and to learn?
+			What a load of hogwash, aim for perfection 
+			on the first try or get sent to the Volcanic Fields!
+			'''
+		2:
+			'''
+			It's where I usually toss my garbage
+			if you're into that thing.
+			'''
+		3: ...
+		4: Well this is embarassing.
+		5:
+			'''
+			I'm just going to see myself out.
+			If for whatever reason you want to fight those scraps
+			again, bring another Turnip Sprout.
+			'''
+	}
+}
+
+ShadeGreen: {
+	Intro1.0: Mm? We were summoned?
+
+	Intro2: {
+		0: Allow us to introduce ourselves.
+		1: We are The Shades.
+		2:
+			'''
+			You need not to know our history, however
+			what we want now is sacrifices.
+			'''
+	}
+
+	Intro3: {
+		0: Let's not get ahead of ourselves here
+		1:
+			'''
+			We need to do this perfectly,
+			so here's the deal.
+			'''
+		2:
+			'''
+			We'll test you by having you kill 
+			the warrior that resides in the Carnelian Forest.
+			'''
+	}
+
+	Intro4: {
+		0: ...Yes
+		1:
+			'''
+			Kill the Ruby Warrior in the Carnelian Forest
+			and bring us one of their... tendrils?
+			'''
+	}
+
+	Mind1: {
+		0: Ah, you've brought the eye, we'll take it.
+		1: ...
+		2: Wonderful.
+	}
+
+	Mind2: {
+		0: Our next target will be that babbling Bright Mind in the badlands.
+		1: Silence his gibberish and bring us a chunk of his brain.
+	}
+
+	Cultist1.0: Great, you've brought the sample.
+
+	Cultist2: {
+		0:
+			'''
+			The final individual we need dispatched
+			is the gloomy hooded figure out in the barrens
+			'''
+		1: Take one of their organs and return to us.
+	}
+
+	QuestEnd: {
+		0: And so you have slain the figure?
+		1: Yep... that certainly looks like a fatality.
+		2:
+			'''
+			Thank you for your help little one.
+			You may find this gateway of interest
+			in furthering your travel
+			'''
+	}
+}
+
+ShadeYellow: {
+	Intro1.0: ...
+
+	Cultist1: {
+		0: ...
+		1: ...
+	}
+
+	QuestEnd: {
+		0: ...
+		1: ...
+		2: I'll be seeing my ways away.
+	}
+}
+
+ShadeBlue: {
+	Intro1.0: HELLO THERE NEW FRIEND!
+	Intro2.0: GO KILL PEOPLE!
+	Intro3.0: GOUGE OUT THEIR EYE AND BRING IT TO US!!!
+	Mind1.0: WOWIE! A REAL EYE!
+	Cultist1.0: I LOVE SOME BRAIN FOOD!
+	QuestEnd.0: BYE BYE HITMAN!!!!
+}
+
+MonorianWarrior: {
+	Intro: {
+		0: What! Who goes there!?
+		1: ...
+		2: Are YOU the one who has been causing so much noise here!?
+		3: I've spent YEARS in these lands unrivaled!
+		4:
+			'''
+			I AM THE MONORIAN WARRIOR! 
+			AND I WILL FORCIBLY CLOSE THIS ISSUE!!!!
+			'''
+	}
+
+	Enrage.0: I SEE HOW IT IS!!!
+}
+
+VigorCloak: {
+	Intro: {
+		0: Greetings young one.
+		1:
+			'''
+			It is often not that such a lively creature 
+			be found out here
+			'''
+		2:
+			'''
+			This land once prosperous has seen
+			a slow and drawn out death
+			'''
+		3: ...
+		4:
+			'''
+			Some forces remain upwards.
+			Perhaps upon their demise,
+			satisfaction will be brought
+			upon the one above
+			'''
+		5:
+			'''
+			Your first task:
+			A mischievous entity of the dark,
+			patterned with purple squares.
+			Some call it Void.
+			'''
+	}
+
+	Disilphia: {
+		0: Destroyed the Void is?
+		1:
+			'''
+			Not one of substantial strength it
+			was compared to some of the other powers
+			'''
+		2:
+			'''
+			In the Volcanic Fields.
+			One who once usurped, and brought armageddon.
+			Destroy Disilphia.
+			'''
+	}
+
+	Oneguy: {
+		0: Destroyed again is the great mechanism?
+		1: That is both powers accounted for.
+		2:
+			'''
+			However, there is a being who has
+			ascended to near godlike power
+			due to this decaying world's breaths of desperation
+			'''
+		3:
+			'''
+			Through his cultist, the Bright Mind,
+			satiate their objectives and it is then
+			that the Monorian Warrior will be driven out of hiding
+			'''
+	}
+
+	Shades: {
+		0: The red shade's siblings ordered my execution?
+		1: I'm afraid that is not something feasible at this moment
+		2: They requested one of my organs yes?
+		3: Here, take this sac. This should be satisfactory to them.
+	}
+
+	End: {
+		0: The great forces of this land have now been extinguished
+		1: It is time.
+		2: The one above, I offer my remaining vigor
+	}
+}

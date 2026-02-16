@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -13,7 +12,6 @@ namespace CalRemix.Content.Projectiles.Weapons
         public ref float Timer => ref Projectile.ai[0];
         public ref float State => ref Projectile.ai[1];
         public Player Owner => Main.player[Projectile.owner];
-        private Vector2 InitVelocity;
         public override void SetStaticDefaults() 
         {
 			// DisplayName.SetDefault("Onyx Fragment");

@@ -1,11 +1,9 @@
 ﻿using CalamityMod;
 using CalamityMod.Items;
-using CalRemix.Content.Buffs;
 using CalRemix.Content.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

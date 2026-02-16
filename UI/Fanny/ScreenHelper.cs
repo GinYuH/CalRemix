@@ -2,6 +2,7 @@
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Potions;
+using CalRemix.Assets.Fonts;
 using CalRemix.Core.Retheme;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
@@ -50,6 +51,9 @@ namespace CalRemix.UI
 
         //Timer that ticks down after a message has been spoken. Lasts one second
         public int talkCooldown;
+
+        //universal on start
+        public Action OnStartUniversal;
 
         /// <summary>
         /// Checks if currently speaking a message. Ignores messages that the helper is already "speaking" but haven't showed yet due to a delay time
@@ -178,6 +182,10 @@ namespace CalRemix.UI
         /// The formatting of the textbox. Defines the minimum and max size, and the default font size
         /// </summary>
         public HelperTextboxFormatting textboxFormatting;
+        /// <summary>
+        /// The font the textbox uses.
+        /// </summary>
+        public DynamicSpriteFont textboxFont;
 
 
         #region Setters
@@ -195,7 +203,7 @@ namespace CalRemix.UI
         /// <summary>
         /// Sets the default hover text and palette of the character's textbox
         /// </summary>
-        public ScreenHelper SetTextboxStyle(string textboxHoverText, HelperTextboxPalette palette = null)
+        public ScreenHelper SetTextboxStyle(string textboxHoverText, HelperTextboxPalette palette = null, DynamicSpriteFont font = null)
         {
             this.textboxHoverText = textboxHoverText;
 
@@ -203,6 +211,12 @@ namespace CalRemix.UI
                 textboxPalette = palette;
             else
                 textboxPalette = new HelperTextboxPalette();
+
+            if (font != null)
+                textboxFont = font;
+            else
+                textboxFont = FontAssets.MouseText.Value;
+
             return this;
         }
 
@@ -224,6 +238,12 @@ namespace CalRemix.UI
             SpeechBubble.outlineThickness = outlineThickness;
             SpeechBubble.backgroundPadding = textBorderPadding;
 
+            return this;
+        }
+
+        public ScreenHelper SetOnStartUniversal(Action action)
+        {
+            OnStartUniversal += action;
             return this;
         }
         #endregion
@@ -502,7 +522,7 @@ namespace CalRemix.UI
             HelperTextboxPalette palette = ParentSpeaker.UsedPalette;
 
             // a shit ton of variables
-            var font = FontAssets.MouseText.Value;
+            var font = ParentSpeaker.textboxFont;
             string text = ParentSpeaker.UsedMessage.Text;
 
             Rectangle dimensions = GetDimensions().ToRectangle();
@@ -611,7 +631,10 @@ namespace CalRemix.UI
             }
 
             // finally draw the text
-            Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
+            if (ParentSpeaker.Name == "QueenOfClubs")
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, ParentSpeaker.textboxFont, text, textDrawPosition.X, textDrawPosition.Y, palette.text * 10, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
+            else
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, ParentSpeaker.textboxFont, text, textDrawPosition.X, textDrawPosition.Y, palette.text * (Main.mouseTextColor / 255f) * opacity, palette.textOutline * opacity, Vector2.Zero, ParentSpeaker.UsedMessage.textSize);
 
             // not final actually draw the guy over the box if desired
             if (ParentSpeaker.renderOverBackground)
@@ -634,8 +657,12 @@ namespace CalRemix.UI
         public static ScreenHelper MovieCygn = new("MovieCygn");
         public static ScreenHelper Solyn = new("Solyn");
         public static ScreenHelper Flux = new("Flux");
+        public static ScreenHelper QueenOfClubs = new("QueenOfClubs");
 
         public static ScreenHelper AltMetalFanny = new("AltMetalFanny");
+        public static ScreenHelper ThePinkFlame = new("ThePinkFlame");
+        public static ScreenHelper CrimFather = new("CrimFather");
+        public static ScreenHelper ExampleHelper = new("ExampleHelper");
 
         public override void OnInitialize()
         {
@@ -649,28 +676,6 @@ namespace CalRemix.UI
                 .SetTextboxStyle("Get away, Evil Fanny!", new HelperTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato))
                 .SetAvailabilityCondition(() => Main.hardMode)
                 .SetPositionData(true, 120);
-
-            LoadScreenHelper(WonderFlower,  "TalkingFlower")
-                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.Grass)
-                .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f))
-                .SetPositionData(false, 240, 0.37f)
-                .SetAvailabilityCondition(() => Main.hardMode);
-
-            LoadScreenHelper(BizarroFanny, "BizarroFannyIdle")
-                .SetVoiceStyle(ScreenHelperManager.BizarroFannyTalk with { MaxInstances = 0 })
-                .SetTextboxStyle("???", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
-                .SetExtraAnimations(false, false, false)
-                .SetPositionData(false, 840, 0.65f)
-                .SetAvailabilityCondition(() => DownedBossSystem.downedCeaselessVoid);
-
-            LoadScreenHelper(Renault5, "Renault5")
-                .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
-                .SetAvailabilityCondition(()=> NPC.downedMechBossAny)
-                .SetTextboxStyle("TRUE", new HelperTextboxPalette(Color.Black, Color.White, new Color(238, 217, 14), Color.White, Color.Black))
-                .SetTextboxTheme(new HelperTextboxTheme("Renault5_9Slice", new Vector2(77, 15)))
-                .SetExtraAnimations(true, false, true).
-                AddOnClickEffect(ScreenHelperManager.RenaultAdvertisment)
-                .SetPositionData(false, 220, 0.42f);
 
             LoadScreenHelper(MiracleBoy, "MiracleBoyIdle")
                 .SetVoiceStyle(SoundID.BloodZombie with { MaxInstances = 0 })
@@ -688,10 +693,9 @@ namespace CalRemix.UI
                     ))
                 .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked || (!CalRemixWorld.postGenUpdate && NPC.downedMoonlord));
                 
-
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
-                .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || !CalRemixWorld.postGenUpdate) && Main.hardMode && (DateTime.Today.DayOfYear != 18))
+                .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss || !CalRemixWorld.postGenUpdate) && Main.hardMode && (DateTime.Today.DayOfYear != 18))
                 .SetTextboxStyle("Wretched abomination agaisnt god", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme("CrimSon_9Slice", new Vector2(22, 19), "CrimSon_Background", Vector2.Zero, new Point(6, 6), 6)).
                 SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(135, 300), 135)).
@@ -705,7 +709,7 @@ namespace CalRemix.UI
                     Vector2.UnitY * 40f
                     ));
 
-            LoadScreenHelper(TrapperBulbChan, "TrapperDefault", false, new Vector2(96, 96))
+            LoadScreenHelper(TrapperBulbChan, "TrapperIdle", false, new Vector2(96, 96))
                 .SetVoiceStyle(SoundID.LucyTheAxeTalk with { MaxInstances = 0 })
                 .SetTextboxStyle("Sugoi!!! Arigato Gozaimas!", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Trapper_Background", Vector2.Zero)).
@@ -725,23 +729,12 @@ namespace CalRemix.UI
                     ));
 
 
-            LoadScreenHelper(AltMetalFanny, "FannyIdle", false)
-                .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
-                .SetTextboxStyle("Thank you for the help, Fanny!")
-                .SetPositionData(false, 240, 0.17f);
-
-            LoadScreenHelper(Solyn, "Solyn")
-                .SetVoiceStyle(BetterSoundID.ItemManaCrystal with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.4f }, BetterSoundID.ItemMagicStar)
-                .SetTextboxStyle("Thank you for the help, Solyn!", new HelperTextboxPalette(Color.HotPink, Color.Gold, Color.Purple, Color.MediumPurple, Color.PaleGoldenrod))
-                .SetAvailabilityCondition(() => CalRemixAddon.Wrath != null && Main.LocalPlayer.Remix().solynUnlocked)
-                .SetPositionData(false, 240);
-
-            LoadScreenHelper(Flux, "FluxDefault", false, new Vector2(150, 160), true)
-                .SetVoiceStyle(SoundID.Item6 with { MaxInstances = 0 })
+            LoadScreenHelper(Flux, "FluxIdle", false, new Vector2(150, 160), true)
+                .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
                 .SetTextboxStyle("I mean, alright Flux", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Transparent, Color.Transparent, Color.Transparent))
                 .SetTextboxTheme(new HelperTextboxTheme(null, Vector2.Zero, "Flux_Background", Vector2.Zero))
                 .SetExtraAnimations(false, false, false) //shes locked in her textbox
-                .SetAvailabilityCondition(() => Main.LocalPlayer.Remix().fifteenMinutesSinceHardmode == 0)
+                .SetAvailabilityCondition(() => Main.LocalPlayer.Remix().fifteenMinutesSinceHardmode <= 0 && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake)
                 .SetTextboxFormatting(new HelperTextboxFormatting(new Vector2(670, 172), 462), 0, 0)
                 .SetPositionData(new HelperPositionData(
                     new Vector2(0.1f, 0.6f), // anchored to bottom middle, a little shifted to the left
@@ -753,6 +746,22 @@ namespace CalRemix.UI
                     Vector2.Zero,
                     null,
                     new Vector2(189, 25)
+                    ));
+
+            LoadScreenHelper(QueenOfClubs, "QueenOfClubsEmpty", false, new Vector2(136, 174), true)
+                .SetVoiceStyle(SoundID.Item178 with { MaxInstances = 0 })
+                .SetTextboxStyle("test", new HelperTextboxPalette(Color.White, Color.Black * 0.2f, Color.Black, Color.Black, Color.LightSlateGray), FontRegistry.Instance.WorkbenchDelicateText)
+                .SetExtraAnimations(false, false, false)
+                .SetOnStartUniversal(ScreenHelperManager.SpinQoC)
+                .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCUnlocked && Main.LocalPlayer.GetModPlayer<QoCPlayer>().isQoCAwake)
+                .SetPositionData(new HelperPositionData(
+                    new Vector2(1, 0), // anchored to bottom middle, a little shifted to the left
+                    new Vector2(-175 - 65, 100 - 83),   //top right. arbitrary values - half of width/height
+                    new Vector2(0f, 0f),   // just fade in
+                    new Vector2(-480, -100),   //left 
+                    Vector2.Zero,
+                    Vector2.Zero,
+                    Vector2.Zero
                     ));
 
             /* LoadScreenHelper(MovieCygn, "Moviecygn", false, new Vector2(495, 595))
@@ -773,6 +782,61 @@ namespace CalRemix.UI
                      new Vector2(0, 0)
                      ));
              */
+
+
+            LoadScreenHelper(WonderFlower, "TalkingFlower")
+                .SetVoiceStyle(ScreenHelperManager.WonderFannyVoice, SoundID.Grass)
+                .SetTextboxStyle("Oooh! So exciting!", new HelperTextboxPalette(Color.Black, Color.Transparent, new Color(250, 250, 250), Color.White, Color.Black * 0.4f))
+                .SetPositionData(false, 240, 0.37f)
+                .SetAvailabilityCondition(() => Main.hardMode);
+
+            LoadScreenHelper(BizarroFanny, "BizarroFannyIdle")
+                .SetVoiceStyle(ScreenHelperManager.BizarroFannyTalk with { MaxInstances = 0 })
+                .SetTextboxStyle("???", new HelperTextboxPalette(Color.White, Color.Black, Color.Transparent, Color.Transparent, Color.Transparent))
+                .SetExtraAnimations(false, false, false)
+                .SetPositionData(false, 840, 0.65f)
+                .SetAvailabilityCondition(() => DownedBossSystem.downedCeaselessVoid);
+
+            LoadScreenHelper(Renault5, "Renault5")
+                .SetVoiceStyle(ScreenHelperManager.VroomVroom with { MaxInstances = 0 })
+                .SetAvailabilityCondition(() => NPC.downedMechBossAny)
+                .SetTextboxStyle("TRUE", new HelperTextboxPalette(Color.Black, Color.White, new Color(238, 217, 14), Color.White, Color.Black))
+                .SetTextboxTheme(new HelperTextboxTheme("Renault5_9Slice", new Vector2(77, 15)))
+                .SetExtraAnimations(true, false, true).
+                AddOnClickEffect(ScreenHelperManager.RenaultAdvertisment)
+                .SetPositionData(false, 220, 0.42f);
+
+            LoadScreenHelper(AltMetalFanny, "FannyIdle", false)
+                .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
+                .SetTextboxStyle("Thank you for the help, Fanny!")
+                .SetPositionData(false, 240, 0.17f);
+
+            LoadScreenHelper(Solyn, "Solyn")
+                .SetVoiceStyle(BetterSoundID.ItemManaCrystal with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.4f }, BetterSoundID.ItemMagicStar)
+                .SetTextboxStyle("Thank you for the help, Solyn!", new HelperTextboxPalette(Color.HotPink, Color.Gold, Color.Purple, Color.MediumPurple, Color.PaleGoldenrod))
+                .SetAvailabilityCondition(() => CalRemixAddon.Wrath != null && Main.LocalPlayer.Remix().solynUnlocked)
+                .SetPositionData(false, 240);
+
+            LoadScreenHelper(ThePinkFlame, "ThePinkFlame")
+                .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 2 }, SoundID.DD2_GoblinScream)
+                .SetTextboxStyle("Thank you for the help, The Pink Flame!", new HelperTextboxPalette(Color.AliceBlue, Color.DarkOrchid, Color.HotPink, Color.DarkOrchid, Color.DarkOrchid), FontRegistry.Instance.TimesNewRomanText)
+                .SetPositionData(false, 240);
+
+            LoadScreenHelper(CrimFather, "CrimFather")
+                .SetVoiceStyle(SoundID.DD2_OgreRoar with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.3f })
+                .SetTextboxStyle("Anytime, Crim Father.", new HelperTextboxPalette(Color.Red, Color.Yellow, Color.DarkRed, Color.Black, Color.Black))
+                .SetAvailabilityCondition(() => DownedBossSystem.downedYharon && (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss) && CalRemixWorld.timeSinceYharonMurdered >= 36000)
+                .SetPositionData(false, 360);
+
+            // This is how a helper is registered
+            // First make a static ScreenHelper instance, then assign the base texture to it. This texture will have the word "Helper" in front of it in the actual files, so in this example, the file is called HelperExampleHelper.
+            // SetVoiceStyle sets the sound that plays when the helper appears.
+            // SetTextboxStyle allows you to put the default response to this helper's dialogue as well as the colors for its text box
+            // SetPositoinData sets where the helper will appear on screen. This helper appears in the same place as Fanny.
+            LoadScreenHelper(ExampleHelper, "ExampleHelper", false)
+                .SetVoiceStyle(SoundID.MenuOpen)
+                .SetTextboxStyle("This is an example response.", new HelperTextboxPalette(Color.White, Color.Black, Color.White, Color.LightGray, Color.Black))
+                .SetPositionData(false, 240, 0.17f);
         }
 
         /// <summary>
@@ -973,7 +1037,7 @@ namespace CalRemix.UI
         /// <summary>
         /// Contains the screen helpers messages grouped by speaker. Created after all messages have been loaded
         /// </summary>
-        public static IEnumerable<IGrouping<ScreenHelper, HelperMessage>> screenHelperMessageGroups; 
+        public static IEnumerable<IGrouping<ScreenHelper, HelperMessage>> screenHelperMessageGroups;
         /// <summary>
         /// Dictionnary of screen helper portraits
         /// </summary>
@@ -993,9 +1057,18 @@ namespace CalRemix.UI
         public static int ongoingConversationTimer = 0;
 
         #region Loading
+
         public override void Load()
         {
             LoadFannyPortraits();
+
+            screenHelpersEnabled = true;
+            fannyTimesFrozen = 0;
+            sceneMetrics = new ScreenHelperSceneMetrics();
+        }
+
+        public override void AddRecipes()
+        {
             LoadIntroMessages();
             LoadMoonLordDeath();
 
@@ -1021,12 +1094,12 @@ namespace CalRemix.UI
             LoadTrapperBulbChan();
             LoadSolynMessages();
             LoadFluxMessages();
+            LoadQoCMessages();
             LoadMiracleBoyMessages();
+            LoadPinkFlameMessage();
+            LoadCrimFatherMessages();
+            LoadExampleHelperMessage();
             SneakersRetheme.LoadHelperMessages();
-
-            screenHelpersEnabled = true;
-            fannyTimesFrozen = 0;
-            sceneMetrics = new ScreenHelperSceneMetrics();
         }
 
         public static void LoadFannyPortraits()
@@ -1076,6 +1149,8 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("FannyMetalChlorium", 8);
             ScreenHelperPortrait.LoadPortrait("FannyMetalHallowed", 8);
 
+            ScreenHelperPortrait.LoadPortrait("FannyMetalMiracle", 8);
+
             //Fazbear
             ScreenHelperPortrait.LoadPortrait("FannyFazebear", 1);
             ScreenHelperPortrait.LoadPortrait("FannyFazebearEndo", 1);
@@ -1106,6 +1181,11 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("MiracleBoyGnaw", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoySob", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoyRadiant", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyItWasMeee", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyCry", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyGrinchBaby", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyUpset", 2, 6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoySweat", 2, 6);
 
             //Dead miracle boy
             ScreenHelperPortrait.LoadPortrait("MiracleBoyDisemboweled", 1);
@@ -1123,12 +1203,18 @@ namespace CalRemix.UI
             ScreenHelperPortrait.LoadPortrait("CrimSonNose", 42, 6, 6);
 
             //Trapper bulb chan
-            ScreenHelperPortrait.LoadPortrait("TrapperDefault", 1);
+            ScreenHelperPortrait.LoadPortrait("TrapperIdle", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperUwaa", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperHappy", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperWTF", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperHuh", 1);
             ScreenHelperPortrait.LoadPortrait("TrapperDisgust", 1);
+
+            //Flux
+            ScreenHelperPortrait.LoadPortrait("FluxIdle", 1);
+
+            //Queen of Clubs
+            ScreenHelperPortrait.LoadPortrait("QueenOfClubsEmpty", 1);
 
             //Talking Flower
             ScreenHelperPortrait.LoadPortrait("TalkingFlower", 11, 5);
@@ -1139,8 +1225,14 @@ namespace CalRemix.UI
             //Solyn
             ScreenHelperPortrait.LoadPortrait("Solyn", 1);
 
-            //Flux
-            ScreenHelperPortrait.LoadPortrait("FluxDefault", 1);
+            //The Pink Flame
+            ScreenHelperPortrait.LoadPortrait("ThePinkFlame", 1);
+
+            //Crim Father
+            ScreenHelperPortrait.LoadPortrait("CrimFather", 1);
+
+            //Example Helper
+            ScreenHelperPortrait.LoadPortrait("ExampleHelper", 1);
 
             //Moviecygn
             ScreenHelperPortrait.LoadPortrait("Moviecygn", 3, 30);
@@ -1463,6 +1555,7 @@ namespace CalRemix.UI
             {
                 //Cache the original text, and format it
                 originalText = value;
+                // this doesnt account for helper font. i hope that doesnt break anything ahahaha
                 FormatText(FontAssets.MouseText.Value, maxTextWidth);
             }
         }
@@ -1563,9 +1656,9 @@ namespace CalRemix.UI
         /// <returns></returns>
         public static HelperMessage New(string identifier, string message, string portrait = "", ScreenHelperMessageCondition condition = null, float duration = 5, float cooldown = 60, bool displayOutsideInventory = true, bool onlyPlayOnce = true, bool cantBeClickedOff = false, bool persistsThroughSaves = true, int maxWidth = 380, float fontSize = 1f)
         {
-            HelperMessage msg = new HelperMessage(identifier, message, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, cantBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
+            string txt = Language.GetOrRegister("Mods.CalRemix.Fanny." + identifier, () => message).Value;
 
-            //Language.GetOrRegister("Mods.CalRemix.Fanny" + identifier);
+            HelperMessage msg = new HelperMessage(identifier, txt, portrait, condition, duration, cooldown, displayOutsideInventory, onlyPlayOnce, cantBeClickedOff, persistsThroughSaves, maxWidth, fontSize);
 
             //Adds the message to the list
             ScreenHelperManager.screenHelperMessages.Add(msg);
@@ -1573,10 +1666,10 @@ namespace CalRemix.UI
             return msg;
         }
 
-            /// <summary>
-            /// Makes the message be spoken by evil fanny
-            /// </summary>
-            public HelperMessage SpokenByEvilFanny(bool ignoreHardmodeUnlockCondition = false)
+        /// <summary>
+        /// Makes the message be spoken by evil fanny
+        /// </summary>
+        public HelperMessage SpokenByEvilFanny(bool ignoreHardmodeUnlockCondition = false)
         {
             DesiredSpeaker = ScreenHelpersUIState.EvilFanny;
             IgnoreSpeakerSpecificCondition = ignoreHardmodeUnlockCondition;
@@ -1914,7 +2007,7 @@ namespace CalRemix.UI
             }
 
             //Recalculate the text as its played if we have dynamic text segments, or if the speaker's custom formatting changed
-            FormatText(FontAssets.MouseText.Value, maxTextWidth);
+            FormatText(speaker.textboxFont, maxTextWidth);
 
             //Immediately play message start effects if the message doesnt have a delay
             if (delayTime == 0)
@@ -1929,8 +2022,8 @@ namespace CalRemix.UI
             currentSpeaker.needsToShake = true;
             SoundEngine.PlaySound(SoundID.MenuOpen);
             SoundEngine.PlaySound(voiceOverride ?? currentSpeaker.speakingSound);
+            currentSpeaker.OnStartUniversal?.Invoke();
             OnStart?.Invoke();
-
 
             //Hook
             ScreenHelperManager.OnMessageStartCall(this);
@@ -2159,7 +2252,7 @@ namespace CalRemix.UI
             Vector2 basePosition = speaker.BasePosition + textboxOffsetFromCharacter;
 
             //Measure the text
-            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(speaker.UsedMessage.Text) * speaker.UsedMessage.textSize;
+            Vector2 textSize = speaker.textboxFont.MeasureString(speaker.UsedMessage.Text) * speaker.UsedMessage.textSize;
 
             //Get the corner position by offsetting the corner by the text's size
             //Can be modified so the text size affects or not the position
@@ -2284,6 +2377,33 @@ namespace CalRemix.UI
             this.minimumDimensions = minimumDimensions;
             this.maximumWidth = maximumWidth;
             this.defaultTextSize = defaultTextSize;
+        }
+    }
+
+    /// <summary>
+    /// Helper methods for assorted Helpers.
+    /// </summary>
+    public class HelperHelpers
+    {
+        /// <summary>
+        /// Returns the the time in frames with a level of noise applied. For use with "Mediumweight" Helpers, like Flux or the Queen of Clubs.
+        /// </summary>
+        /// <param name="timeInput"> The baseline value of time, in minutes. </param>
+        /// <param name="noiseSubtract"> The maximum amount of time which could be subtracted from the end result. Defaults to 3 minutes. </param>
+        /// <param name="noiseAdd"> The maximum amount of time which could be added to the end result. Defaults to 3 minutes. </param>
+        public static int GetTimeUntilNextStage(float timeInput, float noiseSubtract = 3, float noiseAdd = 3)
+        {
+            float timeToReturn = timeInput;
+
+            // turn int into minutes
+            timeToReturn *= (float)Math.Pow(60, 2);
+            // add layer of noise
+            int noiseSubtractFrames = (int)(-noiseSubtract * Math.Pow(60, 2));
+            int noiseAddFrames = (int)(noiseAdd * Math.Pow(60, 2) + 1);
+            timeToReturn += Main.rand.Next(noiseSubtractFrames, noiseAddFrames);
+
+            //timeToReturn = 120;
+            return (int)timeToReturn;
         }
     }
 

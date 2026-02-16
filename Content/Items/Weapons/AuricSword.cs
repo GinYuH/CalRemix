@@ -1,13 +1,8 @@
-﻿using CalamityMod;
-using CalRemix.Content.Items.Materials;
+﻿using CalRemix.Content.Items.Materials;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace CalRemix.Content.Items.Weapons
 {

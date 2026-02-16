@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 using static System.MathF;
 using static Terraria.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
-using static CalRemix.CalRemixHelper;
 using CalRemix.Core.World;
 
 namespace CalRemix.Core.Graphics
@@ -44,7 +43,7 @@ namespace CalRemix.Core.Graphics
             Terraria.On_Main.DrawSunAndMoon += DrawNoxusInBackgroundHook;
         }
 
-        private void DrawNoxusInBackgroundHook(Terraria.On_Main.orig_DrawSunAndMoon orig, Main self, Main.SceneArea sceneArea, Color moonColor, Color sunColor, float tempMushroomInfluence)
+        private void DrawNoxusInBackgroundHook(On_Main.orig_DrawSunAndMoon orig, Main self, Main.SceneArea sceneArea, Color moonColor, Color sunColor, float tempMushroomInfluence)
         {
             orig(self, sceneArea, moonColor, sunColor, tempMushroomInfluence);
             PreviousSceneDetails = sceneArea;

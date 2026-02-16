@@ -128,7 +128,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             }
             if (NPC.ai[0] == 0 && beginning > 300)
             {
-                NPC.aiStyle = 56;
+                NPC.aiStyle = NPCAIStyleID.DungeonSpirit;
                 TIME1++;
                 if (TIME1 == 10 && SOUND == 0)
                 {
@@ -204,7 +204,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             }
             if (NPC.ai[0] == 2)
             {
-                NPC.aiStyle = 0;
+                NPC.aiStyle = NPCAIStyleID.FaceClosestPlayer;
                 TIME1++;
                 if (TIME1 == 30 && SOUND == 0)
                 {
@@ -246,7 +246,7 @@ namespace CalRemix.Content.NPCs.Minibosses
 
 
         }
-        void SpawnProjectile(Terraria.Player player, float projectileSpeed, int damage, int knockBack, int type)
+        void SpawnProjectile(Player player, float projectileSpeed, int damage, int knockBack, int type)
 
         {
 

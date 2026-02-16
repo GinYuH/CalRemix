@@ -31,7 +31,7 @@ public class TwistedNetheriteSword : ModItem
         CreateRecipe().
             AddIngredient<TwistedNetheriteBar>(2).
             AddRecipeGroup("Wood", 2).
-            AddTile(TileID.LunarCraftingStation).
+            AddTile(TileID.MythrilAnvil).
             Register();
     }
 

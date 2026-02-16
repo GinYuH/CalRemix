@@ -21,7 +21,7 @@ namespace CalRemix.Content.Items.Placeables
         {
             Item.width = 20;
             Item.height = 32;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;
@@ -30,7 +30,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.consumable = true;
             Item.value = Item.buyPrice(0, 0, 0, 0);
             Item.rare = ModContent.RarityType<Violet>();
-            Item.createTile = ModContent.TileType<Content.Tiles.AncientConsole>();
+            Item.createTile = ModContent.TileType<Tiles.AncientConsole>();
         }
 
         public override void AddRecipes()

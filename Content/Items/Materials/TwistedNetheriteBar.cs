@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Materials
             CreateRecipe().
                 AddIngredient<TwistingNether>().
                 AddIngredient<CosmiliteSlag>(3).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

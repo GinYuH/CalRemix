@@ -10,7 +10,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override string Texture => "Terraria/Images/Projectile_" + 661;
         public override void SetDefaults() 
         {
-            AIType = 661;
+            AIType = ProjectileID.BlackBolt;
             Projectile.CloneDefaults(661);
             Projectile.timeLeft = 300;
             Projectile.friendly = false;

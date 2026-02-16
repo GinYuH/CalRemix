@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
@@ -18,6 +17,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         {
             // DisplayName.SetDefault("Basilius");
             this.HideFromBestiary();
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
         }
 
         public override void SetDefaults()

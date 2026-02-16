@@ -24,6 +24,7 @@ using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalRemix.Content.NPCs.Bosses.Pathogen;
 using CalRemix.Content.NPCs.Bosses.Origen;
+using CalRemix.Content.NPCs.Bosses.Aurelionium;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Lore;
@@ -35,6 +36,20 @@ using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using System.Reflection;
+using CalRemix.Content.NPCs.Eclipse;
+using Terraria.ModLoader.Core;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
+using CalamityMod.Items.Placeables.Ores;
+using CalamityMod.CalPlayer;
+using CalamityMod.NPCs.ExoMechs.Ares;
+using CalamityMod.Items.Weapons.Melee;
+using CalRemix.Content.Items.Materials;
+using CalamityMod.NPCs.Cryogen;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Chaotrix;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix;
 
 namespace CalRemix
 {
@@ -50,9 +65,11 @@ namespace CalRemix
         internal static Mod MusicDisplay;
         internal static Mod Wikithis;
         internal static Mod Census;
+        internal static Mod ExampleMod;
 
         internal static Mod Remnants;
         internal static Mod Spirit;
+        internal static Mod Thorium;
 
         internal static Type calvalFanny = null;
         internal static Type calvalFannyBox = null;
@@ -95,9 +112,11 @@ namespace CalRemix
             ModLoader.TryGetMod("Census", out Census);
             ModLoader.TryGetMod("MusicDisplay", out MusicDisplay);
             ModLoader.TryGetMod("Wikithis", out Wikithis);
+            ModLoader.TryGetMod("ExampleMod", out ExampleMod);
 
             ModLoader.TryGetMod("Remnants", out Remnants);
             ModLoader.TryGetMod("SpiritMod", out Spirit);
+            ModLoader.TryGetMod("ThoriumMod", out Thorium);
         }
         public override void Unload()
         {
@@ -111,9 +130,11 @@ namespace CalRemix
             Census = null;
             MusicDisplay = null;
             Wikithis = null;
+            ExampleMod = null;
 
             Remnants = null;
             Spirit = null;
+            Thorium = null;
         }
         public override void PostSetupContent()
         {
@@ -167,6 +188,8 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemID.WoodWall,
             });
+            // fake boss to trick people into thinking that the gilded isle is a boss arena
+            bc.Call("LogBoss", Mod, "Aurelionium", 7.333f, () => RemixDowned.downedAurelionium, NPCType<Aurelionium>(), new Dictionary<string, object>());
             Action<SpriteBatch, Rectangle, Color> plportrait = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Poly/Polyphemalus").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
@@ -200,6 +223,55 @@ namespace CalRemix
             bc.Call("LogBoss", Mod, "Pathogen", 16.75f, () => RemixDowned.downedPathogen, NPCType<Pathogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<BloodyVein>(),
+            });
+            List<int> draedonBosses = new List<int>() { NPCType<SkeletronOmega>(), NPCType<Godraycaster>(), NPCType<ObliteratorHead>() };
+            Action<SpriteBatch, Rectangle, Color> draePortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Dreadon_BC").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 1f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "Dreadon", 17.6, () => RemixDowned.downedDraedon, draedonBosses, new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<TurnipSprout>(),
+                ["customPortrait"] = draePortrait,
+                ["displayName"] = CalRemixHelper.LocalText("NPCs.DreadonFriendly.BossChecklistIntegration.EntryName"),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.DreadonFriendly.BossChecklistIntegration.SpawnInfo"),
+                ["despawnMessage"] = CalRemixHelper.LocalText("NPCs.DreadonFriendly.BossChecklistIntegration.DespawnMessage"),
+            });
+            Action<SpriteBatch, Rectangle, Color> voidPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/VoidBoss_BC").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 1f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "VoidBoss", 17.7, () => RemixDowned.downedVoid, NPCType<VoidBoss>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<NullBeacon>(),
+                ["customPortrait"] = voidPortrait
+            });
+            Action<SpriteBatch, Rectangle, Color> gasPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/MonorianGastropodAscended_BC").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 1f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "Disilphia", 17.8, () => RemixDowned.downedDisil, NPCType<Disilphia>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<DoctorsRemote>()
+            });
+            bc.Call("LogBoss", Mod, "AscendedGastropod", 17.9, () => RemixDowned.downedGastropod, NPCType<MonorianGastropodAscended>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<Gastrosequence>(),
+                ["customPortrait"] = gasPortrait
+            });
+            bc.Call("LogBoss", Mod, "MonorianWarrior", 17.91, () => RemixDowned.downedOneguy, NPCType<MonorianWarrior>(), new Dictionary<string, object>());
+            Action<SpriteBatch, Rectangle, Color> lvPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/GreatSea/Livyatan_BC").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2) * 0.3f, rect.Center.Y - (texture.Height / 2) * 0.3f);
+                sb.Draw(texture, centered, null, color, 0, Vector2.Zero, 0.3f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "Livyatan", 19.1f, () => RemixDowned.downedLivyatan, NPCType<Livyatan>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<SubworldDoor>(),
+                ["customPortrait"] = lvPortrait
             });
             bc.Call("LogBoss", Mod, "Pyrogen", 19.6f, () => RemixDowned.downedPyrogen, NPCType<Pyrogen>(), new Dictionary<string, object>()
             {
@@ -256,6 +328,23 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "YggdrasilEnt", 18.2f, () => RemixDowned.downedYggdrasilEnt, NPCType<YggdrasilEnt>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "Dendritiator", 16.73f, () => RemixDowned.downedDend, NPCType<Dendritiator>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "MaserPhage", 16.74f, () => RemixDowned.downedMaser, NPCType<MaserPhage>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "CrimsonKaiju", 20.5f, () => RemixDowned.downedRed, NPCType<CrimsonKaiju>(), new Dictionary<string, object>());
+            bc.Call("LogMiniBoss", Mod, "Cryonix", 8.6f, () => RemixDowned.downedCryonix, NPCType<Cryonix>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
+            });
+            bc.Call("LogMiniBoss", Mod, "Vernix", 12.08f, () => RemixDowned.downedVernix, NPCType<Vernix>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
+            });
+            bc.Call("LogMiniBoss", Mod, "Chaotrix", 13.1f, () => RemixDowned.downedChaotrix, NPCType<Chaotrix>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
+            });
+            // Events
             bc.Call("LogEvent", Mod, "PandemicPanic", 16.71f, () => RemixDowned.downedPathogen, new List<int> { NPCType<Malignant>(), NPCType<Ecolium>(), NPCType<Basilius>(), NPCType<Tobasaia>(), NPCType<MaserPhage>(), NPCType<WhiteBloodCell>(), NPCType<Platelet>(), NPCType<RedBloodCell>(), NPCType<Eosinine>(), NPCType<Dendritiator>() }, new Dictionary<string, object>());
             bc.Call("LogEvent", Mod, "GaleforceDay", 11.749f, () => RemixDowned.downedGale, new List<int> { NPCID.Dandelion, NPCType<FloatingBiomass>() }, new Dictionary<string, object>());
         }
@@ -286,9 +375,18 @@ namespace CalRemix
             MakeCard(NPCType<Phytogen>(), (horz, anim) => Color.Lerp(Color.Lime, Color.Yellow, anim), "Phytogen", SoundID.Grass, SoundID.NPCDeath1);
             MakeCard(NPCType<Oxygen>(), (horz, anim) => Color.Lerp(Color.LightBlue, Color.SeaGreen, anim), "Oxygen", Oxygen.HitSound, SoundID.Shatter);
             MakeCard(NPCType<Pathogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pathogen", PerforatorHeadLarge.HitSound, PerforatorHeadSmall.HitSound);
-            MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", BetterSoundID.ItemInfernoFork, BetterSoundID.ItemInfernoExplosion);
+            MakeCard(NPCType<SkeletronOmega>(), (horz, anim) => Color.Lerp(Color.Gold, Color.SkyBlue, anim), "SkeletronOmega", CalamityMod.Tiles.Ores.AuricOre.MineSound, AresTeslaCannon.TeslaOrbShootSound);
+            MakeCard(NPCType<Godraycaster>(), (horz, anim) => Color.Lerp(Color.Gold, Color.SkyBlue, anim), "Godraycaster", CalamityMod.Tiles.Ores.AuricOre.MineSound, AresTeslaCannon.TeslaOrbShootSound);
+            MakeCard(NPCType<ObliteratorHead>(), (horz, anim) => Color.Lerp(Color.Gold, Color.SkyBlue, anim), "Obliterator", CalamityMod.Tiles.Ores.AuricOre.MineSound, AresTeslaCannon.TeslaOrbShootSound);
+            MakeCard(NPCType<VoidBoss>(), (horz, anim) => Color.Lerp(Color.Black, Color.Magenta, anim), "Void", BetterSoundID.ItemCast, BetterSoundID.ItemCast);
+            MakeCard(NPCType<Disilphia>(), (horz, anim) => Color.Lerp(Color.White, Color.White, anim), "Disilphia", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
+            MakeCard(NPCType<MonorianGastropodAscended>(), (horz, anim) => Color.Lerp(Color.Pink, Color.Goldenrod, anim), "MonorianGastropodAscended", SoundID.NPCHit1, SoundID.NPCDeath1);
+            MakeCard(NPCType<MonorianWarrior>(), (horz, anim) => Color.Lerp(Color.Red, Color.Red, anim), "MonorianWarrior", BetterSoundID.ItemAerialBane, SoundID.NPCDeath1);
+            MakeCard(NPCType<MonorianSoul>(), (horz, anim) => Color.Lerp(Color.Cyan, Color.Red, anim), "MonorianSoul", BetterSoundID.ItemAerialBane, SoundID.NPCDeath1);
+            MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", Cryogen.HitSound, Cryogen.DeathSound);
             MakeCard(() => NPC.FindFirstNPC(NPCType<Hydrogen>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] < 300, (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Hydrogen", SoundID.Item14, CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);
             MakeCard(NPCType<WulfwyrmHead>(), (horz, anim) => Color.Lerp(Color.LightGreen, Color.LightBlue, horz), "WulfrumExcavator", SoundID.NPCHit4, BetterSoundID.ItemThisStupidFuckingLaser);
+            MakeCard(NPCType<Livyatan>(), (horz, anim) => Color.Lerp(Color.Turquoise, Color.SeaGreen, horz), "Livyatan", Livyatan.HitSound, Livyatan.RoarSound);
             MakeCard(NPCType<AcidEye>(), (horz, anim) => Color.Lerp(Color.LimeGreen, Color.Lime, anim), "Acidsighter", SoundID.Roar, SoundID.NPCDeath1);
             MakeCard(NPCType<TheCalamity>(), (horz, anim) => Color.Red, "Calamity", BetterSoundID.ItemThisStupidFuckingLaser, BetterSoundID.ItemThisStupidFuckingLaser, 360);
             MakeCard(NPCType<Hypnos>(), (horz, anim) => Main.DiscoColor, "Hypnos", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
@@ -413,7 +511,7 @@ namespace CalRemix
             }
             if (Wrath != null)
             {
-                Type[] r = Wrath.Code.GetTypes();
+                Type[] r = AssemblyManager.GetLoadableTypes(Wrath.Code);
                 foreach (Type mn in r)
                 {
                     if (mn.Name == "AvatarUniverseExplorationSystem")

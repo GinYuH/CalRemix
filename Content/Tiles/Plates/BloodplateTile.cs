@@ -26,7 +26,7 @@ namespace CalRemix.Content.Tiles.Plates
                 PulseColors = (Color[])(object)new Color[PulseTexture.Width];
                 Main.QueueMainThreadAction(delegate
                 {
-                    PulseTexture.GetData<Color>(PulseColors);
+                    PulseTexture.GetData(PulseColors);
                 });
                 GlowTexture = Request<Texture2D>("CalRemix/Content/Tiles/Plates/BloodplateTileGlow", (AssetRequestMode)1).Value;
             }

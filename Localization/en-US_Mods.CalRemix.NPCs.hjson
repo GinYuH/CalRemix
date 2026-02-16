@@ -185,6 +185,22 @@ FBIGUY: {
 	Census.SpawnCondition: Conditions unknown
 }
 
+WALLSTREET: {
+	TownNPCMood: {
+		FarFromHome: I am too far from home.
+		LoveSpace: I love having so much space.
+		DislikeCrowded: I dislike how crowded I am.
+		HateCrowded: I hate how crowded I am.
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+		Content: I am content.
+		NoHome: I hate not having a home.
+	}
+
+	DisplayName: Trader
+	Census.SpawnCondition: Enter Hardmode
+}
+
 Acideye: {
 	DisplayName: Acidsighter
 	Bestiary: A large eye mutated by the Sulphurous Sea. Defeating this may allow its prey to come out of hiding.
@@ -225,8 +241,17 @@ Rodenttmod.DisplayName: Rodent.tmod
 TallMan.DisplayName: Tall Man
 Corruption.DisplayName: Corruption
 Glitch.DisplayName: Glitch
-CuboidCurse.DisplayName: CuboidCurse
-CrimsonKaiju.DisplayName: Crimson Kaiju
+CuboidCurse.DisplayName: Cuboid Curse
+
+CrimsonKaiju: {
+	DisplayName: Crimson Kaiju
+
+	BossChecklistIntegration: {
+		EntryName: Crimson Kaiju
+		SpawnInfo: Spawns during the Post-Devourer of Gods Solar Eclipse.
+		DespawnMessage: "[c/ff0000:Crimson Kaiju vanishes to stalk its next victim.]"
+	}
+}
 
 Carcinogen: {
 	DisplayName: Carcinogen
@@ -354,11 +379,11 @@ PathogenShield.DisplayName: Pathogen's Shield
 AergiaNeuron.DisplayName: Aergia Neuron
 
 Hypnos: {
-	DisplayName: Hypnos
+	DisplayName: XP-00 Hypnos
 
 	BossChecklistIntegration: {
 		EntryName: XP-00 Hypnos
-		SpawnInfo: Right click the Codebreaker with [i:CalRemix/Ogscule]
+		SpawnInfo: Right click the Codebreaker with [i:CalamityMod/BloodyVein]
 	}
 }
 
@@ -569,3 +594,196 @@ ChlorinePaladin.DisplayName: Chlorine Paladin
 SplitChlorinePaladin.DisplayName: Split Chlorine Paladin
 SupremeTwin.DisplayName: Supreme Twin
 FunnyButterfly.DisplayName: Funny Butterfly
+WulfrumFrog.DisplayName: Wulfrum Frog
+GoldenAnimatronic.DisplayName: Golden Animatronic
+WaterloggedEffigy.DisplayName: Waterlogged Effigy
+Vigor.DisplayName: Vigor
+Crustiment.DisplayName: Crustiment
+TheShoalless.DisplayName: The Shoalless
+Zoaoa.DisplayName: Zoaoa
+BullShark.DisplayName: Bull Shark
+Remora.DisplayName: Remora
+
+Aurelionium: {
+	DisplayName: Aurelionium
+
+	BossChecklistIntegration: {
+		EntryName: Aurelionium
+		SpawnInfo: Venture into the Gilded Isle's golden portal
+		DespawnMessage: How did you even manage to do this?
+	}
+}
+
+Xiphactinus.DisplayName: Xiphactinus
+XiphactinusHead.DisplayName: Xiphactinus
+BananaMan.DisplayName: Cool Guy
+TanyHead.DisplayName: Tanystropheus
+TanyParasite.DisplayName: Orbule
+KillerPolyp.DisplayName: Killer Polyp
+MicrobialClusterII.DisplayName: Microbial Cluster
+Stanchor.DisplayName: Stanchor
+Liopleurodon.DisplayName: Liopleurodon
+TempestKraken.DisplayName: Tempest Kraken
+HellbenderBaby.DisplayName: Hellbender
+HellbenderHead.DisplayName: Hellbender
+DepthGlider.DisplayName: Depth Glider
+MoonBunny.DisplayName: Moon Bunny
+
+Livyatan: {
+	DisplayName: Livyatan
+
+	BossChecklistIntegration: {
+		EntryName: Livyatan
+		SpawnInfo: Naturally spawns in the Great Sea subworld.
+		DespawnMessage: "[c/438f7c:The colossal whale dives down to the depths.]"
+	}
+}
+
+AnomalyDisciple3.DisplayName: Anomaly Disciple
+StonePriest.DisplayName: Stone Priest
+DisilUnit.DisplayName: Disil Unit
+BrightMind.DisplayName: Bright Mind
+WinterWitch.DisplayName: Winter Witch
+
+DreadonFriendly: {
+	DisplayName: Draedon
+
+	BossChecklistIntegration: {
+		EntryName: Draedon
+		SpawnInfo: Use a [i:CalRemix/TurnipSprout] near him within the Sealed Dimension's tent.
+		DespawnMessage: "[c/cbd179:An imperfection just like me? What a shame.]"
+	}
+}
+
+SkeletronOmega.DisplayName: Skeletron Omega
+OmegaFist.DisplayName: Omega Fist
+OmegaSoothingSunlightBlaster.DisplayName: Omega Soothing Sunlight Blaster
+Godraycaster.DisplayName: Godraycaster
+Godraytracer: Godraytracer
+ObliteratorHead.DisplayName: Obliterator
+WalkingBird.DisplayName: Bumper
+WalkingBirdBlue.DisplayName: Bumper
+WalkingBirdRed.DisplayName: Bumper
+TheBealed.DisplayName: Baligulas
+DoUHead.DisplayName: The Devourer of Threads
+CarrierHead.DisplayName: The Carrier
+Succubus.DisplayName: Succubus
+Succubus2.DisplayName: Succubus
+Balimbaa.DisplayName: Balimbaa
+Blimpaa.DisplayName: Blimpaa
+BoneDog.DisplayName: Bone Dog
+Chronodile.DisplayName: Chronodile
+Cyclops.DisplayName: Cyclops
+PenguinCommander.DisplayName: Penguin Commander
+KoboldArcher.DisplayName: Kobold Archer
+KoboldCaster.DisplayName: Kobold Caster
+KoboldGladiator.DisplayName: Kobold Gladiator
+KoboldPeon.DisplayName: Kobold Peon
+KoboldWarrior.DisplayName: Kobold Warrior
+SealedPorswine.DisplayName: Sealed Porswine
+Trubbling.DisplayName: Trubbling
+Chimp.DisplayName: Chimp
+Graknight.DisplayName: Graknight
+EvilSealedPuppet.DisplayName: Evil Sealed Puppet
+SealedCitizen.DisplayName: Sealed Citizen
+SealedPuppet.DisplayName: Sealed Puppet
+ParadiseCreeper.DisplayName: Paradise Creeper
+YellowEcho.DisplayName: Yellow Echo
+TemporalAbomination.DisplayName: Faux Surrogate of Eight Cold Panels
+MonorianGastropod.DisplayName: Monorian Gastropod
+
+MonorianGastropodAscended: {
+	DisplayName: Ascended Monorian Gastropod
+
+	BossChecklistIntegration: {
+		EntryName: Ascended Monorian Gastropod
+		SpawnInfo: Use a [i:CalRemix/Gastrosequence] in the Void Forest in the Sealed subworld.
+		DespawnMessage: "[c/de9bc2:The slug goes back to The Warrior.]"
+	}
+}
+
+Juggular.DisplayName: Juggular
+Observer.DisplayName: Observer
+
+VoidBoss: {
+	DisplayName: Void
+
+	BossChecklistIntegration: {
+		EntryName: Void
+		SpawnInfo: Use a [i:CalRemix/NullBeacon].
+		DespawnMessage: "[c/ff00ff:The Void seeps away.]"
+	}
+}
+
+Disilphia: {
+	DisplayName: Disilphia
+
+	BossChecklistIntegration: {
+		EntryName: Disilphia
+		SpawnInfo: Use a [i:CalRemix/DoctorsRemote].
+		DespawnMessage: "[c/000000:The Threat has been taken care of.]"
+	}
+}
+
+ShadeBlue.DisplayName: Blue Shade
+ShadeGreen.DisplayName: Green Shade
+ShadeYellow.DisplayName: Yellow Shade
+MonorianGastropodMini.DisplayName: Monorian Gastropod Mini
+
+MonorianWarrior: {
+	DisplayName: Monorion Warrior
+
+	BossChecklistIntegration: {
+		EntryName: Monorian Warrior
+		SpawnInfo: Finish the Bright Mind's questline and talk to them.
+		DespawnMessage: "[c/ff0000:I'M A WINNER!!!]"
+	}
+}
+
+MonorianGemBoss.DisplayName: Monorian Gem
+MonorianSoul.DisplayName: Monorian Soul
+RubyWarrior.DisplayName: Ruby Warrior
+VigorCloak.DisplayName: ????
+Crevivence.DisplayName: Crevivence
+Noone.DisplayName: Noone
+Nothing.DisplayName: Nothing
+LionDogMoth.DisplayName: Lion Dog Repulsor Moth
+Lobotomite.DisplayName: Lobotomite
+AnomalyOne.DisplayName: Convection Anomaly
+AnomalyTwo.DisplayName: Solvation Anomaly
+AnomalyThree.DisplayName: Structure Anomaly
+BeachedGolem.DisplayName: Beached Golem
+Grabler.DisplayName: Grabler
+Echinoderion.DisplayName: Echinoderion
+Distortix.DisplayName: Distortix
+LargeStinkbug.DisplayName: Large Stinkbug
+
+Cryonix: {
+	DisplayName: Cryonix
+	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Tundra.
+}
+
+Vernix: {
+	DisplayName: Vernix
+	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Jungle.
+}
+
+Chaotrix: {
+	DisplayName: Chaotrix
+	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Abyss.
+}
+
+Foveanator.DisplayName: Foveanator
+Chaotrix.DisplayName: Chaotrix
+Cryonix.DisplayName: Cryonix
+Vernix.DisplayName: Vernix
+BunnyBattler.DisplayName: Bunny Battler
+BunnyBattler2.DisplayName: Bunny Battler
+BunnyBrawler.DisplayName: Bunny Brawler
+BunnyBrawler2.DisplayName: Bunny Brawler
+RabbitcopterSoldier.DisplayName: Rabbitcopter Soldier
+RabbitcopterSoldier2.DisplayName: Rabbitcopter Soldier
+Rajah.DisplayName: Rajah Rabbit
+SupremeRajahDefeat.DisplayName: Rajah Rabbit, Champion of the Innocent
+SupremeRajah.DisplayName: Rajah Rabbit, Champion of the Innocent
+RoyalRabbit.DisplayName: Royal Rabbit

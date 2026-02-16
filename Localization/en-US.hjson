@@ -116,6 +116,86 @@ Mods: {
 				DisplayName: Profaned Desert
 				TownNPCDialogueName: the Profaned Desert Biome
 			}
+
+			PrimordialCavesBiome: {
+				DisplayName: Primordial Caves
+				TownNPCDialogueName: the Primordial Caves Biome
+			}
+
+			ClownWorldClownBiome: {
+				DisplayName: Clown World
+				TownNPCDialogueName: the Clown World Clown Biome
+			}
+
+			GreatSeaBiome: {
+				DisplayName: Great Sea
+				TownNPCDialogueName: the Great Sea Biome
+			}
+
+			BadlandsBiome: {
+				DisplayName: Badlands
+				TownNPCDialogueName: the Badlands Biome
+			}
+
+			BarrensBiome: {
+				DisplayName: Barrens
+				TownNPCDialogueName: the Barrens Biome
+			}
+
+			CarnelianForestBiome: {
+				DisplayName: Carnelian Forest
+				TownNPCDialogueName: the Carnelian Forest Biome
+			}
+
+			DarnwoodSwampBiome: {
+				DisplayName: Darnwood Swamp
+				TownNPCDialogueName: the Darnwood Swamp Biome
+			}
+
+			SealedFieldsBiome: {
+				DisplayName: Sealed Fields
+				TownNPCDialogueName: the Sealed Fields Biome
+			}
+
+			TurnipBiome: {
+				DisplayName: Turnip Biome
+				TownNPCDialogueName: the Turnip Biome
+			}
+
+			UnsealedSeaBiome: {
+				DisplayName: Unsealed Sea
+				TownNPCDialogueName: the Unsealed Sea Biome
+			}
+
+			VoidForestBiome: {
+				DisplayName: Void Forest
+				TownNPCDialogueName: the Void Forest Biome
+			}
+
+			VolcanicFieldBiome: {
+				DisplayName: Volcanic Field
+				TownNPCDialogueName: the Volcanic Field Biome
+			}
+
+			SealedUndergroundBiome: {
+				DisplayName: Sealed Caverns
+				TownNPCDialogueName: the Sealed Underground Biome
+			}
+
+			EdisBiome: {
+				DisplayName: Edis Biome
+				TownNPCDialogueName: the Edis Biome
+			}
+
+			NowhereBiome: {
+				DisplayName: Nowhere
+				TownNPCDialogueName: the Nowhere Biome
+			}
+
+			SPBiome: {
+				DisplayName: S P Biome
+				TownNPCDialogueName: the S P Biome
+			}
 		}
 
 		Enchantments: {
@@ -171,6 +251,11 @@ Mods: {
 					Tooltip: ""
 				}
 
+				photosensitivty: {
+					Label: Photosensitivte Features
+					Tooltip: Enables photosensitive features. Disable if they're too straining on the eyes.
+				}
+
 				ScreenShatterEffects: {
 					Label: Screen Shatter Effects
 					Tooltip: Enables screen shatter effects. Disable if they're too straining on the eyes.
@@ -179,6 +264,11 @@ Mods: {
 				VisualOverlayIntensity: {
 					Label: Visual Overlay Intensity
 					Tooltip: Changes the intensity of visual overlays such as blur and chromatic aberration.
+				}
+
+				photosensitivity: {
+					Label: photosensitivity
+					Tooltip: ""
 				}
 			}
 		}
@@ -269,6 +359,52 @@ Mods: {
 				Avatar of Emptiness
 				The Entropic God, Noxus
 				'''
+			Livyatan:
+				'''
+				A Whale of a Time
+				Livyatan
+				'''
+			MonorianGastropodAscended:
+				'''
+				Enlightened Slug
+				Ascended Monorian Gastropod
+				'''
+			VoidBoss: Void
+			Disilphia:
+				'''
+				Lead Maiden
+				Disilphia
+				'''
+			SkeletronOmega:
+				'''
+				Gilded Juggernaut
+				Skeletron Omega
+				'''
+			Godraycaster:
+				'''
+				Gilded Siblings
+				Godraycaster and Godraytracer
+				'''
+			Obliterator:
+				'''
+				Gilded Serpent
+				The Obliterator
+				'''
+			MonorianWarrior:
+				'''
+				The Power of One
+				Monorian Warrior
+				'''
+			MonorianSoul:
+				'''
+				One to the Power of Two
+				Monorian Soul and Gem
+				'''
+			Crevivience:
+				'''
+				Arch-Power Unsealed
+				Crevivience
+				'''
 		}
 
 		NotAvailable: Nothing
@@ -316,6 +452,41 @@ Mods: {
 				DisplayName: Folvs Stone
 				Tooltip: ""
 			}
+		}
+
+		Prefixes: {
+			Bountiful.DisplayName: Bountiful
+			Clear.DisplayName: Clear
+			Clumsy.DisplayName: Clumsy
+			Erratic.DisplayName: Erratic
+			Erroneous.DisplayName: Erroneous
+			Focused.DisplayName: Focused
+			Fumbling.DisplayName: Fumbling
+			Infinite.DisplayName: Infinite
+			Jittery.DisplayName: Jittery
+			Nervous.DisplayName: Nervous
+			Persistent.DisplayName: Persistent
+			Steady.DisplayName: Steady
+			Torrential.DisplayName: Torrential
+			Turbulent.DisplayName: Turbulent
+			Unstable.DisplayName: Unstable
+			Unyielding.DisplayName: Unyielding
+			StormbowArrowTooltip: "{0} projectiles"
+			MoreArrow: more
+			LessArrow: less
+			FolvsPrefix.DisplayName: Folv's
+		}
+
+		"Use a [i:CalRemix/FabergéEgg] in the Tundra": Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Tundra
+
+		"Use a [i:CalRemix/FabergéEgg] in the Jungle": {
+			$parentVal: Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Jungle
+			"": Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Jungle.
+		}
+
+		"Use a [i:CalRemix/FabergéEgg] in the Abyss": {
+			$parentVal: Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Abyss
+			"": Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Abyss.
 		}
 	}
 }

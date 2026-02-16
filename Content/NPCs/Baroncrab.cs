@@ -1,12 +1,10 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.Accessories;
-using CalRemix.UI;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using System.Linq;
 using CalRemix.Core.Biomes;
 using System.Collections.Generic;
 using CalRemix.Content.Items.Placeables;
@@ -59,10 +57,10 @@ namespace CalRemix.Content.NPCs
 
         public override bool? CanBeHitByProjectile(Projectile projectile) => null;
 
-        public override void SetBestiary(Terraria.GameContent.Bestiary.BestiaryDatabase database, Terraria.GameContent.Bestiary.BestiaryEntry bestiaryEntry)
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.UIInfoProvider = new Terraria.GameContent.Bestiary.CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
-            bestiaryEntry.Info.AddRange(new Terraria.GameContent.Bestiary.IBestiaryInfoElement[] {
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], quickUnlock: true);
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });
         }

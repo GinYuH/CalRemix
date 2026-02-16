@@ -5,7 +5,6 @@ using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using CalRemix.Content.NPCs;
-using CalRemix.Core;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

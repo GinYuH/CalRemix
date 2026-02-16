@@ -1,15 +1,9 @@
-﻿using CalamityMod.Rarities;
-using CalamityMod.Items;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.CalPlayer;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Weapons.Rogue;
-using CalRemix.Content.Items.Materials;
 using CalamityMod.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons

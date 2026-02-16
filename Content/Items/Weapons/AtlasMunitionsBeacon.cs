@@ -49,7 +49,7 @@ namespace CalRemix.Content.Items.Weapons
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<AstralBar>(), 8).
                 AddIngredient(ModContent.ItemType<TitanHeart>(), 1).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

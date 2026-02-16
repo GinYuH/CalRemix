@@ -8,7 +8,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.Events;
-using CalRemix.Content.Buffs;
 using CalRemix.Content.NPCs.Bosses.Acideye;
 
 namespace CalRemix.Content.NPCs.Bosses.Poly
@@ -63,18 +62,10 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
 			cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources
 			return true;
         }
-
-		private int timerMax;
 		public ref float timer => ref NPC.ai[1];
 		public ref float phase => ref NPC.ai[2];
 
 		public ref float hpThreshold => ref NPC.ai[3];
-
-		private bool SoC = false;
-
-		private bool OnlySoC = false;
-
-		private bool enraged = false;
 
 		private int contactDmg = 100;
         private int subphase = 0;
@@ -86,7 +77,6 @@ namespace CalRemix.Content.NPCs.Bosses.Poly
 		private int BlueIce = ProjectileID.FrostWave;
 		private int GrayShadow = ProjectileID.CultistBossFireBallClone;
 		private int GreenFireball = ProjectileID.CursedFlameHostile;
-		private int GreenFlamethrower = ProjectileID.EyeFire;
 
 		private int bhType = 0;
 		private int phaseTransitionTime = 0;

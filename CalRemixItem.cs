@@ -21,7 +21,6 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Other;
@@ -30,13 +29,13 @@ using CalamityMod.Rarities;
 using CalamityMod.World;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Cooldowns;
-using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Placeables.Subworlds.Piggy;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Weapons.Farming;
@@ -44,14 +43,17 @@ using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.Prefixes;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
+using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -59,9 +61,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
@@ -75,6 +77,7 @@ namespace CalRemix
         public int NonScoria = -1;
         public int BuffedFrameTimer = 64;
         public int BuffedFrameCounter = -1;
+        public float arrowAmount = 0;
         internal static List<int> Torch = new()
         {
             ItemID.RainbowTorch,
@@ -121,8 +124,17 @@ namespace CalRemix
             ItemType<SoulofPyrogen>(),
         };
 
+        public override void SetStaticDefaults()
+        {
+            foreach (var v in ContentSamples.ItemsByType)
+            {
+                ItemID.Sets.CanGetPrefixes[v.Key] = true;
+            }
+        }
+
         public override void SetDefaults(Item item)
         {
+            item.AllowReforgeForStackableItem = true;
             if (item.type == ItemType<EssenceofHavoc>())
             {
                 ItemID.Sets.ShimmerTransformToItem[item.type] = ItemType<EssenceofLaw>();
@@ -216,12 +228,12 @@ namespace CalRemix
             {
                 item.createTile = TileType<SeaPrismSafe>();
             }
-            if (item.type == ItemType<TheBurningSky>())
-            {
-                item.DamageType = DamageClass.SummonMeleeSpeed;
-            }
             if (CalRemixWorld.weaponReworks)
             {
+                if (item.type == ItemType<TheBurningSky>())
+                {
+                    item.DamageType = DamageClass.SummonMeleeSpeed;
+                }
                 if (item.type == ItemType<ScourgeoftheDesert>())
                 {
                     item.shoot = ProjectileType<ScourgeDesert>();
@@ -237,9 +249,9 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.IchorSpear>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.PalladiumJavelin>())
+                if (item.type == ItemType<PalladiumJavelin>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.PalJav>();
+                    item.shoot = ProjectileType<PalJav>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.CrystalPiercer>())
@@ -249,17 +261,17 @@ namespace CalRemix
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.DraedonsArsenal.FrequencyManipulator>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.FreqManip>();
+                    item.shoot = ProjectileType<FreqManip>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ScourgeoftheSeas>())
+                if (item.type == ItemType<ScourgeoftheSeas>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.ScourgeSea>();
+                    item.shoot = ProjectileType<ScourgeSea>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.SpearofPaleolith>())
+                if (item.type == ItemType<SpearofPaleolith>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Paleolith>();
+                    item.shoot = ProjectileType<Paleolith>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.WaveSkipper>())
@@ -267,9 +279,9 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.WaveSkipper>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.SpearofDestiny>())
+                if (item.type == ItemType<SpearofDestiny>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.SpearDestiny>();
+                    item.shoot = ProjectileType<SpearDestiny>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.PhantasmalRuin>())
@@ -277,9 +289,9 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.PhantasmalRuin>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ShardofAntumbra>())
+                if (item.type == ItemType<ShardofAntumbra>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.Antumbra>();
+                    item.shoot = ProjectileType<Antumbra>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.ProfanedPartisan>())
@@ -287,9 +299,9 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.ProfanedPartisan>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.RealityRupture>())
+                if (item.type == ItemType<RealityRupture>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.RealityRapture>();
+                    item.shoot = ProjectileType<RealityRapture>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.NightsGaze>())
@@ -297,14 +309,14 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.NightsGaze>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.EclipsesFall>())
+                if (item.type == ItemType<EclipsesFall>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.EclipseFall>();
+                    item.shoot = ProjectileType<EclipseFall>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.TheAtomSplitter>())
+                if (item.type == ItemType<TheAtomSplitter>())
                 {
-                    item.shoot = ProjectileType<Content.Projectiles.Weapons.AtomSplitter>();
+                    item.shoot = ProjectileType<AtomSplitter>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
                 /*if (item.type == ItemType<CalamityMod.Items.Weapons.Rogue.Wrathwing>()) he does not cooperate
@@ -317,12 +329,48 @@ namespace CalRemix
                     item.shoot = ProjectileType<Content.Projectiles.Weapons.ScarletDevil>();
                     item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
                 }
-                if (item.type == ItemType<CalamityMod.Items.Weapons.Melee.ArkoftheCosmos>())
+                if (item.type == ItemType<ArkoftheCosmos>())
                 {
                     item.shoot = ProjectileType<Ark>();
                 }
             }
+            if (item.type == ItemID.Frog)
+            {
+                item.ammo = ItemID.Frog;
+            }
+            if (CalRemixWorld.itemChanges)
+            {
+                if (item.type == ModContent.ItemType<DeathWhistle>())
+                {
+                    item.UseSound = new SoundStyle("CalRemix/Assets/Sounds/DeathWhistle") { Volume = 0.6f };
+                }
+                if (item.type == ItemID.CopperWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalamityUtils.SecondsToFrames(300));
+                }
+                if (item.type == ItemID.TinWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalamityUtils.SecondsToFrames(420));
+                }
+                if (item.type == ItemID.SilverWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalamityUtils.SecondsToFrames(300));
+                }
+                if (item.type == ItemID.TungstenWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalamityUtils.SecondsToFrames(420));
+                }
+                if (item.type == ItemID.GoldWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalamityUtils.SecondsToFrames(300));
+                }
+                if (item.type == ItemID.PlatinumWatch)
+                {
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalamityUtils.SecondsToFrames(420));
+                }
+            }
         }
+
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
             if (CalRemixWorld.cosmislag)
@@ -333,6 +381,13 @@ namespace CalRemix
                     {
                         damage *= 0.7f;
                     }
+                }
+            }
+            if (player.Remix().woodEmblem)
+            {
+                if (item.rare <= ItemRarityID.Orange)
+                {
+                    damage *= 1.25f;
                 }
             }
         }
@@ -419,10 +474,6 @@ namespace CalRemix
                     }
                 }
             }
-            if (item.type == ItemType<FabsolsVodka>())
-            {
-                TransformItem(ref item, ItemType<NotFabsolVodka>());
-            }
             if (CalRemixWorld.seafood)
             {
                 if (item.type == ItemType<Seafood>())
@@ -435,12 +486,64 @@ namespace CalRemix
                 TransformItem(ref item, ItemType<DisenchantedSword>());
             }
         }
+
+
+        public override bool CanUseItem(Item item, Player player)
+        {
+            if (item.type == ItemID.WormholePotion)
+            {
+                if (!player.BuyItem(5))
+                {
+                    return false;
+                }
+            }
+            if (SubworldSystem.IsActive<PiggySubworld>() && item.type != ModContent.ItemType<Slingshot>())
+            {
+                return false;
+            }
+            return true;
+        }
+
         public override bool? UseItem(Item item, Player player)
         {
-            if (item.Calamity().AppliedEnchantment != null) 
+            if (item.Calamity().AppliedEnchantment != null)
             {
                 if (player.ItemAnimationJustStarted && player.Calamity().dischargingItemEnchant && item.Calamity().AppliedEnchantment.Value.Name != CalamityUtils.GetText("UI.Ephemeral.DisplayName"))
                     item.Calamity().DischargeEnchantExhaustion--;
+            }
+            if (!item.channel && player.Remix().salvageSuit && player.Calamity().StealthStrikeAvailable() && item.DamageType == GetInstance<RogueDamageClass>())
+            {
+                bool playSound = false;
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (!n.buffImmune[BuffID.Confused] || !n.buffImmune[BuffID.Webbed])
+                    {
+                        if (n.Distance(player.Center) < 2000)
+                        {
+                            playSound = true;
+                            n.AddBuff(BuffID.Confused, 120);
+                            n.AddBuff(BuffID.Webbed, 120);
+                        }
+                    }
+                }
+                if (playSound)
+                {
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Jumpscares/EvilAnimatronicShort") with { Volume = 0.4f }, player.Center);
+                }
+            }
+            if (item.type == ItemID.IceMirror || item.type == ItemID.MagicMirror || item.type == ItemID.CellPhone || item.type == ItemID.Shellphone
+                || item.type == ItemID.MagicConch || item.type == ItemID.DemonConch || item.type == ItemID.ShellphoneSpawn || item.type == ItemID.ShellphoneOcean || item.type == ItemID.ShellphoneHell || item.type == ItemID.ShellphoneDummy)
+            {
+                if (player.Distance(16 * (new Vector2((player.SpawnX == -1 ? Main.spawnTileX : player.SpawnX), (player.SpawnY == -1 ? Main.spawnTileY : player.SpawnY)))) > 2000)
+                {
+                    if (Main.rand.NextBool(50 /* ContentSamples.ItemsByType[item.type].useAnimation*/))
+                    if (!NPC.AnyNPCs(ModContent.NPCType<CarrierHead>()))
+                    {
+                        SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Gortok"), player.Center);
+                        Vector2 spawnPos = player.Center + new Vector2(Main.rand.NextBool().ToDirectionInt() * Main.rand.Next(2000, 3000), Main.rand.Next(-300, 300));
+                        NPC.NewNPC(player.GetSource_FromThis(), (int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<CarrierHead>(), ai0: player.whoAmI);
+                    }
+                }
             }
             return null;
         }
@@ -481,10 +584,6 @@ namespace CalRemix
             if (player.GetModPlayer<CalRemixPlayer>().amongusEnchant)
             {
                 item.crit /= 3;
-            }
-            if (item.type == ItemType<FabsolsVodka>())
-            {
-                TransformItem(ref item, ItemType<NotFabsolVodka>());
             }
             if (CalRemixWorld.seafood)
             {
@@ -932,6 +1031,8 @@ namespace CalRemix
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
+            if (!CalRemixWorld.accReworks)
+                return;
             CalamityPlayer calplayer = player.GetModPlayer<CalamityPlayer>();
             CalRemixPlayer modplayer = player.GetModPlayer<CalRemixPlayer>();
             if (item.type == ItemType<GrandGelatin>())
@@ -974,12 +1075,42 @@ namespace CalRemix
             {
                 GetModItem(ItemType<ArchaicPowder>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<HoneyDew>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<CorruptFlask>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<CrimsonFlask>()).UpdateAccessory(player, hideVisual);
+            }
+            if (item.type == ItemType<AsgardsValor>() || item.type == ItemType<AsgardianAegis>() || item.type == ItemType<TheVerbotenOne>())
+            {
+                GetModItem(ItemType<ShieldoftheHighRuler>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<ShieldoftheOcean>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<FrostBarrier>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<MarniteRepulsionShield>()).UpdateAccessory(player, hideVisual);
+            }
+            if (item.type == ItemType<Nanotech>() || item.type == ItemType<TheVerbotenOne>())
+            {
+                GetModItem(ItemType<VampiricTalisman>()).UpdateAccessory(player, hideVisual);
+                player.luck += 0.22f;
+            }
+            if (item.type == ItemType<VoidofExtinction>())
+            {
+                GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<SlagsplitterPauldron>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<TheBee>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<NecklaceofVexation>()).UpdateAccessory(player, hideVisual);
+            }
+            if (item.type == ItemType<ChaliceOfTheBloodGod>() || item.type == ItemType<TheVerbotenOne>())
+            {
+                GetModItem(ItemType<BloodflareCore>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<FleshTotem>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<BloodyWormScarf>()).UpdateAccessory(player, hideVisual);
             }
             if (item.type == ItemType<AbyssalDivingSuit>() || item.type == ItemType<TheGodfather>() || item.type == ItemType<TheVerbotenOne>())
             {
                 GetModItem(ItemType<LumenousAmulet>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AquaticEmblem>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<AlluringBait>()).UpdateAccessory(player, hideVisual);
+                if (!hideVisual)
+                    GetModItem(ItemType<AlluringBait>()).UpdateAccessory(player, hideVisual);
+                if (!hideVisual)
+                    GetModItem(ItemType<EnchantedPearl>()).UpdateAccessory(player, hideVisual);
                 if (!hideVisual)
                 GetModItem(ItemType<SpelunkersAmulet>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<OceanCrest>()).UpdateAccessory(player, hideVisual);
@@ -997,6 +1128,9 @@ namespace CalRemix
                 GetModItem(ItemType<FrostFlare>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<VoidofExtinction>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<SlagsplitterPauldron>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<TheBee>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<NecklaceofVexation>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<ToxicHeart>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AlchemicalFlask>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<TheEvolution>()).UpdateAccessory(player, hideVisual);
@@ -1015,6 +1149,13 @@ namespace CalRemix
 
         public override void OnConsumeItem(Item item, Player player)
         {
+            if (player.Remix().carnelian)
+            {
+                if (item.type == ItemID.ChocolateChipCookie || item.type == ItemID.SugarCookie || item.type == ItemID.GingerbreadCookie)
+                {
+                    player.Heal(player.statLifeMax2);
+                }
+            }
             if (player.GetModPlayer<CalRemixPlayer>().bananaClown && !player.HasCooldown(BananaClownCooldown.ID))
             {
                 if (IsFruit(item))
@@ -1089,9 +1230,9 @@ namespace CalRemix
 
         public override void PostUpdate(Item item)
         {
-            foreach (NPC npc in Main.npc)
+            foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (item.Hitbox.Intersects(npc.Hitbox) && npc.type == NPCType<Lizard>() && GemCrawl.TryGetValue(item.type, out int value))
+                if (GemCrawl.TryGetValue(item.type, out int value) && npc.type == NPCType<Lizard>() && item.Hitbox.Intersects(npc.Hitbox))
                 {
                     SpawnNewNPC(item.GetSource_FromThis(), npc.Center, value);
                     npc.life = 0;
@@ -1111,6 +1252,12 @@ namespace CalRemix
             }
             else
                 return true;
+        }
+
+        public override int ChoosePrefix(Item item, UnifiedRandom rand)
+        {
+            int pfx = base.ChoosePrefix(item, rand);
+            return pfx == -1 ? PrefixType<FolvsPrefix>() : rand.NextBool(2) ? PrefixType<FolvsPrefix>() : pfx;
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -1194,50 +1341,84 @@ namespace CalRemix
                 line.OverrideColor = Color.OrangeRed;
                 tooltips.Add(line);
             }
-            if (item.type == ItemType<PhantomicArtifact>())
+            if (MincerTE.minceables.ContainsKey(item.type))
             {
-                var line = new TooltipLine(Mod, "PhantomicSoulArtifact", CalRemixHelper.LocalText($"{key}PhantomicSoulArtifact").Value);
+                var line = new TooltipLine(Mod, "Minceable", CalRemixHelper.LocalText($"{key}Minceable").Value);
+                line.OverrideColor = Color.IndianRed;
                 tooltips.Add(line);
             }
-            if (item.type == ItemType<GrandGelatin>())
+            if (item.type == ItemID.WormholePotion)
             {
-                var line = new TooltipLine(Mod, "GrandGelatinRemix", CalRemixHelper.LocalText($"{key}GrandGelatinRemix").Value);
+                var line = new TooltipLine(Mod, "WormholePotionRemix", CalRemixHelper.LocalText($"{key}WormholePotionRemix").Value);
                 tooltips.Add(line);
             }
-            if (item.type == ItemType<TheAbsorber>())
+            if (CalRemixWorld.accReworks)
             {
-                var line = new TooltipLine(Mod, "AbsorberRemix", CalRemixHelper.LocalText($"{key}AbsorberRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheSponge>())
-            {
-                var line = new TooltipLine(Mod, "SpongeRemix", CalRemixHelper.LocalText($"{key}SpongeRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AmbrosialAmpoule>())
-            {
-                var line = new TooltipLine(Mod, "AmbrosiaRemix", CalRemixHelper.LocalText($"{key}AmbrosiaRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AbyssalDivingGear>())
-            {
-                var line = new TooltipLine(Mod, "DivingGearRemix", CalRemixHelper.LocalText($"{key}DivingGearRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<AbyssalDivingSuit>())
-            {
-                var line = new TooltipLine(Mod, "DivingSuitRemix", CalRemixHelper.LocalText($"{key}DivingSuitRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<TheAmalgam>())
-            {
-                var line = new TooltipLine(Mod, "AmalgamRemix", CalRemixHelper.LocalText($"{key}AmalgamRemix").Value);
-                tooltips.Add(line);
-            }
-            if (item.type == ItemType<DesertMedallion>())
-            {
-                var line = new TooltipLine(Mod, "MedallionRemix", CalRemixHelper.LocalText($"{key}MedallionRemix").Value);
-                tooltips.Add(line);
+                if (item.type == ItemType<PhantomicArtifact>())
+                {
+                    var line = new TooltipLine(Mod, "PhantomicSoulArtifact", CalRemixHelper.LocalText($"{key}PhantomicSoulArtifact").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<Nanotech>())
+                {
+                    var line = new TooltipLine(Mod, "NanotechRemix", CalRemixHelper.LocalText($"{key}NanotechRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<ChaliceOfTheBloodGod>())
+                {
+                    var line = new TooltipLine(Mod, "CotbgRemix", CalRemixHelper.LocalText($"{key}CotbgRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<VoidofExtinction>())
+                {
+                    var line = new TooltipLine(Mod, "VoidExtinctRemix", CalRemixHelper.LocalText($"{key}VoidExtinctRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<GrandGelatin>())
+                {
+                    var line = new TooltipLine(Mod, "GrandGelatinRemix", CalRemixHelper.LocalText($"{key}GrandGelatinRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<TheAbsorber>())
+                {
+                    var line = new TooltipLine(Mod, "AbsorberRemix", CalRemixHelper.LocalText($"{key}AbsorberRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<TheSponge>())
+                {
+                    var line = new TooltipLine(Mod, "SpongeRemix", CalRemixHelper.LocalText($"{key}SpongeRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<AmbrosialAmpoule>())
+                {
+                    var line = new TooltipLine(Mod, "AmbrosiaRemix", CalRemixHelper.LocalText($"{key}AmbrosiaRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<AbyssalDivingGear>())
+                {
+                    var line = new TooltipLine(Mod, "DivingGearRemix", CalRemixHelper.LocalText($"{key}DivingGearRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<AbyssalDivingSuit>())
+                {
+                    var line = new TooltipLine(Mod, "DivingSuitRemix", CalRemixHelper.LocalText($"{key}DivingSuitRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<TheAmalgam>())
+                {
+                    var line = new TooltipLine(Mod, "AmalgamRemix", CalRemixHelper.LocalText($"{key}AmalgamRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<DesertMedallion>())
+                {
+                    var line = new TooltipLine(Mod, "MedallionRemix", CalRemixHelper.LocalText($"{key}MedallionRemix").Value);
+                    tooltips.Add(line);
+                }
+                if (item.type == ItemType<AsgardsValor>())
+                {
+                    var line = new TooltipLine(Mod, "AsgardnRemix", CalRemixHelper.LocalText($"{key}AsgardRemix").Value);
+                    tooltips.Add(line);
+                }
             }
             if (item.type == ItemType<HadalStew>())
             {

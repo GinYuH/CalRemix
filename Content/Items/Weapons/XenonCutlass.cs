@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
 using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons;
 
@@ -24,8 +25,8 @@ public class XenonCutlass : ModItem
         Item.useAnimation = 16;
         Item.useStyle = ItemUseStyleID.Swing;
         Item.knockBack = 2.25f;
-        Item.rare = ModContent.RarityType<PureGreen>();
-        Item.value = CalamityGlobalItem.RarityPureGreenBuyPrice;
+        Item.rare = ItemRarityID.Red;
+        Item.value = CalamityGlobalItem.RarityRedBuyPrice;
         Item.UseSound = BetterSoundID.ItemPhaseblade;
         Item.autoReuse = true;
         Item.shoot = ModContent.ProjectileType<XenonSlash>();
@@ -37,8 +38,8 @@ public class XenonCutlass : ModItem
         CreateRecipe().
             AddIngredient(ItemID.PearlwoodSword).
             AddIngredient(ItemID.DD2SquireBetsySword).
-            AddIngredient<RuinousSoul>(5).
-            AddTile(TileID.LunarCraftingStation).
+            AddIngredient<MercuryCoatedSubcinium>(5).
+            AddTile(TileID.MythrilAnvil).
             Register();
     }
 

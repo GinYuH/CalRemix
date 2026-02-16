@@ -29,7 +29,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         ];
         public override void SetStaticDefaults()
         {
-            TextureAssets.Item[ItemID.DemonScythe] = Request<Texture2D>("CalRemix/Content/Items/Weapons/Farming/DemonScythe");
+            if (!Main.dedServ)
+                TextureAssets.Item[ItemID.DemonScythe] = Request<Texture2D>("CalRemix/Content/Items/Weapons/Farming/DemonScythe");
         }
         public override void SetDefaults(Item item)
         {

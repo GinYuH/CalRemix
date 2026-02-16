@@ -6,8 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using CalamityMod;
-using Terraria.Chat;
-using Terraria.Localization;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using CalRemix.Core.World;
 
@@ -47,7 +45,7 @@ namespace CalRemix.Content.NPCs
         }
         public override void ModifyTypeName(ref string typeName)
         {
-            typeName = CalRemixWorld.npcChanges ? CalRemixHelper.LocalText($"Rename.Draedon").Value : CalamityUtils.GetText("NPCs.Draedon.DisplayName").Value;
+            typeName = CalRemixWorld.npcChanges ? CalRemixHelper.LocalText($"Rename.NPCs.Draedon").Value : CalamityUtils.GetText("NPCs.Draedon.DisplayName").Value;
         }
         private static void NewText(string value, Color textColor)
         {
@@ -109,7 +107,7 @@ namespace CalRemix.Content.NPCs
                             CalRemixHelper.SpawnNewNPC(NPC.GetSource_FromAI(), cords, ModContent.NPCType<Hypnos>());
 							NPC.ai[1] = 0;
                             NPC.ai[0] = 1;
-                            NewText(CalRemixHelper.LocalText("StatusText.UncertainAwoken").Format(ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName), new Color(175, 75, 255));
+                            CalRemixHelper.ChatMessage(CalRemixHelper.LocalText("StatusText.UncertainAwoken").Format(ContentSamples.NpcsByNetId[NPCID.BrainofCthulhu].TypeName), new Color(175, 75, 255));
 
                             for (int i = 0; i < 44; i++)
                             {
@@ -161,6 +159,16 @@ namespace CalRemix.Content.NPCs
                         {
                             NPC.ai[1] = 0;
                             NPC.ai[0] = 2;
+                            return;
+                        }
+                        if (!NPC.AnyNPCs(ModContent.NPCType<Hypnos>()))
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            NPC.alpha += 10;
+                            if (NPC.alpha >= 255)
+                            {
+                                NPC.active = false;
+                            }
                         }
 
                     }

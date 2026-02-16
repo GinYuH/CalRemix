@@ -8,7 +8,6 @@ using System.IO;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.GameContent;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;

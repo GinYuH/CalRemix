@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Weapons
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
-			Item.damage = 367;
+			Item.damage = 87;
 			Item.knockBack = 10f; 
 			Item.noMelee = true;
             Item.noUseGraphic = true;

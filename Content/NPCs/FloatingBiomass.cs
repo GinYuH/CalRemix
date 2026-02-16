@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.GameContent.ItemDropRules;
 using CalRemix.Content.Items.Materials;
-using CalamityMod.Buffs.StatDebuffs;
 using Terraria.ModLoader.Utilities;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Microsoft.Xna.Framework;
 
 namespace CalRemix.Content.NPCs
 {
@@ -18,10 +14,6 @@ namespace CalRemix.Content.NPCs
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
         public ref float State => ref NPC.ai[1];
-        public override void SetStaticDefaults()
-        {
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
-        }
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;

@@ -104,7 +104,7 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient(ItemType<NucleateGello>()).
                 AddIngredient(ItemType<MeldConstruct>()).
                 AddIngredient(ItemID.LunarBar, 10).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

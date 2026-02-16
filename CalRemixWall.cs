@@ -1,8 +1,13 @@
 ﻿using CalamityMod;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Content.NPCs.Bosses.Ionogen;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Core.Biomes;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -26,7 +31,7 @@ namespace CalRemix
                     {
                         if (!NPC.AnyNPCs(NPCType<Carcinogen>()))
                         {
-                            CalRemixHelper.SpawnNPCOnPlayer(Main.myPlayer, NPCType<Carcinogen>());
+                            CalRemixHelper.SpawnClientBossRandomPos(NPCType<Carcinogen>(), new Vector2(i, j) * 16);
                         }
                     }
                 }

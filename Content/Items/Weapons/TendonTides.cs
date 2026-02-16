@@ -45,7 +45,7 @@ public class TendonTides : ModItem
             AddIngredient<TenebrisTides>(1).
             AddIngredient<BloodstoneCore>(7).
             AddIngredient(ItemID.SoulofFright,10).
-            AddTile(TileID.LunarCraftingStation).
+            AddTile(TileID.MythrilAnvil).
             Register();
     }
 

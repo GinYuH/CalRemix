@@ -1,8 +1,5 @@
-﻿using CalamityMod.Projectiles.Rogue;
-using System.Collections.Generic;
-using Terraria.Audio;
+﻿using System.Collections.Generic;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {

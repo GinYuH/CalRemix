@@ -26,7 +26,7 @@ namespace CalRemix.Content.Items.Materials
             CreateRecipe().
                 AddIngredient(ModContent.ItemType<RuinousSoul>()).
                 AddIngredient(ModContent.ItemType<Necroplasm>(), 3).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

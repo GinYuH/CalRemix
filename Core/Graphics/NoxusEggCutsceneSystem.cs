@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
 using CalRemix.Content.NPCs;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using static System.MathF;
 using static Terraria.Utils;
-using static Microsoft.Xna.Framework.MathHelper;
 using static CalRemix.CalRemixHelper;
 using CalRemix.Core.World;
 

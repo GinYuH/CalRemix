@@ -96,11 +96,6 @@ namespace CalRemix.Content.NPCs
             num5 -= vector.Y;
             float num6 = (float)Math.Sqrt(num4 * num4 + num5 * num5);
             float num7 = num6;
-            bool flag2 = false;
-            if (num6 > 600f)
-            {
-                flag2 = true;
-            }
             if (num6 == 0f)
             {
                 num4 = NPC.velocity.X;

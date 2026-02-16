@@ -177,7 +177,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             multiplier = 2f;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 npcOffset = NPC.Center - screenPos + Vector2.UnitY * 12 - new Vector2(0, NPC.gfxOffY);
             Texture2D balloons = ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/Cigar").Value;

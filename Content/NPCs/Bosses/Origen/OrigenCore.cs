@@ -44,7 +44,7 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
             NPC.LifeMaxNERB(200, 400, 30000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
@@ -155,7 +155,7 @@ namespace CalRemix.Content.NPCs.Bosses.Origen
             }
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.LesserHealingPotion;
         }

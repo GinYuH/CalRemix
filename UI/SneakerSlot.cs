@@ -1,6 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Items.Mounts;
-using CalRemix.Content.Items.Accessories;
+﻿using CalamityMod.Items.Mounts;
 using CalRemix.Core.Retheme;
 using CalRemix.Core.Retheme.Sneakers;
 using CalRemix.Core.World;

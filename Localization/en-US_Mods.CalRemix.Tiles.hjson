@@ -44,3 +44,25 @@ BarPlanterTile.MapEntry: Bar Planter
 AlloyBarPlant.MapEntry: Alloy Bar Plant
 EssentialEssenceBarPlant.MapEntry: Essential Essence Bar Plant
 YharimBarPlant.MapEntry: Yharim Bar Plant
+
+FrigidChestPlaced: {
+	MapEntry0: Frigid Chest
+	MapEntry1: Locked Frigid Chest
+}
+
+PlaguedLarva.MapEntry: Plagued Larva
+FunnyBalloonTile.MapEntry: ""
+BigCherryTile.MapEntry: ""
+BigCitrusTile.MapEntry: ""
+BigFruitTile.MapEntry: ""
+MoonstoneTile.MapEntry: ""
+FreddyCheckersBoardTile.MapEntry: ""
+Ant.MapEntry: Ant
+SlingshotPlaced.MapEntry: Slingshot
+GreenFabricPlaced.MapEntry: Green Fabric
+CloseToYouPlaced.MapEntry: Close To You
+MincerPlaced.MapEntry: Mincer
+BabySealedPuppetPlaced.MapEntry: Baby Sealed Puppet
+ArmorPolisherPlaced.MapEntry: Armor Polisher Placed
+NowhereBlock.MapEntry: Nowhere Block
+RoyalBunnyCage.MapEntry: Royal Bunny Cage

@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.GameContent.ItemDropRules;
-using CalamityMod.Buffs.StatDebuffs;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalamityMod.Buffs.DamageOverTime;
@@ -12,7 +11,6 @@ using CalamityMod.Items.Materials;
 using Terraria.Audio;
 using CalamityMod.Items.Pets;
 using System;
-using ReLogic.Content;
 using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalRemix.Content.Projectiles.Hostile;
 using System.IO;
@@ -30,7 +28,6 @@ namespace CalRemix.Content.NPCs.Minibosses
         public override void SetStaticDefaults()
         {
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
-            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<KamiFlu>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Plague>()] = true;
         }
         public override bool SpecialOnKill()

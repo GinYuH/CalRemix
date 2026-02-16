@@ -59,7 +59,7 @@ public class AOTE : ModItem
         CreateRecipe().
             AddIngredient<GlitterEye>(2).
             AddIngredient(ItemID.Diamond).
-            AddTile(TileID.LunarCraftingStation).
+            AddTile(TileID.MythrilAnvil).
             Register();
     }
 

@@ -5,6 +5,7 @@ using CalamityMod.Items.Dyes;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Pets;
+using CalamityMod.Items.Placeables.Furniture.BossRelics;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Magic;
@@ -15,8 +16,8 @@ using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.TownNPCs;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Weapons;
-using CalRemix.UI.Logs;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -31,13 +32,13 @@ namespace CalRemix.UI
         {
             #region Item
             //Fanny
-            HelperMessage.New("Forge", "Na Na Na! The big robotic forge needs a lot of blue meat from the ads! It cannot work without it!",
+            HelperMessage.New("Forge", "Nuh uh uh! Without Delicious Meat, the Draedon's Forge simply will not work. Get to it, friend!",
                 "FannyNuhuh", HasDraedonForgeMaterialsButNoMeat, onlyPlayOnce: false, cooldown: 120).AddItemDisplay(ModContent.ItemType<DeliciousMeat>());
 
             HelperMessage.New("DeliciousMeat", "Oooh! Delicious Meat! Collect as much as you can, it will save you a lot of time.", 
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<DeliciousMeat>())).AddItemDisplay(ModContent.ItemType<DeliciousMeat>());
 
-            HelperMessage.New("Relocator", "Wow! You crafted a Normality Relocator! with a press of a button, unyielding discord is at your fingertips!", 
+            HelperMessage.New("Relocator", "Wow! You crafted a Normality Relocator! This is an invaluable tool in abyss exploration, since it means you can go further in at a quicker pace!", 
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<NormalityRelocator>())).AddItemDisplay(ModContent.ItemType<NormalityRelocator>());
 
             HelperMessage.New("BunnyMurder", "...",
@@ -57,10 +58,11 @@ namespace CalRemix.UI
             //Add a condition to this one YUH, to pass the test of knowledge...
             //YUH YUH YUH YUH YUH
             //IBAN IBAN IBAN IBAN IBAN
-            HelperMessage.New("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific isn't it? Guess that's just how the cookie crumbles!",
+            //where is yuh? im going to iban,code,code,code
+            HelperMessage.New("DesertScourge", "I see you've gotten some mandibles. For some reason, people always try to make medallions out of them when the only way to get them is by killing Cnidrions after the destruction of the legendary Wulfrum Excavator. Strangely specific, isn't it? Guess that's just how the cookie crumbles!",
                 "FannyNuhuh", HasDesertMedallionMaterials).AddItemDisplay(ModContent.ItemType<DesertMedallion>());
 
-            HelperMessage.New("VoodooDoll", "Cool doll you have! I think that it will be even cooler when in lava!",
+            HelperMessage.New("VoodooDoll", "Rather nice doll! Though, they are rather plentiful. If they keep flooding your inventory, maybe you should throw some out in lava...?",
                 "FannyAwooga", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.GuideVoodooDoll));
 
             HelperMessage.New("TwentyTwo", "I love 22. My banner now.",
@@ -72,8 +74,8 @@ namespace CalRemix.UI
             HelperMessage.New("Wood", "Wood? Yummy!",
               "FannyAwe", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.Wood));
 
-            HelperMessage.New("HallowedBar", "What you hold now is a bar of extraordinary power infused with the essence of Heaven itself! That's a biome right?",
-               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HallowedBar)).SetHoverTextOverride("It sure is Fanny, it sure is.");
+            HelperMessage.New("HallowedBar", "Quite the powerful bar you've got there! Keep those safe, as they're a vital part to achieving Auric Bars for powerful lategame gear.",
+               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.HallowedBar)).SetHoverTextOverride("It sure is, Fanny. It sure is.");
 
             HelperMessage.New("LifeCrystal", "Ah, digging up life crystals, are we? Remember, a crystal a day keeps the.. uhh... enemies away! See, I'm good with rhymes!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LifeCrystal));
@@ -81,16 +83,16 @@ namespace CalRemix.UI
             HelperMessage.New("Jump", "Did you know? You can press the \"space\" button to jump!",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.PlatinumCoin)).SetHoverTextOverride("Thanks Fanny! You're so helpful!");
 
-            HelperMessage.New("TitanHeart", "You got a heart from a titan! Place it on the tower for a wacky light show!",
+            HelperMessage.New("TitanHeart", "You got a heart from a Titan! Place it on the tower for a wacky light show!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TitanHeart>())).AddItemDisplay(ModContent.ItemType<TitanHeart>());
 
             HelperMessage.New("BloodyVein", "The Bloody Vein is an item of utmost importance which can be inserted into various altars and machinery for wacky results. How about inserting one into one of those lab hologram box things?",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<BloodyVein>())).AddItemDisplay(ModContent.ItemType<BloodyVein>());
 
-            HelperMessage.New("RottenEye", "The Rotting Eyeball is an item of zero importance. The Bloody Vein from the Crimson's Perforators is way better!",
+            HelperMessage.New("RottenEye", "The Rotting Eyeball is an item of zero importance. The Bloody Vein, which is much more important, can be obtained from a special event in the Corruption biome.",
                 "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<RottingEyeball>()) && !WorldGen.crimson).AddItemDisplay(ModContent.ItemType<RottingEyeball>()).SetHoverTextOverride("Thanks Fanny! I'll be sure to make a Crimson world next time.");
 
-            HelperMessage.New("AlloyBar", "Congratulations, you have obtained the final bar for this stage of your adventure. You should attempt making some Alloy Bars, a versatile material made of every available bar which can be used for powerful items.",
+            HelperMessage.New("AlloyBar", "Congratulations, my friend! With the power of this Alloy Bar, you're sure to complete this stage of your adventure with your eyes closed! Enjoy the fruits of your labour, you deserve it!",
                 "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<AlloyBar>())).AddItemDisplay(ModContent.ItemType<AlloyBar>());
 
             HelperMessage.New("Sponge", "Oh, is that a Sponge? Maybe avoid using it. I've heard something about the wielder dying, or something...",
@@ -135,20 +137,24 @@ namespace CalRemix.UI
             HelperMessage.New("SuperiorHealing2", "There you go, here's a little boost! This is why I always carry my trusty potions!",
                 "FannyIdle", HelperMessage.AlwaysShow).ChainAfter().AddStartEvent(FannyHeal);
 
+            HelperMessage.New("MrRelic", "Relics are a fun way of displaying that you have beaten a boss in a difficult difficulty. However! A dark secret that they don't want you to know is that if you spell relic backwards... you get Ciler! Kinda like Killer! It is for this reason that I have decided that henceforth, all relics should be known as treasures.",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.inventory.Any(i => Relics.Contains(i.type)));
+
+            HelperMessage.New("LightPower", "Torches and other lighting mechanisms hold more power than you think! Things like swords and armors, those can only be used on this universe's creatures. On the other hand, light emitting objects shine right through your screen, meaning they have outer-universal power!",
+                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.CountItem(ItemID.Torch) >= 300);
+
             //Evil Fanny
-            HelperMessage.New("EvilMinions", "Oh, joy, another player reveling in their summoned minions like they've won the pixelated lottery. Just remember, those minions are as loyal as your Wi-Fi signal during a storm—here one minute, gone the next. Enjoy your fleeting companionship, I guess.",
+            HelperMessage.New("EvilMinions", "Oh, summoner, how nice. I want to ask this in the most genuine way I can, do you play videogames for fun? Did you open up a terraria world and genuinely go \"Oh boy! Let's play summoner! I'm going to have so much fun!\"? No!!! You didn't!!! Half of your minions have braindead AI because you're playing Calamity!!! Just play any other class, man. You make me sad.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ActiveItem().DamageType == DamageClass.Summon && Main.LocalPlayer.numMinions >= 10).SpokenByEvilFanny();
 
             HelperMessage.New("EvilTerraBlade", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. It's just a sword, after all. Now, go on, swing it around like the hero you think you are.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.TerraBlade)).SpokenByEvilFanny().AddItemDisplay(ItemID.TerraBlade);
 
-            HelperMessage sama = HelperMessage.New("MurasamaBig", "You. Yeah, you. I know you downloaded this mod just so you could have your disgustingly sized Murasama slash back! After all of Fanny's incessant, inaccurate drivel, are you satisfied? Was it worth it?",
+            HelperMessage sama = HelperMessage.New("MurasamaBig", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. You're gonna be doing this \"big sword crafting tree\" thing a lot from here on out. Hope piggy here likes their slop!",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.ActiveItem().type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny().InitiateConversation();
-
             HelperMessage mgra = HelperMessage.New("Muracrimsona1", "Lmao this item is \"perfectly balanced\" am i right?? Standig here i realize like mgr",
                 "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(sama, 5, true);
-
-            HelperMessage.New("Muracrimsona2", "SHUT THE FUCK UP!! I FUCKING HATE YOU YOU PIECE OF SHIT I HATE YOU WHY WERE YOU EVEN HIRED!?",
+            HelperMessage.New("Muracrimsona2", "SHUT THE FUCK UP!! I FUCKING HATE YOU YOU PIECE OF SHIT I HATE YOU!!!",
                 "EvilFannyCrisped", HelperMessage.AlwaysShow).SpokenByEvilFanny().ChainAfter(mgra, 3, true).EndConversation();
 
             #endregion
@@ -222,6 +228,27 @@ namespace CalRemix.UI
             ItemID.SuperHealingPotion,
             ModContent.ItemType<SupremeHealingPotion>(),
             ModContent.ItemType<OmegaHealingPotion>()
+        };
+        private static readonly List<int> Relics = new List<int>
+        {
+            ModContent.ItemType<CalamityRelic>(),
+            ModContent.ItemType<OrigenRelic>(),
+            ModContent.ItemType<WulfwyrmRelic>(),
+            ModContent.ItemType<AcidsighterRelic>(),
+            ModContent.ItemType<CarcinogenRelic>(),
+            ModContent.ItemType<DesertScourgeRelic>(),
+            ModContent.ItemType<CrabulonRelic>(),
+            ModContent.ItemType<HiveMindRelic>(),
+            ModContent.ItemType<PerforatorsRelic>(),
+            ModContent.ItemType<SlimeGodRelic>(),
+            ItemID.EyeofCthulhuMasterTrophy,
+            ItemID.KingSlimeMasterTrophy,
+            ItemID.EaterofWorldsMasterTrophy,
+            ItemID.BrainofCthulhuMasterTrophy,
+            ItemID.DeerclopsMasterTrophy,
+            ItemID.QueenBeeMasterTrophy,
+            ItemID.SkeletronMasterTrophy,
+            ItemID.WallofFleshMasterTrophy
         };
         private static void TakeRoxcaliburStuff()
         {

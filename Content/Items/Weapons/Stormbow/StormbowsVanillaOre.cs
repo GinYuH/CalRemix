@@ -200,6 +200,15 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             }
             return false;
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.MoltenFury, 2).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddIngredient(ItemID.HellstoneBar, 15).
+                AddTile(TileID.Anvils).
+                Register();
+        }
     }
     #endregion
     #region HM

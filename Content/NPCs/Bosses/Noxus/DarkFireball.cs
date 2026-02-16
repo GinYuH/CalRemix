@@ -64,7 +64,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             // Spawn smoke.
             Vector2 currentDirection = Projectile.velocity.SafeNormalize(Vector2.Zero);
             Vector2 smokeVelocity = -currentDirection.RotatedByRandom(0.93f) * Main.rand.NextFloat(1f, 7f);
-            Dust smokeDust = Dust.NewDustPerfect(Projectile.Center, 31);
+            Dust smokeDust = Dust.NewDustPerfect(Projectile.Center, DustID.Smoke);
             smokeDust.velocity = smokeVelocity * Main.rand.NextFloat(0.3f, 1.1f) + Projectile.velocity;
             smokeDust.scale *= 0.92f;
             smokeDust.fadeIn = -0.2f;

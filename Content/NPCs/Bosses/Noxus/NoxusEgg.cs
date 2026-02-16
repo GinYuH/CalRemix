@@ -7,7 +7,6 @@ using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CalRemix.Content.Particles;
-using CalRemix.Core;
 using CalRemix.Core.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -70,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             Main.npcFrameCount[Type] = 1;
             NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 90;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Scale = 0.3f,
                 PortraitScale = 0.5f
@@ -82,7 +81,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             Terraria.On_NPC.DoDeathEvents_DropBossPotionsAndHearts += DisableNoxusEggBossDeathEffects;
         }
 
-        private void DisableNoxusEggBossDeathEffects(Terraria.On_NPC.orig_DoDeathEvents_DropBossPotionsAndHearts orig, NPC self, ref string typeName)
+        private void DisableNoxusEggBossDeathEffects(On_NPC.orig_DoDeathEvents_DropBossPotionsAndHearts orig, NPC self, ref string typeName)
         {
             if (self.type != Type)
                 orig(self, ref typeName);
@@ -106,7 +105,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 NPC.damage /= 2;
             }
 
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
@@ -888,7 +887,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             CalamityNetcode.SyncWorld();
         }
 
-        public override void BossLoot(ref string name, ref int potionType) => potionType = ModContent.ItemType<OmegaHealingPotion>();
+        public override void BossLoot(ref int potionType) => potionType = ModContent.ItemType<OmegaHealingPotion>();
 
         // Ensure that Noxus' contact damage adhere to the special boss-specific cooldown slot, to prevent things like lava cheese.
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

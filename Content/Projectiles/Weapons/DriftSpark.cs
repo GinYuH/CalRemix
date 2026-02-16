@@ -1,5 +1,4 @@
 using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatDebuffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             Projectile.width = 10;
             Projectile.height = 10;
-            Projectile.aiStyle = 2;
+            Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.alpha = 255;
@@ -74,7 +73,6 @@ namespace CalRemix.Content.Projectiles.Weapons
                 target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 120);
                 target.AddBuff(BuffID.OnFire3, 120);
                 target.AddBuff(ModContent.BuffType<HolyFlames>(), 120);
-                target.AddBuff(ModContent.BuffType<KamiFlu>(), 120);
                 target.AddBuff(BuffID.Frostburn2, 120);
                 target.AddBuff(BuffID.Venom, 120);
             }

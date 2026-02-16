@@ -46,7 +46,7 @@ public class Prismachromancy : ModItem
             AddIngredient(ItemID.FairyQueenMagicItem).
             AddIngredient(ItemID.RainbowRod).
             AddIngredient(ItemID.LunarBar, 5).
-            AddTile(TileID.LunarCraftingStation).
+            AddTile(TileID.MythrilAnvil).
             Register();
     }
 }

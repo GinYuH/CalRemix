@@ -4,20 +4,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using Microsoft.Xna.Framework;
-using Terraria.Audio;
-using CalRemix.Core.Biomes;
 using CalamityMod.NPCs;
-using CalRemix.Content.Tiles;
-using CalamityMod.Tiles;
 using CalamityMod.InverseKinematics;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using System.Collections.Generic;
-using CalamityMod.Prefixes;
-using CalamityMod.Items.Fishing.AstralCatches;
-using CalRemix.Content.Projectiles.Hostile;
 using Terraria.ModLoader.Utilities;
-using CalRemix.Content.Items.Ammo;
 using CalamityMod.Items.Materials;
 
 namespace CalRemix.Content.NPCs

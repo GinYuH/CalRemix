@@ -102,7 +102,7 @@ namespace CalRemix.Content.NPCs
                     int spawnPos = (int)(NPC.position.X + 10f + (float)Main.rand.Next(NPC.width - 20));
                     int projVelocity = (int)(NPC.position.Y + (float)NPC.height + 4f);
                     SoundEngine.PlaySound(BetterSoundID.ItemMissileFireSqueak, NPC.Center);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, projVelocity, 0f, 5f, ModContent.ProjectileType<MushBomb>(), (int)(NPC.damage * 0.25f), 0f, Main.myPlayer);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, projVelocity, 0f, 5f, ModContent.ProjectileType<MushBomb>(), CalRemixHelper.ProjectileDamage(15, 30), 0f, Main.myPlayer);
                 }
             }
         }

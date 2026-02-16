@@ -14,6 +14,7 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.NPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.AcidRain;
 using CalamityMod.NPCs.AquaticScourge;
@@ -64,40 +65,47 @@ using CalRemix.Content.Buffs.Tainted;
 using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Placeables;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
+using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Potions.Recovery;
+using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.BossChanges.Cryogen;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SlimeGod;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
-using CalRemix.Content.NPCs.Bosses.Poly;
-using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalRemix.Content.NPCs.Bosses.BossChanges.Twins;
+using CalRemix.Content.NPCs.Bosses.RajahBoss;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Content.NPCs.TownNPCs;
+using CalRemix.Content.Particles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Graphics;
+using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
 using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Terraria;
@@ -110,6 +118,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
@@ -132,6 +141,7 @@ namespace CalRemix
         public float shadowHit = 1;
         public static int wulfyrm = -1;
         public static int pyrogen = -1;
+        public static int Rajah = 0;
         public static int hypnos = -1;
         public static int aspidCount = 0;
         public bool guardRage, guardOver, yharRage = false;
@@ -142,6 +152,8 @@ namespace CalRemix
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
+        public int shadeStacks = 0;
+        public bool Spear = false;
         public override bool InstancePerEntity => true;
 
         public List<int> BossSlimes = new List<int>
@@ -168,10 +180,10 @@ namespace CalRemix
             NPCID.QueenSlimeMinionPink,
             NPCID.QueenSlimeMinionPurple,
             NPCType<AeroSlime>(),
-            NPCType<CalamityMod.NPCs.Astral.AstralSlime>(),
-            NPCType<CalamityMod.NPCs.PlagueEnemies.PestilentSlime>(),
+            NPCType<AstralSlime>(),
+            NPCType<PestilentSlime>(),
             NPCType<BloomSlime>(),
-            NPCType<CalamityMod.NPCs.Crags.InfernalCongealment>(),
+            NPCType<InfernalCongealment>(),
             NPCType<PerennialSlime>(),
             NPCType<CryoSlime>(),
             NPCType<GammaSlime>(),
@@ -206,6 +218,11 @@ namespace CalRemix
             {
                 entity.lifeMax = (int)(entity.lifeMax * 0.5f);
                 entity.Calamity().DR = entity.Calamity().DR * 0.25f;
+            }
+
+            if (IsBunny(entity) && RemixDowned.downedRajahsRevenge)
+            {
+                entity.dontTakeDamage = true;
             }
         }
 
@@ -294,7 +311,84 @@ namespace CalRemix
         {
             if (npc.type == NPCType<OldDuke>())
             {
-                npc.active = false;
+                if (BossRushEvent.BossRushActive)
+                {
+                    npc.StrikeInstantKill();
+                }
+                else
+                {
+                    npc.active = false;
+                }
+            }
+            if (npc.type == NPCType<SepulcherHead>() || npc.type == NPCType<SepulcherBody>() || npc.type == NPCType<SepulcherBodyEnergyBall>() || npc.type == NPCType<SepulcherTail>() || npc.type == NPCType<SepulcherArm>())
+            {
+                bool sepulcherDead = (!NPC.AnyNPCs(ModContent.NPCType<BrimstoneHeart>()) && !Main.zenithWorld) || CalamityGlobalNPC.SCal < 0 || !Main.npc[CalamityGlobalNPC.SCal].active;
+                if (npc.type == NPCType<SepulcherHead>())
+                {
+                    if (sepulcherDead)
+                    {
+                        if (Main.rand.NextBool(10))
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherTrophy>());
+                            }
+                        }
+                    }
+                }
+                if (npc.type == NPCType<SepulcherBody>())
+                {
+                    if (sepulcherDead)
+                    {
+                        bool notalt = npc.localAI[3] / 2f % 2f == 0f;
+                        if (Main.rand.NextBool(10))
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), notalt ? ItemType<SepulcherBodyTrophy>() : ItemType<SepulcherBodyAltTrophy>());
+                            }
+                        }
+                    }
+                }
+                if (npc.type == NPCType<SepulcherArm>())
+                {
+                    if (sepulcherDead)
+                    {
+                        if (Main.rand.NextBool(10))
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherHandTrophy>());
+                            }
+                        }
+                    }
+                }
+                if (npc.type == NPCType<SepulcherBodyEnergyBall>())
+                {
+                    if (sepulcherDead)
+                    {
+                        if (Main.rand.NextBool(10))
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherOrbTrophy>());
+                            }
+                        }
+                    }
+                }
+                if (npc.type == NPCType<SepulcherTail>())
+                {
+                    if (sepulcherDead)
+                    {
+                        if (Main.rand.NextBool(10))
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Item.NewItem(npc.GetSource_Death(), npc.getRect(), ItemType<SepulcherTailTrophy>());
+                            }
+                        }
+                    }
+                }
             }
             if (CalRemixWorld.wizardDisabled)
             {
@@ -303,7 +397,7 @@ namespace CalRemix
                     npc.active = false;
                 }
             }
-            if (CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
+            if (!CalamityUtils.AnyProjectiles(ProjectileType<Claw>()))
             {
                 clawed = 0;
             }
@@ -313,6 +407,23 @@ namespace CalRemix
             if (player.pathogenSoul)
             {
                 npc.canGhostHeal = true;
+            }
+
+            if (shadeStacks > 0)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector2 spawnPos = Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 4f)).RotatedBy(Main.GlobalTimeWrappedHourly) * (npc.width + npc.height) * 0.5f + Main.rand.NextVector2Circular(4, 4);
+                    float size = Main.rand.NextFloat(10, 20);
+                    if (i == 0)
+                        VoidMetaball.SpawnParticle(npc.Center + spawnPos, Vector2.Zero, size);
+                    if (i == 1 && shadeStacks >= 2)
+                        VoidMetaballBlue.SpawnParticle(npc.Center + spawnPos, Vector2.Zero, size);
+                    if (i == 2 && shadeStacks >= 3)
+                        VoidMetaballGreen.SpawnParticle(npc.Center + spawnPos, Vector2.Zero, size);
+                    if (i == 3 && shadeStacks >= 4)
+                        VoidMetaballYellow.SpawnParticle(npc.Center + spawnPos, Vector2.Zero, size);
+                }
             }
 
             // fall damage 
@@ -382,7 +493,7 @@ namespace CalRemix
 
             if (player.taintedWrath)
             {
-                if (!npc.dontTakeDamage && !npc.Calamity().unbreakableDR && !npc.friendly)
+                if (!npc.dontTakeDamage && !npc.Calamity().unbreakableDR && !npc.friendly && npc.Distance(Main.LocalPlayer.Center) < Main.screenWidth)
                 {
                     npc.life -= Math.Max((int)(npc.lifeMax / (float)CalamityUtils.SecondsToFrames(300)), 1);
                     if (npc.life <= 0)
@@ -403,6 +514,7 @@ namespace CalRemix
                 }
             }
 
+            #region Slime accessories
             bool assortgel = player.assortegel;
             bool amalgam = player.amalgel;
             bool godfather = player.godfather;
@@ -560,6 +672,7 @@ namespace CalRemix
                     }
                 }
             }
+            #endregion
             if (taintedInvis)
                 return false;
             #region Quotes
@@ -783,28 +896,204 @@ namespace CalRemix
                 {
                     SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<ChlorinePaladin>());
                 }
+
+                if (npc.type == NPCID.Retinazer)
+                {
+                    if (CalamityWorld.revenge)
+                    {
+                        TwinsAI.BuffedRetinazerAI(npc, Mod);
+                        return false;
+                    }
+                    else
+                    {
+                        CalamityGlobalNPC.laserEye = npc.whoAmI;
+                        if (npc.Calamity().newAI[0] == 0f && Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, NPCType<Foveanator>());
+                            npc.Calamity().newAI[0] = 1f;
+                            npc.SyncExtraAI();
+                        }
+                    }
+                }
+                if (npc.type == NPCID.Spazmatism)
+                {
+                    if (CalamityWorld.revenge)
+                    {
+                        TwinsAI.BuffedSpazmatismAI(npc, Mod);
+                        return false;
+                    }
+                    else
+                    {
+                        CalamityGlobalNPC.fireEye = npc.whoAmI;
+                    }
+                }
             }
+            /*if (npc.type == NPCID.Deerclops)
+            {
+                npc.noGravity = true;
+                npc.noTileCollide = true;
+                npc.TargetClosest();
+                Player p = Main.player[npc.target];
+                switch (npc.ai[0])
+                {
+                    case 0:
+                        {
+                            Vector2 dest = p.Center + Vector2.UnitX * 300 * (npc.Center.X - p.Center.X).DirectionalSign();
+                            if (npc.Distance(dest) < 60)
+                            {
+                                npc.velocity *= 0.9f;
+                                if (npc.velocity.Length() < 1)
+                                {
+                                    npc.ai[1] = 0;
+                                    npc.ai[0] = Main.rand.NextBool() ? 1 : 0;
+                                    if (npc.ai[0] == 0)
+                                    {
+                                        npc.ai[2]++;
+                                    }
+                                    else
+                                    {
+                                        npc.ai[2] = 0;
+                                    }
+                                    if (npc.ai[2] > 3)
+                                    {
+                                        npc.ai[0] = 1;
+                                        npc.ai[2] = 0;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                FlyTo(npc, dest, 8);
+                            }
+                            npc.ai[1]++;
+                        }
+                        break;
+                    case 1:
+                        {
+                            if (npc.ai[1] == 20)
+                            {
+                                SoundEngine.PlaySound(SoundID.DeerclopsScream);
+                                npc.velocity = npc.DirectionTo(p.Center) * 20;
+                            }
+                            if (npc.ai[1] > 30)
+                            {
+                                npc.velocity *= 0.94f;
+                                if (npc.velocity.Length() < 1)
+                                {
+                                    npc.ai[1] = 0;
+                                    npc.ai[0] = Main.rand.NextBool() ? 2 : 1;
+                                    if (npc.ai[0] == 1)
+                                    {
+                                        npc.ai[2]++;
+                                    }
+                                    else
+                                    {
+                                        npc.ai[2] = 0;
+                                    }
+                                    if (npc.ai[2] > 3)
+                                    {
+                                        npc.ai[0] = 2;
+                                        npc.ai[2] = 0;
+                                    }
+                                }
+                            }
+                            npc.ai[1]++;
+                        }
+                        break;
+                    case 2:
+                        {
+                            int cycleLength = 70;
+                            float mod = npc.ai[1] % cycleLength;
+                            int tellTime = 40;
+                            if (npc.ai[2] == 0)
+                            {
+                                if (mod < tellTime)
+                                {
+                                    FlyTo(npc, p.Center - Vector2.UnitY * 400, 14);
+                                    npc.ai[1]++;
+                                }
+                                else if (mod == tellTime)
+                                {
+                                    SoundEngine.PlaySound(SoundID.DeerclopsScream);
+                                    npc.velocity = npc.DirectionTo(p.Center) * 20;
+                                    npc.ai[1]++;
+                                }
+                                else
+                                {
+                                    foreach (NPC n in Main.ActiveNPCs)
+                                    {
+                                        if (n.type == ModContent.NPCType<PrimalAspid>())
+                                        {
+                                            if (n.Hitbox.Intersects(npc.Hitbox))
+                                            {
+                                                n.StrikeInstantKill();
+                                            }
+                                        }
+                                    }
+                                    if ((npc.Center.Y > p.Center.Y && Collision.SolidCollision(npc.position, npc.width, npc.height)) || npc.Center.Y > p.Center.Y + 200)
+                                    {
+                                        SoundEngine.PlaySound(SoundID.DeerclopsStep);
+                                        npc.velocity.Y *= -1;
+                                        npc.ai[2] = 1;
+                                    }
+                                }
+                            }
+                            else if (npc.ai[2] == 1)
+                            {
+                                npc.velocity *= 0.95f;
+                                npc.ai[1]++;
+                                if (mod >= cycleLength - 1)
+                                {
+                                    npc.ai[2] = 0;
+                                }
+                            }
+                            //Main.NewText(npc.ai[1] + " " + npc.ai[2] + " " + mod);
+                            if (npc.ai[1] > cycleLength * 3)
+                            {
+                                npc.ai[1] = 0;
+                                npc.ai[2] = 0;
+                                npc.ai[0] = 3;
+                            }
+                        }
+                        break;
+                    case 3:
+                        {
+                            npc.velocity *= 0.8f;
+                            npc.ai[1]++;
+                            if (npc.ai[1] == 20)
+                            {
+                                SoundEngine.PlaySound(SoundID.DeerclopsScream);
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X + Main.rand.Next(-120, 120), (int)npc.Center.Y + Main.rand.Next(-120, 120), ModContent.NPCType<PrimalAspid>());
+                                }
+                            }
+                            if (npc.ai[1] > 50)
+                            {
+                                npc.ai[1] = 0;
+                                npc.ai[0] = 0;
+                            }
+                        }
+                        break;
+                }
+                npc.rotation = npc.velocity.ToRotation();
+                npc.spriteDirection = npc.direction = npc.velocity.X.DirectionalSign();
+                return false;
+            }*/
             return true;
         }
+
+        public static void FlyTo(NPC n, Vector2 pos, float speed)
+        {
+            n.SimpleFlyMovement(pos - n.Center, speed);
+        }
+
         public override void AI(NPC npc)
         {
             CalRemixPlayer modPlayer = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             if (npc.type == NPCType<MicrobialCluster>() && npc.catchItem == 0)
             {
                 npc.catchItem = ItemType<DisgustingSeawater>();
-            }
-            if (npc.type == NPCType<FAP>()) // MURDER the drunk princess
-            {
-                npc.active = false;
-            }
-            if (npc.type == NPCType<SupremeCalamitas>()) // MURDER the drunk princess
-            {
-                SupremeCalamitas cirrus = npc.ModNPC as SupremeCalamitas;
-                if (cirrus.cirrus)
-                {
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.ByeSAC", Color.Red);
-                    npc.active = false;
-                }
             }
             if (npc.type == NPCType<AureusSpawn>() && (modPlayer.nuclegel || modPlayer.assortegel) && !CalamityMod.Events.BossRushEvent.BossRushActive)
             {
@@ -926,10 +1215,26 @@ namespace CalRemix
                     }
                 }
             }
-            if (!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type))
+            if ((!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type)) || RemixDowned.downedNoxus)
             {
-                if (npc.GetGlobalNPC<CalamityMod.NPCs.CalamityGlobalNPC>().pearlAura > 0)
+                if (npc.GetGlobalNPC<CalamityGlobalNPC>().pearlAura > 0)
                     npc.AddBuff(BuffType<CalamityMod.Buffs.StatDebuffs.GlacialState>(), 60);
+                foreach (Player p in Main.ActivePlayers)
+                {
+                    if (p.Remix().voidArmor)
+                    {
+                        float xSpeed = Math.Abs(npc.velocity.X);
+                        float ySpeed = Math.Abs(npc.velocity.Y);
+                        if (xSpeed > ySpeed)
+                        {
+                            npc.velocity.Y = 0;
+                        }
+                        else if (ySpeed > xSpeed)
+                        {
+                            npc.velocity.X = 0;
+                        }
+                    }
+                }
             }
             if (npc.GetGlobalNPC<CalRemixNPC>().clawed > 0)
             {
@@ -947,6 +1252,7 @@ namespace CalRemix
             if (shop.NpcType == NPCID.Merchant)
             {
                 shop.Add(new NPCShop.Entry(ItemType<LesserStealthPotion>()));
+                shop.Add(new NPCShop.Entry(ItemType<WoodBag>()));
             }
             if (shop.NpcType == NPCType<THIEF>())
             {
@@ -974,6 +1280,12 @@ namespace CalRemix
         }
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+            if (npc.type == NPCID.GoldBunny && NPC.downedGolemBoss)
+                npcLoot.AddIf(() => NPC.downedGolemBoss, ItemType<GoldenCarrot>());
+
+            if (IsBunny(npc) && NPC.downedGolemBoss)
+                npcLoot.AddIf(() => NPC.downedGolemBoss, ItemType<GoldenCarrot>(), new Fraction(1, 80));
+
             EnemyLoot(npc, npcLoot);
             MiniBossLoot(npc, npcLoot);
             BossLoot(npc, npcLoot);
@@ -1134,6 +1446,10 @@ namespace CalRemix
                     npcLoot.Add(ItemType<MeldChipIceCream>(), 33);
                     break;
             }
+            if (npc.type == NPCID.BrainScrambler || npc.type == NPCID.NebulaBrain)
+            {
+                npcLoot.Add(ItemType<NerveEndingBundle>(), 10, 14, 28);
+            }
             if (npc.type == NPCType<SightseerSpitter>())
             {
                 npcLoot.Add(ItemType<AstralPearl>(), new Fraction(1, 15));
@@ -1153,6 +1469,36 @@ namespace CalRemix
             if (npc.type == NPCID.GiantFungiBulb)
             {
                 npcLoot.Add(ItemType<FungiStone>(), new Fraction(1, 50));
+            }
+            if (npc.type ==  NPCID.ChaosElemental)
+            {
+                //checks for rod, could be improved
+                npcLoot.RemoveWhere(
+                    rule => rule is LeadingConditionRule leadingRule
+                        && (leadingRule.condition is Conditions.TenthAnniversaryIsNotUp)
+                );
+                npcLoot.RemoveWhere(
+                    rule => rule is LeadingConditionRule leadingRule
+                        && (leadingRule.condition is Conditions.TenthAnniversaryIsNotUp)
+                );
+                npcLoot.Add(ItemID.RodofDiscord);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 2));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(2, 3));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 4), 1, 3);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 8));
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 16), 10, 10);
+                npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 32));
+                npcLoot.Add(ItemID.RodOfHarmony, new Fraction(1, 64), 1, 200);
+            }
+            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && npc.type != NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            {
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
+                hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
+                npcLoot.Add(hm);
+            }
+            if (npc.type == NPCID.Paladin)
+            {
+                npcLoot.Add(ItemType<EssenceofRend>(), 1, 2, 5);
             }
             #endregion
             #region Godseeker Mode
@@ -1216,15 +1562,35 @@ namespace CalRemix
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterAdrenalinePotion>(), 1, 5, 10);
                 npcLoot.AddIf(() => CalamityWorld.revenge || CalamityWorld.death, ItemType<GreaterEnragePotion>(), 1, 5, 10);
             }
-            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && npc.type != NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            #endregion
+            #region Epilogue
+            if (npc.type == NPCID.BloodCrawler || npc.type == NPCID.BloodCrawlerWall || npc.type == NPCID.FaceMonster || npc.type == NPCID.Crimera || npc.type == NPCID.CrimsonGoldfish || npc.type == NPCType<CrimulanBlightSlime>())
             {
-                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
-                hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
-                npcLoot.Add(hm);
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<BloodredReactiveEssence>(), 20);
             }
-            if (npc.type == NPCID.Paladin)
+            if (npc.type == NPCID.Herpling || npc.type == NPCID.Crimslime || npc.type == NPCID.BloodJelly || npc.type == NPCID.BloodFeeder)
             {
-                npcLoot.Add(ItemType<EssenceofRend>(), 1, 2, 5);
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<BloodredReactiveEssence>(), 10);
+            }
+            if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 20);
+            }
+            if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 10);
+            }
+            if (npc.type == NPCID.IceSlime || npc.type == NPCID.ZombieEskimo || npc.type == NPCID.CorruptPenguin || npc.type == NPCID.CrimsonPenguin || npc.type == NPCType<Rimehound>()) //waterfreeze, probably tundra mobs
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<WaterfreezeReactiveEssence>(), 20);
+            }
+            if (npc.type == NPCID.IceElemental || npc.type == NPCID.Wolf || npc.type == NPCID.IceGolem || npc.type == NPCType<AuroraSpirit>() || npc.type == NPCType<Cryon>() || npc.type == NPCType<IceClasper>() || npc.type == NPCType<CryoSlime>())
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<WaterfreezeReactiveEssence>(), 10);
+            }
+            if (npc.DeathSound == CommonCalamitySounds.AstralNPCDeathSound || npc.type == NPCType<AstralSlime>() || npc.type == NPCType<Atlas>())
+            {
+                npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<NocticReactiveEssence>(), 10);
             }
             #endregion
         }
@@ -1442,7 +1808,7 @@ namespace CalRemix
             }
             else if (npc.type == NPCID.CultistBoss)
             {
-
+                npcLoot.Add(ModContent.ItemType<CloseToYou>());
             }
             else if (npc.type == NPCType<AstrumDeusHead>())
             {
@@ -1510,6 +1876,15 @@ namespace CalRemix
             else if (npc.type == NPCType<SupremeCalamitas>())
             {
                 npcLoot.AddNormalOnly(ItemType<YharimBar>(), 1, 60, 80);
+                npcLoot.AddNormalOnly(ItemType<FlinstoneGangsterTrophy>(), 10);
+            }
+            else if (npc.type == NPCType<SoulSeekerSupreme>())
+            {
+                npcLoot.AddNormalOnly(ItemType<SoulSeekerTrophy>(), 10);
+            }
+            else if (npc.type == NPCType<BrimstoneHeart>())
+            {
+                npcLoot.AddNormalOnly(ItemType<BrimstoneHeartTrophy>(), 10);
             }
             else if (npc.type == NPCType<PrimordialWyrmHead>())
             {
@@ -1518,19 +1893,38 @@ namespace CalRemix
             }
 
         }
+
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (player.Remix().taintedWrath)
             {
                 modifiers.SourceDamage *= 0;
             }
+            foreach (Projectile p in Main.ActiveProjectiles)
+            {
+                if (p.type == ProjectileType<NowhereAura>())
+                {
+                    if (p.Distance(npc.Center) < 100)
+                        modifiers.SourceDamage *= 1.7f;
+                }
+            }
         }
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.owner > -1)
-            if (Main.player[projectile.owner].Remix().taintedWrath)
             {
-                modifiers.SourceDamage *= 0;
+                if (Main.player[projectile.owner].Remix().taintedWrath)
+                {
+                    modifiers.SourceDamage *= 0;
+                }
+            }
+            foreach (Projectile p in Main.ActiveProjectiles)
+            {
+                if (p.type == ProjectileType<NowhereAura>())
+                {
+                    if (p.Distance(npc.Center) < 100)
+                        modifiers.SourceDamage *= 1.7f;
+                }
             }
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
@@ -1559,6 +1953,19 @@ namespace CalRemix
                                 CalRemixWorld.UpdateWorldBool();
                             }
                         }
+                    }
+                }
+                if (p.Remix().sealedArmor)
+                {
+                    if (p.Remix().sealedCooldown <= 0)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int proj = Projectile.NewProjectile(p.GetSource_FromThis(), npc.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * 14, ProjectileType<SealedLashesProj>(), (int)(hit.Damage * 0.5f), 0, p.whoAmI);
+                            Main.projectile[proj].DamageType = DamageClass.Generic;
+                            Main.projectile[proj].ownerHitCheck = false;
+                        }
+                        p.Remix().sealedCooldown = 20;
                     }
                 }
                 if (npc.type == NPCID.Wizard && npc.life <= 0 && CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
@@ -1645,6 +2052,50 @@ namespace CalRemix
                 if (npc.type == NPCType<SepulcherHead>() && NPC.FindFirstNPC(NPCType<SupremeTwin>()) > 0)
                 {
                     SpawnNewNPC(npc.GetSource_Death(), npc.Center, NPCType<SupremeSkeletron>());
+                }
+            }
+
+            if (Main.hardMode && IsBunny(npc) && Rajah != -1)
+            {
+                Player player = Main.player[Player.FindClosest(npc.Center, npc.width, npc.height)];
+
+                int bunnyKills = NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
+                if (bunnyKills % 100 == 0 && bunnyKills < 1000)
+                {
+                    if (Main.netMode != 1)
+                    {
+                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.1", new Color(107, 137, 179));
+                    }
+
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound"), npc.Center);
+                    SpawnRajah(player, new Vector2(npc.Center.X, npc.Center.Y - 2000));
+
+                }
+
+                if (bunnyKills % 100 == 0 && bunnyKills >= 1000)
+                {
+                    if (Main.netMode != 1)
+                    {
+                        if (Main.netMode == 0)
+                        {
+                            Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.RajahGlobalInfo.2", player.name.ToUpper()), new Color(107, 137, 179));
+                        }
+                        else if (Main.netMode == 2)
+                        {
+                            ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.RajahGlobalInfo.2", player.name.ToUpper()), new Color(107, 137, 179));
+                        }
+                    }
+
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound"), npc.Center);
+                    SpawnRajah(player, new Vector2(npc.Center.X, npc.Center.Y - 2000));
+                }
+
+                if (bunnyKills % 50 == 0 && bunnyKills % 100 != 0)
+                {
+                    if (Main.netMode != 1)
+                    {
+                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.3", new Color(107, 137, 179));
+                    }
                 }
             }
         }
@@ -1761,6 +2212,9 @@ namespace CalRemix
                 witherDebuff = false;
             if (!witherDebuff)
                 wither = 0;
+
+            if (!npc.HasBuff<SpearStuck>())
+                Spear = false;
 
             if (!Main.dedServ && npc.Hitbox.Intersects(ScreenHelperManager.screenRect))
             {
@@ -1932,30 +2386,175 @@ namespace CalRemix
                 maxSpawns *= 2;
                 spawnRate = Math.Max((int)(spawnRate * 0.5f), 1);
             }
+            if (SubworldSystem.AnyActive())
+            {
+                if (SubworldSystem.Current is ICustomSpawnSubworld)
+                {
+                    if (CalamityPlayer.areThereAnyDamnBosses)
+                    {
+                        maxSpawns = 0;
+                        spawnRate = 0;
+                        return;
+                    }
+                    ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
+                    spawnRate = (int)(spawnRate * IDS.SpawnMult);
+                    maxSpawns = IDS.MaxSpawns;
+                }
+            }
         }
+
+        internal static readonly FieldInfo MaxSpawnsField = typeof(NPC).GetField("maxSpawns", BindingFlags.NonPublic | BindingFlags.Static);
+
+        public static void RemixSpawnSystem(Player player)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
+            if (SubworldSystem.AnyActive())
+            {
+                if (SubworldSystem.Current is ICustomSpawnSubworld)
+                {
+                    if (CalamityPlayer.areThereAnyDamnBosses)
+                    {
+                        return;
+                    }
+                    ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
+                    if (!IDS.OverrideVanilla)
+                        return;
+                    int spawnRate = 400;
+                    int maxSpawnCount = IDS.MaxSpawns;
+                    NPCLoader.EditSpawnRate(player, ref spawnRate, ref maxSpawnCount);
+                    if (maxSpawnCount == 0)
+                        return;
+
+                    float spawnsTaken = 0;
+                    foreach (NPC n in Main.ActiveNPCs)
+                    {
+                        if (!n.townNPC)
+                        {
+                            spawnsTaken += n.npcSlots;
+                        }
+                    }
+                    if (spawnsTaken >= IDS.MaxSpawns)
+                        return;
+
+                    float playerCenterX = player.Center.X / 16f;
+                    float playerCenterY = player.Center.Y / 16f;
+                    //for (int i = 0; i < 8; i++)
+                    {
+                        int checkPositionX = (int)(playerCenterX + Main.rand.Next(-90, 90));
+                        int checkPositionY = (int)(playerCenterY + Main.rand.Next(-80, 80));
+
+                        Vector2 checkPosition = new Vector2(checkPositionX, checkPositionY);
+
+                        if (Math.Abs(playerCenterY - checkPosition.Y) < 40 && Math.Abs(playerCenterX - checkPosition.X) < 70)
+                            return;
+
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(checkPositionX, checkPositionY);
+                        Tile aboveSpawnTile = CalamityUtils.ParanoidTileRetrieval(checkPositionX, checkPositionY - 1);
+
+                        // If the place the NPC should spawn (a tile above) is a block, return
+                        if (aboveSpawnTile.HasTile && Main.tileSolid[aboveSpawnTile.TileType])
+                            return;
+
+                        NPCSpawnInfo spawnInfo = new NPCSpawnInfo();
+                        spawnInfo.Player = player;
+                        spawnInfo.SpawnTileType = aboveSpawnTile.TileType;
+                        spawnInfo.SpawnTileX = checkPositionX;
+                        spawnInfo.SpawnTileY = checkPositionY - 1;
+                        spawnInfo.Water = aboveSpawnTile.LiquidAmount >= 255 && aboveSpawnTile.LiquidType == LiquidID.Water;
+
+                        WeightedRandom<(int, Predicate<NPCSpawnInfo>)> pool = new WeightedRandom<(int, Predicate<NPCSpawnInfo>)>();
+                        pool.Add((NPCID.None, (NPCSpawnInfo s) => true), 1f);
+                        foreach (var v in IDS.Spawns())
+                        {
+                            pool.Add((v.Item1, v.Item3), v.Item2);
+                        }
+
+                        var spawnEntry = pool.Get();
+                        if (!spawnEntry.Item2.Invoke(spawnInfo))
+                            return;
+                        if (spawnEntry.Item1 != NPCID.None)
+                        {
+                            int spawnedNPC = NPCLoader.SpawnNPC(spawnEntry.Item1, checkPositionX, checkPositionY - 1);
+                            if (Main.netMode == NetmodeID.Server && spawnedNPC < Main.maxNPCs)
+                            {
+                                Main.npc[spawnedNPC].position.Y -= 8f;
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, spawnedNPC);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void ClearPool(ref IDictionary<int, float> pool)
+        {
+            List<int> keys = pool.Keys.ToList();
+            foreach (int key in keys)
+            {
+                pool[key] = 0;
+            }
+        }
+        public static void TryInjectSpawn(ref IDictionary<int, float> pool, int id, float chance)
+        {
+            List<int> keys = pool.Keys.ToList();
+            if (keys.Contains(id))
+            {
+                pool[id] = chance;
+            }
+            else
+            {
+                pool.Add(id, chance);
+            }
+        }
+
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
             if (CalRemixWorld.roachDuration > 0)
             {
-                pool.Clear();
-                pool.Add(NPCType<LabRoach>(), 22f);
+                ClearPool(ref pool);
+                TryInjectSpawn(ref pool, NPCType<LabRoach>(), 22f);
                 return;
             }
             if (ProfanedDesert.scorchedWorld)
             {
-                pool.Clear();
-                pool.Add(NPCType<ScornEater>(), 1);
+                ClearPool(ref pool);
+                TryInjectSpawn(ref pool, NPCType<ScornEater>(), 1);
                 if (!NPC.AnyNPCs(NPCType<ProfanedEnergyBody>()))
-                    pool.Add(NPCType<ProfanedEnergyBody>(), 1);
-                pool.Add(NPCType<ImpiousImmolator>(), 1);
-                pool.Add(NPCType<YggdrasilEnt>(), 0.05f);
+                    TryInjectSpawn(ref pool, NPCType<ProfanedEnergyBody>(), 1);
+                TryInjectSpawn(ref pool, NPCType<ImpiousImmolator>(), 1);
+                TryInjectSpawn(ref pool, NPCType<YggdrasilEnt>(), 0.05f);
                 if (CalRemixAddon.CalVal != null)
                 {
-                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("ProvFly").Type, 1);
-                    pool.Add(CalRemixAddon.CalVal.Find<ModNPC>("CrystalFly").Type, 1);
+                    TryInjectSpawn(ref pool, CalRemixAddon.CalVal.Find<ModNPC>("ProvFly").Type, 1);
+                    TryInjectSpawn(ref pool, CalRemixAddon.CalVal.Find<ModNPC>("CrystalFly").Type, 1);
                 }
 
                 return;
+            }
+            if (SubworldSystem.AnyActive())
+            {
+                if (SubworldSystem.Current is ICustomSpawnSubworld)
+                {
+                    ClearPool(ref pool);
+                    ICustomSpawnSubworld IDS = SubworldSystem.Current as ICustomSpawnSubworld;
+                    if (IDS.OverrideVanilla)
+                        return;
+                    foreach (var v in IDS.Spawns())
+                    {
+                        if (v.Item3.Invoke(spawnInfo))
+                        {
+                            TryInjectSpawn(ref pool, v.Item1, v.Item2);
+                        }
+                    }
+                    return;
+                }
+                if (SubworldSystem.Current is IDisableSpawnsSubworld)
+                {
+                    ClearPool(ref pool);
+                }
             }
             //Wizard can't respawn
             if (CalRemixWorld.wizardDisabled)
@@ -1965,11 +2564,15 @@ namespace CalRemix
                     pool.Remove(NPCID.BoundWizard);
                 }
             }
+            if (NPC.AnyNPCs(NPCType<CrimsonKaiju>()))
+            {
+                ClearPool(ref pool);
+            }
             if (CalamityPlayer.areThereAnyDamnEvents)
                 return;
             if (CalRemixWorld.oxydayTime > 0)
             {
-                pool.Add(NPCID.Dandelion, 100);
+                TryInjectSpawn(ref pool, NPCID.Dandelion, 100);
             }
             if (spawnInfo.Player.InModBiome<FrozenStrongholdBiome>())
             {
@@ -1983,54 +2586,54 @@ namespace CalRemix
             }
             if (spawnInfo.Player.GetModPlayer<CalRemixPlayer>().dungeon2)
             {
-                pool.Clear();
+                ClearPool(ref pool);
                 //if (NPC.downedBoss3)
                 {
                     if (!NPC.savedMech)
                     {
-                        pool.Add(NPCID.BoundMechanic, 0.1f);
+                        TryInjectSpawn(ref pool, NPCID.BoundMechanic, 0.1f);
                     }
-                    pool.Add(NPCID.AngryBones, 1);
-                    pool.Add(NPCID.AngryBonesBig, 1);
-                    pool.Add(NPCID.AngryBonesBigHelmet, 1);
-                    pool.Add(NPCID.AngryBonesBigMuscle, 1);
-                    pool.Add(NPCID.DarkCaster, 0.5f);
-                    pool.Add(NPCID.CursedSkull, 0.5f);
-                    pool.Add(NPCID.DungeonSlime, 0.05f);
-                    pool.Add(NPCID.SpikeBall, 0.05f);
-                    pool.Add(NPCID.BlazingWheel, 0.05f);
+                    TryInjectSpawn(ref pool, NPCID.AngryBones, 1);
+                    TryInjectSpawn(ref pool, NPCID.AngryBonesBig, 1);
+                    TryInjectSpawn(ref pool, NPCID.AngryBonesBigHelmet, 1);
+                    TryInjectSpawn(ref pool, NPCID.AngryBonesBigMuscle, 1);
+                    TryInjectSpawn(ref pool, NPCID.DarkCaster, 0.5f);
+                    TryInjectSpawn(ref pool, NPCID.CursedSkull, 0.5f);
+                    TryInjectSpawn(ref pool, NPCID.DungeonSlime, 0.05f);
+                    TryInjectSpawn(ref pool, NPCID.SpikeBall, 0.05f);
+                    TryInjectSpawn(ref pool, NPCID.BlazingWheel, 0.05f);
                     if (Main.hardMode)
                     {
-                        pool.Add(NPCType<RenegadeWarlock>(), 0.05f);
+                        TryInjectSpawn(ref pool, NPCType<RenegadeWarlock>(), 0.05f);
                     }
                     if (NPC.downedPlantBoss)
                     {
-                        pool.Add(NPCID.BlueArmoredBones, 1);
-                        pool.Add(NPCID.BlueArmoredBonesMace, 1);
-                        pool.Add(NPCID.BlueArmoredBonesNoPants, 1);
-                        pool.Add(NPCID.BlueArmoredBonesSword, 1);
-                        pool.Add(NPCID.HellArmoredBones, 1);
-                        pool.Add(NPCID.HellArmoredBonesMace, 1);
-                        pool.Add(NPCID.HellArmoredBonesSpikeShield, 1);
-                        pool.Add(NPCID.HellArmoredBonesSword, 1);
-                        pool.Add(NPCID.RustyArmoredBonesAxe, 1);
-                        pool.Add(NPCID.RustyArmoredBonesFlail, 1);
-                        pool.Add(NPCID.RustyArmoredBonesSword, 1);
-                        pool.Add(NPCID.RustyArmoredBonesSwordNoArmor, 1);
-                        pool.Add(NPCID.Necromancer, 0.2f);
-                        pool.Add(NPCID.DiabolistRed, 0.1f);
-                        pool.Add(NPCID.DiabolistWhite, 0.1f);
-                        pool.Add(NPCID.RaggedCaster, 0.2f);
-                        pool.Add(NPCID.Paladin, 0.05f);
-                        pool.Add(NPCID.TacticalSkeleton, 0.2f);
-                        pool.Add(NPCID.SkeletonSniper, 0.2f);
-                        pool.Add(NPCID.SkeletonCommando, 0.2f);
-                        pool.Add(NPCID.GiantCursedSkull, 0.2f);
-                        pool.Add(NPCID.BoneLee, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.BlueArmoredBones, 1);
+                        TryInjectSpawn(ref pool, NPCID.BlueArmoredBonesMace, 1);
+                        TryInjectSpawn(ref pool, NPCID.BlueArmoredBonesNoPants, 1);
+                        TryInjectSpawn(ref pool, NPCID.BlueArmoredBonesSword, 1);
+                        TryInjectSpawn(ref pool, NPCID.HellArmoredBones, 1);
+                        TryInjectSpawn(ref pool, NPCID.HellArmoredBonesMace, 1);
+                        TryInjectSpawn(ref pool, NPCID.HellArmoredBonesSpikeShield, 1);
+                        TryInjectSpawn(ref pool, NPCID.HellArmoredBonesSword, 1);
+                        TryInjectSpawn(ref pool, NPCID.RustyArmoredBonesAxe, 1);
+                        TryInjectSpawn(ref pool, NPCID.RustyArmoredBonesFlail, 1);
+                        TryInjectSpawn(ref pool, NPCID.RustyArmoredBonesSword, 1);
+                        TryInjectSpawn(ref pool, NPCID.RustyArmoredBonesSwordNoArmor, 1);
+                        TryInjectSpawn(ref pool, NPCID.Necromancer, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.DiabolistRed, 0.1f);
+                        TryInjectSpawn(ref pool, NPCID.DiabolistWhite, 0.1f);
+                        TryInjectSpawn(ref pool, NPCID.RaggedCaster, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.Paladin, 0.05f);
+                        TryInjectSpawn(ref pool, NPCID.TacticalSkeleton, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.SkeletonSniper, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.SkeletonCommando, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.GiantCursedSkull, 0.2f);
+                        TryInjectSpawn(ref pool, NPCID.BoneLee, 0.2f);
                     }
                     if (spawnInfo.Water && DownedBossSystem.downedPolterghast)
                     {
-                        pool.Add(NPCType<MinnowsPrime>(), 1f);
+                        TryInjectSpawn(ref pool, NPCType<MinnowsPrime>(), 1f);
                     }
                 }
             }
@@ -2421,22 +3024,6 @@ namespace CalRemix
                                 }
                             }
                             Vector2 pos = target != null ? target.position : prowlPoint;
-                            if (false)
-                            {
-                                flag6 = true;
-                                if (Math.Abs(npc.velocity.X) < speed / 2f)
-                                {
-                                    if (npc.velocity.X == 0f)
-                                    {
-                                        npc.velocity.X -= npc.direction;
-                                    }
-                                    npc.velocity.X *= 1.1f;
-                                }
-                                else if (npc.velocity.Y > 0f - speed)
-                                {
-                                    npc.velocity.Y -= acceleration;
-                                }
-                            }
                         }
                         if (!flag6)
                         {
@@ -2584,6 +3171,27 @@ namespace CalRemix
                 }
             }
             return false;
+        }
+
+        public static void SpawnRajah(Player player, Vector2 npcCenter = default)
+        {
+            if (npcCenter == default)
+            {
+                npcCenter = player.Center;
+            }
+
+            int RajahType = ModContent.NPCType<Rajah>();
+            if (NPC.killCount[NPCID.Bunny] >= 1000)
+            {
+                RajahType = ModContent.NPCType<SupremeRajah>();
+            }
+
+            CalamityUtils.SpawnBossBetter(npcCenter, RajahType);
+        }
+
+        public bool IsBunny(NPC npc)
+        {
+            return npc.type == NPCID.Bunny || npc.type == NPCID.GoldBunny || npc.type == NPCID.BunnySlimed || npc.type == NPCID.BunnyXmas || npc.type == NPCID.PartyBunny;
         }
     }
 }

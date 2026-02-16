@@ -15,6 +15,7 @@ using CalRemix.UI;
 using Terraria.UI;
 using Terraria.DataStructures;
 using CalRemix.Core.Retheme.Sneakers;
+using System;
 
 namespace CalRemix.Core.Retheme
 {
@@ -35,10 +36,8 @@ namespace CalRemix.Core.Retheme
         public static Asset<Texture2D> originalBoneGloveBackTexture;
         public static Asset<Texture2D> invisibleSprite;
 
-        public static List<Asset<Texture2D>> BrandLogos = new();
-
-        public static SetFactory SneakersFactory = new SetFactory(ItemLoader.ItemCount);
-        public static bool[] SneakerList = SneakersFactory.CreateBoolSet(
+        public static List<Asset<Texture2D>> BrandLogos = [];
+        public static bool[] SneakerList = ItemID.Sets.Factory.CreateBoolSet(
             //Vanilla
               ItemID.RoyalGel,
               ItemID.EoCShield, 
@@ -87,7 +86,7 @@ namespace CalRemix.Core.Retheme
               ItemType<YharimsGift>(), 
               ItemType<ExoThrone>(), 
               ItemType<Calamity>()
-            );
+        );
 
         public static void Load()
         {
@@ -141,7 +140,7 @@ namespace CalRemix.Core.Retheme
                 .AddDelay(1f).NeedsActivation().SetHoverTextOverride("That's amazing Fanny, I'm glad I have a friend that's knowledgeable in the hobby of sneaker collection!");
 
 
-            HelperMessage.New("SneakersExtraSlot", "Ohh my friend this is marvelous! I am overjoyed! I am ecstatic! Over the moon, I tell you! A brand new slot, for you? So you can display TWOOOOO sneakers at once? Oh my lordy lord that is just brilliant. I'm already seeing your net worth skyrocket! SKY!RO!CKET! I can already imagine the faces your friends will make when they see you proudly displaying your newly aquired sneakers!", "FannySneakers",
+            HelperMessage.New("SneakersExtraSlot", "Ohh my friend this is marvelous! I am overjoyed! I am ecstatic! Over the moon, I tell you! A brand new slot, for you? So you can display TWOOOOO sneakers at once? Oh my lordy lord that is just brilliant. I'm already seeing your net worth skyrocket! SKY!RO!CKET! I can already imagine the faces your friends will make when they see you proudly displaying your newly acquired sneakers!", "FannySneakers",
                (ScreenHelperSceneMetrics m) => Main.LocalPlayer.extraAccessory)
                 .AddDelay(1f).SetHoverTextOverride("Now that I can finally use both my feet, I'll finally be able to wear the shoes I've been collecting!");
 
@@ -175,7 +174,7 @@ namespace CalRemix.Core.Retheme
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemType<AquaticEmblem>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).SetHoverTextOverride("Blessed creatures made with love and care in mind");
 
-            HelperMessage.New("VolatileSneakers", "Oh look, another pathetic schmuck who just wants to collect those branded sneakers to increase their net worth. Just know that someone, somewhere in was paid FAR less than these shoes base worth. While your pointless net worth increases, the poor stays poor, and there is no changing that. But fine, flex those blasted sneakers to your easily impressionable \"friends\" and not care about the poor workers who were paid only 3 copper coins per shoe.", "EvilFannyDisgusted",
+            HelperMessage.New("VolatileSneakers", "Oh look, another schmuck getting into sneaker collecting. You know these are being pumped out of some sweatshop, right? These aren't actually worth anything, all their value comes from impressionable losers like you and fanny throwing your disposable income away for brand loyalty. You're out here increasing your \"Net worth\", while the kid that made these got payed 3 copper coins to lose his fingers to a sewing machine so you could wear those garrish things, I hope you remember that anytime you get your hands on another pair.", "EvilFannyDisgusted",
                 (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ItemID.VolatileGelatin))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.EvilFanny);
 
@@ -390,6 +389,7 @@ namespace CalRemix.Core.Retheme
             { 
                 foreach (KeyValuePair<int, string> p in itemSneakerPairs)
                 {
+                    SneakerList[p.Key] = true;
                     TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/Sneakers/" + p.Value, AssetRequestMode.ImmediateLoad);
                 }
                 foreach (KeyValuePair<int, string> p in buffSneakerPairs)
@@ -431,6 +431,7 @@ namespace CalRemix.Core.Retheme
             {
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in OriginalItemTextures)
                 {
+                    SneakerList[p.Key] = false;
                     TextureAssets.Item[p.Key] = p.Value;
                 }
                 foreach (KeyValuePair<int, Asset<Texture2D>> p in OriginalBuffTextures)
@@ -440,24 +441,45 @@ namespace CalRemix.Core.Retheme
 
                 Asset<Texture2D>[] MinecartMechTexture = OriginalMechCartTexture;
                 Asset<Texture2D>[] CuteFishronTexture = OriginalCuteFishronTexture;
+                try
+                {
+                    if (Mount.mounts?[MountID.MinecartMech] != null)
+                    {
+                        Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
+                        if (minecartMech != null)
+                        {
+                            minecartMech.frontTexture = MinecartMechTexture[0];
+                            minecartMech.frontTextureGlow = MinecartMechTexture[1];
+                            minecartMech.textureWidth = MinecartMechTexture[0].Width();
+                        }
+                    }
 
-                Mount.MountData minecartMech = Mount.mounts[MountID.MinecartMech];
-                minecartMech.frontTexture = MinecartMechTexture[0];
-                minecartMech.frontTextureGlow = MinecartMechTexture[1];
-                minecartMech.textureWidth = MinecartMechTexture[0].Width();
+                    if (Mount.mounts?[MountID.CuteFishron] != null)
+                    {
+                        Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
+                        if (cuteFishron != null)
+                        {
+                            cuteFishron.backTexture = CuteFishronTexture[0];
+                            cuteFishron.backTextureGlow = CuteFishronTexture[1];
+                            cuteFishron.frontTexture = Asset<Texture2D>.Empty;
+                            cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
+                            cuteFishron.textureWidth = CuteFishronTexture[0].Width();
+                        }
+                    }
 
-                Mount.MountData cuteFishron = Mount.mounts[MountID.CuteFishron];
-                cuteFishron.backTexture = CuteFishronTexture[0];
-                cuteFishron.backTextureGlow = CuteFishronTexture[1];
-                cuteFishron.frontTexture = Asset<Texture2D>.Empty;
-                cuteFishron.frontTextureGlow = Asset<Texture2D>.Empty;
-                cuteFishron.textureWidth = CuteFishronTexture[0].Width();
-
-                var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>()).MountData;
-                throneData.backTexture = OriginalThroneBackTexture;
-                throneData.frontTexture = OriginalThroneTexture;
-                throneData.frontTextureGlow = OriginalThroneGlowTexture;
-                throneData.textureWidth = throneData.frontTexture.Width();
+                    if (MountLoader.GetMount(MountType<DraedonGamerChairMount>())?.MountData != null)
+                    {
+                        var throneData = MountLoader.GetMount(MountType<DraedonGamerChairMount>())?.MountData;
+                        throneData.backTexture = OriginalThroneBackTexture;
+                        throneData.frontTexture = OriginalThroneTexture;
+                        throneData.frontTextureGlow = OriginalThroneGlowTexture;
+                        throneData.textureWidth = throneData.frontTexture.Width();
+                    }
+                }
+                catch 
+                {
+                    Console.WriteLine("This entire block is being bad");
+                }
 
                 TextureAssets.AccShield[ArmorIDs.Shield.ShieldofCthulhu] = originalSocTexture;
                 TextureAssets.AccNeck[ArmorIDs.Neck.WormScarf] = originalWormScarfTexture;
@@ -472,7 +494,10 @@ namespace CalRemix.Core.Retheme
                     foreach (KeyValuePair<int, string> p in RethemeList.Items)
                     {
                         if (IsASneaker(p.Key))
+                        {
+                            SneakerList[p.Key] = false;
                             TextureAssets.Item[p.Key] = Request<Texture2D>("CalRemix/Core/Retheme/" + p.Value);
+                        }
                     }
                 }
             }

@@ -56,7 +56,7 @@ public class TenebrisTides : ModItem
             AddIngredient<TyphonsGreed>(1).
             AddIngredient(ItemID.LunarBar, 10).
             AddIngredient<PlantyMush>(50).
-            AddTile(TileID.LunarCraftingStation).
+            AddTile(TileID.MythrilAnvil).
             Register();
     }
 

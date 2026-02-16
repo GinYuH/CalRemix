@@ -248,7 +248,7 @@ namespace CalRemix.Core.World
                     }
                     if (tile.LiquidAmount > 0 && flag)
                     {
-                        tile.LiquidType = 1;
+                        tile.LiquidType = LiquidID.Lava;
                     }
                 }
             }
@@ -511,7 +511,7 @@ namespace CalRemix.Core.World
                 {
                     for (int num6 = k - num5; num6 <= k + num5; num6++)
                     {
-                        if (Main.tile[n, num6].HasTile && (TileID.Sets.Boulders[Main.tile[n, num6].TileType] || Main.tile[n, num6].TileType == 26 || Main.tile[n, num6].TileType == 237))
+                        if (Main.tile[n, num6].HasTile && (TileID.Sets.Boulders[Main.tile[n, num6].TileType] || Main.tile[n, num6].TileType == TileID.DemonAltar || Main.tile[n, num6].TileType == TileID.LihzahrdAltar))
                             return -1;
                     }
                 }

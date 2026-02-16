@@ -40,7 +40,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
     public class Pyrogen : ModNPC
     {
         public ref float Phase => ref NPC.ai[0];
-        private int currentPhase = 1;
         private int biomeEnrageTimer = CalamityMod.NPCs.CalamityGlobalNPC.biomeEnrageTimerMax;
         private double rotation;
         private double rotationIncrement;
@@ -189,7 +188,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             NPC.defense = 60;
             NPC.DR_NERD(0.3f);
             NPC.LifeMaxNERB(161300, 187850, 675000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
@@ -432,8 +431,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             playerXDist *= playerDistance;
                             playerYDist *= playerDistance;
 
-                            float inertia = 25f;
-
                             Vector2 predictiveVector = player.Center + player.velocity * 20f - NPC.Center;
 
                             if (AttackTimer == 2) //reset position immediately to prep charge
@@ -543,7 +540,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             int stop2 = 170;
                             int dash = 91;
                             int flareRate = 10;
-                            bool canShootFlares = false;
                             int endPhase = 170;
 
                             if (AttackTimer == 1)
@@ -593,13 +589,12 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 {
                                     SoundEngine.PlaySound(FlareSound, NPC.Center);
                                     //if (Main.netMode != NetmodeID.MultiplayerClient)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, CalRemixHelper.ProjectileDamage(200, 320), 0f, -1, Main.rand.NextBool().ToInt());
                                 }
                             }
 
                             if (NPC.ai[1] >= endPhase)
                             {
-                                canShootFlares = false;
                                 SelectNextAttack();
                             }
                         }
@@ -801,9 +796,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                 case (int)PyroPhaseType.PonceSpin: //spins around the player and leaves stationary fireballs to trap the player in, then relentlessly pursues them while leaving a trail that forces awkward movement
                 {
                         int flareRate = 10;
-                        int timeToCharge = 300;
-                        int chargingTime = 0;
-                        float chargeVelocity = 35; //stays the same
                         int circleRadius = 500;
                         AttackTimer++;
 
@@ -837,8 +829,6 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         }
                         if (AttackTimer >= 15 && AttackTimer <= 70) //create a border of flares
                         {
-                            int spintimer = 65;
-
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                  NPC.Center = player.Center + new Vector2(500, 0).RotatedBy(rotation);
@@ -853,7 +843,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 if (AttackTimer % flareRate == 0)
                                 SoundEngine.PlaySound(FlareSound, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, CalRemixHelper.ProjectileDamage(200, 320), 0f, -1, Main.rand.NextBool().ToInt());
                         }
 
                         if (AttackTimer > 70)
@@ -882,7 +872,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                                 int type = Main.zenithWorld ? ModContent.ProjectileType<IceBlast>() : ModContent.ProjectileType<PyrogenFlareStatic2>();
                                 SoundEngine.PlaySound(FlareSound, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, (int)(NPC.damage * 0.25f), 0f, -1, Main.rand.NextBool().ToInt());
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, type, CalRemixHelper.ProjectileDamage(200, 320), 0f, -1, Main.rand.NextBool().ToInt());
                             }
                         }
                         InfiniteFlight();
@@ -1509,7 +1499,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             CalRemixWorld.UpdateWorldBool();
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ModContent.ItemType<SupremeHealingPotion>();
         }

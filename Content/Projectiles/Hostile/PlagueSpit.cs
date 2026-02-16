@@ -49,7 +49,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             for (int i = 0; i < 10; i++) 
             {
                 Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, (int)CalamityMod.Dusts.CalamityDusts.Plague, 0f, 0f);
-                d.velocity = new Microsoft.Xna.Framework.Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11));
+                d.velocity = new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11));
             }
 
         }

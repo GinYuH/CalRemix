@@ -73,7 +73,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
             NPC.LifeMaxNERB(60000, 68000, 300000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
@@ -251,7 +251,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
                                         SoundEngine.PlaySound(PerforatorHeadMedium.DeathSound, NPC.Center);
                                     }
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 1.5f) * Main.rand.NextFloat(17f, 32f), ModContent.ProjectileType<PathogenBloodDrop>(), (int)(NPC.damage * 0.5f), 0f, ai2: 0.6f);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 1.5f) * Main.rand.NextFloat(17f, 32f), ModContent.ProjectileType<PathogenBloodDrop>(), CalRemixHelper.ProjectileDamage(200, 360), 0f, ai2: 0.6f);
                                     if (NPC.ai[3] > drillTime)
                                     {
                                         Phase = (int)PhaseType.Caltrops;
@@ -312,7 +312,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
                             for (int i = 0; i < projPerRound; i++)
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * 12, ModContent.ProjectileType<PathogenCaltrop>(), (int)(NPC.damage * 0.25f), 0f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * 12, ModContent.ProjectileType<PathogenCaltrop>(), CalRemixHelper.ProjectileDamage(160, 220), 0f);
                             }
                             NPC.position.Y += kb;
                         }
@@ -354,7 +354,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
                                 {
                                     SoundEngine.PlaySound(PerforatorHive.GeyserShoot, NPC.Center);
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * 12, ModContent.ProjectileType<PathogenBloodThorn>(), (int)(NPC.damage * 0.5f), 0f, -1, 0, Main.rand.NextFloat() * 0.5f + 0.6f);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * 12, ModContent.ProjectileType<PathogenBloodThorn>(), CalRemixHelper.ProjectileDamage(200, 360), 0f, -1, 0, Main.rand.NextFloat() * 0.5f + 0.6f);
                                 }
                                 if (NPC.velocity.Y > 0f)
                                 {
@@ -428,7 +428,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
                                 int amt = 10;
                                 for (int i = 0; i < amt; i++)
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 1.8f) * Main.rand.NextFloat(16f, 28f), ModContent.ProjectileType<PathogenBloodDrop>(), (int)(NPC.damage * 0.5f), 0f, ai2: 0.4f);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 1.8f) * Main.rand.NextFloat(16f, 28f), ModContent.ProjectileType<PathogenBloodDrop>(), CalRemixHelper.ProjectileDamage(150, 200), 0f, ai2: 0.4f);
                             }
                             else
                             {
@@ -499,7 +499,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pathogen
             }
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
         }

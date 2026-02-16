@@ -1,5 +1,5 @@
 ﻿using CalamityMod.Items.Materials;
-using CalamityMod.Projectiles.Rogue;
+using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -142,7 +142,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int amountOfEvil = Main.rand.Next(2, 30);
-            ShootArrowsLikeStormbow(player, source, amountOfEvil, new List<int>{ ProjectileID.LightDisc });
+            ShootArrowsLikeStormbow(player, source, (int)(amountOfEvil + Item.Remix().arrowAmount), new List<int>{ ProjectileID.LightDisc });
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
         public override void AddRecipes()
@@ -151,6 +151,23 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 AddIngredient<ExcaliburStormbow>().
                 AddIngredient(ItemID.Cobweb, 15).
                 AddIngredient(ItemID.ChlorophyteBar, 30).
+                AddTile(TileID.MythrilAnvil).
+                Register();
+        }
+    }
+    // forbidden fragment
+    public class Legendscribe : StormbowAbstract
+    {
+        public override int damage => 285;
+        public override int useTime => 100;
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<SandstoneProjectile>() };
+        public override int arrowAmount => 1;
+        public override OverallRarity overallRarity => OverallRarity.Yellow;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.Cobweb, 15).
+                AddIngredient(ItemID.SandElementalBanner, 1).
                 AddTile(TileID.MythrilAnvil).
                 Register();
         }

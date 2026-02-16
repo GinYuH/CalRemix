@@ -28,7 +28,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             NPC.aiStyle = -1;
             NPC.lifeMax = 20000;
             NPC.LifeMaxNERB(250000, 328125);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.damage = 1;
             NPC.HitSound = null;

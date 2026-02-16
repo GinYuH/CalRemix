@@ -1,9 +1,7 @@
-﻿using CalRemix.UI.Anomaly109;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -98,19 +96,7 @@ namespace CalRemix.UI.Title
                 Vector2 velocity = (rand) ? -Vector2.UnitX : Vector2.UnitX;
 
                 bool evilFanny = !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperEvilFannyIdle").Value) && (Main.WorldList.Exists((WorldFileData w) => w.IsHardMode) || Main.WorldList.Exists((WorldFileData w) => w.ZenithWorld));
-                if (rand2 == 9 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value))
-                {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value;
-                    direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f) : Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f);
-                }
-                else if (rand2 == 9 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && File.Exists(Anomaly109UI.a109path) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound").Value))
-                {
-                    characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Blockhound_Evil").Value;
-                    direction = (rand) ? 1 : 0;
-                    velocity = (rand) ? -Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f) : Vector2.UnitX * Main.rand.NextFloat(2f, 2.5f);
-                }
-                else if (rand2 == 7 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value))
+                if (rand2 == 7 && (Main.WorldList.Exists((WorldFileData w) => w.DefeatedMoonlord)) && !Characters.Exists((Character c) => c.texture == ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value))
                 {
                     characterTexture = ModContent.Request<Texture2D>("CalRemix/UI/Title/Zero").Value;
                     direction = (rand) ? 1 : 0;
@@ -187,13 +173,13 @@ namespace CalRemix.UI.Title
                 Main.dayTime = true;
             }
             Texture2D Glow = ModContent.Request<Texture2D>("CalRemix/UI/Title/LogoGlow2").Value;
-            Rectangle rect = new(0, Frame * (Logo.Value.Height / 5), Logo.Value.Width, Logo.Value.Height / 5);
-            spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 471f) + new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), rect, Main.DiscoColor, 0, Glow.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 471f), rect, drawColor, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
+            Rectangle rect = new(0, Frame * (Logo.Value.Height / 12), Logo.Value.Width, Logo.Value.Height / 12);
+            spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 125) + new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), rect, Main.DiscoColor, 0, new Vector2(Logo.Value.Width / 2, Logo.Value.Height / 24), 0.45f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 125), rect, drawColor, 0, new Vector2(Logo.Value.Width / 2, Logo.Value.Height / 24), 0.45f, SpriteEffects.None, 0f);
             FrameCounter++;
             if (FrameCounter > 6)
             {
-                if (Frame > 3)
+                if (Frame > 10)
                     Frame = 0;
                 else
                     Frame++;

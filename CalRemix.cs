@@ -8,9 +8,7 @@ using CalamityMod.NPCs.Leviathan;
 using CalamityMod.NPCs.OldDuke;
 using CalamityMod.NPCs.PlaguebringerGoliath;
 using CalamityMod.NPCs.CeaselessVoid;
-using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Accessories;
-using CalRemix.Content.Items.Ammo;
 using CalRemix.Content.Items.ZAccessories;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Bosses.Acideye;
@@ -38,15 +36,14 @@ using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using CalRemix.UI.Anomaly109;
-using CalRemix.Core.Retheme;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.UI;
+using CalRemix.Content.Buffs;
 
 namespace CalRemix
 {
@@ -63,7 +60,8 @@ namespace CalRemix
         StartPandemicPanic,
         EndPandemicPanic,
         KillDefender,
-        KillInvader
+        KillInvader,
+        ShadeQuestIncrement
     }
     public class CalRemix : Mod
     {
@@ -171,6 +169,7 @@ namespace CalRemix
                         PandemicPanic.IsActive = true;
                         PandemicPanic.DefendersKilled = 0;
                         PandemicPanic.InvadersKilled = 0;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
                 case RemixMessageType.EndPandemicPanic:
@@ -180,18 +179,28 @@ namespace CalRemix
                         PandemicPanic.InvadersKilled = 0;
                         PandemicPanic.LockedFinalSide = 0;
                         PandemicPanic.SummonedPathogen = false;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
                 case RemixMessageType.KillDefender:
                     {
-                        int killCount = reader.ReadByte();
+                        int killCount = reader.ReadInt32();
                         PandemicPanic.DefendersKilled = killCount;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
                 case RemixMessageType.KillInvader:
                     {
-                        int killCount = reader.ReadByte();
+                        int killCount = reader.ReadInt32();
                         PandemicPanic.InvadersKilled = killCount;
+                        CalRemixWorld.UpdateWorldBool();
+                        break;
+                    }
+                case RemixMessageType.ShadeQuestIncrement:
+                    {
+                        int count = reader.ReadInt32();
+                        CalRemixWorld.shadeQuestLevel = count;
+                        CalRemixWorld.UpdateWorldBool();
                         break;
                     }
             }
@@ -265,6 +274,9 @@ namespace CalRemix
 
             // all for the eight seconds its all worth it
             cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/Bleeding", (NPC npc) => npc.HasBuff(BuffID.Bleeding));
+            cal.Call("RegisterDebuff", "CalRemix/Content/Buffs/RealityBearerForClopsBuff", (NPC npc) => npc.HasBuff<RealityBearerForClopsBuff>());
+
+            CalRemixPlayer.LoadDyeStats();
         }
         private static void MenuStuff(ModMenu menu)
         {

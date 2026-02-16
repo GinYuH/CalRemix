@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -51,7 +50,7 @@ namespace CalRemix.Core.Graphics
             gd.SetRenderTarget(null);
         }
 
-        private void DrawOverlayTarget(Terraria.On_Main.orig_DrawProjectiles orig, Main self)
+        private void DrawOverlayTarget(On_Main.orig_DrawProjectiles orig, Main self)
         {
             orig(self);
 

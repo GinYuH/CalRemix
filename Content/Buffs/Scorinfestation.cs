@@ -47,7 +47,7 @@ namespace CalRemix.Content.Buffs
             Item victim = player.inventory[slotToDestroy];
             int stack = victim.stack;
             int type = victim.type;
-            if (victim.TryGetGlobalItem<CalRemixItem>(out CalRemixItem e))
+            if (victim.TryGetGlobalItem(out CalRemixItem e))
             {
                 if (!e.Scoriad)
                 {

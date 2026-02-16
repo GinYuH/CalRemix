@@ -1,8 +1,5 @@
 ﻿using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria;
-using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Weapons.Ranged;
 
 namespace CalRemix.Content.Items.Weapons;

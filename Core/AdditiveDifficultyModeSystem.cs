@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using CalamityMod;
-using CalamityMod.CalPlayer;
-using CalamityMod.Events;
 using CalamityMod.Items.Armor.Demonshade;
 using CalamityMod.World;
 using CalRemix.Content.DifficultyModes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static CalamityMod.CalamityUtils;
 
 namespace CalRemix.Core
 {

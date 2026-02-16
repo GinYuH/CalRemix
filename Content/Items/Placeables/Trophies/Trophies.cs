@@ -14,7 +14,7 @@ public abstract class RemixTrophy : ModItem
         Item.useAnimation = 15;
         Item.useTime = 10;
         Item.autoReuse = true;
-        Item.maxStack = 99;
+        Item.maxStack = 9999;
         Item.consumable = true;
         Item.width = 12;
         Item.height = 12;
@@ -166,5 +166,93 @@ public class PyrogenTrophy : RemixTrophy
     {
         base.SetDefaults();
         Item.createTile = TileType<PyrogenTrophyPlaced>();
+    }
+}
+public class RedTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<RedTrophyPlaced>();
+    }
+}
+public class SepulcherTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherTrophyPlaced>();
+    }
+}
+public class SepulcherBodyTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherBodyTrophyPlaced>();
+    }
+}
+public class SepulcherHandTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherHandTrophyPlaced>();
+    }
+}
+public class SepulcherBodyAltTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherBodyAltTrophyPlaced>();
+    }
+}
+public class SepulcherTailTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherTailTrophyPlaced>();
+    }
+}
+public class SepulcherOrbTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SepulcherOrbTrophyPlaced>();
+    }
+}
+public class SoulSeekerTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<SoulSeekerTrophyPlaced>();
+    }
+}
+public class BrimstoneHeartTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<BrimstoneHeartTrophyPlaced>();
+    }
+}
+public class FlinstoneGangsterTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<FlinstoneGangsterTrophyPlaced>();
+    }
+}
+public class LivyatanTrophy : RemixTrophy
+{
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.createTile = TileType<LivyatanTrophyPlaced>();
     }
 }

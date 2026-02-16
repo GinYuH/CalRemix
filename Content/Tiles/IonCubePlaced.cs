@@ -3,6 +3,7 @@ using CalamityMod.DataStructures;
 using CalamityMod.Items.Fishing.SunkenSeaCatches;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.NPCs.Bosses.Ionogen;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -67,8 +69,10 @@ namespace CalRemix.Content.Tiles
                     }
                     else
                     {
-                        if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1)) 
-                            CalRemixHelper.SpawnNewNPC(new EntitySource_WorldEvent(), i * 16, j * 16, ModContent.NPCType<Ionogen>(), awakenMessage: true);
+                        if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1))
+                        {
+                            CalRemixHelper.SpawnClientBoss(ModContent.NPCType<Ionogen>(), new Vector2(i, j) * 16);
+                        }
                         player.ionDialogue = -1;
                         cube.textLifeTime = 0;
                     }
@@ -265,7 +269,9 @@ namespace CalRemix.Content.Tiles
                         {
                             shouldUpdate = true;
                             if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1))
-                                CalRemixHelper.SpawnNewNPC(new EntitySource_WorldEvent(), guy.Position.X * 16, guy.Position.Y * 16, ModContent.NPCType<Ionogen>(), awakenMessage: true);
+                            {
+                                CalRemixHelper.SpawnClientBoss(ModContent.NPCType<Ionogen>(), new Vector2(guy.Position.X, guy.Position.Y) * 16);
+                            }
                             player.ionDialogue = -1;
                         }
                     }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
-using CalRemix.Content.Projectiles;
 using CalRemix.Content.Items.Materials;
 using System.Reflection;
 using Microsoft.Xna.Framework;
@@ -44,7 +38,7 @@ namespace CalRemix.Content.Items.Tools.Chlorium
         public static readonly MethodInfo TryPaintMethod = typeof(Player).GetMethod("TryPainting", BindingFlags.Instance | BindingFlags.NonPublic);
 
         //Litterally only used to draw the remaining paint ammo on the ui
-        private bool GetPaintAmmo(On_Main.orig_TryGetAmmo orig, Main self, Item sourceItem, out Item ammoItem, out Microsoft.Xna.Framework.Color ammoColor, out float ammoScale, out Microsoft.Xna.Framework.Vector2 ammoOffset)
+        private bool GetPaintAmmo(On_Main.orig_TryGetAmmo orig, Main self, Item sourceItem, out Item ammoItem, out Color ammoColor, out float ammoScale, out Vector2 ammoOffset)
         {
             if (sourceItem.type == Type)
             {

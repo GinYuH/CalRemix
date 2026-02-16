@@ -27,7 +27,7 @@ namespace CalRemix.Content.Tiles.Plates
                 PulseColors = (Color[])(object)new Color[PulseTexture.Width];
                 Main.QueueMainThreadAction((Action)delegate
                 {
-                    PulseTexture.GetData<Color>(PulseColors);
+                    PulseTexture.GetData(PulseColors);
                 });
                 GlowTexture = Request<Texture2D>("CalRemix/Content/Tiles/Plates/MediocreMatterTileGlow", (AssetRequestMode)1).Value;
             }
@@ -49,7 +49,7 @@ namespace CalRemix.Content.Tiles.Plates
 
         public override void RandomUpdate(int i, int j)
         {
-            Dust.NewDust(new Vector2(i, j) * 16f, 16, 16, 6, 0f, 0f, 1, new Color(255, 255, 255), 1f);
+            Dust.NewDust(new Vector2(i, j) * 16f, 16, 16, DustID.Torch, 0f, 0f, 1, new Color(255, 255, 255), 1f);
         }
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

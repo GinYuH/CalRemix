@@ -1,16 +1,8 @@
-﻿using System;
-using CalamityMod.Items;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables;
-using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.Projectiles.Magic;
-using CalamityMod.Projectiles.Rogue;
+﻿using CalamityMod.Items;
 using CalRemix.Content.DamageClasses;
-using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,7 +1,15 @@
-﻿using CalRemix.Content.Projectiles;
+﻿using CalamityMod;
+using CalamityMod.DataStructures;
+using CalamityMod.World;
+using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
+using CalRemix.Content.Projectiles;
+using CalRemix.UI;
+using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +22,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace CalRemix
 {
@@ -23,6 +32,16 @@ namespace CalRemix
         public static CalRemixNPC Remix(this NPC npc) => npc.GetGlobalNPC<CalRemixNPC>();
         public static CalRemixPlayer Remix(this Player player) => player.GetModPlayer<CalRemixPlayer>();
         public static CalRemixProjectile Remix(this Projectile projectile) => projectile.GetGlobalProjectile<CalRemixProjectile>();
+
+        public static Player Target(this NPC n)
+        {
+            if (n.target == -1)
+            {
+                n.TargetClosest(false);
+            }
+            return Main.player[n.target];
+        }
+
         /// <summary>
         /// Checks if the player has a stack of an item.
         /// </summary>
@@ -226,6 +245,21 @@ namespace CalRemix
             else
                 NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: playerWhoAmI, number2: type);
         }
+
+        public static void SpawnClientBossRandomPos(int id, Vector2 position, bool msg = true)
+        {
+            CalamityNetcode.NewNPC_ClientSide(position + Main.rand.NextVector2CircularEdge(1000, 600), id, Main.LocalPlayer);
+            if (msg)
+                ChatMessage(Language.GetTextValue("Announcement.HasAwoken", ContentSamples.NpcsByNetId[id].TypeName), new Color(175, 75, 255), NetworkText.FromKey("Announcement.HasAwoken", ContentSamples.NpcsByNetId[id].GetTypeNetName()));
+        }
+        public static void SpawnClientBoss(int id, Vector2 position, bool msg = true)
+        {
+            CalamityNetcode.NewNPC_ClientSide(position, id, Main.LocalPlayer);
+            if (msg)
+                ChatMessage(Language.GetTextValue("Announcement.HasAwoken", ContentSamples.NpcsByNetId[id].TypeName), new Color(175, 75, 255), NetworkText.FromKey("Announcement.HasAwoken", ContentSamples.NpcsByNetId[id].GetTypeNetName()));
+        }
+
+
         /// <summary>
         /// Spawns a new npc with multiplayer and action invocation support.
         /// </summary>
@@ -276,6 +310,22 @@ namespace CalRemix
         {
             return SpawnNewNPC(source, (int)position.X, (int)position.Y, type, minSlot, ai0, ai1, ai2, ai3, target, npcTasks, awakenMessage);
         }
+
+        /// <summary>
+        /// Spawns a NPC at this entity's center
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="id"></param>
+        /// <param name="ai0"></param>
+        /// <param name="ai1"></param>
+        /// <param name="ai2"></param>
+        /// <param name="ai3"></param>
+        /// <returns></returns>
+        public static NPC QuickSpawnNPC(this Entity entity, int id, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f, float ai3 = 0f)
+        {
+            return SpawnNewNPC(entity.GetSource_FromThis(), (int)entity.Center.X, (int)entity.Center.Y, id, ai0: ai0, ai1: ai1, ai2: ai2, ai3: ai3);
+        }
+
         public static void DestroyTile(int i, int j, bool fail = false, bool effectOnly = false, bool noItem = false)
         {
             WorldGen.KillTile(i, j, fail, effectOnly, noItem);
@@ -337,6 +387,1068 @@ namespace CalRemix
                     yield return Main.projectile[i];
             }
         }
+
+
+
+        /// <summary>
+        /// Returns a readable projectile damage number
+        /// </summary>
+        /// <param name="normal">The damage in normal mode</param>
+        /// <param name="expert">The damage in expert mode. If left 0, defaults to normal damage</param>
+        /// <param name="master">The damage in master mode. If left 0, defaults to expert damage, then normal damage</param>
+        /// <returns></returns>
+        public static int ProjectileDamage(int normal, int expert = 0, int master = 0)
+        {
+            if (Main.masterMode && master != 0)
+                return (int)(master / 6f);
+            else if (Main.masterMode && master == 0 && expert != 0)
+                return (int)(expert / 6f);
+            else if (Main.masterMode && master == 0 && expert == 0)
+                return (int)(normal / 6f);
+            else if (Main.expertMode && expert != 0)
+                return (int)(expert / 4f);
+            else if (Main.masterMode && expert == 0)
+                return (int)(normal / 4f);
+            else
+                return (int)(normal / 2f);
+        }
+
+        /// <summary>
+        /// Checks if a point is inside of a given elipse area and position
+        /// </summary>
+        /// <param name="x">X to checkt</param>
+        /// <param name="y">Y to check</param>
+        /// <param name="h">Elipse center x</param>
+        /// <param name="k">Elipse center y</param>
+        /// <param name="a">X size</param>
+        /// <param name="b">Y size</param>
+        /// <returns>true if the point is inside</returns>
+        public static bool WithinElipse(float x, float y, float h, float k, float a, float b)
+        {
+            double p = (MathF.Pow((x - h), 2) / MathF.Pow(a, 2))
+                    + (MathF.Pow((y - k), 2) / MathF.Pow(b, 2));
+
+            return p < 1;
+        }
+
+        /// <summary>
+        /// Checks if a point is inside of a given heart area and position
+        /// </summary>
+        /// <param name="origin">The center of the heart</param>
+        /// <param name="roughDimensions">The width and height of the heart</param>
+        /// <param name="point">The point to check</param>
+        /// <returns>true if the point is inside</returns>
+        public static bool WithinHeart(Point origin, Point roughDimensions, Point point)
+        {
+            float x = (point.X - origin.X) / (roughDimensions.X / 2f);
+            float y = -(point.Y - origin.Y) / (roughDimensions.Y / 2f);
+
+            return (MathF.Pow(MathF.Pow(x, 2) + MathF.Pow(y, 2) - 1f, 3f) - (MathF.Pow(x, 2) * MathF.Pow(y, 3))) <= 0f;
+        }
+
+        /// <summary>
+        /// Checks if a point is inside of a given rhombus area and position
+        /// </summary>
+        /// <param name="origin">The center of the rhombus</param>
+        /// <param name="dimensions">The width and height of the rhombus</param>
+        /// <param name="point">The point to check</param>
+        /// <returns>true if the point is inside</returns>
+        public static bool WithinRhombus(Point origin, Point dimensions, Point point)
+        {
+            float val = ((Math.Abs(point.X - origin.X)) / (float)dimensions.X) + ((Math.Abs(point.Y - origin.Y)) / (float)dimensions.Y);
+            return val < 1;
+        }
+
+        /// <summary>
+        /// Gets the area of a triangle given 3 points
+        /// </summary>
+        /// <param name="point1">The first point</param>
+        /// <param name="point2">The second point</param>
+        /// <param name="point3">The third point</param>
+        /// <returns>the area of the triangle</returns>
+        public static float TriangleArea(Point point1, Point point2, Point point3)
+        {
+            return Math.Abs(point1.X * (point2.Y - point3.Y) + point2.X * (point3.Y - point1.Y) + point3.X * (point1.Y - point2.Y)) / 2f;
+        }
+
+        /// <summary>
+        /// Checks if a point is inside of a triangle with 3 given points
+        /// </summary>
+        /// <param name="point1">The first point</param>
+        /// <param name="point2">The second point</param>
+        /// <param name="point3">The third point</param>
+        /// <param name="toCheck">The point to check</param>
+        /// <returns>true if the point is inside</returns>
+        public static bool WithinTriangle(Point point1, Point point2, Point point3, Point toCheck)
+        {
+            float mainArea = TriangleArea(point1, point2, point3);
+
+            float areaOneTwo = TriangleArea(point1, point2, toCheck);
+            float areaTwoThree = TriangleArea(point2, point3, toCheck);
+            float areaOneThreeLikeTheUser = TriangleArea(point3, point1, toCheck);
+
+            return mainArea == areaOneTwo + areaTwoThree + areaOneThreeLikeTheUser;
+        }
+
+        public enum PerlinEase
+        {
+            /// <summary>
+            /// No easing, all of the noise is consistent
+            /// </summary>
+            None = 0,
+            /// <summary>
+            /// Top starts solid and becomes noise
+            /// </summary>
+            EaseInTop = 1,
+            /// <summary>
+            /// Top is noise, bottom is air
+            /// </summary>
+            EaseOutBottom = 2,
+            /// <summary>
+            /// Top and bottom are solid, middle is noise
+            /// </summary>
+            EaseInOut = 3,
+            /// <summary>
+            /// Top and bottom are noise, middle is solid
+            /// </summary>
+            EaseOutIn = 4,
+            /// <summary>
+            /// Top is noise, bottom is solid
+            /// </summary>
+            EaseInBottom = 5,
+            /// <summary>
+            /// Top is air, bottom is noise
+            /// </summary>
+            EaseOutTop = 6,
+            /// <summary>
+            /// Top is air, middle is noise, bottom is solid
+            /// </summary>
+            EaseAirTopSolidBottom = 7,
+            /// <summary>
+            /// Top is solid, middle is noise, bottom is air
+            /// </summary>
+            EaseSolidTopAirBottom = 8,
+        }
+
+        /// <summary>
+        /// Generates a rectangle of tiles and/or walls using noise
+        /// </summary>
+        /// <param name="area">The rectangle</param>
+        /// <param name="noiseThreshold">How open should caves be? Scales between 0f and 1f</param>
+        /// <param name="noiseStrength">How strong the noise is. Weaker values look more like noodles</param>
+        /// <param name="noiseSize">The zoom of the noise. Higher values means more zoomed in. Set to 120, 180 by default, the same as the Baron Strait</param>
+        /// <param name="tileType">The tile to place</param>
+        /// <param name="wallType">The wall to place</param>
+        /// <param name="tileCondition">A condition for if a tile can be placed. Usually used in conjunction with shapes</param>
+        public static void PerlinGeneration(Rectangle area, float noiseThreshold = 0.56f, float noiseStrength = 0.1f, Vector2 noiseSize = default, int tileType = -1, int wallType = 0, PerlinEase ease = PerlinEase.None, float topStop = 0.3f, float bottomStop = 0.7f, Predicate<Point> tileCondition = null, bool overrideTiles = false, bool eraseWalls = true)
+        {
+
+            int sizeX = area.Width;
+            int sizeY = area.Height;
+
+            // Map to store what blocks should be converted
+            bool[,] map = new bool[sizeX, sizeY];
+
+            // default Baron Strait numbers
+            if (noiseSize == default)
+            {
+                noiseSize.X = 180f;
+                noiseSize.Y = 120f;
+            }
+
+            int seed = (int)Main.GlobalTimeWrappedHourly;
+            // Create a perlin noise map
+            for (int i = 0; i < area.Width; i++)
+            {
+                for (int j = 0; j < area.Height; j++)
+                {
+                    float noise = CalamityUtils.PerlinNoise2D(i / noiseSize.X, j / noiseSize.Y, 3, seed) * 0.5f + 0.5f;
+
+                    float endPoint = noiseThreshold;
+                    switch (ease)
+                    {
+                        case PerlinEase.EaseInTop:
+                            endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            break;
+                        case PerlinEase.EaseOutBottom:
+                            endPoint = MathHelper.Lerp(noiseThreshold, 0, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
+                            break;
+                        case PerlinEase.EaseInOut:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(1f, bottomStop, (j / (float)area.Height), true));
+                            }
+                            break;
+                        case PerlinEase.EaseOutTop:
+                            endPoint = MathHelper.Lerp(0, noiseThreshold, Utils.GetLerpValue(0f, topStop, (j / (float)area.Height), true));
+                            break;
+                        case PerlinEase.EaseInBottom:
+                            endPoint = MathHelper.Lerp(noiseThreshold, noise, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
+                            break;
+                        case PerlinEase.EaseOutIn:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0.5f, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0.5f, bottomStop, (j / (float)area.Height), true));
+                            }
+                            break;
+                        case PerlinEase.EaseAirTopSolidBottom:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(0, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noiseThreshold, noise, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
+                            }
+                            break;
+                        case PerlinEase.EaseSolidTopAirBottom:
+                            if (j / (float)area.Height < 0.5f)
+                            {
+                                endPoint = MathHelper.Lerp(noise, noiseThreshold, Utils.GetLerpValue(0, topStop, (j / (float)area.Height), true));
+                            }
+                            else
+                            {
+                                endPoint = MathHelper.Lerp(noiseThreshold, 0, Utils.GetLerpValue(bottomStop, 1f, (j / (float)area.Height), true));
+                            }
+                            break;
+                    }
+
+                    map[i, j] = MathHelper.Distance(noise, endPoint) < noiseStrength;
+                }
+            }
+            if (overrideTiles)
+            {
+                // Iterate through the map and remove blocks/walls accordingly
+                for (int gdv = 0; gdv < 1; gdv++)
+                {
+                    for (int i = 0; i < area.Width; i++)
+                    {
+                        for (int j = 0; j < area.Height; j++)
+                        {
+                            if (!WorldGen.InWorld(area.X + i, area.Y + j))
+                            {
+                                continue;
+                            }
+                            Tile t = Main.tile[area.X + i, area.Y + j];
+
+                            if (tileCondition != null)
+                            {
+                                if (!tileCondition.Invoke(new Point(area.X + i, area.Y + j)))
+                                {
+                                    continue;
+                                }
+                            }
+
+                            t.ClearEverything();
+                        }
+                    }
+                }
+            }
+            // Iterate through the map and add blocks/walls accordingly
+            for (int gdv = 0; gdv < 1; gdv++)
+            {
+                for (int i = 0; i < area.Width; i++)
+                {
+                    for (int j = 0; j < area.Height; j++)
+                    {
+                        if (!WorldGen.InWorld(area.X + i, area.Y + j))
+                        {
+                            continue;
+                        }
+                        Tile t = Main.tile[area.X + i, area.Y + j];
+                        if (t.HasTile && !overrideTiles)
+                        {
+                            continue;
+                        }
+
+                        if (tileCondition != null)
+                        {
+                            if (!tileCondition.Invoke(new Point(area.X + i, area.Y + j)))
+                            {
+                                continue;
+                            }
+                        }
+
+                        // Cell stuff
+                        int sur = SurroundingTileCounts(map, i, j, area.Width, area.Height);
+
+                        // If there are more than 4 nearby nodes, place some
+                        if (sur > 4 && (tileType != -1 || (wallType != 0 && eraseWalls)))
+                        {
+                            if (tileType != -1)
+                            {
+                                t.ResetToType((ushort)tileType);
+                                //WorldGen.SquareTileFrame(area.X + i, area.Y + j);
+                            }
+                            if (wallType != 0)
+                            {
+                                t.WallType = (ushort)wallType;
+                                //WorldGen.SquareWallFrame(area.X + i, area.Y + j);
+                            }
+                            map[i, j] = true;
+                        }
+                        // If there are less than 4 nodes nearby, remove
+                        else if (sur < 4)
+                        {
+                            t.ClearEverything();
+                            map[i, j] = false;
+                        }
+
+                        if (!eraseWalls && wallType != 0)
+                        {
+                            t.WallType = (ushort)wallType;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generations perlin-based surface terrain
+        /// </summary>
+        /// <param name="area">The area to generate it</param>
+        /// <param name="tileType">The tile type</param>
+        /// <param name="iterations">How many iterations should be done</param>
+        /// <param name="variance">Height variance in tiles</param>
+        /// <param name="perlinBottom">Smoothen the bottom like the top</param>
+        public static void PerlinSurface(Rectangle area, int tileType, int iterations = 3, int variance = 20, bool perlinBottom = false)
+        {
+            int baseHeight = area.Y;
+            int noiseSeed = WorldGen.genRand.Next(0, int.MaxValue);
+            int noiseSeedBottom = WorldGen.genRand.Next(0, int.MaxValue);
+            for (int i = area.X; i < area.X + area.Width; i++)
+            {
+                float height = CalamityUtils.PerlinNoise2D(i / 380f, 0, iterations, noiseSeed);
+                float heightBottom = CalamityUtils.PerlinNoise2D(i / 380f, 0, iterations, noiseSeedBottom);
+
+                for (int j = area.Y; j < area.Y + area.Height; j++)
+                {
+                    bool bottom = perlinBottom ? (j < area.Y + area.Height - (int)(heightBottom * variance)) : true;
+                    if (j > baseHeight + 2 + (int)(height * variance) && bottom)
+                    {
+                        Tile t = Main.tile[i, j];
+                        t.ResetToType((ushort)tileType);
+                    }
+                }
+            }
+        }
+
+        // thank you random youtube video
+        // https://www.youtube.com/watch?v=v7yyZZjF1z4
+        public static int SurroundingTileCounts(bool[,] map, int x, int y, int checkDistX = 0, int chestDistY = 0)
+        {
+            int wallCount = 0;
+            for (int neighbourX = x - 1; neighbourX <= x + 1; neighbourX++)
+            {
+                for (int neighbourY = y - 1; neighbourY <= y + 1; neighbourY++)
+                {
+                    if (neighbourX >= 0 && neighbourX < checkDistX && neighbourY >= 0 && neighbourY < chestDistY)
+                    {
+                        if (neighbourX != x || neighbourY != y)
+                        {
+                            wallCount += map[neighbourX, neighbourY].ToInt();
+                        }
+                    }
+                    else
+                    {
+                        wallCount++;
+                    }
+                }
+            }
+            return wallCount;
+        }
+
+        /// <summary>
+        /// Creates a basic verlet chain if one doesn't exist
+        /// </summary>
+        /// <param name="list">The list instance</param>
+        /// <param name="segmentAmount">The amount of segments</param>
+        /// <param name="basePosition">The position to hook from</param>
+        /// <param name="locks">Indices that should be locked</param>
+        /// <returns>The segment list</returns>
+        public static List<VerletSimulatedSegment> CreateVerletChain(ref List<VerletSimulatedSegment> list, int segmentAmount, Vector2 basePosition, List<int> locks = default)
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                if (list == null || list.Count < segmentAmount)
+                {
+                    list = new List<VerletSimulatedSegment>(segmentAmount);
+                    for (int i = 0; i < segmentAmount; i++)
+                    {
+                        VerletSimulatedSegment segment = new VerletSimulatedSegment(basePosition);
+                        list.Add(segment);
+                    }
+                    // Lock segments
+                    if (locks != default)
+                    {
+                        for (int i = 0; i < locks.Count; i++)
+                        {
+                            // Assure the index isnt too high
+                            int trueIndex = (locks[i] >= list.Count) ? (list.Count - 1) : locks[i];
+                            list[trueIndex].locked = true;
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+        /// <summary>
+        /// Gives a specified player a specified number of coins.
+        /// </summary>
+        /// <param name="coinValue">The value of the coins to give the player.</param>
+        /// <param name="player">The player to be given the coins.</param>
+        public static void GiveCoins(int coinValue, Player player)
+        {
+            int[] coinsList = { ItemID.CopperCoin, ItemID.SilverCoin, ItemID.GoldCoin, ItemID.PlatinumCoin, ModContent.ItemType<CosmiliteCoin>(), ModContent.ItemType<Klepticoin>() };
+            for(int i = 5; i >= 0; i--)
+            {
+                if (coinValue >= Math.Pow(100, i))
+                {
+                    player.QuickSpawnItem(player.GetSource_DropAsItem(), coinsList[i], (int)(coinValue / Math.Pow(100, i)));
+                    coinValue %= (int)Math.Pow(100, i);
+                }
+            }
+        }
+
+        public static void DrawChain(Texture2D texture, Vector2 start, Vector2 end, float angleAdditive = 0, Color color = default)
+        {
+            Vector2 center = start;
+            float rotation = start.AngleTo(end) - MathF.PI / 2f;
+            bool doDraw = true;
+            float increment = angleAdditive == MathHelper.PiOver2 ? texture.Width : texture.Height;
+            while (doDraw)
+            {
+                float dist = (end - center).Length();
+                if (dist < (float)increment + 1f)
+                {
+                    doDraw = false;
+                    continue;
+                }
+
+                if (float.IsNaN(dist))
+                {
+                    doDraw = false;
+                    continue;
+                }
+
+                center += start.DirectionTo(end) * increment;
+                Color finalColor = (color == new Color(0, 0, 0, 0) ? Lighting.GetColor((int)((center.X + Main.screenPosition.X) / 16), (int)((center.Y + Main.screenPosition.Y) / 16f)) : color);
+                Main.spriteBatch.Draw(texture, center, new Rectangle(0, 0, texture.Width, texture.Height), finalColor, rotation + angleAdditive, texture.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            }
+        }
+
+        public static void DustExplosionOutward(Vector2 position, int dustID, float speed, int amount = 50, Color color = default, int alpha = 0, float scaleMin = 1, float scaleMax = 1.001f)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(position, dustID, Vector2.Zero, alpha, color, Main.rand.NextFloat(scaleMin, scaleMax));
+                dust.noGravity = true;
+                dust.position += Main.rand.NextVector2Square(-5, 5);
+                dust.velocity = position.DirectionTo(dust.position) * speed;
+            }
+        }
+
+        public static void DustExplosionOutward(Vector2 position, int dustID, float speedMin, float speedMax, int amount = 50, Color color = default, int alpha = 0, float scaleMin = 1, float scaleMax = 1.001f)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(position, dustID, Vector2.Zero, alpha, color, Main.rand.NextFloat(scaleMin, scaleMax));
+                dust.noGravity = true;
+                dust.position += Main.rand.NextVector2Square(-5, 5);
+                dust.velocity = position.DirectionTo(dust.position) * Main.rand.NextFloat(speedMin, speedMax);
+            }
+        }
+
+        public static void DustExplosionOutward(Vector2 position, int dustID, float speedMin, float speedMax, int amount = 50, Color color = default, int alpha = 0, float scale = 1)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(position, dustID, Vector2.Zero, alpha, color, scale);
+                dust.noGravity = true;
+                dust.position += Main.rand.NextVector2Square(-5, 5);
+                dust.velocity = position.DirectionTo(dust.position) * Main.rand.NextFloat(speedMin, speedMax);
+            }
+        }
+
+        public static void DustExplosionOutward(Vector2 position, int dustID, float speed, int amount = 50, Color color = default, int alpha = 0, float scale = 1)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(position, dustID, Vector2.Zero, alpha, color, scale);
+                dust.noGravity = true;
+                dust.position += Main.rand.NextVector2Square(-5, 5);
+                dust.velocity = position.DirectionTo(dust.position) * speed;
+            }
+        }
+
+
+        public static bool ForceGrowTree(int i, int y, int height = 0)
+        {
+            int j = y;
+
+            if (!Main.tile[i, j].IsHalfBlock && Main.tile[i, j].Slope == 0)
+            {
+                TileColorCache cache = Main.tile[i, j].BlockColorAndCoating();
+                if (Main.tenthAnniversaryWorld && !WorldGen.gen)
+                    cache.Color = (byte)WorldGen.genRand.Next(1, 13);
+
+                int treeHeight = WorldGen.genRand.Next(5, 17);
+
+                if (height != 0)
+                    treeHeight = height;
+
+                int extraHeight = treeHeight + 4;
+
+                bool canGenerate = false;
+                if (WorldGen.EmptyTileCheck(i - 2, i + 2, j - extraHeight, j - 1, 20))
+                {
+                    canGenerate = true;
+                }
+                if (canGenerate)
+                {
+                    bool remixUnderground = Main.remixWorld && (double)j < Main.worldSurface;
+                    bool topMaybeIDK = false;
+                    bool branchIThinkIDK = false;
+                    int treeFrame;
+                    for (int k = j - treeHeight; k < j; k++)
+                    {
+                        Main.tile[i, k].TileType = TileID.Trees;
+                        Main.tile[i, k].Get<TileWallWireStateData>().HasTile = true;
+                        Main.tile[i, k].TileFrameX = ((byte)WorldGen.genRand.Next(3));
+                        Main.tile[i, k].UseBlockColors(cache);
+                        treeFrame = WorldGen.genRand.Next(3);
+                        int randomFrame = WorldGen.genRand.Next(10);
+                        if (k == j - 1 || k == j - treeHeight)
+                            randomFrame = 0;
+
+                        while (((randomFrame == 5 || randomFrame == 7) && topMaybeIDK) || ((randomFrame == 6 || randomFrame == 7) && branchIThinkIDK))
+                        {
+                            randomFrame = WorldGen.genRand.Next(10);
+                        }
+
+                        topMaybeIDK = false;
+                        branchIThinkIDK = false;
+                        if (randomFrame == 5 || randomFrame == 7)
+                            topMaybeIDK = true;
+
+                        if (randomFrame == 6 || randomFrame == 7)
+                            branchIThinkIDK = true;
+
+                        switch (randomFrame)
+                        {
+                            case 1:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            case 2:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 0;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 22;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 44;
+                                }
+                                break;
+                            case 3:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 44;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 44;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 44;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            case 4:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 22;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            case 5:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 88;
+                                    Main.tile[i, k].TileFrameY = 0;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 88;
+                                    Main.tile[i, k].TileFrameY = 22;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 88;
+                                    Main.tile[i, k].TileFrameY = 44;
+                                }
+                                break;
+                            case 6:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 66;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 66;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 66;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            case 7:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 110;
+                                    Main.tile[i, k].TileFrameY = 66;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 110;
+                                    Main.tile[i, k].TileFrameY = 88;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 110;
+                                    Main.tile[i, k].TileFrameY = 110;
+                                }
+                                break;
+                            default:
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 0;
+                                }
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 22;
+                                }
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i, k].TileFrameX = 0;
+                                    Main.tile[i, k].TileFrameY = 44;
+                                }
+                                break;
+                        }
+
+                        if (randomFrame == 5 || randomFrame == 7)
+                        {
+                            Main.tile[i - 1, k].TileType = TileID.Trees;
+                            Main.tile[i - 1, k].Get<TileWallWireStateData>().HasTile = true;
+                            Main.tile[i - 1, k].UseBlockColors(cache);
+                            treeFrame = WorldGen.genRand.Next(3);
+                            if (WorldGen.genRand.Next(3) < 2 && !remixUnderground)
+                            {
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 44;
+                                    Main.tile[i - 1, k].TileFrameY = 198;
+                                }
+
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 44;
+                                    Main.tile[i - 1, k].TileFrameY = 220;
+                                }
+
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 44;
+                                    Main.tile[i - 1, k].TileFrameY = 242;
+                                }
+                            }
+                            else
+                            {
+                                if (treeFrame == 0)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 66;
+                                    Main.tile[i - 1, k].TileFrameY = 0;
+                                }
+
+                                if (treeFrame == 1)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 66;
+                                    Main.tile[i - 1, k].TileFrameY = 22;
+                                }
+
+                                if (treeFrame == 2)
+                                {
+                                    Main.tile[i - 1, k].TileFrameX = 66;
+                                    Main.tile[i - 1, k].TileFrameY = 44;
+                                }
+                            }
+                        }
+
+                        if (randomFrame != 6 && randomFrame != 7)
+                            continue;
+
+                        Main.tile[i + 1, k].TileType = TileID.Trees;
+                        Main.tile[i + 1, k].Get<TileWallWireStateData>().HasTile = true;
+                        Main.tile[i + 1, k].UseBlockColors(cache);
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (WorldGen.genRand.Next(3) < 2 && !remixUnderground)
+                        {
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 66;
+                                Main.tile[i + 1, k].TileFrameY = 198;
+                            }
+
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 66;
+                                Main.tile[i + 1, k].TileFrameY = 220;
+                            }
+
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 66;
+                                Main.tile[i + 1, k].TileFrameY = 242;
+                            }
+                        }
+                        else
+                        {
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 88;
+                                Main.tile[i + 1, k].TileFrameY = 66;
+                            }
+
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 88;
+                                Main.tile[i + 1, k].TileFrameY = 88;
+                            }
+
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i + 1, k].TileFrameX = 88;
+                                Main.tile[i + 1, k].TileFrameY = 110;
+                            }
+                        }
+                    }
+
+                    int rootType = WorldGen.genRand.Next(3);
+                    bool flag5 = false;
+                    bool flag6 = false;
+                    if (!Main.tile[i - 1, j].IsHalfBlock && Main.tile[i - 1, j].Slope == 0)
+                        flag5 = true;
+
+                    if (!Main.tile[i + 1, j].IsHalfBlock && Main.tile[i + 1, j].Slope == 0)
+                        flag6 = true;
+
+                    if (!flag5)
+                    {
+                        if (rootType == 0)
+                            rootType = 2;
+
+                        if (rootType == 1)
+                            rootType = 3;
+                    }
+
+                    if (!flag6)
+                    {
+                        if (rootType == 0)
+                            rootType = 1;
+
+                        if (rootType == 2)
+                            rootType = 3;
+                    }
+
+                    if (flag5 && !flag6)
+                        rootType = 2;
+
+                    if (flag6 && !flag5)
+                        rootType = 1;
+
+                    if (rootType == 0 || rootType == 1)
+                    {
+                        Main.tile[i + 1, j - 1].TileType = TileID.Trees;
+                        Main.tile[i + 1, j - 1].Get<TileWallWireStateData>().HasTile = true;
+                        Main.tile[i + 1, j - 1].UseBlockColors(cache);
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (treeFrame == 0)
+                        {
+                            Main.tile[i + 1, j - 1].TileFrameX = 22;
+                            Main.tile[i + 1, j - 1].TileFrameY = 132;
+                        }
+
+                        if (treeFrame == 1)
+                        {
+                            Main.tile[i + 1, j - 1].TileFrameX = 22;
+                            Main.tile[i + 1, j - 1].TileFrameY = 154;
+                        }
+
+                        if (treeFrame == 2)
+                        {
+                            Main.tile[i + 1, j - 1].TileFrameX = 22;
+                            Main.tile[i + 1, j - 1].TileFrameY = 176;
+                        }
+                    }
+
+                    if (rootType == 0 || rootType == 2)
+                    {
+                        Main.tile[i - 1, j - 1].TileType = TileID.Trees;
+                        Main.tile[i - 1, j - 1].Get<TileWallWireStateData>().HasTile = true;
+                        Main.tile[i - 1, j - 1].UseBlockColors(cache);
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (treeFrame == 0)
+                        {
+                            Main.tile[i - 1, j - 1].TileFrameX = 44;
+                            Main.tile[i - 1, j - 1].TileFrameY = 132;
+                        }
+
+                        if (treeFrame == 1)
+                        {
+                            Main.tile[i - 1, j - 1].TileFrameX = 44;
+                            Main.tile[i - 1, j - 1].TileFrameY = 154;
+                        }
+
+                        if (treeFrame == 2)
+                        {
+                            Main.tile[i - 1, j - 1].TileFrameX = 44;
+                            Main.tile[i - 1, j - 1].TileFrameY = 176;
+                        }
+                    }
+
+                    treeFrame = WorldGen.genRand.Next(3);
+                    switch (rootType)
+                    {
+                        case 0:
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 88;
+                                Main.tile[i, j - 1].TileFrameY = 132;
+                            }
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 88;
+                                Main.tile[i, j - 1].TileFrameY = 154;
+                            }
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 88;
+                                Main.tile[i, j - 1].TileFrameY = 176;
+                            }
+                            break;
+                        case 1:
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 0;
+                                Main.tile[i, j - 1].TileFrameY = 132;
+                            }
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 0;
+                                Main.tile[i, j - 1].TileFrameY = 154;
+                            }
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 0;
+                                Main.tile[i, j - 1].TileFrameY = 176;
+                            }
+                            break;
+                        case 2:
+                            if (treeFrame == 0)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 66;
+                                Main.tile[i, j - 1].TileFrameY = 132;
+                            }
+                            if (treeFrame == 1)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 66;
+                                Main.tile[i, j - 1].TileFrameY = 154;
+                            }
+                            if (treeFrame == 2)
+                            {
+                                Main.tile[i, j - 1].TileFrameX = 66;
+                                Main.tile[i, j - 1].TileFrameY = 176;
+                            }
+                            break;
+                    }
+
+                    if (!WorldGen.genRand.NextBool(13) && !remixUnderground)
+                    {
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (treeFrame == 0)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 22;
+                            Main.tile[i, j - treeHeight].TileFrameY = 198;
+                        }
+
+                        if (treeFrame == 1)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 22;
+                            Main.tile[i, j - treeHeight].TileFrameY = 220;
+                        }
+
+                        if (treeFrame == 2)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 22;
+                            Main.tile[i, j - treeHeight].TileFrameY = 242;
+                        }
+                    }
+                    else
+                    {
+                        treeFrame = WorldGen.genRand.Next(3);
+                        if (treeFrame == 0)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 0;
+                            Main.tile[i, j - treeHeight].TileFrameY = 198;
+                        }
+
+                        if (treeFrame == 1)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 0;
+                            Main.tile[i, j - treeHeight].TileFrameY = 220;
+                        }
+
+                        if (treeFrame == 2)
+                        {
+                            Main.tile[i, j - treeHeight].TileFrameX = 0;
+                            Main.tile[i, j - treeHeight].TileFrameY = 242;
+                        }
+                    }
+
+                    WorldGen.RangeFrame(i - 2, j - treeHeight - 1, i + 2, j + 1);
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendTileSquare(-1, i - 1, j - treeHeight, 3, treeHeight);
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public static void MakeTag(ref TagCompound savedWorldData, string key, int status)
+        {
+            savedWorldData[key] = status;
+        }
+        public static void MakeTag(ref TagCompound savedWorldData, string key, bool status)
+        {
+            if (status)
+            {
+                savedWorldData[key] = status;
+            }
+        }
+
+        /// <summary>
+        /// Saves difficulties and Fanny togglage across subworlds
+        /// The returned TagComound has the name "RemixCommonBools" MAKE SURE to insert "SubworldSystem.CopyWorldData("RemixCommonBools_<WorldName>", savedWorldData);" after all further data saving!
+        /// </summary>
+        /// <returns></returns>
+        public static TagCompound SaveCommonSubworldBools()
+        {
+            TagCompound savedWorldData = [];
+            MakeTag(ref savedWorldData, "RevengeanceMode", CalamityWorld.revenge);
+            MakeTag(ref savedWorldData, "DeathMode", CalamityWorld.death);
+            MakeTag(ref savedWorldData, "Fanny", ScreenHelperManager.screenHelpersEnabled);
+            /*foreach (Anomaly109Option option in Anomaly109Manager.options)
+            {
+                MakeTag(ref savedWorldData, "Anomaly" + option.key, option.check.Invoke());
+            }*/
+            return savedWorldData;
+        }
+
+        /// <summary>
+        /// Loads difficulties and Fanny togglage across subworlds
+        /// </summary>
+        /// <returns></returns>
+        public static TagCompound LoadCommonSubworldBools(string world)
+        {
+            TagCompound savedWorldData = SubworldSystem.ReadCopiedWorldData<TagCompound>("RemixCommonBools_" + world);
+            CalamityWorld.revenge = savedWorldData.GetBool("RevengeanceMode");
+            CalamityWorld.death = savedWorldData.GetBool("DeathMode");
+            ScreenHelperManager.screenHelpersEnabled = savedWorldData.GetBool("Fanny");
+            /*for (int i = 0; i < Anomaly109Manager.options.Count; i++)
+            {
+                Anomaly109Option option = Anomaly109Manager.options[i];
+                if (option.check.Invoke() != savedWorldData.GetBool("Anomaly" + option.key))
+                    option.toggle();
+            }*/
+            return savedWorldData;
+        }
+
+        /// <summary>
+        /// Quickly returns SpriteEffects based on the Entity's direction. Defaults to flipping if the entity faces left (-1)
+        /// </summary>
+        /// <param name="proj">The projectile</param>
+        /// <param name="reverse">Flip when facing right instead</param>
+        /// <returns></returns>
+        public static SpriteEffects FlippedEffects(this Projectile proj, bool reverse = false)
+        {
+            if ((proj.spriteDirection == -1 && !reverse) || (reverse && proj.spriteDirection == 1))
+            {
+                return SpriteEffects.None;
+            }
+            return SpriteEffects.FlipHorizontally;
+        }
+
+        /// <summary>
+        /// Quickly returns SpriteEffects based on the Entity's direction. Defaults to flipping if the entity faces left (-1)
+        /// </summary>
+        /// <param name="npc">The NPC</param>
+        /// <param name="reverse">Flip when facing right instead</param>
+        /// <returns></returns>
+        public static SpriteEffects FlippedEffects(this NPC npc, bool reverse = false)
+        {
+            if ((npc.spriteDirection == -1 && !reverse) || (reverse && npc.spriteDirection == 1))
+            {
+                return SpriteEffects.None;
+            }
+            return SpriteEffects.FlipHorizontally;
+        }
     }
 
     public static class RarityHelper
@@ -381,7 +1493,13 @@ namespace CalRemix
         public const int Pathogen = 8;
         public const int LunaticCultist = 9;
         public const int AstrumDeus = 9;
+        public const int SealedMain = 9;
+        public const int Void = 10;
+        public const int Disilphia = 10;
+        public const int GastropodA = 10;
+        public const int Oneguy = 10;
         public const int MoonLord = 10;
+        public const int Crevi = 11;
     }
 
     public static class BetterSoundID

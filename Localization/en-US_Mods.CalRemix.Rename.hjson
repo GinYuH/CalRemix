@@ -7,15 +7,12 @@ NPCs: {
 	SupremeCalamitas: Brimdeath Witch, Calitas Jane
 	WITCH: Calamity Witch
 	Skeletron: Dungen
-	Anahita: Anastasia
+	Anahita: Anasthesia
 	Cnidrion: Grand Thunder Cnidrion
 }
 
 Items: {
 	Absolute: {
-		Fabstaff: Interfacer Staff
-		Fabsol: Discordian Sigil
-		CirrusDress: Ash's Cloak
 		LoreExoMechs: The Exo Mechs
 		OldDukeScales: Sulfuric Scale
 		ReaverShark: reef Shark
@@ -89,4 +86,4 @@ Sneakers: {
 	Calamity: Calamitas X Air Jordans "Throwback"
 }
 
-Draedon: Mods.CalRemix.Rename.Draedon
+Draedon: Draedon, the Living Intellect of Samuel Graydron

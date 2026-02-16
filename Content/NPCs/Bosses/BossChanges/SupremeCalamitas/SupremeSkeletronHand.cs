@@ -1,13 +1,8 @@
-﻿using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
-using CalamityMod.NPCs.SupremeCalamitas;
-using System;
-using CalamityMod.Projectiles.Boss;
-using System.Diagnostics;
 using Terraria;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
@@ -22,8 +17,6 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         public ref float LeftOrRight => ref NPC.ai[2];
         public ref float Owner => ref NPC.ai[3];
         public ref float Timer => ref NPC.localAI[0];
-
-        private bool isMouthOpen = false;
         public List<VerletSimulatedSegment> Segments;
         int segmentCount = 27;
         public override void SetStaticDefaults()

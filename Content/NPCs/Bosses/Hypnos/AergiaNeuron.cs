@@ -16,6 +16,8 @@ using CalamityMod.Graphics.Primitives;
 using Terraria.Graphics.Effects;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Skies;
+using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs.Bosses.Hypnos
 {
@@ -413,7 +415,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
-                                        target.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(target.name + " felt 10 thousand volts."), 200, 0);
+                                        target.Hurt(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LightningGate").Format(target.name))), 200, 0);
                                     }
                                 }
                             }
@@ -430,14 +432,14 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
-                                        target.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(target.name + " felt 10 thousand volts."), 600, 0);
+                                        target.Hurt(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LightningGate").Format(target.name))), 600, 0);
                                     }
                                 }
                                 if (nextneuron.type == ModContent.NPCType<AergiaNeuron>() && NPC.ai[1] == 3 && nextneuron.ai[1] == 0 && nextneuron.active)
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
-                                        target.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(target.name + " felt 10 thousand volts."), 600, 0);
+                                        target.Hurt(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LightningGate").Format(target.name))), 600, 0);
                                     }
                                 }
                             }
@@ -1112,7 +1114,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             int afterimageAmt = 7;
 
 
-            if (CalamityConfig.Instance.Afterimages && afterimages)
+            if (CalamityClientConfig.Instance.Afterimages && afterimages)
             {
                 for (int i = 1; i < afterimageAmt; i += 2)
                 {
@@ -1228,7 +1230,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                 Color eyecolor = hypnos.ModNPC<Hypnos>().ragetimer > 0 ? Color.Red : Lighting.GetColor((int)hypnos.position.X / 16, (int)hypnos.position.Y / 16);
                 Color glowcolor = hypnos.ModNPC<Hypnos>().ragetimer > 0 ? Color.Red : Color.White;
 
-                if (CalamityConfig.Instance.Afterimages && hypnos?.ModNPC<Hypnos>().afterimages == true)
+                if (CalamityClientConfig.Instance.Afterimages && hypnos?.ModNPC<Hypnos>().afterimages == true)
                 {
                     for (int i = 1; i < afterimageAmt; i += 2)
                     {

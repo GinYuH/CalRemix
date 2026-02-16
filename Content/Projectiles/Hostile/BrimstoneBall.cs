@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria;
-using CalamityMod.Buffs.DamageOverTime;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
@@ -51,7 +48,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 120);
+            //target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 120);
         }
         public override void OnKill(int timeLeft)
         {

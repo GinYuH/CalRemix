@@ -52,7 +52,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ItemID.SliceOfCake, 12).
                 AddIngredient<RuinousSoul>(14).
                 AddIngredient(ItemID.BambooBlock, 64).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

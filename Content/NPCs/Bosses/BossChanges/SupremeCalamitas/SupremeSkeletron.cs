@@ -115,7 +115,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
                 );
             };*/
 
-            var boss = BossRushEvent.Bosses.First(x => x.EntityID == ModContent.NPCType<CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas>());
+            var boss = BossRushEvent.Bosses.First(x => x.EntityID == ModContent.NPCType<SCal>());
             boss.HostileNPCsToNotDelete.Add(ModContent.NPCType<SupremeSkeletron>());
             boss.HostileNPCsToNotDelete.Add(ModContent.NPCType<SupremeSkeletronHand>());
         }
@@ -155,6 +155,17 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
         }
         public override void AI()
         {
+            int cala = NPC.FindFirstNPC(ModContent.NPCType<SCal>());
+            if (cala > -1)
+            {
+                NPC calamitas = Main.npc[cala];
+                float lifeRatio = (float)calamitas.life / (float)calamitas.lifeMax;
+                if (lifeRatio <= 0.01f)
+                {
+                    NPC.HitEffect();
+                    NPC.active = false;
+                }
+            }
             // This is dangerous because Calamity only expects SepulcherHead to
             // set this.  Should be fine for now!
             CalamityGlobalNPC.SCalWorm = NPC.whoAmI;

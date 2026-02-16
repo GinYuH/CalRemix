@@ -212,7 +212,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 // spawn too far from the blade.
                 spawnPosition += Main.rand.NextVector2CircularEdge(9f, 35f).RotatedBy(Projectile.velocity.ToRotation() + MathHelper.PiOver2);
 
-                Dust rainbowSpark = Dust.NewDustPerfect(spawnPosition, 261);
+                Dust rainbowSpark = Dust.NewDustPerfect(spawnPosition, DustID.AncientLight);
                 rainbowSpark.velocity = Projectile.velocity * 3f + Main.rand.NextVector2CircularEdge(1.5f, 1.5f);
                 rainbowSpark.noGravity = true;
                 rainbowSpark.color = Main.hslToRgb((Time / 40f + Main.rand.NextFloat(-0.1f, 0.1f)) % 1f, 0.95f, 0.6f);

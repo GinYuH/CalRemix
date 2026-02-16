@@ -89,7 +89,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             NPC.defense = 15;
             NPC.DR_NERD(0.1f);
             NPC.LifeMaxNERB(30000, 35000, 300000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
@@ -305,7 +305,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                                     Vector2 perturbedSpeed = NPC.DirectionTo(Target.Center).RotatedBy(MathHelper.Lerp(-spreadfactor, spreadfactor, i / ((float)projPerShot - 1))) * scaleFactor;
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, perturbedSpeed, ModContent.ProjectileType<Potpourri>(), CalRemixHelper.ProjectileDamage(100, 200), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
                                         Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
                                     }
                                 }
@@ -356,7 +356,6 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                             minTime /= 2;
                             maxTime /= 2;
                         }
-                        int height = 100;
                         int fireRate = rev ? 120 : 160;
                         NPC.ai[2]++;
                         NPC.ai[3]++;
@@ -378,7 +377,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                                         velocity = velocity.RotatedBy(variance * i);
 
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PineappleFrondProj>(), (int)(0.5f * NPC.damage), 0, Main.myPlayer, Main.rand.Next(2, 6));
+                                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, velocity, ModContent.ProjectileType<PineappleFrondProj>(), CalRemixHelper.ProjectileDamage(200, 300), 0, Main.myPlayer, Main.rand.Next(2, 6));
                                     }
                                     DustExplosion();
                                     NPC.Calamity().newAI[1] = 30;
@@ -394,7 +393,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                             SoundEngine.PlaySound(SoundID.Grass, NPC.Center);
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * speed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * speed, ModContent.ProjectileType<Potpourri>(), CalRemixHelper.ProjectileDamage(80, 160), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
                                 Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
                             }
                         }
@@ -443,7 +442,6 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                 case (int)PhaseType.LastStand:
                     {
                         float speed = 2f;
-                        int maxTime = 120;
                         int sporeFireRate = death ? 20 : rev ? 30 : expert ? 40 : 50;
                         int petalFireRate = death ? 40 : rev ? 60 : expert ? 70 : 80;
                         float petalSpeed = 8f;
@@ -465,7 +463,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                                 SoundEngine.PlaySound(SoundID.Grass, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * petalSpeed, ModContent.ProjectileType<Potpourri>(), (int)(NPC.damage * 0.25f), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity.SafeNormalize(Vector2.One) * petalSpeed, ModContent.ProjectileType<Potpourri>(), CalRemixHelper.ProjectileDamage(150, 210), 0, Main.myPlayer, 1, Target.whoAmI, Main.rand.NextFloat(-2f, 2f));
                                     Main.projectile[p].localAI[0] = Main.rand.Next(0, 3);
                                 }
                             }
@@ -551,7 +549,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             }
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
         }

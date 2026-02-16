@@ -30,6 +30,7 @@ using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Weapons;
+using Terraria.Localization;
 
 namespace CalRemix.Content.NPCs.Bosses.Hydrogen
 {
@@ -97,7 +98,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
             NPC.LifeMaxNERB(40000, 48000, 300000);
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
@@ -207,7 +208,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                                     // The last few projectiles are gravity-affected warheads
                                     int type = NPC.ai[2] > (rocketAmt - 2) * rocketRate ? ModContent.ProjectileType<HydrogenWarhead>() : ModContent.ProjectileType<HydrogenShell>();
                                     Vector2 acidSpeed = (Vector2.UnitY * Main.rand.NextFloat(-10f, -8f)).RotatedByRandom(MathHelper.ToRadians(missileSpread));
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, (int)(NPC.damage * 0.4f), 3f, Main.myPlayer, Target.whoAmI);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, acidSpeed, type, CalRemixHelper.ProjectileDamage(100, 180), 3f, Main.myPlayer, Target.whoAmI);
                                 }
                                 if (NPC.ai[2] > rocketAmt * rocketRate)
                                 {
@@ -243,7 +244,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                             SoundEngine.PlaySound(CalamityMod.NPCs.PlaguebringerGoliath.PlaguebringerGoliath.NukeWarningSound);
                             for (int i = 0; i < mineAmt; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), (int)(NPC.damage * 0.5f), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(Main.rand.Next(-mineRange, mineRange), Main.rand.Next(400, 600)), Vector2.UnitY * -mineSpeed, ModContent.ProjectileType<HydrogenMine>(), CalRemixHelper.ProjectileDamage(120, 190), 0f, Main.myPlayer);
                             }
                         }
                         if (NPC.ai[1] > phaseTime)
@@ -296,7 +297,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                                 if (p.GetModPlayer<CalRemixPlayer>().fridge)
                                     continue;
                                 // Else disentegrate {{sic}}
-                                p.KillMe(PlayerDeathReason.ByCustomReason(p.name + " was atomized."), 9999, 1);
+                                p.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.Hydrogen").Format(p.name))), 9999, 1);
                             }
 
                             // Prevent netUpdate from being blocked by the spam counter.
@@ -373,7 +374,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
             }
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
         }

@@ -16,8 +16,6 @@ namespace CalRemix.Content.Tiles
     public class BeetleHeadPlaced : ModTile
     {
         public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
-        int rotationbottom;
-        int negavar;
         public override void SetStaticDefaults()
         {
             TileID.Sets.DisableSmartCursor[Type] = true;
@@ -34,32 +32,11 @@ namespace CalRemix.Content.Tiles
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<BeetleTE>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.addTile(Type);
         }
-
-        private bool shittypostimer = true;
-        private bool shittynegatimer = false;
-        public override void PlaceInWorld(int i, int j, Item item)
-        {
-            rotationbottom = -35;
-        }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             GetInstance<BeetleTE>().Kill(i, j);
         }
 
-        /*public override void RandomUpdate(int i, int j)
-        {
-            if (rotationbottom <= -30f)
-            {
-                rotationbottom++;
-            }
-            if (rotationbottom >= 30f)
-            {
-                rotationbottom--;
-            }
-        }*/
-
-        float count;
-        float abso;
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Main.tile[i, j];
@@ -95,9 +72,8 @@ namespace CalRemix.Content.Tiles
                             for (int u = 0; u < cables.Segments.Count; u++)
                             {
                                 VerletSimulatedSegment v = cables.Segments[u];
-                                int ct = cables.Segments.Count;
-                                Texture2D s2u = Seg1;
-                                Texture2D prev2u = Seg1;
+                                Texture2D s2u;
+                                Texture2D prev2u;
                                 switch (u)
                                 {
                                     case 10:
@@ -122,7 +98,7 @@ namespace CalRemix.Content.Tiles
                                     if (dist <= 2)
                                         dist = 2;
                                     dist += 2;
-                                    float rote = 0f;
+                                    float rote;
                                     Rectangle final = u < 9 ? new Rectangle(0, 0, (int)dist, 2) : rect;
                                     Vector2 fingalorigin = u < 9 ? TextureAssets.BlackTile.Size() / 2 : origine;
                                     if (u > 0)

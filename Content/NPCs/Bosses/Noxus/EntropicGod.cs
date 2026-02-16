@@ -6,7 +6,6 @@ using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using static Terraria.Utils;
-using CalRemix.Content.Items;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Particles;
 using CalRemix.Core.Graphics;
@@ -28,11 +27,9 @@ using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Accessories;
 using CalamityMod.DataStructures;
-using Terraria.GameContent.Animations;
-using Terraria.Graphics;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Placeables;
+using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Bosses.Noxus
 {
@@ -432,7 +429,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             NPCID.Sets.MustAlwaysDraw[Type] = true;
             NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 90;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Scale = 0.3f,
                 PortraitScale = 0.5f
@@ -465,7 +462,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 NPC.damage /= 2;
             }
 
-            double HPBoost = CalamityConfig.Instance.BossHealthBoost * 0.01;
+            double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
             AIType = -1;
@@ -2603,6 +2600,8 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 NPC.NPCLoot();
                 NPC.checkDead();
                 NPC.active = false;
+                RemixDowned.downedNoxus = true;
+                CalRemixWorld.UpdateWorldBool();
             }
         }
 
@@ -3124,7 +3123,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             npcLoot.DefineConditionalDropSet(DropHelper.RevAndMaster).Add(ModContent.ItemType<OblivionRattle>());
         }
 
-        public override void BossLoot(ref string name, ref int potionType) => potionType = ModContent.ItemType<OmegaHealingPotion>();
+        public override void BossLoot(ref int potionType) => potionType = ModContent.ItemType<OmegaHealingPotion>();
 
         // Ensure that Noxus' contact damage adhere to the special boss-specific cooldown slot, to prevent things like lava cheese.
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

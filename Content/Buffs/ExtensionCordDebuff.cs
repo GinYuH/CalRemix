@@ -36,7 +36,7 @@ namespace CalRemix.Content.Buffs
             {
                 // Apply a flat bonus to every hit
                 modifiers.FlatBonusDamage += ExtensionCordDebuff.TagDamage * projTagMultiplier;
-                int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), npc.Center - new Microsoft.Xna.Framework.Vector2(Main.rand.Next(-10, 10), 3200f), Vector2.UnitY, ModContent.ProjectileType<IonogenLightning>(), projectile.damage, 0, Main.player[projectile.owner].whoAmI, 0f, -1, 61);
+                int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), npc.Center - new Vector2(Main.rand.Next(-10, 10), 3200f), Vector2.UnitY, ModContent.ProjectileType<IonogenLightning>(), projectile.damage, 0, Main.player[projectile.owner].whoAmI, 0f, -1, 61);
                 Main.projectile[p].hostile = false;
                 Main.projectile[p].friendly = true;
                 Main.projectile[p].timeLeft = 22;

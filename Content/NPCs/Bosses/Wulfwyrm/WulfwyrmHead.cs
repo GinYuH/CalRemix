@@ -258,12 +258,11 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
 
         public void SpawnSegments()
         {
-            // if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int previousSegment = NPC.whoAmI;
                 for (int i = 0; i < SegmentCount; i++)
                 {
-
                     int nextSegmentIndex;
                     if (i < SegmentCount - 1)
                     {
@@ -275,9 +274,9 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
                     Main.npc[nextSegmentIndex].realLife = NPC.whoAmI;
                     Main.npc[nextSegmentIndex].ai[2] = NPC.whoAmI;
                     Main.npc[nextSegmentIndex].ai[1] = previousSegment;
+                    Main.npc[nextSegmentIndex].CopyInteractions(NPC);
+                    NetMessage.SendData(MessageID.SyncNPC, number: nextSegmentIndex);
                     Main.npc[previousSegment].ai[0] = nextSegmentIndex;
-                    Main.npc[nextSegmentIndex].netUpdate = true;
-                    Main.npc[previousSegment].netUpdate = true;
 
                     previousSegment = nextSegmentIndex;
                 }
@@ -289,7 +288,6 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             int laserBurstCount = 3;
             int segmentSpacingPerLaser = 3;
             int delayPerBurst = 360;
-            int damageDelay = 200;
             int slowdownTime = 30;
             int timeSpentFiringLasers = 60;
             int laserShootTime = slowdownTime + timeSpentFiringLasers;
@@ -395,7 +393,6 @@ namespace CalRemix.Content.NPCs.Bosses.Wulfwyrm
             int laserCount = 4;
             int delayPerBurst = 180;
             int slowdownTime = 30;
-            int segmentSpacingPerLaser = 3;
             int timeSpentFiringLasers = 60;
             int laserShootTime = slowdownTime + timeSpentFiringLasers;
             int laserDamage = 24;

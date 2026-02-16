@@ -4,19 +4,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Content.Items.Placeables;
-using CalRemix.Core.Biomes;
 using CalamityMod.BiomeManagers;
-using CalRemix.Content.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using System.Linq;
-using CalRemix.Content.NPCs.Minibosses;
-using CalRemix.Core.World;
 using Terraria.Audio;
-using System.Security.Cryptography.X509Certificates;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 using Terraria.WorldBuilding;
 using CalamityMod.Items.Materials;
@@ -55,8 +48,8 @@ namespace CalRemix.Content.NPCs
             NPC.damage = 20;
             NPC.width = 46;
             NPC.height = 64;
-            NPC.defense = 22;
-            NPC.lifeMax = 2000;
+            NPC.defense = 3;
+            NPC.lifeMax = 660;
             NPC.value = 200;
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = true;
@@ -220,7 +213,7 @@ namespace CalRemix.Content.NPCs
                             Dust.NewDustPerfect(NPC.Center, ModContent.DustType<BrimstoneFireDustMatte>(), dustVelocity);
                         }
                         Vector2 velocity = NPC.DirectionTo(Target.Center) * 4;
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, velocity, ModContent.ProjectileType<BrimstoneBall>(), 25, 0, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, velocity, ModContent.ProjectileType<BrimstoneBall>(), 13, 0, Main.myPlayer);
                     }
 
                     

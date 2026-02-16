@@ -1,13 +1,10 @@
 ﻿using CalamityMod.Items.Materials;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Ranged;
+using CalamityMod.Projectiles.Summon;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -77,6 +74,26 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
     }
     #endregion
     #region HM
+    // Cryonic
+    public class IcarusStormbow : StormbowAbstract
+    {
+        public override int damage => 30;
+        public override int crit => 12;
+        public override int useTime => 20;
+        public override SoundStyle useSound => SoundID.Item13;
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<DaedalusCrystalShot>() };
+        public override int arrowAmount => 5;
+        public override OverallRarity overallRarity => OverallRarity.Lime;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<CryonicBar>(30).
+                AddIngredient(ItemID.DaedalusStormbow, 1).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.Hellforge).
+                Register();
+        }
+    }
     // perennial
     public class PerennialMillenial : StormbowAbstract
     {
@@ -91,6 +108,24 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         {
             CreateRecipe().
                 AddIngredient<PerennialBar>(30).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.MythrilAnvil).
+                Register();
+        }
+    }
+    // Scoria
+    public class BoilingSkies : StormbowAbstract
+    {
+        public override int damage => 54;
+        public override int crit => 12;
+        public override int useTime => 12;
+        public override SoundStyle useSound => SoundID.Item20;
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<ForbiddenSunProjectile>() };
+        public override OverallRarity overallRarity => OverallRarity.Lime;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient<ScoriaBar>(30).
                 AddIngredient(ItemID.Cobweb, 15).
                 AddTile(TileID.MythrilAnvil).
                 Register();
@@ -111,7 +146,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 AddIngredient<StarryBlight>().
                 AddIngredient(ItemID.Cobweb, 15).
                 AddIngredient<AstralBar>(30).
-                AddTile(TileID.LunarCraftingStation).
+                AddTile(TileID.MythrilAnvil).
                 Register();
         }
     }

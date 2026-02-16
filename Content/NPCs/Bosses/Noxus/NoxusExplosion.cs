@@ -4,10 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.MathF;
 using static Terraria.Utils;
-using static Microsoft.Xna.Framework.MathHelper;
-using static CalRemix.CalRemixHelper;
 
 namespace CalRemix.Content.NPCs.Bosses.Noxus
 {
@@ -47,7 +44,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 {
                     Vector2 dustSpawnPosition = Projectile.Center + Main.rand.NextVector2Circular(8f, 8f);
                     Vector2 dustVelocity = Main.rand.NextVector2Circular(20f, 20f);
-                    Dust dust = Dust.NewDustPerfect(dustSpawnPosition, 264, dustVelocity);
+                    Dust dust = Dust.NewDustPerfect(dustSpawnPosition, DustID.PortalBoltTrail, dustVelocity);
                     dust.color = Color.Lerp(Color.SkyBlue, Color.Fuchsia, Main.rand.NextFloat(0.35f, 0.65f));
                     dust.scale = 2.2f;
                     dust.noLight = true;

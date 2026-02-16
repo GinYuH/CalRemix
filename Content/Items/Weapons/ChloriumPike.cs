@@ -1,15 +1,12 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using CalamityMod.Items;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Weapons
 {
-	public class ChloriumPike : ModItem
+    public class ChloriumPike : ModItem
     {
         public override void SetStaticDefaults()
         {
