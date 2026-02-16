@@ -457,3 +457,63 @@ FriendshipBuff: {
 	DisplayName: The Power of Friendship
 	Description: Yeah!!!!
 }
+
+Impaled: {
+	DisplayName: Impaled
+	Description: Ouch!
+}
+
+InfinityOverload: {
+	DisplayName: Elemental Overload
+	Description: The elements lash out against your very being
+}
+
+RabbitcopterSoldier: {
+	DisplayName: Rabbitcopter Soldier
+	Description: Summons a Rabbitcopter Soldier to fight for you
+}
+
+RoyalRabbit: {
+	DisplayName: Royal Rabbit
+	Description: Summons a Royal Rabbit to fight for you
+}
+
+SpearStuck: {
+	DisplayName: Speared
+	Description: There's a spear stuck in you. Ouch.
+}
+
+BaronBuff: {
+	DisplayName: Baron Bunny
+	Description: Baron Bunny protects you
+}
+
+CBoost1: {
+	DisplayName: Champion Boost
+	Description: Increased stats
+}
+
+CBoost2: {
+	DisplayName: Champion Boost
+	Description: Increased stats
+}
+
+CBoost3: {
+	DisplayName: Champion Boost
+	Description: Increased stats
+}
+
+DroneCool: {
+	DisplayName: Drone Cool
+	Description: Mods.CalRemix.Buffs.DroneCool.Description
+}
+
+RageBuff: {
+	DisplayName: Defender's Rage
+	Description: A champion of Terraria never backs down
+}
+
+RageCool: {
+	DisplayName: Rajah's Rage
+	Description: A champion of Terraria never backs down
+}

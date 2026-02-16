@@ -5,10 +5,11 @@ using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.TownNPCs;
+using CalamityMod.World;
 using CalRemix.Content.Items.Armor;
-using CalRemix.Content.Items.TVs;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.ZAccessories;
+using CalRemix.Content.NPCs.Bosses.BossChanges.Twins;
 using CalRemix.Content.NPCs.Bosses.Hydrogen;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
@@ -38,18 +39,22 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks.Dataflow;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Liquid;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
 using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
+using CalRemix.Content.Items.TVs;
 
 namespace CalRemix.Core
 {
@@ -97,8 +102,6 @@ namespace CalRemix.Core
 
             IL.CalamityMod.Events.AcidRainEvent.TryStartEvent += AcidsighterToggle;
             IL.CalamityMod.Events.AcidRainEvent.TryToStartEventNaturally += AcidsighterToggle2;
-            IL.CalamityMod.NPCs.Cryogen.Cryogen.OnKill += DisableCryonic;
-            IL.CalamityMod.NPCs.CalamityGlobalNPC.OnKill += DisablePerennial;
 
             IL_UIWorldCreation.AddWorldSizeOptions += ReplaceWorldSelectionSizeDescriptions;
             //IL_NPC.SpawnNPC += NewSpawnNPC;
@@ -117,14 +120,19 @@ namespace CalRemix.Core
             On_Main.DrawBlack += FixSubworldDrawBlack;
             On_WorldGen.oceanDepths += DisableOceanSubworld;
             On_Main.DrawPlayers_AfterProjectiles += DrawGrass;
-            On_Item.Prefix += FolvsPrefix;
+            On_Item.Prefix += FolvsPrefix; 
+            On_NPC.SpawnBoss += TripletsSpawnTextOverride;
+            On_NPC.DoDeathEvents_BeforeLoot += PreventFoveanatorDefeatMessageIfNotKilledLast;
+            On_NPC.DoDeathEvents_CelebrateBossDeath += TripletsDefeatTextOverride;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
-            
+            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedRetinazerAI += DisableRevRetinazer;
+            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedSpazmatismAI += DisableRevSpazmatism;
+
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
             schematicEntityHook = new Hook(schematicEntityMethod, RemixSchematicEntities);
@@ -135,43 +143,6 @@ namespace CalRemix.Core
         {
             loadStoneHook = null;
             drawHook = null;
-        }
-
-        public static void DisablePerennial(ILContext il)
-        {
-            var cursor = new ILCursor(il);
-            if (!cursor.TryGotoNext(MoveType.After, i => i.MatchLdsfld<NPC>("downedPlantBoss")))
-            {
-                CalRemix.instance.Logger.Error("DisablePerennial: Could not find first downed");
-                return;
-            }
-            if (!cursor.TryGotoNext(MoveType.Before, i => i.MatchLdsfld<NPC>("downedPlantBoss")))
-            {
-                CalRemix.instance.Logger.Error("DisablePerennial: Could not find second downed");
-                return;
-            }
-            if (!cursor.TryGotoNext(i => i.OpCode.FlowControl == FlowControl.Cond_Branch))
-            {
-                CalRemix.instance.Logger.Error("DisablePerennial: Could not find conditional");
-                return;
-            }
-            cursor.Next.OpCode = OpCodes.Brtrue;
-        }
-
-        public static void DisableCryonic(ILContext il)
-        {
-            var cursor = new ILCursor(il);
-            if (!cursor.TryGotoNext(i => i.MatchCallOrCallvirt<CalamityMod.DownedBossSystem>("get_downedCryogen")))
-            {
-                CalRemix.instance.Logger.Error("DisableCryonic: Could not find downed");
-                return;
-            }
-            if (!cursor.TryGotoNext(i => i.OpCode.FlowControl == FlowControl.Cond_Branch))
-            {
-                CalRemix.instance.Logger.Error("DisableCryonic: Could not find conditional");
-                return;
-            }
-            cursor.Next.OpCode = OpCodes.Brtrue;
         }
 
         public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)
@@ -195,6 +166,84 @@ namespace CalRemix.Core
             }
             return self.prefix == PrefixType<FolvsPrefix>() ? true : ret;
         }
+
+        #region Revengeance Master Mode Twins Shenanigans
+
+        public static bool DisableRevSpazmatism(On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.orig_BuffedSpazmatismAI orig, object guy, object mod)
+        {
+            if (CalRemixWorld.bossAdditions)
+                return false;
+            else
+                return orig(guy, mod);
+        }
+
+        public static bool DisableRevRetinazer(On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.orig_BuffedRetinazerAI orig, object guy, object mod)
+        {
+            if (CalRemixWorld.bossAdditions)
+                return false;
+            else
+                return orig(guy, mod);
+        }
+
+        public static void TripletsSpawnTextOverride(On_NPC.orig_SpawnBoss orig, int x, int y, int type, int targetPlayerIndex)
+        {
+            if (CalRemixWorld.bossAdditions && type == NPCID.Retinazer)
+            {
+                int retinazerIndex = NPC.NewNPC(NPC.GetBossSpawnSource(targetPlayerIndex), x, y, type, 1);
+                if (retinazerIndex == 200)
+                {
+                    return;
+                }
+                Main.npc[retinazerIndex].target = targetPlayerIndex;
+                Main.npc[retinazerIndex].timeLeft *= 20;
+
+                if (Main.dedServ && retinazerIndex < 200)
+                {
+                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, retinazerIndex);
+                }
+
+                AchievementsHelper.CheckMechaMayhem();
+
+                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.TripletsBossText", new Color(175, 75, 255));
+                return;
+            }
+            else
+            {
+                orig(x, y, type, targetPlayerIndex);
+            }
+        }
+
+        public static void PreventFoveanatorDefeatMessageIfNotKilledLast(On_NPC.orig_DoDeathEvents_BeforeLoot orig, NPC self, Player closestPlayer)
+        {
+            if (CalRemixWorld.bossAdditions && self.type == ModContent.NPCType<Foveanator>() && (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)))
+            {
+                self.value = 0f;
+                self.boss = false;
+                return;
+            }
+            else
+            {
+                orig(self, closestPlayer);
+            }
+        }
+
+        public static void TripletsDefeatTextOverride(On_NPC.orig_DoDeathEvents_CelebrateBossDeath orig, NPC self, string typeName)
+        {
+            bool correctNPCType = self.type == NPCID.Retinazer || self.type == NPCID.Spazmatism || self.type == ModContent.NPCType<Foveanator>();
+            if (CalRemixWorld.bossAdditions && correctNPCType)
+            {
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue("Announcement.HasBeenDefeated_Plural", CalRemixHelper.LocalText("StatusText.TripletsDefeatName").Value), 175, 75, 255);
+                else if (Main.dedServ)
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasBeenDefeated_Plural", NetworkText.FromKey("Mods.CalRemix.StatusText.TripletsDefeatName")), new Color(175, 75, 255));
+                return;
+            }
+            else
+            {
+                orig(self, typeName);
+            }
+        }
+        #endregion
 
         public static void DrawGrass(On_Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
         {

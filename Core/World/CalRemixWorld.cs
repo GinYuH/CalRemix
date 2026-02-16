@@ -1,59 +1,60 @@
+using CalamityMod;
+using CalamityMod.Items.DraedonMisc;
+using CalamityMod.Items.Fishing.SulphurCatches;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.SummonItems;
+using CalamityMod.NPCs.Abyss;
+using CalamityMod.NPCs.AquaticScourge;
+using CalamityMod.NPCs.Bumblebirb;
+using CalamityMod.NPCs.Cryogen;
+using CalamityMod.NPCs.DesertScourge;
+using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.Tiles;
+using CalamityMod.Tiles.DraedonStructures;
+using CalamityMod.Tiles.FurnitureStratus;
+using CalamityMod.Tiles.FurnitureVoid;
+using CalamityMod.Tiles.Plates;
+using CalamityMod.Tiles.SunkenSea;
+using CalamityMod.Walls;
+using CalamityMod.World;
+using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Misc;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Stormbow;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Content.NPCs.Bosses.Oxygen;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.PlaguedJungle;
+using CalRemix.Content.Tiles.Plates;
+using CalRemix.Content.Tiles.Subworlds.Sealed;
+using CalRemix.Core.Backgrounds.Plague;
+using CalRemix.Core.Scenes;
+using CalRemix.Core.Subworlds;
+using CalRemix.UI;
+using CalRemix.UI.Anomaly109;
+using CalRemix.UI.ElementalSystem;
+using Microsoft.Xna.Framework;
+using SubworldLibrary;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Generation;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static Terraria.ModLoader.ModContent;
-using System.IO;
-using CalamityMod.World;
-using System;
-using CalRemix.Content.Tiles;
-using CalamityMod.Walls;
-using CalamityMod;
-using Microsoft.Xna.Framework;
-using CalamityMod.NPCs.Cryogen;
-using CalRemix.UI;
-using CalRemix.Content.Tiles.PlaguedJungle;
-using CalRemix.Content.Items.Weapons;
-using System.Threading;
-using Terraria.GameContent.ItemDropRules;
-using CalamityMod.NPCs.Abyss;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Fishing.SulphurCatches;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.Tiles.DraedonStructures;
 using Terraria.WorldBuilding;
-using CalamityMod.Tiles.FurnitureVoid;
-using CalamityMod.Items.SummonItems;
-using CalamityMod.NPCs.DesertScourge;
-using CalamityMod.NPCs.Bumblebirb;
-using Terraria.GameContent;
-using Terraria.DataStructures;
-using CalamityMod.NPCs.AquaticScourge;
-using Terraria.GameContent.Generation;
-using SubworldLibrary;
-using CalRemix.Core.Subworlds;
-using CalamityMod.Items.DraedonMisc;
-using CalamityMod.Tiles.FurnitureStratus;
-using CalamityMod.Tiles.SunkenSea;
-using CalRemix.Content.NPCs.Bosses.Oxygen;
-using CalRemix.Content.NPCs;
-using CalRemix.UI.Anomaly109;
-using CalRemix.Content.Items.Lore;
-using CalamityMod.Tiles;
-using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
-using Terraria.Audio;
-using CalRemix.Core.Scenes;
-using CalRemix.Content.Tiles.Plates;
-using CalamityMod.Tiles.Plates;
-using CalRemix.Content.Items.Weapons.Stormbow;
 using static CalRemix.CalRemixHelper;
-using Terraria.Localization;
-using System.Linq;
-using CalRemix.Content.Items.Misc;
-using CalRemix.Content.Tiles.Subworlds.Sealed;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using CalRemix.Core.Backgrounds.Plague;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Core.World
 {
@@ -705,16 +706,8 @@ namespace CalRemix.Core.World
                 worldFullyStarted = true;
             if (!loadedRecipeInjections)
             {
-                if (reargar)
-                {
-                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrate, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>());
-                    RemoveLoot(ItemID.JungleFishingCrateHard, ItemType<CalamityMod.Items.Materials.UelibloomBar>());
-                }
                 if (frontgar)
                 {
-                    RemoveLoot(ItemType<SulphurousCrate>(), ItemType<ReaperTooth>());
                     RemoveLoot(NPCType<ReaperShark>(), ItemType<ReaperTooth>(), true);
                 }
                 if (cosmislag)
@@ -1104,30 +1097,14 @@ namespace CalRemix.Core.World
             }
             else
             {
-                if (npcType == ItemType<SulphurousCrate>())
-                {
-                    // dude i fucking FUCKING LOATHE drop code
-                    var postDuke = new LeadingConditionRule(DropHelper.PostOD());
-                    postDuke.Add(ItemType<ReaperTooth>(), 10, 1, 5);
-                    var postPolter = new LeadingConditionRule(DropHelper.PostPolter()).OnSuccess(postDuke);
-                    Main.ItemDropsDB.RegisterToItem(npcType, postPolter);
-                }
-                if (npcType == ItemID.JungleFishingCrate)
-                {
-                    var postDuke = new LeadingConditionRule(DropHelper.PostProv());
-                    postDuke.Add(ItemType<CalamityMod.Items.Placeables.Ores.UelibloomOre>(), 5, 16, 28);
-                    postDuke.Add(ItemType<CalamityMod.Items.Materials.UelibloomBar>(), new Fraction(15, 100), 4, 7);
-                    Main.ItemDropsDB.RegisterToItem(npcType, postDuke);
-                    Main.ItemDropsDB.RegisterToItem(ItemID.JungleFishingCrateHard, postDuke);
-                }
             }
         }
         public static void RemoveLoot(int bagType, int itemToRemove, bool npc = false)
         {
-            List<IItemDropRule> JungleCrateDrops = npc ? Main.ItemDropsDB.GetRulesForNPCID(bagType) : Main.ItemDropsDB.GetRulesForItemID(bagType);
-            for (int i = 0; i < JungleCrateDrops.Count; i++)
+            List<IItemDropRule> lootRules = npc ? Main.ItemDropsDB.GetRulesForNPCID(bagType) : Main.ItemDropsDB.GetRulesForItemID(bagType);
+            for (int i = 0; i < lootRules.Count; i++)
             {
-                if (JungleCrateDrops[i] is LeadingConditionRule lead)
+                if (lootRules[i] is LeadingConditionRule lead)
                 {
                     for (int j = 0; j < lead.ChainedRules.Count; j++)
                     {

@@ -25,7 +25,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
         public virtual int health => 9000;
         public virtual int projType => ModContent.ProjectileType<BrimstoneBall>();
         public virtual int dustType => DustID.Torch;
-        public virtual int invulThreshold => 600;
+        private int invulThreshold => (int)(health * (1 / 15f)); // defaults to 600 w base hp
 
         public Vector2 targetPos;
 
@@ -259,9 +259,9 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
             }
         }
 
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        public override void BossLoot(ref int potionType)
         {
-
+            potionType = ItemID.GreaterHealingPotion;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
