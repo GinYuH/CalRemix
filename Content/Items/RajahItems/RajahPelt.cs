@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.RajahItems
@@ -16,7 +17,7 @@ namespace CalRemix.Content.Items.RajahItems
 			Item.height = 20;
 			Item.maxStack = 999;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = 8;
+			Item.rare = ItemRarityID.Yellow;
 		}
 	}
 }

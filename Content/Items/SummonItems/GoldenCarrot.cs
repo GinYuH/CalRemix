@@ -21,12 +21,12 @@ namespace CalRemix.Content.Items.SummonItems
         {
             Item.width = 24;
             Item.height = 24;
-            Item.rare = 2;
+            Item.rare = ItemRarityID.Green;
             Item.maxStack = 20;
             Item.value = Item.sellPrice(0, 0, 0, 0);
             Item.useAnimation = 45;
             Item.useTime = 45;
-            Item.useStyle = 4;
+            Item.useStyle = ItemUseStyleID.HoldUp;
             Item.noUseGraphic = true;
             Item.consumable = true;
             Item.UseSound = new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound");

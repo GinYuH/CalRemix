@@ -44,7 +44,7 @@ namespace CalRemix.Content.Items.Tools
             Item.UseSound = SoundID.Item20 with { MaxInstances = 50, Volume = 0.3f };
 
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
 
             Item.shoot = ModContent.ProjectileType<NoxusSprayerGas>();
             Item.shootSpeed = 7f;

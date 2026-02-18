@@ -134,13 +134,13 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
 
 
-        internal float WidthFunction(float completionRatio) => 0.9f;
+        internal float WidthFunction(float completionRatio, Vector2 v) => 0.9f;
 
-        internal float BackgroundWidthFunction(float completionRatio) => WidthFunction(completionRatio) * 4f;
+        internal float BackgroundWidthFunction(float completionRatio, Vector2 v) => WidthFunction(completionRatio, v) * 4f;
 
-        public Color BackgroundColorFunction(float completionRatio) => Color.CornflowerBlue * 0.4f;
+        public Color BackgroundColorFunction(float completionRatio, Vector2 v) => Color.CornflowerBlue * 0.4f;
 
-        internal Color ColorFunction(float completionRatio)
+        internal Color ColorFunction(float completionRatio, Vector2 v)
         {
             Color baseColor1 = Color.Cyan;
             Color baseColor2 = Color.Cyan;

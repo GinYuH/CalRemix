@@ -13,7 +13,7 @@ namespace CalRemix.Content.Items.RajahItems
         {
             Item.mana = 10;
             Item.damage = 74;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.shootSpeed = 9f;
             Item.shoot = ModContent.ProjectileType<Projectiles.Hostile.RajahProjectiles.Carrot>();
             Item.width = 58;
@@ -22,7 +22,7 @@ namespace CalRemix.Content.Items.RajahItems
             Item.useAnimation = 30;
             Item.useTime = 15;
             Item.autoReuse = true;
-            Item.rare = 8;
+            Item.rare = ItemRarityID.Yellow;
             Item.noMelee = true;
             Item.knockBack = 2f;
             Item.value = Item.sellPrice(0, 5, 0, 0);

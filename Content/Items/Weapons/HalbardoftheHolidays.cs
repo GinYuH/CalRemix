@@ -30,7 +30,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.autoReuse = true;
             Item.height = 72;
             Item.value = Item.buyPrice(100);
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.shoot = ModContent.ProjectileType<RedBall>();
             Item.shootSpeed = 18f;
         }

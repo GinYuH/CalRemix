@@ -50,6 +50,7 @@ using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix;
 using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes;
 using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Chaotrix;
 using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix;
+using CalRemix.Content.NPCs.Subworlds.SingularPoint;
 
 namespace CalRemix
 {
@@ -277,6 +278,15 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<MoltenMatter>(),
             });
+            Action<SpriteBatch, Rectangle, Color> ano = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/SingularPoint/Anomaly_BC").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2 * 0.33f), rect.Center.Y - (texture.Height / 2 * 0.33f));
+                sb.Draw(texture, centered, null, Color.White, 0, Vector2.Zero, 0.33f, 0, 0);
+            };
+            bc.Call("LogBoss", Mod, "AnomalyBoss", 20.8f, () => RemixDowned.downedAnomaly, NPCType<AnomalyTwo>(), new Dictionary<string, object>()
+            {
+                ["customPortrait"] = ano
+            });
             bc.Call("LogBoss", Mod, "Hypnos", 22.5f, () => RemixDowned.downedHypnos, NPCType<Hypnos>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemType<BloodyVein>()
@@ -331,17 +341,17 @@ namespace CalRemix
             bc.Call("LogMiniBoss", Mod, "CrimsonKaiju", 20.5f, () => RemixDowned.downedRed, NPCType<CrimsonKaiju>(), new Dictionary<string, object>());
             bc.Call("LogMiniBoss", Mod, "Cryonix", 8.6f, () => RemixDowned.downedCryonix, NPCType<Cryonix>(), new Dictionary<string, object>()
             {
-                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnItems"] = ItemType<FabergeEgg>(),
                 ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
             });
             bc.Call("LogMiniBoss", Mod, "Vernix", 12.08f, () => RemixDowned.downedVernix, NPCType<Vernix>(), new Dictionary<string, object>()
             {
-                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnItems"] = ItemType<FabergeEgg>(),
                 ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
             });
             bc.Call("LogMiniBoss", Mod, "Chaotrix", 13.1f, () => RemixDowned.downedChaotrix, NPCType<Chaotrix>(), new Dictionary<string, object>()
             {
-                ["spawnItems"] = ItemType<FabergéEgg>(),
+                ["spawnItems"] = ItemType<FabergeEgg>(),
                 ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Cryonix.BossChecklistIntegration.SpawnInfo"),
             });
             // Events

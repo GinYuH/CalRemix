@@ -517,3 +517,8 @@ RageCool: {
 	DisplayName: Rajah's Rage
 	Description: A champion of Terraria never backs down
 }
+
+SharkRain: {
+	DisplayName: Shark Rain
+	Description: It's raining sharks!
+}

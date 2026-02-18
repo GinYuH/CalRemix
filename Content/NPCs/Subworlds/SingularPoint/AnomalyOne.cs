@@ -21,10 +21,12 @@ using CalamityMod.Items.Weapons.Ranged;
 using CalRemix.Content.NPCs.Bosses.Noxus;
 using CalamityMod.Particles;
 using CalRemix.Content.Particles;
+using MonoMod.Logs;
+using CalamityMod.Items.Potions;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {
-    // [AutoloadBossHead]
+    [AutoloadBossHead]
     public class AnomalyOne : ModNPC
     {
         public ref float Phase => ref NPC.ai[0];
@@ -70,7 +72,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             SpawnAnim = 0,
             SineGas = 1,
             Flamethrower = 2,
-            Knockout = 3
+            Knockout = 3,
+            Respawn = 4
         }
 
         public PhaseType CurrentPhase
@@ -78,6 +81,9 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             get => (PhaseType)Phase;
             set => Phase = (int)value;
         }
+
+        public bool FinishedAttack = false;
+
         public ref float JawRotation => ref NPC.Calamity().newAI[2];
 
         public List<Vector2> ctrlPoints = new();
@@ -112,6 +118,17 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             NPC.behindTiles = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
+        }
+        public override void BossHeadSlot(ref int index)
+        {
+            if (NPC.Opacity >= 1)
+            {
+                index = ModContent.GetModBossHeadSlot(BossHeadTexture);
+            }
+            else
+            {
+                index = -1;
+            }
         }
 
         public override void AI()
@@ -164,9 +181,9 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         float finish = lookDown + 50;
 
                         bool skip = false;
-                        if (skip && Timer < startRise)
+                        if (skip)
                         {
-                            Timer = startRise;
+                            Timer += 4;
                         }
 
                         Vector2 arenaPoint = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8 + Vector2.UnitY * 200;
@@ -174,41 +191,44 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         float arenaCreationWidth = 1000;
 
                         #region camera stuff
-                        if (Timer < roarDuration)
+                        if (!skip)
                         {
-                            if (Timer < startRise)
+                            if (Timer < roarDuration)
                             {
-                                CameraPanSystem.CameraPanInterpolant = CalamityUtils.SineInEasing(Utils.GetLerpValue(0, startRise, Timer, true), 1);
+                                if (Timer < startRise)
+                                {
+                                    CameraPanSystem.CameraPanInterpolant = CalamityUtils.SineInEasing(Utils.GetLerpValue(0, startRise, Timer, true), 1);
+                                }
+                                else
+                                {
+                                    CameraPanSystem.CameraPanInterpolant = 1;
+                                }
+                                CameraPanSystem.CameraFocusPoint = arenaPoint + screenShake;
                             }
-                            else
+                            else if (Timer < lookDown)
                             {
+                                if (Timer < stopLooking)
+                                {
+                                    CameraPanSystem.CameraFocusPoint = Vector2.Lerp(arenaPoint, NPC.Center, CalamityUtils.SineInEasing(Utils.GetLerpValue(roarDuration, stopLooking, Timer, true), 1));
+                                }
+                                else
+                                {
+                                    CameraPanSystem.CameraFocusPoint = NPC.Center;
+                                }
                                 CameraPanSystem.CameraPanInterpolant = 1;
                             }
-                            CameraPanSystem.CameraFocusPoint = arenaPoint + screenShake;
-                        }
-                        else if (Timer < lookDown)
-                        {
-                            if (Timer < stopLooking)
-                            {
-                                CameraPanSystem.CameraFocusPoint = Vector2.Lerp(arenaPoint, NPC.Center, CalamityUtils.SineInEasing(Utils.GetLerpValue(roarDuration, stopLooking, Timer, true), 1));
-                            }
                             else
                             {
+                                if (Timer < finish)
+                                {
+                                    CameraPanSystem.CameraPanInterpolant = CalamityUtils.SineInEasing(Utils.GetLerpValue(finish, lookDown, Timer, true), 1);
+                                }
+                                else
+                                {
+                                    CameraPanSystem.CameraPanInterpolant = 0;
+                                }
                                 CameraPanSystem.CameraFocusPoint = NPC.Center;
                             }
-                            CameraPanSystem.CameraPanInterpolant = 1;
-                        }
-                        else
-                        {
-                            if (Timer < finish)
-                            {
-                                CameraPanSystem.CameraPanInterpolant = CalamityUtils.SineInEasing(Utils.GetLerpValue(finish, lookDown, Timer, true), 1);
-                            }
-                            else
-                            {
-                                CameraPanSystem.CameraPanInterpolant = 0;
-                            }
-                            CameraPanSystem.CameraFocusPoint = NPC.Center;
                         }
                         #endregion
 
@@ -360,7 +380,12 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 {
                                     if (Timer % 10 == 0)
                                         SoundEngine.PlaySound(GasSound, NPC.Center);
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Main.rand.NextVector2Circular(30, 30), Vector2.Zero, ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(210, 380), 1);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Main.rand.NextVector2Circular(30, 30), Vector2.Zero, ModContent.ProjectileType<VirisiteMist>(), CalRemixHelper.ProjectileDamage(210, 380), 1);
+                                    if (PhaseTwo)
+                                    {
+                                        Main.projectile[p].timeLeft = (int)(Main.projectile[p].timeLeft * 1.4f);
+                                        NetMessage.SendData(MessageID.SyncProjectile, number: p);
+                                    }
                                 }
                             }
                         }
@@ -371,22 +396,31 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                                 NPC.direction = NPC.spriteDirection *= -1;
                                 SoundEngine.PlaySound(ShortRoarSound, NPC.Center);
                             }
-                            EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
                             JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
                             NPC.velocity *= 0.99f;
                         }
                         else if (Timer >= waitForBombs)
                         {
-                            ChangePhase(PhaseType.Flamethrower);
+                            PhaseCheck(PhaseType.Flamethrower);
+                        }
+
+                        if (Timer > waving)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(target.Center).ToRotation() + (NPC.spriteDirection != -1 ? MathHelper.Pi : 0), 0.1f);
+                            if ((target.Center.X - NPC.Center.X).DirectionalSign() != -NPC.spriteDirection)
+                            {
+                                NPC.spriteDirection = NPC.direction *= -1;
+                            }
+                            EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
                         }
                     }
                     break;
                 case PhaseType.Flamethrower:
                     {
                         int wait = 20;
-                        int travelTime = wait + 30;
+                        int travelTime = wait + (PhaseTwo ? 90 : 30);
                         int chargeUp = travelTime + 20;
-                        int firingTime = chargeUp + 150;
+                        int firingTime = chargeUp + (PhaseTwo ? 190 : 150);
                         int waitEnd = firingTime + 80;
 
                         float dist = 700;
@@ -433,12 +467,20 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         else if (Timer < waitEnd)
                         {
                             JawRotation = Utils.AngleLerp(JawRotation, 0, 0.1f);
-                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
-                            NPC.velocity *= 0.98f;
+                            NPC.velocity *= 0.96f;
                         }
                         else if (Timer > waitEnd)
                         {
-                            ChangePhase(PhaseType.SineGas);
+                            PhaseCheck(PhaseType.SineGas);
+                        }
+
+                        if (Timer >= firingTime)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(target.Center).ToRotation() + (NPC.spriteDirection != -1 ? MathHelper.Pi : 0), 0.1f);
+                            if ((target.Center.X - NPC.Center.X).DirectionalSign() != -NPC.spriteDirection)
+                            {
+                                NPC.spriteDirection = NPC.direction *= -1;
+                            }
                         }
 
                         if (Timer >= wait)
@@ -450,22 +492,25 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                         NPC.dontTakeDamage = true;
                         NPC.velocity = Vector2.Zero;
 
-                        int wait = 0;
-                        int pauseBeforeFall = wait + 60;
+                        int pauseBeforeFall = 60;
                         int fallDuration = pauseBeforeFall + 60;
                         int finishAnim = fallDuration + 90;
 
                         PhaseTwo = true;
 
-                        if (Timer < wait)
+                        if (Timer < pauseBeforeFall)
                         {
-
-                        }
-                        else if (Timer < pauseBeforeFall)
-                        {
-                            if (Timer == wait)
+                            if (Timer <= 1)
                             {
                                 SoundEngine.PlaySound(RoarSound with { Pitch = 0.7f });
+                                int orbType = ModContent.ProjectileType<VirisiteMist>();
+                                foreach (Projectile p in Main.ActiveProjectiles)
+                                {
+                                    if (p.type == orbType)
+                                    {
+                                        p.timeLeft = 60;
+                                    }
+                                }
                             }
                             SavePosition = new Vector2(NPC.Center.X, arenaCenter.Y + 600);
                             OldPosition = NPC.Center;
@@ -483,7 +528,8 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             NPC.Opacity = 0;
                             if (MainHead.type == ModContent.NPCType<AnomalyTwo>())
                             {
-                                MainHead.ModNPC<AnomalyTwo>().ChangePhase(AnomalyTwo.PhaseType.PhaseTwo);
+                                if (MainHead.ModNPC<AnomalyTwo>().CurrentPhase == AnomalyTwo.PhaseType.PhaseOne)
+                                    MainHead.ModNPC<AnomalyTwo>().ChangePhase(AnomalyTwo.PhaseType.PhaseTwo);
                             }
                             else
                             {
@@ -491,16 +537,83 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
                             }
                         }
 
-                        if (Timer >= wait)
+                        NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.spriteDirection * MathHelper.ToRadians(80) + MathF.Sin(Timer * 0.4f + 1) * MathHelper.ToRadians(10), 0.1f);
+                        JawRotation = MathHelper.ToRadians(40) + MathF.Sin(Timer * 1f) * MathHelper.ToRadians(4);
+                        EditPoints(new() { new(), new(-200, 250), new(400, 550), new(0, 900) });
+                    }
+                    break;
+                case PhaseType.Respawn:
+                    {
+                        NPC.Opacity = 1;
+                        Vector2 basePosition = arenaCenter + new Vector2(-500, 600);
+
+                        int riseDuration = 40;
+                        int roarDuration = riseDuration + 170;
+
+                        if (Timer < riseDuration)
                         {
-                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.spriteDirection * MathHelper.ToRadians(80) + MathF.Sin(Timer * 0.4f + 1) * MathHelper.ToRadians(10), 0.1f);
+                            if (Timer <= 1)
+                            {
+                                NPC.Center = basePosition;
+                                OldPosition = NPC.Center;
+                                SavePosition = NPC.Center - Vector2.UnitY * 800;
+                                NPC.direction = NPC.spriteDirection = -1;
+                            }
+                            else
+                            {
+                                NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.ExpInEasing(Utils.GetLerpValue(0, riseDuration, Timer, true), 1));
+                            }
+                        }
+                        else if (Timer < roarDuration)
+                        {
+                            if (Timer == riseDuration)
+                            {
+                                SoundEngine.PlaySound(RoarSound);
+                            }
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.PiOver4 + MathF.Sin(Timer * 0.4f + 1) * MathHelper.ToRadians(10), 0.1f);
                             JawRotation = MathHelper.ToRadians(40) + MathF.Sin(Timer * 1f) * MathHelper.ToRadians(4);
                             EditPoints(new() { new(), new(-200, 250), new(400, 550), new(0, 900) });
+                            if (Timer % 7 == 0)
+                            {
+                                GeneralParticleHandler.SpawnParticle(new HKShockwave(NPC.Center, Vector2.Zero, Color.SeaGreen * 0.6f, 0.1f, 22f, 20));
+                            }
+                        }
+                        else
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.DirectionTo(target.Center).ToRotation() + (NPC.spriteDirection != -1 ? MathHelper.Pi : 0), 0.1f);
+                            if ((target.Center.X - NPC.Center.X).DirectionalSign() != -NPC.spriteDirection)
+                            {
+                                NPC.spriteDirection = NPC.direction *= -1;
+                            }
+                            EditPoints(new() { new(), new(200 * NPC.direction, -50), new(800 * NPC.direction, 550), new(0, 900) });
+                            JawRotation = Utils.AngleLerp(JawRotation, 0, 0.2f);
+                            NPC.dontTakeDamage = false;
                         }
                     }
                     break;
             }
             Timer++;
+        }
+
+        public void PhaseCheck(PhaseType change)
+        {
+            FinishedAttack = true;
+            bool canChange = true;
+            if (NPC.AnyNPCs(ModContent.NPCType<AnomalyThree>()))
+            {
+                if (MainHead.ModNPC != null)
+                {
+                    if (MainHead.ModNPC is AnomalyTwo atwo)
+                    {
+                        if (atwo.CurrentPhase >= AnomalyTwo.PhaseType.IdleBehaviour)
+                            canChange = false;
+                    }
+                }
+            }
+            if (canChange)
+            {
+                ChangePhase(change);
+            }
         }
 
         public void ChangePhase(PhaseType phase)
@@ -510,6 +623,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             ExtraTwo = 0;
             Timer = 0;
             NPC.netUpdate = true;
+            FinishedAttack = false;
         }
 
 
@@ -522,6 +636,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             writer.Write(NPC.Calamity().newAI[1]);
             writer.Write(NPC.Calamity().newAI[2]);
             writer.WriteVector2(OldPosition);
+            writer.Write(FinishedAttack);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -533,6 +648,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             NPC.Calamity().newAI[1] = reader.ReadSingle();
             NPC.Calamity().newAI[2] = reader.ReadSingle();
             OldPosition = reader.ReadVector2();
+            FinishedAttack = reader.ReadBoolean();
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -593,7 +709,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
             Vector2 jawOrigin = new Vector2(NPC.spriteDirection == 1 ? jaw.Width - 106 : 106, 65);
             spriteBatch.Draw(tex, NPC.Center - screenPos + offset, null, norm, NPC.rotation, tex.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
             spriteBatch.Draw(jaw, NPC.Center - screenPos + offset - (jaw.Size() / 2).RotatedBy(NPC.rotation) + jawOrigin.RotatedBy(NPC.rotation), null, norm, NPC.rotation + correctJawRotation, jawOrigin, NPC.scale, NPC.FlippedEffects(), 0);
-            spriteBatch.Draw(eye, NPC.Center - screenPos + offset, null, Color.SeaGreen, NPC.rotation, eye.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
+            spriteBatch.Draw(eye, NPC.Center - screenPos + offset, null, Color.White, NPC.rotation, eye.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
         }
 
         public void EditPoints(List<Vector2> points)
@@ -613,6 +729,15 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
         public override bool CheckActive()
         {
             return !NPC.HasValidTarget;
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
+        }
+        public override void BossLoot(ref int potionType)
+        {
+            potionType = ModContent.ItemType<SupremeHealingPotion>();
         }
     }
 }

@@ -49,7 +49,7 @@ namespace CalRemix.Content.Items.Bags
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ModContent.ItemType<BloodSample>(), 1, 8, 10);
+            itemLoot.Add(ItemID.TissueSample, 1, 8, 10);
             itemLoot.Add(ModContent.ItemType<PathogenMask>(), 7);
             itemLoot.Add(ModContent.ItemType<SoulofPathogen>());
             itemLoot.Add(ModContent.ItemType<SickStick>());

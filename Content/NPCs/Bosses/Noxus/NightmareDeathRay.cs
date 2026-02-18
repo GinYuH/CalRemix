@@ -150,7 +150,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             target.AddBuff(ModContent.BuffType<NoxusFumes>(), EntropicGod.DebuffDuration_PowerfulAttack);
         }
 
-        public float WidthFunction(float completionRatio)
+        public float WidthFunction(float completionRatio, Vector2 v)
         {
             if (EntropicGod.Myself is null)
                 return 0f;
@@ -159,7 +159,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             return MathHelper.SmoothStep(2f, Projectile.width, squeezeInterpolant) * Pow(completionRatio, 0.3f) * EntropicGod.Myself.ModNPC<EntropicGod>().LaserSquishFactor * 1.36f;
         }
 
-        public Color ColorFunction(float completionRatio)
+        public Color ColorFunction(float completionRatio, Vector2 v)
         {
             Color color = Color.Lerp(Color.DarkSlateBlue, Color.HotPink, 0.3f);
             color = Color.Lerp(color, Color.DeepSkyBlue, 0.12f);

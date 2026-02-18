@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using CalamityMod.Enums;
+using CalamityMod.Graphics.Metaballs;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Graphics.Metaballs;
 
 namespace CalRemix.Content.Particles
 {
@@ -71,7 +72,7 @@ namespace CalRemix.Content.Particles
             }
         }
 
-        public override MetaballDrawLayer DrawContext => MetaballDrawLayer.BeforeNPCs;
+        public override GeneralDrawLayer DrawLayer => GeneralDrawLayer.BeforeNPCs;
 
         public override Color EdgeColor => new(255, 0, 255);
 

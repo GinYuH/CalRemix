@@ -56,7 +56,7 @@ namespace CalRemix.UI
                 "FannySob", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.DungeonGuardian) && Main.LocalPlayer.dead);
 
             HelperMessage.New("AmidiasTalk", "What's this guy babbling about? His advice sure doesn't sound useful, though! Besides, you've got good ol' me! Who else could you possibly need?",
-                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SEAHOE>() && Main.LocalPlayer.TalkNPC == n));
+                "FannyIdle", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<SeaKing>() && Main.LocalPlayer.TalkNPC == n));
 
             HelperMessage.New("AnglerTalk", "Look at his shit eating grin. He knows there is nothing you can do to him. He's bullying you, and you are helpless. Kill him. Kill him now. He won't see death coming.",
                 "EvilFannyMiffed", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == NPCID.Angler && Main.LocalPlayer.TalkNPC == n)).SetHoverTextOverride("... what?").SpokenByEvilFanny();

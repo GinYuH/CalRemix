@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CalamityMod;
+using CalamityMod.Enums;
 using CalamityMod.Graphics.Metaballs;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Projectiles.Hostile;
@@ -29,7 +30,7 @@ public class DoUMetaball : Metaball
         }
     }
 
-    public override MetaballDrawLayer DrawContext => MetaballDrawLayer.BeforeProjectiles;
+    public override GeneralDrawLayer DrawLayer => GeneralDrawLayer.AfterNPCs;
 
     public override Color EdgeColor => Color.Lerp(Color.Purple, Color.Black, 0.75f);
 

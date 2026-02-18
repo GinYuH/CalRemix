@@ -31,7 +31,6 @@ namespace CalRemix.Content.Items.Weapons
             Item.shootSpeed = 22f;
             Item.useAmmo = AmmoID.Bullet;
             Item.shoot = ProjectileID.PurificationPowder;
-			Item.Calamity().canFirePointBlankShots = true;
 		}
 
         public override void AddRecipes()

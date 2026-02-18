@@ -23,7 +23,7 @@ namespace CalRemix.Content.Items.RajahItems
             Item.height = 28;
             Item.useTime = 32;
             Item.useAnimation = 32;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true; //so the item's animation doesn't do damage
             Item.knockBack = 7.5f;
             Item.value = Item.sellPrice(0, 5, 0, 0);
@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.RajahItems
             Item.shootSpeed = 24f;
             Item.shoot = ModContent.ProjectileType<RabbitRocket3>();
             Item.useAmmo = AmmoID.Rocket;
-            Item.rare = 8;
+            Item.rare = ItemRarityID.Yellow;
         }
         public override Vector2? HoldoutOffset()
         {

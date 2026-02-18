@@ -6,6 +6,7 @@ using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.DevourerofGods;
 using CalRemix.Core.Retheme;
 using CalRemix.Core.World;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -140,35 +141,13 @@ namespace CalRemix.UI.Anomaly109
                     if (textwithoutspaces == "welive4hypnos" || textwithoutspaces == "weliveforhypnos")
                     {
                         SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
-                        if (Main.netMode == NetmodeID.MultiplayerClient)
-                        {
-                            ModPacket packet = CalRemix.instance.GetPacket();
-                            packet.Write((byte)RemixMessageType.Anomaly109Unlock);
-                            packet.Write(i);
-                            packet.Send();
-                        }
-                        else
-                        {
-                            Anomaly109Manager.options[i].unlocked = true;
-                            CalRemixWorld.UpdateWorldBool();
-                        }
-                        continue;
+                        Anomaly109Manager.UnlockAllOptions();
+                        break;
                     }
                     if (Anomaly109Manager.options[i].key == textwithoutspaces)
                     {
                         SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
-                        if (Main.netMode == NetmodeID.MultiplayerClient)
-                        {
-                            ModPacket packet = CalRemix.instance.GetPacket();
-                            packet.Write((byte)RemixMessageType.Anomaly109Unlock);
-                            packet.Write(i);
-                            packet.Send();
-                        }
-                        else
-                        {
-                            Anomaly109Manager.options[i].unlocked = true;
-                            CalRemixWorld.UpdateWorldBool();
-                        }
+                        Anomaly109Manager.UnlockOption(i);
                         break;
                     }
                 }
@@ -234,18 +213,7 @@ namespace CalRemix.UI.Anomaly109
                 var pathWriter = File.CreateText(a109path);
                 pathWriter.WriteLine(finalText);
                 pathWriter.Close();
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                {
-                    ModPacket packet = CalRemix.instance.GetPacket();
-                    packet.Write((byte)RemixMessageType.Anomaly109Help);
-                    packet.Send();
-                }
-                else
-                {
-                    Anomaly109Manager.helpUnlocked = true;
-                    CalRemixWorld.UpdateWorldBool();
-                }              
-                CalRemixWorld.UpdateWorldBool();
+                Anomaly109Manager.UnlockHelp();
             }
             if (maus.Intersects(promptborderframe))
             {
@@ -345,6 +313,11 @@ namespace CalRemix.UI.Anomaly109
                         status = "Locked";
                         statusColor = Color.Gray;
                     }
+                    else if (option.check.Invoke())
+                    {
+                        status = "Enabled";
+                        statusColor = Color.Lime;
+                    }
                     else if (!option.check.Invoke())
                     {
                         status = "Disabled";
@@ -356,29 +329,7 @@ namespace CalRemix.UI.Anomaly109
                     if (Main.mouseLeft && Main.mouseLeftRelease && option.unlocked)
                     {
                         SoundEngine.PlaySound(CalamityMod.UI.DraedonSummoning.ExoMechSelectionUI.TwinsHoverSound);
-
-                        if (Main.netMode == NetmodeID.MultiplayerClient)
-                        {
-                            ModPacket packet = CalRemix.instance.GetPacket();
-                            packet.Write((byte)RemixMessageType.Anomaly109Sync);
-                            packet.Write(Anomaly109Manager.options.FindIndex(o => o.title == option.title));
-                            packet.Send();
-                        }
-                        else
-                        {
-                            option.toggle();
-                            CalRemixWorld.UpdateWorldBool();
-                        }
-                        if (option.check.Invoke())
-                        {
-                            status = "Enabled";
-                            statusColor = Color.Lime;
-                        }
-                        else
-                        {
-                            status = "Disabled";
-                            statusColor = Color.Red;
-                        }
+                        Anomaly109Manager.ToggleOption(Anomaly109Manager.options.IndexOf(option));
                         ClickCooldown = 8;
                     }
                 }
@@ -487,17 +438,7 @@ namespace CalRemix.UI.Anomaly109
                 }
                 if (Main.mouseLeft && Main.mouseLeftRelease)
                 {
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                    {
-                        ModPacket packet = CalRemix.instance.GetPacket();
-                        packet.Write((byte)RemixMessageType.ToggleHelpers);
-                        packet.Send();
-                    }
-                    else
-                    {
-                        ScreenHelperManager.screenHelpersEnabled = !ScreenHelperManager.screenHelpersEnabled;
-                        CalRemixWorld.UpdateWorldBool();
-                    }
+                    Anomaly109Manager.ToggleHelpers();
                     if (ScreenHelperManager.screenHelpersEnabled)
                     {
                         fannyFreezeTime = 0;
@@ -671,6 +612,71 @@ namespace CalRemix.UI.Anomaly109
                 options[i].unlocked = tag.ContainsKey("Anomaly109" + msg.title);
             }
             helpUnlocked = tag.ContainsKey("help109");
+        }
+
+        public static void ToggleOption(int id, bool endClient = false)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer || endClient)
+                options[id].toggle();
+            else
+            {
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.Anomaly109Toggle);
+                packet.Write(id);
+                packet.Send();
+            }
+        }
+
+        public static void UnlockHelp(bool endClient = false)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer || endClient)
+                helpUnlocked = true;
+            else
+            {
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.Anomaly109Help);
+                packet.Send();
+            }
+        }
+
+        public static void UnlockOption(int id, bool endClient = false)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer || endClient)
+                options[id].unlocked = true;
+            else
+            {
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.Anomaly109Unlock);
+                packet.Write(id);
+                packet.Send();
+            }
+        }
+
+        public static void UnlockAllOptions(bool endClient = false)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer || endClient)
+            {
+                for (int i = 0; i < options.Count; i++)
+                    options[i].unlocked = true;
+            }
+            else
+            {
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.Anomaly109UnlockAll);
+                packet.Send();
+            }
+        }
+
+        public static void ToggleHelpers(bool endClient = false)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer || endClient)
+                ScreenHelperManager.screenHelpersEnabled = !ScreenHelperManager.screenHelpersEnabled;
+            else
+            {
+                ModPacket packet = CalRemix.instance.GetPacket();
+                packet.Write((byte)RemixMessageType.ToggleHelpers);
+                packet.Send();
+            }
         }
     }
 

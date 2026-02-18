@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             Item.DefaultToWhip(ModContent.ProjectileType<OperatorWhipEnd>(), 1029, 2, 3, 40);
             Item.shoot = ModContent.ProjectileType<OperatorWhipPage>();
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.channel = true;
             Item.autoReuse = true;
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;

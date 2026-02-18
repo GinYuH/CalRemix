@@ -15,6 +15,7 @@ using Terraria.WorldBuilding;
 using CalamityMod.Items.Materials;
 using Terraria.GameContent.ItemDropRules;
 using System.Collections.Generic;
+using CalamityMod.Items.Placeables.Crags;
 
 namespace CalRemix.Content.NPCs
 {
@@ -295,7 +296,7 @@ namespace CalRemix.Content.NPCs
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ModContent.ItemType<AncientBoneDust>(), 2);
-            npcLoot.Add(ModContent.ItemType<DemonicBoneAsh>(), 2);
+            npcLoot.Add(ModContent.ItemType<ScorchedBone>(), 2);
 
             LeadingConditionRule hardmode = npcLoot.DefineConditionalDropSet(DropHelper.Hardmode());
             LeadingConditionRule postProv = npcLoot.DefineConditionalDropSet(DropHelper.PostProv());

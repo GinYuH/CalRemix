@@ -1,9 +1,8 @@
 Element: {
 	None: No entities tracked
 	NoInfo: No elemental info available
-	Vulnerable: Vulnerable to {0} element
-	Resistant: Resisting {0} element
-	Equilibrium: Equilibrium
+	Weak: Weak:
+	Resist: Resist:
 }
 
 Generator: {

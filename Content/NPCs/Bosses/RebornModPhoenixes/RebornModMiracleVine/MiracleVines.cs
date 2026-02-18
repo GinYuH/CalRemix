@@ -54,7 +54,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine
                 #region phoenix shit
                 for (int num154 = 0; num154 < 1; num154++)
                 {
-                    int num155 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 18, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100, default, 1f);
+                    int num155 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CorruptGibs, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100, default, 1f);
                     if (Main.rand.Next(3) != 0 || true)
                     {
                         Main.dust[num155].noGravity = true;

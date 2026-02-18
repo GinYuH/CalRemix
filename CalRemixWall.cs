@@ -1,13 +1,8 @@
-﻿using CalamityMod;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using CalRemix.Content.NPCs.Bosses.Ionogen;
-using CalRemix.Content.NPCs.Bosses.Phytogen;
+﻿using CalRemix.Content.NPCs.Bosses.Carcinogen;
 using CalRemix.Core.Biomes;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Chat;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 

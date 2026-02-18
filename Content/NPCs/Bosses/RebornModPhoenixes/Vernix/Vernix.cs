@@ -39,7 +39,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix
 
             string key = "Mods.CalamityMod.Status.Progression.PlantOreText";
             Color messageColor = Color.GreenYellow;
-            CalamityUtils.DisplayLocalizedText(key, messageColor);
+            CalamityUtils.BroadcastLocalizedText(key, messageColor);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

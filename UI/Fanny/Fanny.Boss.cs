@@ -155,15 +155,15 @@ namespace CalRemix.UI
                     Terraria.Main.npc[q].active = false;
                 }
             }
-            CalamityUtils.DisplayLocalizedText("Providence, the Profaned Goddess has been defeated!", new Color(175, 75, 255));
+            CalamityUtils.BroadcastLocalizedText("Providence, the Profaned Goddess has been defeated!", new Color(175, 75, 255));
             string key2 = "Mods.CalamityMod.Status.Progression.ProfanedBossText3";
             Color messageColor2 = Color.Orange;
-            CalamityUtils.DisplayLocalizedText(key2, messageColor2);
+            CalamityUtils.BroadcastLocalizedText(key2, messageColor2);
             if (!CalRemixWorld.reargar) { 
                 string key3 = "Mods.CalamityMod.Status.Progression.TreeOreText";
                 Color messageColor3 = Color.LightGreen;
                 CalamityUtils.SpawnOre(ModContent.TileType<UelibloomOre>(), 17E-05, 0.55f, 0.9f, 8, 14, TileID.Mud);
-                CalamityUtils.DisplayLocalizedText(key3, messageColor3);
+                CalamityUtils.BroadcastLocalizedText(key3, messageColor3);
 
             }
 

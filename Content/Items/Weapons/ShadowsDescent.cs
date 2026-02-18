@@ -62,7 +62,6 @@ namespace CalRemix.Content.Items.Weapons
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             CalamityPlayer calamityPlayer = player.Calamity();
-            calamityPlayer.killSpikyBalls = false;
             if (calamityPlayer.StealthStrikeAvailable())
             {
                 damage = (int)((double)damage * 1.345);
@@ -80,8 +79,7 @@ namespace CalRemix.Content.Items.Weapons
 
         public override bool AltFunctionUse(Player player)
         {
-            player.Calamity().killSpikyBalls = true;
-            return true;
+            return false;
         }
 
         public override void AddRecipes()

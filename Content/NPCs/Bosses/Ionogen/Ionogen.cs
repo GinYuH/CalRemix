@@ -310,7 +310,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                 SoundEngine.PlaySound(SoundID.Thunder, NPC.Center);
                 Vector2 velocity = new Vector2(0, 1);
                 // Randomly rotate the lightning in Master Mode
-                if (Main.masterMode)
+                if (CalamityWorld.death)
                 {
                     velocity = velocity.RotatedByRandom(MathHelper.PiOver2);
                 }

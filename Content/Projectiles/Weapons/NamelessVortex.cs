@@ -89,7 +89,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                     Vector2 end = Projectile.Center + Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / tentacleCount)).RotatedBy(-Projectile.rotation.DirectionalSign() * MathHelper.Lerp(0, MathHelper.PiOver2, j / pointCount)).RotatedBy(Projectile.rotation) * length;
                     points.Add(Vector2.Lerp(start, end, j / pointCount));
                 }
-                PrimitiveRenderer.RenderTrail(points.ToArray(), new PrimitiveSettings((float f) => 10 * MathHelper.Lerp(10, 20, CalamityUtils.SineOutEasing(1- f, 1)), (float f) => Color.Lerp(col, col * 0.1f, f), shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
+                PrimitiveRenderer.RenderTrail(points.ToArray(), new PrimitiveSettings((float f, Vector2 v) => 10 * MathHelper.Lerp(10, 20, CalamityUtils.SineOutEasing(1- f, 1)), (float f, Vector2 v) => Color.Lerp(col, col * 0.1f, f), shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
             }
             Main.spriteBatch.ExitShaderRegion();
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);

@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using CalamityMod.Projectiles.Magic;
 using Terraria.DataStructures;
+using CalamityMod.Projectiles.Summon;
 
 namespace CalRemix.Content.Items.Weapons.Stormbow
 {
@@ -20,7 +21,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.damage = 4;
             Item.DamageType = ModContent.GetInstance<StormbowDamageClass>();
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
         }
         public override void AddRecipes()
         {
@@ -107,7 +108,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                     int speed = 11;
                     for (int i = 0; i < projCount; i++)
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(Main.MouseWorld) * speed + Main.rand.NextVector2Circular(randomness, randomness), ModContent.ProjectileType<BrimstoneHomer>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(Main.MouseWorld) * speed + Main.rand.NextVector2Circular(randomness, randomness), ModContent.ProjectileType<BrimstoneDartMinion>(), Projectile.damage, Projectile.knockBack, Owner.whoAmI);
                     }
                 }
                 Projectile.frame = 1;

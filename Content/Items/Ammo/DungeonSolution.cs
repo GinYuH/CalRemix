@@ -21,7 +21,7 @@ namespace CalRemix.Content.Items.Ammo
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {
-			return player.itemAnimation >= player.ActiveItem().useAnimation - 3;
+			return player.itemAnimation >= player.HeldItem.useAnimation - 3;
 		}
     }
     public class PinkGreySolution : DungeonSolution

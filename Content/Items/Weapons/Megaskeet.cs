@@ -28,7 +28,7 @@ namespace CalRemix.Content.Items.Weapons
 		{
 			Item.width = 10;
 			Item.height = 10;
-			Item.rare = ModContent.RarityType<Violet>();
+			Item.rare = ModContent.RarityType<BurnishedAuric>();
 			Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.useTime = 3; 
 			Item.useAnimation = 3;
@@ -78,9 +78,9 @@ namespace CalRemix.Content.Items.Weapons
         {
             CreateRecipe().
                 AddIngredient<SDOMG>(1).
-                AddIngredient<ClockGatlignum>(1).
+                AddIngredient(ItemID.VenusMagnum).
                 AddIngredient<YharonSoulFragment>(5).
-                AddIngredient<CoreofSunlight>(17).
+                AddIngredient<EssenceofSunlight>(17).
                 AddTile<CosmicAnvil>().
                 Register();
         }

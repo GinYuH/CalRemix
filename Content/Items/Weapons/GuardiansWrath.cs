@@ -23,7 +23,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             Item.width = 10;
             Item.height = 10;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.value = Item.sellPrice(gold: 20);
             Item.useTime = 20;
             Item.useAnimation = 20;

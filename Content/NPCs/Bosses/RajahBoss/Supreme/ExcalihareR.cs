@@ -53,7 +53,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss.Supreme
             Vector2 value6 = new Vector2(1.05f, 1f);
             for (float num14 = 0f; num14 < num13; num14 += 1f)
             {
-                int num15 = Dust.NewDust(Projectile.Center, 0, 0, 66, 0f, 0f, 0, Color.Transparent, 1f);
+                int num15 = Dust.NewDust(Projectile.Center, 0, 0, DustID.RainbowTorch, 0f, 0f, 0, Color.Transparent, 1f);
                 Main.dust[num15].position = Projectile.Center;
                 Main.dust[num15].velocity = spinningpoint.RotatedBy(6.28318548f * num14 / num13) * value6 * (0.8f + Main.rand.NextFloat() * 0.4f);
                 Main.dust[num15].color = Main.hslToRgb(num14 / num13, 1f, 0.5f);

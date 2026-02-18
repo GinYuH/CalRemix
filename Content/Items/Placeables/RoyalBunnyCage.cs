@@ -22,7 +22,7 @@ namespace CalRemix.Content.Items.Placeables
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<Tiles.RoyalBunnyCage>(); //put your CustomBlock Tile name
         }
@@ -37,7 +37,7 @@ namespace CalRemix.Content.Items.Placeables
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(Mod, "RoyalRabbit", 1);
             recipe.AddIngredient(ItemID.Terrarium, 1);
-            recipe.AddRecipeGroup(ItemID.GoldBar, 20);
+            recipe.AddRecipeGroup("AnyGoldBar", 20);
             recipe.Register();
         }
 
@@ -49,9 +49,9 @@ namespace CalRemix.Content.Items.Placeables
                 int bunnyKills = ++NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
                 if (bunnyKills % 100 == 0 && bunnyKills < 1000)
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.RoyalRabbit.1", new Color(107, 137, 179));
+                        CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.RoyalRabbit.1", new Color(107, 137, 179));
                     }
 
                     SoundEngine.PlaySound(new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound"), player.Center);
@@ -61,13 +61,13 @@ namespace CalRemix.Content.Items.Placeables
 
                 if (bunnyKills % 100 == 0 && bunnyKills >= 1000)
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (Main.netMode == 0)
+                        if (Main.netMode == NetmodeID.SinglePlayer)
                         {
                             Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.RoyalRabbit.2", player.name.ToUpper()), new Color(107, 137, 179));
                         }
-                        else if (Main.netMode == 2)
+                        else if (Main.netMode == NetmodeID.Server)
                         {
                             ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.RoyalRabbit.2", player.name.ToUpper()), new Color(107, 137, 179));
                         }

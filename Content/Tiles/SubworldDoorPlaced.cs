@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.Content.Items.Placeables;
 using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,13 +24,20 @@ namespace CalRemix.Content.Tiles
 
         public virtual Color DoorColor => Color.White;
 
+        public virtual int DoorStyle => -1;
+
         public override void Load()
         {
             if (!Main.dedServ)
             {
-                // Cache the extra texture displayed on the pedestal
                 PreviewTex = ModContent.Request<Texture2D>(PreviewTexName);
             }
+        }
+
+        public static void AddSubdoorItem(ModTile mt, int style = -1)
+        {
+            ModItem doorItem = new SubworldDoor(mt, style);
+            ModContent.GetInstance<CalRemix>().AddContent(doorItem);
         }
 
         public override void SetStaticDefaults()
@@ -111,9 +119,12 @@ namespace CalRemix.Content.Tiles
             Tile t = Main.tile[i, j];
             if (t.TileFrameX % 36 == 0 && t.TileFrameY == 54)
             {
-                Texture2D tex = PreviewTex.Value;
-                Vector2 tileSize = new Vector2(32, 54);
-                Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Color.White, 0, Vector2.Zero, tileSize / tex.Size(), 0);
+                if (PreviewTex != null)
+                {
+                    Texture2D tex = PreviewTex.Value;
+                    Vector2 tileSize = new Vector2(32, 54);
+                    Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Lighting.GetColor(i, j), 0, Vector2.Zero, tileSize / tex.Size(), 0);
+                }
             }
             Main.EntitySpriteDraw(TextureAssets.Tile[Type].Value, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, new Rectangle(t.TileFrameX, t.TileFrameY, 16, 16), Lighting.GetColor(i, j, DoorColor), 0, Vector2.Zero, 1, 0);
 
@@ -129,6 +140,8 @@ namespace CalRemix.Content.Tiles
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
 
         public override Color DoorColor => Color.DarkGray;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class BaronDoor : SubworldDoorPlaced
@@ -156,6 +169,8 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.GhostWhite;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class GrandSeaDoor : SubworldDoorPlaced
@@ -165,6 +180,8 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.RoyalBlue;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class AntDoor : SubworldDoorPlaced
@@ -174,6 +191,8 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.WhiteSmoke;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class PiggyDoor : SubworldDoorPlaced
@@ -183,6 +202,8 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.LightPink;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class SealedDoor : SubworldDoorPlaced
@@ -192,6 +213,8 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.Purple;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class HorizonDoor : SubworldDoorPlaced
@@ -201,6 +224,8 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.PaleGoldenrod;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class DeformityDoor : SubworldDoorPlaced
@@ -210,6 +235,8 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.CadetBlue;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class NowhereDoor : SubworldDoorPlaced
@@ -219,6 +246,8 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.Gray;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class SPDoor : SubworldDoorPlaced
@@ -228,6 +257,29 @@ namespace CalRemix.Content.Tiles
 
         public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
         public override Color DoorColor => Color.DarkSeaGreen;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
+    }
+
+    public class TheGrayDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/TheGray/Underscore_Eye";
+        public override Subworld BoundSubworld => ModContent.GetInstance<TheGraySubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.Black;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
+    }
+    public class NightlineDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/Car";
+        public override Subworld BoundSubworld => ModContent.GetInstance<NightlineSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.IndianRed;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
 
     public class EdisDoor : SubworldDoorPlaced

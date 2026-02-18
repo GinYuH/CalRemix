@@ -4,6 +4,8 @@ using Terraria.ID;
 using CalamityMod;
 using CalamityMod.Items.Placeables;
 using CalRemix.Core.World;
+using CalamityMod.Items.Placeables.FurnitureMonolith;
+using CalamityMod.Items.Placeables.FurnitureAcidwood;
 
 namespace CalRemix.Content.Items.Bags
 {

@@ -48,6 +48,7 @@ namespace CalRemix
         public bool whipGonged = false;
         public int taintSummon = 0;
         public int deflectedEnemy = -1;
+        public bool friendlyRajahProj = false;
         public override bool InstancePerEntity => true;
         public int[] baronStraitTiles =
         {
@@ -143,7 +144,11 @@ namespace CalRemix
                 projectile.frame = 0;
 
             }
-
+            if (friendlyRajahProj)
+            {
+                projectile.friendly = true;
+                projectile.hostile = false;
+            }
             if (CalRemixWorld.oxydayTime > 0 && projectile.Center.Y < Main.worldSurface * 16.0 && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16] != null && Main.tile[(int)projectile.Center.X / 16, (int)projectile.Center.Y / 16].WallType == WallID.None && (projectile.velocity.X > 0f && Main.windSpeedCurrent < 0f || projectile.velocity.X < 0f && Main.windSpeedCurrent > 0f || Math.Abs(projectile.velocity.X) < Math.Abs(Main.windSpeedCurrent * Main.windPhysicsStrength) * 180f) && Math.Abs(projectile.velocity.X) < 16f)
             {
                 projectile.velocity.X += Main.windSpeedCurrent * Main.windPhysicsStrength;
@@ -371,7 +376,7 @@ namespace CalRemix
         public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[projectile.owner];
-            
+
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             var source = projectile.GetSource_FromThis();
             if (modPlayer.tvo && CalamityUtils.CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
@@ -463,7 +468,7 @@ namespace CalRemix
             {
                 modifiers.FinalDamage *= 1.5f;
             }
-            
+
             CalRemixPlayer p = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
             if (p.hydrogenSoul)
             {
@@ -522,7 +527,7 @@ namespace CalRemix
             {
                 if (projectile.type == ProjectileType<CryonicShield>())
                     return Color.Magenta;
-                if (uniproj && (projectile.type == ProjectileType<GalileosPlanet>()
+                if (uniproj && (projectile.type == ProjectileType<StratusBlackHole>()
                     || projectile.type == ProjectileType<CosmicBlast>()
                     || projectile.type == ProjectileType<EndoIceShard>()))
                     return Color.HotPink;
@@ -562,6 +567,24 @@ namespace CalRemix
                     if (!projectile.hostile)
                     {
                         projectile.DamageType = GetInstance<StormbowDamageClass>();
+                    }
+                }
+            }
+
+            if (source is EntitySource_Parent par)
+            {
+                if (par.Entity is NPC rajah)
+                {
+                    if (rajah.friendly)
+                    {
+                        friendlyRajahProj = true;
+                    }
+                }
+                if (par.Entity is Projectile rajahe)
+                {
+                    if (rajahe.GetGlobalProjectile<CalRemixProjectile>().friendlyRajahProj)
+                    {
+                        friendlyRajahProj = true;
                     }
                 }
             }

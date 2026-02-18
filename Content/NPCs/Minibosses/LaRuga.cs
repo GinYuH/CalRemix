@@ -198,7 +198,7 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         public override void OnKill()
         {
-            CalamityMod.Particles.DeathAshParticle.CreateAshesFromNPC(NPC);
+            CalamityMod.Particles.DeathAshParticle.CreateAshesFromNPC(NPC, Vector2.Zero);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

@@ -12,6 +12,7 @@ using CalamityMod.Tiles.Astral;
 using CalamityMod.Tiles.AstralDesert;
 using CalamityMod.Tiles.AstralSnow;
 using CalamityMod.Items.Materials;
+using CalamityMod.Tiles.FurnitureMonolith;
 
 namespace CalRemix.Core.World
 {

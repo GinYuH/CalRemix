@@ -28,7 +28,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             get
             {
-                float swordRotation = InitialRotation + (!SwingingUp ? SwingDown(SwingCompletion) : SwingUp(SwingCompletion)) * Projectile.spriteDirection + MathHelper.PiOver4;
+                float swordRotation = InitialRotation + (!SwingingUp ? SwingDown(SwingCompletion, Vector2.Zero) : SwingUp(SwingCompletion, Vector2.Zero)) * Projectile.spriteDirection + MathHelper.PiOver4;
                 if (Projectile.spriteDirection == 1)
                     swordRotation += MathHelper.PiOver2;
                 if (SwingingUp)
@@ -58,9 +58,9 @@ namespace CalRemix.Content.Projectiles.Weapons
         public static CurveSegment Piece2Big => new(EasingType.PolyIn, 0.7f, Piece1Big.EndingHeight, 2f, 1);
         public static CurveSegment Piece3Big => new(EasingType.PolyOut, 0.8f, Piece2Big.EndingHeight, 0.97f, 3);
 
-        public static float SwingDown(float completion) => PiecewiseAnimation(completion, Piece1, Piece2, Piece3);
-        public static float SwingUp(float completion) => PiecewiseAnimation(completion, Piece1Up, Piece2Up, Piece3Up);
-        public static float SwingBing(float completion) => PiecewiseAnimation(completion, Piece1Big, Piece2Big, Piece3Big);
+        public static float SwingDown(float completion, Vector2 v) => PiecewiseAnimation(completion, Piece1, Piece2, Piece3);
+        public static float SwingUp(float completion, Vector2 v) => PiecewiseAnimation(completion, Piece1Up, Piece2Up, Piece3Up);
+        public static float SwingBing(float completion, Vector2 v) => PiecewiseAnimation(completion, Piece1Big, Piece2Big, Piece3Big);
 
         public bool SwingingUp => Projectile.ai[2] == 2;
         public bool Spinning => false;// Projectile.ai[2] == 3;
@@ -254,14 +254,14 @@ namespace CalRemix.Content.Projectiles.Weapons
                 return false;
             float point = 0f;
 
-            Vector2 attackRotation = (InitialRotation + SwingDown(SwingCompletion)).ToRotationVector2();
+            Vector2 attackRotation = (InitialRotation + SwingDown(SwingCompletion, Vector2.Zero)).ToRotationVector2();
             if (Projectile.ai[2] == 2)
             {
-                attackRotation = (InitialRotation + SwingUp(SwingCompletion)).ToRotationVector2();
+                attackRotation = (InitialRotation + SwingUp(SwingCompletion, Vector2.Zero)).ToRotationVector2();
             }
             else if (Projectile.ai[2] == 3)
             {
-                attackRotation = (InitialRotation + SwingBing(SwingCompletion)).ToRotationVector2();
+                attackRotation = (InitialRotation + SwingBing(SwingCompletion, Vector2.Zero)).ToRotationVector2();
             }
 
             Vector2 direction = attackRotation * new Vector2(Projectile.spriteDirection, 1f);

@@ -51,7 +51,7 @@ public class Driftorcher : ModItem
                 torch = 2;
             else if (player.ConsumeItem(ItemType<SulphurousTorch>(), true))
                 torch = 3;
-            else if (player.ConsumeItem(ItemType<AbyssTorch>(), true))
+            else if (player.ConsumeItem(ItemType<VoidTorch>(), true))
                 torch = 4;
             else if (player.ConsumeItem(ItemType<GloomTorch>(), true))
                 torch = 5;

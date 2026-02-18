@@ -1,11 +1,9 @@
 ﻿using CalamityMod;
 using CalamityMod.Events;
 using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.HiveMind;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.TownNPCs;
-using CalamityMod.World;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.ZAccessories;
@@ -36,7 +34,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks.Dataflow;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -119,18 +116,20 @@ namespace CalRemix.Core
             On_Main.DrawBlack += FixSubworldDrawBlack;
             On_WorldGen.oceanDepths += DisableOceanSubworld;
             On_Main.DrawPlayers_AfterProjectiles += DrawGrass;
-            On_Item.Prefix += FolvsPrefix; 
+            //On_Item.Prefix += FolvsPrefix; 
             On_NPC.SpawnBoss += TripletsSpawnTextOverride;
             On_NPC.DoDeathEvents_BeforeLoot += PreventFoveanatorDefeatMessageIfNotKilledLast;
             On_NPC.DoDeathEvents_CelebrateBossDeath += TripletsDefeatTextOverride;
+            //On_Lighting.AddLight_int_int_float_float_float += CustomLight;
+            //On_Lighting.AddLight_int_int_int_float += CustomLight2;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
             On.CalamityMod.Systems.ExoMechsMusicScene.AdditionalCheck += ExoMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.AdditionalCheck += DoGMusicDeath;
             On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.AdditionalCheck += DoGMusicDeath2;
-            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedRetinazerAI += DisableRevRetinazer;
-            On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedSpazmatismAI += DisableRevSpazmatism;
+            //On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedRetinazerAI += DisableRevRetinazer;
+            //On.CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses.TwinsAI.BuffedSpazmatismAI += DisableRevSpazmatism;
 
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
@@ -144,8 +143,18 @@ namespace CalRemix.Core
             drawHook = null;
         }
 
+        public static void CustomLight2(On_Lighting.orig_AddLight_int_int_int_float orig, int i, int j, int lightType, float lightAmount)
+        {
+            orig(i, j, lightType, lightAmount);
+        }
+
+        public static void CustomLight(On_Lighting.orig_AddLight_int_int_float_float_float orig, int i, int j, float r, float g, float b)
+        {
+            orig(i, j, r, g, b);
+        }
+
         public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)
-        {            
+        {
             if (!CalRemixWorld.folvsPrefix)
             {
                 return orig(self, pfx);
@@ -203,7 +212,7 @@ namespace CalRemix.Core
 
                 AchievementsHelper.CheckMechaMayhem();
 
-                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.TripletsBossText", new Color(175, 75, 255));
+                CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.TripletsBossText", new Color(175, 75, 255));
                 return;
             }
             else
@@ -251,14 +260,14 @@ namespace CalRemix.Core
                 return;
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
             int grass = TileType<HorizonGrass>();
-            
+
             foreach (Player p in Main.ActivePlayers)
             {
                 int checkRange = 3;
                 Point pos = p.Bottom.ToTileCoordinates();
                 for (int i = pos.X - checkRange; i < pos.X + checkRange; i++)
                 {
-                    for (int j =  pos.Y - checkRange;  j < pos.Y + checkRange; j++)
+                    for (int j = pos.Y - checkRange; j < pos.Y + checkRange; j++)
                     {
                         Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                         if (t.TileType == grass)
@@ -488,6 +497,13 @@ namespace CalRemix.Core
                 orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, (byte)SpriteEffects.FlipVertically);
             else if (Main.LocalPlayer.name == "jeb_")
                 orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, Main.DiscoColor, originX, originY, rotationSin, rotationCos, depth, effects);
+            else if (Main.LocalPlayer.name.ToLower().Contains("fabsol"))
+            {
+                Texture2D bloom = Request<Texture2D>("CalamityMod/Particles/LargeBloom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                if (destinationW + destinationH < 2000)
+                    orig(self, bloom, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, Color.White with { A = 0 }, originX, originY, rotationSin, rotationCos, depth, effects);
+                orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, effects);
+            }
             else
                 orig(self, texture, sourceX, sourceY, sourceW, sourceH, destinationX, destinationY, destinationW, destinationH, color, originX, originY, rotationSin, rotationCos, depth, effects);
         }
@@ -1201,7 +1217,7 @@ namespace CalRemix.Core
         }
         public static void SetOldDukeDead()
         {
-            CalamityMod.NPCs.CalamityGlobalNPC.SetNewShopVariable(new int[] { NPCType<SEAHOE>() }, DownedBossSystem.downedBoomerDuke);
+            CalamityMod.NPCs.CalamityGlobalTownNPC.SetNewShopVariable(new int[] { NPCType<SeaKing>() }, DownedBossSystem.downedBoomerDuke);
 
             // Mark Old Duke as dead
             DownedBossSystem.downedBoomerDuke = true;
@@ -1213,7 +1229,7 @@ namespace CalRemix.Core
         private static bool ExoMusicDeath(On.CalamityMod.Systems.ExoMechsMusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.ExoMechsMusicScene self) => false;
         private static bool DoGMusicDeath(On.CalamityMod.Systems.DevourerofGodsPhase1MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase1MusicScene self) => false;
         private static bool DoGMusicDeath2(On.CalamityMod.Systems.DevourerofGodsPhase2MusicScene.orig_AdditionalCheck orig, CalamityMod.Systems.DevourerofGodsPhase2MusicScene self) => false;
-        
+
         private static void ReplaceWorldSelectionSizeDescriptions(ILContext il)
         {
             var c = new ILCursor(il);
@@ -1221,7 +1237,7 @@ namespace CalRemix.Core
             c.GotoNext(MoveType.After, x => x.MatchLdstr("UI.WorldDescriptionSizeMedium"));
             c.EmitPop();
             c.EmitLdstr("Mods.CalRemix.UI.MediumWorldWarning");
-            
+
             c.GotoNext(MoveType.After, x => x.MatchLdstr("UI.WorldDescriptionSizeLarge"));
             c.EmitPop();
             c.EmitLdstr("Mods.CalRemix.UI.LargeWorldGreening");

@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Food;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.ExoMechs;
@@ -46,7 +47,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             .SetBiomeAffection<OceanBiome>(AffectionLevel.Dislike)
             .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Love)
             .SetNPCAffection(NPCID.Pirate, AffectionLevel.Hate)
-            .SetNPCAffection(ModContent.NPCType<WITCH>(), AffectionLevel.Like) 
+            .SetNPCAffection(ModContent.NPCType<BrimstoneWitch>(), AffectionLevel.Like) 
             .SetNPCAffection(NPCID.Demolitionist, AffectionLevel.Dislike) 
 ;
         }
@@ -164,7 +165,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
                 int pirate = NPC.FindFirstNPC(NPCID.Pirate);
                 chat.Add("Who the hell let " +  Main.npc[pirate].GivenName + " have a cannon?! Trusting pirates with just about anything is a recipe for disaster!");
             }
-            if (NPC.AnyNPCs(ModContent.NPCType<WITCH>()))
+            if (NPC.AnyNPCs(ModContent.NPCType<BrimstoneWitch>()))
             {
                 chat.Add("Nice to see that our luck’s turning around. That Calamitas reminds me an awful lot of a good friend of mine...");
             }

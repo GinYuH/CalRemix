@@ -66,7 +66,7 @@ namespace CalRemix.Content.NPCs
                         NPC.noGravity = false;
                         NPC.noTileCollide = false;
                         NPC.Remix().GreenAI[1]++;
-                        CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
+                        NPC.aiStyle = NPCAIStyleID.Herpling;
                         if (NPC.Remix().GreenAI[1] >= 120)
                         {
                             SwitchPhase(1);
@@ -75,6 +75,7 @@ namespace CalRemix.Content.NPCs
                     break;
                 case 1:
                     {
+                        NPC.aiStyle = -1;
                         xColumn = 1;
                         yMin = 4;
                         yMax = 4;
@@ -100,6 +101,7 @@ namespace CalRemix.Content.NPCs
                     }
                 case 2:
                     {
+                        NPC.aiStyle = -1;
                         xColumn = 1;
                         yMin = 0;
                         yMax = 3;

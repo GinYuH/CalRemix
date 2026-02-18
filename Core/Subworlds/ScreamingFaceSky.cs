@@ -11,7 +11,7 @@ using static Terraria.Main;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class ScreamingFaceSky : CustomSky
+    public class ScreamingFaceSky : CustomSky, IDisableBuilding
     {
         public static bool CanSkyBeActive
         {

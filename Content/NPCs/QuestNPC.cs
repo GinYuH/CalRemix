@@ -68,6 +68,10 @@ namespace CalRemix.Content.NPCs
                             if (CalRemixWorld.shadeQuestLevel == 2)
                             {
                                 NPCDialogueUI.StartDialogue(NPC.whoAmI, "Shades");
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Item.NewItem(NPC.GetSource_FromThis(), NPC.Hitbox, ModContent.ItemType<PusSac>());
+                                }
                                 return;
                             }
                         }

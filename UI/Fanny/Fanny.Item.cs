@@ -6,8 +6,11 @@ using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.Items.Pets;
 using CalamityMod.Items.Placeables.Furniture.BossRelics;
+using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Food;
 using CalamityMod.Items.SummonItems;
+using CalamityMod.Items.Tools;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
@@ -23,6 +26,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CalRemix.Content.Items.Potions;
 
 namespace CalRemix.UI
 {
@@ -145,13 +149,13 @@ namespace CalRemix.UI
 
             //Evil Fanny
             HelperMessage.New("EvilMinions", "Oh, summoner, how nice. I want to ask this in the most genuine way I can, do you play videogames for fun? Did you open up a terraria world and genuinely go \"Oh boy! Let's play summoner! I'm going to have so much fun!\"? No!!! You didn't!!! Half of your minions have braindead AI because you're playing Calamity!!! Just play any other class, man. You make me sad.",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.ActiveItem().DamageType == DamageClass.Summon && Main.LocalPlayer.numMinions >= 10).SpokenByEvilFanny();
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HeldItem.DamageType == DamageClass.Summon && Main.LocalPlayer.numMinions >= 10).SpokenByEvilFanny();
 
             HelperMessage.New("EvilTerraBlade", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. It's just a sword, after all. Now, go on, swing it around like the hero you think you are.",
                 "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.TerraBlade)).SpokenByEvilFanny().AddItemDisplay(ItemID.TerraBlade);
 
             HelperMessage sama = HelperMessage.New("MurasamaBig", "Oh, congratulations, you managed to get a Terra Blade. I'm sure you're feeling all proud and accomplished now. But hey, don't strain yourself patting your own back too hard. You're gonna be doing this \"big sword crafting tree\" thing a lot from here on out. Hope piggy here likes their slop!",
-                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.ActiveItem().type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny().InitiateConversation();
+                "EvilFannyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.controlUseItem && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Murasama>() && DownedBossSystem.downedDoG && fannyTimesFrozen <= 0).SpokenByEvilFanny().InitiateConversation();
             HelperMessage mgra = HelperMessage.New("Muracrimsona1", "Lmao this item is \"perfectly balanced\" am i right?? Standig here i realize like mgr",
                 "CrimSonDefault", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.CrimSon).ChainAfter(sama, 5, true);
             HelperMessage.New("Muracrimsona2", "SHUT THE FUCK UP!! I FUCKING HATE YOU YOU PIECE OF SHIT I HATE YOU!!!",
@@ -164,7 +168,7 @@ namespace CalRemix.UI
                "FannyAwe", (ScreenHelperSceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, CalRemixAddon.Wrath, "Xenqiterthralyensyr"));
 
             HelperMessage.New("Catharsis", "Don’t exhume Kaleidoscope! Catharsis is known to cause clinical depression in users.",
-               "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<WITCH>() && Main.LocalPlayer.TalkNPC == n) && ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip));
+               "FannyNuhuh", (ScreenHelperSceneMetrics scene) => scene.onscreenNPCs.Any(n => n.type == ModContent.NPCType<BrimstoneWitch>() && Main.LocalPlayer.TalkNPC == n) && ModLoader.HasMod("CatalystMod") && Main.LocalPlayer.HasItem(ItemID.RainbowWhip));
 
             HelperMessage.New("ThoriumOre", "Hey, take a look at this blueish-greenish-yellow metal! Isn't it cool? It's called Thorium! That would be a great name for a mod! Thankfully, we're not in a game, so I can use it freely!",
                "FannyNuhuh", (ScreenHelperSceneMetrics scene) => CalRemixHelper.HasCrossModItem(Main.LocalPlayer, "ThoriumMod", "ThoriumOre"));
@@ -207,7 +211,7 @@ namespace CalRemix.UI
             ModContent.ItemType<StormRuler>(),
             ModContent.ItemType<TheFirstShadowflame>(),
             ModContent.ItemType<DefiledFlameDye>(),
-            ModContent.ItemType<RuneofKos>()
+            ModContent.ItemType<MarkofProvidence>()
         };
         private static readonly List<int> TofuItems = new List<int>
         {
@@ -220,7 +224,6 @@ namespace CalRemix.UI
             ModContent.ItemType<DarkSpark>(),
             ModContent.ItemType<ResurrectionButterfly>(),
             ModContent.ItemType<FantasyTalisman>(),
-            ModContent.ItemType<HellsSun>(),
             ModContent.ItemType<TheDreamingGhost>()
         };
         private static readonly List<int> GoodHealingPots = new List<int>

@@ -191,7 +191,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
             Vector2 trailOffset = NPC.Size * 0.5f;
             trailOffset += (NPC.rotation + MathHelper.PiOver2).ToRotationVector2();
-            PrimitiveRenderer.RenderTrail(vecList, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => Vector2.Zero, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 17);
+            PrimitiveRenderer.RenderTrail(vecList, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_, _) => Vector2.Zero, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 17);
 
             Main.spriteBatch.ExitShaderRegion();
             
@@ -204,9 +204,9 @@ namespace CalRemix.Content.NPCs.PandemicPanic
         }
 
 
-        public float FlameTrailWidthFunction(float completionRatio) => MathHelper.Lerp(60, 1, completionRatio);
+        public float FlameTrailWidthFunction(float completionRatio, Vector2 v) => MathHelper.Lerp(60, 1, completionRatio);
 
-        public Color FlameTrailColorFunction(float completionRatio)
+        public Color FlameTrailColorFunction(float completionRatio, Vector2 v)
         {
             Color color = Color.Violet;
             if (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>() != null)

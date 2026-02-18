@@ -555,7 +555,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
 
                     spriteBatch.EnterShaderRegion();
-                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(new((float f) => 80 * (1 - f)), new PrimitiveSettings.VertexColorFunction((float f) => (Color.Lerp(Color.CornflowerBlue, default, f))), shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
+                    PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new(new((float f, Vector2 v) => 80 * (1 - f)), new PrimitiveSettings.VertexColorFunction((float f, Vector2 v) => (Color.Lerp(Color.CornflowerBlue, default, f))), shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
                     spriteBatch.ExitShaderRegion();
                 }
             }

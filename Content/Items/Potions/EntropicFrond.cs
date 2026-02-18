@@ -23,7 +23,7 @@ namespace CalRemix.Content.Items.Potions
             Item.UseSound = SoundID.Item2;
             Item.maxStack = 9999;
             Item.consumable = true;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.value = Item.buyPrice(gold: 50);
             Item.buffType = ModContent.BuffType<EntropicallyFed>();
             Item.buffTime = 600;
