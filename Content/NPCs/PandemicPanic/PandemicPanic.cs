@@ -197,7 +197,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                 packet.Write((byte)RemixMessageType.StartPandemicPanic);
                 packet.Send();
             }
-            CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.PandemicPanicBegin", Color.Red);
+            CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.PandemicPanicBegin", Color.Red);
         }
 
         public static void EndEvent()
@@ -213,7 +213,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
             string winner = InvadersWinning ? "BadEnd" : DefendersWinning ? "GoodEnd" : "NeutralEnd";
             Color c = InvadersWinning ? Color.Red : DefendersWinning? Color.Lime : Color.Ivory;
 
-            CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.PandemicPanic" + winner, c);
+            CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.PandemicPanic" + winner, c);
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
@@ -434,6 +434,13 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     }
                     PandemicPanic.InvadersKilled = killCount;
                 }
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    ModPacket packet = CalRemix.instance.GetPacket();
+                    packet.Write((byte)RemixMessageType.KillInvader);
+                    packet.Write(PandemicPanic.InvadersKilled);
+                    packet.Send();
+                }
             }
             if (PandemicPanic.DefenderNPCs.Contains(npc.type))
             {
@@ -446,23 +453,14 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     }
                     PandemicPanic.DefendersKilled = killCount;
                 }
-            }
-            if (Main.netMode == NetmodeID.Server)
-            {
+                if (Main.netMode == NetmodeID.Server)
                 {
                     ModPacket packet = CalRemix.instance.GetPacket();
                     packet.Write((byte)RemixMessageType.KillDefender);
                     packet.Write(PandemicPanic.DefendersKilled);
                     packet.Send();
                 }
-                {
-                    ModPacket packet = CalRemix.instance.GetPacket();
-                    packet.Write((byte)RemixMessageType.KillInvader);
-                    packet.Write(PandemicPanic.InvadersKilled);
-                    packet.Send();
-                }
             }
-            CalRemixWorld.UpdateWorldBool();
         }
 
         public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers)

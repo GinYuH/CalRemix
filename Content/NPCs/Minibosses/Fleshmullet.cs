@@ -173,7 +173,7 @@ namespace CalRemix.Content.NPCs.Minibosses
             return false;
         }
 
-        public float RibbonTrailWidthFunction(float completion)
+        public float RibbonTrailWidthFunction(float completion, Vector2 vletion)
         {
             if (completion < 0.9f)
                 return Math.Abs(MathF.Sin(completion * 0.5f) + 0.5f) * 10;
@@ -183,7 +183,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                 return MathHelper.Lerp(14, 10, Utils.GetLerpValue(0.95f, 1f, completion));
         }
 
-        public float RibbonTrailWidthFunctionSmall(float completion)
+        public float RibbonTrailWidthFunctionSmall(float completion, Vector2 vletion)
         {
             float baseg = Math.Abs(MathF.Sin(completion * 0.5f) + 0.5f) * 6;
             if (completion < 0.9f)
@@ -192,7 +192,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                 return baseg + MathF.Sin(completion) * 4;
         }
 
-        public Color RibbonTrailColorFunction(float color)
+        public Color RibbonTrailColorFunction(float color, Vector2 v)
         {
             return Color.Black;
         }

@@ -113,7 +113,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             NPC target = CalamityUtils.MinionHoming(Projectile.Center, 1000, Main.player[Projectile.owner]);
             if (Projectile.timeLeft % 350 == 1 && target != null && target.active && Projectile.timeLeft > 60)
             {
-                SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.OtherwordlyHitSound);
+                SoundEngine.PlaySound(CalamityMod.NPCs.DevourerofGods.DevourerofGodsHead.HitSound);
                 if (Projectile.owner == Main.myPlayer)
                 {
                     for (int i = 0; i < 2; i++)

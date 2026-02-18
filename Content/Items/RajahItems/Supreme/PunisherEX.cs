@@ -15,7 +15,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
 
         public override void SetDefaults()
         {
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 14;
             Item.useTime = 14;
             Item.autoReuse = true;
@@ -26,7 +26,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
             Item.shoot = Terraria.ModLoader.ModContent.ProjectileType<Projectiles.Hostile.RajahProjectiles.Supreme.PunisherEX>();
             Item.shootSpeed = 15f;
             Item.UseSound = SoundID.Item1;
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
             Item.expert = true; Item.expertOnly = true;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;

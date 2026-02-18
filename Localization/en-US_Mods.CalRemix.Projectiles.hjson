@@ -362,7 +362,7 @@ AttackSquid.DisplayName: Attack Squid
 SquidzookaBlast.DisplayName: Squidzooka Blast
 KrakenTentacleFlail.DisplayName: Kraken Tentacle
 PliobrineProj.DisplayName: Pliobrine
-AnomalyOrbule.DisplayName: Anomaly Orbule
+AnomalyOrbule.DisplayName: Viriste Orbule
 MonorianGemProj.DisplayName: Monorian Gem
 OmegaReticle.DisplayName: Omega Reticle
 OmegaPlumLaser.DisplayName: Omega Plum Laser
@@ -482,6 +482,16 @@ PunisherEX.DisplayName: Punisher E X
 RabbitBeam.DisplayName: Rabbit Beam
 RabbitRocketEX.DisplayName: Rabbit Rocket E X
 RoyalRabbit.DisplayName: Royal Rabbit
+AnomalyOrbuleBoss.DisplayName: Viriste Orbule
+BagofCarrotsProj.DisplayName: Bag of Carrots
+VirisiteDrop.DisplayName: Virisite Drop
+WulfrumNanite.DisplayName: Wulfrum Nanite
+DeadeyeRevolverProj.DisplayName: Deadeye Revolver Proj
+DeadeyeRevolverMeatball.DisplayName: Deadeye Revolver Meatball
+EyesickleProj.DisplayName: Eyesickle Proj
+LookerBookProj.DisplayName: Looker Book Proj
+LookerBookTooth.DisplayName: Looker Book Tooth
+PrisonOpalProj.DisplayName: Prison Opal
 DarkSpear.DisplayName: Dark Spear
 DarkEnergyBolt.DisplayName: Dark Energy Bolt
 DarkBeam.DisplayName: Dark Beam

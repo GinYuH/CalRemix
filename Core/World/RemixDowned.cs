@@ -12,6 +12,8 @@ namespace CalRemix.Core.World
     {
         public static bool DownedGens => downedOrigen && downedCarcinogen && downedPhytogen && downedHydrogen && downedOxygen && downedIonogen && downedPathogen;
 
+        // Bosses
+
         public static bool downedCalamity;
 
         public static bool downedExcavator;
@@ -62,6 +64,14 @@ namespace CalRemix.Core.World
 
         public static bool downedCrevi;
 
+        public static bool downedRajah;
+
+        public static bool downedRajahsRevenge;
+
+        public static bool downedAnomaly;
+
+        //Minibosses
+
         public static bool downedEarthElemental;
 
         public static bool downedLifeSlime;
@@ -86,17 +96,15 @@ namespace CalRemix.Core.World
 
         public static bool downedRed;
 
-        public static bool downedGale;
-
         public static bool downedCryonix;
 
         public static bool downedVernix;
 
         public static bool downedChaotrix;
 
-        public static bool downedRajah;
+        //Events
 
-        public static bool downedRajahsRevenge;
+        public static bool downedGale;
 
         public void ResetBools()
         {

@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.SunkenSea;
 
 namespace CalRemix.Content.Items.Weapons
 {

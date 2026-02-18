@@ -1,4 +1,5 @@
 using CalamityMod.Items.Materials;
+using CalamityMod.Items.Placeables.Crags;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Materials;
 using Terraria;
@@ -48,7 +49,7 @@ namespace CalRemix.Content.Items.Potions
         {
             CreateRecipe().
                 AddIngredient(ItemID.GlowingMushroom, 10).
-                AddIngredient<DemonicBoneAsh>(2).
+                AddIngredient<ScorchedBone>(2).
                 AddIngredient(ItemID.Gel, 20).
                 AddTile(TileID.AlchemyTable).
                 Register();

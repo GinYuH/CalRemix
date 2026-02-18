@@ -139,7 +139,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             PrimitiveRenderer.RenderTrail(baseDrawPoints, new(LaserWidthFunction, LaserColorFunction, shader: GameShaders.Misc["CalamityMod:ArtemisLaser"]), 64);
             return false;
         }
-        public float LaserWidthFunction(float f)
+        public float LaserWidthFunction(float f, Vector2 v)
         {
             float basescal = Projectile.scale * Projectile.width + 180;
             float pinch = 0.3f;
@@ -150,7 +150,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             return basescal;
         }
 
-        public static Color LaserColorFunction(float completionRatio)
+        public static Color LaserColorFunction(float completionRatio, Vector2 v)
         {
             return CalamityUtils.MulticolorLerp((1 - completionRatio) + Main.GlobalTimeWrappedHourly * 0.4f, Color.Red, Color.Cyan, Color.Purple, Color.Teal, Color.DarkRed);
         }

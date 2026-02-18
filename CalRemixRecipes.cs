@@ -1,64 +1,65 @@
-using static Terraria.ModLoader.ModContent;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using CalRemix.Content.Items.Accessories;
-using CalamityMod.Items.Armor.Empyrean;
-using CalamityMod.Items.Armor.Plaguebringer;
-using CalamityMod.Items.Placeables.Furniture;
-using CalamityMod.Items.Fishing.AstralCatches;
-using CalamityMod.Items.Potions;
-using CalamityMod.Items.Placeables.Ores;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Placeables;
+using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Potions.Alcohol;
-using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Items.Materials;
 using CalamityMod.Items.Accessories.Wings;
+using CalamityMod.Items.Armor.DesertProwler;
+using CalamityMod.Items.Armor.Empyrean;
+using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Items.Armor.Plaguebringer;
+using CalamityMod.Items.Armor.PlagueReaper;
+using CalamityMod.Items.Armor.Prismatic;
+using CalamityMod.Items.Armor.Silva;
+using CalamityMod.Items.Armor.Umbraphile;
+using CalamityMod.Items.Fishing.AstralCatches;
+using CalamityMod.Items.Fishing.FishingRods;
+using CalamityMod.Items.LoreItems;
+using CalamityMod.Items.Materials;
+using CalamityMod.Items.PermanentBoosters;
+using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.Furniture;
+using CalamityMod.Items.Placeables.FurnitureNavystone.FurnitureAncientNavystone;
+using CalamityMod.Items.Placeables.FurnitureStratus;
+using CalamityMod.Items.Placeables.Ores;
+using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Alcohol;
+using CalamityMod.Items.SummonItems;
+using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Items.SummonItems;
-using CalamityMod.Items.Fishing.FishingRods;
-using CalamityMod.Items.Placeables.Furniture.CraftingStations;
-using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Rogue;
-using CalRemix.Content.Items.Weapons;
 using CalamityMod.Items.Weapons.Summon;
-using CalamityMod.Items.Armor.PlagueReaper;
-using CalamityMod.Items.Armor.Fearmonger;
-using CalamityMod.Items.Armor.Umbraphile;
+using CalamityMod.Items.Weapons.Typeless;
+using CalamityMod.Rarities;
+using CalRemix.Content.Items.Accessories;
+using CalRemix.Content.Items.Ammo;
+using CalRemix.Content.Items.Critters;
+using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Placeables.MusicBoxes;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
+using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.NPCs.TownNPCs;
+using CalRemix.Core.World;
+using CalRemix.UI.Anomaly109;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CalamityMod.Items.Placeables.FurnitureStratus;
-using CalamityMod.Items.LoreItems;
-using CalamityMod;
-using CalRemix.Content.NPCs.TownNPCs;
-using CalRemix.Core.World;
-using CalRemix.Content.Items.Critters;
-using CalRemix.Content.Items.Lore;
-using CalRemix.Content.Items.Ammo;
-using CalRemix.Content.Items.Placeables.MusicBoxes;
-using CalamityMod.Items.Placeables;
-using CalamityMod.Items.Armor.DesertProwler;
-using CalamityMod.Items.Armor.Prismatic;
-using CalamityMod.Items.Armor.Silva;
-using System;
-using CalRemix.Content.Items.Placeables.Trophies;
-using CalRemix.UI.Anomaly109;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalamityMod.Rarities;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
         public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyExoMechMusicBox, AnyCritter, AnyEnemyStatue;
+
         public static readonly MethodInfo CreateRecipeLookups = typeof(Recipe).GetMethod("CreateRequiredItemQuickLookups", BindingFlags.Static | BindingFlags.NonPublic);
         public override void Unload()
         {
-            GreaterEvil = null;
             EvilBar = null;
             T4Bar = null;
             HMT1Bar = null;
@@ -67,8 +68,6 @@ namespace CalRemix
         public static string GroupName(string s) => CalRemixHelper.LocalText("RecipeGroups.Any").Format(CalRemixHelper.LocalText($"RecipeGroups.{s}"));
         public override void AddRecipeGroups()
         {
-            GreaterEvil = new RecipeGroup(() => GroupName("GreaterEvil"), ItemType<RottenMatter>(), ItemType<BloodSample>());
-            RecipeGroup.RegisterGroup("CalRemix:GreaterEvil", GreaterEvil);
             EvilBar = new RecipeGroup(() => GroupName("EvilBar"), ItemID.DemoniteBar, ItemID.CrimtaneBar);
             RecipeGroup.RegisterGroup("CalRemix:EvilBar", EvilBar);
             T4Bar = new RecipeGroup(() => GroupName("T4Bar"), ItemID.GoldBar, ItemID.PlatinumBar);
@@ -255,7 +254,7 @@ namespace CalRemix
             AlcoholRecipe(ItemType<CinnamonRoll>(), ItemType<Everclear>(), ItemType<Whiskey>(), ItemID.BeetleHusk, 5, 1);
             AlcoholRecipe(ItemType<Everclear>(), ItemType<Margarita>(), ItemID.Hay, ItemType<AureusCell>(), 10, 1);
             AlcoholRecipe(ItemType<EvergreenGin>(), ItemType<Vodka>(), ItemID.PineTreeBlock, ItemType<LivingShard>(), 20, 2);
-            AlcoholRecipe(ItemType<Fireball>(), ItemID.Ale, ItemType<BloodOrange>(), ItemID.UnicornHorn, 40, 1);
+            AlcoholRecipe(ItemType<Fireball>(), ItemID.Ale, ItemType<SanguineTangerine>(), ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ItemType<GrapeBeer>(), ItemID.Ale, ItemID.GrapeJuice, ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ItemType<Margarita>(), ItemType<Vodka>(), ItemID.Starfruit, ItemType<LivingShard>(), 20, 1);
             AlcoholRecipe(ItemType<Moonshine>(), ItemType<Everclear>(), ItemID.Ale, ItemID.BeetleHusk, 5, 1);
@@ -263,7 +262,7 @@ namespace CalRemix
             AlcoholRecipe(ItemType<OldFashioned>(), ItemType<Whiskey>(), ItemID.BambooBlock, ItemType<LivingShard>(), 20, 1);
             AlcoholRecipe(ItemType<RedWine>(), ItemID.Ale, ItemID.Grapes, ItemID.UnicornHorn, 40, 1);
             AlcoholRecipe(ItemType<Rum>(), ItemID.Ale, ItemID.BambooBlock, ItemID.UnicornHorn, 40, 20);
-            AlcoholRecipe(ItemType<Screwdriver>(), ItemType<PurpleHaze>(), ItemType<BloodOrange>(), ItemType<HallowedOre>(), 30, 1);
+            AlcoholRecipe(ItemType<Screwdriver>(), ItemType<PurpleHaze>(), ItemType<SanguineTangerine>(), ItemType<HallowedOre>(), 30, 1);
             AlcoholRecipe(ItemType<StarBeamRye>(), ItemType<Margarita>(), ItemID.Hay, ItemType<AureusCell>(), 10, 20);
             AlcoholRecipe(ItemType<Tequila>(), ItemID.Ale, ItemID.Hay, ItemID.UnicornHorn, 40, 20);
             AlcoholRecipe(ItemType<TequilaSunrise>(), ItemType<Everclear>(), ItemType<Tequila>(), ItemID.BeetleHusk, 5, 1);
@@ -297,19 +296,19 @@ namespace CalRemix
                 if (recipe.HasResult(ItemType<CoreofCalamity>()))
                 {
                     recipe.RemoveIngredient(ItemType<AshesofCalamity>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
-                    recipe.AddIngredient(ItemType<CoreofRend>(), 3);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 3);
+                    recipe.AddIngredient(ItemType<EssenceofRend>(), 3);
                     recipe.AddIngredient(ItemType<UnholyCore>());
                 }
                 if (recipe.HasResult(ItemType<AngelicShotgun>()))
                 {
-                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 7);
+                    recipe.RemoveIngredient(ItemType<EssenceofSunlight>());
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 7);
                 }
                 if (recipe.HasResult(ItemType<TwistingThunder>()))
                 {
-                    recipe.RemoveIngredient(ItemType<CoreofSunlight>());
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
+                    recipe.RemoveIngredient(ItemType<EssenceofSunlight>());
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 5);
                 }
                 if (recipe.HasResult(ItemID.NightsEdge))
                 {
@@ -360,7 +359,7 @@ namespace CalRemix
                         recipe.AddIngredient(ItemID.Feather);
                     }
                 }
-                
+
                 #region Replacement
                 if (recipe.HasResult(ItemType<DesertProwlerHat>()) || recipe.HasResult(ItemType<DesertProwlerShirt>()) || recipe.HasResult(ItemType<DesertProwlerPants>()))
                 {
@@ -405,10 +404,6 @@ namespace CalRemix
                     Replace(recipe, ItemID.WaterBolt, ItemType<SaltWaterBolt>());
                     recipe.AddIngredient(ItemType<PlasmaflashBolt>());
                 }
-                if (recipe.HasResult(ItemType<CoreofEleum>()) || recipe.HasResult(ItemType<CoreofHavoc>()) || recipe.HasResult(ItemType<CoreofSunlight>()))
-                {
-                    Replace(recipe, ItemID.Ectoplasm, ItemID.HallowedBar);
-                }
                 if (!recipe.HasResult(ItemType<HauntedBar>()) && recipe.HasIngredient(ItemType<RuinousSoul>()))
                 {
                     Replace(recipe, ItemType<RuinousSoul>(), ItemType<HauntedBar>());
@@ -446,15 +441,15 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ItemType<EmpyreanMask>()))
                 {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 2);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 2);
                 }
                 if (recipe.HasResult(ItemType<EmpyreanCloak>()))
                 {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 5);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 5);
                 }
                 if (recipe.HasResult(ItemType<EmpyreanCuisses>()))
                 {
-                    recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
+                    recipe.AddIngredient(ItemType<EssenceofBabil>(), 3);
                 }
                 if (recipe.HasResult(ItemType<ClaretCannon>()))
                 {
@@ -549,7 +544,7 @@ namespace CalRemix
                 }
                 #endregion
                 #region Anomaly Recipes
-                if (recipe.HasResult(ItemType<Elderberry>()))
+                if (recipe.HasResult(ItemType<TaintedCloudberry>()))
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("Elderberry"), () => !CalRemixWorld.permanenthealth));
                 }
@@ -557,11 +552,11 @@ namespace CalRemix
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("MiracleFruit"), () => !CalRemixWorld.permanenthealth));
                 }
-                if (recipe.HasResult(ItemType<Dragonfruit>()))
+                if (recipe.HasResult(ItemType<SacredStrawberry>()))
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("Dragonfruit"), () => !CalRemixWorld.permanenthealth));
                 }
-                if (recipe.HasResult(ItemType<BloodOrange>()))
+                if (recipe.HasResult(ItemType<SanguineTangerine>()))
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("BloodOrange"), () => !CalRemixWorld.permanenthealth));
                 }
@@ -627,7 +622,7 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ItemType<TheAbsorber>()))
                 {
-                    recipe.AddIngredient<Regenator>();
+                    recipe.AddIngredient<Regenerator>();
                 }
                 if (recipe.HasResult(ItemType<TheSponge>()))
                 {
@@ -635,7 +630,7 @@ namespace CalRemix
                     recipe.AddIngredient<AquaticHeart>();
                     recipe.AddIngredient<FlameLickedShell>();
                     recipe.AddIngredient<TrinketofChi>();
-                    recipe.AddIngredient<AmidiasSpark>();
+                    recipe.AddIngredient<IlmerisSpark>();
                     recipe.AddIngredient<UrsaSergeant>();
                     recipe.AddIngredient<PermafrostsConcoction>();
                 }
@@ -648,23 +643,23 @@ namespace CalRemix
                 }
                 if (recipe.HasResult(ItemType<RampartofDeities>()))
                 {
-                    recipe.AddIngredient<RustyMedallion>();
+                    recipe.AddIngredient<ScionsCurio>();
                     recipe.AddIngredient<AmidiasPendant>();
                 }
                 if (recipe.HasResult(ItemType<StatisVoidSash>()))
                 {
                     recipe.AddIngredient<EvasionScarf>();
                 }
-                if (recipe.HasResult(ItemType<TracersElysian>()))
+                if (recipe.HasResult(ItemType<VoidStriders>()))
                 {
-                    recipe.AddIngredient<GravistarSabaton>();
+                    recipe.AddIngredient<InterstellarStompers>();
                     recipe.AddIngredient<Microxodonta>();
                 }
                 if (recipe.HasResult(ItemType<AmbrosialAmpoule>()))
                 {
                     recipe.AddIngredient<ArchaicPowder>();
                     recipe.AddIngredient<HoneyDew>();
-                    recipe.AddRecipeGroup(new RecipeGroup(() => "Any Evil Flask", ModContent.ItemType<CorruptFlask>(), ModContent.ItemType<CrimsonFlask>()));
+                    recipe.AddRecipeGroup(new RecipeGroup(() => "Any Evil Tonic", ModContent.ItemType<UnholyTonic>(), ModContent.ItemType<ViciousTonic>()));
                 }
                 if (recipe.HasResult(ItemType<Nanotech>()))
                 {
@@ -680,8 +675,8 @@ namespace CalRemix
                     recipe.AddIngredient<AquaticEmblem>();
                     recipe.AddIngredient<SpelunkersAmulet>();
                     recipe.AddIngredient<AlluringBait>();
-                    recipe.AddIngredient<LumenousAmulet>();
                     recipe.AddIngredient<EnchantedPearl>();
+                    recipe.AddIngredient<DiamondOfTheDeep>();
                 }
                 if (recipe.HasResult(ItemType<ChaliceOfTheBloodGod>()))
                 {
@@ -706,7 +701,7 @@ namespace CalRemix
                     recipe.AddIngredient<LeviathanAmbergris>();
                     recipe.AddIngredient(ItemID.SporeSac);
                     recipe.AddIngredient<TheCamper>();
-                    recipe.AddIngredient<AlchemicalFlask>();
+                    recipe.AddIngredient<AlchemicalDecanter>();
                     recipe.AddIngredient<ToxicHeart>();
                     recipe.AddIngredient<DynamoStemCells>();
                     recipe.AddIngredient<BlazingCore>();

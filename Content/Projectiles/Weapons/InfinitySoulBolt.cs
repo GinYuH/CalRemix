@@ -62,7 +62,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
             // Prepare the flame trail shader with its map texture.
             GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Trails/ScarletDevilStreak"));
-            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => trailOffset, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 61);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_, _) => trailOffset, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), 61);
 
             Main.spriteBatch.ExitShaderRegion();
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
@@ -134,9 +134,9 @@ namespace CalRemix.Content.Projectiles.Weapons
 
             return false;
         }
-        public float FlameTrailWidthFunction(float completionRatio) => MathHelper.SmoothStep(26f * Projectile.scale, 22f * Projectile.scale, completionRatio);
+        public float FlameTrailWidthFunction(float completionRatio, Vector2 v) => MathHelper.SmoothStep(26f * Projectile.scale, 22f * Projectile.scale, completionRatio);
 
-        public Color FlameTrailColorFunction(float completionRatio)
+        public Color FlameTrailColorFunction(float completionRatio, Vector2 v)
         {
             Color main = CalamityUtils.MulticolorLerp(completionRatio + Main.GlobalTimeWrappedHourly, Color.Teal, Color.Cyan, Color.Purple, Color.Red, Color.DarkRed);
             return Color.Lerp(main * 2, default, completionRatio) * Projectile.Opacity;

@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using CalRemix.Core.World;
+using CalamityMod.Items.Placeables;
 
 namespace CalRemix.Content.Items.SummonItems
 {
@@ -32,7 +33,7 @@ namespace CalRemix.Content.Items.SummonItems
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = null;
             Item.value = 0;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
         }
 
         public override bool CanUseItem(Player player) =>

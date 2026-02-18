@@ -23,6 +23,7 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Ammo;
 using CalamityMod.Items.Placeables.Furniture.Monoliths;
+using CalamityMod.Items.Potions.Food;
 
 namespace CalRemix.Core.World
 {

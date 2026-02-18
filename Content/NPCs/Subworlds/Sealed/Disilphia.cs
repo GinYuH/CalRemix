@@ -2,13 +2,13 @@
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.NPCs.AstrumDeus;
-using CalamityMod.NPCs.CalamityAIs.CalamityBossAIs;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Summon.SmallAresArms;
 using CalamityMod.Sounds;
 using CalamityMod.World;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
@@ -203,7 +203,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         if (localTimer == telegraphTime)
                         {
-                            SoundEngine.PlaySound(ScorchedEarth.ShootSound with { Volume = 0.8f }, target.Center);
+                            SoundEngine.PlaySound(GildedGauntlet.RocketSound with { Volume = 0.8f }, target.Center);
                         }
                     }
                     break;

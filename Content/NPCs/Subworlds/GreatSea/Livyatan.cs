@@ -702,7 +702,6 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             };
             npcLoot.Add(ModContent.ItemType<LivyatanTrophy>(), 10);
             npcLoot.AddIf(()=> Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<LivyatanRelic>());
-            npcLoot.AddNormalOnly(ModContent.ItemType<BlubberNugget>());
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<LivyatanBag>());
         }
 

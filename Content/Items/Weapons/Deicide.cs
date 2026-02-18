@@ -28,7 +28,7 @@ namespace CalRemix.Content.Items.Weapons
 			Item.width = 10;
 			Item.height = 10;
             Item.crit = 22;
-			Item.rare = ModContent.RarityType<Violet>();
+			Item.rare = ModContent.RarityType<BurnishedAuric>();
 			Item.value = Item.sellPrice(gold: 30);
             Item.useTime = 42; 
 			Item.useAnimation = 42;

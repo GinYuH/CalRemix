@@ -31,7 +31,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.noMelee = true;
             Item.knockBack = 6f;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<DraconicPulse>();
             Item.shootSpeed = 12f;
@@ -50,7 +50,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ModContent.ItemType<YharonSoulFragment>(), 6).
                 AddIngredient(ModContent.ItemType<AuricBar>(), 5).
                 AddIngredient(ModContent.ItemType<EffulgentFeather>(), 3).
-                AddIngredient(ModContent.ItemType<CoreofSunlight>(), 10).
+                AddIngredient(ModContent.ItemType<EssenceofSunlight>(), 10).
                 AddTile(ModContent.TileType<CosmicAnvil>()).
                 Register();
         }

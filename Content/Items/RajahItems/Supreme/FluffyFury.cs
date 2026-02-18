@@ -22,16 +22,16 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
             Item.height = 76;
             Item.useTime = 10;
             Item.useAnimation = 10;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 3f;
             Item.value = Item.sellPrice(0, 60, 0, 0);
             Item.UseSound = SoundID.Item5;
             Item.autoReuse = true;
-            Item.shoot = 1;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
             Item.shootSpeed = 16f;
             Item.useAmmo = AmmoID.Arrow;
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
             //AARarity = 14;
         }
 

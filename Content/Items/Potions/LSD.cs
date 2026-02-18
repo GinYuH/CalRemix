@@ -1,4 +1,5 @@
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.FurnitureAcidwood;
 using CalamityMod.Items.Potions;
 using CalRemix.Content.Buffs;
 using Terraria;

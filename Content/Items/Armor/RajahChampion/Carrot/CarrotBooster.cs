@@ -46,7 +46,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion.Carrot
         public override bool OnPickup(Player player)
         {
             SoundEngine.PlaySound(SoundID.Grab, player.position);
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 player.GetModPlayer<CalRemixPlayer>().CarrotLevelup();
             }

@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.noMelee = true;
             Item.knockBack = 4f;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.UseSound = SoundID.Item113;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<EXOLOTL>();
@@ -44,7 +44,7 @@ namespace CalRemix.Content.Items.Weapons
         {
             CreateRecipe().
                 AddIngredient<AtlasMunitionsBeacon>().
-                AddIngredient<HeavyLaserRifle>().
+                AddIngredient<PhalanxSurge>().
                 AddIngredient<PulsePistol>().
                 AddIngredient<ExoPrism>(10).
                 AddTile<DraedonsForge>().

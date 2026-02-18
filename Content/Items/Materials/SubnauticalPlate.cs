@@ -18,7 +18,7 @@ namespace CalRemix.Content.Items.Materials
         }
 		public override void SetDefaults()
 		{
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
             Item.maxStack = 9999;
         }

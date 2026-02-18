@@ -6,6 +6,7 @@ using CalamityMod.Walls;
 using static Terraria.ModLoader.ModContent;
 using CalamityMod.Tiles.AstralDesert;
 using Microsoft.Xna.Framework;
+using CalamityMod.Tiles.FurnitureMonolith;
 
 namespace CalRemix.Core.World
 {

@@ -8,6 +8,7 @@ using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Content.Items.Materials;
 using CalamityMod.Items.Placeables;
 using CalamityMod;
+using CalamityMod.Items.Placeables.SunkenSea;
 
 namespace CalRemix.Content.Items.Weapons;
 

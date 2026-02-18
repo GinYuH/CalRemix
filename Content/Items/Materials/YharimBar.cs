@@ -20,7 +20,7 @@ namespace CalRemix.Content.Items.Materials
 		public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<YharimBarPlaced>());
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
         }
         public override void HoldItem(Player player)

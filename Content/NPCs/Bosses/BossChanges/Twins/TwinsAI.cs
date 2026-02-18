@@ -215,7 +215,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                                 laserSpeed += 3f * enrageScale;
 
                                 int type = ProjectileID.EyeLaser;
-                                int damage = npc.GetProjectileDamage(type);
+                                int damage = 120;
 
                                 // Reduce mech boss projectile damage depending on the new ore progression changes
                                 if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -350,8 +350,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             bool shootLaser = npc.ai[1] % 20f == 0f;
-                            int type = shootLaser ? ProjectileID.DeathLaser : ModContent.ProjectileType<ScavengerLaser>();
-                            int damage = npc.GetProjectileDamage(type);
+                            int type = shootLaser ? ProjectileID.DeathLaser : ModContent.ProjectileType<HomingLaserDart>();
+                            int damage = 120;
 
                             // Reduce mech boss projectile damage depending on the new ore progression changes
                             if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -502,7 +502,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                                 float laserSpeed = 10f;
                                 laserSpeed += enrageScale;
                                 int type = ProjectileID.DeathLaser;
-                                int damage = npc.GetProjectileDamage(type);
+                                int damage = 120;
 
                                 // Reduce mech boss projectile damage depending on the new ore progression changes
                                 if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -559,7 +559,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                                     float laserSpeed = 9f;
                                     laserSpeed += enrageScale;
                                     int type = ProjectileID.DeathLaser;
-                                    int damage = (int)Math.Round(npc.GetProjectileDamage(type) * 0.75);
+                                    int damage = (int)Math.Round(120 * 0.75);
 
                                     // Reduce mech boss projectile damage depending on the new ore progression changes
                                     if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -654,8 +654,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         float laserDartSpeed = (death ? 9f : 6f) * (spazAlive ? 1f : 1.5f);
-                                        int type = ModContent.ProjectileType<ScavengerLaser>();
-                                        int damage = npc.GetProjectileDamage(type);
+                                        int type = ModContent.ProjectileType<HomingLaserDart>();
+                                        int damage = 120;
 
                                         // Reduce mech boss projectile damage depending on the new ore progression changes
                                         if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -942,8 +942,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                             {
                                 float cursedFireballSpeed = 15f;
                                 cursedFireballSpeed += 3f * enrageScale;
-                                int type = ProjectileID.CursedFlameHostile;
-                                int damage = npc.GetProjectileDamage(type);
+                                int type = ModContent.ProjectileType<CursedFire>();
+                                int damage = 120;
 
                                 // Reduce mech boss projectile damage depending on the new ore progression changes
                                 if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -1081,8 +1081,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int type = npc.ai[1] % 20f == 0f ? ProjectileID.CursedFlameHostile : ModContent.ProjectileType<ShadowflameFireball>();
-                            int damage = npc.GetProjectileDamage(type);
+                            int type = npc.ai[1] % 20f == 0f ? ModContent.ProjectileType<CursedFire>() : ModContent.ProjectileType<ShadowflameFireball>();
+                            int damage = 120;
 
                             // Reduce mech boss projectile damage depending on the new ore progression changes
                             if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -1231,8 +1231,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                                 float timeForFlamethrowerToReachMaxVelocity = 60f;
                                 float flamethrowerSpeedScalar = MathHelper.Clamp(npc.ai[2] / timeForFlamethrowerToReachMaxVelocity, 0f, 1f);
                                 flamethrowerSpeed = MathHelper.Lerp(0.1f, flamethrowerSpeed, flamethrowerSpeedScalar);
-                                int type = npc.ai[3] % 2f == 0f ? ProjectileID.CursedFlameHostile : ModContent.ProjectileType<Shadowflamethrower>();
-                                int damage = npc.GetProjectileDamage(type);
+                                int type = npc.ai[3] % 2f == 0f ? ModContent.ProjectileType<CursedFire>() : ModContent.ProjectileType<Shadowflamethrower>();
+                                int damage = 120;
 
                                 // Reduce mech boss projectile damage depending on the new ore progression changes
                                 if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -1253,8 +1253,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                                 Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center + flamethrowerVelocity.SafeNormalize(Vector2.UnitY) * 25f, flamethrowerVelocity, type, damage, 0f, Main.myPlayer);
                                 if (death && npc.ai[3] % 30f == 0f)
                                 {
-                                    type = npc.ai[3] % 60f == 0f ? ModContent.ProjectileType<ShadowflameFireball>() : ProjectileID.CursedFlameHostile;
-                                    damage = npc.GetProjectileDamage(type);
+                                    type = npc.ai[3] % 60f == 0f ? ModContent.ProjectileType<ShadowflameFireball>() : ModContent.ProjectileType<CursedFire>();
+                                    damage = 120;
                                     Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center + flamethrowerVelocity.SafeNormalize(Vector2.UnitY) * 50f, flamethrowerVelocity * 2f, type, damage, 0f, Main.myPlayer);
                                 }
                             }
@@ -1406,8 +1406,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                             if (death)
                             {
                                 float projectileSpeed = spazmatismPhase3ChargeSpeed * 0.5f;
-                                int type = (!retAlive && npc.ai[3] % 2f == 0f) ? ModContent.ProjectileType<ShadowflameFireball>() : ProjectileID.CursedFlameHostile;
-                                int damage = npc.GetProjectileDamage(type);
+                                int type = (!retAlive && npc.ai[3] % 2f == 0f) ? ModContent.ProjectileType<ShadowflameFireball>() : ModContent.ProjectileType<CursedFire>();
+                                int damage = 120;
 
                                 // Reduce mech boss projectile damage depending on the new ore progression changes
                                 if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)
@@ -1522,8 +1522,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 float projectileSpeed = 16f;
-                                int type = npc.ai[3] % 2f == 0f ? ProjectileID.CursedFlameHostile : ModContent.ProjectileType<ShadowflameFireball>();
-                                int damage = npc.GetProjectileDamage(type);
+                                int type = npc.ai[3] % 2f == 0f ? ModContent.ProjectileType<CursedFire>() : ModContent.ProjectileType<ShadowflameFireball>();
+                                int damage = 120;
 
                                 // Reduce mech boss projectile damage depending on the new ore progression changes
                                 if (CalamityServerConfig.Instance.EarlyHardmodeProgressionRework && !BossRushEvent.BossRushActive)

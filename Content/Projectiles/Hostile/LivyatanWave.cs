@@ -10,7 +10,6 @@ namespace CalRemix.Content.Projectiles.Hostile
 {
     public class LivyatanWave : ModProjectile
     {
-        public override string Texture => "CalamityMod/Projectiles/Melee/MendedBiomeBlade_GestureForTheDrownedWave";
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 3;

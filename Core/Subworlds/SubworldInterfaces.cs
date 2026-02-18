@@ -45,4 +45,19 @@ namespace CalRemix.Core.Subworlds
     {
 
     }
+
+    public interface IInfiniteFlight
+    {
+
+    }
+
+    public interface IDisableFlight
+    {
+
+    }
+
+    public interface IDisableBuilding
+    {
+
+    }
 }

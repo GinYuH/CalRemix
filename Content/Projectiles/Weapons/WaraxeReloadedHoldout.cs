@@ -22,7 +22,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             get
             {
-                float swordRotation = InitialRotation + (Projectile.ai[2] == 1 ? SwingDown(SwingCompletion) : SwingUp(SwingCompletion)) * Projectile.spriteDirection + MathHelper.PiOver4;
+                float swordRotation = InitialRotation + (Projectile.ai[2] == 1 ? SwingDown(SwingCompletion, Vector2.Zero) : SwingUp(SwingCompletion, Vector2.Zero)) * Projectile.spriteDirection + MathHelper.PiOver4;
                 if (Projectile.spriteDirection == 1)
                     swordRotation += MathHelper.PiOver2;
                 if (Projectile.ai[2] == 2)
@@ -50,8 +50,8 @@ namespace CalRemix.Content.Projectiles.Weapons
         public static CurveSegment Piece2Up => new(EasingType.PolyIn, 0.7f, Piece1Up.EndingHeight, -2f, 1);
         public static CurveSegment Piece3Up => new(EasingType.PolyOut, 0.8f, Piece2Up.EndingHeight, -0.97f, 3);
 
-        public static float SwingDown(float completion) => PiecewiseAnimation(completion, Piece1, Piece2, Piece3);
-        public static float SwingUp(float completion) => PiecewiseAnimation(completion, Piece1Up, Piece2Up, Piece3Up);
+        public static float SwingDown(float completion, Vector2 v) => PiecewiseAnimation(completion, Piece1, Piece2, Piece3);
+        public static float SwingUp(float completion, Vector2 v) => PiecewiseAnimation(completion, Piece1Up, Piece2Up, Piece3Up);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Waraxe Reloaded");

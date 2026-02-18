@@ -44,6 +44,13 @@ namespace CalRemix
         [Range(0f, 1f)]
         //[Tooltip("Changes the intensity of visual overlays such as blur and chromatic aberration.")]
         public float VisualOverlayIntensity;
+
+        [Header("OtherHeader")]
+
+        [DefaultValue(1f)]
+        [Range(1f, 10f)]
+        [ReloadRequired]
+        public float DialogueSpeed;
     }
     public class RemixButton : UIElement
     {

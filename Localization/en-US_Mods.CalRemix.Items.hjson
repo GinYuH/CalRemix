@@ -271,11 +271,6 @@ Klepticoin: {
 	Tooltip: The change of the gods
 }
 
-CoreofBabil: {
-	DisplayName: Core of Babil
-	Tooltip: ""
-}
-
 CoyoteVenom: {
 	DisplayName: Coyote Venom
 	Tooltip: Try not to drink it
@@ -2465,7 +2460,7 @@ WindTurbineBlade: {
 }
 
 Wind: {
-	Tooltip: ""
+	Tooltip: Pushes and causes enemies to be prone to movement effects
 	DisplayName: Wind
 }
 
@@ -2735,6 +2730,25 @@ Weapons: {
 				Fires rocket powered fists which explode on contact
 				Triples movement speed and maximum jump height and increases flight time by 20% while held
 				Stealth strikes home
+				'''
+		}
+
+		BagofCarrots: {
+			DisplayName: Bag of Carrots
+			Tooltip:
+				'''
+				Throws out bags of carrots which attract Rajah Rabbit
+				Stealth strikes attract The Champion of the Innocent
+				'''
+		}
+
+		Eyesickle: {
+			DisplayName: Eyesickle
+			Tooltip:
+				'''
+				Tosses a returning bone sickle
+				The sickle spins faster at the furthest extent of its range, hitting multiple times
+				Stealth strikes will make the sickle travel further and faster, and hit enemies more frequently
 				'''
 		}
 	}
@@ -3499,11 +3513,6 @@ DiviningRod: {
 	DisplayName: Divining Rod
 }
 
-CoreofRend: {
-	DisplayName: Core of Rend
-	Tooltip: ""
-}
-
 EssenceofRend: {
 	DisplayName: Essence of Rend
 	Tooltip: The essence of endless struggle.
@@ -3865,54 +3874,54 @@ Tooltips: {
 	Lightmix: Lightmix Dedicated Item
 	Stormbow: Stormbow
 	StormbowTip: Shoots arrows from the sky
-	CryoKeyRemix: Drops from Primal Aspids
-	EyeofDesolationRemix: Drops from Clamitas
+	CryoKey: Drops from Primal Aspids
+	EyeofDesolation: Drops from Clamitas
 	AbombinationOld: the Jungle
 	AbombinationNew: the Plagued Jungle [c/C61B40:(yes, she enrages in the normal Jungle)]
 	TorchRemix: Can be used as ammo for the Driftorcher
 	Minceable: Can be minced at the Mincer
-	PhantomicSoulArtifact: Judgement
-	GrandGelatinRemix:
+	PhantomicArtifact: Judgement
+	GrandGelatin:
 		'''
 		Reduces stealth costs by 3%
 		Increases wing flight time by 10%
 		Activating Rage will deal 50% of your health as damage
 		Activating Adrenaline will defile your soul
 		'''
-	AbsorberRemix: Your health is capped at 50% while the accessory is visable
-	SpongeRemix:
+	TheAbsorber: Your health is capped at 50% while the accessory is visable
+	TheSponge:
 		'''
 		Effects of Ursa Sergeant, Amidias' Spark, Permafrost's Concocion, Flame-Licked Shell, Aquatic Heart, and Trinket of Chi
 		Your health is capped at 50% while the accessory is visable
 		'''
-	AmbrosiaRemix: Effects of Honew Dew, Corrupt and Crimson Flasks, and increased mining speed and defense while underground
-	DivingGearRemix: Pacifies all normal ocean enemies
-	DivingSuitRemix:
+	AmbrosialAmpoule: Effects of Honew Dew, Corrupt and Crimson Flasks, and increased mining speed and defense while underground
+	AbyssalDivingGear: Pacifies all normal ocean enemies
+	AbyssalDivingSuit:
 		'''
 		Effects of Lumenous Amulet and Aquatic Emblem
 		Effects of Alluring Bait and Enchanted pearl while the accessory is visible
 		Reveals treasure while the accessory is visible
 		'''
-	AmalgamRemix:
+	TheAmalgam:
 		'''
 		Effects of Giant Pearl, Frost Flare, Void of Extinction, Radiance, Plague Hive, Old Duke's Scales, Affliction, and The Evolution
 		You passively rain down brimstone flames and leave behind a trail of gas and bees
 		Attacks inflict Mushy
 		Mana Overloader effect while the accessory is visible
 		'''
-	CotbgRemix: Effects of Bloody Worm Scarf, Flesh Totem, and Bloodflare Core
-	NanotechRemix:
+	ChaliceOfTheBloodGod: Effects of Bloody Worm Scarf, Flesh Totem, and Bloodflare Core
+	Nanotech:
 		'''
 		Effects of Vampiric Talisman
 		22% increased luck
 		'''
-	AsgardRemix: Effects of Shield of the Ocean, Frost Barrier, and Marnite Repulsion Shield
-	VoidExtinctRemix: Effects of The Bee, Void of Calamity, Slagsplitter Pauldron, and Necklace of Vexation
-	MedallionRemix: Drops from Cnidrions after defeating the Wulfrum Excavator
-	HadalStewRemix: Grants a handful of combat buffs
-	SoulofCryogenRemix: Boosts Cold damage
-	MetalMonstrosityRemix: \'Just looking at it makes you feel ill...\'
-	WormholePotionRemix: "[c/B87333:Requires a fee of 5 copper!]"
+	AsgardsValor: Effects of Shield of the Ocean, Frost Barrier, and Marnite Repulsion Shield
+	VoidofExtinction: Effects of The Bee, Void of Calamity, Slagsplitter Pauldron, and Necklace of Vexation
+	DesertMedallion: Drops from Cnidrions after defeating the Wulfrum Excavator
+	HadalStew: Grants a handful of combat buffs
+	SoulofCryogen: Boosts Cold damage
+	MetalMonstrosity: \'Just looking at it makes you feel ill...\'
+	WormholePotion: "[c/B87333:Requires a fee of 5 copper!]"
 }
 
 DyeStats: {
@@ -4512,6 +4521,11 @@ AccidatedReactiveEssence: {
 BloodredReactiveEssence: {
 	DisplayName: Bloodred Reactive Essence
 	Tooltip: ""
+}
+
+Blood: {
+	Tooltip: Bleeds enemies out, reducing healing efficiency
+	DisplayName: Blood
 }
 
 NocticReactiveEssence: {
@@ -5229,7 +5243,7 @@ NeonDust: {
 
 Veinroot: {
 	DisplayName: Veinroot
-	Tooltip: As much of a delicacy as it is a useful fillament
+	Tooltip: As much of a delicacy as it is a useful filament
 }
 
 CritterChip: {
@@ -5249,12 +5263,12 @@ MonorianGemShards: {
 
 MonorianGem: {
 	DisplayName: Monorian Gem
-	Tooltip: Fires monorian gemstones at extremely fast speeds
+	Tooltip: Fires monorian gemstones at extremely high speeds
 }
 
 NauseatingPowder: {
 	DisplayName: Nauseating Powder
-	Tooltip: An assortment of powders that can make many go mad
+	Tooltip: An assortment of powders that could make many go mad
 }
 
 Delirium: {
@@ -5268,7 +5282,7 @@ SoftScarf: {
 		'''
 		Causes Rage to always generate
 		Rage is automatically activated when at max
-		Rage duration is decremented at a slower rate
+		Rage is decremented at a slower rate while in use
 		'''
 }
 
@@ -5281,8 +5295,8 @@ ArchRaptierre: {
 	DisplayName: Arch Raptierre
 	Tooltip:
 		'''
-		Strikes downwards 5 icicles for each swing
-		<right> to freeze nearby enemies
+		Calls down 5 icicles for each swing
+		Press <right> to freeze nearby enemies
 		'''
 }
 
@@ -5290,8 +5304,8 @@ ArcticRapier: {
 	DisplayName: Arctic Rapier
 	Tooltip:
 		'''
-		Strikes downwards 5 icicles for each swing
-		<right> to freeze nearby enemies
+		Calls down 5 icicles for each swing
+		Press <right> to freeze nearby enemies
 		'''
 }
 
@@ -5299,8 +5313,8 @@ HeavenReaper: {
 	DisplayName: Heaven Reaper
 	Tooltip:
 		'''
-		Flings out a spread of auric probes which slow down to a stop
-		Hitting a probe with another weapon's projectile causes the probe to detonate into a massive explosion
+		Flings out a spread of auric probes which slow to a stop
+		Hitting a probe with a friendly projectile causes it to explode violently
 		'''
 }
 
@@ -5311,7 +5325,7 @@ Astrogel: {
 
 Gastrogel: {
 	DisplayName: Gastrogel
-	Tooltip: Splatters of Gastropod hide that works as an adhesive
+	Tooltip: Splatters of Gastropod hide that work as an adhesive
 }
 
 GastropodEye: {
@@ -5729,7 +5743,7 @@ NullBeacon: {
 }
 
 VoidWings: {
-	DisplayName: Void Wings
+	DisplayName: Condensed Void Wings
 	Tooltip:
 		'''
 		Horizontal speed: 13
@@ -5976,7 +5990,7 @@ FriendshipPotion: {
 	Tooltip: Unleashes the true power of friendship
 }
 
-FabergéEgg: {
+FabergeEgg: {
 	DisplayName: Fabergé Egg
 	Tooltip:
 		'''
@@ -6152,7 +6166,7 @@ Bunzooka: {
 
 CarrotFarmer: {
 	DisplayName: Carrot Farmer
-	Tooltip: 
+	Tooltip:
 		'''
 		Spins a Carrot Scythe around you that shreds through enemies
 		Scythes fire off carrots while spun
@@ -6312,4 +6326,247 @@ RoyalRabbit: {
 RoyalBunnyCage: {
 	DisplayName: Royal Bunny Cage
 	Tooltip: ""
+}
+
+RajahMusicBox: {
+	DisplayName: Rajah Music Box
+	Tooltip: ""
+}
+
+SupremeRajahMusicBox: {
+	DisplayName: Supreme Rajah Music Box
+	Tooltip: ""
+}
+
+RajahRelic: {
+	DisplayName: Rajah Relic
+	Tooltip: ""
+}
+
+SupremeRajahRelic: {
+	DisplayName: Supreme Rajah Relic
+	Tooltip: ""
+}
+
+AnomalyRelic: {
+	DisplayName: Anomaly Relic
+	Tooltip: ""
+}
+
+IronWizard: {
+	DisplayName: Iron Wizard
+	Tooltip: Instantly kills the Wizard
+}
+
+AnomalyBag: {
+	DisplayName: Treasure Bag (Anomaly)
+	Tooltip: ""
+}
+
+VirisiteTear: {
+	DisplayName: Virisite Tear
+	Tooltip: Corrosive plasmic element with dark properties
+}
+
+XenoxApparatus: {
+	DisplayName: Xenox Apparatus
+	Tooltip:
+		'''
+		Doubles some of the effects of accessories placed in slots below this one
+		'Inconsistently consistent'
+		'''
+}
+
+BlueMazeBrick: {
+	DisplayName: Blue Maze Brick
+	Tooltip: ""
+}
+
+QuestionSoil: {
+	DisplayName: ??? Soil
+	Tooltip: ""
+}
+
+YellowMazeBrick: {
+	DisplayName: Yellow Maze Brick
+	Tooltip: ""
+}
+
+Flann: {
+	DisplayName: Flann
+	Tooltip: ""
+}
+
+WulfrumCactusBanner: {
+	DisplayName: Wulfrum Cactus Banner
+	Tooltip: ""
+}
+
+GrablerBanner: {
+	DisplayName: Grabler Banner
+	Tooltip: ""
+}
+
+SharkPotion: {
+	DisplayName: Shark Potion
+	Tooltip: Causes sharks to rain from the sky
+}
+
+DeadeyeRevolver: {
+	DisplayName: Deadeye Revolver
+	Tooltip:
+		'''
+		Fires an innacurate triple shot of congealed flesh orbs that bounce once
+		Hitting enemies after a bounce will result in a guaranteed critical strike
+		'''
+}
+
+Bomb: {
+	Tooltip: Combusts and reduces damage reduction
+	DisplayName: Bomb
+}
+
+Adhesive: {
+	Tooltip: Sticks to enemies, dealing more damage over time
+	DisplayName: Adhesive
+}
+
+AntDoor: {
+	DisplayName: Ant Subworld Door
+	Tooltip: ""
+}
+
+DeformityDoor: {
+	DisplayName: Deformity Subworld Door
+	Tooltip: ""
+}
+
+ExosphereDoor: {
+	DisplayName: Exosphere Subworld Door
+	Tooltip: ""
+}
+
+GrandSeaDoor: {
+	DisplayName: Grand Sea Subworld Door
+	Tooltip: ""
+}
+
+HorizonDoor: {
+	DisplayName: Horizon Subworld Door
+	Tooltip: ""
+}
+
+NowhereDoor: {
+	DisplayName: Nowhere Subworld Door
+	Tooltip: ""
+}
+
+PiggyDoor: {
+	DisplayName: Piggy Subworld Door
+	Tooltip: ""
+}
+
+ScreamDoor: {
+	DisplayName: Screaming Corridor Subworld Door
+	Tooltip: ""
+}
+
+SealedDoor: {
+	DisplayName: Sealed Subworld Door
+	Tooltip: ""
+}
+
+SPDoor: {
+	DisplayName: Singular Point Subworld Door
+	Tooltip: ""
+}
+
+TheGrayDoor: {
+	DisplayName: The Gray Subworld Door
+	Tooltip: ""
+}
+
+BlueMazeBrickWall: {
+	DisplayName: Blue Maze Brick Wall
+	Tooltip: ""
+}
+
+YellowMazeBrickWall: {
+	DisplayName: Yellow Maze Brick Wall
+	Tooltip: ""
+}
+
+RoyalGuardianSword: {
+	DisplayName: Royal Guardian Sword
+	Tooltip:
+		'''
+		<right> to swing as fast as you can click
+		'A grandious sword that originates from a dangerous zone'
+		'''
+}
+
+KnowledgeRajah.DisplayName: Rajah Rabbit
+
+NightlineDoor: {
+	DisplayName: Nightline Subworld Door
+	Tooltip: ""
+}
+
+LookerBook: {
+	DisplayName: Looker Book
+	Tooltip:
+		'''
+		Uses 40 mana
+		Throws a living tome that fires bone fragments at enemies
+		The tome's contact damage benefits from ranged damage bonuses
+		Can be thrown with insufficient mana for bonus contact damage, but it doesn't shoot
+		'''
+}
+
+PrisonOpal: {
+	DisplayName: Prison Opal
+	Tooltip:
+		'''
+		Throw one at an NPC, even hostile ones, to store them inside
+		If an NPC is already stored, throwing it at a block will release it
+		Stored NPCs retain their health and some of their behaviour directly before being captured
+		'''
+}
+
+RunnersEmblem: {
+	DisplayName: Runner's Emblem
+	Tooltip: Increases movement speed by 15%
+}
+
+Aeroluminescence: {
+	DisplayName: Aeroluminescence
+	Tooltip:
+		'''
+		Increases movement speed, flight time and acceleration
+		You slowly recover flight time while in the air if you are not flying or gliding
+		Provides light when worn
+		'''
+}
+
+IronHorseshoe: {
+	DisplayName: Iron Horseshoe
+	Tooltip:
+		'''
+		Negates fall damage
+		'Said to bring good fortune and keep around 0.5 damage at bay'
+		'''
+}
+
+Resmellinator: {
+	DisplayName: Resmellinator
+	Tooltip:
+		'''
+		Enemies are less likely to target you
+		5% increased damage and critical strike chance
+		Your health cannot exceed 50% of its maximum
+		Increases length of invincibility after taking damage
+		Provides powerful special life regen to heal you for 7.5 HP/s
+		All normal life regen is negated and converted into damage
+		Current damage boost..? Who knows!
+		'''
 }

@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
+using Terraria.ID;
 
 namespace CalRemix.Content.Items.Armor.RajahChampion
 {
@@ -19,7 +20,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion
 			Item.width = 20;
 			Item.height = 24;
 			Item.value = Item.sellPrice(3, 0, 0, 0);
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
             //AARarity = 14;
             Item.defense = 30;
 		}

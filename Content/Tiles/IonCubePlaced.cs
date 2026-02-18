@@ -2,6 +2,7 @@
 using CalamityMod.DataStructures;
 using CalamityMod.Items.Fishing.SunkenSeaCatches;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.Ionogen;
 using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Core.World;
@@ -72,6 +73,10 @@ namespace CalRemix.Content.Tiles
                         if (CalRemixWorld.ionQuestLevel >= (IonCubeTE.dialogue.Count - 1))
                         {
                             CalRemixHelper.SpawnClientBoss(ModContent.NPCType<Ionogen>(), new Vector2(i, j) * 16);
+                        }
+                        else if (CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
+                        {
+                            Item.NewItem(new EntitySource_TileEntity(cube), i * 16, j * 16, 5, 5, ModContent.ItemType<IronWizard>());
                         }
                         player.ionDialogue = -1;
                         cube.textLifeTime = 0;
@@ -272,6 +277,10 @@ namespace CalRemix.Content.Tiles
                             {
                                 CalRemixHelper.SpawnClientBoss(ModContent.NPCType<Ionogen>(), new Vector2(guy.Position.X, guy.Position.Y) * 16);
                             }
+                            else if (CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
+                            {
+                                Item.NewItem(new EntitySource_TileEntity(guy), guy.Position.X * 16, guy.Position.Y * 16, 5, 5, ModContent.ItemType<IronWizard>());
+                            }
                             player.ionDialogue = -1;
                         }
                     }
@@ -459,7 +468,7 @@ namespace CalRemix.Content.Tiles
                 "It's nothing personal\nJust too many mages running amok.\nOnly the strongest may survive",
                 "And don't worry about\nhim respawning!",
                 "I can assure he [c/E0122D:stays dead],\nand can give you [c/47FF60:all] that\nhe ever could have!",
-                "Now go! Go my friend!\nBeat him to a crisp!"
+                "This hammer [i:CalRemix/IronWizard] should do it\n if you're having trouble.\nNow go! Go my friend!\nBeat him to a crisp!"
             }, -1, () => CalRemixWorld.wizardDisabled));
             dialogue.Add(new(new List<string>()
             {

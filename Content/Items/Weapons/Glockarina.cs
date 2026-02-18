@@ -26,12 +26,11 @@ namespace CalRemix.Content.Items.Weapons
             Item.noMelee = true;
             Item.knockBack = 9f;
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.UseSound = null;
             Item.autoReuse = true;
             Item.shootSpeed = 30;
             Item.shoot = ModContent.ProjectileType<ZalGlock>();
-            Item.Calamity().canFirePointBlankShots = true;
             if (CalRemixAddon.Thorium != null)
             {
                 Item.DamageType = CalRemixAddon.Thorium.Find<DamageClass>("BardDamage");

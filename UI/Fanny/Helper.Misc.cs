@@ -22,7 +22,7 @@ namespace CalRemix.UI
                 .SpokenByAnotherHelper(ScreenHelpersUIState.WonderFlower).SetSoundOverride(OnwardAndUpwardSound);
 
             HelperMessage.New("Wonder_Tracers", "Onward and upward... and sideward!",
-                "TalkingFlower", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<TracersCelestial>()) || Main.LocalPlayer.equippedWings?.type == ModContent.ItemType<TracersCelestial>(), 15, maxWidth: 500)
+                "TalkingFlower", (ScreenHelperSceneMetrics m) => Main.LocalPlayer.HasItem(ModContent.ItemType<MoonWalkers>()) || Main.LocalPlayer.equippedWings?.type == ModContent.ItemType<MoonWalkers>(), 15, maxWidth: 500)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.WonderFlower).SetSoundOverride(OnwardAndUpwardSound);
         }
         #endregion

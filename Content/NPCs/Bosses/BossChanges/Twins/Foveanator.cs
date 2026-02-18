@@ -103,8 +103,6 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
             NPC.Calamity().VulnerableToSickness = true;
             AnimationType = NPCID.Retinazer;
             Music = MusicID.Boss2;
-
-            CalamityGlobalNPC.AdjustMasterModeStatScaling(NPC);
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -912,7 +910,6 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * NPC.GetExpertDamageMultiplier());
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

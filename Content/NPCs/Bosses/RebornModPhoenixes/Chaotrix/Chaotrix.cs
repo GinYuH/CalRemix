@@ -28,7 +28,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Chaotrix
 
             string key = "The seal of the seas has been broken! You can now mine Scoria Ore.";
             Color messageColor = Color.Red;
-            CalamityUtils.DisplayLocalizedText(key, messageColor);
+            CalamityUtils.BroadcastLocalizedText(key, messageColor);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

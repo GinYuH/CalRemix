@@ -61,7 +61,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             // Recalculate damage every frame for balance reasons, as this is a long-lasting holdout.
             // This is important because you could start using it while benefitting from Auric Tesla standstill bonus, for example.
-            Projectile.damage = Owner.ActiveItem() is null ? 0 : Owner.GetWeaponDamage(Owner.ActiveItem());
+            Projectile.damage = Owner.HeldItem is null ? 0 : Owner.GetWeaponDamage(Owner.HeldItem);
             DetermineDamage();
 
             PlayChainsawSounds();
@@ -233,7 +233,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
             // Incorporate item shoot speed into the range of the crystals.
             // This means that projectile speed boosts will improve the range of the chainsaw.
-            shootReach *= Owner.ActiveItem().shootSpeed;
+            shootReach *= Owner.HeldItem.shootSpeed;
 
             float distanceFromMouse = Owner.Distance(Main.MouseWorld);
 

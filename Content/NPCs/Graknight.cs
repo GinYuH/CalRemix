@@ -367,12 +367,12 @@ namespace CalRemix.Content.NPCs
         }
 
 
-        public float RibbonTrailWidthFunctionSmall(float completion)
+        public float RibbonTrailWidthFunctionSmall(float completion, Vector2 v)
         {
             return MathHelper.Lerp(10, 1, completion);
         }
 
-        public Color RibbonTrailColorFunction(float color)
+        public Color RibbonTrailColorFunction(float color, Vector2 v)
         {
             return Color.Lerp(Color.Navy, Color.MediumAquamarine, color) * 0.4f;
         }

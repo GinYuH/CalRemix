@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.ModLoader.Utilities;
 using System.IO;
-using CalamityMod.NPCs.CalamityAIs.CalamityRegularEnemyAIs;
+using CalamityMod.NPCs;
+using CalamityMod.NPCs.NormalNPCs;
 
 namespace CalRemix.Content.NPCs
 {
@@ -64,6 +65,7 @@ namespace CalRemix.Content.NPCs
             NPC.TargetClosest();
             if (!detected && (NPC.Distance(Target.Center) < 100 || NPC.life < NPC.lifeMax))
                 detected = true;
+            
             if (detected)
                 CalamityRegularEnemyAI.GemCrawlerAI(NPC, Mod, 6f, 0.18f);
         }

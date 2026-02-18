@@ -14,6 +14,7 @@ using CalamityMod.Items.Placeables.DraedonStructures;
 using CalamityMod.Items.Placeables.Furniture;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
 using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Food;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Tools;
 using CalamityMod.Items.Tools.ClimateChange;
@@ -36,7 +37,7 @@ namespace CalRemix
     public partial class Recipes
     {
         public static List<(int, int, int)> alloyBarCrafts = new List<(int, int, int)> { };
-        public static List<(int, int, int)> essenceBarCrafts = new List<(int, int, int)>{};
+        public static List<(int, int, int)> essenceBarCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> yharimBarCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> crocodileCrafts = new List<(int, int, int)> { };
         public static List<(int, int, int)> venomCrafts = new List<(int, int, int)> { };
@@ -103,7 +104,6 @@ namespace CalRemix
             essenceBarCrafts.Add((ItemType<BarracudaGun>(), ItemType<EssentialEssenceBar>(), 1));
             essenceBarCrafts.Add((ItemType<BladedgeRailbow>(), ItemType<EssentialEssenceBar>(), 1));
             essenceBarCrafts.Add((ItemType<BrimstoneSword>(), ItemType<EssentialEssenceBar>(), 1));
-            essenceBarCrafts.Add((ItemType<CatastropheClaymore>(), ItemType<EssentialEssenceBar>(), 2));
             essenceBarCrafts.Add((ItemType<DarklightGreatsword>(), ItemType<EssentialEssenceBar>(), 4));
             essenceBarCrafts.Add((ItemType<FlarefrostBlade>(), ItemType<EssentialEssenceBar>(), 1));
             #endregion
@@ -112,17 +112,17 @@ namespace CalRemix
             yharimBarCrafts.Add((ItemType<AuricBar>(), ItemType<YharimBar>(), 1));
             yharimBarCrafts.Add((ItemType<AuricTeslaBodyArmor>(), ItemType<YharimBar>(), 35));
             yharimBarCrafts.Add((ItemType<AuricTeslaCuisses>(), ItemType<YharimBar>(), 35));
-            yharimBarCrafts.Add((ItemType<AuricTeslaHoodedFacemask>(), ItemType<YharimBar>(), 35));
-            yharimBarCrafts.Add((ItemType<AuricTeslaWireHemmedVisage>(), ItemType<YharimBar>(), 35));
-            yharimBarCrafts.Add((ItemType<AuricTeslaPlumedHelm>(), ItemType<YharimBar>(), 35));
-            yharimBarCrafts.Add((ItemType<AuricTeslaSpaceHelmet>(), ItemType<YharimBar>(), 35));
-            yharimBarCrafts.Add((ItemType<AuricTeslaRoyalHelm>(), ItemType<YharimBar>(), 35));
+            yharimBarCrafts.Add((ItemType<AuricTeslaHeadMelee>(), ItemType<YharimBar>(), 35));
+            yharimBarCrafts.Add((ItemType<AuricTeslaHeadRanged>(), ItemType<YharimBar>(), 35));
+            yharimBarCrafts.Add((ItemType<AuricTeslaHeadMagic>(), ItemType<YharimBar>(), 35));
+            yharimBarCrafts.Add((ItemType<AuricTeslaHeadSummon>(), ItemType<YharimBar>(), 35));
+            yharimBarCrafts.Add((ItemType<AuricTeslaHeadRogue>(), ItemType<YharimBar>(), 35));
             yharimBarCrafts.Add((ItemType<EclipseMirror>(), ItemType<YharimBar>(), 4));
             yharimBarCrafts.Add((ItemType<ChaliceOfTheBloodGod>(), ItemType<YharimBar>(), 4));
             yharimBarCrafts.Add((ItemType<EcologicalCollapse>(), ItemType<YharimBar>(), 4));
             yharimBarCrafts.Add((ItemType<EidolonStaff>(), ItemType<YharimBar>(), 17));
-            yharimBarCrafts.Add((ItemType<ElementalQuiver>(), ItemType<YharimBar>(), 4));
-            yharimBarCrafts.Add((ItemType<TracersElysian>(), ItemType<YharimBar>(), 4));
+            yharimBarCrafts.Add((ItemType<PlanebreakersPouch>(), ItemType<YharimBar>(), 4));
+            yharimBarCrafts.Add((ItemType<VoidStriders>(), ItemType<YharimBar>(), 4));
             yharimBarCrafts.Add((ItemType<GazeOfCrysthamyr>(), ItemType<YharimBar>(), 8));
             yharimBarCrafts.Add((ItemType<GodSlayerSlug>(), ItemType<YharimBar>(), 4));
             yharimBarCrafts.Add((ItemType<GrandReef>(), ItemType<YharimBar>(), 20));
@@ -157,7 +157,7 @@ namespace CalRemix
             crocodileCrafts.Add((ItemType<FlakKraken>(), ItemType<CrocodileScale>(), 10));
             crocodileCrafts.Add((ItemType<BallisticPoisonBomb>(), ItemType<CrocodileScale>(), 10));
             crocodileCrafts.Add((ItemType<Floodtide>(), ItemType<CrocodileScale>(), 5));
-            crocodileCrafts.Add((ItemType<LumenousAmulet>(), ItemType<CrocodileScale>(), 5));
+            crocodileCrafts.Add((ItemType<DiamondOfTheDeep>(), ItemType<CrocodileScale>(), 5));
             crocodileCrafts.Add((ItemType<TyphonsGreed>(), ItemType<CrocodileScale>(), 10));
             crocodileCrafts.Add((ItemType<UndinesRetribution>(), ItemType<CrocodileScale>(), 10));
             crocodileCrafts.Add((ItemType<AbyssBlade>(), ItemType<CrocodileScale>(), 5));
@@ -217,24 +217,24 @@ namespace CalRemix
             accessoryCrafts.Add((ItemType<GrandGelatin>(), ItemType<IrateJelly>(), 1));
             accessoryCrafts.Add((ItemType<GrandGelatin>(), ItemType<ElasticJelly>(), 1));
             accessoryCrafts.Add((ItemType<GrandGelatin>(), ItemType<InvigoratingJelly>(), 1));
-            accessoryCrafts.Add((ItemType<TheAbsorber>(), ItemType<Regenator>(), 1));
+            accessoryCrafts.Add((ItemType<TheAbsorber>(), ItemType<Regenerator>(), 1));
             accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<TheAbsorber>(), 1));
             accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<AquaticHeart>(), 1));
             accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<FlameLickedShell>(), 1));
             accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<TrinketofChi>(), 1));
-            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<AmidiasSpark>(), 1));
+            accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<IlmerisSpark>(), 1));
             accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<UrsaSergeant>(), 1));
             accessoryCrafts.Add((ItemType<TheSponge>(), ItemType<PermafrostsConcoction>(), 1));
-            accessoryCrafts.Add((ItemType<RampartofDeities>(), ItemType<RustyMedallion>(), 1));
+            accessoryCrafts.Add((ItemType<RampartofDeities>(), ItemType<ScionsCurio>(), 1));
             accessoryCrafts.Add((ItemType<RampartofDeities>(), ItemType<AmidiasPendant>(), 1));
-            accessoryCrafts.Add((ItemType<TracersElysian>(), ItemType<GravistarSabaton>(), 1));
+            accessoryCrafts.Add((ItemType<VoidStriders>(), ItemType<InterstellarStompers>(), 1));
             accessoryCrafts.Add((ItemType<AmbrosialAmpoule>(), ItemType<HoneyDew>(), 1));
             accessoryCrafts.Add((ItemType<AmbrosialAmpoule>(), ItemType<ArchaicPowder>(), 1));
             accessoryCrafts.Add((ItemType<AbyssalDivingGear>(), ItemType<OceanCrest>(), 1));
             accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<AquaticEmblem>(), 1));
             accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<SpelunkersAmulet>(), 1));
             accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<AlluringBait>(), 1));
-            accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<LumenousAmulet>(), 1));
+            accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<DiamondOfTheDeep>(), 1));
             accessoryCrafts.Add((ItemType<AbyssalDivingSuit>(), ItemType<EnchantedPearl>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<GiantPearl>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<ManaPolarizer>(), 1));
@@ -244,7 +244,7 @@ namespace CalRemix
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<LeviathanAmbergris>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemID.SporeSac, 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<TheCamper>(), 1));
-            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<AlchemicalFlask>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<AlchemicalDecanter>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<ToxicHeart>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<DynamoStemCells>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<BlazingCore>(), 1));

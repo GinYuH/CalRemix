@@ -31,7 +31,7 @@ public class Exodimus : ModItem
         Item.noUseGraphic = true;
         Item.knockBack = 0;
         Item.value = Item.buyPrice(0, 52, 0, 50);
-        Item.rare = ModContent.RarityType<Violet>();
+        Item.rare = ModContent.RarityType<BurnishedAuric>();
         Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;

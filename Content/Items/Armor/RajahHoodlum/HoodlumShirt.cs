@@ -19,7 +19,7 @@ namespace CalRemix.Content.Items.Armor.RajahHoodlum
 			Item.width = 26;
 			Item.height = 20;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
-            Item.rare = 8;
+            Item.rare = ItemRarityID.Yellow;
             Item.defense = 28;
 		}
 

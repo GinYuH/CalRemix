@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.ID;
 
 namespace CalRemix.Content.Items.Armor.RajahChampion.Drone
 {
@@ -54,7 +55,7 @@ namespace CalRemix.Content.Items.Armor.RajahChampion.Drone
 
                 Target();
 
-                if (target != null && Main.netMode != 2 && Projectile.owner == Main.myPlayer)
+                if (target != null && Main.netMode != NetmodeID.Server && Projectile.owner == Main.myPlayer)
                 {
                     Projectile.localAI[0]--;
                     if (Projectile.localAI[0] <= 0)

@@ -1,6 +1,7 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Potions;
+using CalamityMod.Items.Tools;
 using CalamityMod.Rarities;
 using CalRemix.Content.Buffs;
 using Terraria;
@@ -27,7 +28,7 @@ namespace CalRemix.Content.Items.Potions
             Item.useTurn = true;
             Item.maxStack = 9999;
             Item.consumable = true;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.useStyle = ItemUseStyleID.EatFood;
             Item.UseSound = SoundID.Item2;
             Item.value = Item.sellPrice(0, 0, 70);

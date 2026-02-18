@@ -33,8 +33,8 @@ namespace CalRemix.UI
 
 
 
-            HelperMessage.New("Trapperbulbdotdotdot", "Ohhh, I see you found a... whaaa!!! It's like a distant memory of me, >m<! How strange to see myself in this form, but remember, even in stillness, there's beauty and purpose, nyan! Let's cherish every moment and bloom brightly together, even in different forms, desu! ^v^",
-                "TrapperWTF", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TrapperBulb>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
+           // HelperMessage.New("Trapperbulbdotdotdot", "Ohhh, I see you found a... whaaa!!! It's like a distant memory of me, >m<! How strange to see myself in this form, but remember, even in stillness, there's beauty and purpose, nyan! Let's cherish every moment and bloom brightly together, even in different forms, desu! ^v^",
+             //   "TrapperWTF", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ModContent.ItemType<TrapperBulb>())).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);
 
             HelperMessage.New("Lucy", "Ohayo! Trapper Bulb Chan here, desu! ^_^ Oh, you’ve got Lucy the Axe with you? Kawaii! Lucy-chan, you’re so sharp and strong, just like a samurai’s spirit, nya~",
                 "TrapperIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasItem(ItemID.LucyTheAxe)).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan);

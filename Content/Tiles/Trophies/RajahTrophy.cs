@@ -16,7 +16,7 @@ namespace CalRemix.Content.Tiles.Trophies
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleWrapLimit = 36;
             TileObjectData.addTile(Type);
-            DustType = 7;
+            DustType = DustID.WoodFurniture;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AddMapEntry(new Color(120, 85, 60));
 			RegisterItemDrop(ModContent.ItemType<Items.RajahItems.RajahTrophy>());
