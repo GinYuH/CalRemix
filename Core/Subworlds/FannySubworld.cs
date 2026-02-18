@@ -8,7 +8,7 @@ using CalRemix.Content.Tiles;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class FannySubworld : Subworld
+    public class FannySubworld : Subworld, IDisableBuilding
     {
         public override int Height => 900;
         public override int Width => 900;

@@ -19,7 +19,7 @@ namespace CalRemix.Content.Items.Materials
             Item.consumable = true;
             Item.width = 24;
             Item.height = 24;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.value = 0;
         }
     }

@@ -4,17 +4,16 @@ using CalamityMod.Buffs.StatBuffs;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.CalPlayer;
 using CalamityMod.Events;
-using CalamityMod.Graphics.Renderers;
 using CalamityMod.Items.Dyes;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.ExoMechs;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.SunkenSea;
 using CalamityMod.Particles;
 using CalamityMod.Projectiles.Boss;
-using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Summon.Umbrella;
 using CalamityMod.Projectiles.Typeless;
@@ -52,14 +51,12 @@ using CalRemix.Content.Walls;
 using CalRemix.Core;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Retheme;
-using CalRemix.Core.Retheme.Sneakers;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -77,23 +74,13 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using static CalRemix.CalRemixHelper;
-using CalRemix.Core.Retheme;
-using CalRemix.Content.NPCs.Eclipse;
-using CalRemix.Content.NPCs.Subworlds.GreatSea;
-using CalRemix.UI.Anomaly109;
-using CalamityMod.Projectiles.Melee;
-using Mono.Cecil;
-using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
-using CalRemix.Content.NPCs.Subworlds.SingularPoint;
-using static CalRemix.ChampionNPC;
-using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {
     public struct DyeStats(int red = 0, int orange = 0, int yellow = 0, int lime = 0, int green = 0, int cyan = 0, int teal = 0, int skyblue = 0, int blue = 0, int purple = 0, int violet = 0, int pink = 0, int brown = 0, int black = 0, int silver = 0)
-	{
-		public int red = red;
+    {
+        public int red = red;
         public int orange = orange;
         public int yellow = yellow;
         public int lime = lime;
@@ -108,7 +95,7 @@ namespace CalRemix
         public int pink = pink;
         public int silver = silver;
         public int black = black;
-	}
+    }
 
     public struct Jumpscare(int duration, SoundStyle sound, string name)
     {
@@ -118,23 +105,23 @@ namespace CalRemix
     }
 
     public class CalRemixPlayer : ModPlayer
-	{
-		private sealed class SoRetroSceneEffect : ModSceneEffect
-		{
-			public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh + 10;
+    {
+        private sealed class SoRetroSceneEffect : ModSceneEffect
+        {
+            public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh + 10;
 
-			public override bool IsSceneEffectActive(Player player)
-			{
-				return player.GetModPlayer<CalRemixPlayer>().soRetro;
-			}
+            public override bool IsSceneEffectActive(Player player)
+            {
+                return player.GetModPlayer<CalRemixPlayer>().soRetro;
+            }
 
-			public override void SpecialVisuals(Player player, bool isActive)
-			{
-				base.SpecialVisuals(player, isActive);
-                
-				player.ManageSpecialBiomeVisuals("CalRemix:SoRetro", isActive, player.position);
-			}
-		}
+            public override void SpecialVisuals(Player player, bool isActive)
+            {
+                base.SpecialVisuals(player, isActive);
+
+                player.ManageSpecialBiomeVisuals("CalRemix:SoRetro", isActive, player.position);
+            }
+        }
 
         public static readonly SoundStyle glassBreakSound = new("CalRemix/Assets/Sounds/GlassBreak");
 
@@ -204,6 +191,7 @@ namespace CalRemix
         public bool fungiStone;
         public bool fungiStone2;
         public bool woodEmblem;
+        public bool xApparatus;
 
         public bool miragel;
         public bool elastigel;
@@ -381,7 +369,7 @@ namespace CalRemix
 
         public int talkedNPC = -1;
 
-		public static Dictionary<int, DyeStats> dyeStats = new Dictionary<int, DyeStats>();
+        public static Dictionary<int, DyeStats> dyeStats = new Dictionary<int, DyeStats>();
 
         private static readonly List<PlayerDrawLayer> HiddenGenLayers =
         [
@@ -403,26 +391,26 @@ namespace CalRemix
         ];
 
         public int[] MinionList =
-		{
-			ProjectileType<PlantationStaffSummon>(),
-			ProjectileType<AtlasSoldier>(),
-			ProjectileType<CosmilampMinion>(),
-			ProjectileType<FieryDraconid>(),
-			ProjectileType<SepulcherMinion>(),
-			ProjectileType<CosmicEnergySpiral>(),
-			ProjectileType<EndoCooperBody>(),
-			ProjectileType<MagicUmbrella>(),
-			ProjectileType<SiriusMinion>(),
-			ProjectileType<SarosAura>()
+        {
+            ProjectileType<PlantationStaffSummon>(),
+            ProjectileType<AtlasSoldier>(),
+            ProjectileType<CosmilampMinion>(),
+            ProjectileType<FieryDraconid>(),
+            ProjectileType<SepulcherMinion>(),
+            ProjectileType<CosmicEnergySpiral>(),
+            ProjectileType<EndoCooperBody>(),
+            ProjectileType<MagicUmbrella>(),
+            ProjectileType<SiriusMinion>(),
+            ProjectileType<SarosAura>()
 
-		};
+        };
 
-		public int[] abnormalEnemyList = // immune to effects like Moon Fist's instant kill
+        public int[] abnormalEnemyList = // immune to effects like Moon Fist's instant kill
 		{
 			/*NPCType<SignalDrone>(),
 			NPCType<DerellectPlug>(),*/
 			NPCType<LifeSlime>()
-		};
+        };
 
         public Dictionary<string, int> stocks = new Dictionary<string, int>();
 
@@ -433,32 +421,32 @@ namespace CalRemix
 
         private static void StretchStool(On_PlayerDrawLayers.orig_DrawPlayer_03_PortableStool orig, ref PlayerDrawSet drawinfo)
         {
-	        if (!drawinfo.drawPlayer.portableStoolInfo.IsInUse)
-	        {
-		        return;
-	        }
+            if (!drawinfo.drawPlayer.portableStoolInfo.IsInUse)
+            {
+                return;
+            }
 
-	        var value = TextureAssets.Extra[ExtrasID.PortableStool].Value;
-	        var position = new Vector2(
-		        (int)(drawinfo.Position.X - Main.screenPosition.X + drawinfo.drawPlayer.width / 2f),
-		        (int)(drawinfo.Position.Y - Main.screenPosition.Y + drawinfo.drawPlayer.height + drawinfo.drawPlayer.portableStoolInfo.HeightBoost)
-	        );
-	        var rectangle = value.Frame();
-	        var origin    = rectangle.Size() * new Vector2(0.5f, 1f);
+            var value = TextureAssets.Extra[ExtrasID.PortableStool].Value;
+            var position = new Vector2(
+                (int)(drawinfo.Position.X - Main.screenPosition.X + drawinfo.drawPlayer.width / 2f),
+                (int)(drawinfo.Position.Y - Main.screenPosition.Y + drawinfo.drawPlayer.height + drawinfo.drawPlayer.portableStoolInfo.HeightBoost)
+            );
+            var rectangle = value.Frame();
+            var origin = rectangle.Size() * new Vector2(0.5f, 1f);
 
-	        var destinationRect = new Rectangle(
-		        (int)position.X,
-		        (int)position.Y,
-		        rectangle.Width,
-		        drawinfo.drawPlayer.portableStoolInfo.HeightBoost
-	        );
-			
-	        var drawData = new DrawData(value, destinationRect, rectangle, drawinfo.colorArmorLegs, drawinfo.drawPlayer.bodyRotation, origin, drawinfo.playerEffect)
-	        {
-		        shader = drawinfo.cPortableStool,
-	        };
+            var destinationRect = new Rectangle(
+                (int)position.X,
+                (int)position.Y,
+                rectangle.Width,
+                drawinfo.drawPlayer.portableStoolInfo.HeightBoost
+            );
 
-	        drawinfo.DrawDataCache.Add(drawData);
+            var drawData = new DrawData(value, destinationRect, rectangle, drawinfo.colorArmorLegs, drawinfo.drawPlayer.bodyRotation, origin, drawinfo.playerEffect)
+            {
+                shader = drawinfo.cPortableStool,
+            };
+
+            drawinfo.DrawDataCache.Add(drawData);
         }
 
         public override void SaveData(TagCompound tag)
@@ -492,28 +480,28 @@ namespace CalRemix
             foreach (var stock in StockMarketSystem.StockList) stocks.Add(stock, tag.GetInt("Stock" + stock));
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
-		{
-			if (CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
-			{
-				if (!Player.HasCooldown(EclipseAuraCooldown.ID) && Player.GetModPlayer<CalRemixPlayer>().eclipseaura <= -1)
-				{
-					Player.GetModPlayer<CalRemixPlayer>().eclipseaura = 300;
-				}
-			}
-			if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
+        {
+            if (CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
             {
-				if (!Player.HasCooldown(BaroclawCooldown.ID))
-				{
-					float XDist = 120;
-					clawPosition = Main.MouseWorld;
-					Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld + Vector2.UnitX * XDist, Vector2.Zero, ProjectileType<Claw>(), 30, 0);
-					int p = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld - Vector2.UnitX * XDist, Vector2.Zero, ProjectileType<Claw>(), 30, 0);
-					Main.projectile[p].spriteDirection *= -1;
-				}
+                if (!Player.HasCooldown(EclipseAuraCooldown.ID) && Player.GetModPlayer<CalRemixPlayer>().eclipseaura <= -1)
+                {
+                    Player.GetModPlayer<CalRemixPlayer>().eclipseaura = 300;
+                }
+            }
+            if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
+            {
+                if (!Player.HasCooldown(BaroclawCooldown.ID))
+                {
+                    float XDist = 120;
+                    clawPosition = Main.MouseWorld;
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld + Vector2.UnitX * XDist, Vector2.Zero, ProjectileType<Claw>(), 30, 0);
+                    int p = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld - Vector2.UnitX * XDist, Vector2.Zero, ProjectileType<Claw>(), 30, 0);
+                    Main.projectile[p].spriteDirection *= -1;
+                }
             }
             if (CalRemixKeybinds.StealthPotKeybind.JustPressed && Player.Calamity().rogueStealth < Player.Calamity().rogueStealthMax / 2 && Player.Calamity().wearingRogueArmor)
             {
-				if (Player.HasItem(ItemType<SuperStealthPotion>()))
+                if (Player.HasItem(ItemType<SuperStealthPotion>()))
                 {
                     CombatText.NewText(Player.getRect(), Color.MediumPurple, (int)(Player.Calamity().rogueStealthMax * 100f * 0.25f));
                     Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.25f;
@@ -540,30 +528,30 @@ namespace CalRemix
                     Player.Calamity().rogueStealth += Player.Calamity().rogueStealthMax * 0.1f;
                     Player.ConsumeItem(ItemType<LesserStealthPotion>());
                 }
-				if (Main.myPlayer == Player.whoAmI)
-					SoundEngine.PlaySound(SoundID.Item3, Player.Center);
+                if (Main.myPlayer == Player.whoAmI)
+                    SoundEngine.PlaySound(SoundID.Item3, Player.Center);
             }
             if (CalRemixKeybinds.IonoLightningKeybind.JustPressed && ionogenSoul)
             {
                 if (!Player.HasCooldown(IonLightningCooldown.ID))
                 {
                     int io = Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - Vector2.UnitY * 3200f, Vector2.UnitY, ProjectileType<IonogenLightning>(), 0, 0, Player.whoAmI, 0f, -1, 61);
-					Main.projectile[io].timeLeft = 22;
-					SoundEngine.PlaySound(CommonCalamitySounds.LightningSound, Player.Center);
-					double dam = Player.Hurt(PlayerDeathReason.ByProjectile(Player.whoAmI, io), 1, 0, dodgeable: false);
-					if (dam > 0)
-					{
-						Player.statLife += (int)dam;
-						Player.RemoveAllIFrames();
-					}
-					Player.AddCooldown("Ionic", 300);
+                    Main.projectile[io].timeLeft = 22;
+                    SoundEngine.PlaySound(CommonCalamitySounds.LightningSound, Player.Center);
+                    double dam = Player.Hurt(PlayerDeathReason.ByProjectile(Player.whoAmI, io), 1, 0, dodgeable: false);
+                    if (dam > 0)
+                    {
+                        Player.statLife += (int)dam;
+                        Player.RemoveAllIFrames();
+                    }
+                    Player.AddCooldown("Ionic", 300);
                 }
             }
             if (CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
             {
-				TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
-				if (!Player.HasCooldown(SoulExplosionCooldown.ID) && helmet.souls > 0)
-				{
+                TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
+                if (!Player.HasCooldown(SoulExplosionCooldown.ID) && helmet.souls > 0)
+                {
                     SoundEngine.PlaySound(DevourerofGodsHead.AttackSound);
                     int maxSouls = (helmet.souls < 10) ? helmet.souls : 10;
                     for (int i = 0; i < maxSouls; i++)
@@ -572,20 +560,20 @@ namespace CalRemix
                         Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, velocity, ProjectileType<SepulcherSoul>(), 0, 0f);
                     }
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ProjectileType<TwistedNetheriteSoulExplosion>(), (int)(Math.Log(helmet.souls) + 1) * 1000, 0f, Player.whoAmI, ai1: 1600);
-					helmet.souls = 0;
+                    helmet.souls = 0;
                     Player.AddCooldown("SoulExplosion", 1800);
                 }
             }
-			if (CalRemixKeybinds.InfraredSightsKeybind.JustPressed && infraredSights)
-			{
-				if (!Player.HasCooldown(InfraredSightsCooldown.ID))
+            if (CalRemixKeybinds.InfraredSightsKeybind.JustPressed && infraredSights)
+            {
+                if (!Player.HasCooldown(InfraredSightsCooldown.ID))
                 {
-					if (Main.myPlayer == Player.whoAmI)
-						CombatText.NewText(Player.getRect(), Color.Red, LocalText("StatusText.InfaredScan").Value, true);
+                    if (Main.myPlayer == Player.whoAmI)
+                        CombatText.NewText(Player.getRect(), Color.Red, LocalText("StatusText.InfaredScan").Value, true);
                     infraredSightsScanning = true;
                     Player.AddCooldown("InfraredSights", 3600);
                 }
-			}
+            }
             if (CalamityKeybinds.RageHotKey.JustPressed && Player.Calamity().rage >= Player.Calamity().rageMax && irategel)
             {
                 Player.Hurt(new PlayerDeathReason(), Player.statLifeMax2 / 2, 0);
@@ -625,7 +613,7 @@ namespace CalRemix
 
                             int duration = CalamityPlayer.areThereAnyDamnBosses ? CalamityPlayer.chaosStateDuration_NR : 360;
                             if (Player.HeldItem.type == ItemType<NamelessMurasama>())
-                            Player.AddCooldown(NamelessCooldown.ID, duration,true);
+                                Player.AddCooldown(NamelessCooldown.ID, duration, true);
                             else
                                 Player.AddCooldown(ComboCooldown.ID, duration, true);
                             Player.AddBuff(BuffID.ChaosState, duration);
@@ -645,51 +633,60 @@ namespace CalRemix
             }
             if (eclipseaura > 0)
             {
-				modifiers.SourceDamage *= 0f;
+                modifiers.SourceDamage *= 0f;
             }
-			if (fridge)
+            if (fridge)
             {
                 modifiers.SourceDamage *= 0f;
             }
-			if (cursed)
-			{ 
-				modifiers.SourceDamage *= 1.9f;
-			}
+            if (cursed)
+            {
+                modifiers.SourceDamage *= 1.9f;
+            }
             if (taintedGills && Player.IsUnderwater() && Player.breath > 0)
             {
                 modifiers.SourceDamage *= 0f;
-            }			
+            }
+            if ((NPC.AnyNPCs(NPCType<DevourerofGodsHead>()) && !DownedBossSystem.downedDoG) || (NPC.AnyNPCs(NPCType<Draedon>()) && !DownedBossSystem.downedExoMechs))
+            {
+                float damageMult = MathHelper.Lerp(0.02f, 0.4f, CalamityUtils.SineOutEasing(Player.statLife / (float)Player.statLifeMax2, 1));
+                modifiers.FinalDamage *= damageMult; ;
+            }
         }
 
         private int stoolBoost;
 
         public override void PostUpdateEquips()
         {
-	        base.PostUpdateEquips();
-	        
-	        if (!Player.portableStoolInfo.IsInUse)
-	        {
-		        stoolBoost = 0;
-	        }
-	        else
-	        {
-		        stoolBoost++;
-	            
-		        // Don't reuse the height boost normally granted because our
-		        // changes make it look jank but in a boring way.  It's funnier
-		        // to see it grow from 0 pixels instead.
-		        // var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
-		        var boost = stoolBoost;
-		        Player.portableStoolInfo.SetStats(boost, boost, boost);
-		        
-		        // increase crit by 1% every 5 tiles
-		        var crit = boost / 80f; // 16 * 5
-		        Player.GetCritChance(DamageClass.Generic) += crit;
-	        }
+            base.PostUpdateEquips();
 
-            if (SubworldSystem.IsActive<PiggySubworld>())
+            if (!Player.portableStoolInfo.IsInUse)
             {
-                //Player.noBuilding = true;
+                stoolBoost = 0;
+            }
+            else
+            {
+                stoolBoost++;
+
+                // Don't reuse the height boost normally granted because our
+                // changes make it look jank but in a boring way.  It's funnier
+                // to see it grow from 0 pixels instead.
+                // var boost = Player.portableStoolInfo.HeightBoost + stoolBoost;
+                var boost = stoolBoost;
+                Player.portableStoolInfo.SetStats(boost, boost, boost);
+
+                // increase crit by 1% every 5 tiles
+                var crit = boost / 80f; // 16 * 5
+                Player.GetCritChance(DamageClass.Generic) += crit;
+            }
+
+            if (SubworldSystem.Current != null)
+            {
+                if (SubworldSystem.Current is IDisableBuilding)
+                {
+                    Player.noBuilding = true;
+                    Player.AddBuff(BuffID.NoBuilding, 60);
+                }
             }
         }
         public override void PostUpdate()
@@ -701,7 +698,7 @@ namespace CalRemix
                 Player.GetDamage(DamageClass.Generic) *= 1f + 0.05f * grabCount;
             }
 
-            if (ChampionMe &&  CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(ModContent.BuffType<RageCool>()))
+            if (ChampionMe && CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(ModContent.BuffType<RageCool>()))
             {
                 int BuffLength = 240;
                 if (Player.statLife < (int)(Player.statLifeMax2 * .75f))
@@ -738,9 +735,9 @@ namespace CalRemix
 
         public override void UpdateEquips()
         {
-			if (CalRemixWorld.remixJump)
-				Player.GetJumpState<DefaultJump>().Enable();
-			else
+            if (CalRemixWorld.remixJump)
+                Player.GetJumpState<DefaultJump>().Enable();
+            else
                 Player.GetJumpState<DefaultJump>().Disable();
 
             if (CalRemixWorld.dyeStats)
@@ -751,8 +748,12 @@ namespace CalRemix
                     CalRemixHooks.CountDyes(Player, Player.miscDyes[i].type);
             }
         }
-		public override void PreUpdate()
+        public override void PreUpdate()
         {
+            if (xApparatus)
+            {
+                Player.Calamity().PreUpdate();
+            }
             if (Main.myPlayer == Player.whoAmI)
             {
                 Anomaly109ClientUpdates();
@@ -770,7 +771,7 @@ namespace CalRemix
 
             }
             if (CalRemixWorld.permanenthealth)
-				SpawnPhantomHeart();
+                SpawnPhantomHeart();
 
             if (calamitizedHitCooldown > 0)
                 calamitizedHitCooldown--;
@@ -813,7 +814,7 @@ namespace CalRemix
                 krakenInvince--;
 
             if (VerbotenMode >= 5)
-				VerbotenMode = 1;
+                VerbotenMode = 1;
             if (chainSawCharge >= chainSawLevel1)
             {
                 Player.ClearBuff(BuffID.Darkness);
@@ -909,26 +910,26 @@ namespace CalRemix
                 Player.statDefense -= (int)(Player.statDefense * 0.22f);
             }
 
-			if (Player.ZoneRockLayerHeight)
-			{
-				if (!NPC.AnyNPCs(NPCType<Phytogen>()))
-				{
-					int plagueEnemies = 0;
-					int plagueToSpawnPhytogen = 6;
-					foreach (NPC n in Main.npc)
-					{
-						if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type) && n.Distance(Player.Center) < 600)
-						{
-							plagueEnemies++;
-							if (plagueEnemies >= plagueToSpawnPhytogen)
-							{
+            if (Player.ZoneRockLayerHeight)
+            {
+                if (!NPC.AnyNPCs(NPCType<Phytogen>()))
+                {
+                    int plagueEnemies = 0;
+                    int plagueToSpawnPhytogen = 6;
+                    foreach (NPC n in Main.npc)
+                    {
+                        if (n.active && n.life > 0 && n != null && Phytogen.plagueEnemies.Contains(n.type) && n.Distance(Player.Center) < 600)
+                        {
+                            plagueEnemies++;
+                            if (plagueEnemies >= plagueToSpawnPhytogen)
+                            {
                                 SpawnNPCOnPlayer(Player.whoAmI, NPCType<Phytogen>());
-								break;
-							}
-						}
-					}
-				}
-			}
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
             if (CalRemixWorld.hydrogenLocation != Vector2.Zero && !BossRushEvent.BossRushActive)
             {
                 if (Player.Distance(CalRemixWorld.hydrogenLocation) < 2000)
@@ -941,6 +942,18 @@ namespace CalRemix
             if (Main.hardMode && fifteenMinutesSinceHardmode > 0)
             {
                 fifteenMinutesSinceHardmode--;
+            }
+
+            if (SubworldSystem.Current != null)
+            {
+                if (SubworldSystem.Current is IInfiniteFlight)
+                {
+                    Player.Calamity().infiniteFlight = true;
+                }
+                else if (SubworldSystem.Current is IDisableFlight)
+                {
+                    Player.wingTimeMax = 0;
+                }
             }
         }
 
@@ -987,8 +1000,8 @@ namespace CalRemix
         }
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
-        {     
-            if (Main.zenithWorld) 
+        {
+            if (Main.zenithWorld)
                 SoundEngine.PlaySound(glassBreakSound, Player.Center);
             return true;
         }
@@ -1079,6 +1092,10 @@ namespace CalRemix
 
         public override void PostUpdateMiscEffects()
         {
+            if (xApparatus)
+            {
+                Player.Calamity().PostUpdateMiscEffects();
+            }
             if (Main.myPlayer == Player.whoAmI)
             {
                 if (Main.mouseItem.type == ItemType<ShardofGlass>())
@@ -1132,7 +1149,7 @@ namespace CalRemix
                 {
                     Player.buffImmune[BuffID.Darkness] = true;
                     Player.buffImmune[BuffID.Obstructed] = true;
-                    Player.Calamity().externalAbyssLight += 50;
+                    Player.Calamity().abyssPlayerGlowMultiplier = 100;
                 }
             }
             if (Player.HasCooldown(ParadiseHealCooldown.ID) || (Player.HasCooldown(ComboCooldown.ID) && !(Player.controlUp && muraregen)))
@@ -1142,138 +1159,138 @@ namespace CalRemix
                 Player.jumpSpeed *= 3;
             }
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
-			if (cart)
-			{
-				for (int i = 0; i < MinionList.Length; i++)
-				{
-					if (Main.LocalPlayer.ownedProjectileCounts[MinionList[i]] > 0)
-					{
-						Main.LocalPlayer.maxMinions += Player.ownedProjectileCounts[MinionList[i]];
-					}
-				}
-			}
-			if (cosdam > 0.3f)
+            if (cart)
             {
-				cosdam = 0.3f;
+                for (int i = 0; i < MinionList.Length; i++)
+                {
+                    if (Main.LocalPlayer.ownedProjectileCounts[MinionList[i]] > 0)
+                    {
+                        Main.LocalPlayer.maxMinions += Player.ownedProjectileCounts[MinionList[i]];
+                    }
+                }
             }
-			if (crystalconflict && cosdam > 0)
+            if (cosdam > 0.3f)
             {
-				Main.LocalPlayer.GetDamage<GenericDamageClass>() += cosdam;
-			}
-			if (!crystalconflict)
-            {
-				cosdam = 0;
+                cosdam = 0.3f;
             }
-			if (godfather)
+            if (crystalconflict && cosdam > 0)
             {
-				calplayer.externalAbyssLight = 10;
-				Main.LocalPlayer.breath = Main.LocalPlayer.breathMax;
+                Main.LocalPlayer.GetDamage<GenericDamageClass>() += cosdam;
+            }
+            if (!crystalconflict)
+            {
+                cosdam = 0;
+            }
+            if (godfather)
+            {
+                calplayer.externalAbyssLight = 10;
+                Main.LocalPlayer.breath = Main.LocalPlayer.breathMax;
             }
             #region Eclipse Aura
             if (ring2 != null)
-			{
-				ring2.Position = Player.Center;
-				ring2.Velocity = Player.velocity;
-				ring2.Scale *= 1.05f;
-				ring2.Time += 1;
-			}
-			if (eclipseaura != -1)
             {
-				Color outerring = tvo ? Color.LightPink : Color.Yellow;
-				aura = new StrongBloom(Player.Center, Player.velocity, Color.Purple * 0.6f, 1f + Main.rand.NextFloat(0f, 1.5f) * 1.5f, 40);
-				ring = new BloomRing(Player.Center, Player.velocity, outerring * 0.4f, 1.5f, 40);
-				if (ring != null)
-				{
-					ring.Position = Player.Center;
-					ring.Velocity = Player.velocity;
-					ring.Time = 0;
-				}
-				if (aura != null)
-				{
-					aura.Position = Player.Center;
-					aura.Velocity = Player.velocity;
-					aura.Time = 0;
-				}
-				for (int i = 0; i < Main.maxNPCs; i++)
+                ring2.Position = Player.Center;
+                ring2.Velocity = Player.velocity;
+                ring2.Scale *= 1.05f;
+                ring2.Time += 1;
+            }
+            if (eclipseaura != -1)
+            {
+                Color outerring = tvo ? Color.LightPink : Color.Yellow;
+                aura = new StrongBloom(Player.Center, Player.velocity, Color.Purple * 0.6f, 1f + Main.rand.NextFloat(0f, 1.5f) * 1.5f, 40);
+                ring = new BloomRing(Player.Center, Player.velocity, outerring * 0.4f, 1.5f, 40);
+                if (ring != null)
                 {
-					NPC target = Main.npc[i];
-					if (Player.Center.Distance(target.Center) < 100 && !target.friendly)
+                    ring.Position = Player.Center;
+                    ring.Velocity = Player.velocity;
+                    ring.Time = 0;
+                }
+                if (aura != null)
+                {
+                    aura.Position = Player.Center;
+                    aura.Velocity = Player.velocity;
+                    aura.Time = 0;
+                }
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC target = Main.npc[i];
+                    if (Player.Center.Distance(target.Center) < 100 && !target.friendly)
                     {
-						int dam = tvo ? 300 : 200;
-						target.StrikeNPC(target.CalculateHitInfo(dam, 0, knockBack: 0));
+                        int dam = tvo ? 300 : 200;
+                        target.StrikeNPC(target.CalculateHitInfo(dam, 0, knockBack: 0));
                     }
                 }
-				if (eclipseaura % 10 == 0)
-				{
-					GeneralParticleHandler.SpawnParticle(aura);
-					GeneralParticleHandler.SpawnParticle(ring);
-				}
-				eclipseaura--;
+                if (eclipseaura % 10 == 0)
+                {
+                    GeneralParticleHandler.SpawnParticle(aura);
+                    GeneralParticleHandler.SpawnParticle(ring);
+                }
+                eclipseaura--;
             }
-			else
-			{
-				if (ring != null)
-				{
-					ring.Kill();
-				}
-				if (aura != null)
-				{
-					aura.Kill();
-				}
-			}
-			if (eclipseaura == 0)
-			{
-				int duration = tvo ? 30 : 20;
-				Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalamityUtils.SecondsToFrames(duration));
-			}
+            else
+            {
+                if (ring != null)
+                {
+                    ring.Kill();
+                }
+                if (aura != null)
+                {
+                    aura.Kill();
+                }
+            }
+            if (eclipseaura == 0)
+            {
+                int duration = tvo ? 30 : 20;
+                Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalamityUtils.SecondsToFrames(duration));
+            }
             #endregion
             if (halEffigy)
-			{
-				Player.moveSpeed += 0.25f;
-				Player.GetCritChance<GenericDamageClass>() += 25;
-				Player.GetDamage<GenericDamageClass>() += 0.25f;
-				Player.statDefense += 20;
-				Player.endurance += 0.08f;
-				Player.AddCooldown(CalamityMod.Cooldowns.ChaosState.ID, 20);
-			}
-			if (astEffigy)
-			{
-				if (Player.ZoneSkyHeight)
-				{
-					Player.gravity = Player.defaultGravity;
-					if (Player.wet)
-					{
-						if (Player.honeyWet)
-							Player.gravity = 0.1f;
-						else if (Player.merman)
-							Player.gravity = 0.3f;
-						else
-							Player.gravity = 0.2f;
-					}
-				}
-			}
-			if (tvo && calplayer.adrenalineModeActive)
-			{
-				Main.LocalPlayer.GetDamage<GenericDamageClass>() *= 3;
-			}
-			if (tvo)
-			{
-				for (int i = 0; i < Main.maxNPCs; i++)
-				{
-					NPC target = Main.npc[i];
-					if (!target.active || !target.Hitbox.Intersects(Utils.CenteredRectangle(Main.MouseWorld, new Vector2(35f, 62f))) || target.immortal || target.dontTakeDamage || target.townNPC || NPCID.Sets.ActsLikeTownNPC[target.type] || NPCID.Sets.CountsAsCritter[target.type])
-						continue;
+            {
+                Player.moveSpeed += 0.25f;
+                Player.GetCritChance<GenericDamageClass>() += 25;
+                Player.GetDamage<GenericDamageClass>() += 0.25f;
+                Player.statDefense += 20;
+                Player.endurance += 0.08f;
+                Player.AddCooldown(CalamityMod.Cooldowns.ChaosState.ID, 20);
+            }
+            if (astEffigy)
+            {
+                if (Player.ZoneSkyHeight)
+                {
+                    Player.gravity = Player.defaultGravity;
+                    if (Player.wet)
+                    {
+                        if (Player.honeyWet)
+                            Player.gravity = 0.1f;
+                        else if (Player.merman)
+                            Player.gravity = 0.3f;
+                        else
+                            Player.gravity = 0.2f;
+                    }
+                }
+            }
+            if (tvo && calplayer.adrenalineModeActive)
+            {
+                Main.LocalPlayer.GetDamage<GenericDamageClass>() *= 3;
+            }
+            if (tvo)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC target = Main.npc[i];
+                    if (!target.active || !target.Hitbox.Intersects(Utils.CenteredRectangle(Main.MouseWorld, new Vector2(35f, 62f))) || target.immortal || target.dontTakeDamage || target.townNPC || NPCID.Sets.ActsLikeTownNPC[target.type] || NPCID.Sets.CountsAsCritter[target.type])
+                        continue;
 
-					target.AddBuff(BuffType<BrimstoneFlames>(), 1200);
-				}
+                    target.AddBuff(BuffType<BrimstoneFlames>(), 1200);
+                }
             }
 
             if (Player.Calamity().fearmongerSet && CalRemixWorld.fearmonger)
             {
-				if (Main.snowMoon || Main.pumpkinMoon)
-				{
-					Player.endurance *= 0.85f;
-				}
+                if (Main.snowMoon || Main.pumpkinMoon)
+                {
+                    Player.endurance *= 0.85f;
+                }
                 Player.Calamity().wearingRogueArmor = false;
                 Player.Calamity().WearingPostMLSummonerSet = false;
                 Player.maxMinions -= 1;
@@ -1316,17 +1333,17 @@ namespace CalRemix
                 else
                     dungeon2 = false;
             }
-			if (!carcinogenSoul)
-			{
+            if (!carcinogenSoul)
+            {
                 if (timeSmoked > 0)
                     timeSmoked--;
             }
             // Kick people from chests in pre hardmode
             if (Player.chest > -1)
-			{
+            {
                 if (Player.InModBiome<FrozenStrongholdBiome>() && !Main.hardMode)
-				{
-					Player.chest = -1;
+                {
+                    Player.chest = -1;
                 }
                 RecentChest = Player.chest;
             }
@@ -1385,24 +1402,24 @@ namespace CalRemix
             Player.wingTimeMax += dyesLightBlue * 10;
             #region stealth cuts
             if (tvo) //Verboten one
-			{
-				StealthCut(0.995f);
-			}
-			else if (godfather) //Godfather
-			{
-				StealthCut(0.01f);
-			}
-			else if (calplayer.sponge) //Sponge
-			{
-				StealthCut(0.02f);
-			}
-			else if (calplayer.absorber) //Absorber
-			{
-				StealthCut(0.03f);
-			}
-			else if (miragel) //Mirage Jelly & Grand Gelatin
             {
-				StealthCut(0.05f);
+                StealthCut(0.995f);
+            }
+            else if (godfather) //Godfather
+            {
+                StealthCut(0.01f);
+            }
+            else if (calplayer.sponge) //Sponge
+            {
+                StealthCut(0.02f);
+            }
+            else if (calplayer.absorber) //Absorber
+            {
+                StealthCut(0.03f);
+            }
+            else if (miragel) //Mirage Jelly & Grand Gelatin
+            {
+                StealthCut(0.05f);
             }
             #endregion
 
@@ -1481,49 +1498,50 @@ namespace CalRemix
             }
         }
         public override void ResetEffects()
-		{
-			brimPortal = false;
-			arcanumHands = false;
-			marnite = false;
-			roguebox = false;
+        {
+            brimPortal = false;
+            arcanumHands = false;
+            marnite = false;
+            roguebox = false;
             dreamingGhost = false;
-			statue = false;
-			mackerel = false;
+            statue = false;
+            mackerel = false;
             moltool = false;
             sickcell = false;
-			neuron = false;
+            neuron = false;
             soldier = false;
             nowhereDragons = false;
             Rabbitcopter = false;
             RabbitcopterR = false;
             corrosiveEye = false;
             onyxFist = false;
-			astEffigy = false;
-			halEffigy = false;
-			nothing = false;
-			miragel = false;
+            astEffigy = false;
+            halEffigy = false;
+            nothing = false;
+            miragel = false;
             elastigel = false;
             invigel = false;
             irategel = false;
-			nuclegel = false;
-			assortegel = false;
-			amalgel = false;
-			godfather = false;
-			cosmele = false;
-			earthele = false;
-			crystalconflict = false;
-			moonFist = false;
-			cursed = false;
-			tvo = false;
-			cart = false;
-			tvohide = false;
-			baroclaw = false;
-			blaze = false;
-			pearl = false;
-			astralEye = false;
-			bananaClown = false;
-			twistedNetherite = false;
-			twistedNetheriteBoots = false;
+            nuclegel = false;
+            assortegel = false;
+            amalgel = false;
+            godfather = false;
+            cosmele = false;
+            earthele = false;
+            crystalconflict = false;
+            moonFist = false;
+            cursed = false;
+            tvo = false;
+            cart = false;
+            tvohide = false;
+            baroclaw = false;
+            blaze = false;
+            pearl = false;
+            astralEye = false;
+            xApparatus = false;
+            bananaClown = false;
+            twistedNetherite = false;
+            twistedNetheriteBoots = false;
             salvageSuit = false;
             springlocked = false;
             carnelian = false;
@@ -1536,82 +1554,82 @@ namespace CalRemix
             ChampionMa = false;
             ChampionRa = false;
             wormMeal = false;
-			invGar = false;
-			hayFever = false;
+            invGar = false;
+            hayFever = false;
             stratusBeverage = false;
             friendship = false;
             Baron = false;
             infinityOverload = false;
             Spear = false;
             taintedAmmo = false;
-            taintedArchery= false;
-            taintedBattle= false;
-            taintedBuilder= false;
-            taintedCalm= false;
-            taintedCrate= false;
-            taintedDanger= false;
-            taintedEndurance= false;
-            taintedFeather= false;
+            taintedArchery = false;
+            taintedBattle = false;
+            taintedBuilder = false;
+            taintedCalm = false;
+            taintedCrate = false;
+            taintedDanger = false;
+            taintedEndurance = false;
+            taintedFeather = false;
             taintedFish = false;
-            taintedGills= false;
-            taintedGravity= false;
-            taintedHeart= false;
-            taintedHunt= false;
-            taintedInferno= false;
-            taintedInvis= false;
-            taintedIron= false;
-            taintedLife= false;
-            taintedLove= false;
-            taintedLuck= false;
-            taintedMagic= false;
-            taintedMana= false;
-            taintedMining= false;
-            taintedOwl= false;
-            taintedObsidian= false;
-            taintedRage= false;
-            taintedRegen= false;
-            taintedShine= false;
-            taintedSonar= false;
-            taintedSpelunker= false;
-            taintedStink= false;
-            taintedSummoning= false;
-            taintedSwift= false;
-            taintedThorns= false;
-            taintedTitan= false;
-            taintedWarmth= false;
-            taintedWater= false;
-            taintedWrath= false;
+            taintedGills = false;
+            taintedGravity = false;
+            taintedHeart = false;
+            taintedHunt = false;
+            taintedInferno = false;
+            taintedInvis = false;
+            taintedIron = false;
+            taintedLife = false;
+            taintedLove = false;
+            taintedLuck = false;
+            taintedMagic = false;
+            taintedMana = false;
+            taintedMining = false;
+            taintedOwl = false;
+            taintedObsidian = false;
+            taintedRage = false;
+            taintedRegen = false;
+            taintedShine = false;
+            taintedSonar = false;
+            taintedSpelunker = false;
+            taintedStink = false;
+            taintedSummoning = false;
+            taintedSwift = false;
+            taintedThorns = false;
+            taintedTitan = false;
+            taintedWarmth = false;
+            taintedWater = false;
+            taintedWrath = false;
             murablink = false;
             muraregen = false;
             phd = false;
-			infraredSights = false;
+            infraredSights = false;
             exolotl = false;
             fractalCrawler = false;
             carcinogenSoul = false;
-			carcinogenSoulVanity = false;
-			hydrogenSoul = false;
-			origenSoul = false;
-			ionogenSoul = false;
-			phytogenSoul = false;
+            carcinogenSoulVanity = false;
+            hydrogenSoul = false;
+            origenSoul = false;
+            ionogenSoul = false;
+            phytogenSoul = false;
             pyrogenSoul = false;
-			oxygenSoul = false;
-			pathogenSoul = false;
+            oxygenSoul = false;
+            pathogenSoul = false;
             genActive = false;
-			dyesRed = 0;
-			dyesOrange = 0;
-			dyesYellow = 0;
-			dyesLime = 0;
-			dyesGreen = 0;
-			dyesCyan = 0;
-			dyesTeal = 0;
-			dyesLightBlue = 0;
-			dyesDarkBlue = 0;
-			dyesPurple = 0;
-			dyesViolet = 0;
-			dyesSilver = 0;
-			dyesBlack = 0;
-			dyesBrown = 0;
-			dyesPink = 0;
+            dyesRed = 0;
+            dyesOrange = 0;
+            dyesYellow = 0;
+            dyesLime = 0;
+            dyesGreen = 0;
+            dyesCyan = 0;
+            dyesTeal = 0;
+            dyesLightBlue = 0;
+            dyesDarkBlue = 0;
+            dyesPurple = 0;
+            dyesViolet = 0;
+            dyesSilver = 0;
+            dyesBlack = 0;
+            dyesBrown = 0;
+            dyesPink = 0;
             retroman = false;
             soRetro = false;
             noTomorrow = false;
@@ -1627,18 +1645,18 @@ namespace CalRemix
                 calamitizedCounter = 0;
             }
             if (!CalamityUtils.AnyProjectiles(ProjectileType<Fridge>()))
-			{
+            {
                 fridge = false;
             }
             if (astEffigy)
-				Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
-			if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)
-			{
-				if (!Player.HeldItem.Calamity().AppliedEnchantment.HasValue)
-				{
-					amongusEnchant = false;
-				}
-			}
+                Player.statLifeMax2 = (int)(Player.statLifeMax2 * 1.5);
+            if (Player.HeldItem != null && Player.HeldItem.type != ItemID.None)
+            {
+                if (!Player.HeldItem.Calamity().AppliedEnchantment.HasValue)
+                {
+                    amongusEnchant = false;
+                }
+            }
             if (Main.myPlayer == Player.whoAmI)
             {
                 if (Filters.Scene["CalRemix:AcidSight"].Active)
@@ -1649,21 +1667,21 @@ namespace CalRemix
         }
         public override void GetDyeTraderReward(List<int> rewardPool)
         {
-			if (CalamityMod.DownedBossSystem.downedProvidence && CalRemixWorld.permanenthealth)
-			{
-				if (CalamityMod.DownedBossSystem.downedProvidence && !Player.Calamity().eBerry)
-				{
-					rewardPool.Clear();
-				}
-				rewardPool.Add(ItemType<Elderberry>());
-			}
+            if (CalamityMod.DownedBossSystem.downedProvidence && CalRemixWorld.permanenthealth)
+            {
+                if (CalamityMod.DownedBossSystem.downedProvidence && !Player.Calamity().tCloudberry)
+                {
+                    rewardPool.Clear();
+                }
+                rewardPool.Add(ItemType<TaintedCloudberry>());
+            }
         }
-		public override void OnHitNPC(NPC npc, NPC.HitInfo hit, int damageDone)
-		{
-			if (npc.life <= 0 && npc.value > 0 && twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
+        public override void OnHitNPC(NPC npc, NPC.HitInfo hit, int damageDone)
+        {
+            if (npc.life <= 0 && npc.value > 0 && twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
             {
                 TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
-				helmet.souls++;
+                helmet.souls++;
             }
             if (npc.life > 0)
             {
@@ -1698,7 +1716,7 @@ namespace CalRemix
 
             if (Player.portableStoolInfo.IsInUse)
             {
-	            npc.AddBuff(BuffID.Dazed, 5 * 60);
+                npc.AddBuff(BuffID.Dazed, 5 * 60);
             }
 
             if (ChampionMa)
@@ -1713,8 +1731,8 @@ namespace CalRemix
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
         {
             if (amongusEnchant && hit.Crit)
-			{
-				if (Main.myPlayer == Player.whoAmI)
+            {
+                if (Main.myPlayer == Player.whoAmI)
                 {
                     CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
                     SoundEngine.PlaySound(SoundID.NPCHit1);
@@ -1726,22 +1744,22 @@ namespace CalRemix
             {
             }
             if (moonFist && item.DamageType == DamageClass.Melee)
-			{
-				target.AddBuff(BuffType<Nightwither>(), 300, false);
-				if (target.boss == false && !abnormalEnemyList.Contains(target.type)) 
-				{				
-					if (Main.rand.NextBool(10))
-					{
-						target.HitEffect(0, target.lifeMax * 22);
-					}		
-					
-				}
-			}
-			if (twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
             {
-				TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
+                target.AddBuff(BuffType<Nightwither>(), 300, false);
+                if (target.boss == false && !abnormalEnemyList.Contains(target.type))
+                {
+                    if (Main.rand.NextBool(10))
+                    {
+                        target.HitEffect(0, target.lifeMax * 22);
+                    }
+
+                }
+            }
+            if (twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
+            {
+                TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
                 target.AddBuff(BuffType<Wither>(), 120);
-				target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
+                target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
                 if (target.life <= 0 && target.value > 0 && item.type == ItemType<TwistedNetheriteSword>())
                     helmet.souls += 2;
             }
@@ -1761,25 +1779,25 @@ namespace CalRemix
                 }
             }
         }
-		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
-		{
-			if (amongusEnchant && hit.Crit)
-			{
-				CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
-				Main.LocalPlayer.statLife -= (int)MathHelper.Clamp(damageDone / 7, 0, Player.statLife - 1);
-				SoundEngine.PlaySound(SoundID.NPCHit1, Player.Center);
-				hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
-			}
-			if (moonFist && proj.DamageType == DamageClass.Melee)
-			{
-				target.AddBuff(BuffType<Nightwither>(), 300, false);
-				if (target.boss == false) 
-				{				
-					if(Main.rand.NextBool(10))
-					{
-						target.HitEffect(0, target.lifeMax * 22);
-					}		
-				}
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
+        {
+            if (amongusEnchant && hit.Crit)
+            {
+                CombatText.NewText(Main.LocalPlayer.getRect(), Color.Red, damageDone / 7);
+                Main.LocalPlayer.statLife -= (int)MathHelper.Clamp(damageDone / 7, 0, Player.statLife - 1);
+                SoundEngine.PlaySound(SoundID.NPCHit1, Player.Center);
+                hit.SourceDamage = (int)(hit.SourceDamage * 2.5f);
+            }
+            if (moonFist && proj.DamageType == DamageClass.Melee)
+            {
+                target.AddBuff(BuffType<Nightwither>(), 300, false);
+                if (target.boss == false)
+                {
+                    if (Main.rand.NextBool(10))
+                    {
+                        target.HitEffect(0, target.lifeMax * 22);
+                    }
+                }
             }
             if (twistedNetherite && Player.armor[0].type == ItemType<TwistedNetheriteHelmet>())
             {
@@ -1819,7 +1837,7 @@ namespace CalRemix
 
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
-			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+            CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
             if (Player.HasBuff(ModContent.BuffType<DepthGliderBuff>()))
             {
                 if (npc.type == ModContent.NPCType<TempestKraken>())
@@ -1831,30 +1849,31 @@ namespace CalRemix
                 }
             }
             if (godfather)
-			{
-				if (npc.type == NPCID.BlueJellyfish || npc.type == NPCID.PinkJellyfish || npc.type == NPCID.GreenJellyfish ||
-					npc.type == NPCID.FungoFish || npc.type == NPCID.BloodJelly || npc.type == NPCID.AngryNimbus || npc.type == NPCID.GigaZapper ||
-					npc.type == NPCID.MartianTurret || npc.type == NPCType<Stormlion>() || npc.type == NPCType<GhostBell>() || npc.type == NPCType<BoxJellyfish>())
-					calplayer.contactDamageReduction += 1;
-				var source = Main.LocalPlayer.GetSource_OnHurt(npc);
-				Vector2 playercenter = Main.LocalPlayer.Center;
-				Vector2 spawnvector = new Vector2(playercenter.X - 4, playercenter.Y - 4);
-				Projectile.NewProjectile(source, spawnvector, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 33000, 0, Main.LocalPlayer.whoAmI);
-			}
+            {
+                if (npc.type == NPCID.BlueJellyfish || npc.type == NPCID.PinkJellyfish || npc.type == NPCID.GreenJellyfish ||
+                    npc.type == NPCID.FungoFish || npc.type == NPCID.BloodJelly || npc.type == NPCID.AngryNimbus || npc.type == NPCID.GigaZapper ||
+                    npc.type == NPCID.MartianTurret || npc.type == NPCType<Stormlion>() || npc.type == NPCType<GhostBell>() || npc.type == NPCType<BoxJellyfish>())
+                    calplayer.contactDamageReduction += 1;
+                var source = Main.LocalPlayer.GetSource_OnHurt(npc);
+                Vector2 playercenter = Main.LocalPlayer.Center;
+                Vector2 spawnvector = new Vector2(playercenter.X - 4, playercenter.Y - 4);
+                Projectile.NewProjectile(source, spawnvector, Vector2.Zero, ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 33000, 0, Main.LocalPlayer.whoAmI);
+            }
             if (calamityRing)
             {
                 npc.damage *= 2;
             }
-		}
-		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
-		{
-			CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
-			if (godfather)
-			{
-				if (proj.type == ProjectileID.MartianTurretBolt || proj.type == ProjectileID.GigaZapperSpear || proj.type == ProjectileID.CultistBossLightningOrbArc || proj.type == ProjectileID.VortexLightning || proj.type == ProjectileType<DestroyerElectricLaser>() ||
-					proj.type == ProjectileID.BulletSnowman || proj.type == ProjectileID.BulletDeadeye || proj.type == ProjectileID.SniperBullet || proj.type == ProjectileID.VortexLaser)
-					calplayer.projectileDamageReduction += 1;
-			}
+
+        }
+        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+        {
+            CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+            if (godfather)
+            {
+                if (proj.type == ProjectileID.MartianTurretBolt || proj.type == ProjectileID.GigaZapperSpear || proj.type == ProjectileID.CultistBossLightningOrbArc || proj.type == ProjectileID.VortexLightning || proj.type == ProjectileType<DestroyerElectricLaser>() ||
+                    proj.type == ProjectileID.BulletSnowman || proj.type == ProjectileID.BulletDeadeye || proj.type == ProjectileID.SniperBullet || proj.type == ProjectileID.VortexLaser)
+                    calplayer.projectileDamageReduction += 1;
+            }
             if (calamityRing)
             {
                 proj.damage *= 2;
@@ -1864,6 +1883,13 @@ namespace CalRemix
                 if (proj.Name.Contains("fire", StringComparison.CurrentCultureIgnoreCase) || proj.Name.Contains("hell", StringComparison.CurrentCultureIgnoreCase) || proj.Name.Contains("infer", StringComparison.CurrentCultureIgnoreCase))
                 {
                     modifiers.SourceDamage *= 0.5f;
+                }
+            }
+            if (SubworldSystem.Current == GetInstance<TheGraySubworld>())
+            {
+                if (proj.type == ProjectileID.Explosives)
+                {
+                    modifiers.SourceDamage *= 600;
                 }
             }
         }
@@ -1902,7 +1928,7 @@ namespace CalRemix
             }
 
             int roll = Main.rand.Next(100);
-            if (attempt.bobberType == ProjectileType<TyrantBobber>() && Player.ActiveItem().type == ItemType<TheCodseeker>() && Main.rand.NextBool(100))
+            if (attempt.bobberType == ProjectileType<TyrantBobber>() && Player.HeldItem.type == ItemType<TheCodseeker>() && Main.rand.NextBool(100))
             {
                 if (Main.myPlayer == Player.whoAmI)
                     SoundEngine.PlaySound(SoundID.ScaryScream);
@@ -2058,10 +2084,10 @@ namespace CalRemix
             RecentChest = Player.chest;
         }
 
-        public override void PreUpdateBuffs() 
+        public override void PreUpdateBuffs()
         {
         }
-		public override void UpdateBadLifeRegen()
+        public override void UpdateBadLifeRegen()
         {
             if (Held(Player, ItemType<FlamingIceBow>()))
             {
@@ -2103,6 +2129,16 @@ namespace CalRemix
                 }
             }
             if (stratusBeverage) Main.LocalPlayer.Calamity().alcoholPoisonLevel += 2;
+            if ((NPC.AnyNPCs(NPCType<DevourerofGodsHead>()) && !DownedBossSystem.downedDoG) || (NPC.AnyNPCs(NPCType<Draedon>()) && !DownedBossSystem.downedExoMechs))
+            {
+                if (Player.statLife < Player.statLifeMax2 * 0.25f)
+                {
+                    if (Player.lifeRegen < 0)
+                    {
+                        Player.lifeRegen = (int)MathHelper.Lerp(-4, Player.lifeRegen, Player.statLife / (float)Player.statLifeMax2);
+                    }
+                }
+            }
         }
 
         public override void UpdateLifeRegen()
@@ -2115,14 +2151,14 @@ namespace CalRemix
         }
 
         public override void FrameEffects()
-		{
-			if (Player.GetJumpState<DefaultJump>().Active)
-				Player.armorEffectDrawShadow = true;
+        {
+            if (Player.GetJumpState<DefaultJump>().Active)
+                Player.armorEffectDrawShadow = true;
 
             if (retroman)
                 GetInstance<RetromansPowerStar>().SetSet(Player);
-		}
-		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        }
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
             bool deicide = Held(Player, ItemType<Deicide>());
             bool flamingIce = Held(Player, ItemType<FlamingIceBow>());
@@ -2185,8 +2221,8 @@ namespace CalRemix
             {
                 anomaly109UI = false;
                 SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
-				Player.AddBuff(BuffType<GarBoost>(), 60);
-			}
+                Player.AddBuff(BuffType<GarBoost>(), 60);
+            }
             if (taintedIron && npc.Calamity().canBreakPlayerDefense)
             {
                 Player.Calamity().defenseDamageRatio *= 0.5f;
@@ -2245,7 +2281,7 @@ namespace CalRemix
                     Console.WriteLine(e);
                 }
                 if (npc is null)
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
+                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
                 else
                 {
                     string f = CalRemixHelper.LocalText("StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);
@@ -2262,16 +2298,16 @@ namespace CalRemix
             }
             infraredSightsCounter++;
         }
-		public static void LoadDyeStats()
-		{
-			// Basics
-			dyeStats.Add(ItemID.RedDye, new DyeStats(red: 1));
+        public static void LoadDyeStats()
+        {
+            // Basics
+            dyeStats.Add(ItemID.RedDye, new DyeStats(red: 1));
             dyeStats.Add(ItemID.OrangeDye, new DyeStats(orange: 1));
             dyeStats.Add(ItemID.YellowDye, new DyeStats(yellow: 1));
             dyeStats.Add(ItemID.LimeDye, new DyeStats(lime: 1));
             dyeStats.Add(ItemID.GreenDye, new DyeStats(green: 1));
             dyeStats.Add(ItemID.CyanDye, new DyeStats(cyan: 1));
-			dyeStats.Add(ItemID.TealDye, new DyeStats(teal: 1));
+            dyeStats.Add(ItemID.TealDye, new DyeStats(teal: 1));
             dyeStats.Add(ItemID.SkyBlueDye, new DyeStats(skyblue: 1));
             dyeStats.Add(ItemID.BlueDye, new DyeStats(blue: 1));
             dyeStats.Add(ItemID.PurpleDye, new DyeStats(purple: 1));
@@ -2280,7 +2316,7 @@ namespace CalRemix
             dyeStats.Add(ItemID.BrownDye, new DyeStats(brown: 1));
             dyeStats.Add(ItemID.SilverDye, new DyeStats(silver: 1));
             dyeStats.Add(ItemID.BlackDye, new DyeStats(black: 1));
-			// Bright
+            // Bright
             dyeStats.Add(ItemID.BrightRedDye, new DyeStats(red: 2));
             dyeStats.Add(ItemID.BrightOrangeDye, new DyeStats(orange: 2));
             dyeStats.Add(ItemID.BrightYellowDye, new DyeStats(yellow: 2));
@@ -2295,8 +2331,8 @@ namespace CalRemix
             dyeStats.Add(ItemID.BrightPinkDye, new DyeStats(pink: 2));
             dyeStats.Add(ItemID.BrightBrownDye, new DyeStats(brown: 2));
             dyeStats.Add(ItemID.BrightSilverDye, new DyeStats(silver: 2));
-			// Fancy crafts
-            dyeStats.Add(ItemID.FlameDye, new DyeStats(red: 1, orange : 1, yellow: 1));
+            // Fancy crafts
+            dyeStats.Add(ItemID.FlameDye, new DyeStats(red: 1, orange: 1, yellow: 1));
             dyeStats.Add(ItemID.GreenFlameDye, new DyeStats(green: 1, lime: 1, yellow: 1));
             dyeStats.Add(ItemID.BlueFlameDye, new DyeStats(blue: 1, cyan: 1, skyblue: 1));
             dyeStats.Add(ItemID.YellowGradientDye, new DyeStats(lime: 1, orange: 1, yellow: 1));
@@ -2308,7 +2344,7 @@ namespace CalRemix
             dyeStats.Add(ItemID.IntenseBlueFlameDye, new DyeStats(blue: 2, cyan: 2, skyblue: 2));
             dyeStats.Add(ItemID.IntenseRainbowDye, new DyeStats(lime: 2, orange: 2, yellow: 2, blue: 2, cyan: 2, skyblue: 2, purple: 2, violet: 2, pink: 2));
             // Black combos
-			dyeStats.Add(ItemID.RedandBlackDye, new DyeStats(red: -1));
+            dyeStats.Add(ItemID.RedandBlackDye, new DyeStats(red: -1));
             dyeStats.Add(ItemID.OrangeandBlackDye, new DyeStats(orange: -1));
             dyeStats.Add(ItemID.YellowandBlackDye, new DyeStats(yellow: -1));
             dyeStats.Add(ItemID.LimeandBlackDye, new DyeStats(lime: -1));

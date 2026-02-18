@@ -48,10 +48,10 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine
                         #region should be last thorn
                         if (Projectile.ai[1] >= 13f) // change for max parts
                         {
-                            num14 = ModContent.ProjectileType<BrimstoneFireball>();
+                            num14 = ModContent.ProjectileType<BrimstoneHellfireballFriendly>();
                         }
                         else
-                            num14 = ModContent.ProjectileType<BrimstoneFireball>();
+                            num14 = ModContent.ProjectileType<BrimstoneHellfireballFriendly>();
                         #endregion
                         int num15 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(Projectile.position.X + Projectile.velocity.X + (float)(Projectile.width / 2), Projectile.position.Y + Projectile.velocity.Y + (float)(Projectile.height / 2)), Projectile.velocity, num14, Projectile.damage, Projectile.knockBack, Projectile.owner);
                         Main.projectile[num15].damage = Projectile.damage;
@@ -85,9 +85,9 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 18, Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
+                        Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.CorruptGibs, Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
                     }
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 14, 0f, 0f, 170, default(Color), 1.1f);
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Demonite, 0f, 0f, 170, default(Color), 1.1f);
                 }
                 #endregion
                 Projectile.alpha += 5;

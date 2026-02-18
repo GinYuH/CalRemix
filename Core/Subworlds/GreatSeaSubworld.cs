@@ -19,7 +19,7 @@ using Terraria.ModLoader.IO;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class GreatSeaSubworld : Subworld, ICustomSpawnSubworld, IDisableOcean
+    public class GreatSeaSubworld : Subworld, ICustomSpawnSubworld, IDisableOcean, IInfiniteFlight
     {
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {

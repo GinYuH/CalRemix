@@ -92,12 +92,6 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override int ProjType => ModContent.ProjectileType<CrystalPiercerProjectile>();
     }
 
-    public class FreqManip : RogueSpear
-    {
-        public override string Texture => "CalamityMod/Items/Weapons/DraedonsArsenal/FrequencyManipulator";
-        public override int ProjType => ModContent.ProjectileType<FrequencyManipulatorProjectile>();
-    }
-
     public class ScourgeSea : RogueSpear
     {
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/ScourgeoftheSeas";
@@ -148,8 +142,8 @@ namespace CalRemix.Content.Projectiles.Weapons
 
     public class NightsGaze : RogueSpear
     {
-        public override string Texture => "CalamityMod/Items/Weapons/Rogue/NightsGaze";
-        public override int ProjType => ModContent.ProjectileType<NightsGazeProjectile>();
+        public override string Texture => "CalamityMod/Items/Weapons/Rogue/Vega";
+        public override int ProjType => ModContent.ProjectileType<VegaProjectile>();
     }
 
     public class EclipseFall : RogueSpear

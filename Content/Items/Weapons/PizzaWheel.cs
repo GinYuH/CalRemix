@@ -24,7 +24,7 @@ public class PizzaWheel : RogueWeapon
         Item.noMelee = true;
         Item.noUseGraphic = true;
         Item.knockBack = 0.5f;
-        Item.rare = ModContent.RarityType<DarkBlue>();
+        Item.rare = ModContent.RarityType<CosmicPurple>();
         Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
         Item.UseSound = SoundID.DD2_MonkStaffSwing;
         Item.autoReuse = true;

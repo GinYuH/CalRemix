@@ -79,7 +79,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 Projectile.localAI[0] = 0;
                 Projectile.frame = 0;
             }
-            CalamityUtils.MinionAntiClump(Projectile);
+            CalRemixHelper.MinionAntiClump(Projectile);
         }
     }
 }

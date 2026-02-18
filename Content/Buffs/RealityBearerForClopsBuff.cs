@@ -10,6 +10,13 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.Buffs
 {
+    public class UnloadCheerclops : ModSystem
+    {
+        public override void Unload()
+        {
+            TextureAssets.Npc[NPCID.Deerclops] = ModContent.Request<Texture2D>("Terraria/Images/NPC_668");
+        }
+    }
     public class RealityBearerForClopsBuff : ModBuff
     {
         public override void SetStaticDefaults()

@@ -129,7 +129,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     pos.X += MathHelper.Lerp(0, MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + i * 0.1f + NPC.whoAmI) * 10, i / (float)pts);
                     points.Add(pos);
                 }
-                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f) => (1 - f) * 6), new PrimitiveSettings.VertexColorFunction((float f) => Color.Cyan * (1 - f))));
+                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f, Vector2 v) => (1 - f) * 6), new PrimitiveSettings.VertexColorFunction((float f, Vector2 v) => Color.Cyan * (1 - f))));
             }
             return true;
         }

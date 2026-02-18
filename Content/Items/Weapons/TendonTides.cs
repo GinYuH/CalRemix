@@ -1,6 +1,7 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Rarities;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;
@@ -43,6 +44,7 @@ public class TendonTides : ModItem
     {
         CreateRecipe().
             AddIngredient<TenebrisTides>(1).
+            AddIngredient(ModContent.ItemType<VirisiteTear>(), 5).
             AddIngredient<BloodstoneCore>(7).
             AddIngredient(ItemID.SoulofFright,10).
             AddTile(TileID.MythrilAnvil).

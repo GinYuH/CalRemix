@@ -27,7 +27,6 @@ using CalRemix.Content.NPCs.Bosses.Pyrogen;
 using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
-using CalRemix.Content.Tiles;
 using CalRemix.Core.OutboundCompatibility;
 using CalRemix.Core.World;
 using CalRemix.UI;
@@ -42,31 +41,16 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Buffs;
 
 namespace CalRemix
 {
-    enum RemixMessageType
-    {
-        Anomaly109Help,
-        Anomaly109Sync,
-        Anomaly109Unlock,
-        ToggleHelpers,
-        SyncIonmaster,
-        IonQuestLevel,
-        OxydayTime,
-        TrueStory,
-        StartPandemicPanic,
-        EndPandemicPanic,
-        KillDefender,
-        KillInvader,
-        ShadeQuestIncrement
-    }
     public class CalRemix : Mod
     {
         internal static Mod CalMod = ModLoader.GetMod("CalamityMod");
@@ -90,129 +74,9 @@ namespace CalRemix
 
         // Defer mod call handling to the extraneous mod call manager.
         public override object Call(params object[] args) => ModCallManager.Call(args);
-        public override void HandlePacket(BinaryReader reader, int whoAmI)
-        {
-            RemixMessageType msgType = (RemixMessageType)reader.ReadByte();
-            switch (msgType)
-            {
-                case RemixMessageType.Anomaly109Help:
-                    {
-                        Anomaly109Manager.helpUnlocked = true;
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-                case RemixMessageType.Anomaly109Sync:
-                    {
-                        int optionIndex = reader.ReadInt32();
-                        Anomaly109Manager.options[optionIndex].toggle();
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-                case RemixMessageType.Anomaly109Unlock:
-                    {
-                        int optionIndex = reader.ReadInt32(); 
-                        Anomaly109Manager.options[optionIndex].unlocked = true;
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-                case RemixMessageType.ToggleHelpers:
-                    {
-                        ScreenHelperManager.screenHelpersEnabled = !ScreenHelperManager.screenHelpersEnabled;
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-                case RemixMessageType.SyncIonmaster:
-                    {
-                        int kennyID = reader.ReadByte();
-                        float posX = reader.ReadSingle();
-                        float posY = reader.ReadSingle();
-                        float desiredX = reader.ReadSingle();
-                        float desiredY = reader.ReadSingle();
-                        string text = reader.ReadString();
-                        float textLife = reader.ReadSingle();
-                        int lookedItem = reader.ReadInt32();
-                        int itemTimer = reader.ReadInt32();
-                        float rotation = reader.ReadSingle();
-                        float desRotation = reader.ReadSingle();
 
-                        if (TileEntity.ByID.TryGetValue(kennyID, out TileEntity t))
-                        {
-                            if (t is IonCubeTE kendrick)
-                            {
-                                kendrick.positionX = posX;
-                                kendrick.positionY = posY;
-                                kendrick.desiredX = desiredX;
-                                kendrick.desiredY = desiredY;
-                                kendrick.rotation = rotation;
-                                kendrick.desiredRotation = desRotation;
-                                kendrick.lookedAtItem = lookedItem;
-                                kendrick.lookingAtItem = itemTimer;
-                                kendrick.displayText = text;
-                                kendrick.textLifeTime = textLife;
-                            }
-                        }
+        public override void HandlePacket(BinaryReader reader, int whoAmI) => CalRemixPacketManager.HandlePacket(reader, whoAmI);
 
-                        break;
-                    }
-                case RemixMessageType.IonQuestLevel:
-                    {
-                        int level = reader.ReadByte();
-                        CalRemixWorld.ionQuestLevel = level;
-                        break;
-                    }
-                case RemixMessageType.OxydayTime:
-                    {
-                        int oxygenTime = reader.ReadByte();
-                        CalRemixWorld.oxydayTime = oxygenTime;
-                        break;
-                    }
-                case RemixMessageType.TrueStory:
-                    {
-                        string uuid = reader.ReadString();
-                        CalRemixWorld.playerSawTrueStory.Add(uuid);
-                        break;
-                    }
-                case RemixMessageType.StartPandemicPanic:
-                    {
-                        PandemicPanic.IsActive = true;
-                        PandemicPanic.DefendersKilled = 0;
-                        PandemicPanic.InvadersKilled = 0;
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-                case RemixMessageType.EndPandemicPanic:
-                    {
-                        PandemicPanic.IsActive = false;
-                        PandemicPanic.DefendersKilled = 0;
-                        PandemicPanic.InvadersKilled = 0;
-                        PandemicPanic.LockedFinalSide = 0;
-                        PandemicPanic.SummonedPathogen = false;
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-                case RemixMessageType.KillDefender:
-                    {
-                        int killCount = reader.ReadInt32();
-                        PandemicPanic.DefendersKilled = killCount;
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-                case RemixMessageType.KillInvader:
-                    {
-                        int killCount = reader.ReadInt32();
-                        PandemicPanic.InvadersKilled = killCount;
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-                case RemixMessageType.ShadeQuestIncrement:
-                    {
-                        int count = reader.ReadInt32();
-                        CalRemixWorld.shadeQuestLevel = count;
-                        CalRemixWorld.UpdateWorldBool();
-                        break;
-                    }
-            }
-        }
         public override void Load()
         {
             instance = this;
@@ -271,7 +135,7 @@ namespace CalRemix
                 ModItem item = ItemLoader.GetItem(i);
                 if (item.Type == ItemType<WulfrumMetalScrap>())
                     continue;
-                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone || item is BouncyRogue || item is StickyRogue || item is AutoloadedLegendPortraitItem || item is LegendMemorialItem || item is LegendPromoItem )
+                if (!CalRemixAddon.Names.Contains(item.Mod.Name) || Main.itemAnimations[item.Type] != null || item is DebuffStone || item is BouncyRogue || item is StickyRogue || item is AutoloadedLegendPortraitItem || item is LegendMemorialItem || item is LegendPromoItem)
                     continue;
                 CalRemixAddon.Items.Add(item);
             }

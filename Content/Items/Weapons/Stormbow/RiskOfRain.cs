@@ -40,7 +40,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             Item.useAnimation = 190;
 
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-            Item.rare = ModContent.RarityType<DarkBlue>();
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.Calamity().donorItem = true;
             Item.shoot = ModContent.ProjectileType<RiskOfRainArrow>();
         }

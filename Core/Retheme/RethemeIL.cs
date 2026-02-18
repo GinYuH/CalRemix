@@ -22,7 +22,7 @@ namespace CalRemix.Core.Retheme
             IL.CalamityMod.NPCs.Crabulon.Crabulon.PreDraw += Crabulon;
             IL.CalamityMod.NPCs.Cryogen.CryogenShield.PreDraw += CryogenShield;
             //IL.CalamityMod.NPCs.CalamityAIs.CalamityBossAIs.AstrumAureusAI.VanillaAstrumAureusAI += AureusAI;
-            MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|83_0", BindingFlags.NonPublic | BindingFlags.Instance), ProvidenceColors);
+            //MonoModHooks.Modify(typeof(Providence).GetMethod("<PreDraw>g__drawProvidenceInstance|83_0", BindingFlags.NonPublic | BindingFlags.Instance), ProvidenceColors);
 
             #region Items
             // IL.CalamityMod.Items.Weapons.PreDraw += ;

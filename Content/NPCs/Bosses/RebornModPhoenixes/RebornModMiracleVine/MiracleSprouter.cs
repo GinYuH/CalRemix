@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using tModPorter;
 
@@ -23,7 +24,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine
         public override void AI()
         {
             Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.X, (double)Projectile.velocity.Y);
-            int dust = Dust.NewDust(new Vector2((float)Projectile.position.X, (float)Projectile.position.Y), Projectile.width, Projectile.height, 75, 0, 0, 100, default, 2.0f);
+            int dust = Dust.NewDust(new Vector2((float)Projectile.position.X, (float)Projectile.position.Y), Projectile.width, Projectile.height, DustID.CursedTorch, 0, 0, 100, default, 2.0f);
             Main.dust[dust].noGravity = true;
         }
 

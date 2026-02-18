@@ -91,7 +91,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
             Vector2 trailOffset = Projectile.Size * 0.5f;
             //trailOffset += (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
-            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_) => trailOffset), 61);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(FlameTrailWidthFunction, FlameTrailColorFunction, (_, _) => trailOffset), 61);
 
             Main.spriteBatch.ExitShaderRegion();
             Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
@@ -163,9 +163,9 @@ namespace CalRemix.Content.Projectiles.Hostile
 
             return false;
         }
-        public float FlameTrailWidthFunction(float completionRatio) => MathHelper.SmoothStep(6f * Projectile.scale, 2f * Projectile.scale, completionRatio);
+        public float FlameTrailWidthFunction(float completionRatio, Vector2 v) => MathHelper.SmoothStep(6f * Projectile.scale, 2f * Projectile.scale, completionRatio);
 
-        public Color FlameTrailColorFunction(float completionRatio)
+        public Color FlameTrailColorFunction(float completionRatio, Vector2 v)
         {
             return Color.Lerp(Color.Cyan * 0.5f, default, completionRatio) * Projectile.Opacity;
         }

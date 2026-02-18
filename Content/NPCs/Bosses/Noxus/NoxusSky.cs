@@ -20,7 +20,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
 {
     public class NoxusSkyScene : ModSceneEffect
     {
-        private static readonly FieldInfo particlesField = typeof(GeneralParticleHandler).GetField("particles", BindingFlags.NonPublic | BindingFlags.Static);
+        private static readonly FieldInfo particlesField = typeof(GeneralParticleHandler).GetField("activeParticles", BindingFlags.NonPublic | BindingFlags.Static);
 
         public override bool IsSceneEffectActive(Player player) => NoxusSky.SkyIntensityOverride > 0f || NPC.AnyNPCs(ModContent.NPCType<EntropicGod>());
 

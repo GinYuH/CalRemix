@@ -53,7 +53,7 @@ namespace CalRemix.Content.Projectiles
         public override bool PreDraw(ref Color lightColor)
         {
             Projectile.DrawProjectileWithBackglow(Color.Gold, Color.White, 4);
-            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f) => (1 - f) * 6), new PrimitiveSettings.VertexColorFunction((float f) => Color.Gold)));
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f, Vector2 v) => (1 - f) * 6), new PrimitiveSettings.VertexColorFunction((float f, Vector2 v) => Color.Gold)));
             return false;
         }
     }

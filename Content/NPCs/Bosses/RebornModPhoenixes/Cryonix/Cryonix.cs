@@ -51,7 +51,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix
 
             string key = "Mods.CalamityMod.Status.Progression.IceOreText";
             Color messageColor = Color.LightSkyBlue;
-            CalamityUtils.DisplayLocalizedText(key, messageColor);
+            CalamityUtils.BroadcastLocalizedText(key, messageColor);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

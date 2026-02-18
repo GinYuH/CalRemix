@@ -65,10 +65,10 @@ namespace CalRemix.UI
                 "FannyCryptid", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(100000000), duration: 60, cantBeClickedOff: true);
 
             HelperMessage.New("Mhage", "Be careful when using magic weapons. Drinking too many mana potions can drain your health, and leave you vulnerable to enemy attacks.",
-               "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.ActiveItem().DamageType == DamageClass.Magic, cooldown: 300, onlyPlayOnce: false);
+               "FannyNuhuh", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == DamageClass.Magic, cooldown: 300, onlyPlayOnce: false);
 
             HelperMessage.New("Thrust", "Did you know you can parry enemy attacks with your sword? Just right click the moment something is about to hit you, and you'll block it with ease!",
-               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.ActiveItem().DamageType == ModContent.GetInstance<TrueMeleeDamageClass>(), cooldown: 300, onlyPlayOnce: false);
+               "FannyIdle", (ScreenHelperSceneMetrics scene) => Main.rand.NextBool(2160000) && Main.LocalPlayer.HeldItem.DamageType == ModContent.GetInstance<TrueMeleeDamageClass>(), cooldown: 300, onlyPlayOnce: false);
 
             HelperMessage.New("Frozen1", "I'm back! It was quite chilly in there, but luckily, I was able to thaw myself out! Hopefully it doesn't happen again!",
                "FannyIdle", (ScreenHelperSceneMetrics scene) => fannyTimesFrozen == 1).SetHoverTextOverride("...");

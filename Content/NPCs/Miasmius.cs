@@ -53,6 +53,7 @@ namespace CalRemix.Content.NPCs
             NPC.Remix().GreenAI[2]++;
             if (NPC.Remix().GreenAI[1] == 0)
             {
+                NPC.aiStyle = -1;
                 NPC.TargetClosest();
                 NPC.velocity.X = 0;
                 if (NPC.HasPlayerTarget)
@@ -77,7 +78,7 @@ namespace CalRemix.Content.NPCs
             }
             else
             {
-                CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedHerplingAI(NPC, Mod);
+                NPC.aiStyle = NPCAIStyleID.Herpling;
                 if (NPC.HasPlayerTarget)
                 {
                     if (NPC.Remix().GreenAI[0] % (70 + Main.rand.Next(0, 21)) == 0)

@@ -10,6 +10,7 @@ using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.Items.Materials;
+using CalamityMod.Items.Placeables;
 
 namespace CalRemix.Content.Items.Weapons
 {

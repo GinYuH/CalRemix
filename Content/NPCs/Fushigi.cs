@@ -67,7 +67,7 @@ namespace CalRemix.Content.NPCs
             }
             if (NPC.position.Y < 656)
             {
-                CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.LightBlue);
+                CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.LightBlue);
                 int oxTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {

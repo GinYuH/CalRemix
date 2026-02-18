@@ -40,7 +40,7 @@ namespace CalRemix.Content.Items.Placeables.Plates
                 .Register();
             CreateRecipe(3)
                 .AddIngredient(ItemID.Obsidian, 3)
-                .AddIngredient<BloodSample>()
+                .AddIngredient(ItemID.TissueSample)
                 .AddTile(TileID.Hellforge)
                 .Register();
             CreateRecipe(100)

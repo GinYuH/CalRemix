@@ -9,7 +9,7 @@ using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
 {
-    public class FabergéEgg : ModItem
+    public class FabergeEgg : ModItem
     {
         public override void SetDefaults()
         {
@@ -66,7 +66,7 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
         private Color biomeColor = new Color();
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            Texture2D tex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RebornModPhoenixes/FabergéEgg_Glow").Value;
+            Texture2D tex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RebornModPhoenixes/FabergeEgg_Glow").Value;
             int biome = WhatFreakingBiomeAmIInAnyways();
             float glowAmt = 1f + (currentGlowFade / GlowFadeMax) - 1f;
 

@@ -31,6 +31,7 @@ using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Lore;
 using CalRemix.Content.Items.Weapons;
 using Terraria.Localization;
+using CalamityMod.Items.Placeables.SunkenSea;
 
 namespace CalRemix.Content.NPCs.Bosses.Hydrogen
 {
@@ -194,7 +195,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hydrogen
                         int rocketAmt = death ? 20 : rev ? 16 : expert ? 10 : 8; // Amount of rockets to be fired before stagger
                         int salvoAmount = 2; // Amount of rounds
                         float missileSpread = death ? 60f : 45f; // Spread
-                        if (Main.masterMode)
+                        if (death)
                             salvoAmount *= 2;
                         NPC.ai[1]++;
                         NPC.velocity *= 0.95f;

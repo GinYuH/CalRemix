@@ -81,7 +81,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 float lt = Color.Turquoise.G;
                 int colRange = 22;
                 int colorVariety = 22;
-                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings((float c) => 4, (float c) => Color.Lerp(Color.DarkTurquoise with { G = (byte)MathHelper.Lerp(dt - colRange, dt + colRange, i % colorVariety / (float)(colorVariety - 1)) }, Color.Turquoise with { G = (byte)MathHelper.Lerp(lt - colRange, lt + colRange, i % colorVariety / (float)(colorVariety - 1)) }, c))); ;
+                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings((float c, Vector2 v) => 4, (float c, Vector2 v) => Color.Lerp(Color.DarkTurquoise with { G = (byte)MathHelper.Lerp(dt - colRange, dt + colRange, i % colorVariety / (float)(colorVariety - 1)) }, Color.Turquoise with { G = (byte)MathHelper.Lerp(lt - colRange, lt + colRange, i % colorVariety / (float)(colorVariety - 1)) }, c))); ;
             }
             spriteBatch.ExitShaderRegion();
             spriteBatch.Draw(tex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(tex.Width / 2, tex.Height / Main.npcFrameCount[Type] / 2), NPC.scale * Vector2.One + scale, fx, 0);

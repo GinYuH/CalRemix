@@ -21,7 +21,7 @@ namespace CalRemix.Content.Tiles.Subworlds.SingularPoint
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
-            AddMapEntry(new Color(156, 50, 17));
+            AddMapEntry(new Color(10, 23, 17));
             HitSound = SoundID.Tink;
             DustType = DustID.Stone;
             Main.tileBlendAll[Type] = true;

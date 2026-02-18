@@ -119,4 +119,13 @@ namespace CalRemix.Content.Items.Placeables.Banners
     {
         public override int TileType => ModContent.TileType<BalimbaaBannerPlaced>();
     }
+
+    public class WulfrumCactusBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<WulfrumCactusBannerPlaced>();
+    }
+    public class GrablerBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<GrablerBannerPlaced>();
+    }
 }

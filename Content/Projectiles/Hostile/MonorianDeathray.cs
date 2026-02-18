@@ -138,8 +138,8 @@ namespace CalRemix.Content.Projectiles.Hostile
 
             points.Add(destination);
 
-            PrimitiveRenderer.RenderTrail(points, new((float f) => 90, (float f) => Color.Cyan, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
-            PrimitiveRenderer.RenderTrail(points, new((float f) => 40, (float f) => Color.White, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
+            PrimitiveRenderer.RenderTrail(points, new((float f, Vector2 v) => 90, (float f, Vector2 v) => Color.Cyan, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
+            PrimitiveRenderer.RenderTrail(points, new((float f, Vector2 v) => 40, (float f, Vector2 v) => Color.White, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]), pointAmt + 1);
 
             Main.spriteBatch.ExitShaderRegion();
 

@@ -277,7 +277,7 @@ namespace CalRemix.Content.NPCs.Bosses.BossScule
         internal static int CalamitySetCounter()
         {
             int counter = 3;
-            if (Main.masterMode || CalamityWorld.death || Main.getGoodWorld)
+            if (CalamityWorld.death || Main.getGoodWorld)
                 counter = 0;
             if (Main.zenithWorld) // may god have mercy on your soul
                 counter = 6;

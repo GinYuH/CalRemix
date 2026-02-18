@@ -59,6 +59,7 @@ namespace CalRemix.Content.Items.RajahItems
                 ModContent.ItemType<RoyalScepter>(),
                 ModContent.ItemType<Punisher>(),
                 ModContent.ItemType<RabbitcopterEars>(),
+                ModContent.ItemType<BagofCarrots>(),
             ];
             if (ModLoader.HasMod("ThoriumMod"))
                 weapons.Add(ModContent.ItemType<CarrotFarmer>());

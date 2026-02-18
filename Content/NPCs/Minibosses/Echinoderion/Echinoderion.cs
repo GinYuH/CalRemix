@@ -26,7 +26,7 @@ namespace CalRemix.Content.NPCs.Minibosses.Echinoderion
     {
         public override void SetDefaults()
         {
-            NPC.aiStyle = -1;
+            NPC.aiStyle = NPCAIStyleID.Unicorn;
             NPC.damage = 70;
             NPC.width = 32;
             NPC.height = 110;
@@ -45,7 +45,6 @@ namespace CalRemix.Content.NPCs.Minibosses.Echinoderion
 
         public override void AI()
         {
-            CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedUnicornAI(NPC, Mod);
             NPC.spriteDirection = -NPC.velocity.X.DirectionalSign();
             if (NPC.velocity.X != 0 && NPC.velocity.Y >= 0)
                 NPC.Calamity().newAI[0] += 0.05f * NPC.velocity.X;
@@ -108,7 +107,7 @@ namespace CalRemix.Content.NPCs.Minibosses.Echinoderion
                     end.X *= NPC.spriteDirection;
                     frille.Add(NPC.Center + tentacleBase + Vector2.Lerp(start, end, i / (float)(ptAmt - 1)));
                 }
-                PrimitiveRenderer.RenderTrail(frille.ToArray(), new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f) => 3), new PrimitiveSettings.VertexColorFunction((float f) => new Color(100, 175, 140) * 0.8f), shader: GameShaders.Misc["CalamityMod:TeslaTrail"]));
+                PrimitiveRenderer.RenderTrail(frille.ToArray(), new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f, Vector2 v) => 3), new PrimitiveSettings.VertexColorFunction((float f, Vector2 v) => new Color(100, 175, 140) * 0.8f), shader: GameShaders.Misc["CalamityMod:TeslaTrail"]));
             }
             Main.spriteBatch.ExitShaderRegion();
 

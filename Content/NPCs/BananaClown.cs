@@ -32,7 +32,7 @@ namespace CalRemix.Content.NPCs
 
         public override void SetDefaults()
         {
-            NPC.aiStyle = -1;
+            NPC.aiStyle = NPCAIStyleID.Fighter;
             NPC.damage = 40;
             NPC.width = 54;
             NPC.height = 126;
@@ -59,7 +59,6 @@ namespace CalRemix.Content.NPCs
         {
             NPC.Remix().GreenAI[0]++;
             NPC.Remix().GreenAI[2]++;
-            CalamityMod.NPCs.VanillaNPCAIOverrides.RegularEnemies.RevengeanceAndDeathAI.BuffedFighterAI(NPC, Mod);
             NPC.spriteDirection = NPC.direction;
             if (NPC.HasPlayerTarget)
             {

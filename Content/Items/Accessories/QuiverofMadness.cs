@@ -31,7 +31,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.width = 42;
             Item.height = 36;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.accessory = true;
         }
 
@@ -45,11 +45,11 @@ namespace CalRemix.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            ModContent.GetModItem(ModContent.ItemType<ElementalQuiver>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<PlanebreakersPouch>()).UpdateAccessory(player, hideVisual);
             ModContent.GetModItem(ModContent.ItemType<DaawnlightSpiritOrigin>()).UpdateAccessory(player, hideVisual);
             player.GetDamage<RangedDamageClass>() += 0.3f;
             CalamityPlayer caPlayer = player.Calamity();
-            caPlayer.rangedAmmoCost *= 0f;
+            caPlayer.ammoCost *= 0f;
             player.GetCritChance<RangedDamageClass>() += 25;
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             modPlayer.brimPortal = true;
@@ -68,7 +68,7 @@ namespace CalRemix.Content.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<ElementalQuiver>(1).
+                AddIngredient<PlanebreakersPouch>(1).
                 AddIngredient<QuiverofNihility>(1).
                 AddIngredient<DaawnlightSpiritOrigin>(1).
                 AddIngredient<RedWine>(5).

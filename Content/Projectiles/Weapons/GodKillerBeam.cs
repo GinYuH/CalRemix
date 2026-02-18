@@ -83,7 +83,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
             return false;
         }
-        public float FlameTrailWidthFunction(float completionRatio)
+        public float FlameTrailWidthFunction(float completionRatio, Vector2 v)
         {
             int widthMax = 200;
             int widthMin = 88;
@@ -109,25 +109,25 @@ namespace CalRemix.Content.Projectiles.Weapons
             return ret;
         }
 
-        public Color FlameTrailColorFunction(float completionRatio)
+        public Color FlameTrailColorFunction(float completionRatio, Vector2 v)
         {
             return Color.Cyan * MathHelper.Clamp(1 - completionRatio, 0.4f, 0.6f);
         }
-        public float FlameTrailBackWidthFunction(float completionRatio)
+        public float FlameTrailBackWidthFunction(float completionRatio, Vector2 v)
         {
-            return FlameTrailWidthFunction(completionRatio) * 4f;
+            return FlameTrailWidthFunction(completionRatio, v) * 4f;
         }
 
-        public Color FlameTrailBackColorFunction(float completionRatio)
+        public Color FlameTrailBackColorFunction(float completionRatio, Vector2 v)
         {
             return Color.Cyan * 0.1f;
         }
-        public float FlameTrailFrontWidthFunction(float completionRatio)
+        public float FlameTrailFrontWidthFunction(float completionRatio, Vector2 v)
         {
-            return FlameTrailWidthFunction(completionRatio) * 0.6f;
+            return FlameTrailWidthFunction(completionRatio, v) * 0.6f;
         }
 
-        public Color FlameTrailFrontColorFunction(float completionRatio)
+        public Color FlameTrailFrontColorFunction(float completionRatio, Vector2 v)
         {
             return Color.White;
         }

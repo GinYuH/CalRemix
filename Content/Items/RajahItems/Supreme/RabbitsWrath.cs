@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.RajahItems.Supreme
@@ -24,14 +25,14 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
             Item.useTime = 6;
             Item.useAnimation = 10;
             Item.reuseDelay = 10;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = .5f;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.autoReuse = true;
             Item.shootSpeed = 14f;
             Item.shoot = Mod.Find<ModProjectile>("CarrotEX").Type;
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
             //AARarity = 14;
         }
 

@@ -153,13 +153,13 @@ namespace CalRemix.Content.Projectiles.Weapons
 
             // Prepare the flame trail shader with its map texture.
             GameShaders.Misc["CalamityMod:ImpFlameTrail"].SetShaderTexture(ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/GreyscaleTextures/FieryBeam"));
-            PrimitiveRenderer.RenderTrail(list, new PrimitiveSettings(WidthFunction, (float f) => Color.MediumBlue, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
-            PrimitiveRenderer.RenderTrail(list, new PrimitiveSettings(WidthFunction2, (float f) => new Color(20, 20, 205) * 0.5f, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
+            PrimitiveRenderer.RenderTrail(list, new PrimitiveSettings(WidthFunction, (float f, Vector2 v) => Color.MediumBlue, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
+            PrimitiveRenderer.RenderTrail(list, new PrimitiveSettings(WidthFunction2, (float f, Vector2 v) => new Color(20, 20, 205) * 0.5f, shader: GameShaders.Misc["CalamityMod:ImpFlameTrail"]));
             Main.spriteBatch.ExitShaderRegion();
             return false;
         }
 
-        public static float WidthFunction(float w)
+        public static float WidthFunction(float w, Vector2 v)
         {
             float mainSize = 50;
             float startPinch = 0.7f;
@@ -169,7 +169,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
             return mainSize;
         }
-        public static float WidthFunction2(float w)
+        public static float WidthFunction2(float w, Vector2 v)
         {
             float mainSize = 20;
             float startPinch = 0.7f;
@@ -179,7 +179,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             }
             return mainSize;
         }
-        public Color FlameTrailColorFunction(float completionRatio)
+        public Color FlameTrailColorFunction(float completionRatio, Vector2 v)
         {
             return Color.MediumBlue * MathHelper.Clamp(1 - completionRatio, 0.4f, 0.6f);
         }

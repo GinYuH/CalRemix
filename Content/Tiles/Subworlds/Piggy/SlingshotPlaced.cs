@@ -90,12 +90,12 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                         prong2P.Add(Vector2.Lerp(prong2, worldPos + SlingshotSystem.dragOffset, k / (float)slingPoints));
                     }
 
-                    PrimitiveRenderer.RenderTrail(prong1P, new((float f) => 4, (float f) => Color.SaddleBrown));
+                    PrimitiveRenderer.RenderTrail(prong1P, new((float f, Vector2 v) => 4, (float f, Vector2 v) => Color.SaddleBrown));
 
                     spriteBatch.Draw(tex, worldPos - Main.screenPosition + SlingshotSystem.dragOffset + stretchOffset, null, Lighting.GetColor(i, j), rotation, tex.Size() / 2, 1, 0, 0);
 
                     spriteBatch.ExitShaderRegion();
-                    PrimitiveRenderer.RenderTrail(prong2P, new((float f) => 4, (float f) => Color.SaddleBrown));
+                    PrimitiveRenderer.RenderTrail(prong2P, new((float f, Vector2 v) => 4, (float f, Vector2 v) => Color.SaddleBrown));
 
                     if (drawLine)
                     {

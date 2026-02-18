@@ -36,7 +36,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.value = Item.buyPrice(gold: 2);
             NPC.noGravity = false;
             NPC.noTileCollide = false;
-            NPC.HitSound = CommonCalamitySounds.OtherwordlyHitSound;
+            NPC.HitSound = DevourerofGodsHead.HitSound;
             NPC.DeathSound = DevourerofGodsHead.DeathAnimationSound;
             NPC.rarity = 1;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<BadlandsBiome>().Type };

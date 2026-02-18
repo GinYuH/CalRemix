@@ -24,7 +24,7 @@ public class TyrantShield : ModItem
     {
         Item.damage = 5960;
         Item.DamageType = DamageClass.Generic;
-        Item.rare = ModContent.RarityType<Violet>();
+        Item.rare = ModContent.RarityType<BurnishedAuric>();
         Item.value = Item.sellPrice(gold: 90);
     }
     public override void UpdateInventory(Player player)

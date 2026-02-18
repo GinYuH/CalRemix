@@ -1,5 +1,6 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.Abyss;
 using CalamityMod.Items.Weapons.Melee;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;

@@ -57,4 +57,11 @@ namespace CalRemix.Content.Tiles.Banners
     public class BoneDogBannerPlaced : ModBannerTile
     {
     }
+    public class WulfrumCactusBannerPlaced : ModBannerTile
+    {
+    }
+    public class GrablerBannerPlaced : ModBannerTile
+    {
+    }
+
 }

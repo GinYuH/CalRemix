@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Misc
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + $"/Trial Award for {SteamFriends.GetPersonaName()}.png";
                 if (!File.Exists(path))
                 {
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.CertificateSent", Color.Brown);
+                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.CertificateSent", Color.Brown);
                     Texture2D texture = ModContent.Request<Texture2D>($"{Mod.Name}/Content/Items/Misc/CalamitousCertificate_Full", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     FileStream stream = new(path, FileMode.Create);
                     texture.SaveAsPng(stream, texture.Width, texture.Height);

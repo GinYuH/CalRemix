@@ -121,7 +121,7 @@ namespace CalRemix.Content.NPCs
                 {
                     points.Add(start + new Vector2(MathF.Sin((float)j * 0.05f - Main.GlobalTimeWrappedHourly * (i % 5 * 0.5f + 1) * 2 + i * 2f) * 15f, MathHelper.Lerp(0, -v.Item2, (float)j / (float)(segCount - 1))).RotatedBy(MathHelper.Lerp(-angleRange, angleRange, i % 3 / 3f)));
                 }
-                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings((float c) => i % 3 + 1, (float c) => Color.Lerp(Color.Black, Color.Black * 0, CalamityUtils.CircInEasing(c, 1))));
+                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings((float c, Vector2 v) => i % 3 + 1, (float c, Vector2 v) => Color.Lerp(Color.Black, Color.Black * 0, CalamityUtils.CircInEasing(c, 1))));
             }
             for (int i = 0; i < bottomTentacles.Count; i++)
             {
@@ -133,7 +133,7 @@ namespace CalRemix.Content.NPCs
                 {
                     points.Add(start + new Vector2(MathF.Sin((float)j * 0.05f - Main.GlobalTimeWrappedHourly * (i % 5 * 0.5f + 1) * 2 + i * 2f) * 5f, MathHelper.Lerp(0, v.Item2, (float)j / (float)(segCount - 1))).RotatedBy(MathHelper.Lerp(-angleRange, angleRange, i % 10 / 10f)));
                 }
-                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings((float c) => i % 3 + 1, (float c) => Color.Lerp(Color.Black, Color.Black * 0, CalamityUtils.CircInEasing(c, 1))));
+                PrimitiveRenderer.RenderTrail(points, new PrimitiveSettings((float c, Vector2 v) => i % 3 + 1, (float c, Vector2 v) => Color.Lerp(Color.Black, Color.Black * 0, CalamityUtils.CircInEasing(c, 1))));
             }
             spriteBatch.ExitShaderRegion();
             spriteBatch.Draw(tex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(tex.Width / 2, tex.Height / Main.npcFrameCount[Type] / 2), NPC.scale * Vector2.One + scale, fx, 0);

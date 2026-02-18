@@ -25,12 +25,12 @@ namespace CalRemix.Content.Items.SummonItems
         {
             Item.width = 24;
             Item.height = 24;
-            Item.rare = 9;
+            Item.rare = ItemRarityID.Cyan;
             //AARarity = 14;
             Item.value = Item.sellPrice(0, 0, 0, 0);
             Item.useAnimation = 45;
             Item.useTime = 45;
-            Item.useStyle = 4;
+            Item.useStyle = ItemUseStyleID.HoldUp;
             Item.noUseGraphic = true;
             Item.consumable = false;
             Item.UseSound = new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound");
@@ -57,12 +57,12 @@ namespace CalRemix.Content.Items.SummonItems
         {
             if (!RemixDowned.downedRajahsRevenge)
             {
-                if (Main.netMode != 1) CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.DiamondCarrot.1", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.DiamondCarrot.1", new Color(107, 137, 179));
             }
             else
             {
                 string Name;
-                if (Main.netMode != 0)
+                if (Main.netMode != NetmodeID.SinglePlayer)
                 {
                     Name = "Terrarians";
                 }
@@ -71,8 +71,8 @@ namespace CalRemix.Content.Items.SummonItems
                     Name = Main.LocalPlayer.name;
                 }
                 Name += '!';
-                if (Main.netMode != 1) {
-                    if (Main.netMode == 0)
+                if (Main.netMode != NetmodeID.MultiplayerClient) {
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                     {
                         Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.DiamondCarrot.2", Name), new Color(107, 137, 179));
                     }

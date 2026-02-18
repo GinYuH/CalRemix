@@ -46,7 +46,7 @@ namespace CalRemix.Content.Items.Weapons
             Item.shoot = ModContent.ProjectileType<OnyxGunsawProjectile>();
             Item.shootSpeed = 1f;
 
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
         }
 

@@ -70,6 +70,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:Disilphia"] = new DisilphiaSky();
                 Filters.Scene["CalRemix:HorizonSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
                 SkyManager.Instance["CalRemix:HorizonSky"] = new HorizonSky();
+                Filters.Scene["CalRemix:TheGraySky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
+                SkyManager.Instance["CalRemix:TheGraySky"] = new TheGraySky();
             }
 
             AssetRepository remixAsset = Mod.Assets;
@@ -186,6 +188,7 @@ namespace CalRemix
         public static readonly int TrueStory = Set("Misc/TrueStory");
         public static readonly int PlasticOracle = Set("Misc/PlasticOracle");
         public static readonly int Generator = Set("Misc/Generator");
+        public static readonly int Nothing = Set("Nothing");
 
         private static int Set(string name) => MusicLoader.GetMusicSlot(CalRemix.instance, $"{Path}{name}");
     }

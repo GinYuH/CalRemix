@@ -9,6 +9,8 @@ NPCs: {
 	Skeletron: Dungen
 	Anahita: Anasthesia
 	Cnidrion: Grand Thunder Cnidrion
+	CloudElemental: Mods.CalRemix.Rename.NPCs.CloudElemental
+	BrimstoneWitch: Mods.CalRemix.Rename.NPCs.BrimstoneWitch
 }
 
 Items: {

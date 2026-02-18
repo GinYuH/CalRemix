@@ -3,6 +3,7 @@ using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Ranged;
+using CalamityMod.Projectiles.Summon;
 using CalamityMod.Projectiles.Typeless;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
@@ -51,8 +52,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<RottenMatter>(25).
-                AddIngredient<BloodSample>(25).
+                AddIngredient(ItemID.ShadowScale, 25).
+                AddIngredient(ItemID.TissueSample, 25).
                 AddIngredient(ItemID.Cobweb, 15).
                 AddTile(TileID.Anvils).
                 Register();
@@ -104,7 +105,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override int damage => 54;
         public override int crit => 12;
         public override int useTime => 18;
-        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<BrimstoneHomer>() };
+        public override List<int> projsToShoot => new List<int>() { ModContent.ProjectileType<BrimstoneDartMinion>() };
         public override int arrowAmount => 5;
         public override OverallRarity overallRarity => OverallRarity.Lime;
     }

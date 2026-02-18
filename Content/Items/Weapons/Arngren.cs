@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Placeables.Abyss;
 
 namespace CalRemix.Content.Items.Weapons
 {
@@ -48,7 +49,7 @@ namespace CalRemix.Content.Items.Weapons
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<ClockGatlignum>(1).
+                AddIngredient(ItemID.VenusMagnum).
                 AddIngredient(ItemID.FragmentStardust, 10).
                 AddIngredient<AbyssGravel>(64).
                 AddTile(TileID.LunarCraftingStation).

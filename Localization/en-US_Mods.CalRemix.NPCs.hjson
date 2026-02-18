@@ -667,6 +667,7 @@ WalkingBirdRed.DisplayName: Bumper
 TheBealed.DisplayName: Baligulas
 DoUHead.DisplayName: The Devourer of Threads
 CarrierHead.DisplayName: The Carrier
+Car.DisplayName: Car
 Succubus.DisplayName: Succubus
 Succubus2.DisplayName: Succubus
 Balimbaa.DisplayName: Balimbaa
@@ -749,8 +750,18 @@ Noone.DisplayName: Noone
 Nothing.DisplayName: Nothing
 LionDogMoth.DisplayName: Lion Dog Repulsor Moth
 Lobotomite.DisplayName: Lobotomite
+
+AnomalyTwo: {
+	DisplayName: Solvation Anomaly
+
+	BossChecklistIntegration: {
+		EntryName: Anomaly
+		SpawnInfo: Rests at the center platform of the Singular Point subworld.
+		DespawnMessage: "[c/3beb9b:The Anomaly sinks back into the Virisite basin.]"
+	}
+}
+
 AnomalyOne.DisplayName: Convection Anomaly
-AnomalyTwo.DisplayName: Solvation Anomaly
 AnomalyThree.DisplayName: Structure Anomaly
 BeachedGolem.DisplayName: Beached Golem
 Grabler.DisplayName: Grabler
@@ -759,24 +770,21 @@ Distortix.DisplayName: Distortix
 LargeStinkbug.DisplayName: Large Stinkbug
 
 Cryonix: {
-	DisplayName: Cryonix
 	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Tundra.
+	DisplayName: Cryonix
 }
 
 Vernix: {
-	DisplayName: Vernix
 	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Jungle.
+	DisplayName: Vernix
 }
 
 Chaotrix: {
-	DisplayName: Chaotrix
 	BossChecklistIntegration.SpawnInfo: Use a [i:CalRemix/FabergéEgg] in the Abyss.
+	DisplayName: Chaotrix
 }
 
 Foveanator.DisplayName: Foveanator
-Chaotrix.DisplayName: Chaotrix
-Cryonix.DisplayName: Cryonix
-Vernix.DisplayName: Vernix
 BunnyBattler.DisplayName: Bunny Battler
 BunnyBattler2.DisplayName: Bunny Battler
 BunnyBrawler.DisplayName: Bunny Brawler
@@ -787,3 +795,5 @@ Rajah.DisplayName: Rajah Rabbit
 SupremeRajahDefeat.DisplayName: Rajah Rabbit, Champion of the Innocent
 SupremeRajah.DisplayName: Rajah Rabbit, Champion of the Innocent
 RoyalRabbit.DisplayName: Royal Rabbit
+Underscore.DisplayName: _
+WulfrumCactus.DisplayName: Wulfrum Cactus

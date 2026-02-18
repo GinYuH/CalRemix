@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using System.Collections.Generic;
 using Terraria.Localization;
+using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs
 {
@@ -31,6 +32,8 @@ namespace CalRemix.Content.NPCs
             NPC.DeathSound = SoundID.NPCHit8;
             NPC.lifeMax = 130;
             NPC.rarity = 2;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<GrablerBanner>();
             NPC.aiStyle = NPCAIStyleID.HoveringFighter;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;

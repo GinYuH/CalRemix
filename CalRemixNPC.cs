@@ -6,8 +6,8 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.PermanentBoosters;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.Potions.Alcohol;
+using CalamityMod.Items.Potions.Food;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Melee;
@@ -58,6 +58,7 @@ using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Sounds;
+using CalamityMod.Systems.Collections;
 using CalamityMod.Tiles.Ores;
 using CalamityMod.World;
 using CalRemix.Content.Buffs;
@@ -100,7 +101,6 @@ using CalRemix.UI.Anomaly109;
 using CalRemix.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -151,7 +151,7 @@ namespace CalRemix
         public float[] storedCalAI = { 0f, 0f, 0f, 0f };
         public float[] storedLocalAI = { 0f, 0f, 0f, 0f };
         public float[] storedGreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0];
+        public float[] GreenAI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         public int shadeStacks = 0;
         public bool Spear = false;
         public override bool InstancePerEntity => true;
@@ -223,6 +223,13 @@ namespace CalRemix
             if (IsBunny(entity) && RemixDowned.downedRajahsRevenge)
             {
                 entity.dontTakeDamage = true;
+            }
+            if (entity.type == NPCID.Retinazer || entity.type == NPCID.Spazmatism)
+            {
+                if (CalamityUtils.AIOverrideNPC(entity) != null)
+                {
+                    CalamityUtils.AIOverrideNPC(entity).AIOverride = null;
+                }
             }
         }
 
@@ -743,11 +750,11 @@ namespace CalRemix
                         Talk($"{npcName}.EnragedH", Color.LavenderBlush);
                     guardOver = true;
                 }
-                if (NPC.AnyNPCs(NPCType<DILF>()) && !guardRage && guardSay > 0)
+                if (NPC.AnyNPCs(NPCType<Archmage>()) && !guardRage && guardSay > 0)
                 {
                     foreach (NPC frosty in Main.ActiveNPCs)
                     {
-                        if (frosty.type == NPCType<DILF>() && npc.Distance(frosty.Center) < 2400)
+                        if (frosty.type == NPCType<Archmage>() && npc.Distance(frosty.Center) < 2400)
                         {
                             Talk($"{npcName}.Meat", Color.Yellow);
                             if (NPC.AnyNPCs(NPCType<ProfanedGuardianDefender>()))
@@ -852,11 +859,11 @@ namespace CalRemix
             #endregion
             if (npc.type == NPCType<ProfanedGuardianCommander>() || npc.type == NPCType<ProfanedGuardianDefender>() || npc.type == NPCType<ProfanedGuardianHealer>())
             {
-                if (NPC.AnyNPCs(NPCType<DILF>()) && guardRage)
+                if (NPC.AnyNPCs(NPCType<Archmage>()) && guardRage)
                 {
                     foreach (NPC frosty in Main.ActiveNPCs)
                     {
-                        if (frosty.type == NPCType<DILF>() && npc.Distance(frosty.Center) < 2400)
+                        if (frosty.type == NPCType<Archmage>() && npc.Distance(frosty.Center) < 2400)
                         {
                             npc.velocity = npc.DirectionTo(frosty.Center) * 14f;
                             if (frosty.Hitbox.Intersects(npc.Hitbox))
@@ -888,7 +895,7 @@ namespace CalRemix
                 {
                     if (npc.life < (int)(npc.lifeMax * 0.5f) && !Main.hardMode && !BossRushEvent.BossRushActive && CalRemixWorld.mullet)
                     {
-                        npc.active = false; 
+                        npc.active = false;
                         SpawnNewNPC(npc.GetSource_FromThis(), npc.Center, NPCType<Fleshmullet>());
                     }
                 }
@@ -1215,9 +1222,9 @@ namespace CalRemix
                     }
                 }
             }
-            if ((!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityLists.enemyImmunityList.Contains(npc.type)) || RemixDowned.downedNoxus)
+            if ((!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityNPCSets.ScalesHealthLikeBoss[npc.type]) || RemixDowned.downedNoxus)
             {
-                if (npc.GetGlobalNPC<CalamityGlobalNPC>().pearlAura > 0)
+                if (npc.GetGlobalNPC<CalamityGlobalNPC>().pearlAura)
                     npc.AddBuff(BuffType<CalamityMod.Buffs.StatDebuffs.GlacialState>(), 60);
                 foreach (Player p in Main.ActivePlayers)
                 {
@@ -1254,7 +1261,7 @@ namespace CalRemix
                 shop.Add(new NPCShop.Entry(ItemType<LesserStealthPotion>()));
                 shop.Add(new NPCShop.Entry(ItemType<WoodBag>()));
             }
-            if (shop.NpcType == NPCType<THIEF>())
+            if (shop.NpcType == NPCType<Bandit>())
             {
                 shop.Add(new NPCShop.Entry(ItemType<StealthPotion>()));
             }
@@ -1263,7 +1270,7 @@ namespace CalRemix
                 shop.Add(new NPCShop.Entry(ItemType<PlaguedSolution>()));
                 shop.Add(new NPCShop.Entry(ItemID.CellPhone));
             }
-            if (shop.NpcType == NPCType<DILF>())
+            if (shop.NpcType == NPCType<Archmage>())
             {
                 shop.Add(new NPCShop.Entry(ItemType<ColdheartIcicle>()));
                 shop.Add(new NPCShop.Entry(ItemType<TheGenerator>(), new Condition("Conditions.DownedGens", () => RemixDowned.DownedGens)));
@@ -1366,15 +1373,16 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<InvigoratingJelly>(), 7, 5));
             }
+
             #endregion
             #region Hardmode
-            if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            if (npc.type == NPCID.ManEater || CalamityNPCTypeSets.Hornet[npc.type] || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
             {
                 LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ItemType<EssenceofBabil>(), 4, hideLootReport: !Main.hardMode);
                 npcLoot.Add(hm);
             }
-            if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
+            if (npc.type == NPCID.AngryTrapper || npc.type == NPCID.MossHornet || npc.type == NPCID.BigMossHornet || npc.type == NPCID.GiantMossHornet || npc.type == NPCID.LittleMossHornet || npc.type == NPCID.TinyMossHornet || npc.type == NPCID.Derpling)
             {
                 npcLoot.Add(ItemType<EssenceofBabil>(), 3);
             }
@@ -1470,7 +1478,7 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<FungiStone>(), new Fraction(1, 50));
             }
-            if (npc.type ==  NPCID.ChaosElemental)
+            if (npc.type == NPCID.ChaosElemental)
             {
                 //checks for rod, could be improved
                 npcLoot.RemoveWhere(
@@ -1490,7 +1498,7 @@ namespace CalRemix
                 npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 32));
                 npcLoot.Add(ItemID.RodOfHarmony, new Fraction(1, 64), 1, 200);
             }
-            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && npc.type != NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            if ((CalamityNPCSets.IsBuffedDungeonEnemy[npc.type] && npc.type != NPCID.Paladin) || CalamityNPCTypeSets.AngryBones[npc.type] || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
             {
                 LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
@@ -1572,11 +1580,11 @@ namespace CalRemix
             {
                 npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<BloodredReactiveEssence>(), 10);
             }
-            if (npc.type == NPCID.ManEater || CalamityLists.hornetList.Contains(npc.type) || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            if (npc.type == NPCID.ManEater || CalamityNPCTypeSets.Hornet[npc.type] || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
             {
                 npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 20);
             }
-            if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
+            if (npc.type == NPCID.AngryTrapper || npc.type == NPCID.MossHornet || npc.type == NPCID.BigMossHornet || npc.type == NPCID.GiantMossHornet || npc.type == NPCID.LittleMossHornet || npc.type == NPCID.TinyMossHornet || npc.type == NPCID.Derpling)
             {
                 npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 10);
             }
@@ -1602,7 +1610,7 @@ namespace CalRemix
                 hm.Add(ItemType<ClamChowder>(), 2);
                 npcLoot.Add(hm);
             }
-            if (npc.type == NPCType<Horse>())
+            if (npc.type == NPCType<EarthElemental>())
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<RockStone>(), 5, 3));
             }
@@ -1615,13 +1623,12 @@ namespace CalRemix
 
                 LeadingConditionRule mainRule = new LeadingConditionRule(new Conditions.IsExpert());
                 LeadingConditionRule normal = npcLoot.DefineNormalOnlyDropSet();
-                int[] itemIDs = new int[6]
+                int[] itemIDs = new int[5]
                 {
                     ItemType<Tumbleweed>(),
-                    ItemType<SandstormGun>(),
+                    ItemType<Duststorm>(),
                     ItemType<ShiftingSands>(),
                     ItemType<SandSharknadoStaff>(),
-                    ItemType<Sandslasher>(),
                     ItemType<DuststormInABottle>()
                 };
                 mainRule.Add(DropHelper.CalamityStyle(DropHelper.BagWeaponDropRateFraction, itemIDs), hideLootReport: !Main.expertMode);
@@ -1659,7 +1666,7 @@ namespace CalRemix
                     npcLoot.Add(frond);
                 }
             }
-            
+
             // bosses
             // phm
             if (npc.type == NPCID.KingSlime)
@@ -1673,7 +1680,9 @@ namespace CalRemix
             }
             else if (npc.type == NPCID.EyeofCthulhu)
             {
-
+                npcLoot.AddNormalOnly(ItemType<Eyesickle>(), 10);
+                npcLoot.AddNormalOnly(ItemType<LookerBook>(), 10);
+                npcLoot.AddNormalOnly(ItemType<DeadeyeRevolver>(), 10);
             }
             else if (npc.type == NPCType<Crabulon>())
             {
@@ -1714,10 +1723,11 @@ namespace CalRemix
                 npcLoot.AddNormalOnly(ItemType<ToxicTome>(), 25);
                 npcLoot.AddNormalOnly(ItemType<ChlorislimeStaff>(), 25);
             }
-            else if(npc.type == NPCID.WallofFlesh)
+            else if (npc.type == NPCID.WallofFlesh)
             {
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CorruptionKey);
                 npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.CrimsonKey);
+                npcLoot.AddNormalOnly(ItemType<RunnersEmblem>(), 25);
             }
 
             // him
@@ -1748,15 +1758,15 @@ namespace CalRemix
                      npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.SoulofSight);
                      npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.TwinsBossBag);
                 } */
-             }
-             else if (npc.type == NPCID.Retinazer)
-             {
-                 /* if (CalRemixWorld.leash)
-                 {
-                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedBar);
-                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.SoulofSight);
-                     npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.TwinsBossBag);
-                 } */
+            }
+            else if (npc.type == NPCID.Retinazer)
+            {
+                /* if (CalRemixWorld.leash)
+                {
+                    npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.HallowedBar);
+                    npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.SoulofSight);
+                    npcLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemID.TwinsBossBag);
+                } */
             }
             else if (npc.type == NPCType<BrimstoneElemental>())
             {
@@ -1832,7 +1842,7 @@ namespace CalRemix
             {
 
             }
-            else if (npc.type == NPCType<Bumblefuck>())
+            else if (npc.type == NPCType<Dragonfolly>())
             {
                 npcLoot.AddNormalOnly(ItemType<DisgustingMeat>(), new Fraction(55, 100), 236, 650);
             }
@@ -1971,7 +1981,7 @@ namespace CalRemix
                 if (npc.type == NPCID.Wizard && npc.life <= 0 && CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
                 {
                     CalRemixWorld.wizardDisabled = true;
-                    CalamityUtils.DisplayLocalizedText("Mods.CalRemix.StatusText.ByeWizard", Color.DarkBlue);
+                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.ByeWizard", Color.DarkBlue);
                     CalRemixWorld.UpdateWorldBool();
                 }
             }
@@ -1996,7 +2006,7 @@ namespace CalRemix
                     Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, Vector2.Zero, ProjectileType<CalHeart>(), 0, 0, Main.myPlayer);
                 }
             }
-            if (npc.type == NPCType<Horse>())
+            if (npc.type == NPCType<EarthElemental>())
                 RemixDowned.downedEarthElemental = true;
             if (!Main.dedServ)
             {
@@ -2062,9 +2072,9 @@ namespace CalRemix
                 int bunnyKills = NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
                 if (bunnyKills % 100 == 0 && bunnyKills < 1000)
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.1", new Color(107, 137, 179));
+                        CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.1", new Color(107, 137, 179));
                     }
 
                     SoundEngine.PlaySound(new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound"), npc.Center);
@@ -2074,13 +2084,13 @@ namespace CalRemix
 
                 if (bunnyKills % 100 == 0 && bunnyKills >= 1000)
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (Main.netMode == 0)
+                        if (Main.netMode == NetmodeID.SinglePlayer)
                         {
                             Main.NewText(Language.GetTextValue("Mods.CalRemix.Dialog.RajahGlobalInfo.2", player.name.ToUpper()), new Color(107, 137, 179));
                         }
-                        else if (Main.netMode == 2)
+                        else if (Main.netMode == NetmodeID.Server)
                         {
                             ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.CalRemix.Dialog.RajahGlobalInfo.2", player.name.ToUpper()), new Color(107, 137, 179));
                         }
@@ -2092,9 +2102,9 @@ namespace CalRemix
 
                 if (bunnyKills % 50 == 0 && bunnyKills % 100 != 0)
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        CalamityUtils.DisplayLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.3", new Color(107, 137, 179));
+                        CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.3", new Color(107, 137, 179));
                     }
                 }
             }
@@ -2161,13 +2171,13 @@ namespace CalRemix
         public override bool PreKill(NPC npc)
         {
             if (CalRemixWorld.lifeoretoggle)
-            { 
+            {
                 if (!DownedBossSystem.downedRavager && npc.type == NPCType<RavagerBody>())
                 {
                     CalamityUtils.SpawnOre(TileType<LifeOreTile>(), 0.25E-05, 0.45f, 0.65f, 30, 40);
 
                     Color messageColor = Color.Lime;
-                    CalamityUtils.DisplayLocalizedText("Vitality sprawls throughout the underground.", messageColor);
+                    CalamityUtils.BroadcastLocalizedText("Vitality sprawls throughout the underground.", messageColor);
                 }
             }
             if (CalRemixWorld.shrinetoggle)
@@ -2706,17 +2716,17 @@ namespace CalRemix
                     if (segmentType != 0)
                     {
                         if (!Main.npc[(int)npc.ai[1]].active)
-                            {
-                                npc.life = 0;
-                                npc.HitEffect();
-                                npc.checkDead();
-                                npc.active = false;
-                                NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, -1f);
-                                return;
-                            }
+                        {
+                            npc.life = 0;
+                            npc.HitEffect();
+                            npc.checkDead();
+                            npc.active = false;
+                            NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, -1f);
+                            return;
+                        }
                     }
                     if (segmentType == 0)
-                    { 
+                    {
                         if (!Main.npc[(int)npc.ai[0]].active)
                         {
                             npc.life = 0;

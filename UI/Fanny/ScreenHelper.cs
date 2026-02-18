@@ -1,7 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Furniture.CraftingStations;
-using CalamityMod.Items.Potions;
+using CalamityMod.Items.Potions.Food;
 using CalRemix.Assets.Fonts;
 using CalRemix.Core.Retheme;
 using CalRemix.Core.World;
@@ -81,7 +81,7 @@ namespace CalRemix.UI
         /// <summary>
         /// You probably don't need to use this. This is the helper's current message wether or not it is being shown or if it is in a delay waiting period. Use <see cref="UsedMessage"/> for the messagte thats actually seen
         /// </summary>
-        public HelperMessage StoredMessage => currentMessage ;
+        public HelperMessage StoredMessage => currentMessage;
 
         /// <summary>
         /// Basic checks to know if the helper can even talk, irregardless of what the message is<br/>
@@ -441,14 +441,14 @@ namespace CalRemix.UI
 
                 position.Y -= MathF.Pow(Math.Abs(MathF.Sin(bounce * MathHelper.Pi)), 0.6f) * 22f;
             }
-            
+
 
             //Stupid fuck
             if (tickle >= 1)
                 position += Main.rand.NextVector2Circular(3f, 3f) * tickle;
 
             float opacity = fadeIn;
-            
+
 
             //fades with the textbox if the textbox doesnt have a fade offset
             if (CharacterPositionData.textboxFadeOutOffset == Vector2.Zero)
@@ -557,7 +557,7 @@ namespace CalRemix.UI
             if (ParentSpeaker.textboxTheme != null)
             {
                 //Draw the background texture
-                if (ParentSpeaker.textboxTheme.backgroundFill  != null)
+                if (ParentSpeaker.textboxTheme.backgroundFill != null)
                 {
                     Texture2D tex = ParentSpeaker.textboxTheme.backgroundFill.Value;
 
@@ -666,11 +666,11 @@ namespace CalRemix.UI
 
         public override void OnInitialize()
         {
-            LoadScreenHelper(FannyTheFire,"FannyIdle", true)
+            LoadScreenHelper(FannyTheFire, "FannyIdle", true)
                 .SetVoiceStyle(SoundID.Cockatiel with { MaxInstances = 0, Volume = 0.3f, Pitch = -0.8f }, SoundID.DD2_GoblinScream)
                 .SetTextboxStyle("Thank you for the help, Fanny!")
                 .SetPositionData(false, 240);
-            
+
             LoadScreenHelper(EvilFanny, "EvilFannyIdle")
                 .SetVoiceStyle(SoundID.DD2_DrakinShot with { MaxInstances = 0, Volume = 0.3f, Pitch = 0.8f }, SoundID.NPCHit40)
                 .SetTextboxStyle("Get away, Evil Fanny!", new HelperTextboxPalette(Color.Black, Color.Red, Color.Indigo, Color.DeepPink, Color.Tomato))
@@ -692,7 +692,7 @@ namespace CalRemix.UI
                     Vector2.UnitY * 40f
                     ))
                 .SetAvailabilityCondition(() => Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().miracleUnlocked || (!CalRemixWorld.postGenUpdate && NPC.downedMoonlord));
-                
+
             LoadScreenHelper(CrimSon, "CrimSonDefault")
                 .SetVoiceStyle(SoundID.DD2_KoboldFlyerChargeScream with { MaxInstances = 0 })
                 .SetAvailabilityCondition(() => (Main.LocalPlayer.GetModPlayer<CalRemixPlayer>().gottenCellPhone || NPC.downedGolemBoss || !CalRemixWorld.postGenUpdate) && Main.hardMode && (DateTime.Today.DayOfYear != 18))
@@ -889,7 +889,8 @@ namespace CalRemix.UI
 
         public List<ScreenHelper> ScreenHelpers
         {
-            get {
+            get
+            {
                 List<ScreenHelper> helpers = new();
                 foreach (UIElement element in Elements)
                 {
@@ -932,7 +933,8 @@ namespace CalRemix.UI
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
                     "CalRemix: Fanny",
-                    delegate {
+                    delegate
+                    {
 
                         FannyInterface?.Update(Main._drawInterfaceGameTime);
                         FannyInterface.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
@@ -1176,7 +1178,7 @@ namespace CalRemix.UI
 
             //Miracle Boy
             ScreenHelperPortrait.LoadPortrait("MiracleBoyIdle", 2, 6);
-            ScreenHelperPortrait.LoadPortrait("MiracleBoyIceCream", 10, 6, 5,  6);
+            ScreenHelperPortrait.LoadPortrait("MiracleBoyIceCream", 10, 6, 5, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoyRead", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoyGnaw", 2, 6);
             ScreenHelperPortrait.LoadPortrait("MiracleBoySob", 2, 6);
@@ -1620,7 +1622,7 @@ namespace CalRemix.UI
             cooldownDuration = (int)(cooldown * 60);
             CooldownTime = 0;
 
-            messageDuration = (int)(duration * 60);
+            messageDuration = (int)(duration * 60 * CalRemixConfig.Instance.DialogueSpeed);
             TimeLeft = 0;
 
             DisplayOutsideInventory = displayOutsideInventory;
@@ -1985,7 +1987,7 @@ namespace CalRemix.UI
             {
                 PersistentData.UnlockHelper(speaker.Name);
             }
-            
+
             TimeLeft = messageDuration + delayTime;
             speaker.UsedMessage = this;
             currentSpeaker = speaker;
