@@ -30,8 +30,8 @@ namespace CalRemix.Content.Items.Weapons
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item1;
 			Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
-            Item.consumable = true;
-            Item.maxStack = 9999;
+            Item.consumable = false;
+            Item.maxStack = 1;
             Item.damage = 32;
 			Item.knockBack = 1f; 
 			Item.noMelee = true;
@@ -57,19 +57,19 @@ namespace CalRemix.Content.Items.Weapons
         }
         public override void AddRecipes()
         {
-            CreateRecipe(999).
-                AddIngredient<RotBall>(999).
-                AddIngredient<HardenedHoneycomb>(999).
-                AddIngredient<InfernalKris>(999).
-                AddIngredient<BundleBones>(999).
+            CreateRecipe().
+                AddIngredient<RotBall>().
+                AddIngredient<HardenedHoneycomb>().
+                AddIngredient<InfernalKris>().
+                AddIngredient<BundleBones>().
                 AddIngredient<PurifiedGel>(30).
                 AddTile(TileID.DemonAltar).
                 Register();
             CreateRecipe(999).
-                AddIngredient<ToothBall>(999).
-                AddIngredient<HardenedHoneycomb>(999).
-                AddIngredient<InfernalKris>(999).
-                AddIngredient<BundleBones>(999).
+                AddIngredient<ToothBall>().
+                AddIngredient<HardenedHoneycomb>().
+                AddIngredient<InfernalKris>().
+                AddIngredient<BundleBones>().
                 AddIngredient<PurifiedGel>(30).
                 AddTile(TileID.DemonAltar).
                 Register();

@@ -33,8 +33,8 @@ namespace CalRemix.Content.Items.Weapons
 			Item.knockBack = 2f; 
 			Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.consumable = true;
-            Item.maxStack = 9999;
+            Item.consumable = false;
+            Item.maxStack = 1;
             Item.shoot = ModContent.ProjectileType<BoneBundle>();
             Item.shootSpeed = 8;
         }
