@@ -3,6 +3,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.DataStructures;
 using CalamityMod.Particles;
+using CalamityMod.Utilities.Daybreak;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -86,7 +87,7 @@ public class Ozma : ModNPC
         //OzmaAttack.Meteor, 
         OzmaAttack.Doomsday, 
         //OzmaAttack.Flare, 
-        //OzmaAttack.Holy, 
+        OzmaAttack.Holy, 
         OzmaAttack.Death, 
         OzmaAttack.AbsorbMP
     ];
@@ -94,7 +95,7 @@ public class Ozma : ModNPC
     private static OzmaAttack[] EvenAttacks => [
         OzmaAttack.Curse,
         //OzmaAttack.Mini,
-        //OzmaAttack.LV4_Holy,
+        OzmaAttack.Holy,
         OzmaAttack.Death,
         OzmaAttack.Curaga,
         //OzmaAttack.Esuna,
@@ -273,8 +274,37 @@ public class Ozma : ModNPC
                     NPC.netUpdate = true;
                 }
                 break;
+            case OzmaAttack.Holy:
+                NPC.velocity = ((Target.Center - (Vector2.UnitY * 180)) - NPC.Center) / 30f;
+                NPC.rotation *= 0.9f;
+                NPC.rotation += NPC.velocity.X / 188f;
 
+                UseLVVariant = TurnCounter % 2 == 0;
 
+                if (AttackTime >= 600)
+                {
+                    PickAttack();
+                    return;
+                }
+
+                if(UseLVVariant)
+                {
+                    if (AttackTime <= 580 && AttackTime % 45 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        bool everyOther = AttackTime % 90 == 0;
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(everyOther ? -320 : 320, 0), Vector2.Zero, ModContent.ProjectileType<HolyLight>(), 0, 0f, ai0: 70);
+                    }
+                }
+                else
+                {
+                    if (AttackTime <= 580 && AttackTime % 90 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        bool everyOther = AttackTime % 180 == 0;
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), Target.Center + new Vector2(everyOther ? -400 : 400, 0), Vector2.Zero, ModContent.ProjectileType<HolyLight>(), 0, 0f, ai0: 135);
+                    }
+                }
+                
+                break;
         }
 
         AttackTime++;
@@ -468,7 +498,7 @@ public class Miasma : ModProjectile
 
     public override void OnSpawn(IEntitySource source)
     {
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < 16; i++)
         {
             MiasmaGas gas = new(Projectile.Center, Projectile.velocity.RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * Main.rand.NextFloat(0.2f, 3f), Color.Lime, Color.DarkGreen, 2f, 0.5f, 60, Main.rand.NextFloat(-0.05f, 0.05f));
             GeneralParticleHandler.SpawnParticle(gas);
@@ -477,13 +507,16 @@ public class Miasma : ModProjectile
 
     public override void AI()
     {
-        MiasmaGas gas = new(Projectile.Center, Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(1f, 7f), Color.Lime, Color.DarkGreen, 2f, 0.75f, 60, Main.rand.NextFloat(-0.05f, 0.05f));
-        GeneralParticleHandler.SpawnParticle(gas);
-
-        if (Time % 8 == 0)
+        if (Time % 2 == 0)
         {
-            float randRadius = 80;
-            Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(randRadius, randRadius), DustID.GreenFairy, Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(1f, 4f));
+            MiasmaGas gas = new(Projectile.Center, Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(1f, 7f), Color.Lime, Color.DarkGreen, 2f, 0.75f, 60, Main.rand.NextFloat(-0.05f, 0.05f));
+            GeneralParticleHandler.SpawnParticle(gas);
+
+            if (Time % 8 == 0)
+            {
+                float randRadius = 80;
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(randRadius, randRadius), DustID.GreenFairy, Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(1f, 4f));
+            }
         }
 
         Lighting.AddLight(Projectile.Center, Color.White.ToVector3() * 0.25f);
@@ -661,6 +694,80 @@ public class ReaperSlash : ModProjectile
         Rectangle frame = texture.Frame(2, 6, frameX, frameY);
         SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         Main.EntitySpriteDraw(texture, position, frame, Color.White * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+        return false;
+    }
+}
+
+public class HolyLight : ModProjectile
+{
+    public override string Texture => "CalamityMod/Particles/BloomLineThick";
+
+    public override void SetDefaults()
+    {
+        Projectile.width = 200;
+        Projectile.height = 1000;
+        Projectile.penetrate = -1;
+        Projectile.hostile = true;
+        Projectile.damage = 0;
+        Projectile.tileCollide = false;
+        Projectile.ignoreWater = true;
+        Projectile.timeLeft = 999;
+    }
+
+    public override void AI()
+    {
+        if (Projectile.timeLeft > (int)Projectile.ai[0])
+            Projectile.timeLeft = (int)Projectile.ai[0];
+
+        int uptime = (int)Projectile.ai[0] - Projectile.timeLeft;
+
+        if (uptime > 30)
+        {
+            int target = Player.FindClosest(Projectile.position, Projectile.width, Projectile.height);
+            if (target != -1)
+            {
+                Player p = Main.player[target];
+                bool leftOfPlayer = p.Center.X > Projectile.Center.X;
+                float speedUp = MathHelper.Clamp((uptime - 30) / 10f, 0f, 1f);
+                float slowDown = 1 - MathHelper.Clamp((uptime - ((int)Projectile.ai[0] - 10)) / 10f, 0f, 1f);
+
+                Projectile.velocity = new Vector2((leftOfPlayer ? 8 : -8) * speedUp * slowDown, 0);
+                Projectile.Center = new Vector2(Projectile.Center.X, p.Center.Y);
+            }
+        }
+
+        if (uptime < 20)
+            Projectile.scale = CalamityUtils.CircOutEasing(uptime / 20f, 1);
+        else if (uptime >= (int)Projectile.ai[0] - 10)
+            Projectile.scale = CalamityUtils.CircInEasing(1 - ((uptime - ((int)Projectile.ai[0] - 10)) / 10f), 1);
+        else
+            Projectile.scale = 1f;
+
+        foreach (Player p in Main.ActivePlayers)
+        {
+            if (p.dead)
+                continue;
+
+            if (Projectile.Hitbox.Intersects(p.Hitbox))
+            {
+                p.AddBuff(BuffID.Burning, 2);
+                p.AddBuff(BuffID.OnFire, 2);
+                p.AddBuff(ModContent.BuffType<HolyInferno>(), 2);
+                p.AddBuff(ModContent.BuffType<BanishingFire>(), 2);
+            }
+        }
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        Main.spriteBatch.SetBlendState(BlendState.Additive);
+
+        Texture2D tex = TextureAssets.Projectile[Type].Value;
+
+        Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, null, Color.Yellow * 0.75f, 0f, tex.Size() * 0.5f, new Vector2(0.75f * Projectile.scale, 10f), 0, 0);
+        Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, null, Color.White * 0.75f, 0f, tex.Size() * 0.5f, new Vector2(0.5f * Projectile.scale, 10f), 0, 0);
+
+        Main.spriteBatch.SetBlendState(BlendState.AlphaBlend);
         return false;
     }
 }
