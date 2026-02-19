@@ -1185,7 +1185,7 @@ namespace CalRemix.Core.World
                 }
                 AsbestosBiome.GenerateAllHouses();
             }));
-            int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Roxcalibur"));
+            int FinalIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Sulphur Sea 2"));
             if (FinalIndex != -1)
             {
                 if (!stratusDungeonDisabled)
