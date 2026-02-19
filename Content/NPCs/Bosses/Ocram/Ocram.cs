@@ -600,7 +600,15 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             origin.Y *= 0.5f;
             int frame = NPC.frame.Y / frameHeight;
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, texture.Frame(1, Main.npcFrameCount[NPC.type], 0, frame), drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
+            int width = texture.Width;
+            Vector2 pivot = default;
+            pivot.X = width >> 1;
+            pivot.Y = frameHeight >> 1;
+            pivot.Y *= 0.5f;
+            Vector2 pos = new Vector2(NPC.position.X - screenPos.X + (NPC.width >> 1) - width * NPC.scale * 0.5f + pivot.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - frameHeight * NPC.scale + 4f + pivot.Y * NPC.scale);
+
+            spriteBatch.Draw(texture, pos, texture.Frame(1, Main.npcFrameCount[NPC.type], 0, frame), drawColor, NPC.rotation, pivot, NPC.scale, SpriteEffects.None, 0);
+            //spriteBatch.Draw(texture, NPC.Center - screenPos, texture.Frame(1, Main.npcFrameCount[NPC.type], 0, frame), drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
     }
