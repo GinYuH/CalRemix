@@ -1,6 +1,6 @@
 displayName = Calamity: Community Remix
 author = Fanny the Flame
-version = 1.3.9
+version = 1.3.10
 dllReferences = MMHOOK_CalamityMod, TomatsSecretAwesomeStuff
 modReferences = CalamityMod, SubworldLibrary
 loadAfter = CalamityMod, CalValEX
