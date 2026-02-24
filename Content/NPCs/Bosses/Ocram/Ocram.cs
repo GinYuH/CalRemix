@@ -47,17 +47,30 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             NPC.buffImmune[BuffID.Poisoned] = true;
         }
 
+        // decompilation translation notes:
+        // >> is division (x >> 1 ==  x / 2, x >> 2 == x / 4, x >> 3 == x / 8, x >> 4 == x / 16, ect)
+        // << is multiplication (x << 1 == x * 2, x << 2 == x * 4, x << 3 == x * 8, x << 4 == x * 16, ect)
+        // if something is being &'d, cast it to an int (& is round to nearest of x aka x & 8 is round to nearest num divisible by 8)
+        // XYWH is the hitbox size. XY equates to NPC.position.x and NPC.position.y, WH are NPC.width and NPC.height
+        // Main.PlayerSet[Target] == Main.player[NPC.target]
+        // for Lighting.AddLight just replace the XYWH shit with NPC.position. ignore the >> 4, thats not needed. its just accounting for tile grid shit, we dont do that in germany anymore
+        // if you ever see a scary as fuck dust being spawned with a pointer, refer to "// idly spawned blood"
+
+        // TODO: need to extract gores from a decomp of og console terraria
         public override void AI()
         {
-            Lighting.AddLight(new Vector2((int)NPC.position.X >> 4, (int)NPC.position.Y >> 4), new Vector3(1f, 1f, 1f));
+            Lighting.AddLight(NPC.position, new Vector3(1f, 1f, 1f));
+
             if (NPC.target == Main.maxPlayers || Main.player[NPC.target].dead || Main.player[NPC.target].active == false)
             {
                 NPC.TargetClosest();
             }
+
             bool dead = Main.player[NPC.target].dead;
-            float num = NPC.position.X + (NPC.width >> 1) - Main.player[NPC.target].position.X - 10f;
+            float num = NPC.position.X + (NPC.width / 2) - Main.player[NPC.target].position.X - 10f;
             float num2 = NPC.position.Y + NPC.height - 59f - Main.player[NPC.target].position.Y - 21f;
             float num3 = (float)Math.Atan2(num2, num) + 1.57f;
+
             if (num3 < 0f)
             {
                 num3 += 6.283f;
@@ -85,7 +98,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             }
             if (NPC.rotation < num3)
             {
-                if ((double)(num3 - NPC.rotation) > 3.1415)
+                if ((double)(num3 - NPC.rotation) > Math.PI)
                 {
                     NPC.rotation -= num4;
                 }
@@ -96,7 +109,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             }
             else if (NPC.rotation > num3)
             {
-                if ((double)(NPC.rotation - num3) > 3.1415)
+                if ((double)(NPC.rotation - num3) > Math.PI)
                 {
                     NPC.rotation += num4;
                 }
@@ -111,28 +124,29 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             }
             if (NPC.rotation < 0f)
             {
-                NPC.rotation += 6.283f;
+                NPC.rotation += MathHelper.TwoPi;
             }
-            else if (NPC.rotation > 6.283f)
+            else if (NPC.rotation > MathHelper.TwoPi)
             {
-                NPC.rotation -= 6.283f;
+                NPC.rotation -= MathHelper.TwoPi;
             }
             if (NPC.rotation > num3 - num4 && NPC.rotation < num3 + num4)
             {
                 NPC.rotation = num3;
             }
+
+            // idly spawn blood
             if (Main.rand.Next(6) == 0)
             {
-                /*
-                //Dust* ptr = Main.DustSet.NewDust(NPC.position.X, NPC.position.Y + (NPC.height >> 2), NPC.width, NPC.height >> 1, 5, NPC.velocity.X, 2.0);
-                Dust* ptr = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y + (NPC.height >> 2)), NPC.width, NPC.height >> 1, 5, NPC.velocity.X, 2);
-                if (ptr != null)
+                Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y + (NPC.height / 4)), NPC.width, (NPC.height / 2), ModContent.DustType<OcramDustBlood>(), NPC.velocity.X, 2.0f);
+                if (dust != null)
                 {
-                    ptr->NPC.velocity.X *= 0.5f;
-                    ptr->NPC.velocity.Y *= 0.1f;
+                    dust.velocity.X *= 0.5f;
+                    dust.velocity.Y *= 0.1f;
                 }
-                */
             }
+
+            // despawn
             if (Main.dayTime || dead)
             {
                 NPC.velocity.Y -= 0.04f;
@@ -142,13 +156,14 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                 }
                 return;
             }
+
             if (NPC.ai[0] == 0f)
             {
                 if (NPC.ai[1] == 0f)
                 {
                     float num5 = 8f;
                     float num6 = 0.12f;
-                    Vector2 vector = new Vector2(NPC.position.X + (NPC.width >> 1), NPC.position.Y + (NPC.height >> 1));
+                    Vector2 vector = new Vector2(NPC.position.X + (NPC.width / 2), NPC.position.Y + (NPC.height / 2));
                     float num7 = Main.player[NPC.target].position.X + 10f - vector.X;
                     float num8 = Main.player[NPC.target].position.Y + 21f - 200f - vector.Y;
                     float num9 = (float)Math.Sqrt(num7 * num7 + num8 * num8);
@@ -212,8 +227,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                             num8 *= num9;
                             vector.X += num7 * 15f;
                             vector.Y += num8 * 15f;
-                            //Projectile.NewProjectile(vector.X, vector.Y, num7, num8, 100, 20, 0f);
-                            Projectile.NewProjectile(NPC.GetBossSpawnSource(NPC.target), vector, new Vector2(num7, num8), ProjectileID.DeathLaser, 20, 0f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), vector, new Vector2(num7, num8), ModContent.ProjectileType<OcramDeathLaser>(), 20, 0f);
                         }
                         if (NPC.ai[3] == 60f || NPC.ai[3] == 70f || NPC.ai[3] == 80f || NPC.ai[3] == 90f)
                         {
@@ -230,7 +244,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                             vector2.Y += vector3.Y * 10f;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int num14 = NPC.NewNPC(NPC.GetSource_FromThis(), (int)vector2.X, (int)vector2.Y, NPCID.ServantofCthulhu);
+                                int num14 = NPC.NewNPC(NPC.GetSource_FromThis(), (int)vector2.X, (int)vector2.Y, ModContent.NPCType<ServantOfOcram>());
                                 if (num14 < Main.maxNPCs)
                                 {
                                     Main.npc[num14].velocity.X = vector3.X;
@@ -241,10 +255,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                             SoundEngine.PlaySound(SoundID.NPCHit1, vector2);
                             for (int i = 0; i < 8; i++)
                             {
-                                if (null == Dust.NewDust(vector2, 20, 20, 5, vector3.X * 0.4f, vector3.Y * 0.4f))
-                                {
-                                    break;
-                                }
+                                Dust.NewDust(vector2, 20, 20, ModContent.DustType<OcramDustBlood>(), vector3.X * 0.4f, vector3.Y * 0.4f);
                             }
                         }
                         if (NPC.ai[3] == 103f)
@@ -303,7 +314,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                         }
                     }
                 }
-                if (NPC.life < NPC.lifeMax >> 1)
+                if (NPC.life < NPC.lifeMax / 2)
                 {
                     NPC.ai[0] = 1f;
                     NPC.ai[1] = 0f;
@@ -346,21 +357,18 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                         SoundEngine.PlaySound(SoundID.NPCHit1, NPC.position);
                         for (int j = 0; j < 2; j++)
                         {
-                            Gore.NewGore(NPC.GetBossSpawnSource(NPC.target), NPC.position, new Vector2(Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f), 174);
-                            Gore.NewGore(NPC.GetBossSpawnSource(NPC.target), NPC.position, new Vector2(Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f), 173);
-                            Gore.NewGore(NPC.GetBossSpawnSource(NPC.target), NPC.position, new Vector2(Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f), 172);
+                            Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, new Vector2(Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f), 174);
+                            Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, new Vector2(Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f), 173);
+                            Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, new Vector2(Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f), 172);
                         }
                         for (int k = 0; k < 16; k++)
                         {
-                            if (null == Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f))
-                            {
-                                break;
-                            }
+                            Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<OcramDustBlood>(), Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f);
                         }
                         SoundEngine.PlaySound(SoundID.Roar, NPC.position);
                     }
                 }
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<OcramDustBlood>(), Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f);
                 NPC.velocity.X *= 0.98f;
                 NPC.velocity.Y *= 0.98f;
                 if (NPC.velocity.X > -0.1 && NPC.velocity.X < 0.1)
@@ -437,7 +445,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                     num22 += Main.rand.Next(-40, 41) * 0.08f;
                     vector5.X += num21 * 15f;
                     vector5.Y += num22 * 15f;
-                    Projectile.NewProjectile(NPC.GetBossSpawnSource(NPC.target), vector5, new Vector2(num21, num22), ProjectileID.EyeLaser, 45, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), vector5, new Vector2(num21, num22), ModContent.ProjectileType<OcramEyeLaser>(), 45, 0f);
                 }
             }
             else if (NPC.ai[1] == 1f)
@@ -464,7 +472,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                     {
                         vector6.X += Main.rand.Next(-50, 50) * 2f;
                         vector6.Y += Main.rand.Next(-50, 50) * 2f;
-                        Projectile.NewProjectile(NPC.GetBossSpawnSource(NPC.target), vector6, new Vector2(num25, num26), ProjectileID.DemonSickle, 45, 0f);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), vector6, new Vector2(num25, num26), ModContent.ProjectileType<OcramDemonSickle>(), 45, 0f);
                     }
                 }
                 NPC.ai[1] = 2f;
@@ -522,7 +530,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
                     vector8.Y += vector9.Y * 10f;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int num31 = NPC.NewNPC(NPC.GetSource_FromThis(), (int)vector8.X, (int)vector8.Y, NPCID.ServantofCthulhu);
+                        int num31 = NPC.NewNPC(NPC.GetSource_FromThis(), (int)vector8.X, (int)vector8.Y, ModContent.NPCType<ServantOfOcram>());
                         if (num31 < Main.maxNPCs)
                         {
                             Main.npc[num31].velocity.X = vector9.X;
@@ -550,7 +558,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             }
             else if (NPC.frameCounter < 21f)
             {
-                NPC.frame.Y = (short)(frameHeight << 1);
+                NPC.frame.Y = (short)(frameHeight * 2);
             }
             else
             {
@@ -566,10 +574,20 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
+            OnHitAndDeathStuff(hit, damageDone);
+        }
+
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
+        {
+            OnHitAndDeathStuff(hit, damageDone);
+        }
+
+        public void OnHitAndDeathStuff(NPC.HitInfo hit, int damageDone)
+        {
             if (NPC.life > 0)
             {
                 int num52 = (int)(damageDone / NPC.lifeMax * 80.0);
-                while (num52 > 0 && null != Dust.NewDust(NPC.position, NPC.width, NPC.height, 5, hit.HitDirection, -1))
+                while (num52 > 0 && null != Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<OcramDustBlood>(), hit.HitDirection, -1))
                 {
                     num52--;
                 }
@@ -577,7 +595,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             }
             for (int num53 = 0; num53 < 128; num53++)
             {
-                if (null == Dust.NewDust(NPC.position, NPC.width, NPC.height, hit.HitDirection << 1, -2))
+                if (null == Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<OcramDustBlood>(), hit.HitDirection * 2, -2))
                 {
                     break;
                 }
@@ -596,18 +614,17 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
         {
             Texture2D texture = TextureAssets.Npc[Type].Value;
             int frameHeight = texture.Height / Main.npcFrameCount[NPC.type];
-            Vector2 origin = new Vector2(texture.Width / 2, (texture.Height / Main.npcFrameCount[NPC.type]) / 2);
-            origin.Y *= 0.5f;
             int frame = NPC.frame.Y / frameHeight;
+            SpriteEffects direction = NPC.spriteDirection == 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
             int width = texture.Width;
             Vector2 pivot = default;
-            pivot.X = width >> 1;
-            pivot.Y = frameHeight >> 1;
+            pivot.X = width / 2;
+            pivot.Y = frameHeight / 2;
             pivot.Y *= 0.5f;
-            Vector2 pos = new Vector2(NPC.position.X - screenPos.X + (NPC.width >> 1) - width * NPC.scale * 0.5f + pivot.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - frameHeight * NPC.scale + 4f + pivot.Y * NPC.scale);
+            Vector2 pos = new Vector2(NPC.position.X - screenPos.X + (NPC.width / 2) - width * NPC.scale * 0.5f + pivot.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - frameHeight * NPC.scale + 4f + pivot.Y * NPC.scale);
 
-            spriteBatch.Draw(texture, pos, texture.Frame(1, Main.npcFrameCount[NPC.type], 0, frame), drawColor, NPC.rotation, pivot, NPC.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, pos, texture.Frame(1, Main.npcFrameCount[NPC.type], 0, frame), drawColor, NPC.rotation, pivot, NPC.scale, direction, 0);
             //spriteBatch.Draw(texture, NPC.Center - screenPos, texture.Frame(1, Main.npcFrameCount[NPC.type], 0, frame), drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
