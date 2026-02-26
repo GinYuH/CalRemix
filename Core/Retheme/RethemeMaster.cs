@@ -1,35 +1,38 @@
-using Terraria;
-using Terraria.ModLoader;
+using CalamityMod.Events;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.LoreItems;
+using CalamityMod.Items.Materials;
+using CalamityMod.NPCs.AstrumAureus;
+using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.Crabulon;
+using CalamityMod.NPCs.Cryogen;
+using CalamityMod.NPCs.DesertScourge;
+using CalamityMod.NPCs.HiveMind;
+using CalamityMod.NPCs.Leviathan;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.ProfanedGuardians;
+using CalamityMod.NPCs.Providence;
+using CalamityMod.NPCs.SupremeCalamitas;
+using CalamityMod.NPCs.Yharon;
+using CalamityMod.Projectiles.Boss;
+using CalamityMod.Projectiles.Melee.Spears;
+using CalamityMod.Projectiles.Rogue;
+using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using CalamityMod.Events;
-using Terraria.GameContent;
-using CalamityMod.Items.Materials;
 using ReLogic.Content;
-using CalamityMod.NPCs.ProfanedGuardians;
-using CalamityMod.Projectiles.Boss;
-using CalamityMod.NPCs.SupremeCalamitas;
-using Terraria.ID;
-using System.Collections.Generic;
-using CalamityMod.NPCs.AstrumAureus;
-using Terraria.DataStructures;
-using static Terraria.ModLoader.ModContent;
-using CalamityMod.Projectiles.Melee.Spears;
-using CalRemix.Core.World;
-using CalamityMod.NPCs.DesertScourge;
-using CalamityMod.NPCs.Crabulon;
-using CalamityMod.NPCs.HiveMind;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.Cryogen;
-using CalamityMod.NPCs.Leviathan;
-using CalamityMod.NPCs.CalClone;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.NPCs.Yharon;
-using CalamityMod.Projectiles.Rogue;
-using CalamityMod.Items.LoreItems;
+using Stubble.Core.Classes;
 using System;
-using CalamityMod.Items.Accessories;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using static CalRemix.World.ProfanedDesert;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Core.Retheme
 {
@@ -43,7 +46,9 @@ namespace CalRemix.Core.Retheme
         public override void Load()
         {
             SneakersRetheme.Load();
+            SynonymSwap.Load();
         }
+
         public override void Unload() => UnloadAll();
         public override void PostSetupContent()
         {
@@ -65,6 +70,21 @@ namespace CalRemix.Core.Retheme
             }
             SneakersRetheme.SaveDefaultSneakersTextures();
         }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            SynonymSwap.SaveWorld(tag);
+        }
+        public override void LoadWorldData(TagCompound tag)
+        {
+            SynonymSwap.LoadWorld(tag);
+        }
+
+        public override void ClearWorld()
+        {
+            SynonymSwap.ClearWorld();
+        }
+
         private static void UnloadAll()
         {
             RethemeItem.ResetAnimations(true);
@@ -311,6 +331,7 @@ namespace CalRemix.Core.Retheme
             ResetAnimations();
             ResetNames();
         }
+
         public static void ResetNames()
         {
             if (Main.LocalPlayer != null)
@@ -385,8 +406,10 @@ namespace CalRemix.Core.Retheme
         public override void SetDefaults(Item item)
         {
             AbsoluteChanges(item);
+
             if (CalRemixWorld.itemChanges)
                 NormalChanges(item);
+
             if (CalRemixWorld.sneakerheadMode && SneakersRetheme.IsASneaker(item.type) && SneakersRetheme.itemSneakerPairs.ContainsKey(item.type))
                 SneakersRetheme.InitializeItem(item);
         }
@@ -395,6 +418,7 @@ namespace CalRemix.Core.Retheme
             if (RethemeList.ItemNames.Contains(item.type))
                 item.SetNameOverride(CalRemixHelper.LocalText($"Rename.Items.Normal.{item.ModItem.Name}").Value);
         }
+
         public static void AbsoluteChanges(Item item)
         {
             string relic = "Rename.Items.Absolute.Relic";
@@ -421,9 +445,12 @@ namespace CalRemix.Core.Retheme
             }
             else if (item.Name.Contains("Skeletron"))
             {
-                item.SetNameOverride(item.Name.Replace(Language.GetOrRegister("Mods.CalamityMod.Items.Materials.Bloodstone.DisplayName").Value, CalRemixHelper.LocalText("Rename.Items.Absolute.Hemostone").Value));
+                item.SetNameOverride(item.Name.Replace("Skeletron", CalRemixHelper.LocalText("Rename.NPCs.Skeletron").Value));
             }
+
+            SynonymSwap.ProcessSynonyms(item);
         }
+
         public override void SetMatch(int armorSlot, int type, bool male, ref int equipSlot, ref bool robes)
         {
            if (equipSlot == EquipLoader.GetEquipSlot(Mod, "AshsCloakBody", EquipType.Body))
@@ -436,6 +463,8 @@ namespace CalRemix.Core.Retheme
         {
             if (SneakersRetheme.IsASneaker(item.type))
                 SneakersRetheme.ModifyTooltips(item, tooltips);
+
+            SynonymSwap.ProcessSynonyms(item, tooltips);
         }
 
         public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset)
