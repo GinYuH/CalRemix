@@ -366,6 +366,7 @@ namespace CalRemix.Core.Retheme
             if ((SynonymToggles & (ulong)SynonymType.EssenceAnima) != 0)
             {
                 RegisterFlip("Essence", "Anima");
+                RegisterFlip("Casts", "Sends forth", false);
             }
             if ((SynonymToggles & (ulong)SynonymType.DefenseToughness) != 0)
             {
@@ -447,6 +448,7 @@ namespace CalRemix.Core.Retheme
             {
                 RegisterFlip("Fire", "Flame");
                 RegisterFlip("Flaming", "Fiery");
+                RegisterFlip("Equippable", "Able to be Equipped");
             }
             if ((SynonymToggles & (ulong)SynonymType.MoonMars) != 0)
             {
@@ -475,6 +477,7 @@ namespace CalRemix.Core.Retheme
             if ((SynonymToggles & (ulong)SynonymType.BloodPrana) != 0)
             {
                 RegisterFlip("Blood", "Prana");
+                RegisterFlip("Bloody", "Fucking");
             }
             if ((SynonymToggles & (ulong)SynonymType.PronounsNeutral) != 0)
             {
@@ -489,6 +492,7 @@ namespace CalRemix.Core.Retheme
             }
             if ((SynonymToggles & (ulong)SynonymType.ChanceProbability) != 0)
             {
+                RegisterFlip("Rune", "Sigil");
                 RegisterFlip("Chance", "Probability");
             }
 
