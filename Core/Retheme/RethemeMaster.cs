@@ -223,6 +223,8 @@ namespace CalRemix.Core.Retheme
             {
                 typeName = typeName.Replace("Anahita", CalRemixHelper.LocalText("Rename.NPCs.Anahita").Value);
             }
+
+            SynonymSwap.ApplySynonym(ref typeName);
         }
 
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
