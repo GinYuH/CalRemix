@@ -810,7 +810,7 @@ namespace CalRemix
             }
             else if (item.type == ItemType<DesertScourgeBag>())
             {
-                itemLoot.Add(ItemType<Duststorm>(), 1 / 3);
+                itemLoot.Add(ItemType<Duststorm>(), 3);
                 itemLoot.Add(ItemType<ParchedScale>(), 1, 30, 40);
                 itemLoot.RemoveWhere((rule) => rule is CommonDrop e && e.itemId == ItemType<PearlShard>());
             }
@@ -871,7 +871,7 @@ namespace CalRemix
             }
             else if (item.type == ItemType<CryogenBag>())
             {
-                itemLoot.Add(ItemType<FrostedFractals>(), 1 / 3);
+                itemLoot.Add(ItemType<FrostedFractals>(), 3);
             }
             else if (item.type == ItemID.TwinsBossBag)
             {
@@ -879,7 +879,7 @@ namespace CalRemix
             }
             else if (item.type == ItemType<AquaticScourgeBag>())
             {
-                itemLoot.Add(ItemType<Rainstorm>(), 1 / 3);
+                itemLoot.Add(ItemType<Rainstorm>(), 3);
             }
             else if (item.type == ItemID.DestroyerBossBag)
             {
@@ -895,7 +895,7 @@ namespace CalRemix
             }
             else if (item.type == ItemType<CalamitasCloneBag>())
             {
-                itemLoot.Add(ItemType<RisingFire>(), 1 / 3);
+                itemLoot.Add(ItemType<RisingFire>(), 3);
                 itemLoot.Add(ItemType<CalamityRing>());
             }
             else if (item.type == ItemID.PlanteraBossBag)
@@ -920,7 +920,7 @@ namespace CalRemix
             }
             else if (item.type == ItemType<PlaguebringerGoliathBag>())
             {
-                itemLoot.Add(ItemType<Alchemists3rdTrumpet>(), 1 / 3);
+                itemLoot.Add(ItemType<Alchemists3rdTrumpet>(), 3);
             }
             else if (item.type == ItemID.FairyQueenBossBag)
             {
