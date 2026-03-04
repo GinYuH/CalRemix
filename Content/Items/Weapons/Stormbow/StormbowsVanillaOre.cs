@@ -156,6 +156,14 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override List<int> projsToShoot => new List<int>() { ProjectileID.UnholyArrow };
         public override int arrowAmount => 4;
         public override OverallRarity overallRarity => OverallRarity.Blue;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.CrimtaneBar, 30).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.Anvils).
+                Register();
+        }
     }
     public class Fruminous : StormbowAbstract
     {
@@ -199,6 +207,14 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 int projectile = Projectile.NewProjectile(source, cursorPos.X, cursorPos.Y, speedX, speedY, type, damage, knockback, player.whoAmI, ai1, batOffset);
             }
             return false;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.HellstoneBar, 30).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.Anvils).
+                Register();
         }
     }
     #endregion
@@ -313,6 +329,14 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
         public override List<int> projsToShoot => new List<int>() { ProjectileID.HolyArrow };
         public override int arrowAmount => 12;
         public override OverallRarity overallRarity => OverallRarity.Pink;
+        public override void AddRecipes()
+        {
+            CreateRecipe().
+                AddIngredient(ItemID.HallowedBar, 30).
+                AddIngredient(ItemID.Cobweb, 15).
+                AddTile(TileID.MythrilAnvil).
+                Register();
+        }
     }
     #region Chlorophyte
     public abstract class ChlorophyteStormbow : StormbowAbstract
