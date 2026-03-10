@@ -687,6 +687,11 @@ namespace CalRemix
                     Player.noBuilding = true;
                     Player.AddBuff(BuffID.NoBuilding, 60);
                 }
+                if (SubworldSystem.Current is IDisableItems)
+                {
+                    Player.noItems = true;
+                    Player.AddBuff(ModContent.BuffType<Pacifism>(), 60);
+                }
             }
         }
         public override void PostUpdate()
@@ -953,6 +958,7 @@ namespace CalRemix
                 else if (SubworldSystem.Current is IDisableFlight)
                 {
                     Player.wingTimeMax = 0;
+                    Player.AddBuff(BuffType<FearofHeights>(), 60);
                 }
             }
         }

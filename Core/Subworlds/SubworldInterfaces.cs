@@ -60,4 +60,8 @@ namespace CalRemix.Core.Subworlds
     {
 
     }
+    public interface IDisableItems
+    {
+
+    }
 }

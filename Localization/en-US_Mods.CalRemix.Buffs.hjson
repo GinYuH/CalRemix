@@ -522,3 +522,13 @@ SharkRain: {
 	DisplayName: Shark Rain
 	Description: It's raining sharks!
 }
+
+FearofHeights: {
+	DisplayName: Fear of Heights
+	Description: You can't fly!
+}
+
+Pacifism: {
+	DisplayName: Inner Peace
+	Description: Your hands refuse to use items
+}
