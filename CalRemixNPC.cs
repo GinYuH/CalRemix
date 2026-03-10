@@ -57,6 +57,7 @@ using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Projectiles.Boss;
+using CalamityMod.Projectiles.Typeless;
 using CalamityMod.Sounds;
 using CalamityMod.Systems.Collections;
 using CalamityMod.Tiles.Ores;
@@ -112,6 +113,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -2362,6 +2364,14 @@ namespace CalRemix
                 if (npc.type == CalRemixAddon.Wrath.Find<ModNPC>("Solyn").Type && SubworldSystem.AnyActive() && ScreenHelperManager.screenHelpersEnabled)
                     return false;
             }
+            if (npc.type == NPCType<CalamityMod.Projectiles.Boss.BrainOfCthulhu.BloodBomb>())
+            {
+                if (npc.IsABestiaryIconDummy)
+                {
+                    spriteBatch.Draw(TextureAssets.Npc[npc.type].Value, npc.Center - screenPos, null, Color.White, 0, TextureAssets.Npc[npc.type].Value.Size() / 2, npc.scale, 0, 0);
+                    return false;
+                }
+            }
             return true;
         }
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
@@ -2685,6 +2695,19 @@ namespace CalRemix
             AddModBiomeToBestiary(npc.type, NPCType<Apollo>(), exosphereID, bestiaryEntry);
             AddModBiomeToBestiary(npc.type, NPCType<ThanatosHead>(), exosphereID, bestiaryEntry);
             AddModBiomeToBestiary(npc.type, NPCType<Draedon>(), exosphereID, bestiaryEntry);
+
+            if (npc.type == NPCType<CalamityMod.Projectiles.Boss.BrainOfCthulhu.BloodBomb>())
+            {
+                NPCID.Sets.NPCBestiaryDrawOffset[NPCType<CalamityMod.Projectiles.Boss.BrainOfCthulhu.BloodBomb>()] = new NPCID.Sets.NPCBestiaryDrawModifiers()
+                {
+                    Hide = false
+                };
+                bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                    new FlavorTextBestiaryInfoElement("Mods.CalRemix.Bestiary.BloodBomb"),
+                    BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCrimson,
+                });
+                ItemID.Sets.KillsToBanner[npc.type] = 5;
+            }
         }
 
         private static void Talk(string value, Color textColor)
