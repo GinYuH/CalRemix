@@ -22,6 +22,7 @@ using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;
@@ -630,6 +631,83 @@ namespace CalRemix
                 }
 
                 Main.EntitySpriteDraw(texture, drawPosition, frame, projectile.GetAlpha(lightColor), drawRotation, origin, projectile.scale, effects, 0);
+                return false;
+            }
+            if (projectile.type == ModContent.ProjectileType<SigilSet>())
+            {
+
+                Texture2D main = TextureAssets.Projectile[projectile.type].Value;
+                Texture2D smol = Request<Texture2D>("CalamityMod/Projectiles/Magic/ThaumRingSmall").Value;
+                Texture2D rune = Request<Texture2D>("CalRemix/Core/Retheme/ThaumRunes").Value;
+                Asset<Texture2D> ghostTextureAsset = Request<Texture2D>("CalRemix/Core/Retheme/ThaumRunesGlow");
+
+                // Modify opacity again so it doesn't override changes to alpha in AI
+                float drawOpacity = 1f - projectile.alpha / 255f;
+                Main.EntitySpriteDraw(smol, projectile.Center - Main.screenPosition, null, Color.White * 0.5f * drawOpacity, projectile.rotation, smol.Size() / 2, projectile.scale + MathF.Cos(2 * Main.GlobalTimeWrappedHourly + 5) * 0.0027f, SpriteEffects.None);
+                Main.EntitySpriteDraw(main, projectile.Center - Main.screenPosition, main.Frame(1, 4, 0, projectile.frame), Color.White * 0.5f * drawOpacity, projectile.rotation, new Vector2(main.Width / 2, main.Height / 8), projectile.scale, SpriteEffects.None);
+
+                // -- Normal Runes --
+                for (int i = 0; i < 14; i++)
+                {
+                    float runeStartTick = i * 3;
+
+                    float t = MathHelper.Clamp((projectile.localAI[2] - runeStartTick) / 22, 0f, 1f);
+                    float ease = MathHelper.SmoothStep(0f, 1f, t);
+
+                    float baseDist = 150 + MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 10;
+                    float lerpedRadius = MathHelper.Lerp(240, baseDist, ease);
+
+                    float angle = MathHelper.TwoPi * i / 14f;
+                    Vector2 circleOffset = Vector2.UnitX.RotatedBy(angle) * lerpedRadius;
+                    circleOffset = circleOffset.RotatedBy(-projectile.rotation * 0.6f);
+                    Vector2 animatedPos = projectile.Center + circleOffset;
+                    float runeAlpha = ease;
+
+                    Main.EntitySpriteDraw(rune, animatedPos - Main.screenPosition, rune.Frame(1, 12, 0, i % 11), Color.White * 0.5f * drawOpacity * runeAlpha, (animatedPos - projectile.Center).ToRotation() + MathHelper.PiOver2, new Vector2(rune.Width / 2, rune.Height / 24), projectile.scale, SpriteEffects.None);
+                }
+
+
+                // --- White/Flash layer --
+                // Used in spawn anim for the runes
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
+                Texture2D ghostTexture = ghostTextureAsset.Value;
+
+                for (int i = 0; i < 14; i++)
+                {
+                    float runeStartTick = i * 3f;
+                    float t = MathHelper.Clamp((projectile.localAI[2] - runeStartTick) / 22f, 0f, 1f);
+                    float ease = MathHelper.SmoothStep(0f, 1f, t);
+
+                    float peakTime = 0.25f;
+                    float endTime = 1f;
+
+                    float rampUp = Utils.GetLerpValue(0f, peakTime, t, clamped: true);
+                    float rampDown = Utils.GetLerpValue(endTime, peakTime, t, clamped: true);
+
+                    float ghostOpacity = Math.Min(rampUp, rampDown);
+
+                    if (ghostOpacity > 0f)
+                    {
+                        // Recalculate position (same as solid rune)
+                        float baseDist = 150 + MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 10;
+                        float lerpedRadius = MathHelper.Lerp(240, baseDist, ease);
+
+                        float angle = MathHelper.TwoPi * i / 14f;
+                        Vector2 circleOffset = Vector2.UnitX.RotatedBy(angle) * lerpedRadius;
+                        circleOffset = circleOffset.RotatedBy(-projectile.rotation * 0.6f);
+                        Vector2 animatedPos = projectile.Center + circleOffset;
+
+                        Rectangle runeFrame = ghostTexture.Frame(1, 12, 0, i % 11);
+                        Vector2 runeOrigin = new Vector2(runeFrame.Width / 2, runeFrame.Height / 2);
+
+                        Main.EntitySpriteDraw(ghostTexture, animatedPos - Main.screenPosition, runeFrame, Color.White * drawOpacity * ghostOpacity * 0.6f, (animatedPos - projectile.Center).ToRotation() + MathHelper.PiOver2, runeOrigin, projectile.scale * (1f + ghostOpacity * 0.3f), SpriteEffects.None);
+                    }
+                }
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
                 return false;
             }
             return base.PreDraw(projectile, ref lightColor);
