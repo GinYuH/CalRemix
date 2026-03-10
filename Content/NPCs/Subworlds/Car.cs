@@ -84,6 +84,11 @@ namespace CalRemix.Content.NPCs.Subworlds
                 {
                     NPC.ai[0] = 0;
                 }
+                if (NPC.Center.X > (16 * Main.maxTilesX) * 0.93f)
+                {
+                    NPC.ai[0] = 2;
+                    NPC.velocity.X = 0;
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Core.Backgrounds;
 using CalRemix.Core.Subworlds;
@@ -8,8 +9,10 @@ using ReLogic.Content;
 using SubworldLibrary;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Core.Scenes
@@ -52,6 +55,25 @@ namespace CalRemix.Core.Scenes
                         opacity = MathHelper.Lerp(maxOpacity, 0, Utils.GetLerpValue(0.5f + fullOptime / 2f, 1 - noFog, completion, true));
 
                     data.UseOpacity(opacity);
+
+                    int car = ModContent.NPCType<Car>();
+
+                    bool done = false;
+                    foreach (NPC n in Main.ActiveNPCs)
+                    {
+                        if (n.type == car)
+                        {
+                            if (n.ai[0] == 2)
+                            {
+                                done = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (done && opacity == maxOpacity)
+                    {
+                        player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.CalRemix.DeathReasons.Nightline", player.name)), 66200, 1);
+                    }
                 }
             }
         }
