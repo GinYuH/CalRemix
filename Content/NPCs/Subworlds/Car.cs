@@ -65,36 +65,15 @@ namespace CalRemix.Content.NPCs.Subworlds
                     NPC.ai[0] = 0;
                     return;
                 }
-                int speed = 4;
-                float acc = 1.1f;
                 int maxSpeed = 10;
-                bool moving = person.controlLeft || person.controlRight;
-                if (moving)
+                if (person.controlRight)
                 {
-                    if (NPC.velocity.X == 0)
-                    {
-                        NPC.velocity.X = person.controlLeft ? -speed : speed;
-
-                    }
-                    else
-                    {
-                        if ((NPC.velocity.X > 0 && person.controlLeft) || (NPC.velocity.X < 0 && person.controlRight))
-                        {
-                            NPC.velocity.X *= -1;
-                        }
-                        else
-                        {
-                            NPC.velocity.X *= acc;
-                            if (Math.Abs(NPC.velocity.X) > maxSpeed)
-                            {
-                                NPC.velocity.X = person.controlLeft ? -maxSpeed : maxSpeed;
-                            }
-                        }
-                    }
+                    NPC.velocity.X = maxSpeed;
+                    NPC.localAI[0] += 0.25f;
                 }
                 else
                 {
-                    NPC.velocity.X *= 0.9f;
+                    NPC.velocity.X = 0;
                 }
                 person.Center = NPC.Center + new Vector2(0, -20) + NPC.velocity;
                 person.velocity = Vector2.Zero;
@@ -118,7 +97,7 @@ namespace CalRemix.Content.NPCs.Subworlds
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D wheel = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Car_Wheel").Value;
             float offY = 8;
-            spriteBatch.Draw(tex, NPC.Bottom - screenPos - Vector2.UnitY * offY, null, NPC.GetAlpha(drawColor), 0, new Vector2(tex.Width / 2, tex.Height), NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, NPC.Bottom - screenPos - Vector2.UnitY * (offY + 2 * MathF.Sin(NPC.localAI[0])), null, NPC.GetAlpha(drawColor), 0, new Vector2(tex.Width / 2, tex.Height), NPC.scale, 0, 0);
             float wheelRotation = NPC.rotation;
             spriteBatch.Draw(wheel, NPC.Bottom - screenPos + new Vector2(-60, -10 - offY), null, NPC.GetAlpha(drawColor), wheelRotation, new Vector2(wheel.Width / 2, wheel.Height / 2), NPC.scale, 0, 0);
             spriteBatch.Draw(wheel, NPC.Bottom - screenPos + new Vector2(80, -10 - offY), null, NPC.GetAlpha(drawColor), wheelRotation, new Vector2(wheel.Width / 2, wheel.Height / 2), NPC.scale, 0, 0);
