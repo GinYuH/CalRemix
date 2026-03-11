@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-using Terraria;
+﻿using CalamityMod.Tiles.FurnitureAshen;
+using CalRemix.Content.NPCs.Subworlds;
+using CalRemix.Content.Tiles;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
 using SubworldLibrary;
-using Terraria.WorldBuilding;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using Terraria.ID;
-using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
-using CalamityMod.Tiles.FurnitureAshen;
-using CalRemix.Content.NPCs.Subworlds;
-using Terraria.DataStructures;
+using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -32,6 +33,7 @@ namespace CalRemix.Core.Subworlds
         public override void Update()
         {
             base.Update();
+            SkyManager.Instance["Ambience"].Deactivate();
             Main.dayTime = false;
             Main.time = Main.nightLength / 2;
             if (!NPC.AnyNPCs(ModContent.NPCType<Car>()))

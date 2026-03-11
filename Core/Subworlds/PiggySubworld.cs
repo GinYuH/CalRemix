@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-using Terraria;
-using SubworldLibrary;
-using Terraria.WorldBuilding;
-using Terraria.IO;
-using System;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using Terraria.ID;
-using CalamityMod;
+﻿using CalamityMod;
 using CalamityMod.Schematics;
+using Microsoft.Xna.Framework;
+using SubworldLibrary;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
+using Terraria.IO;
+using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -29,7 +30,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
-            Main.LocalPlayer.noBuilding = true;
+            SkyManager.Instance["Ambience"].Deactivate();
             Main.time = Main.dayLength * 0.5f;
             base.Update();
         }

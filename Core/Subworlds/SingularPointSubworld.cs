@@ -74,6 +74,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SkyManager.Instance["Ambience"].Deactivate();
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:SPSky", true);
             SkyManager.Instance.Activate("CalRemix:SPSky", Main.LocalPlayer.position);
             if (!dontSpawnAnomaly)

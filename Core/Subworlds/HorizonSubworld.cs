@@ -34,6 +34,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SkyManager.Instance["Ambience"].Deactivate();
             SubworldSystem.hideUnderworld = true;
             Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:HorizonSky", true);
             SkyManager.Instance.Activate("CalRemix:HorizonSky", Main.LocalPlayer.position);

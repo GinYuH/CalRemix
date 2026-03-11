@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
@@ -31,6 +32,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SkyManager.Instance["Ambience"].Deactivate();
             Main.LocalPlayer.ZoneBeach = false;
             // make it night. eternal torment... the torcher never stops...
             Main.dayTime = false;

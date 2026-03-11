@@ -67,6 +67,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SkyManager.Instance["Ambience"].Deactivate();
             int light = ModContent.ProjectileType<LightOrbGuiding>();
             if (!CalamityUtils.AnyProjectiles(light) && !Main.LocalPlayer.HasItem(ModContent.ItemType<ParadiseInfusedMurasama>()) && !Main.LocalPlayer.HasItem(ModContent.ItemType<Combosama>()))
             {

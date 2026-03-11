@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-using Terraria;
-using SubworldLibrary;
-using Terraria.WorldBuilding;
-using Terraria.IO;
-using Terraria.ModLoader;
-using CalamityMod.Tiles.FurnitureExo;
-using System;
+﻿using CalamityMod.Tiles.FurnitureExo;
 using CalamityMod.Tiles.Ores;
 using Microsoft.Xna.Framework;
+using SubworldLibrary;
+using System;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.IO;
+using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -30,6 +31,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SkyManager.Instance["Ambience"].Deactivate();
             base.Update();
             SubworldSystem.Exit();
             KickTimer = 0;            

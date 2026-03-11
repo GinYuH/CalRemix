@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
-using Terraria;
+﻿using CalamityMod.Tiles.FurnitureAshen;
+using CalRemix.Content.Tiles;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
 using SubworldLibrary;
-using Terraria.WorldBuilding;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using Terraria.ID;
-using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
-using CalamityMod.Tiles.FurnitureAshen;
+using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -29,6 +30,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            SkyManager.Instance["Ambience"].Deactivate();
             base.Update();
         }
 
