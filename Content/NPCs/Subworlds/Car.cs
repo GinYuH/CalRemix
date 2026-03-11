@@ -96,6 +96,7 @@ namespace CalRemix.Content.NPCs.Subworlds
                 {
                     NPC.ai[0] = 2;
                     NPC.velocity.X = 0;
+                    Main.spawnTileX = (int)(NPC.Center.X / 16);
                 }
             }
         }
