@@ -281,6 +281,16 @@ namespace CalRemix.Content.Tiles
 
         public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
+    public class GlamourDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalRemix/Content/Walls/GlamorousGemWallPlaced";
+        public override Subworld BoundSubworld => ModContent.GetInstance<GlamourSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.Magenta;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
+    }
 
     public class EdisDoor : SubworldDoorPlaced
     {

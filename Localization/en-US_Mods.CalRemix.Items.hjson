@@ -6570,3 +6570,8 @@ Resmellinator: {
 		Current damage boost..? Who knows!
 		'''
 }
+
+GlamourDoor: {
+	DisplayName: Glamour Door
+	Tooltip: ""
+}

@@ -1,9 +1,11 @@
 ﻿using CalamityMod.Tiles.FurnitureAshen;
 using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Walls;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -17,13 +19,13 @@ using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class NightlineSubworld : Subworld, IDisableBuilding, IDisableOcean, IDisableFlight, IDisableSpawnsSubworld
+    public class GlamourSubworld : Subworld, IDisableBuilding, IDisableOcean, IDisableFlight, IDisableSpawnsSubworld
     {
         public override int Height => 300;
         public override int Width => 2000;
         public override List<GenPass> Tasks => new List<GenPass>()
         {
-            new NightlineGeneration()
+            new GlamourGeneration()
         };
 
         public override void OnEnter()
@@ -33,17 +35,14 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
+            {
+                SubworldSystem.Enter<GlamourSubworld>();
+            }
             base.Update();
             SkyManager.Instance["Ambience"].Deactivate();
-            Main.dayTime = false;
-            Main.time = Main.nightLength / 2;
-            if (!NPC.AnyNPCs(ModContent.NPCType<Car>()))
-            {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    NPC.NewNPC(new EntitySource_WorldEvent(), (Main.spawnTileX + 22) * 16, (Main.spawnTileY - 1) * 16, ModContent.NPCType<Car>());
-                }
-            }
+            Main.dayTime = true;
+            Main.time = Main.dayLength / 2;
         }
 
         public override bool GetLight(Tile tile, int x, int y, ref FastRandom rand, ref Vector3 color)
@@ -57,7 +56,7 @@ namespace CalRemix.Core.Subworlds
         public override void DrawMenu(GameTime gameTime)
         {
             base.DrawMenu(gameTime);
-            string str = CalRemixHelper.LocalText("StatusText.Ant").Value;
+            string str = CalRemixHelper.LocalText("StatusText.Glamour").Value;
             Vector2 size = FontAssets.MouseText.Value.MeasureString(str) * 2;
             //Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, Main.screenWidth * 2, Main.screenHeight * 2), Color.Black, 0, Vector2.Zero, 1, 0, 0);
             /*Utils.DrawBorderString(Main.spriteBatch,
@@ -66,39 +65,50 @@ namespace CalRemix.Core.Subworlds
 
         }
     }
-    public class NightlineGeneration : GenPass
+    public class GlamourGeneration : GenPass
     {
-        public NightlineGeneration() : base("Terrain", 1) { }
+        public GlamourGeneration() : base("Terrain", 1) { }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Generating terrain"; // Sets the text displayed for this pass
             Main.worldSurface = Main.maxTilesY - 142; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
-            int concrete = 60;
+            int spawnTile = 60;
 
+            int wallCooldown = 0;
             for (int i = 0; i < Main.maxTilesX; i++)
             {
                 for (int j = (int)Main.worldSurface; j < Main.maxTilesY; j++)
                 {
-                    if (i <= concrete && j < Main.worldSurface + 5)
+                    Main.tile[i, j].ResetToType(TileID.Asphalt);
+
+                    if (j == (int)Main.worldSurface && WorldGen.genRand.NextBool(20) && wallCooldown <= 0)
                     {
-                        Main.tile[i, j].ResetToType(TileID.StoneSlab);
-                    }
-                    else
-                    {
-                        Main.tile[i, j].ResetToType(TileID.Asphalt);
+                        bool right = WorldGen.genRand.NextBool();
+                        int dir = right.ToDirectionInt();
+                        int xOff = WorldGen.genRand.Next(10, 20) * dir;
+                        Rectangle bounds = new Rectangle(i - Math.Abs(xOff) * 2, 0, Math.Abs(xOff) * 4, j);
+                        for (int k = bounds.X; k < bounds.Right; k++)
+                        {
+                            for (int l = bounds.Y; l < bounds.Bottom; l++)
+                            {
+                                if (CalRemixHelper.WithinTriangle(new Point(i, j), new Point(i - xOff, j), new Point(i + xOff * 2, -100), new Point(k, l)))
+                                {
+                                    Main.tile[k, l].WallType = (ushort)ModContent.WallType<GlamorousGemWallPlaced>();
+                                }
+                            }
+                        }
+                        wallCooldown = Math.Abs(xOff) * 4;
                     }
                 }
+                wallCooldown--;
             }
 
-            Main.spawnTileX = concrete - 3;
+            Main.spawnTileX = spawnTile - 3;
             Main.spawnTileY = (int)Main.worldSurface - 1;
 
-            WorldGen.PlaceObject((int)Main.spawnTileX - 10, (int)Main.spawnTileY, TileID.Lampposts);
-            WorldGen.PlaceObject((int)Main.spawnTileX - 6, (int)Main.spawnTileY, TileID.Benches);
-
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<NightlineDoor>());
+            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<GlamourDoor>());
         }
     }
 }

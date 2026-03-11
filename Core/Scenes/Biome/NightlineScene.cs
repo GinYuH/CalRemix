@@ -2,6 +2,7 @@
 using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Core.Backgrounds;
+using CalRemix.Core.Backgrounds.Plague;
 using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,6 +20,7 @@ namespace CalRemix.Core.Scenes
 {
     public class NightlineScene : ModSceneEffect
     {
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<NightlineBgStyle>();
         public override bool IsSceneEffectActive(Player player)
         {
             if (!SubworldSystem.IsActive<NightlineSubworld>())
