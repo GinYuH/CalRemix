@@ -756,7 +756,7 @@ AnomalyTwo: {
 
 	BossChecklistIntegration: {
 		EntryName: Anomaly
-		SpawnInfo: Rests at the center platform of the Singular Point subworld.
+		SpawnInfo: Rests at the center platform of the Virisite Wastes subworld.
 		DespawnMessage: "[c/3beb9b:The Anomaly sinks back into the Virisite basin.]"
 	}
 }

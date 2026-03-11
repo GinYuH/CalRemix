@@ -131,6 +131,7 @@ namespace CalRemix.Content.NPCs.Subworlds
             return false;
         }
     }
+
     public class CarDrawLayer : PlayerDrawLayer
     {
         public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)

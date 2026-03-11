@@ -6477,7 +6477,7 @@ SealedDoor: {
 }
 
 SPDoor: {
-	DisplayName: Singular Point Subworld Door
+	DisplayName: Virisite Wastes Subworld Door
 	Tooltip: ""
 }
 
