@@ -28,6 +28,9 @@ namespace CalRemix
         public static Asset<Texture2D> sunOxy = null;
         public static Asset<Texture2D> sunOxy2 = null;
         public static Asset<Texture2D> brian = null;
+
+        public static Asset<Texture2D> BloomTexture = null;
+
         public override void Load()
         {
             if (!Main.dedServ)
@@ -91,6 +94,7 @@ namespace CalRemix
             sunCreepy = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Eclipse");
             sunOxy = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Oxysun");
             sunOxy2 = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Oxysun2");
+            BloomTexture = Request<Texture2D>("CalamityMod/Particles/LargeBloom");
         }
         private static void RegisterSceneFilter(ScreenShaderData passReg, string registrationName, EffectPriority priority = EffectPriority.High)
         {

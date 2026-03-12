@@ -89,7 +89,7 @@ namespace CalRemix.Core.Scenes.Subworlds
                 float edge = Main.maxTilesX * 0.86f * 16;
                 float edgeEnd = Main.maxTilesX * 0.91f * 16;
                 float fadeOff = Utils.GetLerpValue(edgeEnd, edge, Main.LocalPlayer.Center.X, true);
-                Texture2D starr = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
+                Texture2D starr = CalRemixAsset.BloomTexture;
                 for (int i = 0; i < Main.screenHeight; i++)
                 {
                     Color shade = Color.Lerp(new Color(6, 0, 64), new Color(0, 0, 0), 1 - (i / (float)Main.screenHeight));
