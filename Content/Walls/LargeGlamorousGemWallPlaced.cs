@@ -14,7 +14,7 @@ namespace CalRemix.Content.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = false;
-
+            HitSound = BetterSoundID.ItemIceBreak;
             AddMapEntry(new Color(113, 22, 115));
         }
 

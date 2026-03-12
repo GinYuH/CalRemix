@@ -3,6 +3,7 @@ using CalamityMod.Tiles.FurnitureAshen;
 using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Glamour;
+using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Content.Walls;
 using CalRemix.Core.World;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -17,6 +18,7 @@ using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 
@@ -85,6 +87,7 @@ namespace CalRemix.Core.Subworlds
             int wiggleRoom = (int)(Main.maxTilesX * 0.9f);
             ushort bigWall = (ushort)ModContent.WallType<LargeGlamorousGemWallPlaced>();
             ushort smolWall = (ushort)ModContent.WallType<GlamorousGemWallPlaced>();
+            ushort stone = (ushort)ModContent.TileType<GlamorousGemstonePlaced>();
 
             // Main columns
             int wallCooldown = 0;
@@ -92,7 +95,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = (int)Main.worldSurface; j < Main.maxTilesY; j++)
                 {
-                    Main.tile[i, j].ResetToType(TileID.Asphalt);
+                    Main.tile[i, j].ResetToType(stone);
 
                     if (i >= wiggleRoom)
                         continue;

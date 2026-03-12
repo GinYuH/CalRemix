@@ -6580,3 +6580,18 @@ GlamourMonolith: {
 	DisplayName: Glamourous Bonzai
 	Tooltip: Spread glamorous stars across the sky
 }
+
+GlamorousGemstone: {
+	DisplayName: Glamourous Gemstone
+	Tooltip: ""
+}
+
+GlamorousGemWall: {
+	DisplayName: Glamourous Gemstone Wall
+	Tooltip: ""
+}
+
+LargeGlamorousGemWall: {
+	DisplayName: Large Glamourous Gemstone Wall
+	Tooltip: ""
+}
