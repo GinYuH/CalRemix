@@ -1,4 +1,5 @@
-﻿using CalamityMod.Tiles.FurnitureAshen;
+﻿using CalamityMod;
+using CalamityMod.Tiles.FurnitureAshen;
 using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Walls;
@@ -75,7 +76,10 @@ namespace CalRemix.Core.Subworlds
             Main.worldSurface = Main.maxTilesY - 142; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
             int spawnTile = 60;
+            ushort bigWall = (ushort)ModContent.WallType<LargeGlamorousGemWallPlaced>();
+            ushort smolWall = (ushort)ModContent.WallType<GlamorousGemWallPlaced>();
 
+            // Main columns
             int wallCooldown = 0;
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -87,7 +91,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         bool right = WorldGen.genRand.NextBool();
                         int dir = right.ToDirectionInt();
-                        int xOff = WorldGen.genRand.Next(10, 20) * dir;
+                        int xOff = WorldGen.genRand.Next(6, 11) * dir;
                         Rectangle bounds = new Rectangle(i - Math.Abs(xOff) * 2, 0, Math.Abs(xOff) * 4, j);
                         for (int k = bounds.X; k < bounds.Right; k++)
                         {
@@ -95,7 +99,7 @@ namespace CalRemix.Core.Subworlds
                             {
                                 if (CalRemixHelper.WithinTriangle(new Point(i, j), new Point(i - xOff, j), new Point(i + xOff * 2, -100), new Point(k, l)))
                                 {
-                                    Main.tile[k, l].WallType = (ushort)ModContent.WallType<GlamorousGemWallPlaced>();
+                                    Main.tile[k, l].WallType = bigWall;
                                 }
                             }
                         }
@@ -103,6 +107,97 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
                 wallCooldown--;
+            }
+
+            // Fill in edges
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (t.WallType == bigWall)
+                    {
+                        if (i % 2 != 0)
+                        {
+                            Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
+                            if (left.WallType == 0)
+                            {
+                                left.WallType = bigWall;
+                            }
+                        }
+                        else
+                        {
+                            Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                            if (right.WallType == 0)
+                            {
+                                right.WallType = bigWall;
+                            }
+                        }
+                        if (j % 2 != 0)
+                        {
+                            Tile up = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                            if (up.WallType == 0)
+                            {
+                                up.WallType = bigWall;
+                            }
+                        }
+                        else
+                        {
+                            Tile down = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
+                            if (down.WallType == 0)
+                            {
+                                down.WallType = bigWall;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Generate surrounding small walls
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    bool edge = false;
+                    if (WorldGen.genRand.NextBool(22))
+                        continue;
+                    if (CalamityUtils.ParanoidTileRetrieval(i, j).WallType != bigWall)
+                        continue;
+
+                    for (int k = i - 1; k <= i + 1; k++)
+                    {
+                        if (edge)
+                            break;
+                        for (int l = j - 1; l <= j + 1; l++)
+                        {
+                            if (CalamityUtils.ParanoidTileRetrieval(k, l).WallType == 0)
+                            {
+                                edge = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (edge)
+                    {
+                        int xDim = WorldGen.genRand.Next(4, 10);
+                        int yDim = WorldGen.genRand.Next(6, 12);
+                        Rectangle diamondArea = new Rectangle(i - xDim, j - yDim, xDim * 2 + 1, yDim * 2 + 1);
+                        for (int k = diamondArea.Left; k < diamondArea.Right; k++)
+                        {
+                            for (int l = diamondArea.Top; l < diamondArea.Bottom; l++)
+                            {
+                                Tile targ = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                if (targ.WallType != 0)
+                                    continue;
+                                if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(xDim, yDim), new Point(k, l)))
+                                {
+                                    targ.WallType = smolWall;
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             Main.spawnTileX = spawnTile - 3;
