@@ -2,6 +2,7 @@
 using CalamityMod.Tiles.FurnitureAshen;
 using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.Glamour;
 using CalRemix.Content.Walls;
 using CalRemix.Core.World;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -208,10 +209,26 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
+            Rectangle island = new Rectangle((int)(Main.maxTilesX * 0.95f), (int)Main.worldSurface - 1, 21, 10);
+            for (int i = island.Left; i < island.Right; i++)
+                for (int j = island.Top; j < island.Bottom; j++)
+                {
+                    if (CalRemixHelper.WithinElipse(i, j, island.Center.X, island.Center.Y, island.Width / 2, island.Height / 2))
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        if (t.HasTile)
+                        {
+                            t.TileType = (j == island.Top + 1 ? TileID.Grass : TileID.Dirt);
+                        }
+                    }
+                    if (i == island.Center.X && j == island.Top)
+                    {
+                        WorldGen.PlaceObject(i + 2, j, ModContent.TileType<FreeTree>());
+                    }
+                }
+
             Main.spawnTileX = spawnTile - 3;
             Main.spawnTileY = (int)Main.worldSurface - 1;
-
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<GlamourDoor>());
         }
     }
 }
