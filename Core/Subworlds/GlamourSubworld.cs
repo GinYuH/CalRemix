@@ -40,10 +40,6 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
-            if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
-            {
-                SubworldSystem.Enter<GlamourSubworld>();
-            }
             base.Update();
             SkyManager.Instance["Ambience"].Deactivate();
             Main.dayTime = true;
