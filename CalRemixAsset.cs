@@ -13,6 +13,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using CalRemix.Core.Biomes.Subworlds;
+using CalRemix.Core.Scenes.Subworlds;
 
 namespace CalRemix
 {
@@ -73,6 +74,8 @@ namespace CalRemix
                 SkyManager.Instance["CalRemix:HorizonSky"] = new HorizonSky();
                 Filters.Scene["CalRemix:TheGraySky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
                 SkyManager.Instance["CalRemix:TheGraySky"] = new TheGraySky();
+                Filters.Scene["CalRemix:GlamourSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
+                SkyManager.Instance["CalRemix:GlamourSky"] = new GlamourSky();
             }
 
             AssetRepository remixAsset = Mod.Assets;

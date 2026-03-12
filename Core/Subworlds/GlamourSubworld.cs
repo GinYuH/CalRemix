@@ -4,6 +4,7 @@ using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Walls;
 using CalRemix.Core.World;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System;
@@ -50,8 +51,12 @@ namespace CalRemix.Core.Subworlds
         {
             if (tile.HasTile)
                 return false;
-            color = new Vector3(0.22f, 0.24f, 0.27f);
-            return false;
+            // Thank you drawblack, very cool!
+            if (y < 90)
+                color = new Vector3(1, 1, 1);
+            else
+                color = new Vector3(0.1f, 0.1f, 0.1f);
+            return true;
         }
 
         public override void DrawMenu(GameTime gameTime)
@@ -76,6 +81,7 @@ namespace CalRemix.Core.Subworlds
             Main.worldSurface = Main.maxTilesY - 142; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
             int spawnTile = 60;
+            int wiggleRoom = (int)(Main.maxTilesX * 0.9f);
             ushort bigWall = (ushort)ModContent.WallType<LargeGlamorousGemWallPlaced>();
             ushort smolWall = (ushort)ModContent.WallType<GlamorousGemWallPlaced>();
 
@@ -87,6 +93,8 @@ namespace CalRemix.Core.Subworlds
                 {
                     Main.tile[i, j].ResetToType(TileID.Asphalt);
 
+                    if (i >= wiggleRoom)
+                        continue;
                     if (j == (int)Main.worldSurface && WorldGen.genRand.NextBool(20) && wallCooldown <= 0)
                     {
                         bool right = WorldGen.genRand.NextBool();

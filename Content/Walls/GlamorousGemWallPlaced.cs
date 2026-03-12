@@ -23,7 +23,7 @@ namespace CalRemix.Content.Walls
         {
             Texture2D tex = ModContent.Request<Texture2D>(Texture + "_GrayBright").Value;
             Tile t = Main.tile[i, j];
-            spriteBatch.Draw(tex, new Vector2(i, j) * 16 + CalamityUtils.TileDrawOffset - Main.screenPosition, new Rectangle(t.WallFrameX, t.WallFrameY, 32, 32), (Color.Lerp(Color.DarkSlateBlue, Color.DarkViolet, Utils.PingPongFrom01To010(j % (40 + MathF.Sin(Main.GlobalTimeWrappedHourly)) / 40f))) * 0.9f, 0, new Vector2(0, 0), 1, 0, 0);
+            spriteBatch.Draw(tex, new Vector2(i, j) * 16 + CalamityUtils.TileDrawOffset - Main.screenPosition, new Rectangle(t.WallFrameX, t.WallFrameY, 32, 32), (Color.Lerp(Color.DarkSlateBlue, Color.DarkViolet, Utils.PingPongFrom01To010(j % (40 + MathF.Sin(Main.GlobalTimeWrappedHourly)) / 40f))) * 0.3f, 0, new Vector2(0, 0), 1, 0, 0);
             return false;
         }
     }
