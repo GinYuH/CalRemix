@@ -6575,3 +6575,8 @@ GlamourDoor: {
 	DisplayName: Glamour Door
 	Tooltip: ""
 }
+
+GlamourMonolith: {
+	DisplayName: Glamourous Bonzai
+	Tooltip: Spread glamorous stars across the sky
+}

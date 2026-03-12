@@ -43,7 +43,11 @@ namespace CalRemix.Core.Scenes.Subworlds
         {
             get
             {
-                return SubworldSystem.IsActive<GlamourSubworld>();
+                if (SubworldSystem.IsActive<GlamourSubworld>())
+                    return true;
+                if (Main.LocalPlayer.TryGetModPlayer(out CalRemixPlayer mp))
+                    return mp.glamourMonolith;
+                return false;
             }
         }
 
@@ -89,6 +93,8 @@ namespace CalRemix.Core.Scenes.Subworlds
                 float edge = Main.maxTilesX * 0.86f * 16;
                 float edgeEnd = Main.maxTilesX * 0.91f * 16;
                 float fadeOff = Utils.GetLerpValue(edgeEnd, edge, Main.LocalPlayer.Center.X, true);
+                if (!SubworldSystem.IsActive<GlamourSubworld>())
+                    fadeOff = 1;
                 Texture2D starr = CalRemixAsset.BloomTexture.Value;
                 for (int i = 0; i < Main.screenHeight; i++)
                 {

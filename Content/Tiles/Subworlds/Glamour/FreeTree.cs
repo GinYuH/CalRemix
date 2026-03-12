@@ -12,6 +12,10 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.GameContent;
+using SubworldLibrary;
+using CalRemix.Core.Subworlds;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CalRemix.Content.Tiles.Subworlds.Glamour
 {
@@ -43,10 +47,13 @@ namespace CalRemix.Content.Tiles.Subworlds.Glamour
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Microsoft.Xna.Framework.Color(255, 120, 0), name);
             RegisterItemDrop(ModContent.ItemType<BigEater>());
+            FlexibleTileWand.RubblePlacementLarge.AddVariation(ModContent.ItemType<BigEater>(), Type, 0);
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
+            if (!SubworldSystem.IsActive<GlamourSubworld>())
+                return;
             Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
             if (t.TileFrameX == 0 && t.TileFrameY == 0)
             {

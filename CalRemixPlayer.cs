@@ -156,6 +156,7 @@ namespace CalRemix
         public bool generatingGen = false;
         public bool genActive = false;
         public bool genMusic = true;
+        public bool glamourMonolith = false;
 
         // Biome
         public bool dungeon2;
@@ -1644,6 +1645,7 @@ namespace CalRemix
             fungiStone2 = false;
             cultacean = false;
             woodEmblem = false;
+            glamourMonolith = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {

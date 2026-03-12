@@ -22,7 +22,7 @@ namespace CalRemix.Core.Scenes
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            if (!SubworldSystem.IsActive<GlamourSubworld>())
+            if (!SubworldSystem.IsActive<GlamourSubworld>() && !player.Remix().glamourMonolith)
             {
                 return false;
             }
