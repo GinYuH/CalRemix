@@ -116,6 +116,7 @@ namespace CalRemix.Core.Subworlds
             SubworldUpdateMethods.UpdateLiquids();
             SubworldUpdateMethods.UpdateTiles();
             SubworldUpdateMethods.UpdateTileEntities();
+            SkyManager.Instance["Ambience"].Deactivate();
 
             if (!NPC.AnyNPCs(ModContent.NPCType<Disilphia>()))
             {
