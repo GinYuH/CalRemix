@@ -1,7 +1,9 @@
 ﻿using CalamityMod;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 namespace CalRemix.Content.Projectiles.Weapons
 {
@@ -35,9 +37,14 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override bool? CanHitNPC(NPC target) => !target.CountsAsACritter && !target.friendly && target.chaseable;
 
         public override bool OnTileCollide(Vector2 oldVelocity) => false;
-        public override Color? GetAlpha(Color lightColor)
+
+        public override bool PreDraw(ref Color lightColor)
         {
-            return Color.LightBlue * Projectile.Opacity * 0.67f;
+            Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
+            Texture2D tex = TextureAssets.Projectile[Type].Value;
+            Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition, null, Color.LightBlue * Projectile.Opacity * 0.67f, 0, tex.Size() / 2, Projectile.scale, 0);
+            Main.spriteBatch.ExitShaderRegion();
+            return false;
         }
     }
 }
