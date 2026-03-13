@@ -2018,6 +2018,26 @@ namespace CalRemix
                 }
             }
         }
+
+        /// <summary>
+        /// Sets a tile to be highlighted
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="state"></param>
+        public static void SetHighlight(this Tile t, bool state)
+        {
+            t.Get<TileWallBrightnessInvisibilityData>().IsTileFullbright = state;
+        }
+
+        /// <summary>
+        /// Returns if a tile is highlighted
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static bool GetHighlight(this Tile t)
+        {
+            return t.Get<TileWallBrightnessInvisibilityData>().IsTileFullbright;
+        }
     }
 
     public static class RarityHelper

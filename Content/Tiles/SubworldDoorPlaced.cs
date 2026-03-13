@@ -291,6 +291,16 @@ namespace CalRemix.Content.Tiles
 
         public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
+    public class PinnaclesDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalamityMod/Items/Weapons/Ranged/Onyxia";
+        public override Subworld BoundSubworld => ModContent.GetInstance<PinnaclesSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.LightSlateGray;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
+    }
 
     public class EdisDoor : SubworldDoorPlaced
     {

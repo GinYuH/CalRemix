@@ -6595,3 +6595,8 @@ LargeGlamorousGemWall: {
 	DisplayName: Large Glamourous Gemstone Wall
 	Tooltip: ""
 }
+
+PinnaclesDoor: {
+	DisplayName: Pinnacles Door
+	Tooltip: ""
+}
