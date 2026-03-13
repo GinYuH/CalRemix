@@ -5,6 +5,7 @@ using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.NPCs.Subworlds.Nowhere;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.World;
+using Microsoft.Build.Utilities;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System;
@@ -96,6 +97,8 @@ namespace CalRemix.Core.Subworlds
             CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f), Main.maxTilesX, (int)(Main.maxTilesY * 0.2f)), (ushort)TileID.Obsidian, variance: 10);
             CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f) - 1, Main.maxTilesX, (int)(Main.maxTilesY * 0.02f)), (ushort)TileID.SnowBlock, variance: 10);
 
+            #region Spawn Island and Hill
+
             int topY = (int)(Main.maxTilesY * 0.2f);
             int topWidth = (int)(Main.maxTilesX * 0.2f);
             int topHeight = (int)(Main.maxTilesY * 0.2f) * 2;
@@ -150,6 +153,60 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
+            #endregion
+
+            int stacCD = 0;
+            int stamCD = 0;
+            for (int i = 0; i < bottomWidth; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    if (!WorldGen.genRand.NextBool(11))
+                        continue;
+
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (t.TileType != TileID.Obsidian)
+                        continue;
+
+                    if (t.Get<TileWallBrightnessInvisibilityData>().IsTileInvisible)
+                        continue;
+
+                    bool ground = false;
+                    bool air = false;
+
+                    if (!CalamityUtils.ParanoidTileRetrieval(i, j - 1).HasTile && stamCD <= 0)
+                        ground = true;
+                    if (!CalamityUtils.ParanoidTileRetrieval(i, j + 1).HasTile && stacCD <= 0)
+                        air = true;
+                    if (!ground && !air)
+                        continue;
+
+                    int height = WorldGen.genRand.Next(20, 80);
+                    int width = (height / 2) + WorldGen.genRand.Next(-5, 5);
+
+                    for (int k = i - width / 2; k < i + width / 2; k++)
+                    {
+                        for (int l = j - height / 2; l < j + height / 2; l++)
+                        {
+                            Tile newT = CalamityUtils.ParanoidTileRetrieval(k, l);
+                            if (newT.HasTile)
+                                continue;
+                            if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(width / 2, height / 2), new Point(k, l)))
+                            {
+                                newT.ResetToType(TileID.Obsidian);
+                                newT.Get<TileWallBrightnessInvisibilityData>().IsTileInvisible = true;
+                                newT.SetHighlight(true);
+                            }
+                        }
+                    }
+                    if (ground)
+                        stamCD = width;
+                    if (air)
+                        stamCD = width;
+                }
+                stacCD--;
+                stamCD--;
+            }
 
             #region Pinnacles
 
@@ -252,6 +309,7 @@ namespace CalRemix.Core.Subworlds
                         {
                             t.SetHighlight(false);
                         }
+                        t.Get<TileWallBrightnessInvisibilityData>().IsTileInvisible = false;
                         if (t.TileType != TileID.Obsidian)
                             continue;
 
