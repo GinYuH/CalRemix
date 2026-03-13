@@ -64,7 +64,7 @@ namespace CalRemix.Core.Subworlds
         {
             if (tile.HasTile)
                 return false;
-            color = new Vector3(3f, 3f, 3f);
+            color = new Vector3(1f, 1f, 1f);
             return false;
         }
 
@@ -89,18 +89,69 @@ namespace CalRemix.Core.Subworlds
             progress.Message = "Generating terrain"; // Sets the text displayed for this pass
             Main.worldSurface = Main.maxTilesY - 142; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
-            int concrete = 60;
+            int concrete = 160;
 
-            for (int i = 0; i < Main.maxTilesX; i++)
+            Main.spawnTileX = concrete;
+
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f), Main.maxTilesX, (int)(Main.maxTilesY * 0.2f)), (ushort)TileID.Obsidian, variance: 10);
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f) - 1, Main.maxTilesX, (int)(Main.maxTilesY * 0.02f)), (ushort)TileID.SnowBlock, variance: 10);
+
+            int topY = (int)(Main.maxTilesY * 0.2f);
+            int topWidth = (int)(Main.maxTilesX * 0.2f);
+            int topHeight = (int)(Main.maxTilesY * 0.2f) * 2;
+            Rectangle topElipse = new Rectangle(0, topY - topHeight / 2, topWidth, topHeight);
+
+            for (int i = topElipse.Left; i < topElipse.Right; i++)
             {
-                for (int j = (int)Main.worldSurface; j < Main.maxTilesY; j++)
+                for (int j = topElipse.Center.Y; j < topElipse.Bottom; j++)
                 {
-                    Main.tile[i, j].ResetToType(TileID.Obsidian);
+                    if (CalRemixHelper.WithinElipse(i, j, 0, topY, topWidth, topHeight / 2))
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        t.ResetToType(TileID.Obsidian);
+                        t.SetHighlight(true);
+                    }
+                }
+            }
+            CalRemixHelper.PerlinSurface(new Rectangle(0, topY - 15, topWidth, 20), (ushort)TileID.SnowBlock, variance: 10);
+
+            for (int i = topWidth + 22; i > topWidth - 22; i--)
+            {
+                for (int j = 0; j < (int)(Main.maxTilesY * 0.3f); j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    if (t.TileType == TileID.SnowBlock && !CalamityUtils.ParanoidTileRetrieval(i + 1, j).HasTile)
+                    {
+                        if (WorldGen.genRand.NextBool())
+                        {
+                            Main.tile[i + 1, j].ResetToType(TileID.SnowBlock);
+                        }
+                    }
                 }
             }
 
-            Main.spawnTileX = concrete - 3;
-            Main.spawnTileY = (int)Main.worldSurface - 1;
+            Main.spawnTileY = topY - 10;
+
+            int bottomY = (int)(Main.maxTilesY * 0.8f);
+            int bottomWidth = (int)(Main.maxTilesX * 0.25f);
+            int bottomHeight = (int)(Main.maxTilesY - bottomY) * 2;
+
+            Rectangle bottomElipse = new Rectangle(0, bottomY - bottomHeight / 2, bottomWidth, bottomHeight / 2);
+            for (int i = bottomElipse.Left; i < bottomElipse.Right; i++)
+            {
+                for (int j = bottomElipse.Top; j < bottomElipse.Bottom + 100; j++)
+                {
+                    if (CalRemixHelper.WithinElipse(i, j, 0, bottomY, bottomWidth, bottomHeight / 2))
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        t.ResetToType(TileID.Obsidian);
+                        t.SetHighlight(true);
+                    }
+                }
+            }
+
+
+            #region Pinnacles
 
             // Point where the triangles focus on
             Point pinnacleAnchor = new Point((int)(Main.maxTilesX * 0.85f), (int)(Main.maxTilesY * 0.5f));
@@ -154,6 +205,10 @@ namespace CalRemix.Core.Subworlds
                 skipTimer--;
             }
 
+            #endregion
+
+            #region Noise and Smoothing
+
             // Rhombus noise
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -197,6 +252,8 @@ namespace CalRemix.Core.Subworlds
                         {
                             t.SetHighlight(false);
                         }
+                        if (t.TileType != TileID.Obsidian)
+                            continue;
 
                         // Check adjacent tile counts
                         int surroundingCounts = 0;
@@ -227,6 +284,8 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
             }
+
+            #endregion
 
             RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<NightlineDoor>());
         }
