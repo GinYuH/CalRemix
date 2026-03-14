@@ -153,8 +153,6 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
-            #endregion
-
             int stacCD = 0;
             int stamCD = 0;
             for (int i = 0; i < bottomWidth; i++)
@@ -208,59 +206,12 @@ namespace CalRemix.Core.Subworlds
                 stamCD--;
             }
 
+            #endregion
+
             #region Pinnacles
 
-            // Point where the triangles focus on
-            Point pinnacleAnchor = new Point((int)(Main.maxTilesX * 0.85f), (int)(Main.maxTilesY * 0.5f));
-            Vector2 pinnacleAnchorVector = pinnacleAnchor.ToVector2();
-            // Distance away from the point that the triangles begin
-            float pinnacleRadius = (int)(Main.maxTilesY * 0.1f);
-
-            float spikeCount = WorldGen.genRand.Next(9, 14);
-
-            int skipTimer = 0;
-            for (int z = 0; z < spikeCount; z++)
-            {
-                // Skip spikes occasionally after the first few
-                if (skipTimer <= 0 && z > 2 && WorldGen.genRand.NextBool(3))
-                {
-                    skipTimer = WorldGen.genRand.Next(1, 3);
-                    continue;
-                }
-                // The angle that this spike is facing away from the center
-                float angle = MathHelper.Lerp(MathHelper.ToRadians(20), MathHelper.ToRadians(-200), z / (spikeCount - 1));
-                // The vertex of the spike that touches the center
-                Vector2 startPoint = pinnacleAnchorVector + new Vector2(0, pinnacleRadius).RotatedBy(angle);
-                // The angle of the above vertex
-                float angularSize = WorldGen.genRand.NextFloat(MathHelper.ToRadians(5), MathHelper.ToRadians(25));
-                // Make the first triangle bigger
-                if (z == 0)
-                {
-                    angularSize = WorldGen.genRand.NextFloat(MathHelper.ToRadians(15), MathHelper.ToRadians(25));
-                }
-                float halfSize = angularSize / 2f;
-
-                // Create the three points of the triangle
-                Point start = startPoint.ToPoint();
-                Point tip = (startPoint + Vector2.UnitY.RotatedBy(halfSize + angle) * 1000).ToPoint();
-                Point tip2 = (startPoint + Vector2.UnitY.RotatedBy(-halfSize + angle) * 1000).ToPoint();
-
-                // I could absolutely optimize this to only iterate through neccessary bounds, but won't because I'm evil and it generates instantly anyways
-                for (int i = 0; i < Main.maxTilesX; i++)
-                {
-                    for (int j = 0; j < Main.maxTilesY; j++)
-                    {
-                        Point current = new Point(i, j);
-                        if (CalRemixHelper.WithinTriangle(start, tip, tip2, current))
-                        {
-                            Main.tile[i, j].ResetToType(TileID.Obsidian);
-                            Main.tile[i, j].SetHighlight(true);
-                        }
-                    }
-                }
-
-                skipTimer--;
-            }
+            CircularSpikes((int)(Main.maxTilesX * 0.035f), 10);
+            CircularSpikes((int)(Main.maxTilesX * 0.1f), 15);
 
             #endregion
 
@@ -345,7 +296,163 @@ namespace CalRemix.Core.Subworlds
 
             #endregion
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<NightlineDoor>());
+            #region Islands
+
+            Rectangle bounds = Utils.CenteredRectangle(new Vector2(Main.maxTilesX, Main.maxTilesY) * 0.5f, new Vector2(Main.maxTilesX, Main.maxTilesY * 1.4f) * 0.5f);
+
+            int snowAmt = WorldGen.genRand.Next(15, 27);
+            for (int e = 0; e < snowAmt; e++)
+            {
+                bool validIsland = true;
+                int islandAttempts = 0;
+                Point spawnPoint = WorldGen.genRand.NextVector2FromRectangle(bounds).ToPoint();
+
+                if (validIsland)
+                {
+                    int orbWidth = WorldGen.genRand.Next(10, 35);
+                    int orbHeight = WorldGen.genRand.Next(8, 20);
+                    Rectangle orb = Utils.CenteredRectangle(spawnPoint.ToVector2(), new Vector2(orbWidth, orbHeight));
+
+                    for (int i = orb.Left; i < orb.Right; i++)
+                    {
+                        for (int j = orb.Top; j < orb.Bottom; j++)
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            if (t.HasTile)
+                                continue;
+                            if (CalRemixHelper.WithinElipse(i, j, orb.Center.X, orb.Center.Y, orb.Width / 2, orb.Height / 2))
+                            {
+                                ushort tileType = j < orb.Center.Y ? TileID.SnowBlock : TileID.Obsidian;
+                                if (j == orb.Center.Y)
+                                {
+                                    tileType = WorldGen.genRand.NextBool() ? TileID.SnowBlock : TileID.Obsidian;
+                                }
+                                t.ResetToType(tileType);
+                                t.SetHighlight(true);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Rhombus noise
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    if (WorldGen.genRand.NextBool(22))
+                        continue;
+
+                    // If a tile is highlighted, spawn rhombuses 
+                    if (CalamityUtils.ParanoidTileRetrieval(i, j).GetHighlight())
+                    {
+                        int xDim = WorldGen.genRand.Next(2, 5);
+                        int yDim = WorldGen.genRand.Next(2, 5);
+                        Rectangle diamondArea = new Rectangle(i - xDim, j - yDim, xDim * 2 + 1, yDim * 2 + 1);
+                        for (int k = diamondArea.Left; k < diamondArea.Right; k++)
+                        {
+                            for (int l = diamondArea.Top; l < diamondArea.Bottom; l++)
+                            {
+                                Tile targ = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                if (targ.HasTile)
+                                    continue;
+                                bool sb = false;
+                                for (int m = l; m < l + 10; m++)
+                                {
+                                    if (CalamityUtils.ParanoidTileRetrieval(k, m).TileType == TileID.SnowBlock)
+                                    {
+                                        sb = true;
+                                        break;
+                                    }
+                                }
+                                if (sb)
+                                    break;
+                                if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(xDim, yDim), new Point(k, l)))
+                                {
+                                    targ.ResetToType(TileID.Obsidian);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    // Reset highlights
+                    if (t.GetHighlight())
+                    {
+                        t.SetHighlight(false);
+                    }
+                }
+            }
+
+            #endregion
+
+                    RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<NightlineDoor>());
+        }
+
+        public static void CircularSpikes(int baseSize, int amount)
+        {
+            // Point where the triangles focus on
+            Point pinnacleAnchor = new Point((int)(Main.maxTilesX * 0.85f), (int)(Main.maxTilesY * 0.5f));
+            Vector2 pinnacleAnchorVector = pinnacleAnchor.ToVector2();
+            // Distance away from the point that the triangles begin
+            float pinnacleRadius = baseSize;
+            float startAngle = MathHelper.ToRadians(20 + WorldGen.genRand.Next(-20, 30));
+            float endAngle = MathHelper.ToRadians(-200 + WorldGen.genRand.Next(-60, -20));
+
+            float spikeCount = amount + WorldGen.genRand.Next(1, 4);
+
+            int skipTimer = 0;
+            for (int z = 0; z < spikeCount; z++)
+            {
+                // Skip spikes occasionally after the first few
+                if (skipTimer <= 0 && z > 2 && WorldGen.genRand.NextBool(3))
+                {
+                    skipTimer = WorldGen.genRand.Next(1, 3);
+                    continue;
+                }
+                // The angle that this spike is facing away from the center
+                float angle = MathHelper.Lerp(startAngle, endAngle, z / (spikeCount - 1));
+                // The vertex of the spike that touches the center
+                Vector2 startPoint = pinnacleAnchorVector + new Vector2(0, pinnacleRadius).RotatedBy(angle);
+                // Randomness
+                int startPointRandomness = 10;
+                startPoint += WorldGen.genRand.NextVector2Circular(startPointRandomness, startPointRandomness);
+                // The angle of the above vertex
+                float angularSize = WorldGen.genRand.NextFloat(MathHelper.ToRadians(5), MathHelper.ToRadians(25));
+                // Make the first triangle bigger
+                if (z == 0)
+                {
+                    angularSize = WorldGen.genRand.NextFloat(MathHelper.ToRadians(15), MathHelper.ToRadians(25));
+                }
+                float halfSize = angularSize / 2f;
+
+                // Create the three points of the triangle
+                Point start = startPoint.ToPoint();
+                Point tip = (startPoint + Vector2.UnitY.RotatedBy(halfSize + angle) * 1000).ToPoint();
+                Point tip2 = (startPoint + Vector2.UnitY.RotatedBy(-halfSize + angle) * 1000).ToPoint();
+
+                // I could absolutely optimize this to only iterate through neccessary bounds, but won't because I'm evil and it generates instantly anyways
+                for (int i = 0; i < Main.maxTilesX; i++)
+                {
+                    for (int j = 0; j < Main.maxTilesY; j++)
+                    {
+                        Point current = new Point(i, j);
+                        if (CalRemixHelper.WithinTriangle(start, tip, tip2, current))
+                        {
+                            Main.tile[i, j].ResetToType(TileID.Obsidian);
+                            Main.tile[i, j].SetHighlight(true);
+                        }
+                    }
+                }
+
+                skipTimer--;
+            }
         }
     }
 }
