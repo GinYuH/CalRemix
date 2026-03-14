@@ -405,7 +405,7 @@ namespace CalRemix.Core.Subworlds
             // Distance away from the point that the triangles begin
             float pinnacleRadius = baseSize;
             float startAngle = MathHelper.ToRadians(20 + WorldGen.genRand.Next(-20, 30));
-            float endAngle = MathHelper.ToRadians(-200 + WorldGen.genRand.Next(-60, -20));
+            float endAngle = MathHelper.ToRadians(-200 + WorldGen.genRand.Next(-40, -20));
 
             float spikeCount = amount + WorldGen.genRand.Next(1, 4);
 
