@@ -90,7 +90,7 @@ namespace CalRemix.Core.Subworlds
             progress.Message = "Generating terrain"; // Sets the text displayed for this pass
             Main.worldSurface = Main.maxTilesY - 142; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
-            int concrete = 160;
+            int concrete = 260;
 
             Main.spawnTileX = concrete;
 
@@ -100,7 +100,7 @@ namespace CalRemix.Core.Subworlds
             #region Spawn Island and Hill
 
             int topY = (int)(Main.maxTilesY * 0.2f);
-            int topWidth = (int)(Main.maxTilesX * 0.2f);
+            int topWidth = (int)(Main.maxTilesX * 0.25f);
             int topHeight = (int)(Main.maxTilesY * 0.2f) * 2;
             Rectangle topElipse = new Rectangle(0, topY - topHeight / 2, topWidth, topHeight);
 
@@ -300,39 +300,41 @@ namespace CalRemix.Core.Subworlds
 
             Rectangle bounds = Utils.CenteredRectangle(new Vector2(Main.maxTilesX, Main.maxTilesY) * 0.5f, new Vector2(Main.maxTilesX, Main.maxTilesY * 1.4f) * 0.5f);
 
-            int snowAmt = WorldGen.genRand.Next(15, 27);
+            int snowAmt = WorldGen.genRand.Next(56, 124);
             for (int e = 0; e < snowAmt; e++)
             {
                 bool validIsland = true;
                 int islandAttempts = 0;
                 Point spawnPoint = WorldGen.genRand.NextVector2FromRectangle(bounds).ToPoint();
 
-                if (validIsland)
+                if (spawnPoint.Y > (int)(Main.maxTilesY * 0.7f))
                 {
-                    int orbWidth = WorldGen.genRand.Next(10, 35);
-                    int orbHeight = WorldGen.genRand.Next(8, 20);
-                    Rectangle orb = Utils.CenteredRectangle(spawnPoint.ToVector2(), new Vector2(orbWidth, orbHeight));
+                    spawnPoint.Y = (int)(Main.maxTilesY * 0.7f) - WorldGen.genRand.Next(10, 40); 
+                }
 
-                    for (int i = orb.Left; i < orb.Right; i++)
+                int orbWidth = WorldGen.genRand.Next(10, 35);
+                int orbHeight = WorldGen.genRand.Next(8, 20);
+                Rectangle orb = Utils.CenteredRectangle(spawnPoint.ToVector2(), new Vector2(orbWidth, orbHeight));
+
+                for (int i = orb.Left; i < orb.Right; i++)
+                {
+                    for (int j = orb.Top; j < orb.Bottom; j++)
                     {
-                        for (int j = orb.Top; j < orb.Bottom; j++)
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        if (t.HasTile)
+                            continue;
+                        if (CalRemixHelper.WithinElipse(i, j, orb.Center.X, orb.Center.Y, orb.Width / 2, orb.Height / 2))
                         {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                            if (t.HasTile)
-                                continue;
-                            if (CalRemixHelper.WithinElipse(i, j, orb.Center.X, orb.Center.Y, orb.Width / 2, orb.Height / 2))
+                            ushort tileType = j < orb.Center.Y ? TileID.SnowBlock : TileID.Obsidian;
+                            if (j == orb.Center.Y)
                             {
-                                ushort tileType = j < orb.Center.Y ? TileID.SnowBlock : TileID.Obsidian;
-                                if (j == orb.Center.Y)
-                                {
-                                    tileType = WorldGen.genRand.NextBool() ? TileID.SnowBlock : TileID.Obsidian;
-                                }
-                                t.ResetToType(tileType);
-                                t.SetHighlight(true);
+                                tileType = WorldGen.genRand.NextBool() ? TileID.SnowBlock : TileID.Obsidian;
                             }
+                            t.ResetToType(tileType);
+                            t.SetHighlight(true);
                         }
                     }
-                }
+                }                
             }
 
             // Rhombus noise
@@ -392,7 +394,7 @@ namespace CalRemix.Core.Subworlds
 
             #endregion
 
-                    RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<NightlineDoor>());
+            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<PinnaclesDoor>());
         }
 
         public static void CircularSpikes(int baseSize, int amount)
