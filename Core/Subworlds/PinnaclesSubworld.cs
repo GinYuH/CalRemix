@@ -385,6 +385,14 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
+            WeightedRandom<int> piletypes = new();
+
+            piletypes.Add(ModContent.TileType<AshPilesLarge>(), 5);
+            piletypes.Add(ModContent.TileType<AshPilesMedium>(), 10);
+            piletypes.Add(ModContent.TileType<AshPilesSmall>(), 22);
+
+            int smol = ModContent.TileType<AshPilesSmall>();
+
             for (int i = 0; i < Main.maxTilesX; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
@@ -394,6 +402,18 @@ namespace CalRemix.Core.Subworlds
                     if (t.GetHighlight())
                     {
                         t.SetHighlight(false);
+                    }
+                    if (t.TileType != ash)
+                        continue;
+                    Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                    if (!above.HasTile && t.HasTile)
+                    {
+                        if (WorldGen.genRand.NextBool(10))
+                        {
+                            int objtype = piletypes.Get();
+                            int frame = objtype == smol ? 0 : WorldGen.genRand.Next(0, 5);
+                            WorldGen.PlaceObject(i, j - 1, objtype, style: frame, mute: true);
+                        }
                     }
                 }
             }
