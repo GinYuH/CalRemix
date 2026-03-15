@@ -43,42 +43,23 @@ namespace CalRemix
                 Filters.Scene["CalRemix:VoidColors"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/VoidColors"), "VoidPass"), EffectPriority.VeryHigh);
                 Filters.Scene["CalRemix:Nightline"] = new Filter(new ScreenShaderData(Request<Effect>("CalRemix/Assets/Effects/NightlineFog"), "AutoloadPass"), EffectPriority.VeryHigh);
 
-                Filters.Scene["CalRemix:PlagueBiome"] = new Filter(new PlagueSkyData("FilterMiniTower").UseColor(Color.Green).UseOpacity(0.15f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:PlagueBiome"] = new PlagueSky();
-                Filters.Scene["CalRemix:CalamitySky"] = new Filter(new ScreenShaderData("FilterMoonLord"), EffectPriority.High);
-                SkyManager.Instance["CalRemix:CalamitySky"] = new CalamitySky();
-                Filters.Scene["CalRemix:Exosphere"] = new Filter(new ExosphereScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:Exosphere"] = new ExosphereSky();
-                Filters.Scene["CalRemix:Fanny"] = new Filter(new FannyScreenShaderData("FilterMiniTower").UseColor(FannySky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:Fanny"] = new FannySky();
-                Filters.Scene["CalRemix:Asbestos"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.Gray).UseOpacity(0.5f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:Asbestos"] = new CarcinogenSky();
-                Filters.Scene["CalRemix:PandemicPanic"] = new Filter(new PandemicPanicScreenShaderData("FilterMiniTower").UseColor(ExosphereSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:PandemicPanic"] = new PandemicSky();
-                Filters.Scene["CalRemix:ScreamingFaceSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:ScreamingFaceSky"] = new ScreamingFaceSky();
-                Filters.Scene["CalRemix:ClownWorldSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ClownWorldSky.DrawColor).UseOpacity(0.25f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:ClownWorldSky"] = new ClownWorldSky();
-                Filters.Scene["CalRemix:EaterSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseOpacity(0f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:EaterSky"] = new EaterSky();
-                Filters.Scene["CalRemix:NowhereSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:NowhereSky"] = new NowhereSky();
-                Filters.Scene["CalRemix:EdisSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(EdisSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:EdisSky"] = new EdisSky();
-                Filters.Scene["CalRemix:SPSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(ScreamingFaceSky.DrawColor).UseOpacity(0f), EffectPriority.VeryHigh);
-                SkyManager.Instance["CalRemix:SPSky"] = new SPSky();
-
-
-                Filters.Scene["CalRemix:Sealed"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
-                SkyManager.Instance["CalRemix:Sealed"] = new SealedSky();
-                Filters.Scene["CalRemix:Disilphia"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
-                SkyManager.Instance["CalRemix:Disilphia"] = new DisilphiaSky();
-                Filters.Scene["CalRemix:HorizonSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
-                SkyManager.Instance["CalRemix:HorizonSky"] = new HorizonSky();
-                Filters.Scene["CalRemix:TheGraySky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
-                SkyManager.Instance["CalRemix:TheGraySky"] = new TheGraySky();
-                Filters.Scene["CalRemix:GlamourSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(Color.White).UseOpacity(0f), EffectPriority.Medium);
-                SkyManager.Instance["CalRemix:GlamourSky"] = new GlamourSky();
+                RegisterSky(new PlagueSky(), "PlagueBiome", Color.Green, 0.15f);
+                RegisterSky(new CalamitySky(), "CalamitySky");
+                RegisterSky(new ExosphereSky(), "ExosphereSky", ExosphereSky.DrawColor, 0.25f);
+                RegisterSky(new FannySky(), "FannySky", FannySky.DrawColor, 0.25f);
+                RegisterSky(new AsbestosSky(), "Asbestos", Color.Gray, 0.5f);
+                RegisterSky(new PandemicSky(), "PandemicSky", ExosphereSky.DrawColor);
+                RegisterSky(new ScreamingFaceSky(), "ScreamingFaceSky", ScreamingFaceSky.DrawColor, 0.25f);
+                RegisterSky(new ClownWorldSky(), "ClownWorldSky", ScreamingFaceSky.DrawColor, 0.25f);
+                RegisterSky(new EaterSky(), "EaterSky");
+                RegisterSky(new NowhereSky(), "NowhereSky", ScreamingFaceSky.DrawColor);
+                RegisterSky(new EdisSky(), "EdisSky", EdisSky.DrawColor);
+                RegisterSky(new SPSky(), "SPSky", ScreamingFaceSky.DrawColor);
+                RegisterSky(new SealedSky(), "SealedSky");
+                RegisterSky(new DisilphiaSky(), "Disilphia");
+                RegisterSky(new HorizonSky(), "HorizonSky");
+                RegisterSky(new PinnacleSky(), "PinnacleSky");
+                RegisterSky(new GlamourSky(), "GlamourSky");
             }
 
             AssetRepository remixAsset = Mod.Assets;
@@ -96,6 +77,16 @@ namespace CalRemix
             sunOxy2 = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Oxysun2");
             BloomTexture = Request<Texture2D>("CalamityMod/Particles/LargeBloom");
         }
+
+        private static void RegisterSky(CustomSky sky, string key, Color c = default, float opacity = 0)
+        {
+            string finalKey = "CalRemix:" + key;
+            if (c == default)
+                c = Color.White;
+            Filters.Scene[finalKey] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(c).UseOpacity(opacity), EffectPriority.Medium);
+            SkyManager.Instance[finalKey] = sky;
+        }
+
         private static void RegisterSceneFilter(ScreenShaderData passReg, string registrationName, EffectPriority priority = EffectPriority.High)
         {
             string prefixedRegistrationName = "CalRemix:" + registrationName;

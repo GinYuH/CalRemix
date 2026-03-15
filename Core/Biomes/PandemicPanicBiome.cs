@@ -34,7 +34,7 @@ namespace CalRemix.Core.Biomes
 
         public override void SpecialVisuals(Player player, bool isActive)
         {
-            player.ManageSpecialBiomeVisuals("CalRemix:PandemicPanic", isActive);
+            player.ManageSpecialBiomeVisuals("CalRemix:PandemicSky", isActive);
         }
         public override int Music => CalRemixMusic.PandemicPanic;
     }

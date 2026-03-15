@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace CalRemix.Content.NPCs.Bosses.Carcinogen
 {
-    public class CarcinogenSky : CustomSky
+    public class AsbestosSky : CustomSky
     {
         public float BackgroundIntensity;
         public float LightningIntensity;

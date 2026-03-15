@@ -16,8 +16,8 @@ namespace CalRemix.Core.Scenes
         }
         public override void SpecialVisuals(Player player, bool isActive)
         {
-            player.ManageSpecialBiomeVisuals("CalRemix:PandemicPanic", isActive);
-            SkyManager.Instance.Activate("CalRemix:PandemicPanic", player.position);
+            player.ManageSpecialBiomeVisuals("CalRemix:PandemicSky", isActive);
+            SkyManager.Instance.Activate("CalRemix:PandemicSky", player.position);
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.Event;
     }

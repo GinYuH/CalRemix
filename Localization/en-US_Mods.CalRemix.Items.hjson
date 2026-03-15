@@ -6600,3 +6600,13 @@ PinnaclesDoor: {
 	DisplayName: Pinnacles Door
 	Tooltip: ""
 }
+
+PowderedAsh: {
+	DisplayName: Powdered Ash
+	Tooltip: ""
+}
+
+Rhyolite: {
+	DisplayName: Rhyolite
+	Tooltip: ""
+}

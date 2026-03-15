@@ -332,7 +332,7 @@ namespace CalRemix.Core
             // TODO:
             // This broke fsr
             // Fix it and remove the false
-            if (SubworldSystem.AnyActive() && SubworldSystem.Current is IFixDrawBlack && false)
+            if (SubworldSystem.AnyActive() && SubworldSystem.Current is IFixDrawBlack)
             {
                 if (Main.shimmerAlpha == 1f)
                 {
@@ -380,11 +380,6 @@ namespace CalRemix.Core
                 if (yMax > Main.maxTilesY)
                 {
                     yMax = Main.maxTilesY - point.Y;
-                }
-                if (!force)
-                {
-                    yMax = Math.Min(yMax, (int)Main.worldSurface + 1);
-                    yMin = Math.Min(yMin, (int)Main.worldSurface + 1);
                 }
                 bool showInvisibleWalls = Main.ShouldShowInvisibleWalls();
                 for (int i = yMin; i < yMax; i++)

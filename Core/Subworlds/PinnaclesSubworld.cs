@@ -4,6 +4,7 @@ using CalRemix.Content.Items.Critters;
 using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.NPCs.Subworlds.Nowhere;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.Pinnacles;
 using CalRemix.Core.World;
 using Microsoft.Build.Utilities;
 using Microsoft.Xna.Framework;
@@ -22,7 +23,7 @@ using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class PinnaclesSubworld : Subworld, IDisableOcean, ICustomSpawnSubworld
+    public class PinnaclesSubworld : Subworld, IDisableOcean, ICustomSpawnSubworld, IFixDrawBlack
     {
         public override int Height => 800;
         public override int Width => 2000;
@@ -57,6 +58,8 @@ namespace CalRemix.Core.Subworlds
             base.Update();
             SubworldSystem.hideUnderworld = true;
             SkyManager.Instance["Ambience"].Deactivate();
+            Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:PinnacleSky", true);
+            SkyManager.Instance.Activate("CalRemix:PinnacleSky", Main.LocalPlayer.position);
             Main.dayTime = true;
             Main.time = Main.dayLength / 2;
         }
@@ -94,8 +97,11 @@ namespace CalRemix.Core.Subworlds
 
             Main.spawnTileX = concrete;
 
-            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f), Main.maxTilesX, (int)(Main.maxTilesY * 0.2f)), (ushort)TileID.Obsidian, variance: 10);
-            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f) - 1, Main.maxTilesX, (int)(Main.maxTilesY * 0.02f)), (ushort)TileID.SnowBlock, variance: 10);
+            ushort stone = (ushort)ModContent.TileType<RhyolitePlaced>();
+            ushort ash = (ushort)ModContent.TileType<PowderedAshPlaced>();
+
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f), Main.maxTilesX, (int)(Main.maxTilesY * 0.2f)), (ushort)stone, variance: 10);
+            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f) - 1, Main.maxTilesX, (int)(Main.maxTilesY * 0.02f)), (ushort)ash, variance: 10);
 
             #region Spawn Island and Hill
 
@@ -111,23 +117,23 @@ namespace CalRemix.Core.Subworlds
                     if (CalRemixHelper.WithinElipse(i, j, 0, topY, topWidth, topHeight / 2))
                     {
                         Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                        t.ResetToType(TileID.Obsidian);
+                        t.ResetToType(stone);
                         t.SetHighlight(true);
                     }
                 }
             }
-            CalRemixHelper.PerlinSurface(new Rectangle(0, topY - 15, topWidth, 20), (ushort)TileID.SnowBlock, variance: 10);
+            CalRemixHelper.PerlinSurface(new Rectangle(0, topY - 15, topWidth, 20), (ushort)ash, variance: 10);
 
             for (int i = topWidth + 22; i > topWidth - 22; i--)
             {
                 for (int j = 0; j < (int)(Main.maxTilesY * 0.3f); j++)
                 {
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    if (t.TileType == TileID.SnowBlock && !CalamityUtils.ParanoidTileRetrieval(i + 1, j).HasTile)
+                    if (t.TileType == ash && !CalamityUtils.ParanoidTileRetrieval(i + 1, j).HasTile)
                     {
                         if (WorldGen.genRand.NextBool())
                         {
-                            Main.tile[i + 1, j].ResetToType(TileID.SnowBlock);
+                            Main.tile[i + 1, j].ResetToType(ash);
                         }
                     }
                 }
@@ -147,7 +153,7 @@ namespace CalRemix.Core.Subworlds
                     if (CalRemixHelper.WithinElipse(i, j, 0, bottomY, bottomWidth, bottomHeight / 2))
                     {
                         Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                        t.ResetToType(TileID.Obsidian);
+                        t.ResetToType(stone);
                         t.SetHighlight(true);
                     }
                 }
@@ -163,7 +169,7 @@ namespace CalRemix.Core.Subworlds
                         continue;
 
                     Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    if (t.TileType != TileID.Obsidian)
+                    if (t.TileType != stone)
                         continue;
 
                     if (t.Get<TileWallBrightnessInvisibilityData>().IsTileInvisible)
@@ -191,7 +197,7 @@ namespace CalRemix.Core.Subworlds
                                 continue;
                             if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(width / 2, height / 2), new Point(k, l)))
                             {
-                                newT.ResetToType(TileID.Obsidian);
+                                newT.ResetToType(stone);
                                 newT.Get<TileWallBrightnessInvisibilityData>().IsTileInvisible = true;
                                 newT.SetHighlight(true);
                             }
@@ -240,7 +246,7 @@ namespace CalRemix.Core.Subworlds
                                     continue;
                                 if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(xDim, yDim), new Point(k, l)))
                                 {
-                                    targ.ResetToType(TileID.Obsidian);
+                                    targ.ResetToType(stone);
                                 }
                             }
                         }
@@ -261,7 +267,7 @@ namespace CalRemix.Core.Subworlds
                             t.SetHighlight(false);
                         }
                         t.Get<TileWallBrightnessInvisibilityData>().IsTileInvisible = false;
-                        if (t.TileType != TileID.Obsidian)
+                        if (t.TileType != stone)
                             continue;
 
                         // Check adjacent tile counts
@@ -289,7 +295,7 @@ namespace CalRemix.Core.Subworlds
 
                         // Single holes get filled
                         if (surroundingCounts == 3)
-                            t.ResetToType(TileID.Obsidian);
+                            t.ResetToType(stone);
                     }
                 }
             }
@@ -325,10 +331,10 @@ namespace CalRemix.Core.Subworlds
                             continue;
                         if (CalRemixHelper.WithinElipse(i, j, orb.Center.X, orb.Center.Y, orb.Width / 2, orb.Height / 2))
                         {
-                            ushort tileType = j < orb.Center.Y ? TileID.SnowBlock : TileID.Obsidian;
+                            ushort tileType = j < orb.Center.Y ? ash : stone;
                             if (j == orb.Center.Y)
                             {
-                                tileType = WorldGen.genRand.NextBool() ? TileID.SnowBlock : TileID.Obsidian;
+                                tileType = WorldGen.genRand.NextBool() ? ash : stone;
                             }
                             t.ResetToType(tileType);
                             t.SetHighlight(true);
@@ -361,7 +367,7 @@ namespace CalRemix.Core.Subworlds
                                 bool sb = false;
                                 for (int m = l; m < l + 10; m++)
                                 {
-                                    if (CalamityUtils.ParanoidTileRetrieval(k, m).TileType == TileID.SnowBlock)
+                                    if (CalamityUtils.ParanoidTileRetrieval(k, m).TileType == ash)
                                     {
                                         sb = true;
                                         break;
@@ -371,7 +377,7 @@ namespace CalRemix.Core.Subworlds
                                     break;
                                 if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(xDim, yDim), new Point(k, l)))
                                 {
-                                    targ.ResetToType(TileID.Obsidian);
+                                    targ.ResetToType(stone);
                                 }
                             }
                         }
@@ -399,6 +405,7 @@ namespace CalRemix.Core.Subworlds
 
         public static void CircularSpikes(int baseSize, int amount)
         {
+            ushort stone = (ushort)ModContent.TileType<RhyolitePlaced>();
             // Point where the triangles focus on
             Point pinnacleAnchor = new Point((int)(Main.maxTilesX * 0.85f), (int)(Main.maxTilesY * 0.5f));
             Vector2 pinnacleAnchorVector = pinnacleAnchor.ToVector2();
@@ -447,7 +454,7 @@ namespace CalRemix.Core.Subworlds
                         Point current = new Point(i, j);
                         if (CalRemixHelper.WithinTriangle(start, tip, tip2, current))
                         {
-                            Main.tile[i, j].ResetToType(TileID.Obsidian);
+                            Main.tile[i, j].ResetToType(stone);
                             Main.tile[i, j].SetHighlight(true);
                         }
                     }
