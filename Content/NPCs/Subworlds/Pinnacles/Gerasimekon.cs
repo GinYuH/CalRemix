@@ -44,14 +44,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
             {
                 NPC.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
                 NPC.direction = NPC.spriteDirection = Main.rand.NextBool().ToDirectionInt();
-                NPC.ai[1] = Main.rand.NextFloat(-0.1f, 0.1f);
-                NPC.ai[0] = 1;
+                NPC.ai[1] = Main.rand.NextBool().ToDirectionInt() * Main.rand.NextFloat(0.3f, 0.6f);
             }
             else
             {
+                if (NPC.ai[0] % 20 == 0)
                 NPC.rotation += NPC.ai[1];
             }
             NPC.velocity *= 0.98f;
+            NPC.ai[0]++;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
