@@ -3,6 +3,7 @@ using CalamityMod.Tiles.FurnitureAshen;
 using CalRemix.Content.Items.Critters;
 using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.NPCs.Subworlds.Nowhere;
+using CalRemix.Content.NPCs.Subworlds.Pinnacles;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Pinnacles;
 using CalRemix.Core.World;
@@ -35,7 +36,7 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            list.Add(item: (ModContent.NPCType<Noone>(), 16f, (NPCSpawnInfo n) => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            list.Add(item: (ModContent.NPCType<Bloudirenosium>(), 16f, (NPCSpawnInfo n) => NPC.CountNPCS(ModContent.NPCType<Bloudirenosium>()) < 4 && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile && n.SpawnTileY > Main.maxTilesY * 0.8f));
             return list;
         }
 
@@ -58,8 +59,6 @@ namespace CalRemix.Core.Subworlds
             base.Update();
             SubworldSystem.hideUnderworld = true;
             SkyManager.Instance["Ambience"].Deactivate();
-            Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:PinnacleSky", true);
-            SkyManager.Instance.Activate("CalRemix:PinnacleSky", Main.LocalPlayer.position);
             Main.dayTime = true;
             Main.time = Main.dayLength / 2;
         }

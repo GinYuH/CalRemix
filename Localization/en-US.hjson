@@ -193,8 +193,13 @@ Mods: {
 			}
 
 			SPBiome: {
-				DisplayName: S P Biome
-				TownNPCDialogueName: the S P Biome
+				DisplayName: Virisite Wastes
+				TownNPCDialogueName: Virisite Wastes
+			}
+
+			PinnaclesBiome: {
+				DisplayName: The Pinnacles
+				TownNPCDialogueName: The Pinnacles
 			}
 		}
 
