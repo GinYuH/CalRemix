@@ -36,9 +36,9 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            list.Add(item: (ModContent.NPCType<Bloudirenosium>(), 5, n => NPC.CountNPCS(ModContent.NPCType<Bloudirenosium>()) < 4 && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile && n.SpawnTileY > Main.maxTilesY * 0.8f));
-            list.Add(item: (ModContent.NPCType<Gerasimekon>(), 1f, n => !Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile && n.SpawnTileY < Main.maxTilesY * 0.8f && n.SpawnTileX > Main.maxTilesX * 0.2f));
-            list.Add(item: (ModContent.NPCType<Vinisunik>(), 20, n => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            list.Add(item: (ModContent.NPCType<Bloudirenosium>(), 10, n => NPC.CountNPCS(ModContent.NPCType<Bloudirenosium>()) < 4 && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile && n.SpawnTileY > Main.maxTilesY * 0.8f));
+            list.Add(item: (ModContent.NPCType<Gerasimekon>(), 0.1f, n => !Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile && n.SpawnTileY < Main.maxTilesY * 0.8f && n.SpawnTileX > Main.maxTilesX * 0.2f));
+            list.Add(item: (ModContent.NPCType<Vinisunik>(), 30, n => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
             return list;
         }
 
