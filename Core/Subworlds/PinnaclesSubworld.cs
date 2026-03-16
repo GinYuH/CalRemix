@@ -36,11 +36,13 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            list.Add(item: (ModContent.NPCType<Bloudirenosium>(), 16f, (NPCSpawnInfo n) => NPC.CountNPCS(ModContent.NPCType<Bloudirenosium>()) < 4 && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile && n.SpawnTileY > Main.maxTilesY * 0.8f));
+            list.Add(item: (ModContent.NPCType<Bloudirenosium>(), 5, n => NPC.CountNPCS(ModContent.NPCType<Bloudirenosium>()) < 4 && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile && n.SpawnTileY > Main.maxTilesY * 0.8f));
+            list.Add(item: (ModContent.NPCType<Gerasimekon>(), 1f, n => !Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile && n.SpawnTileY < Main.maxTilesY * 0.8f && n.SpawnTileX > Main.maxTilesX * 0.2f));
+            list.Add(item: (ModContent.NPCType<Vinisunik>(), 20, n => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
             return list;
         }
 
-        int ICustomSpawnSubworld.MaxSpawns { get => 14; }
+        int ICustomSpawnSubworld.MaxSpawns { get => 12; }
         float ICustomSpawnSubworld.SpawnMult { get => 0.3f; }
 
         bool ICustomSpawnSubworld.OverrideVanilla { get => true; }
