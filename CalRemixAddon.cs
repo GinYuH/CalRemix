@@ -401,6 +401,7 @@ namespace CalRemix
             MakeCard(NPCType<TheCalamity>(), (horz, anim) => Color.Red, "Calamity", BetterSoundID.ItemThisStupidFuckingLaser, BetterSoundID.ItemThisStupidFuckingLaser, 360);
             MakeCard(NPCType<Hypnos>(), (horz, anim) => Main.DiscoColor, "Hypnos", CommonCalamitySounds.ExoHitSound, CommonCalamitySounds.ELRFireSound);
             MakeCard(NPCType<NoxusEgg>(), (horz, anim) => Color.Lerp(Color.Black, Color.Violet, anim), "Noxus", NoxusEgg.HitSound, NoxusEgg.GlitchSound);
+            MakeCard(() => NPC.FindFirstNPC(NPCType<AnomalyOne>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<AnomalyOne>())].ai[0] == 0 && Main.npc[NPC.FindFirstNPC(NPCType<AnomalyOne>())].ai[1] == 270, (horz, anim) => Color.Lerp(Color.Black, Color.DarkSeaGreen, anim), "Anomaly", BetterSoundID.ItemDreadnautSpit, AnomalyOne.ShortRoarSound);
         }
         internal void MakeCard(int type, Func<float, float, Color> color, string title, SoundStyle tickSound, SoundStyle endSound, int time = 300, float size = 1f)
         {
