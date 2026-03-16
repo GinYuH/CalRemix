@@ -4,6 +4,7 @@ using CalamityMod.Buffs.StatBuffs;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.CalPlayer;
 using CalamityMod.Events;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Dyes;
 using CalamityMod.Items.PermanentBoosters;
 using CalamityMod.NPCs.Abyss;
@@ -132,6 +133,7 @@ namespace CalRemix
         public bool fridge;
         public Jumpscare jumpscare;
         public int jumpscareTimer = 0;
+        public bool wapUnlocked = false;
 
         public bool gottenCellPhone = false;
         public bool miracleUnlocked = false;
@@ -458,6 +460,7 @@ namespace CalRemix
             tag["TrappFriends"] = trapperFriendsLearned;
             tag["MiracleUnlocked"] = miracleUnlocked;
             tag["FifteenMinutesSinceHardmode"] = fifteenMinutesSinceHardmode;
+            tag["WulfrumPackUnlocked"] = wapUnlocked;
 
             tag["DeliciousMeatRedeemed"] = deliciousMeatRedeemed;
             tag["DeliciousMeatPrestige"] = deliciousMeatPrestige;
@@ -472,6 +475,7 @@ namespace CalRemix
             gottenCellPhone = tag.GetBool("CellPhone");
             trapperFriendsLearned = tag.GetInt("TrappFriends");
             miracleUnlocked = tag.GetBool("MiracleUnlocked");
+            wapUnlocked = tag.GetBool("WulfrumPackUnlocked");
             fifteenMinutesSinceHardmode = tag.GetInt("FifteenMinutesSinceHardmode");
 
             deliciousMeatRedeemed = tag.GetInt("DeliciousMeatRedeemed");
@@ -692,6 +696,24 @@ namespace CalRemix
                 {
                     Player.noItems = true;
                     Player.AddBuff(ModContent.BuffType<Pacifism>(), 60);
+                }
+            }
+
+            if (GetInstance<AcroToggle>().CurrentState == 0)
+            {
+                if (Main.LocalPlayer.miscEquips[4] != null && Main.LocalPlayer.miscEquips[4].type > ItemID.None)
+                {
+                    if (Player.TryGetModPlayer(out WulfrumPackPlayer mp))
+                    {
+                        mp.WulfrumPackEquipped = true;
+                        mp.PackItem = Main.LocalPlayer.miscEquips[4];
+                        Main.LocalPlayer.maxFallSpeed *= 1.25f;
+                    }
+                }
+                else
+                {
+                    Main.LocalPlayer.miscEquips[4].SetDefaults(ItemID.GrapplingHook);
+                    Main.LocalPlayer.miscEquips[4].value = 0;
                 }
             }
         }
@@ -2092,9 +2114,6 @@ namespace CalRemix
             RecentChest = Player.chest;
         }
 
-        public override void PreUpdateBuffs()
-        {
-        }
         public override void UpdateBadLifeRegen()
         {
             if (Held(Player, ItemType<FlamingIceBow>()))

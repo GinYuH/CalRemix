@@ -505,5 +505,12 @@ Mods: {
 			$parentVal: Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Abyss
 			"": Mods.CalRemix.Use a [i:CalRemix/FabergéEgg] in the Abyss.
 		}
+
+		BuilderToggles: {
+			AcroToggle: {
+				OnText: Wulfrum hook enabled
+				OffText: Wulfrum hook disabled
+			}
+		}
 	}
 }
