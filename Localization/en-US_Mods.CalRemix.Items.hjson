@@ -6615,3 +6615,8 @@ BridgeDoor: {
 	DisplayName: Bridge of Lost Hope Door
 	Tooltip: ""
 }
+
+SavannaDoor: {
+	DisplayName: Savanna Door
+	Tooltip: ""
+}

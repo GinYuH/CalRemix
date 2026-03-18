@@ -311,6 +311,16 @@ namespace CalRemix.Content.Tiles
 
         public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
+    public class SavannaDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalamityMod/Items/Weapons/Ranged/Spyker";
+        public override Subworld BoundSubworld => ModContent.GetInstance<SavannaSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.IndianRed;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
+    }
 
     public class EdisDoor : SubworldDoorPlaced
     {
