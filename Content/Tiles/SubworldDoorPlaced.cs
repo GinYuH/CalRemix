@@ -301,6 +301,16 @@ namespace CalRemix.Content.Tiles
 
         public override void Load() { base.Load(); AddSubdoorItem(this); }
     }
+    public class BridgeDoor : SubworldDoorPlaced
+    {
+        public override string PreviewTexName => "CalamityMod/Items/Weapons/Rogue/Supernova";
+        public override Subworld BoundSubworld => ModContent.GetInstance<BridgeofLostHopeSubworld>();
+
+        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public override Color DoorColor => Color.Black;
+
+        public override void Load() { base.Load(); AddSubdoorItem(this); }
+    }
 
     public class EdisDoor : SubworldDoorPlaced
     {

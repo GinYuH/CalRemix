@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria.ModLoader;
 
@@ -63,5 +64,13 @@ namespace CalRemix.Core.Subworlds
     public interface IDisableItems
     {
 
+    }
+
+    public interface ISingleColorSky
+    {
+        /// <summary>
+        /// color of the sky. defaults to black
+        /// </summary>
+        public Color SkyColor { get; }
     }
 }
