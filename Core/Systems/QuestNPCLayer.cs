@@ -1,4 +1,5 @@
-﻿using CalRemix.Content.NPCs.Subworlds.Sealed;
+﻿using CalRemix.Content.NPCs.Subworlds.Pinnacles;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace CalRemix.Core
             ModContent.NPCType<BrightMind>(),
             ModContent.NPCType<ShadeGreen>(),
             ModContent.NPCType<DreadonFriendly>(),
-            ModContent.NPCType<VigorCloak>()
+            ModContent.NPCType<VigorCloak>(),
+            ModContent.NPCType<Bysuinivirit>()
         };
 
         public override void Draw(ref MapOverlayDrawContext context, ref string text)

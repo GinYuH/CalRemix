@@ -15,6 +15,7 @@ using CalRemix.Content.Prefixes;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
 using CalRemix.Core.Scenes;
+using CalRemix.Core.Scenes.Subworlds;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
@@ -256,6 +257,21 @@ namespace CalRemix.Core
         public static void DrawGrass(On_Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
         {
             orig(self);
+            if (SubworldSystem.IsActive<PinnaclesSubworld>())
+            {
+                Texture2D starr = ModContent.Request<Texture2D>("CalRemix/Content/Particles/AshFlake").Value;
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+                List<PinnacleAsh> ashes = PinnacleSky.ashes;
+                foreach (PinnacleAsh speck in ashes)
+                {
+                    if (speck.idealSize > 0.9f)
+                    {
+                        float opacity = speck.lifeTime > 60 ? Utils.GetLerpValue(speck.maxLife, speck.maxLife - 60, speck.lifeTime, true) : Utils.GetLerpValue(0, 60, speck.lifeTime, true);
+                        Main.spriteBatch.Draw(starr, speck.position - Main.screenPosition, starr.Frame(1, 4, 0, speck.frame), Lighting.GetColor(speck.position.ToTileCoordinates()) * opacity, speck.rotation, new Vector2(starr.Width / 2, starr.Height / 8), speck.idealSize, 0, 0);
+                    }
+                }
+                Main.spriteBatch.End();
+            }
             if (!SubworldSystem.IsActive<HorizonSubworld>())
                 return;
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);

@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.ZAccessories;
+using CalRemix.Content.NPCs.Subworlds.Pinnacles;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -64,6 +65,10 @@ namespace CalRemix.UI
                         Rectangle rect2 = new Rectangle(0, 0, textWidth + 24, textHeight + 24);
 
                         Vector2 boxPos = talkedNPC.Top - Main.screenPosition - Vector2.UnitY * rect2.Height;
+                        /*if (dialogueInfo.manualOffset != null)
+                        {
+                            boxPos = dialogueInfo.manualOffset(talkedNPC) - Main.screenPosition - Vector2.UnitY * rect2.Height;
+                        }*/
 
                         spriteBatch.Draw(TextureAssets.MagicPixel.Value, boxPos, rect2, dialogueInfo.borderColor, 0, new Vector2(rect2.Width / 2f, rect2.Height / 2f), 1, 0, 0);
                         spriteBatch.Draw(TextureAssets.MagicPixel.Value, boxPos, rect, dialogueInfo.bgColor, 0, new Vector2(rect.Width / 2f, rect.Height / 2f), 1, 0, 0);
@@ -228,11 +233,16 @@ namespace CalRemix.UI
             RegisterNPC(new(ModContent.NPCType<VigorCloak>(),
             ["Intro", "Void", "Disilphia", "Oneguy", "Shades", "End" ],
             Color.MediumPurple, Color.Red));
+
+            var bishop = RegisterNPC(new(ModContent.NPCType<Bysuinivirit>(),
+            ["Intro"],
+            Color.White, Color.Black));
         }
 
-        public static void RegisterNPC(NPCDialogueSet set)
+        public static NPCDialogueSet RegisterNPC(NPCDialogueSet set)
         {
             allDialogue.Add(set.npcType, set);
+            return set;
         }
 
 
@@ -265,6 +275,7 @@ namespace CalRemix.UI
         public Color bgColor;
         public Color borderColor;
         public int npcType;
+        public Func<NPC, Vector2> manualOffset = null;
 
         public NPCDialogueSet(int npcType, List<string> keys, Color bgColor, Color borderColor)
         {
@@ -289,6 +300,15 @@ namespace CalRemix.UI
             this.npcType = npcType;
             this.bgColor = bgColor;
             this.borderColor = borderColor;
+        }
+
+        /// <summary>
+        /// THIS DOES NOT WORK RN
+        /// </summary>
+        /// <param name="offset"></param>
+        public void AddOffset(Func<NPC, Vector2> offset)
+        {
+            manualOffset = offset;
         }
     }
 

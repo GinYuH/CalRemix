@@ -39,7 +39,7 @@ namespace CalRemix.Core.Scenes.Subworlds
     }
     public class PinnacleSky : CustomSky
     {
-        public List<PinnacleAsh> ashes = new List<PinnacleAsh>();
+        public static List<PinnacleAsh> ashes = new List<PinnacleAsh>();
         public float BackgroundIntensity;
         public static bool CanSkyBeActive
         {
@@ -112,8 +112,11 @@ namespace CalRemix.Core.Scenes.Subworlds
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), new(161, 161, 161));
                 foreach (PinnacleAsh speck in ashes)
                 {
-                    float opacity = speck.lifeTime > 60 ? Utils.GetLerpValue(speck.maxLife, speck.maxLife - 60, speck.lifeTime, true) : Utils.GetLerpValue(0, 60, speck.lifeTime, true);
-                    spriteBatch.Draw(starr, speck.position - Main.screenPosition, starr.Frame(1, 4, 0, speck.frame), Lighting.GetColor(speck.position.ToTileCoordinates()) * opacity, speck.rotation, new Vector2(starr.Width / 2, starr.Height / 8), speck.idealSize, 0, 0);
+                    if (speck.idealSize <= 0.9f)
+                    {
+                        float opacity = speck.lifeTime > 60 ? Utils.GetLerpValue(speck.maxLife, speck.maxLife - 60, speck.lifeTime, true) : Utils.GetLerpValue(0, 60, speck.lifeTime, true);
+                        spriteBatch.Draw(starr, speck.position - Main.screenPosition, starr.Frame(1, 4, 0, speck.frame), Lighting.GetColor(speck.position.ToTileCoordinates()) * opacity, speck.rotation, new Vector2(starr.Width / 2, starr.Height / 8), speck.idealSize, 0, 0);
+                    }
                 }
             }
         }

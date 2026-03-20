@@ -27,6 +27,7 @@ using Terraria.ModLoader.IO;
 using System.IO;
 using SubworldLibrary;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
+using CalRemix.Content.NPCs.Subworlds.Pinnacles;
 
 namespace CalRemix.Content.NPCs
 {
@@ -202,6 +203,8 @@ namespace CalRemix.Content.NPCs
 
         public static int cultistLevel = 0;
 
+        public static int bishopLevel = 0;
+
         public override void PostSetupContent()
         {
             itemQuests.Add(ModContent.NPCType<BrightMind>(), new() { 
@@ -226,6 +229,10 @@ namespace CalRemix.Content.NPCs
                 new(() => RemixDowned.downedDisil, () => cultistLevel == 1, () => cultistLevel = 2, "Disilphia", true, reward: new Item(ModContent.ItemType<GroundFleshBlock>(), 9999)),
                 new(() => RemixDowned.downedOneguy, () => cultistLevel == 2, () => cultistLevel = 3, "Oneguy", true, reward: new Item(ModContent.ItemType<SkullKarrver>())),
             });
+
+            itemQuests.Add(ModContent.NPCType<Bysuinivirit>(), new() {
+                new(() => RemixDowned.downedAnomaly, () => bishopLevel == 0, () => bishopLevel = 1, "Intro", true, reward: new Item(ModContent.ItemType<NowhereStaff>())),
+            });
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -234,6 +241,7 @@ namespace CalRemix.Content.NPCs
             writer.Write(rubyLevel);
             writer.Write(draedonLevel);
             writer.Write(cultistLevel);
+            writer.Write(bishopLevel);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -242,6 +250,7 @@ namespace CalRemix.Content.NPCs
             rubyLevel = reader.ReadInt32();
             draedonLevel = reader.ReadInt32();
             cultistLevel = reader.ReadInt32();
+            bishopLevel = reader.ReadInt32();
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -250,6 +259,7 @@ namespace CalRemix.Content.NPCs
             tag.Add("BrainLevel", brainLevel);
             tag.Add("DraedonLevel", draedonLevel);
             tag.Add("RubyLevel", rubyLevel);
+            tag.Add("BishopLevel", bishopLevel);
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -258,6 +268,7 @@ namespace CalRemix.Content.NPCs
             brainLevel = tag.GetInt("BrainLevel");
             draedonLevel = tag.GetInt("DraedonLevel");
             rubyLevel = tag.GetInt("RubyLevel");
+            bishopLevel = tag.GetInt("BishopLevel");
         }
 
         public override void OnWorldLoad()
@@ -281,6 +292,7 @@ namespace CalRemix.Content.NPCs
             cultistLevel = 0;
             draedonLevel = 0;
             rubyLevel = 0;
+            bishopLevel = 0;
         }
     }
 }

@@ -387,3 +387,22 @@ VigorCloak: {
 		2: The one above, I offer my remaining vigor
 	}
 }
+
+Bysuinivirit: {
+	Intro: {
+		0: What have we here that we have here.
+		1: You sssmell of stained blood and broken promises
+		2: How exquisssite
+		3: Entertain us here at our pinnacles little catalyst
+		4:
+			'''
+			The green volcanic wastelands, 
+			deep deep down at the other side deep down
+			'''
+		5:
+			'''
+			Dispatch the anomaly there, 
+			bring a new era of verdant void to our boring land
+			'''
+	}
+}

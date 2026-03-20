@@ -4,6 +4,7 @@ using CalRemix.Content.Items.Critters;
 using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Content.NPCs.Subworlds.Nowhere;
 using CalRemix.Content.NPCs.Subworlds.Pinnacles;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Pinnacles;
 using CalRemix.Core.World;
@@ -19,6 +20,7 @@ using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 
@@ -54,15 +56,19 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
-            if (Main.LocalPlayer.selectedItem == 1 && Main.LocalPlayer.controlUseItem)
-            {
-                SubworldSystem.Enter<PinnaclesSubworld>();
-            }
             base.Update();
             SubworldSystem.hideUnderworld = true;
             SkyManager.Instance["Ambience"].Deactivate();
             Main.dayTime = true;
             Main.time = Main.dayLength / 2;
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (p.Distance(PinnaclesSubworldData.bishopPos) < 1000)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<Bysuinivirit>()))
+                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)PinnaclesSubworldData.bishopPos.X, (int)PinnaclesSubworldData.bishopPos.Y, ModContent.NPCType<Bysuinivirit>());
+                }
+            }
         }
 
         public override bool GetLight(Tile tile, int x, int y, ref FastRandom rand, ref Vector3 color)
@@ -85,6 +91,22 @@ namespace CalRemix.Core.Subworlds
 
         }
     }
+
+    public class PinnaclesSubworldData : ModSystem
+    {
+        public static Vector2 bishopPos = Vector2.Zero;
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            tag.Add("BishopPosition", bishopPos);
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            bishopPos = tag.Get<Vector2>("BishopPosition");
+        }
+    }
+
     public class PinnaclesGeneration : GenPass
     {
         public PinnaclesGeneration() : base("Terrain", 1) { }
@@ -103,6 +125,19 @@ namespace CalRemix.Core.Subworlds
 
             CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f), Main.maxTilesX, (int)(Main.maxTilesY * 0.2f)), (ushort)stone, variance: 10);
             CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * 0.8f) - 1, Main.maxTilesX, (int)(Main.maxTilesY * 0.02f)), (ushort)ash, variance: 10);
+
+            int bishopY = 0;
+
+            for (int i = 0; i < Main.maxTilesY; i++)
+            {
+                if (CalamityUtils.ParanoidTileRetrieval((int)(Main.maxTilesX / 2), i).HasTile)
+                {
+                    bishopY = i;
+                    break;
+                }
+            }
+
+            PinnaclesSubworldData.bishopPos = new Vector2(Main.maxTilesX / 2, bishopY) * 16;
 
             #region Spawn Island and Hill
 
