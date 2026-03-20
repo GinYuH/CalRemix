@@ -2207,6 +2207,23 @@ namespace CalRemix
                 } */
             }
 
+            if (CalRemixWorld.bossAdditions)
+            {
+                if (!NPC.downedQueenSlime && npc.type == NPCID.QueenSlimeBoss)
+                {
+                    Point qs = npc.Center.ToTileCoordinates();
+                    for (int j = qs.Y; j < Main.maxTilesY; j++)
+                    {
+                        Tile t = CalamityUtils.ParanoidTileRetrieval(qs.X, j);
+                        if (t.HasTile && (TileID.Sets.CanBeDugByShovel[t.TileType] || TileID.Sets.Stone[t.TileType]))
+                        {
+                            WorldGen.KillTile(qs.X, j);
+                            break;
+                        }
+                    }
+                }
+            }
+
             if (!CalRemixWorld.deusDeadInSnow)
             {
                 if (Main.LocalPlayer.ZoneSnow && npc.type == NPCType<AstrumDeusHead>())
