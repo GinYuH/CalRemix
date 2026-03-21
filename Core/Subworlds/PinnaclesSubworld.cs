@@ -68,6 +68,11 @@ namespace CalRemix.Core.Subworlds
                     if (!NPC.AnyNPCs(ModContent.NPCType<Bysuinivirit>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)PinnaclesSubworldData.bishopPos.X, (int)PinnaclesSubworldData.bishopPos.Y, ModContent.NPCType<Bysuinivirit>());
                 }
+                if (p.Distance(PinnaclesSubworldData.frogPos) < 1000)
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<Henry>()))
+                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)PinnaclesSubworldData.frogPos.X, (int)PinnaclesSubworldData.frogPos.Y, ModContent.NPCType<Henry>());
+                }
             }
         }
 
@@ -95,15 +100,18 @@ namespace CalRemix.Core.Subworlds
     public class PinnaclesSubworldData : ModSystem
     {
         public static Vector2 bishopPos = Vector2.Zero;
+        public static Vector2 frogPos = Vector2.Zero;
 
         public override void SaveWorldData(TagCompound tag)
         {
             tag.Add("BishopPosition", bishopPos);
+            tag.Add("FrogPosition", frogPos);
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
             bishopPos = tag.Get<Vector2>("BishopPosition");
+            frogPos = tag.Get<Vector2>("FrogPosition");
         }
     }
 
@@ -247,6 +255,19 @@ namespace CalRemix.Core.Subworlds
                 stacCD--;
                 stamCD--;
             }
+
+            int frogY = 0;
+
+            for (int i = 0; i < Main.maxTilesY; i++)
+            {
+                if (CalamityUtils.ParanoidTileRetrieval(concrete + 100, i).HasTile)
+                {
+                    frogY = i;
+                    break;
+                }
+            }
+
+            PinnaclesSubworldData.frogPos = new Vector2(concrete + 100, frogY) * 16;
 
             #endregion
 

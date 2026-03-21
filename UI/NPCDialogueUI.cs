@@ -243,9 +243,13 @@ namespace CalRemix.UI
             ["Intro", "Void", "Disilphia", "Oneguy", "Shades", "End" ],
             Color.MediumPurple, Color.Red));
 
-            var bishop = RegisterNPC(new(ModContent.NPCType<Bysuinivirit>(),
+            RegisterNPC(new(ModContent.NPCType<Bysuinivirit>(),
             ["Intro"],
             Color.White, Color.Black));
+
+            RegisterNPC(new(ModContent.NPCType<Henry>(),
+            ["Dialogue", "Repeat"],
+            new Color(155, 171, 117), new Color(194, 255, 67)));
         }
 
         public static NPCDialogueSet RegisterNPC(NPCDialogueSet set)

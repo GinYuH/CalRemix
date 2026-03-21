@@ -43,9 +43,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
             }
         }
 
+        public static SoundStyle talkSound = new SoundStyle("CalRemix/Assets/Sounds/HenryTalk") with { PitchVariance = 0.75f };
         public override int TextSpeed => 10;
 
-        public override SoundStyle TextSound => SoundID.Tink with { Pitch = Main.rand.NextFloat(0.5f, 0.9f) };
+        public override SoundStyle TextSound => talkSound;
 
         public override void SetDefaults()
         {

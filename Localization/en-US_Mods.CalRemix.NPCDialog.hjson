@@ -406,3 +406,40 @@ Bysuinivirit: {
 			'''
 	}
 }
+
+Henry: {
+	Dialogue: {
+		0:
+			'''
+			Hey you there! 
+			I’m an emissary of the Wulfrum Robotics corporation. 
+			'''
+		1:
+			'''
+			I’m out here giving FREE samples of the 
+			newest and truest of wulfrum technology.
+			'''
+		2:
+			'''
+			Here, I’ll give you some 
+			exquisite dulling edge technology. 
+			'''
+		3:
+			'''
+			It will allow you to toggle on and off 
+			the Wulfrum Acrobatics Pack at any time 
+			at the left of your inventory. 
+			'''
+		4: Get swinging! Get winning!
+	}
+
+	Repeat: {
+		0: How's the sample doing dude?
+		1:
+			'''
+			Remember, it's at the left
+			side of your inventory!
+			'''
+		2: Get swinging! Get winning!
+	}
+}
