@@ -44,6 +44,7 @@ using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Liquid;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
+using Terraria.GameInput;
 using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -51,6 +52,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using Terraria.UI.Chat;
+using Terraria.UI.Gamepad;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Core
@@ -123,6 +126,7 @@ namespace CalRemix.Core
             On_NPC.DoDeathEvents_CelebrateBossDeath += TripletsDefeatTextOverride;
             //On_Lighting.AddLight_int_int_float_float_float += CustomLight;
             //On_Lighting.AddLight_int_int_int_float += CustomLight2;
+            On_Main.DrawDefenseCounter += AddDecimalDefense;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
@@ -144,6 +148,34 @@ namespace CalRemix.Core
             drawHook = null;
         }
 
+        private void AddDecimalDefense(On_Main.orig_DrawDefenseCounter orig, int inventoryX, int inventoryY)
+        {
+            if (DownedBossSystem.downedCalamitasClone)
+            {
+                Vector2 vector = new Vector2(inventoryX - 10 - 47 - 47 - 14, (float)inventoryY + (float)TextureAssets.InventoryBack.Height() * 0.5f);
+                Main.spriteBatch.Draw(TextureAssets.Extra[58].Value, vector, null, Color.White, 0f, TextureAssets.Extra[ExtrasID.DefenseShield].Value.Size() / 2f, Main.inventoryScale, SpriteEffects.None, 0f);
+                string def = Main.player[Main.myPlayer].statDefense.ToString();
+                def += ".02";
+                Vector2 vector2 = FontAssets.MouseText.Value.MeasureString(def);
+                ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, def, vector - vector2 * 0.5f * Main.inventoryScale, Color.White, 0f, Vector2.Zero, new Vector2(Main.inventoryScale));
+                if (Utils.CenteredRectangle(vector, TextureAssets.Extra[ExtrasID.DefenseShield].Value.Size()).Contains(new Point(Main.mouseX, Main.mouseY)) && !PlayerInput.IgnoreMouseInterface)
+                {
+                    Main.player[Main.myPlayer].mouseInterface = true;
+                    Player.DefenseStat statDefense = Main.player[Main.myPlayer].statDefense;
+                    string value = statDefense.ToString() + ".02 " + Lang.inter[10].Value;
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        Main.hoverItemName = value;
+                    }
+                }
+                UILinkPointNavigator.SetPosition(1557, vector + TextureAssets.Extra[ExtrasID.DefenseShield].Value.Size() * Main.inventoryScale / 4f);
+            }
+            else
+            {
+                orig(inventoryX, inventoryY);
+            }
+        }
+
         public static void CustomLight2(On_Lighting.orig_AddLight_int_int_int_float orig, int i, int j, int lightType, float lightAmount)
         {
             orig(i, j, lightType, lightAmount);
@@ -156,6 +188,9 @@ namespace CalRemix.Core
 
         public bool FolvsPrefix(On_Item.orig_Prefix orig, Item self, int pfx)
         {
+            //DISABLED FOR NOW
+            return orig(self, pfx);
+
             if (!CalRemixWorld.folvsPrefix)
             {
                 return orig(self, pfx);
