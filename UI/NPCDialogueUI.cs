@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.ZAccessories;
+using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Subworlds.Pinnacles;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
@@ -117,6 +118,14 @@ namespace CalRemix.UI
 
         public static void ResetDialogue()
         {
+            if (Main.LocalPlayer.Remix().talkedNPC > -1)
+            {
+                NPC npc = Main.npc[Main.LocalPlayer.Remix().talkedNPC];
+                if (npc.ModNPC is DialogueNPC dialogueNPC)
+                {
+                    dialogueNPC.OnEnd(currentKey);
+                }
+            }
             currentCharacter = -1;
             currentIndex = -1;
             currentKey = "";

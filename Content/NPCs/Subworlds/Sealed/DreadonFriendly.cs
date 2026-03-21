@@ -26,6 +26,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public static SoundStyle DraedonTalk = new SoundStyle("CalRemix/Assets/Sounds/DraedonTalk") { PitchVariance = 0.4f };
 
+        public override SoundStyle TextSound => DraedonTalk;
+
+        public override int TextSpeed => 7;
+
 
         public Vector2 TargetLocation
         {
@@ -84,13 +88,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 IsFlying = true;
                 escaping = true;
                 Timer += 5;
-            }
-            if (NPCDialogueUI.NotFinishedTalking(NPC))
-            {
-                if (Main.LocalPlayer.miscCounter % 7 == 0)
-                {
-                    SoundEngine.PlaySound(DraedonTalk, NPC.Center);
-                }
             }
             if (State == 1)
             {

@@ -24,6 +24,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public static SoundStyle talkSound = new SoundStyle("CalRemix/Assets/Sounds/RubyWarrior") with { PitchVariance = 0.75f };
 
+        public override SoundStyle TextSound => talkSound;
+
+        public override int TextSpeed => 7;
+
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -47,10 +51,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.TargetClosest();
             NPC.spriteDirection = -NPC.direction;
             Timer++;
-            if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
-            {
-                SoundEngine.PlaySound(talkSound, NPC.Center);
-            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

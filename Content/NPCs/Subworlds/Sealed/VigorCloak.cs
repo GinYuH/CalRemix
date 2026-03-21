@@ -46,11 +46,24 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.TargetClosest();
             NPC.spriteDirection = NPC.direction = -1;
             Timer++;
-            if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 18 == 0)
-            {
-                SoundEngine.PlaySound(SoundID.NPCDeath13 with { Pitch = Main.rand.NextFloat(-1.4f, -0.8f) }, NPC.Center);
-            }
         }
+
+        public override string GetDialogue()
+        {
+            if (CalRemixWorld.shadeQuestLevel == 2)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Item.NewItem(NPC.GetSource_FromThis(), NPC.Hitbox, ModContent.ItemType<PusSac>());
+                }
+                return "Shades";
+            }
+            return base.GetDialogue();
+        }
+
+        public override SoundStyle TextSound => SoundID.NPCDeath13 with { Pitch = Main.rand.NextFloat(-1.4f, -0.8f) };
+
+        public override int TextSpeed => 18;
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

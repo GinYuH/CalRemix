@@ -43,6 +43,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
             }
         }
 
+        public override int TextSpeed => 10;
+
+        public override SoundStyle TextSound => SoundID.Tink with { Pitch = Main.rand.NextFloat(0.5f, 0.9f) };
+
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -70,10 +74,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
             if (HeadPosition == default || NPC.velocity != Vector2.Zero)
             {
                 HeadPosition = defaultPos;
-            }
-            if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 18 == 0)
-            {
-                SoundEngine.PlaySound(SoundID.Tink with { Pitch = Main.rand.NextFloat(0.5f, 0.9f) }, NPC.Center);
             }
             if (Timer % 20 == 0)
             {

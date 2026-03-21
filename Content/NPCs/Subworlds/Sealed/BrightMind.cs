@@ -29,6 +29,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public static SoundStyle deathSound = new SoundStyle("CalRemix/Assets/Sounds/BrightMindDeath");
 
+        public override int TextSpeed => 7;
+
+        public override SoundStyle TextSound => talkSound;
+
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -46,6 +50,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<BadlandsBiome>().Type };
         }
+
+        public override void OnEnd(string key)
+        {
+            if (ItemQuestSystem.brainLevel == 3 && Main.player[NPC.target].Distance(NPC.Center) < 600 && NPC.life == NPC.lifeMax)
+            {
+                State = 1;
+                Timer = 0;
+            }
+        }
+
         public override void AI()
         {
             base.AI();
@@ -56,15 +70,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             {
                 NPC.dontTakeDamage = false;
             }
-            if (NPCDialogueUI.NotFinishedTalking(NPC) && Timer % 7 == 0)
-            {
-                SoundEngine.PlaySound(talkSound, NPC.Center);
-            }
-            if ((JustFinishedTalking || Main.netMode != NetmodeID.SinglePlayer) && ItemQuestSystem.brainLevel == 3 && Main.player[NPC.target].Distance(NPC.Center) < 600 && NPC.life == NPC.lifeMax)
+            /*if ((JustFinishedTalking || Main.netMode != NetmodeID.SinglePlayer) && ItemQuestSystem.brainLevel == 3 && Main.player[NPC.target].Distance(NPC.Center) < 600 && NPC.life == NPC.lifeMax)
             {
                 State = 1;
                 Timer = 0;
-            }
+            }*/
             if (State == 1)
             {
                 int wait = 30;

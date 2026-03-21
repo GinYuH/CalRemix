@@ -31,129 +31,59 @@ using CalRemix.Content.NPCs.Subworlds.Pinnacles;
 
 namespace CalRemix.Content.NPCs
 {
-    public abstract class QuestNPC : ModNPC
+    public abstract class QuestNPC : DialogueNPC
     {
-        public virtual bool CanBeTalkedTo => true;
-
-        public bool JustFinishedTalking = false;
-
-        public bool IsTalking = false;
-
-        public override void SendExtraAI(BinaryWriter writer)
+        public override string GetDialogue()
         {
-            writer.Write(IsTalking);
-            writer.Write(JustFinishedTalking);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            IsTalking = reader.ReadBoolean();
-            JustFinishedTalking = reader.ReadBoolean();
-        }
-
-
-        public override void AI()
-        {
-            if (CanBeTalkedTo)
+            string key = "";
+            for (int i = 0; i < ItemQuestSystem.itemQuests[Type].Count; i++)
             {
-                if (!ItemQuestSystem.itemQuests.ContainsKey(Type))
-                    return; 
-                Rectangle maus = Utils.CenteredRectangle(Main.MouseWorld, Vector2.One * 10);
-
-                if (maus.Intersects(NPC.getRect()))
+                ItemQuest quest = ItemQuestSystem.itemQuests[Type][i];
+                bool completedQuest = false;
+                if (quest.IsActive.Invoke())
                 {
-                    if (Main.LocalPlayer.controlUseTile && Main.LocalPlayer.Remix().talkedNPC == -1 && Main.LocalPlayer.Distance(NPC.Center) < 600)
+                    bool cusQuest = false;
+                    if (quest.CustomCondition != null)
                     {
-                        if (NPC.type == ModContent.NPCType<VigorCloak>())
+                        if (quest.CustomCondition.Invoke())
                         {
-                            if (CalRemixWorld.shadeQuestLevel == 2)
-                            {
-                                NPCDialogueUI.StartDialogue(NPC.whoAmI, "Shades");
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
-                                {
-                                    Item.NewItem(NPC.GetSource_FromThis(), NPC.Hitbox, ModContent.ItemType<PusSac>());
-                                }
-                                return;
-                            }
+                            cusQuest = true;
+                            quest.CompletionEvent.Invoke();
+                            completedQuest = true;
                         }
-
-                        string key = "";
-                        for (int i = 0; i < ItemQuestSystem.itemQuests[Type].Count; i++)
+                    }
+                    if (!cusQuest && Main.LocalPlayer.HasItem(quest.RequiredItem))
+                    {
+                        if (quest.consume)
                         {
-                            ItemQuest quest = ItemQuestSystem.itemQuests[Type][i];
-                            bool completedQuest = false;
-                            if (quest.IsActive.Invoke())
-                            {
-                                bool cusQuest = false;
-                                if (quest.CustomCondition != null)
-                                {
-                                    if (quest.CustomCondition.Invoke())
-                                    {
-                                        cusQuest = true;
-                                        quest.CompletionEvent.Invoke();
-                                        completedQuest = true;
-                                    }
-                                }
-                                if (!cusQuest && Main.LocalPlayer.HasItem(quest.RequiredItem))
-                                {
-                                    if (quest.consume)
-                                    {
-                                        Main.LocalPlayer.ConsumeItem(quest.RequiredItem);
-                                    }
-                                    quest.CompletionEvent.Invoke();
-                                    completedQuest = true;
-                                }
-                                else
-                                {
-                                    key = quest.AssociatedDialogue;
-                                }
-                            }
-                            if (completedQuest)
-                            {
-                                if (quest.reward != null)
-                                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_FromThis(), quest.reward);
-                                if (i == ItemQuestSystem.itemQuests[Type].Count - 1)
-                                {
-                                    key = "End";
-                                }
-                                else
-                                {
-                                    key = ItemQuestSystem.itemQuests[Type][i + 1].AssociatedDialogue;
-                                }
-                                break;
-                            }
+                            Main.LocalPlayer.ConsumeItem(quest.RequiredItem);
                         }
-                        if (key == "")
-                            key = "End";
-                        NPCDialogueUI.StartDialogue(NPC.whoAmI, key);
+                        quest.CompletionEvent.Invoke();
+                        completedQuest = true;
+                    }
+                    else
+                    {
+                        key = quest.AssociatedDialogue;
                     }
                 }
-            }
-            if (NPCDialogueUI.IsBeingTalkedTo(NPC))
-            {
-                if (!IsTalking)
+                if (completedQuest)
                 {
-                    IsTalking = true;
-                    NPC.netUpdate = true;
-                }
-            }
-            else
-            {
-                if (IsTalking)
-                {
-                    IsTalking = false;
-                    JustFinishedTalking = true;
-                    NPC.netUpdate = true;
-                }
-                else
-                {
-                    if (JustFinishedTalking)
+                    if (quest.reward != null)
+                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_FromThis(), quest.reward);
+                    if (i == ItemQuestSystem.itemQuests[Type].Count - 1)
                     {
-                        JustFinishedTalking = false;
-                        NPC.netUpdate = true;
+                        key = "End";
                     }
+                    else
+                    {
+                        key = ItemQuestSystem.itemQuests[Type][i + 1].AssociatedDialogue;
+                    }
+                    break;
                 }
             }
+            if (key == "")
+                key = "End";
+            return key;
         }
     }
 
