@@ -201,6 +201,11 @@ Mods: {
 				DisplayName: The Pinnacles
 				TownNPCDialogueName: The Pinnacles
 			}
+
+			WolfForestBiome: {
+				DisplayName: Wolf Forest Biome
+				TownNPCDialogueName: the Wolf Forest Biome
+			}
 		}
 
 		Enchantments: {

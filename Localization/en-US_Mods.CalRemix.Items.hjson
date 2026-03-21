@@ -6620,3 +6620,23 @@ SavannaDoor: {
 	DisplayName: Savanna Door
 	Tooltip: ""
 }
+
+WolfEarth: {
+	DisplayName: Wolf Earth
+	Tooltip: ""
+}
+
+WolfSnow: {
+	DisplayName: Wolf Snow
+	Tooltip: ""
+}
+
+WolfTree: {
+	DisplayName: Wolf Tree
+	Tooltip: ""
+}
+
+WolfDoor: {
+	DisplayName: Wolf Forest Door
+	Tooltip: ""
+}

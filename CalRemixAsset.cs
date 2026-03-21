@@ -62,6 +62,7 @@ namespace CalRemix
                 RegisterSky(new GlamourSky(), "GlamourSky");
                 RegisterSky(new SingleColorSky(), "SingleColor");
                 RegisterSky(new SavannaSky(), "Savanna");
+                RegisterSky(new WolfSky(), "WolfSky");
             }
 
             AssetRepository remixAsset = Mod.Assets;
