@@ -34,8 +34,6 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToSickness = false;
-            Banner = ModContent.NPCType<WalkingBird>();
-            BannerItem = ModContent.ItemType<WalkingBirdBanner>();
             Banner = Type;
             BannerItem = ModContent.ItemType<BoneDogBanner>();
         }
