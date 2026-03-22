@@ -56,7 +56,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
 
             for (int i = 0; i < 2; i++)
             {
-                Dust ptr = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame, 0, 0, 100);
+                Dust ptr = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<OcramDustShadowflame>(), 0, 0, 100);
                 if (ptr == null)
                 {
                     break;
@@ -72,14 +72,14 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             for (int num42 = 0; num42 < 18; num42++)
             {
-                Dust ptr17 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame, Projectile.velocity.X, Projectile.velocity.Y, 100, default, 1.7f);
+                Dust ptr17 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<OcramDustShadowflame>(), Projectile.velocity.X, Projectile.velocity.Y, 100, default, 1.7f);
                 if (ptr17 == null)
                 {
                     break;
                 }
                 ptr17.noGravity = true;
 
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame, Projectile.velocity.X, Projectile.velocity.Y, 100);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<OcramDustShadowflame>(), Projectile.velocity.X, Projectile.velocity.Y, 100);
             }
         }
 

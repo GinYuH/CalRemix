@@ -78,7 +78,8 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
             */
             //MinistructureList.WoodenLamppost.Place(point);
             //PlaceWIPCave(point);
-            PlaceRuin(point);
+            //PlaceRuin(point);
+            CrimVein(new Vector2D(mouseWorld.X, mouseWorld.Y), new Vector2D(0, 1));
             //PlaceOtherSpiritModThing(point);
             //PlaceFish_Flying(point);
 
@@ -421,6 +422,91 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 for (int y = areaOfStuffYouCanUse.Y; y < areaOfStuffYouCanUse.Y + areaOfStuffYouCanUse.Height; y++)
                 {
 
+                }
+            }
+        }
+
+        public static void CrimVein(Vector2D position, Vector2D velocity)
+        {
+            double num = Main.rand.Next(15, 26);
+            bool flag = true;
+            Vector2D vector2D = velocity;
+            Vector2D vector2D2 = position;
+            int num2 = Main.rand.Next(100, 150);
+            if (velocity.Y < 0.0)
+            {
+                num2 -= 25;
+            }
+            while (flag)
+            {
+                num += (double)Main.rand.Next(-50, 51) * 0.02;
+                if (num < 15.0)
+                {
+                    num = 15.0;
+                }
+                if (num > 25.0)
+                {
+                    num = 25.0;
+                }
+                for (int i = (int)(position.X - num / 2.0); (double)i < position.X + num / 2.0; i++)
+                {
+                    for (int j = (int)(position.Y - num / 2.0); (double)j < position.Y + num / 2.0; j++)
+                    {
+                        double num5 = Math.Abs((double)i - position.X);
+                        double num3 = Math.Abs((double)j - position.Y);
+                        double num4 = Math.Sqrt(num5 * num5 + num3 * num3);
+                        Tile tile;
+                        if (num4 < num * 0.2)
+                        {
+                            tile = Main.tile[i, j];
+                            tile.HasTile = false;
+                            tile = Main.tile[i, j];
+                            tile.WallType = WallID.CrimstoneUnsafe;
+                        }
+                        else
+                        {
+                            if (!(num4 < num * 0.5))
+                            {
+                                continue;
+                            }
+                            tile = Main.tile[i, j];
+                            if (tile.WallType != WallID.CrimstoneUnsafe)
+                            {
+                                tile = Main.tile[i, j];
+                                tile.HasTile = true;
+                                tile = Main.tile[i, j];
+                                tile.TileType = TileID.Crimstone;
+                                if (num4 < num * 0.4)
+                                {
+                                    tile = Main.tile[i, j];
+                                    tile.WallType = WallID.CrimstoneUnsafe;
+                                }
+                            }
+                        }
+                    }
+                }
+                velocity.X += (double)Main.rand.Next(-50, 51) * 0.05;
+                velocity.Y += (double)Main.rand.Next(-50, 51) * 0.05;
+                if (velocity.Y < vector2D.Y - 0.75)
+                {
+                    velocity.Y = vector2D.Y - 0.75;
+                }
+                if (velocity.Y > vector2D.Y + 0.75)
+                {
+                    velocity.Y = vector2D.Y + 0.75;
+                }
+                if (velocity.X < vector2D.X - 0.75)
+                {
+                    velocity.X = vector2D.X - 0.75;
+                }
+                if (velocity.X > vector2D.X + 0.75)
+                {
+                    velocity.X = vector2D.X + 0.75;
+                }
+                position += velocity;
+                if (Math.Abs(position.X - vector2D2.X) + Math.Abs(position.Y - vector2D2.Y) > (double)num2)
+                {
+                    flag = false;
                 }
             }
         }

@@ -243,7 +243,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                 }
                 else
                 {
-                    // note: handling the music instantly starting is done in the phase transition attack
+                    // handling the music instantly starting is done in the phase transition attack
                     Music = CalRemixMusic.SealedOnePhase2;
                 }
             }

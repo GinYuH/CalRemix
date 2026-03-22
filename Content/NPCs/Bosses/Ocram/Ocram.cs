@@ -24,6 +24,11 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 6;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers();
+            nPCBestiaryDrawModifiers.Hide = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = nPCBestiaryDrawModifiers;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(this.Type, value);
         }
 
         public override void SetDefaults()
@@ -32,6 +37,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             NPC.width = 100; // Ocram's dimensions should not be 100/110, but the programmer copied over the EoC's values without adjustment; they should be more like 195/155.
             NPC.height = 110;
             //NPC.aiStyle = 39; in his place... is giant tortoise...
+            NPC.aiStyle = -1;
             NPC.damage = 65;
             NPC.defense = 20;
             NPC.lifeMax = 35000;
@@ -47,6 +53,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             NPC.buffImmune[BuffID.Poisoned] = true;
         }
 
+        // reffed from https://github.com/PPrism/TerrariaOGC in case we forget to credit this properly 
         // decompilation translation notes:
         // >> is division (x >> 1 ==  x / 2, x >> 2 == x / 4, x >> 3 == x / 8, x >> 4 == x / 16, ect)
         // << is multiplication (x << 1 == x * 2, x << 2 == x * 4, x << 3 == x * 8, x << 4 == x * 16, ect)
@@ -55,8 +62,10 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
         // Main.PlayerSet[Target] == Main.player[NPC.target]
         // for Lighting.AddLight just replace the XYWH shit with NPC.position. ignore the >> 4, thats not needed. its just accounting for tile grid shit, we dont do that in germany anymore
         // if you ever see a scary as fuck dust being spawned with a pointer, refer to "// idly spawned blood"
+        // alpha is inverted
 
         // TODO: need to extract gores from a decomp of og console terraria
+        // TODO: port health bar?
         public override void AI()
         {
             Lighting.AddLight(NPC.position, new Vector3(1f, 1f, 1f));

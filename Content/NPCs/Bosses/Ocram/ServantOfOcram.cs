@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 2;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers nPCBestiaryDrawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers();
+            nPCBestiaryDrawModifiers.Hide = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = nPCBestiaryDrawModifiers;
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(this.Type, value);
         }
 
         public override void SetDefaults()
@@ -114,7 +120,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
 
             if (Main.rand.Next(48) == 0)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y + (NPC.height / 4)), NPC.width, (NPC.height / 2), DustID.Blood, NPC.velocity.X, 2.0f);
+                Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y + (NPC.height / 4)), NPC.width, (NPC.height / 2), ModContent.DustType<OcramDustBlood>(), NPC.velocity.X, 2.0f);
                 if (dust != null)
                 {
                     dust.velocity.X *= 0.5f;
@@ -166,14 +172,14 @@ namespace CalRemix.Content.NPCs.Bosses.Ocram
             {
                 for (int num57 = 0; num57 < damageDone / NPC.lifeMax * 50.0; num57++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection, -1);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<OcramDustBlood>(), hit.HitDirection, -1);
                 }
             }
             else
             {
                 for (int num58 = 0; num58 < 16; num58++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hit.HitDirection / 2, -2);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<OcramDustBlood>(), hit.HitDirection * 2, -2);
                 }
             }
         }
