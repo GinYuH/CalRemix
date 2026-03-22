@@ -15,6 +15,7 @@ using Terraria.Graphics.Effects;
 using Terraria.DataStructures;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalamityMod;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -81,7 +82,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (j > (int)(Main.maxTilesY * 0.9f))
                     {
-                        WorldGen.PlaceTile(i, j, grass);
+                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType((ushort)grass);
                     }
                 }
             }

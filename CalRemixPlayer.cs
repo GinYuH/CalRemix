@@ -134,6 +134,8 @@ namespace CalRemix
         public Jumpscare jumpscare;
         public int jumpscareTimer = 0;
         public bool wapUnlocked = false;
+        public bool submapUIUnlocked = false;
+        public bool submapUIOpen = false;
 
         public bool gottenCellPhone = false;
         public bool miracleUnlocked = false;

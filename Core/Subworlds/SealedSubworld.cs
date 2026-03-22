@@ -120,8 +120,8 @@ namespace CalRemix.Core.Subworlds
 
             if (!NPC.AnyNPCs(ModContent.NPCType<Disilphia>()))
             {
-                Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:Sealed", true);
-                SkyManager.Instance.Activate("CalRemix:Sealed", Main.LocalPlayer.position);
+                Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:SealedSky", true);
+                SkyManager.Instance.Activate("CalRemix:SealedSky", Main.LocalPlayer.position);
             }
             Main.time = Main.dayLength * 0.5f;
             base.Update();

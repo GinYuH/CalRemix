@@ -71,4 +71,105 @@ SubworldMap: {
 			Populated with screaming mummified faces.
 			'''
 	}
+
+	Pinnacles: {
+		DisplayName: Pinnacles
+		Description:
+			'''
+			Mountainous crags with little life.
+			It is constantly raining ashes here.
+			'''
+	}
+
+	Sealed: {
+		DisplayName: Sealed
+		Description:
+			'''
+			A bizzare twisted land inhabited by sentient puppets.
+			It contains a plethora of biomes, each capitalized
+			on by different prospectors.
+			'''
+	}
+
+	Savanna: {
+		DisplayName: Savanna
+		Description:
+			'''
+			A relatively normal Savanna.
+			As far as the eye can see.
+			'''
+	}
+
+	Glamour: {
+		DisplayName: The Glamour
+		Description:
+			'''
+			Interstellar halls that chime with light.
+			Deep within resides a tree that holds cosmic power.
+			'''
+	}
+
+	Bridge: {
+		DisplayName: Bridge of Lost Hope
+		Description:
+			'''
+			A long, tight corridor made of stone.
+			It is constantly barraged by bombs.
+			'''
+	}
+
+	TheGray: {
+		DisplayName: The Gray
+		Description:
+			'''
+			Dark sterile lands dotted with silent constructs.
+			It would be wise to bring a heavy source of light.
+			'''
+	}
+
+	Horizon: {
+		DisplayName: The Horizon
+		Description:
+			'''
+			Paradise at the edge of the universe.
+			Sit and rest for a bit. Peace does not last long.
+			'''
+	}
+
+	Virisite: {
+		DisplayName: Virisite Wastes
+		Description:
+			'''
+			Volcanic lands seething with molten virisite.
+			The activity here is said to be strong enough
+			to spread to other dimensions.
+			'''
+	}
+
+	Nowhere: {
+		DisplayName: Nowhere
+		Description:
+			'''
+			Deep flat plane inhabited by beings stripped of emotion.
+			Old sayings speak of a decrepit place deep underneath.
+			'''
+	}
+
+	Wolf: {
+		DisplayName: Wolf Forest
+		Description:
+			'''
+			A relatively normal Savanna.
+			As far as the eye can see.
+			'''
+	}
+
+	Nightline: {
+		DisplayName: Nightline
+		Description:
+			'''
+			A peaceful city that faces eternal night.
+			Come and drive down its famous highway.
+			'''
+	}
 }
