@@ -1,6 +1,7 @@
 ﻿using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using SubworldLibrary;
 using System;
@@ -33,8 +34,8 @@ namespace CalRemix.UI.SubworldMap
             Main.inventoryScale = 0.85f;
             int width = 30;
             int height = 30;
-            int yStart = 223;
-            int xPos = 23;
+            int xPos = 27;
+            int yStart = 233;
             int yPos = yStart + height + 4;
             if ((Main.LocalPlayer.chest != -1 || Main.npcShop > 0) && !Main.recBigList)
             {
@@ -59,11 +60,12 @@ namespace CalRemix.UI.SubworldMap
                     Main.npcChatCornerItem = 0;
                     Main.npcChatText = "";
                     Main.mouseLeftRelease = false;
-                    SoundEngine.PlaySound(SoundID.MenuOpen);
+                    SoundEngine.PlaySound(Main.LocalPlayer.Remix().submapUIOpen ? SoundID.MenuClose : SoundID.MenuOpen);
                     Main.LocalPlayer.Remix().submapUIOpen = true;
+                    IngameFancyUI.OpenUIState(new SubworldMapUI());
                 }
             }
-            Texture2D value = TextureAssets.BestiaryMenuButton.Value;
+            Texture2D value = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/Button").Value;
             Vector2 position = hitbox.Center.ToVector2();
             Rectangle bg = value.Frame(2, 1, hovering ? 1 : 0);
             bg.Width -= 2;
@@ -74,7 +76,7 @@ namespace CalRemix.UI.SubworldMap
             //UILinkPointNavigator.SetPosition(310, position);
             if (!Main.mouseText && hovering)
             {
-                Main.instance.MouseText("Community Remix Subworlds", 0, 0);
+                Main.instance.MouseText(CalRemixHelper.LocalText("UI.SubworldMap.Button").Value, 0, 0);
             }
         }
     }
@@ -84,23 +86,23 @@ namespace CalRemix.UI.SubworldMap
     {
         string selected = "";
         Vector2 trueBasePos = Vector2.Zero;
-        Vector2 anchorPoint = Vector2.Zero;
+        Vector2 anchorPoint = -Main.ScreenSize.ToVector2() / 2;
+        bool initialized = false;
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (Main.LocalPlayer.TryGetModPlayer<CalRemixPlayer>(out var player))
+            if (Main.keyState.IsKeyDown(Keys.Escape))
             {
-                if (!player.submapUIOpen)
-                    return;
+                IngameFancyUI.Close();
             }
-            else
-                return;
 
-            if (!Main.playerInventory)
+            if (!initialized)
             {
-                Main.LocalPlayer.Remix().submapUIOpen = false;
+                anchorPoint = new Vector2(-830, -160);
+                initialized = true;
                 return;
             }
+            Main.blockMouse = true;
 
             bool DEV_UNLOCKALL = false; // Public should be false
             bool DEV_CANTELEPORT = false; // Public should be false
@@ -179,9 +181,12 @@ namespace CalRemix.UI.SubworldMap
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, hitbox.Center.ToVector2(), resizedHitbox, (item.unlockCondition.Invoke() || DEV_UNLOCKALL) ? Color.White : Color.Gray, rot, hitbox.Size() / 2, 1, 0, 0);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, portraitRect.Center.ToVector2(), portraitRect, Color.Black, rot, portraitRect.Size() / 2, 1, 0, 0);
 
-                if (ModContent.RequestIfExists("CalRemix/UI/SubworldMap/" + pair.Key, out Asset<Texture2D> asset))
+                if (item.unlockCondition.Invoke() || DEV_UNLOCKALL)
                 {
-                    spriteBatch.Draw(asset.Value, portraitRect.Center.ToVector2(), null, Color.White, rot, asset.Value.Size() / 2, 1, 0, 0);
+                    if (ModContent.RequestIfExists("CalRemix/UI/SubworldMap/" + pair.Key, out Asset<Texture2D> asset))
+                    {
+                        spriteBatch.Draw(asset.Value, portraitRect.Center.ToVector2(), null, Color.White, rot, asset.Value.Size() / 2, 1, 0, 0);
+                    }
                 }
 
                 Rectangle maus = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 10, 10);
@@ -265,6 +270,10 @@ namespace CalRemix.UI.SubworldMap
                 SubworldMapItem item = pair.Value;
                 bool unlocked = item.unlockCondition.Invoke() || DEV_UNLOCKALL;
                 string displayText = /*pair.Key == "Overworld" ? Main.worldName :*/ unlocked ? CalRemixHelper.LocalText("UI.SubworldMap." + key + ".DisplayName").Value : "???"; // The text to display
+                if (pair.Value.boundSubworld == null)
+                {
+                    displayText = Main.worldName;
+                }
                 Vector2 basePosition = trueBasePos;
                 Vector2 iconPosition = basePosition + item.position;
                 //Texture2D tex = ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/" + pair.Key).Value;
@@ -298,7 +307,14 @@ namespace CalRemix.UI.SubworldMap
                                 maxWidth = curWith;
                             }
                         }
+
+                        float nameWidth = FontAssets.MouseText.Value.MeasureString(displayText).X;
+                        if (maxWidth < nameWidth)
+                        {
+                            maxWidth = nameWidth;
+                        }
                         maxWidth += padding * 2;
+
 
                         float height = textOffset - extraHeight + (textSpacing + textSpacing * dialogue.Length) * item.animCompletion;
 
@@ -450,15 +466,6 @@ namespace CalRemix.UI.SubworldMap
             int resourceBarIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
             if (resourceBarIndex != -1)
             {
-                layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
-                    "CalRemix:SubworldMapInterface",
-                    delegate
-                    {
-                        UserInter.Draw(Main.spriteBatch, new GameTime());
-                        return true;
-                    },
-                    InterfaceScaleType.UI)
-                );
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
                     "CalRemix:SubworldMapButton",
                     delegate

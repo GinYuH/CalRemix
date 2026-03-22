@@ -40,6 +40,8 @@ WorldGen: {
 }
 
 SubworldMap: {
+	Button: Subworld Map
+
 	Overworld: {
 		DisplayName: Overworld
 		Description: The main world.
