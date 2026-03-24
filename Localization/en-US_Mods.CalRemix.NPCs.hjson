@@ -791,9 +791,19 @@ BunnyBrawler.DisplayName: Bunny Brawler
 BunnyBrawler2.DisplayName: Bunny Brawler
 RabbitcopterSoldier.DisplayName: Rabbitcopter Soldier
 RabbitcopterSoldier2.DisplayName: Rabbitcopter Soldier
-Rajah.DisplayName: Rajah Rabbit
+
+Rajah: {
+	DisplayName: Rajah Rabbit
+	BossChecklistIntegration.SpawnInfo: Use a {0} or kill 100 Rabbits like a jerk.
+}
+
 SupremeRajahDefeat.DisplayName: Rajah Rabbit, Champion of the Innocent
-SupremeRajah.DisplayName: Rajah Rabbit, Champion of the Innocent
+
+SupremeRajah: {
+	DisplayName: Rajah Rabbit, Champion of the Innocent
+	BossChecklistIntegration.SpawnInfo: Use the {0} or kill 100 rabbits after having killed at least 1000.
+}
+
 RoyalRabbit.DisplayName: Royal Rabbit
 Underscore.DisplayName: _
 WulfrumCactus.DisplayName: Wulfrum Cactus

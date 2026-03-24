@@ -1,56 +1,59 @@
-using static Terraria.ModLoader.ModContent;
-using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using CalamityMod;
+using CalamityMod.CalPlayer;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Pets;
-using CalRemix.Content.NPCs.Minibosses;
-using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
-using CalRemix.Content.NPCs.Bosses.Poly;
-using CalRemix.Content.NPCs.Bosses.BossScule;
-using CalRemix.Content.NPCs.Bosses.Acideye;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using CalRemix.Content.NPCs.TownNPCs;
-using CalRemix.Content.NPCs.Bosses.Phytogen;
-using CalRemix.Content.NPCs.Bosses.Hydrogen;
-using CalRemix.Content.Items.Placeables;
-using CalRemix.Content.NPCs.Bosses.Ionogen;
-using CalRemix.Content.NPCs.Bosses.Oxygen;
-using CalRemix.Content.NPCs.PandemicPanic;
-using CalRemix.Content.NPCs.Bosses.Hypnos;
-using CalRemix.Content.NPCs.Bosses.Pathogen;
-using CalRemix.Content.NPCs.Bosses.Origen;
-using CalRemix.Content.NPCs.Bosses.Aurelionium;
-using CalRemix.Core.World;
-using CalRemix.Content.Items.SummonItems;
-using CalRemix.Content.Items.Lore;
-using Terraria.Audio;
-using CalamityMod.Sounds;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod;
-using CalRemix.Content.NPCs.Bosses.Pyrogen;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Bosses.Noxus;
-using System.Reflection;
-using CalRemix.Content.NPCs.Eclipse;
-using Terraria.ModLoader.Core;
-using CalRemix.Content.NPCs.Subworlds.GreatSea;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalamityMod.Items.Placeables.Ores;
-using CalamityMod.CalPlayer;
-using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Items.Weapons.Melee;
-using CalRemix.Content.Items.Materials;
 using CalamityMod.NPCs.Cryogen;
-using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix;
+using CalamityMod.NPCs.ExoMechs.Ares;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.Sounds;
+using CalRemix.Content.Items.Lore;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.SummonItems;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Bosses.Acideye;
+using CalRemix.Content.NPCs.Bosses.Aurelionium;
+using CalRemix.Content.NPCs.Bosses.BossScule;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Content.NPCs.Bosses.Hydrogen;
+using CalRemix.Content.NPCs.Bosses.Hypnos;
+using CalRemix.Content.NPCs.Bosses.Ionogen;
+using CalRemix.Content.NPCs.Bosses.Noxus;
+using CalRemix.Content.NPCs.Bosses.Origen;
+using CalRemix.Content.NPCs.Bosses.Oxygen;
+using CalRemix.Content.NPCs.Bosses.Pathogen;
+using CalRemix.Content.NPCs.Bosses.Phytogen;
+using CalRemix.Content.NPCs.Bosses.Poly;
+using CalRemix.Content.NPCs.Bosses.Pyrogen;
+using CalRemix.Content.NPCs.Bosses.RajahBoss;
 using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes;
 using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Chaotrix;
+using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix;
 using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix;
+using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
+using CalRemix.Content.NPCs.Eclipse;
+using CalRemix.Content.NPCs.Minibosses;
+using CalRemix.Content.NPCs.PandemicPanic;
+using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.NPCs.Subworlds.SingularPoint;
+using CalRemix.Content.NPCs.TownNPCs;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix
 {
@@ -209,6 +212,19 @@ namespace CalRemix
                 ["customPortrait"] = plportrait
             });
             bc.Call("LogBoss", Mod, "Phytogen", 13.25f, () => RemixDowned.downedPhytogen, NPCType<Phytogen>(), new Dictionary<string, object>());
+
+            Action<SpriteBatch, Rectangle, Color> rajahPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahPortrait").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                sb.Draw(texture, centered, color);
+            };
+            bc.Call("LogBoss", Mod, "RajahRabbit", 13.99f, () => RemixDowned.downedRajah, NPCType<Rajah>(), new Dictionary<string, object>()
+            {
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Rajah.BossChecklistIntegration.SpawnInfo").WithFormatArgs("[i: " + ModContent.ItemType<GoldenCarrot>() + "]"),
+                ["spawnItems"] = ModContent.ItemType<GoldenCarrot>(),
+                ["customPortrait"] = rajahPortrait
+            });
+
             bc.Call("LogBoss", Mod, "Hydrogen", 14.15f, () => RemixDowned.downedHydrogen, NPCType<Hydrogen>(), new Dictionary<string, object>()
             {
                 ["spawnItems"] = ItemID.Grenade,
@@ -291,6 +307,19 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<BloodyVein>()
             });
+
+            Action<SpriteBatch, Rectangle, Color> sRajahPortrait = (SpriteBatch sb, Rectangle rect, Color color) => {
+                Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/RajahBoss/CRajahPortrait").Value;
+                Vector2 centered = new(rect.Center.X - (texture.Width / 2), rect.Center.Y - (texture.Height / 2));
+                sb.Draw(texture, centered, color);
+            };
+            bc.Call("LogBoss", Mod, "RajahRabbitRevenge", 22.55f, () => RemixDowned.downedRajahsRevenge, NPCType<SupremeRajah>(), new Dictionary<string, object>()
+            {
+                ["spawnItems"] = ItemType<DiamondCarrot>(),
+                ["customPortrait"] = sRajahPortrait,
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.SupremeRajah.BossChecklistIntegration.SpawnInfo").WithFormatArgs("[i: " + ModContent.ItemType<GoldenCarrot>() + "]"),
+            });
+
             Action<SpriteBatch, Rectangle, Color> noxPort = (SpriteBatch sb, Rectangle rect, Color color) => {
                 Texture2D texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Noxus/NoxusBossChecklist").Value;
                 Vector2 centered = new(rect.Center.X - (texture.Width / 2 / 2), rect.Center.Y - (texture.Height / 2 / 2));
