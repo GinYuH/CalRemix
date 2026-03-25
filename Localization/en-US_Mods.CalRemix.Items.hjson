@@ -6640,3 +6640,8 @@ WolfDoor: {
 	DisplayName: Wolf Forest Door
 	Tooltip: ""
 }
+
+OvergrowthRainforestDoor: {
+	DisplayName: Overgrowth Rainforest Door
+	Tooltip: ""
+}

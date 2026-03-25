@@ -9,7 +9,7 @@ using CalamityMod.NPCs.Abyss;
 using Microsoft.Xna.Framework;
 using CalamityMod.Projectiles.Boss;
 
-namespace CalRemix.Content.NPCs.Subworlds.Carboniforest
+namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {
     public class LargeStinkbug : ModNPC
     {

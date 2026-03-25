@@ -52,6 +52,10 @@ namespace CalRemix.Core.World
 
         public static bool downedLivyatan;
 
+        public static bool downedYahora;
+
+        public static bool downedGreed;
+
         public static bool downedGastropod;
 
         public static bool downedVoid;

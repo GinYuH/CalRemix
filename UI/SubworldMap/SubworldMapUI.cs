@@ -104,8 +104,8 @@ namespace CalRemix.UI.SubworldMap
             }
             Main.blockMouse = true;
 
-            bool DEV_UNLOCKALL = false; // Public should be false
-            bool DEV_CANTELEPORT = false; // Public should be false
+            bool DEV_UNLOCKALL = true; // Public should be false
+            bool DEV_CANTELEPORT = true; // Public should be false
             bool DEV_CANMOVE = false; // Public should be false
             bool DEV_DRAGENTIRE = true; // Public should be true
 
@@ -416,21 +416,22 @@ namespace CalRemix.UI.SubworldMap
         public static Dictionary<string, SubworldMapItem> Items = new();
         public override void Load()
         {
-            Items.Add("Overworld", new(null, ["GreatSea", "ScreamingFace", "Ant"], () => true, new Vector2(0, 0), false));
-            Items.Add("GreatSea", new(ModContent.GetInstance<GreatSeaSubworld>(), ["Overworld", "ScreamingFace" ], () => true, new Vector2(259, -175), false));
+            Items.Add("Overworld", new(null, ["ScreamingFace", "Ant"], () => true, new Vector2(0, 0), false));
+            Items.Add("GreatSea", new(ModContent.GetInstance<GreatSeaSubworld>(), ["Glamour", "ScreamingFace", "Nightline", "Virisite" ], () => true, new Vector2(259, -175), false));
             Items.Add("Ant", new(ModContent.GetInstance<AntSubworld>(), ["Overworld"], () => true, new Vector2(317, 104), false));
             Items.Add("ScreamingFace", new(ModContent.GetInstance<ScreamingSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(630, 238)));
-            Items.Add("Sealed", new(ModContent.GetInstance<SealedSubworld>(), ["Overworld", "Horizon", "TheGray" ], () => false, new Vector2(-294, 65)));
-            Items.Add("Pinnacles", new(ModContent.GetInstance<PinnaclesSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(177, 348)));
-            Items.Add("Nightline", new(ModContent.GetInstance<NightlineSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(393, -401)));
-            Items.Add("Glamour", new(ModContent.GetInstance<GlamourSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(656, -317)));
-            Items.Add("Bridge", new(ModContent.GetInstance<BridgeofLostHopeSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(-224, 347)));
+            Items.Add("Sealed", new(ModContent.GetInstance<SealedSubworld>(), ["Overworld", "Horizon", "TheGray", "Bridge" ], () => false, new Vector2(-294, 65)));
+            Items.Add("Pinnacles", new(ModContent.GetInstance<PinnaclesSubworld>(), ["OvergrowthJungle", "Pinnacles"], () => false, new Vector2(177, 348)));
+            Items.Add("Nightline", new(ModContent.GetInstance<NightlineSubworld>(), ["Pinnacles", "GreatSea"], () => false, new Vector2(393, -401)));
+            Items.Add("Glamour", new(ModContent.GetInstance<GlamourSubworld>(), ["GreatSea"], () => false, new Vector2(656, -317)));
+            Items.Add("Bridge", new(ModContent.GetInstance<BridgeofLostHopeSubworld>(), ["OvergrowthJungle", "Sealed"], () => false, new Vector2(-224, 347)));
             Items.Add("Savanna", new(ModContent.GetInstance<SavannaSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(-179, -186)));
             Items.Add("Horizon", new(ModContent.GetInstance<HorizonSubworld>(), ["Sealed", "Nowhere"], () => false, new Vector2(-665, -137)));
             Items.Add("TheGray", new(ModContent.GetInstance<TheGraySubworld>(), ["Sealed"], () => false, new Vector2(-657, 382)));
             Items.Add("Nowhere", new(ModContent.GetInstance<NowhereSubworld>(), ["Horizon", "Virisite"], () => false, new Vector2(-293, -392)));
-            Items.Add("Virisite", new(ModContent.GetInstance<SingularPointSubworld>(), ["Nowhere", "GreatSea"], () => false, new Vector2(67, -409)));
-            Items.Add("Wolf", new(ModContent.GetInstance<WolfForestSubworld>(), ["Overworld"], () => false, new Vector2(545, -62)));
+            Items.Add("Virisite", new(ModContent.GetInstance<SingularPointSubworld>(), ["Nowhere", "GreatSea", "OvergrowthJungle"], () => false, new Vector2(67, -409)));
+            Items.Add("Wolf", new(ModContent.GetInstance<WolfForestSubworld>(), ["OvergrowthJungle"], () => false, new Vector2(545, -62)));
+            Items.Add("OvergrowthJungle", new(ModContent.GetInstance<OvergrowthRainforestSubworld>(), ["Pinnacles", "Bridge", "Virisite", "Wolf"], () => false, new Vector2(645, -162)));
         }
     }
 

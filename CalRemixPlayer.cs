@@ -463,6 +463,7 @@ namespace CalRemix
             tag["MiracleUnlocked"] = miracleUnlocked;
             tag["FifteenMinutesSinceHardmode"] = fifteenMinutesSinceHardmode;
             tag["WulfrumPackUnlocked"] = wapUnlocked;
+            tag["SubmapUnlocked"] = submapUIUnlocked;
 
             tag["DeliciousMeatRedeemed"] = deliciousMeatRedeemed;
             tag["DeliciousMeatPrestige"] = deliciousMeatPrestige;
@@ -479,6 +480,7 @@ namespace CalRemix
             miracleUnlocked = tag.GetBool("MiracleUnlocked");
             wapUnlocked = tag.GetBool("WulfrumPackUnlocked");
             fifteenMinutesSinceHardmode = tag.GetInt("FifteenMinutesSinceHardmode");
+            submapUIUnlocked = tag.GetBool("SubmapUnlocked");
 
             deliciousMeatRedeemed = tag.GetInt("DeliciousMeatRedeemed");
             deliciousMeatPrestige = tag.GetInt("DeliciousMeatPrestige");
