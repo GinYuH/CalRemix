@@ -1,6 +1,8 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.Misc;
+using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Core.Biomes;
@@ -20,35 +22,22 @@ using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
-    public class OvergrowthRainforestSubworld : Subworld, ICustomSpawnSubworld, IDisableOcean
+    public class OvergrowthRainforestSubworld : Subworld, ICustomSpawnSubworld, IDisableOcean, IFixDrawBlack
     {
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            // Main Great Sea
-            list.Add(item: (ModContent.NPCType<BullShark>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<MicrobialClusterII>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<Stanchor>(), 16f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
-            list.Add(item: (ModContent.NPCType<KillerPolyp>(), 22f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
-            list.Add(item: (ModContent.NPCType<TempestKraken>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TempestKraken>())));
-            list.Add(item: (ModContent.NPCType<HellbenderBaby>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<HellbenderHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<HellbenderHead>())));
-            list.Add(item: (ModContent.NPCType<Livyatan>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<Livyatan>())));
+            // Main Jungle
+            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.6f, (NPCSpawnInfo n) => true));
+            list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 16f, (NPCSpawnInfo n) => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            list.Add(item: (ModContent.NPCType<Chimp>(), 16f, (NPCSpawnInfo n) => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
 
-            // Primordial Caves
-            list.Add(item: (ModContent.NPCType<TheShoalless>(), 0.8f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
-            list.Add(item: (ModContent.NPCType<Zoaoa>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
-            list.Add(item: (ModContent.NPCType<Xiphactinus>(), 0.4f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
-            list.Add(item: (ModContent.NPCType<TanyHead>(), 0.02f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TanyHead>())));
-            list.Add(item: (ModContent.NPCType<Liopleurodon>(), 0.02f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>() && !NPC.AnyNPCs(ModContent.NPCType<Liopleurodon>())));
-            list.Add(item: (ModContent.NPCType<DepthGlider>(), 0.02f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>()));
-            list.Add(item: (ModContent.NPCType<AnomalyDisciple3>(), 0.3f, (NPCSpawnInfo n) => n.Player.InModBiome<PrimordialCavesBiome>() && n.Player.position.ToTileCoordinates().Y > (Main.maxTilesY * 0.95f)));
+            // Temple
             return list;
         }
 
-        public override int Height => 2000;
-        public override int Width => 6400;
+        public override int Height => 1300;
+        public override int Width => 4400;
         public override List<GenPass> Tasks =>
         [
             new OvergrowthRainforestGeneration()
@@ -111,7 +100,7 @@ namespace CalRemix.Core.Subworlds
     {
         public static float groundLevel = 0.7f;
         public static float treeTopLevel = 0.05f;
-        public static float templePosition = 0.3f;
+        public static float templePosition = 0.22f;
 
         public OvergrowthRainforestGeneration() : base("Terrain", 1) { }
 
@@ -143,7 +132,7 @@ namespace CalRemix.Core.Subworlds
 
             progress.Set(0.25f);
 
-            CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * groundLevel), Main.maxTilesX, (int)(Main.maxTilesY * (1 - groundLevel))), TileID.Mud, variance: 30);
+            CalRemixHelper.PerlinSurface(new Rectangle((int)(Main.maxTilesX * templePosition), (int)(Main.maxTilesY * groundLevel), Main.maxTilesX, (int)(Main.maxTilesY * (1 - groundLevel))), TileID.Mud, variance: 30);
 
             progress.Set(0.5f);
 
