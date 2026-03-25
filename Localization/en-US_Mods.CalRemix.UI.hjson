@@ -174,4 +174,13 @@ SubworldMap: {
 			Come and drive down its famous highway.
 			'''
 	}
+
+	OvergrowthJungle: {
+		DisplayName: Overgrowth Rainforest
+		Description:
+			'''
+			A titanic jungle full of titanic trees.
+			At its heart, a grand temple containing riches untold.
+			'''
+	}
 }

@@ -708,6 +708,29 @@ namespace CalRemix
             }
         }
 
+        /// <summary>
+        /// Finds the topmost solid tile of a given x coordinate
+        /// </summary>
+        /// <param name="i">The x coordinate to check</param>
+        /// <param name="j">The y coordinate that will be found</param>
+        /// <param name="tileType">The type of tile to look for, defaults to -1 which means any block will count</param>
+        /// <param name="start">The vertical start of the loop, defaults to 0 (the top of the world)</param>
+        /// <returns>The tile</returns>
+        public static Tile FindTopTile(int i, out int j, int tileType = -1, int start = 0)
+        {
+            for (int y = start; y < Main.maxTilesY; y++)
+            {
+                Tile t = CalamityUtils.ParanoidTileRetrieval(i, y);
+                if (t.HasTile && t.IsTileSolid() && (tileType == -1 || t.TileType == tileType))
+                {
+                    j = y;
+                    return t;
+                }
+            }
+            j = 0;
+            return CalamityUtils.ParanoidTileRetrieval(i, 0);
+        }
+
         //UGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
         public static void ChargingMinionAI(this Projectile projectile, float range, float maxPlayerDist, float extraMaxPlayerDist, float safeDist, int initialUpdates, float chargeDelayTime, float goToSpeed, float goBackSpeed, Vector2 returnOffset, float chargeCounterMax, float chargeSpeed, bool tileVision, bool ignoreTilesWhenCharging, int updateDifference = 1)
         {

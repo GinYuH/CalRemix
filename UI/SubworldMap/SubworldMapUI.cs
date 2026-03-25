@@ -206,6 +206,8 @@ namespace CalRemix.UI.SubworldMap
                                 SubworldSystem.Enter(item.boundSubworld.FullName);
                             else
                                 SubworldSystem.Exit();
+
+                            IngameFancyUI.Close();
                         }
                     }
                 }
