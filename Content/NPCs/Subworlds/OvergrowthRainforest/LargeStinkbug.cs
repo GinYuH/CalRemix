@@ -1,13 +1,14 @@
-﻿using Terraria;
+﻿using CalamityMod;
+using CalamityMod.NPCs.Abyss;
+using CalamityMod.Projectiles.Boss;
+using CalRemix.Content.Items.Potions;
+using CalRemix.Core.Biomes.Subworlds;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using CalamityMod;
-using CalRemix.Content.Items.Potions;
-using CalamityMod.NPCs.Abyss;
-using Microsoft.Xna.Framework;
-using CalamityMod.Projectiles.Boss;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {
@@ -34,6 +35,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
             NPC.Calamity().VulnerableToCold = true;
+            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type];
         }
 
         public override void AI()

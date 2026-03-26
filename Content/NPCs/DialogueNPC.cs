@@ -102,6 +102,8 @@ namespace CalRemix.Content.NPCs
                         string key = GetDialogue();
                         OnTalk(key);
                         NPCDialogueUI.StartDialogue(NPC.whoAmI, key);
+                        for (int i = 0; i < 50; i++)
+                            Main.BestiaryTracker.Kills.RegisterKill(NPC);
                     }
                 }
             }

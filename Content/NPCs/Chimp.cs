@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalRemix.Core.Biomes.Subworlds;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -38,6 +39,7 @@ namespace CalRemix.Content.NPCs
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToHeat = true;
+            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type];
         }
 
         public override void AI()

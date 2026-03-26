@@ -94,6 +94,7 @@ using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.Biomes;
+using CalRemix.Core.Biomes.Subworlds;
 using CalRemix.Core.Graphics;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
@@ -2712,6 +2713,10 @@ namespace CalRemix
             AddModBiomeToBestiary(npc.type, NPCType<Apollo>(), exosphereID, bestiaryEntry);
             AddModBiomeToBestiary(npc.type, NPCType<ThanatosHead>(), exosphereID, bestiaryEntry);
             AddModBiomeToBestiary(npc.type, NPCType<Draedon>(), exosphereID, bestiaryEntry);
+
+            int jungleID = GetInstance<OvergrowthRainforestBiome>().Type;
+            AddModBiomeToBestiary(npc.type, NPCID.GreenDragonfly, jungleID, bestiaryEntry);
+            AddModBiomeToBestiary(npc.type, NPCID.Stinkbug, jungleID, bestiaryEntry);
 
             if (npc.type == NPCType<CalamityMod.Projectiles.Boss.BrainOfCthulhu.BloodBomb>())
             {
