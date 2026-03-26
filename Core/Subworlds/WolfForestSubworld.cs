@@ -25,7 +25,7 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            list.Add(item: (ModContent.NPCType<DireWolf>(), 1, n => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            list.Add(item: (ModContent.NPCType<DireWolf>(), 1, n => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile));
             return list;
         }
 
@@ -50,10 +50,6 @@ namespace CalRemix.Core.Subworlds
         {
             SkyManager.Instance["Ambience"].Deactivate();
             base.Update();
-            if (Main.LocalPlayer.controlUseItem && Main.LocalPlayer.selectedItem == 2)
-            {
-                SubworldSystem.Enter<WolfForestSubworld>();
-            }
         }
 
         public override void DrawMenu(GameTime gameTime)

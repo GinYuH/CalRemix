@@ -23,13 +23,15 @@ namespace CalRemix.Core.Subworlds
     {
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
+            Predicate<NPCSpawnInfo> tile = new Predicate<NPCSpawnInfo>(n => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile);
+
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
             // Main Great Sea
             list.Add(item: (ModContent.NPCType<BullShark>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
             list.Add(item: (ModContent.NPCType<MicrobialClusterII>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
             list.Add(item: (ModContent.NPCType<Crustiment>(), 0.6f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
-            list.Add(item: (ModContent.NPCType<Stanchor>(), 16f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
-            list.Add(item: (ModContent.NPCType<KillerPolyp>(), 22f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            list.Add(item: (ModContent.NPCType<Stanchor>(), 16f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && tile.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<KillerPolyp>(), 22f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && tile.Invoke(n)));
             list.Add(item: (ModContent.NPCType<TempestKraken>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<TempestKraken>())));
             list.Add(item: (ModContent.NPCType<HellbenderBaby>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>()));
             list.Add(item: (ModContent.NPCType<HellbenderHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<GreatSeaBiome>() && !NPC.AnyNPCs(ModContent.NPCType<HellbenderHead>())));

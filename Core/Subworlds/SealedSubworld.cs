@@ -35,18 +35,20 @@ namespace CalRemix.Core.Subworlds
     {
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
+            Predicate<NPCSpawnInfo> tile = new Predicate<NPCSpawnInfo>(n => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).HasTile);
+
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            list.Add(item: (ModContent.NPCType<StonePriest>(), 0.2f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()&& Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
-            list.Add(item: (ModContent.NPCType<DisilUnit>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
-            list.Add(item: (ModContent.NPCType<SealedPorswine>(), 0.2f, (NPCSpawnInfo n) => (n.Player.InModBiome<SealedFieldsBiome>() || n.Player.InModBiome<TurnipBiome>()) && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
-            list.Add(item: (ModContent.NPCType<DoUHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile && !NPC.AnyNPCs(ModContent.NPCType<DoUHead>())));
+            list.Add(item: (ModContent.NPCType<StonePriest>(), 0.2f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>()&& tile.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<DisilUnit>(), 0.1f, (NPCSpawnInfo n) => n.Player.InModBiome<VolcanicFieldBiome>() && tile.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<SealedPorswine>(), 0.2f, (NPCSpawnInfo n) => (n.Player.InModBiome<SealedFieldsBiome>() || n.Player.InModBiome<TurnipBiome>()) && tile.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<DoUHead>(), 0.01f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && tile.Invoke(n) && !NPC.AnyNPCs(ModContent.NPCType<DoUHead>())));
             list.Add(item: (ModContent.NPCType<ParadiseCreeper>(), 1f, (NPCSpawnInfo n) => n.Player.InModBiome<CarnelianForestBiome>()));
             list.Add(item: (ModContent.NPCType<WinterWitch>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<CarnelianForestBiome>() && !NPC.AnyNPCs(ModContent.NPCType<WinterWitch>())));
-            list.Add(item: (ModContent.NPCType<TheBealed>(), 0.1f, (NPCSpawnInfo n) => (n.Player.InModBiome<BadlandsBiome>() || n.Player.InModBiome<TurnipBiome>() || n.Player.InModBiome<SealedFieldsBiome>() || n.Player.InModBiome<DarnwoodSwampBiome>() || n.Player.InModBiome<BarrensBiome>()) && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
-            list.Add(item: (ModContent.NPCType<EvilSealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile && Main.tile[n.SpawnTileX, n.SpawnTileY].TileType == ModContent.TileType<BadrockPlaced>()));
-            list.Add(item: (ModContent.NPCType<SealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<SealedFieldsBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
-            list.Add(item: (ModContent.NPCType<SealedCitizen>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<TurnipBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
-            list.Add(item: (ModContent.NPCType<Observer>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<TurnipBiome>() && Main.tile[n.SpawnTileX, n.SpawnTileY].HasTile));
+            list.Add(item: (ModContent.NPCType<TheBealed>(), 0.1f, (NPCSpawnInfo n) => (n.Player.InModBiome<BadlandsBiome>() || n.Player.InModBiome<TurnipBiome>() || n.Player.InModBiome<SealedFieldsBiome>() || n.Player.InModBiome<DarnwoodSwampBiome>() || n.Player.InModBiome<BarrensBiome>()) && tile.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<EvilSealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<BadlandsBiome>() && tile.Invoke(n) && CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).TileType == ModContent.TileType<BadrockPlaced>()));
+            list.Add(item: (ModContent.NPCType<SealedPuppet>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<SealedFieldsBiome>() && tile.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<SealedCitizen>(), 2f, (NPCSpawnInfo n) => n.Player.InModBiome<TurnipBiome>() && tile.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<Observer>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<TurnipBiome>() && tile.Invoke(n)));
             list.Add(item: (ModContent.NPCType<YellowEcho>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<BarrensBiome>() && !NPC.AnyNPCs(ModContent.NPCType<YellowEcho>())));
             list.Add(item: (ModContent.NPCType<MonorianGastropod>(), 0.05f, (NPCSpawnInfo n) => n.Player.InModBiome<VoidForestBiome>() && !NPC.AnyNPCs(ModContent.NPCType<MonorianGastropod>())));
             return list;

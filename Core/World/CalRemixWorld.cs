@@ -1058,6 +1058,10 @@ namespace CalRemix.Core.World
             plumestoneTiles = tileCounts[TileType<ActivePlumestonePlaced>()] + tileCounts[TileType<InactivePlumestonePlaced>()];
             turnipTiles = tileCounts[TileType<PorswineManurePlaced>()] + tileCounts[TileType<TurnipFleshPlaced>()] + tileCounts[TileType<TurnipLeafPlaced>()];
             Main.SceneMetrics.HolyTileCount += tileCounts[TileType<TorrefiedTephraPlaced>()];
+            if (SubworldSystem.IsActive<OvergrowthRainforestSubworld>())
+            {
+                Main.SceneMetrics.JungleTileCount += 1000;
+            }
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)

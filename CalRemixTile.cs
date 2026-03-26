@@ -489,7 +489,7 @@ namespace CalRemix
                 }
             }
             Player player = Main.LocalPlayer;
-            if (player.ZoneJungle && !NPC.AnyNPCs(NPCType<Phytogen>()))
+            if (player.ZoneJungle && !NPC.AnyNPCs(NPCType<Phytogen>()) && !SubworldSystem.AnyActive())
             {
                 if (!effectOnly && !fail && TileID.Sets.IsShakeable[type] && WorldGen.genRand.NextBool(22))
                 {

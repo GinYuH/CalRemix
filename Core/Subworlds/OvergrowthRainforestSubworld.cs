@@ -30,12 +30,18 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
+
+            // Enemies are forced to spawn inside the tree if the player is inside as well
+            Point playerPoint = Main.LocalPlayer.Center.ToTileCoordinates();
+            bool playerWall = CalamityUtils.ParanoidTileRetrieval(playerPoint.X, playerPoint.Y).WallType > WallID.None;
+            Predicate<NPCSpawnInfo> wallFunc = new Predicate<NPCSpawnInfo>(t => (CalamityUtils.ParanoidTileRetrieval(t.SpawnTileX, t.SpawnTileY).WallType > WallID.None && playerWall) || !playerWall);
+
             // Main Jungle
-            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.6f, (NPCSpawnInfo n) => true));
-            list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 16f, (NPCSpawnInfo n) => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
-            list.Add(item: (ModContent.NPCType<Chimp>(), 16f, (NPCSpawnInfo n) => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
-            list.Add(item: (NPCID.GreenDragonfly, 0.04f, (NPCSpawnInfo n) => true));
-            list.Add(item: (NPCID.Stinkbug, 0.05f, (NPCSpawnInfo n) => true));
+            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.6f, wallFunc));
+            list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 16f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<Chimp>(), 16f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
+            list.Add(item: (NPCID.GreenDragonfly, 0.04f, wallFunc));
+            list.Add(item: (NPCID.Stinkbug, 0.05f, wallFunc));
 
             // Temple
             return list;
@@ -198,6 +204,24 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    t.SetHighlight(false);
+
+                    Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                    if (!above.HasTile && t.TileType == TileID.JungleGrass && t.HasTile)
+                    {
+                        if (WorldGen.genRand.NextBool(5))
+                        {
+                            CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(20, 53));
+                        }
+                    }
+                }
+            }
+
             RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<OvergrowthRainforestDoor>());
         }
 
@@ -209,7 +233,7 @@ namespace CalRemix.Core.Subworlds
             int top = (int)(Main.maxTilesY * treeTopLevel);
             int stuffInGround = 50;
             int treeNum = 0;
-            for (int i = dungeon + padding * 2; i < Main.maxTilesX - padding; i++)
+            for (int i = dungeon + padding * 2; i < Main.maxTilesX - padding * 2; i++)
             {
                 // Update gen progress each time a tree is made
                 prog.Set(MathHelper.Lerp(0.25f, 0.5f, i / (float)Main.maxTilesX));
@@ -291,7 +315,7 @@ namespace CalRemix.Core.Subworlds
                         // Roots
                         else if (p == 0)
                         {
-                            int rootCount = Main.rand.Next(7, 13);
+                            int rootCount = WorldGen.genRand.Next(7, 13);
                             for (int k = 0; k < rootCount; k++)
                             {
                                 Vector2 rootDir = Vector2.UnitY.RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, k / (float)(rootCount - 1)) + WorldGen.genRand.NextFloat(MathHelper.ToRadians(5)));
@@ -308,7 +332,7 @@ namespace CalRemix.Core.Subworlds
                                 for (int r = 0; r < rootPointCount; r++)
                                 {
                                     int bezierIntensity = 100;
-                                    rootPoints.Add(Vector2.Lerp(orig, end, r / (float)(rootPointCount - 1)) + new Vector2(Main.rand.Next(-bezierIntensity, bezierIntensity), Main.rand.Next(-bezierIntensity, bezierIntensity)));
+                                    rootPoints.Add(Vector2.Lerp(orig, end, r / (float)(rootPointCount - 1)) + new Vector2(WorldGen.genRand.Next(-bezierIntensity, bezierIntensity), WorldGen.genRand.Next(-bezierIntensity, bezierIntensity)));
                                 }
 
                                 // Bezierify the points
@@ -358,6 +382,7 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
 
+                    int islandCD = 0;
                     // Hollow out the trunk using the same point list used to make it
                     for (int p = 0; p < treePoints.Count; p++)
                     {
@@ -374,14 +399,71 @@ namespace CalRemix.Core.Subworlds
                             {
                                 if (k < 0 || k >= Main.maxTilesX || l < 0 || l >= Main.maxTilesY)
                                     continue;
+                                Tile toHollow = CalamityUtils.ParanoidTileRetrieval(k, l + stuffInGround);
+                                if (toHollow.GetHighlight())
+                                    continue;
                                 float dist = Vector2.Distance(new Vector2(k, l), treePoints[p]);
                                 if (dist < pointRad)
                                 {
                                     if (l < y - 40)
-                                        CalamityUtils.ParanoidTileRetrieval(k, l + stuffInGround).HasTile = false;
+                                        toHollow.HasTile = false;
                                 }
                             }
                         }
+
+                        if (p > (int)(treePoints.Count * 0.8f))
+                            continue;
+
+                        // Inner islands
+                        if (WorldGen.genRand.NextBool(22) && CalamityUtils.ParanoidTileRetrieval(tp.X, tp.Y).TileType != TileID.LivingMahoganyLeaves && islandCD <= 0)
+                        {
+                            Vector2 platformPoint = tp.ToVector2() + WorldGen.genRand.NextVector2Circular(pointRad / 2, pointRad / 2);
+                            Point platformPointPoint = platformPoint.ToPoint();
+
+                            int islandWidth = WorldGen.genRand.Next(20, 40);
+                            int islandHeight = WorldGen.genRand.Next(10, 22); // This is divided by 2
+
+                            int dir = 0;
+                            if (WorldGen.genRand.NextBool())
+                                dir = WorldGen.genRand.NextBool().ToDirectionInt();
+
+                            if (dir != 0)
+                            {
+                                int searchStart = dir == -1 ? platformPointPoint.X - 30 : platformPointPoint.X;
+                                int searchEnd = dir == -1 ? platformPointPoint.X : platformPointPoint.X + 30;
+                                bool validLedge = false;
+
+                                for (int d = searchStart; d < searchEnd; d++)
+                                {
+                                    if (CalamityUtils.ParanoidTileRetrieval(d, platformPointPoint.Y).HasTile)
+                                    {
+                                        platformPoint.X = d;
+                                        validLedge = true;
+                                        break;
+                                    }
+                                }
+                                if (validLedge)
+                                    islandWidth = (int)(islandWidth * 1.4f);
+                            }
+
+                            Rectangle platformRect = Utils.CenteredRectangle(platformPoint, new Vector2(islandWidth, islandHeight));
+                            for (int k = platformRect.Left; k < platformRect.Right; k++)
+                            {
+                                for (int l = platformRect.Center.Y; l < platformRect.Bottom; l++)
+                                {
+                                    if (CalRemixHelper.WithinElipse(k, l, platformRect.Center.X, platformRect.Center.Y, platformRect.Width / 2, platformRect.Height / 2))
+                                    {
+                                        Tile platformTile = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                        platformTile.TileType = TileID.LivingMahogany;
+                                        platformTile.HasTile = true;
+                                        platformTile.SetHighlight(true);
+                                    }
+                                }
+                            }
+                            islandCD = 10;
+                        }
+
+                        islandCD--;
                     }
                     treeNum++;
                     treeCd = padding * 2;
@@ -395,7 +477,7 @@ namespace CalRemix.Core.Subworlds
             int sign = WorldGen.genRand.NextBool().ToDirectionInt();
             Point startPoint = treePoints[idx].ToPoint();
             Point extraPoint = treePoints[idx].ToPoint() - new Point(0, branchHeight);
-            Point endPoint = ((-Vector2.UnitY.RotatedBy(-sign * MathHelper.ToRadians(Main.rand.NextFloat(60, 80)))) * branchLength).ToPoint() + startPoint;
+            Point endPoint = ((-Vector2.UnitY.RotatedBy(-sign * MathHelper.ToRadians(WorldGen.genRand.NextFloat(60, 80)))) * branchLength).ToPoint() + startPoint;
 
             Rectangle branchBounds = Utils.BoundingRectangle([startPoint, startPoint, endPoint, extraPoint]);
 
