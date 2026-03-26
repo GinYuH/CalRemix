@@ -206,6 +206,11 @@ Mods: {
 				DisplayName: Wolf Forest Biome
 				TownNPCDialogueName: the Wolf Forest Biome
 			}
+
+			OvergrowthRainforestBiome: {
+				DisplayName: Overgrowth Rainforest Biome
+				TownNPCDialogueName: the Overgrowth Rainforest Biome
+			}
 		}
 
 		Enchantments: {

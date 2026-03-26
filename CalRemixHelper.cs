@@ -553,7 +553,7 @@ namespace CalRemix
                 noiseSize.Y = 120f;
             }
 
-            int seed = (int)Main.GlobalTimeWrappedHourly;
+            int seed = (int)Main.GlobalTimeWrappedHourly + WorldGen.genRand.Next(-1000, 1000);
             // Create a perlin noise map
             for (int i = 0; i < area.Width; i++)
             {

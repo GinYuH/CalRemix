@@ -1,26 +1,22 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
-using CalRemix.Content.Items.Misc;
 using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using CalRemix.Core.Biomes;
+using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Core.World;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
-using Steamworks;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.Utilities;
 using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
@@ -90,7 +86,14 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
+            Point p = Main.MouseWorld.ToTileCoordinates();
+            if (Main.mouseLeft && Main.LocalPlayer.selectedItem == 2)
+            {
+                WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<Chimpnip>(), true, true);
+            }
             base.Update();
+            SubworldUpdateMethods.UpdateTileEntities();
+            SubworldUpdateMethods.UpdateTiles();
         }
 
         public override void DrawMenu(GameTime gameTime)
@@ -212,11 +215,36 @@ namespace CalRemix.Core.Subworlds
                     t.SetHighlight(false);
 
                     Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                    Tile below = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
                     if (!above.HasTile && t.TileType == TileID.JungleGrass && t.HasTile)
                     {
                         if (WorldGen.genRand.NextBool(5))
                         {
                             CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(20, 53));
+                        }
+                    }
+                    if (WorldGen.genRand.NextBool(30) && above.WallType > WallID.None && !above.HasTile && t.HasTile)
+                    {
+                        WorldGen.PlaceTile(i, j - 1, ModContent.TileType<Chimpnip>(), true, true);
+                    }
+                    if (WorldGen.genRand.NextBool(30))
+                    {
+                        if (t.HasTile && !below.HasTile && (t.TileType == TileID.LivingMahogany || t.TileType == TileID.LivingMahoganyLeaves) && below.WallType > WallID.None)
+                        {
+                            bool interrupt = false;
+                            for (int k = j + 2; k < j + 10; k++)
+                            {
+                                if (CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
+                                {
+                                    interrupt = true;
+                                    break;
+                                }
+                            }
+                            if (!interrupt)
+                            {
+                                t.TileType = (ushort)ModContent.TileType<Calamansi>();
+                                TileEntity.PlaceEntityNet(i, j, ModContent.TileEntityType<CalamansiTE>());
+                            }
                         }
                     }
                 }
@@ -400,7 +428,7 @@ namespace CalRemix.Core.Subworlds
                                 if (k < 0 || k >= Main.maxTilesX || l < 0 || l >= Main.maxTilesY)
                                     continue;
                                 Tile toHollow = CalamityUtils.ParanoidTileRetrieval(k, l + stuffInGround);
-                                if (toHollow.GetHighlight())
+                                if (toHollow.GetHighlight() || toHollow.TileType != TileID.LivingMahogany)
                                     continue;
                                 float dist = Vector2.Distance(new Vector2(k, l), treePoints[p]);
                                 if (dist < pointRad)
@@ -459,7 +487,7 @@ namespace CalRemix.Core.Subworlds
                                         platformTile.SetHighlight(true);
                                     }
                                 }
-                            }
+                            }                            
                             islandCD = 10;
                         }
 
