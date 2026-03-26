@@ -26,7 +26,7 @@ namespace CalRemix.Core.Biomes.Subworlds
         // Calculate when the biome is active.
         public override bool IsBiomeActive(Player player)
         {
-            return SubworldSystem.IsActive<OvergrowthRainforestBiome>();
+            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>();
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
