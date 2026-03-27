@@ -451,14 +451,17 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
 
-                        // Hole
+                        // Entrances/exits
                         if (p < (int)(treePoints.Count * 0.8f))
                         {
                             int iterations = 0;
                             bool validCave = true;
 
+                            // Holes are placed either by chance or if enough iterations have passed without a single one being placed
                             if (WorldGen.genRand.NextBool(50) || (iterations > WorldGen.genRand.Next(5, 12) && !placedACave))
                             {
+                                // Check if any branches are nearby
+                                // It's not fool-proof, but it greatly reduces the chances
                                 for (int b = 0; b < branchIndices.Count; b++)
                                 {
                                     if (branchIndices[b] - p > 15 && branchIndices[b] - p < 30)
@@ -470,6 +473,7 @@ namespace CalRemix.Core.Subworlds
                                 if (validCave)
                                 {
                                     int dir = WorldGen.genRand.NextBool().ToDirectionInt();
+                                    // The first cave will always be facing right
                                     if (!placedACave)
                                         dir = 1;
                                     int holePoints = 30;
