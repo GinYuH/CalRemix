@@ -129,7 +129,7 @@ namespace CalRemix.Core.Subworlds
             int spawnX = (int)(Main.maxTilesX * 0.95f);
             Main.spawnTileX = spawnX;
 
-            WorldGen.genRand.SetSeed(Main.rand.Next(0, 10000) + (int)(Main.GlobalTimeWrappedHourly * 2222));
+            //WorldGen.genRand.SetSeed(Main.rand.Next(0, 10000) + (int)(Main.GlobalTimeWrappedHourly * 2222));
 
             // Basic tiles
             for (int i = 0; i < Main.maxTilesX; i++)
@@ -422,6 +422,7 @@ namespace CalRemix.Core.Subworlds
                     }
 
                     int islandCD = 0;
+                    bool placedACave = false;
                     // Hollow out the trunk using the same point list used to make it
                     for (int p = 0; p < treePoints.Count; p++)
                     {
@@ -449,6 +450,63 @@ namespace CalRemix.Core.Subworlds
                                 }
                             }
                         }
+
+                        // Hole
+                        if (p < (int)(treePoints.Count * 0.8f))
+                        {
+                            int iterations = 0;
+                            bool validCave = true;
+
+                            if (WorldGen.genRand.NextBool(50) || (iterations > WorldGen.genRand.Next(5, 12) && !placedACave))
+                            {
+                                for (int b = 0; b < branchIndices.Count; b++)
+                                {
+                                    if (branchIndices[b] - p > 15 && branchIndices[b] - p < 30)
+                                    {
+                                        validCave = false;
+                                        break;
+                                    }
+                                }
+                                if (validCave)
+                                {
+                                    int dir = WorldGen.genRand.NextBool().ToDirectionInt();
+                                    if (!placedACave)
+                                        dir = 1;
+                                    int holePoints = 30;
+                                    Vector2 holeDest = tp.ToVector2() + new Vector2(dir * 200, WorldGen.genRand.Next(-20, 0));
+
+                                    for (int b = 0; b < holePoints; b++)
+                                    {
+                                        int holeRadius = WorldGen.genRand.Next(4, 8);
+                                        Point cavePos = (Vector2.Lerp(tp.ToVector2(), holeDest, b / (float)(holePoints - 1))).ToPoint();
+
+                                        for (int k = cavePos.X - holeRadius; k < cavePos.X + holeRadius; k++)
+                                        {
+                                            for (int l = cavePos.Y - holeRadius; l < cavePos.Y + holeRadius; l++)
+                                            {
+                                                if (k < 0 || k >= Main.maxTilesX || l < 0 || l >= Main.maxTilesY)
+                                                    continue;
+                                                Tile toHollow = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                                if (toHollow.GetHighlight())
+                                                    continue;
+                                                float dist = Vector2.Distance(new Vector2(k, l), cavePos.ToVector2());
+                                                if (dist < holeRadius && toHollow.TileType == woodBlock)
+                                                {
+                                                    if (toHollow.HasTile)
+                                                        toHollow.WallType = woodWall;
+                                                    toHollow.HasTile = false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    placedACave = true;
+                                    if (iterations > 22)
+                                        iterations = 0;
+                                }
+                                iterations++;
+                            }
+                        }
+
 
                         if (p > (int)(treePoints.Count * 0.8f))
                             continue;

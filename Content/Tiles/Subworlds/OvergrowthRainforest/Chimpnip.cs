@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -18,6 +20,7 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
             TileObjectData.newTile.Width = 5;
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 18 };
             TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(2, 3);
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.AmberBolt;
             AddMapEntry(new Color(163, 108, 52));
