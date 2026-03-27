@@ -6645,3 +6645,23 @@ OvergrowthRainforestDoor: {
 	DisplayName: Overgrowth Rainforest Door
 	Tooltip: ""
 }
+
+TitanodendronLeafBlock: {
+	DisplayName: Titanodendron Leaf Block
+	Tooltip: ""
+}
+
+TitanodendronLeafBlockWall: {
+	DisplayName: Titanodendron Leaf Block Wall
+	Tooltip: ""
+}
+
+TitanodendronWood: {
+	DisplayName: Titanodendron Wood
+	Tooltip: ""
+}
+
+TitanodendronWoodWall: {
+	DisplayName: Titanodendron Wood Wall
+	Tooltip: ""
+}

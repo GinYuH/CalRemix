@@ -1,10 +1,12 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
+using CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
+using CalRemix.Content.Walls;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
@@ -127,6 +129,8 @@ namespace CalRemix.Core.Subworlds
             int spawnX = (int)(Main.maxTilesX * 0.95f);
             Main.spawnTileX = spawnX;
 
+            WorldGen.genRand.SetSeed(Main.rand.Next(0, 10000) + (int)(Main.GlobalTimeWrappedHourly * 2222));
+
             // Basic tiles
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -197,6 +201,8 @@ namespace CalRemix.Core.Subworlds
 
         public static void FinalizeGen()
         {
+            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
+            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
             // Spawn position
             for (int j = Main.maxTilesY; j > 0; j--)
             {
@@ -229,10 +235,10 @@ namespace CalRemix.Core.Subworlds
                     }
                     if (WorldGen.genRand.NextBool(30))
                     {
-                        if (t.HasTile && !below.HasTile && (t.TileType == TileID.LivingMahogany || t.TileType == TileID.LivingMahoganyLeaves) && below.WallType > WallID.None)
+                        if (t.HasTile && !below.HasTile && (t.TileType == woodBlock || t.TileType == leafBlock) && below.WallType > WallID.None)
                         {
                             bool interrupt = false;
-                            for (int k = j + 2; k < j + 10; k++)
+                            for (int k = j + 2; k < j + 16; k++)
                             {
                                 if (CalamityUtils.ParanoidTileRetrieval(i, k).HasTile)
                                 {
@@ -255,6 +261,9 @@ namespace CalRemix.Core.Subworlds
 
         public static void PlaceTreeDungeons(GenerationProgress prog)
         {
+            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
+            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
+            ushort woodWall = (ushort)ModContent.WallType<UnsafeTitanodendronWoodWallPlaced>();
             int treeCd = 0;
             int padding = 250;
             int dungeon = (int)(Main.maxTilesX * templePosition);
@@ -324,10 +333,10 @@ namespace CalRemix.Core.Subworlds
                                 if (dist < pointRad)
                                 {
                                     Tile log = CalamityUtils.ParanoidTileRetrieval(k, l + stuffInGround);
-                                    log.ResetToType(TileID.LivingMahogany);
+                                    log.ResetToType(woodBlock);
                                     if (dist < pointRad - 3)
                                     {
-                                        log.WallType = WallID.LivingWoodUnsafe;
+                                        log.WallType = woodWall;
                                     }
                                 }
                             }
@@ -343,28 +352,30 @@ namespace CalRemix.Core.Subworlds
                         // Roots
                         else if (p == 0)
                         {
-                            int rootCount = WorldGen.genRand.Next(7, 13);
+                            int rootCount = WorldGen.genRand.Next(14, 27);
                             for (int k = 0; k < rootCount; k++)
                             {
-                                Vector2 rootDir = Vector2.UnitY.RotatedBy(MathHelper.Lerp(-MathHelper.PiOver4, MathHelper.PiOver4, k / (float)(rootCount - 1)) + WorldGen.genRand.NextFloat(MathHelper.ToRadians(5)));
+                                float rootSpread = MathHelper.ToRadians(75);
+                                Vector2 rootDir = Vector2.UnitY.RotatedBy(MathHelper.Lerp(-rootSpread, rootSpread, k / (float)(rootCount - 1)) + WorldGen.genRand.NextFloat(MathHelper.ToRadians(5)));
 
                                 Vector2 orig = treePoints[p];
                                 bool bigRoot = k % 3 == 0;
-                                int rootLength = bigRoot ? WorldGen.genRand.Next(200, 400) : WorldGen.genRand.Next(150, 300);
+                                bool gigaRoot = k % 9 == 0;
+                                int rootLength = gigaRoot ? WorldGen.genRand.Next(600, 1400) : bigRoot ? WorldGen.genRand.Next(200, 400) : WorldGen.genRand.Next(150, 300);
                                 Vector2 end = (treePoints[p] + rootDir * rootLength);
 
                                 // Make a list of points for the roots
-                                int rootPointCount = WorldGen.genRand.Next(4, 7);
+                                int rootPointCount = WorldGen.genRand.Next(14, 27);
                                 List<Vector2> rootPoints = new();
                                 rootPoints.Add(orig);
                                 for (int r = 0; r < rootPointCount; r++)
                                 {
-                                    int bezierIntensity = 100;
+                                    int bezierIntensity = gigaRoot ? 50 : 100;
                                     rootPoints.Add(Vector2.Lerp(orig, end, r / (float)(rootPointCount - 1)) + new Vector2(WorldGen.genRand.Next(-bezierIntensity, bezierIntensity), WorldGen.genRand.Next(-bezierIntensity, bezierIntensity)));
                                 }
 
                                 // Bezierify the points
-                                rootPoints = new BezierCurve(rootPoints.ToArray()).GetPoints(80);
+                                rootPoints = new BezierCurve(rootPoints.ToArray()).GetPoints(280);
 
                                 // Go through the points and blotch in mahogany circles
                                 for (int r = 0; r < rootPoints.Count; r++)
@@ -379,12 +390,12 @@ namespace CalRemix.Core.Subworlds
                                     {
                                         for (int s = rootPoint.Y - rootWidth; s < rootPoint.Y + rootWidth; s++)
                                         {
-                                            if (q < 0 || q >= Main.maxTilesX || s < 0 || s >= Main.maxTilesY)
+                                            if (q < dungeon || q >= Main.maxTilesX || s < 0 || s >= Main.maxTilesY)
                                                 continue;
                                             float dist = Vector2.Distance(new Vector2(q, s), rootPoint.ToVector2());
                                             if (dist < rootWidth)
                                             {
-                                                CalamityUtils.ParanoidTileRetrieval(q, s).ResetToType(TileID.LivingMahogany);
+                                                CalamityUtils.ParanoidTileRetrieval(q, s).ResetToType(woodBlock);
                                             }
                                         }
                                     }
@@ -428,7 +439,7 @@ namespace CalRemix.Core.Subworlds
                                 if (k < 0 || k >= Main.maxTilesX || l < 0 || l >= Main.maxTilesY)
                                     continue;
                                 Tile toHollow = CalamityUtils.ParanoidTileRetrieval(k, l + stuffInGround);
-                                if (toHollow.GetHighlight() || toHollow.TileType != TileID.LivingMahogany)
+                                if (toHollow.GetHighlight())
                                     continue;
                                 float dist = Vector2.Distance(new Vector2(k, l), treePoints[p]);
                                 if (dist < pointRad)
@@ -443,7 +454,7 @@ namespace CalRemix.Core.Subworlds
                             continue;
 
                         // Inner islands
-                        if (WorldGen.genRand.NextBool(22) && CalamityUtils.ParanoidTileRetrieval(tp.X, tp.Y).TileType != TileID.LivingMahoganyLeaves && islandCD <= 0)
+                        if (WorldGen.genRand.NextBool(22) && CalamityUtils.ParanoidTileRetrieval(tp.X, tp.Y).TileType != leafBlock && islandCD <= 0)
                         {
                             Vector2 platformPoint = tp.ToVector2() + WorldGen.genRand.NextVector2Circular(pointRad / 2, pointRad / 2);
                             Point platformPointPoint = platformPoint.ToPoint();
@@ -482,7 +493,7 @@ namespace CalRemix.Core.Subworlds
                                     if (CalRemixHelper.WithinElipse(k, l, platformRect.Center.X, platformRect.Center.Y, platformRect.Width / 2, platformRect.Height / 2))
                                     {
                                         Tile platformTile = CalamityUtils.ParanoidTileRetrieval(k, l);
-                                        platformTile.TileType = TileID.LivingMahogany;
+                                        platformTile.TileType = woodBlock;
                                         platformTile.HasTile = true;
                                         platformTile.SetHighlight(true);
                                     }
@@ -502,6 +513,7 @@ namespace CalRemix.Core.Subworlds
 
         public static void MakeBranches(int idx, List<Vector2> treePoints, int branchLength, int branchHeight, float bushSizeMult = 1f)
         {
+            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
             int sign = WorldGen.genRand.NextBool().ToDirectionInt();
             Point startPoint = treePoints[idx].ToPoint();
             Point extraPoint = treePoints[idx].ToPoint() - new Point(0, branchHeight);
@@ -518,7 +530,7 @@ namespace CalRemix.Core.Subworlds
                         continue;
                     if (CalRemixHelper.WithinTriangle(endPoint, startPoint, extraPoint, new Point(k, l)))
                     {
-                        branchTile.ResetToType(TileID.LivingMahogany);
+                        branchTile.ResetToType(woodBlock);
                     }
                 }
             }
@@ -536,6 +548,8 @@ namespace CalRemix.Core.Subworlds
         /// <param name="overrideWalls">If this is set to false, existing walls will block leaves from being placed</param>
         public static void MakeBush(float i, float j, int sizeX, int sizeY, bool overrideWalls = false, bool big = false)
         {
+            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
+            ushort leafWall = (ushort)ModContent.WallType<UnsafeTitanodendronLeafBlockWallPlaced>();
             Rectangle foliage = Utils.CenteredRectangle(new Vector2(i, j), new Vector2(sizeX, sizeY));
 
             for (int k = foliage.Left; k < foliage.Right; k++)
@@ -548,7 +562,7 @@ namespace CalRemix.Core.Subworlds
                     }
                     if (CalRemixHelper.WithinElipse(k, l, foliage.Center.X, foliage.Center.Y, foliage.Width / 2, foliage.Height / 2))
                     {
-                        CalamityUtils.ParanoidTileRetrieval(k, l).ResetToType(TileID.LivingMahoganyLeaves);
+                        CalamityUtils.ParanoidTileRetrieval(k, l).ResetToType(leafBlock);
 
                         if (WorldGen.genRand.NextBool(WorldGen.genRand.Next((int)(sizeX * 0.8f), (int)(sizeX * 1.2f))))
                         {
@@ -559,7 +573,7 @@ namespace CalRemix.Core.Subworlds
                                 {
                                     if (new Vector2(k, l).Distance(new Vector2(m, n)) < leafBallRad)
                                     {
-                                        CalamityUtils.ParanoidTileRetrieval(m, n).ResetToType(TileID.LivingMahoganyLeaves);
+                                        CalamityUtils.ParanoidTileRetrieval(m, n).ResetToType(leafBlock);
                                     }
                                 }
                             }
@@ -571,7 +585,7 @@ namespace CalRemix.Core.Subworlds
             if (big)
             {
                 foliage.Inflate(-10, -10);
-                CalRemixHelper.PerlinGeneration(foliage, noiseSize: new Vector2(300, 300), noiseStrength: 0.2f, noiseThreshold: 0.7f, overrideTiles: true, tileType: TileID.LivingMahoganyLeaves, wallType: WallID.LivingLeaf, tileCondition: (Point p) => CalRemixHelper.WithinElipse(p.X, p.Y, foliage.Center.X, foliage.Center.Y, foliage.Width / 2, foliage.Height / 2));
+                CalRemixHelper.PerlinGeneration(foliage, noiseSize: new Vector2(300, 300), noiseStrength: 0.2f, noiseThreshold: 0.7f, overrideTiles: true, tileType: leafBlock, wallType: leafWall, tileCondition: (Point p) => CalRemixHelper.WithinElipse(p.X, p.Y, foliage.Center.X, foliage.Center.Y, foliage.Width / 2, foliage.Height / 2));
 
                 // Add leaf walls
                 for (int k = foliage.Left; k < foliage.Right; k++)
@@ -580,7 +594,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (CalRemixHelper.WithinElipse(k, l, foliage.Center.X, foliage.Center.Y, foliage.Width / 2, foliage.Height / 2))
                         {
-                            CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.LivingLeaf;
+                            CalamityUtils.ParanoidTileRetrieval(k, l).WallType = leafWall;
                         }
                     }
                 }
