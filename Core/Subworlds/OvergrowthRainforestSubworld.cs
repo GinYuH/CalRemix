@@ -101,7 +101,7 @@ namespace CalRemix.Core.Subworlds
             Point p = Main.MouseWorld.ToTileCoordinates();
             if (Main.mouseLeft && Main.LocalPlayer.selectedItem == 2)
             {
-                WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<Chimpnip>(), true, true);
+                WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<CitrusPeelFungus>(), true, true);
             }
             base.Update();
             SubworldUpdateMethods.UpdateTileEntities();
@@ -172,6 +172,7 @@ namespace CalRemix.Core.Subworlds
 
             progress.Set(0.75f);
 
+            Moss();
             TreeHouse();
             FinalizeGen();
 
@@ -351,6 +352,63 @@ namespace CalRemix.Core.Subworlds
             }
         }
 
+        public static void Moss()
+        {
+            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
+            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
+            ushort mos = (ushort)ModContent.TileType<MossyTitanodendronWoodPlaced>();
+
+            int top = (int)(Main.maxTilesY * 0.4f);
+            int dungeon = (int)(Main.maxTilesX * templePosition);
+            int bottom = (int)(Main.maxTilesY * 0.6f);
+
+            int mossesPlaced = 0;
+            int tries = 0;
+
+            while (tries < 10000 && mossesPlaced < 40)
+            {
+                int x = WorldGen.genRand.Next(dungeon, Main.maxTilesX);
+                int y = WorldGen.genRand.Next(top, bottom);
+                Tile t = CalamityUtils.ParanoidTileRetrieval(x, y);
+                if (!t.HasTile || t.TileType != woodBlock || t.WallType == WallID.None)
+                {
+                    continue;
+                }
+                int mossRad = WorldGen.genRand.Next(8, 24);
+                Rectangle rect = Utils.CenteredRectangle(new Vector2(x, y), Vector2.One * (mossRad * 2 + 1));
+                bool aMossPlaced = false;
+                for (int i = rect.Left; i < rect.Right; i++)
+                {
+                    for (int j = rect.Top; j < rect.Bottom; j++)
+                    {
+                        Tile quer = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
+                        Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                        Tile up = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                        Tile down = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
+
+                        if (!(up.HasTile && up.WallType == WallID.None
+                            || left.HasTile && left.WallType == WallID.None
+                            || right.HasTile && right.WallType == WallID.None
+                            ||  down.HasTile && down.WallType == WallID.None))
+                        {
+                            if (!up.HasTile || !left.HasTile || !right.HasTile || !down.HasTile)
+                            { 
+                                if (CalRemixHelper.WithinElipse(i, j, x, y, mossRad, mossRad))
+                                {
+                                    quer.TileType = mos;
+                                    aMossPlaced = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (aMossPlaced)
+                    mossesPlaced++;
+                tries++;
+            }
+        }
+
         public static void TreeHouse()
         {
             ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
@@ -414,6 +472,7 @@ namespace CalRemix.Core.Subworlds
         {
             ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
             ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
+            ushort woodWall = (ushort)ModContent.WallType<UnsafeTitanodendronWoodWallPlaced>();
             // Spawn position
             for (int j = Main.maxTilesY; j > 0; j--)
             {
@@ -439,6 +498,10 @@ namespace CalRemix.Core.Subworlds
                         {
                             CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(20, 53));
                         }
+                    }
+                    if (WorldGen.genRand.NextBool(2000) && t.WallType == woodWall && !t.HasTile)
+                    {
+                        WorldGen.PlaceTile(i, j, ModContent.TileType<CitrusPeelFungus>(), true, true);
                     }
                     if (WorldGen.genRand.NextBool(30) && above.WallType > WallID.None && !above.HasTile && t.HasTile)
                     {

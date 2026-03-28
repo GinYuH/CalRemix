@@ -6665,3 +6665,8 @@ TitanodendronWoodWall: {
 	DisplayName: Titanodendron Wood Wall
 	Tooltip: ""
 }
+
+MacroMoss: {
+	DisplayName: Macro Moss
+	Tooltip: Can be placed on Titanodendron Wood
+}

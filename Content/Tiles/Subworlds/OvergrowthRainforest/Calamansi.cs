@@ -103,10 +103,10 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
                     float fruitRot = (cables.Segments[^1].position.DirectionTo(cables.Segments[^2].position)).ToRotation() + MathHelper.PiOver2;
                     Vector2 fruitPos = cables.Segments[^1].position - Main.screenPosition + CalamityUtils.TileDrawOffset + Vector2.UnitX * 10;
                     SpriteEffects dir = i % 2 == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                    Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
+                    //Main.spriteBatch.EnterShaderRegion(BlendState.Additive);
                     float bloomSize = large ? 0.4f : 0.3f;
-                    Main.EntitySpriteDraw(CalRemixAsset.BloomTexture.Value, fruitPos, null, Color.Yellow * 0.5f, 0, CalRemixAsset.BloomTexture.Size() / 2, bloomSize, 0);
-                    Main.spriteBatch.ExitShaderRegion();
+                    Main.EntitySpriteDraw(CalRemixAsset.BloomTexture.Value, fruitPos, null, Color.Yellow * 0.1f, 0, CalRemixAsset.BloomTexture.Size() / 2, bloomSize, 0);
+                    //Main.spriteBatch.ExitShaderRegion();
                     Main.EntitySpriteDraw(fruit, fruitPos, null, Lighting.GetColor(cables.Segments[^1].position.ToTileCoordinates()), fruitRot, fruit.Size() / 2, 1, dir);
                     Main.EntitySpriteDraw(fruit, fruitPos, null, Color.White, fruitRot, fruit.Size() / 2, 1, dir);
                 }
