@@ -22,11 +22,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
@@ -502,6 +504,15 @@ namespace CalRemix.Core.Subworlds
                     if (WorldGen.genRand.NextBool(2000) && t.WallType == woodWall && !t.HasTile)
                     {
                         WorldGen.PlaceTile(i, j, ModContent.TileType<CitrusPeelFungus>(), true, true);
+                    }
+                    int tableRate = 50;
+                    if (WorldGen.genRand.NextBool(tableRate) && t.WallType == woodWall && !t.HasTile)
+                    {
+                        WorldGen.PlaceTile(i, j, ModContent.TileType<TableFungus>(), true, true, style: WorldGen.genRand.Next(3));
+                    }
+                    if (WorldGen.genRand.NextBool(tableRate) && t.WallType == woodWall && !t.HasTile)
+                    {
+                        WorldGen.PlaceTile(i, j, ModContent.TileType<TableFungusAlt>(), true, true, style: WorldGen.genRand.Next(3));
                     }
                     if (WorldGen.genRand.NextBool(30) && above.WallType > WallID.None && !above.HasTile && t.HasTile)
                     {
