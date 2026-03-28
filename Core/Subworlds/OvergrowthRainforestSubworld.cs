@@ -9,6 +9,7 @@ using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Walls;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
+using rail;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -156,11 +157,113 @@ namespace CalRemix.Core.Subworlds
 
             SpreadGrass();
 
+            progress.Set(0.6f);
+
+            MakeBridges();
+
             progress.Set(0.75f);
 
             FinalizeGen();
 
             progress.Set(1f);
+        }
+
+        public static void MakeBridges()
+        {
+            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
+            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
+
+            int top = (int)(Main.maxTilesY * 0.4f);
+            int dungeon = (int)(Main.maxTilesX * templePosition);
+            int bottom = (int)(Main.maxTilesY * 0.6f);
+
+            Rectangle toCheck = new Rectangle(dungeon, top, Main.maxTilesX - dungeon, bottom - top);
+
+            List<int> bridgePoses = new();
+
+            int bridgeTries = 0;
+            int bridgesPlaced = 0;
+            while (bridgeTries < 100000 && bridgesPlaced < 5)
+            {
+                Point pt = WorldGen.genRand.NextVector2FromRectangle(toCheck).ToPoint();
+                int i = pt.X;
+                int j = pt.Y;
+                Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                bool sb = false;
+                for (int e = 0; e < bridgePoses.Count; e++)
+                {
+                    if (Math.Abs(bridgePoses[e] - j) < 20)
+                    {
+                        sb = true;
+                        break;
+                    }
+                }
+                if (sb)
+                    continue;
+                if (!t.HasTile || (t.TileType != woodBlock && t.TileType != leafBlock))
+                    continue;
+                if (CalamityUtils.ParanoidTileRetrieval(i - 1, j).HasTile && CalamityUtils.ParanoidTileRetrieval(i + 1, j).HasTile)
+                {
+                    continue;
+                }
+                int checkDistance = 100;
+
+                int iters = 0;
+                bool found = false;
+                for (int k = i + 1; k < i + 1000; k++)
+                {
+                    Tile tileCheck = CalamityUtils.ParanoidTileRetrieval(k, j);
+                    iters++;
+                    if (tileCheck.HasTile || tileCheck.WallType > WallID.None)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                Tile finalTile = CalamityUtils.ParanoidTileRetrieval(i + iters, j);
+
+                if (finalTile.TileType != t.TileType)
+                    continue;
+
+                if (iters > checkDistance && found)
+                {
+                    for (int k = i + 1; k < i + iters; k++)
+                    {
+                        Tile platform = CalamityUtils.ParanoidTileRetrieval(k, j);
+                        if (!platform.GetHighlight())
+                        {
+                            platform.TileType = TileID.Platforms;
+                            platform.HasTile = true;
+                        }
+
+                        if (k == i + 1 || k == i + iters - 1)
+                        {
+                            int halfHeight = 5;
+                            int halfWidth = 15;
+                            Rectangle island = Utils.CenteredRectangle(new Vector2(k, j), new Vector2(halfWidth * 2, halfHeight * 2));
+
+                            for (int l = island.Left; l < island.Right; l++)
+                            {
+                                for (int m = island.Center.Y; m < island.Bottom; m++)
+                                {
+                                    Tile querie = CalamityUtils.ParanoidTileRetrieval(l, m);
+                                    if (querie.TileType == leafBlock)
+                                        continue;
+                                    if (CalRemixHelper.WithinElipse(l, m, island.Center.X, island.Center.Y, halfWidth, halfHeight))
+                                    {
+                                        querie.ResetToType(woodBlock);
+                                        querie.SetHighlight(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    bridgesPlaced++;
+                    bridgePoses.Add(j);
+                }
+                bridgeTries++;
+            }
         }
 
         public static void SpreadGrass()
@@ -390,12 +493,15 @@ namespace CalRemix.Core.Subworlds
                                     {
                                         for (int s = rootPoint.Y - rootWidth; s < rootPoint.Y + rootWidth; s++)
                                         {
+                                            Tile possibleRoot = CalamityUtils.ParanoidTileRetrieval(q, s);
+                                            if (rootWidth == 2 && !possibleRoot.HasTile)
+                                                continue;
                                             if (q < dungeon || q >= Main.maxTilesX || s < 0 || s >= Main.maxTilesY)
                                                 continue;
                                             float dist = Vector2.Distance(new Vector2(q, s), rootPoint.ToVector2());
                                             if (dist < rootWidth)
                                             {
-                                                CalamityUtils.ParanoidTileRetrieval(q, s).ResetToType(woodBlock);
+                                                possibleRoot.ResetToType(woodBlock);
                                             }
                                         }
                                     }
@@ -555,6 +661,8 @@ namespace CalRemix.Core.Subworlds
                                     if (CalRemixHelper.WithinElipse(k, l, platformRect.Center.X, platformRect.Center.Y, platformRect.Width / 2, platformRect.Height / 2))
                                     {
                                         Tile platformTile = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                        if (platformTile.WallType == WallID.None)
+                                            continue;
                                         platformTile.TileType = woodBlock;
                                         platformTile.HasTile = true;
                                         platformTile.SetHighlight(true);
