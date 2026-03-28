@@ -28,6 +28,7 @@ namespace CalRemix.Core.World
         internal const string MonorianShrineName = "Core/Schematics/monorianShrine.csch";
         internal const string BrightShrineName = "Core/Schematics/brightShrine.csch";
         internal const string GrayTempleName = "Core/Schematics/grayTemple.csch";
+        internal const string TreeHouseName = "Core/Schematics/treeHouse.csch";
 
         internal static Dictionary<string, SchematicMetaTile[,]> TileMaps =>
             typeof(SchematicManager).GetField("TileMaps", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, SchematicMetaTile[,]>;
@@ -56,6 +57,7 @@ namespace CalRemix.Core.World
             TileMaps.Add("Monorian Shrine", LoadSchematic(MonorianShrineName));
             TileMaps.Add("Bright Shrine", LoadSchematic(BrightShrineName));
             TileMaps.Add("Gray Temple", LoadSchematic(GrayTempleName));
+            TileMaps.Add("Tree House", LoadSchematic(TreeHouseName));
         }
 
 

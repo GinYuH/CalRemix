@@ -1,6 +1,11 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
+using CalamityMod.Items.Placeables.Ores;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Schematics;
 using CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest;
+using CalRemix.Content.Items.Potions;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Tiles;
@@ -8,11 +13,13 @@ using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Walls;
 using CalRemix.Core.World;
+using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
 using rail;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -20,7 +27,9 @@ using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 using Terraria.WorldBuilding;
+using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -163,6 +172,7 @@ namespace CalRemix.Core.Subworlds
 
             progress.Set(0.75f);
 
+            TreeHouse();
             FinalizeGen();
 
             progress.Set(1f);
@@ -183,6 +193,7 @@ namespace CalRemix.Core.Subworlds
 
             int bridgeTries = 0;
             int bridgesPlaced = 0;
+            // Place bridges
             while (bridgeTries < 100000 && bridgesPlaced < 5)
             {
                 Point pt = WorldGen.genRand.NextVector2FromRectangle(toCheck).ToPoint();
@@ -190,6 +201,7 @@ namespace CalRemix.Core.Subworlds
                 int j = pt.Y;
                 Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                 bool sb = false;
+                // Don't place bridges within a vertical distance of each other
                 for (int e = 0; e < bridgePoses.Count; e++)
                 {
                     if (Math.Abs(bridgePoses[e] - j) < 20)
@@ -202,6 +214,7 @@ namespace CalRemix.Core.Subworlds
                     continue;
                 if (!t.HasTile || (t.TileType != woodBlock && t.TileType != leafBlock))
                     continue;
+                // Don't bother if the tile is surrounded by two other tiles
                 if (CalamityUtils.ParanoidTileRetrieval(i - 1, j).HasTile && CalamityUtils.ParanoidTileRetrieval(i + 1, j).HasTile)
                 {
                     continue;
@@ -210,6 +223,7 @@ namespace CalRemix.Core.Subworlds
 
                 int iters = 0;
                 bool found = false;
+                // Check for a solid tile to the right
                 for (int k = i + 1; k < i + 1000; k++)
                 {
                     Tile tileCheck = CalamityUtils.ParanoidTileRetrieval(k, j);
@@ -228,19 +242,54 @@ namespace CalRemix.Core.Subworlds
 
                 if (iters > checkDistance && found)
                 {
+                    int fenceCD = 0;
                     for (int k = i + 1; k < i + iters; k++)
                     {
+                        int platWidth = 15;
+                        if (k == i + platWidth || k == i + iters - 1 - platWidth)
+                        {
+                            for (int m = j - 1; m > j - 8; m--)
+                            {
+                                CalamityUtils.ParanoidTileRetrieval(k, m).WallType = WallID.RichMahoganyFence;
+                            }
+                        }
                         Tile platform = CalamityUtils.ParanoidTileRetrieval(k, j);
                         if (!platform.GetHighlight())
                         {
-                            platform.TileType = TileID.Platforms;
+                            ushort platype = TileID.Platforms;
+                            // Every other platform is cancelled
+                            if (k != i + 1 && k != i + iters - 1)
+                            {
+                                if (k % 2 == 0)
+                                {
+                                    platype = TileID.VineRope;
+                                }
+                            }
+                            platform.TileType = platype;
                             platform.HasTile = true;
+                            if (platype == TileID.VineRope)
+                            {
+                                WorldGen.PlaceTile(k, j + 1, TileID.VineRope, true);
+                                WorldGen.SquareTileFrame(k, j + 1);
+                            }
+                            WorldGen.SquareTileFrame(k, j);
+                            if (platype == TileID.Platforms && fenceCD <= 0 && k < i + iters - platWidth - 1 && k > i + platWidth)
+                            {
+                                for (int m = j - 1; m > j - 4; m--)
+                                {
+                                    CalamityUtils.ParanoidTileRetrieval(k, m).WallType = WallID.RichMahoganyFence;
+                                }
+                                // This should be even
+                                fenceCD = 8;
+                            }
+                            fenceCD--;
                         }
 
+                        // Platform ledges
                         if (k == i + 1 || k == i + iters - 1)
                         {
                             int halfHeight = 5;
-                            int halfWidth = 15;
+                            int halfWidth = platWidth;
                             Rectangle island = Utils.CenteredRectangle(new Vector2(k, j), new Vector2(halfWidth * 2, halfHeight * 2));
 
                             for (int l = island.Left; l < island.Right; l++)
@@ -299,6 +348,65 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                 }
+            }
+        }
+
+        public static void TreeHouse()
+        {
+            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
+            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
+
+            int top = (int)(Main.maxTilesY * 0.4f);
+            int dungeon = (int)(Main.maxTilesX * templePosition);
+            int bottom = (int)(Main.maxTilesY * 0.6f);
+
+            bool hausPlaced = false;
+            int tries = 0;
+
+            while (tries < 10000 && !hausPlaced)
+            {
+                int x = WorldGen.genRand.Next(dungeon, Main.maxTilesX - dungeon);
+                for (int j = 50; j < 300; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(x, j);
+                    Tile above = CalamityUtils.ParanoidTileRetrieval(x, j - 1);
+                    if (t.HasTile && t.TileType == leafBlock && !above.HasTile)
+                    {
+                        bool _ = false;
+                        SchematicManager.PlaceSchematic("Tree House", new Point(x, j + 5), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillTreeHouseChest));
+                        hausPlaced = true;
+                        break;
+                    }
+                }
+                tries++;
+            }
+        }
+
+        public static void FillTreeHouseChest(Chest c, int Type, bool place)
+        {
+            List<(int, int, int)> items = new List<(int, int, int)>();
+            items.Add((ItemID.JungleSpores, 89, 120));
+            items.Add((ItemID.Stinger, 89, 120));
+            items.Add((ItemID.Vine, 89, 120));
+            items.Add((ItemID.JungleKey, 1, 2));
+            items.Add((ModContent.ItemType<Needler>(), 1, 2));
+            items.Add((ModContent.ItemType<TrueCausticEdge>(), 1, 2));
+            items.Add((ModContent.ItemType<UelibloomOre>(), 12, 34));
+            items.Add((ModContent.ItemType<CrabLeaves>(), 23, 34));
+            items.Add((ItemID.JungleYoyo, 1, 2));
+            items.Add((ItemID.TempleKey, 1, 2));
+            items.Add((ItemID.JungleRose, 1, 2));
+            items.Add((ItemID.NaturesGift, 1, 2));
+            items.Add((ItemID.Uzi, 1, 2));
+
+            items = CalamityUtils.ShuffleArray(items.ToArray()).ToList();
+
+            for (int i = 0; i < WorldGen.genRand.Next(6, 11); i++)
+            {
+                (int, int, int) choice = items[i];
+                Item item = c.item[i];
+                item.SetDefaults(choice.Item1);
+                item.stack = WorldGen.genRand.Next(choice.Item2, choice.Item3);
             }
         }
 
