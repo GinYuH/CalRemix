@@ -1209,6 +1209,9 @@ namespace CalRemix.Core
                                     rot = 0;
                                 float scalee = (1 - (u / cables.Segments.Count));
                                 Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, (int)dist, 2), Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.SaddleBrown), rot, TextureAssets.BlackTile.Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+
+                                if (cables.missingIndices.Contains(u))
+                                    continue;
                                 if (u % 2 == 0)
                                 {
                                     Main.EntitySpriteDraw(TextureAssets.Tile[bridgeTile].Value, seg.position - Main.screenPosition + Vector2.UnitY * 8, null, Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.White), 0f, TextureAssets.Tile[bridgeTile].Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);

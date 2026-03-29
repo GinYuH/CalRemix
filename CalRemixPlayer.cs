@@ -1019,7 +1019,8 @@ namespace CalRemix
             }*/
 
             if (!Player.controlDown && !Player.controlDownHold)
-            { 
+            {
+                Rectangle maus = Utils.CenteredRectangle(Main.MouseWorld, Vector2.One * 22);
                 int bridgeID = TileEntityType<RicketyBridgeTE>();
                 foreach (TileEntity t in TileEntity.ByPosition.Values)
                 {
@@ -1030,8 +1031,11 @@ namespace CalRemix
                         if (segs == null)
                             continue;
                         int skip = 2;
-                        foreach (VerletSimulatedSegment seg in segs)
+                        for (int i = 0; i < segs.Count; i++)
                         {
+                            if (bridge.missingIndices.Contains(i))
+                                continue;
+                            VerletSimulatedSegment seg = segs[i];
                             if (skip > 0)
                             {
                                 skip--;
@@ -1039,24 +1043,44 @@ namespace CalRemix
                             }
                             Vector2 segP = seg.position;
                             Rectangle segRect = new Rectangle((int)segP.X - 8, (int)segP.Y - 8, 16, 16);
-                            if (Player.Center.Y < segRect.Top)
+
+                            Vector2 worldPos = segP;
+                            bool db = false;
+                            if (i % 2 == 0)
                             {
-                                if (Player.getRect().Intersects(segRect) && Player.velocity.Y >= 0)
+                                if (Player.HeldItem.pick > 0)
                                 {
-                                    Vector2 pos = Player.position;
-                                    if (!Collision.SolidCollision(pos, Player.width, Player.height))
-                                        Player.position = pos;
-
-                                    if (Player.velocity.Y > 0)
+                                    db = true;
+                                    if (Player.controlUseItem && Player.IsInTileInteractionRange((int)worldPos.X / 16, (int)worldPos.Y / 16, TileReachCheckSettings.Simple) && maus.Contains(worldPos.ToPoint()))
                                     {
-                                        seg.oldPosition = seg.position;
-                                        seg.position.Y += Player.velocity.Y;
+                                        SoundEngine.PlaySound(SoundID.Dig, worldPos);
+                                        for (int m = 0; m < 10; m++)
+                                            Dust.NewDust(worldPos, 8, 8, DustID.WoodFurniture);
+                                        bridge.missingIndices.Add(i);
+                                        continue;
                                     }
+                                }
+                                if (Player.Center.Y < segRect.Top)
+                                {
+                                    if (Player.getRect().Intersects(segRect) && Player.velocity.Y >= 0)
+                                    {
+                                        Vector2 pos = Player.position;
+                                        if (!Collision.SolidCollision(pos, Player.width, Player.height))
+                                            Player.position = pos;
 
-                                    Player.velocity.Y = 0;
-                                    Player.position.Y = segRect.Top - Player.height + 6;
-                                    Player.position += seg.position - seg.oldPosition;
-                                    break;
+                                        if (Player.velocity.Y > 0)
+                                        {
+                                            seg.oldPosition = seg.position;
+                                            seg.position.Y += Player.velocity.Y;
+                                        }
+
+                                        Player.velocity.Y = 0;
+                                        Player.position.Y = segRect.Top - Player.height + 6;
+                                        Player.position += seg.position - seg.oldPosition;
+                                        if (db)
+                                            continue;
+                                        break;
+                                    }
                                 }
                             }
                         }

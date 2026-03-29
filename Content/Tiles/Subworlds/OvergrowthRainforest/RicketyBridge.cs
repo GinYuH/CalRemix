@@ -66,6 +66,7 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
     {
         public Point anchorPoint;
         public List<VerletSimulatedSegment> Segments;
+        public List<int> missingIndices = new();
         public override bool IsTileValidForEntity(int x, int y)
         {
             Tile tile = Main.tile[x, y];
@@ -132,7 +133,13 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
                 int segCount =( anchorPoint.X - Position.X );
 
                 for (int i = 0; i < segCount; ++i)
+                {
                     Segments.Add(new VerletSimulatedSegment(new Vector2((int)(Position.X + i) * 16, (int)Position.Y * 16), false));
+                    if (i % 2 == 0 && WorldGen.genRand.NextBool(40))
+                    {
+                        missingIndices.Add(i);
+                    }
+                }
             }
             else
             {
