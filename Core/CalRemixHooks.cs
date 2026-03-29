@@ -129,6 +129,7 @@ namespace CalRemix.Core
             //On_Lighting.AddLight_int_int_float_float_float += CustomLight;
             //On_Lighting.AddLight_int_int_int_float += CustomLight2;
             On_Main.DrawDefenseCounter += AddDecimalDefense;
+            On_NPC.Collision_DecideFallThroughPlatforms += BridgeCollision;
 
             On.CalamityMod.CalamityUtils.SpawnOldDuke += NoOldDuke;
             On.CalamityMod.NPCs.CalamityGlobalNPC.OldDukeSpawn += NoOldDuke2;
@@ -142,6 +143,51 @@ namespace CalRemix.Core
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
             schematicEntityHook = new Hook(schematicEntityMethod, RemixSchematicEntities);
             drawHook = new Hook(drawMethod, DrawRotated);
+        }
+
+        private bool BridgeCollision(On_NPC.orig_Collision_DecideFallThroughPlatforms orig, NPC npc)
+        {
+            if (!npc.noTileCollide)
+            {
+                int bridgeID = TileEntityType<RicketyBridgeTE>();
+                foreach (TileEntity t in TileEntity.ByPosition.Values)
+                {
+                    if (t.type == bridgeID)
+                    {
+                        RicketyBridgeTE bridge = t as RicketyBridgeTE;
+                        List<VerletSimulatedSegment> segs = bridge.Segments;
+                        if (segs == null)
+                            continue;
+                        foreach (VerletSimulatedSegment seg in segs)
+                        {
+                            Vector2 segP = seg.position;
+                            Rectangle segRect = new Rectangle((int)segP.X - 8, (int)segP.Y - 8, 16, 16);
+                            if (npc.Center.Y < segRect.Top)
+                            {
+                                if (npc.getRect().Intersects(segRect) && npc.velocity.Y >= 0)
+                                {
+                                    Vector2 pos = npc.position;
+                                    if (!Collision.SolidCollision(pos, npc.width, npc.height))
+                                        npc.position = pos;
+
+                                    if (npc.velocity.Y > 0)
+                                    {
+                                        seg.oldPosition = seg.position;
+                                        seg.position.Y += npc.velocity.Y;
+                                    }
+
+                                    npc.velocity.Y = 0;
+                                    npc.position.Y = segRect.Top - npc.height + 6;
+                                    npc.position += seg.position - seg.oldPosition;
+
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return orig(npc);
         }
 
         public override void Unload()
