@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework;
 using rail;
 using SubworldLibrary;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -103,7 +104,14 @@ namespace CalRemix.Core.Subworlds
             Point p = Main.MouseWorld.ToTileCoordinates();
             if (Main.mouseLeft && Main.LocalPlayer.selectedItem == 2)
             {
-                WorldGen.PlaceTile(p.X, p.Y, ModContent.TileType<CitrusPeelFungus>(), true, true);
+                int k = p.X;
+                int j = p.Y;
+                WorldGen.PlaceTile(k, j, ModContent.TileType<RicketyBridge>(), true);
+                TileEntity.PlaceEntityNet(k, j, ModContent.TileEntityType<RicketyBridgeTE>());
+                if (RicketyBridge.GetTEFromCoords(k, j, out RicketyBridgeTE te))
+                {
+                    te.anchorPoint = new Point(k + 22, j);
+                }
             }
             base.Update();
             SubworldUpdateMethods.UpdateTileEntities();
@@ -245,7 +253,6 @@ namespace CalRemix.Core.Subworlds
 
                 if (iters > checkDistance && found)
                 {
-                    int fenceCD = 0;
                     for (int k = i + 1; k < i + iters; k++)
                     {
                         int platWidth = 15;
@@ -253,39 +260,10 @@ namespace CalRemix.Core.Subworlds
                         {
                             for (int m = j - 1; m > j - 8; m--)
                             {
-                                CalamityUtils.ParanoidTileRetrieval(k, m).WallType = WallID.RichMahoganyFence;
+                                //CalamityUtils.ParanoidTileRetrieval(k, m).WallType = WallID.RichMahoganyFence;
+                                CalamityUtils.ParanoidTileRetrieval(k, m).TileType = TileID.ArgonMossBlock;
+                                CalamityUtils.ParanoidTileRetrieval(k, m).SetHighlight(true);
                             }
-                        }
-                        Tile platform = CalamityUtils.ParanoidTileRetrieval(k, j);
-                        if (!platform.GetHighlight())
-                        {
-                            ushort platype = TileID.Platforms;
-                            // Every other platform is cancelled
-                            if (k != i + 1 && k != i + iters - 1)
-                            {
-                                if (k % 2 == 0)
-                                {
-                                    platype = TileID.VineRope;
-                                }
-                            }
-                            platform.TileType = platype;
-                            platform.HasTile = true;
-                            if (platype == TileID.VineRope)
-                            {
-                                WorldGen.PlaceTile(k, j + 1, TileID.VineRope, true);
-                                WorldGen.SquareTileFrame(k, j + 1);
-                            }
-                            WorldGen.SquareTileFrame(k, j);
-                            if (platype == TileID.Platforms && fenceCD <= 0 && k < i + iters - platWidth - 1 && k > i + platWidth)
-                            {
-                                for (int m = j - 1; m > j - 4; m--)
-                                {
-                                    CalamityUtils.ParanoidTileRetrieval(k, m).WallType = WallID.RichMahoganyFence;
-                                }
-                                // This should be even
-                                fenceCD = 8;
-                            }
-                            fenceCD--;
                         }
 
                         // Platform ledges
@@ -300,7 +278,7 @@ namespace CalRemix.Core.Subworlds
                                 for (int m = island.Center.Y; m < island.Bottom; m++)
                                 {
                                     Tile querie = CalamityUtils.ParanoidTileRetrieval(l, m);
-                                    if (querie.TileType == leafBlock)
+                                    if (querie.TileType != woodBlock && querie.HasTile)
                                         continue;
                                     if (CalRemixHelper.WithinElipse(l, m, island.Center.X, island.Center.Y, halfWidth, halfHeight))
                                     {
@@ -308,6 +286,16 @@ namespace CalRemix.Core.Subworlds
                                         querie.SetHighlight(true);
                                     }
                                 }
+                            }
+                        }
+                        if (k == i + platWidth)
+                        {
+                            CalamityUtils.ParanoidTileRetrieval(k, j - 1).TileType = (ushort)ModContent.TileType<RicketyBridge>();
+                            CalamityUtils.ParanoidTileRetrieval(k, j - 1).HasTile = true;
+                            TileEntity.PlaceEntityNet(k, j - 1, ModContent.TileEntityType<RicketyBridgeTE>());
+                            if (RicketyBridge.GetTEFromCoords(k, j - 1, out RicketyBridgeTE te))
+                            {
+                                te.anchorPoint = new Point(i + iters - 1 - platWidth, j);
                             }
                         }
                     }

@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalamityMod.DataStructures;
 using CalamityMod.Events;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.NPCs.HiveMind;
@@ -14,6 +15,7 @@ using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Prefixes;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
+using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Core.Scenes;
 using CalRemix.Core.Scenes.Subworlds;
 using CalRemix.Core.Subworlds;
@@ -1131,6 +1133,45 @@ namespace CalRemix.Core
                 Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
                 Main.spriteBatch.ExitShaderRegion();
                 Main.spriteBatch.End();
+            }
+
+            int bridgeType = TileEntityType<RicketyBridgeTE>();
+            int bridgeTile = TileType<RicketyBridge>();
+            foreach (TileEntity te in TileEntity.ByPosition.Values)
+            {
+                if (te.type == bridgeType)
+                {
+                    RicketyBridgeTE cables = te as RicketyBridgeTE;
+                    if (cables != null)
+                    {
+                        if (cables.Segments != null)
+                        {
+                            Main.spriteBatch.Begin();
+                            for (int u = 0; u < cables.Segments.Count; u++)
+                            {
+                                if (u == 0)
+                                    continue;
+                                VerletSimulatedSegment seg = cables.Segments[u];
+                                float dist = u > 0 ? Vector2.Distance(seg.position, cables.Segments[u - 1].position) : 0;
+                                if (dist <= 2)
+                                    dist = 2;
+                                dist += 2;
+                                float rot = 0f;
+                                if (u > 0)
+                                    rot = seg.position.DirectionTo(cables.Segments[u - 1].position).ToRotation();
+                                else
+                                    rot = 0;
+                                float scalee = (1 - (u / cables.Segments.Count));
+                                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, (int)dist, 2), Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.SaddleBrown), rot, TextureAssets.BlackTile.Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                                if (u % 2 == 0)
+                                {
+                                    Main.EntitySpriteDraw(TextureAssets.Tile[bridgeTile].Value, seg.position - Main.screenPosition + Vector2.UnitY * 8, null, Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.White), 0f, TextureAssets.Tile[bridgeTile].Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                                }
+                            }
+                            Main.spriteBatch.End();
+                        }
+                    }
+                }
             }
         }
         private static void DrawTsarBomba(On_Main.orig_DrawLiquid orig, Main self, bool a, int b, float c, bool d)

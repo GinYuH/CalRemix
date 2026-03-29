@@ -1,6 +1,7 @@
 using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.CalPlayer;
+using CalamityMod.DataStructures;
 using CalamityMod.Events;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Fearmonger;
@@ -93,6 +94,7 @@ using CalRemix.Content.Particles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Biomes.Subworlds;
 using CalRemix.Core.Graphics;
@@ -407,6 +409,48 @@ namespace CalRemix
                     npc.active = false;
                 }
             }
+
+
+            if (!npc.noTileCollide)
+            {
+                int bridgeID = TileEntityType<RicketyBridgeTE>();
+                foreach (TileEntity t in TileEntity.ByPosition.Values)
+                {
+                    if (t.type == bridgeID)
+                    {
+                        RicketyBridgeTE bridge = t as RicketyBridgeTE;
+                        List<VerletSimulatedSegment> segs = bridge.Segments;
+                        if (segs == null)
+                            continue;
+                        foreach (VerletSimulatedSegment seg in segs)
+                        {
+                            Vector2 segP = seg.position;
+                            Rectangle segRect = new Rectangle((int)segP.X - 8, (int)segP.Y - 8, 16, 16);
+                            if (npc.Center.Y < segRect.Top)
+                            {
+                                if (npc.getRect().Intersects(segRect) && npc.velocity.Y >= 0)
+                                {
+                                    Vector2 pos = npc.position;
+                                    if (!Collision.SolidCollision(pos, npc.width, npc.height))
+                                        npc.position = pos;
+
+                                    if (npc.velocity.Y > 0)
+                                    {
+                                        seg.oldPosition = seg.position;
+                                        seg.position.Y += npc.velocity.Y;
+                                    }
+
+                                    npc.velocity.Y = 0;
+                                    npc.position.Y = segRect.Top - npc.height + 6;
+                                    npc.position += seg.position - seg.oldPosition;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             if (!CalamityUtils.AnyProjectiles(ProjectileType<Claw>()))
             {
                 clawed = 0;

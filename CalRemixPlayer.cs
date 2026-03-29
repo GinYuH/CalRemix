@@ -3,6 +3,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatBuffs;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.CalPlayer;
+using CalamityMod.DataStructures;
 using CalamityMod.Events;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Dyes;
@@ -48,6 +49,7 @@ using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Projectiles.Weapons;
+using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Walls;
 using CalRemix.Core;
 using CalRemix.Core.Biomes;
@@ -68,6 +70,7 @@ using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Animations;
 using Terraria.GameInput;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -995,6 +998,70 @@ namespace CalRemix
             if (muraregen)
             {
                 Player.moveSpeed *= 0.022f;
+            }
+
+
+            /*foreach (NPC n in Main.ActiveNPCs)
+            {
+                if (Player.Center.Y < n.Top.Y)
+                {
+                    if (Player.getRect().Intersects(n.getRect()) && Player.velocity.Y >= 0)
+                    {
+                        Vector2 pos = Player.position;
+                        if (!Collision.SolidCollision(pos, Player.width, Player.height))
+                            Player.position = pos;
+                        Player.velocity.Y = 0;
+                        Player.position.Y = n.Top.Y - Player.height + 2;
+                        Player.position += n.velocity;
+                        break;
+                    }
+                }
+            }*/
+
+            if (!Player.controlDown && !Player.controlDownHold)
+            { 
+                int bridgeID = TileEntityType<RicketyBridgeTE>();
+                foreach (TileEntity t in TileEntity.ByPosition.Values)
+                {
+                    if (t.type == bridgeID)
+                    {
+                        RicketyBridgeTE bridge = t as RicketyBridgeTE;
+                        List<VerletSimulatedSegment> segs = bridge.Segments;
+                        if (segs == null)
+                            continue;
+                        int skip = 2;
+                        foreach (VerletSimulatedSegment seg in segs)
+                        {
+                            if (skip > 0)
+                            {
+                                skip--;
+                                continue;
+                            }
+                            Vector2 segP = seg.position;
+                            Rectangle segRect = new Rectangle((int)segP.X - 8, (int)segP.Y - 8, 16, 16);
+                            if (Player.Center.Y < segRect.Top)
+                            {
+                                if (Player.getRect().Intersects(segRect) && Player.velocity.Y >= 0)
+                                {
+                                    Vector2 pos = Player.position;
+                                    if (!Collision.SolidCollision(pos, Player.width, Player.height))
+                                        Player.position = pos;
+
+                                    if (Player.velocity.Y > 0)
+                                    {
+                                        seg.oldPosition = seg.position;
+                                        seg.position.Y += Player.velocity.Y;
+                                    }
+
+                                    Player.velocity.Y = 0;
+                                    Player.position.Y = segRect.Top - Player.height + 6;
+                                    Player.position += seg.position - seg.oldPosition;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
