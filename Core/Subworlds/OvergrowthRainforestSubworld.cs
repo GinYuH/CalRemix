@@ -461,6 +461,8 @@ namespace CalRemix.Core.Subworlds
             ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
             ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
             ushort woodWall = (ushort)ModContent.WallType<UnsafeTitanodendronWoodWallPlaced>();
+            ushort leafWall = (ushort)ModContent.WallType<UnsafeTitanodendronLeafBlockWallPlaced>();
+            ushort lichenWall = (ushort)ModContent.WallType<LichenUnsafeTitanodendronWoodWallPlaced>();
             // Spawn position
             for (int j = Main.maxTilesY; j > 0; j--)
             {
@@ -487,18 +489,46 @@ namespace CalRemix.Core.Subworlds
                             CalRemixHelper.ForceGrowTree(i, j, WorldGen.genRand.Next(20, 53));
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2000) && t.WallType == woodWall && !t.HasTile)
+                    if (t.WallType != leafWall && !t.HasTile && t.WallType > WallID.None)
                     {
-                        WorldGen.PlaceTile(i, j, ModContent.TileType<CitrusPeelFungus>(), true, true);
-                    }
-                    int tableRate = 50;
-                    if (WorldGen.genRand.NextBool(tableRate) && t.WallType == woodWall && !t.HasTile)
-                    {
-                        WorldGen.PlaceTile(i, j, ModContent.TileType<TableFungus>(), true, true, style: WorldGen.genRand.Next(3));
-                    }
-                    if (WorldGen.genRand.NextBool(tableRate) && t.WallType == woodWall && !t.HasTile)
-                    {
-                        WorldGen.PlaceTile(i, j, ModContent.TileType<TableFungusAlt>(), true, true, style: WorldGen.genRand.Next(3));
+                        if (WorldGen.genRand.NextBool(2000))
+                        {
+                            WorldGen.PlaceTile(i, j, ModContent.TileType<CitrusPeelFungus>(), true, true);
+                        }
+                        if (WorldGen.genRand.NextBool(2000))
+                        {
+                            WorldGen.PlaceTile(i, j, ModContent.TileType<CitrusPeelFungusSmall>(), true, true);
+                        }
+                        int tableRate = 50;
+                        if (WorldGen.genRand.NextBool(tableRate))
+                        {
+                            WorldGen.PlaceTile(i, j, ModContent.TileType<TableFungus>(), true, true, style: WorldGen.genRand.Next(3));
+                        }
+                        if (WorldGen.genRand.NextBool(tableRate))
+                        {
+                            WorldGen.PlaceTile(i, j, ModContent.TileType<TableFungusAlt>(), true, true, style: WorldGen.genRand.Next(3));
+                        }
+                        if (WorldGen.genRand.NextBool(4000))
+                        {
+                            int rad = WorldGen.genRand.Next(8, 20);
+                            Rectangle rect = Utils.CenteredRectangle(new Vector2(i, j), Vector2.One * (rad * 2 + 1));
+                            for (int k = rect.Left; k < rect.Right; k++)
+                            {
+                                for (int l = rect.Top; l < rect.Bottom; l++)
+                                {
+                                    Tile wallo = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                    if (wallo.WallType <= WallID.None)
+                                        continue;
+                                    if (wallo.WallType == leafWall)
+                                        continue;
+                                    if (CalRemixHelper.WithinElipse(k, l, i, j, rad, rad))
+                                    {
+                                        if (WorldGen.genRand.NextBool() || CalRemixHelper.WithinElipse(k, l, i, j, rad / 2, rad / 2))
+                                            wallo.WallType = lichenWall;
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (WorldGen.genRand.NextBool(30) && above.WallType > WallID.None && !above.HasTile && t.HasTile)
                     {
@@ -525,6 +555,47 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                 }
+            }
+
+
+            int toothAttempts = 0;
+            int dungeon = (int)(Main.maxTilesX * templePosition);
+            int padding = 200;
+            while (toothAttempts < 10000)
+            {
+                int x = WorldGen.genRand.Next(dungeon + padding, Main.maxTilesX - padding);
+                int y = WorldGen.genRand.Next(0, 400);
+
+                Tile t = CalamityUtils.ParanoidTileRetrieval(x, y);
+                Tile above = CalamityUtils.ParanoidTileRetrieval(x, y - 1);
+
+                if (above.WallType == leafWall || !above.HasTile)
+                {
+                    if (t.TileType == leafBlock)
+                    {
+                        WorldGen.PlaceTile(x, y - 1, ModContent.TileType<BloodyToothPlaced>(), true, true);
+
+                        bool sb = false;
+
+                        for (int i = x - 5; i < x + 5; i++)
+                        {
+                            if (sb)
+                                break;
+                            for (int j = y - 5; j < y + 5; j++)
+                            {
+                                if (CalamityUtils.ParanoidTileRetrieval(i, j).TileType == ModContent.TileType<BloodyToothPlaced>())
+                                {
+                                    sb = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (sb)
+                            break;
+                    }
+                }
+                toothAttempts++;
             }
 
             RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<OvergrowthRainforestDoor>());

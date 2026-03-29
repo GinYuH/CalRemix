@@ -38,7 +38,10 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
             Main.tileLavaDeath[Type] = true;
             TileID.Sets.FramesOnKillWall[Type] = true;
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+            TileObjectData.newTile.Width = 2;
+            TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.CoordinateHeights = [16, 16];
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.addTile(Type);
 
@@ -60,6 +63,17 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
             base.SetStaticDefaults();
             RegisterItemDrop(ModContent.ItemType<MacroMoss>());
             FlexibleTileWand.RubblePlacementLarge.AddVariation(ModContent.ItemType<MacroMoss>(), Type, 0);
+        }
+    }
+
+    public class CitrusPeelFungusSmallEcho : CitrusPeelFungusSmall
+    {
+        public override string Texture => "CalRemix/Content/Tiles/Subworlds/OvergrowthRainforest/CitrusPeelFungusSmall";
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            RegisterItemDrop(ModContent.ItemType<MacroMoss>());
+            FlexibleTileWand.RubblePlacementMedium.AddVariation(ModContent.ItemType<MacroMoss>(), Type, 0);
         }
     }
 }

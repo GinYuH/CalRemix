@@ -6670,3 +6670,8 @@ MacroMoss: {
 	DisplayName: Macro Moss
 	Tooltip: Can be placed on Titanodendron Wood
 }
+
+BloodyTooth: {
+	DisplayName: Bloody Tooth
+	Tooltip: ""
+}
