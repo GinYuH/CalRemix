@@ -11,11 +11,12 @@ namespace CalRemix.Content.Walls
 {
     public class LichenTitanodendronWoodWallPlaced : ModWall
     {
+        public override string Texture => "CalRemix/Content/Walls/TitanodendronWoodWallPlaced";
         public static Asset<Texture2D> glow;
 
         public override void Load()
         {
-            glow = ModContent.Request<Texture2D>(Texture + "_Glow");
+            glow = ModContent.Request<Texture2D>("CalRemix/Content/Walls/LichenTitanodendronWoodWallPlaced_Glow");
         }
 
         public override void SetStaticDefaults()
@@ -23,6 +24,7 @@ namespace CalRemix.Content.Walls
             Main.wallHouse[Type] = true;
             AddMapEntry(new Color(18, 59, 44), null);
             DustType = DustID.Clentaminator_Cyan;
+            Main.wallBlend[Type] = ModContent.WallType<TitanodendronWoodWallPlaced>();
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -49,11 +51,12 @@ namespace CalRemix.Content.Walls
     }
     public class LichenUnsafeTitanodendronWoodWallPlaced : LichenTitanodendronWoodWallPlaced
     {
-        public override string Texture => "CalRemix/Content/Walls/LichenTitanodendronWoodWallPlaced";
+        public override string Texture => "CalRemix/Content/Walls/TitanodendronWoodWallPlaced";
         public override void SetStaticDefaults()
         {
             AddMapEntry(new Color(18, 59, 44), null);
             DustType = DustID.Clentaminator_Cyan;
+            Main.wallBlend[Type] = ModContent.WallType<UnsafeTitanodendronWoodWallPlaced>();
         }
 
 

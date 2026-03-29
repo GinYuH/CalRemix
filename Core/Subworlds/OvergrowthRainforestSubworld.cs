@@ -510,8 +510,9 @@ namespace CalRemix.Core.Subworlds
                         }
                         if (WorldGen.genRand.NextBool(4000))
                         {
-                            int rad = WorldGen.genRand.Next(8, 20);
-                            Rectangle rect = Utils.CenteredRectangle(new Vector2(i, j), Vector2.One * (rad * 2 + 1));
+                            int height = WorldGen.genRand.Next(8, 20);
+                            int width = (int)(height * WorldGen.genRand.NextFloat(0.2f, 0.4f));
+                            Rectangle rect = Utils.CenteredRectangle(new Vector2(i, j), new Vector2(width * 2 + 1, height * 2 + 1));
                             for (int k = rect.Left; k < rect.Right; k++)
                             {
                                 for (int l = rect.Top; l < rect.Bottom; l++)
@@ -521,10 +522,34 @@ namespace CalRemix.Core.Subworlds
                                         continue;
                                     if (wallo.WallType == leafWall)
                                         continue;
-                                    if (CalRemixHelper.WithinElipse(k, l, i, j, rad, rad))
+                                    if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(width, height), new Point(k, l)))
                                     {
-                                        if (WorldGen.genRand.NextBool() || CalRemixHelper.WithinElipse(k, l, i, j, rad / 2, rad / 2))
-                                            wallo.WallType = lichenWall;
+                                        wallo.WallType = lichenWall;
+
+                                        if (WorldGen.genRand.NextBool(3))
+                                        {
+                                            int heightS = WorldGen.genRand.Next(4, 10);
+                                            int widthS = (int)(heightS * WorldGen.genRand.NextFloat(0.3f, 0.6f));
+                                            Rectangle rectS = Utils.CenteredRectangle(new Vector2(k, l), new Vector2(widthS * 2 + 1, heightS * 2 + 1));
+                                            for (int m = rectS.Left; m < rectS.Right; m++)
+                                            {
+                                                for (int n  = rectS.Top;  n < rectS.Bottom; n++)
+                                                {
+                                                    if (WorldGen.genRand.NextBool(5))
+                                                    {
+                                                        if (CalRemixHelper.WithinRhombus(new Point(k, l), new Point(widthS, heightS), new Point(m, n)))
+                                                        {
+                                                            Tile walloS = CalamityUtils.ParanoidTileRetrieval(m, n);
+                                                            if (walloS.WallType <= WallID.None)
+                                                                continue;
+                                                            if (walloS.WallType == leafWall)
+                                                                continue;
+                                                            walloS.WallType = lichenWall;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
