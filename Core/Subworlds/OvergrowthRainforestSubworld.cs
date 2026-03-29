@@ -256,13 +256,11 @@ namespace CalRemix.Core.Subworlds
                     for (int k = i + 1; k < i + iters; k++)
                     {
                         int platWidth = 15;
-                        if (k == i + platWidth || k == i + iters - 1 - platWidth)
+                        if (k == i + platWidth || k == i + iters - platWidth)
                         {
                             for (int m = j - 1; m > j - 8; m--)
                             {
-                                //CalamityUtils.ParanoidTileRetrieval(k, m).WallType = WallID.RichMahoganyFence;
-                                CalamityUtils.ParanoidTileRetrieval(k, m).TileType = TileID.ArgonMossBlock;
-                                CalamityUtils.ParanoidTileRetrieval(k, m).SetHighlight(true);
+                                CalamityUtils.ParanoidTileRetrieval(k, m).WallType = WallID.RichMahoganyFence;
                             }
                         }
 
