@@ -293,7 +293,7 @@ namespace CalRemix.Core.Subworlds
                             TileEntity.PlaceEntityNet(k, j - 1, ModContent.TileEntityType<RicketyBridgeTE>());
                             if (RicketyBridge.GetTEFromCoords(k, j - 1, out RicketyBridgeTE te))
                             {
-                                te.anchorPoint = new Point(i + iters - 1 - platWidth, j);
+                                te.anchorPoint = new Point(i + iters - 1 - platWidth, j - 1);
                             }
                         }
                     }
