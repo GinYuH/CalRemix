@@ -49,7 +49,8 @@ namespace CalRemix.Core.Subworlds
 
             // Main Jungle
             list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.6f, wallFunc));
-            list.Add(item: (ModContent.NPCType<MegaNeurofly>(), 0.6f, wallFunc));
+            list.Add(item: (ModContent.NPCType<MegaNeurofly>(), 0.6f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
+            list.Add(item: (ModContent.NPCType<Calamachnid>(), 0.6f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
             list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
             list.Add(item: (ModContent.NPCType<Chimp>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
             list.Add(item: (NPCID.GreenDragonfly, 0.04f, wallFunc));
