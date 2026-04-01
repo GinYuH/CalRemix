@@ -487,6 +487,20 @@ namespace CalRemix
             return mainArea == areaOneTwo + areaTwoThree + areaOneThreeLikeTheUser;
         }
 
+        /// <summary>
+        /// Checks if a point is inside of a quadrilateral with 4 given points. Points should be in a consistent clockwise or counter clockwise order
+        /// </summary>
+        /// <param name="point1">The first point</param>
+        /// <param name="point2">The second point</param>
+        /// <param name="point3">The third point</param>
+        /// <param name="point4">The fourth point</param>
+        /// <param name="toCheck">The point to check</param>
+        /// <returns>true if the point is inside</returns>
+        public static bool WithinQuad(Point point1, Point point2, Point point3, Point point4, Point toCheck)
+        {
+            return WithinTriangle(point1, point2, point3, toCheck) || WithinTriangle(point1, point3, point4, toCheck);
+        }
+
         public enum PerlinEase
         {
             /// <summary>
