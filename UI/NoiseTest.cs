@@ -40,24 +40,37 @@ namespace CalRemix.UI.SubworldMap
 
         public static int seed = 2222;
 
+        bool show = false;
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             return;
-            Main.blockInput = true;
-            if (Main.mouseLeft)
+            if (Main.keyState.PressingShift())
             {
-                map = PerlinGeneration(new Rectangle(0, 0, Size, Size), noiseThreshold, noiseStrength, noiseSize, ease: easingType, topStop: top, bottomStop: bottom, seed: seed);
+                show = true;
             }
+            else
+                show = false;
+            if (!show)
+                return;
             Vector2 startPos = new Vector2(Main.screenWidth * 0.3f, Main.screenHeight * 0.1f);
             float UISize = Main.screenHeight - startPos.Y * 2;
             float squareSize = UISize / (float)Size;
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, startPos, new Rectangle(0, 0, (int)UISize, (int)UISize), Color.White);
             int qube = ModContent.TileType<IonCubePlaced>();
+            FastNoiseLite lite = new FastNoiseLite(seed);
+            lite.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            lite.SetFractalOctaves(12);
+            lite.SetFractalType(FastNoiseLite.FractalType.DomainWarpProgressive);
+            lite.SetFrequency(0.1f);
+            lite.SetFractalWeightedStrength(0);
             for (int i = 0; i < Size; i++)
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    bool filled = map[i, j];
+                    //bool filled = map[i, j];
+                    //float zoom = 22f;
+                    bool filled = lite.GetNoise(i * noiseSize.X, j * noiseSize.Y) > noiseStrength;
 
                     if (filled)
                         spriteBatch.Draw(TextureAssets.Tile[qube].Value, startPos + new Vector2(i, j) * squareSize, null, filled ? Color.White : Color.White, 0, Vector2.Zero, squareSize / 16f, 0, 0);
@@ -74,6 +87,7 @@ namespace CalRemix.UI.SubworldMap
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, pos, new Rectangle(0, 0, (int)optionsize + 1, (int)optionsize + 1), Color.White, 0, Vector2.Zero, 1, 0, 0);
                 Action<bool?> whatToDo = null;
                 string text = "";
+                float sizeInc = 0.1f;
                 switch (i)
                 {
                     case 0:
@@ -111,7 +125,7 @@ namespace CalRemix.UI.SubworldMap
                                     {
                                         noiseStrength -= 0.05f;
                                     }
-                                    noiseStrength = MathHelper.Clamp(noiseStrength, 0, 1f);
+                                    noiseStrength = MathHelper.Clamp(noiseStrength, -1f, 1f);
                                 }
                             };
                         }
@@ -125,13 +139,13 @@ namespace CalRemix.UI.SubworldMap
                                 {
                                     if (scrollingup.Value)
                                     {
-                                        noiseSize.X += 50;
+                                        noiseSize.X += sizeInc;
                                     }
                                     else
                                     {
-                                        noiseSize.X -= 50;
+                                        noiseSize.X -= sizeInc;
                                     }
-                                    noiseSize.X = MathHelper.Clamp(noiseSize.X, 50, 1000f);
+                                    noiseSize.X = MathHelper.Clamp(noiseSize.X, 1, 5f);
                                 }
                             };
                         }
@@ -145,13 +159,13 @@ namespace CalRemix.UI.SubworldMap
                                 {
                                     if (scrollingup.Value)
                                     {
-                                        noiseSize.Y += 50;
+                                        noiseSize.Y += sizeInc;
                                     }
                                     else
                                     {
-                                        noiseSize.Y -= 50;
+                                        noiseSize.Y -= sizeInc;
                                     }
-                                    noiseSize.Y = MathHelper.Clamp(noiseSize.Y, 50, 1000f);
+                                    noiseSize.Y = MathHelper.Clamp(noiseSize.Y, 1, 5f);
                                 }
                             };
                         }
