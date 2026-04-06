@@ -32,7 +32,6 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
-using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -51,6 +50,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.6f, wallFunc));
             list.Add(item: (ModContent.NPCType<MegaNeurofly>(), 0.6f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
             list.Add(item: (ModContent.NPCType<Calamachnid>(), 0.6f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
+            list.Add(item: (ModContent.NPCType<Stapologe>(), 0.05f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
             list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
             list.Add(item: (ModContent.NPCType<Chimp>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
             list.Add(item: (NPCID.GreenDragonfly, 0.04f, wallFunc));
@@ -103,7 +103,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
-            Point p = Main.MouseWorld.ToTileCoordinates();
+            /*Point p = Main.MouseWorld.ToTileCoordinates();
             if (Main.mouseLeft && Main.LocalPlayer.selectedItem == 2)
             {
                 int k = p.X;
@@ -114,7 +114,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     te.anchorPoint = new Point(k + 22, j);
                 }
-            }
+            }*/
             base.Update();
             SubworldUpdateMethods.UpdateTileEntities();
             SubworldUpdateMethods.UpdateTiles();
