@@ -30,6 +30,11 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
     {
         public NPC[] Arms = new NPC[2];
 
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[Type] = 4;
+        }
+
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -81,17 +86,20 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                     int notChoice = (choice == 1) ? 0 : 1;
                     NPC randomArm = Arms[choice];
                     if (randomArm != null)
-                    if (randomArm.ModNPC != null)
-                    {
-                        if (randomArm.ModNPC<Globbler_Arm>() != null)
+                        if (randomArm.Center.Y > NPC.Center.Y - 28)
                         {
-                            Globbler_Arm army = randomArm.ModNPC<Globbler_Arm>();
+                            if (randomArm.ModNPC != null)
+                            {
+                                if (randomArm.ModNPC<Globbler_Arm>() != null)
+                                {
+                                    Globbler_Arm army = randomArm.ModNPC<Globbler_Arm>();
 
-                            army.Launch();
-                            NPC.ai[3] = 120;
-                            Arms[notChoice].ModNPC<Globbler_Arm>().Release();
+                                    army.Launch();
+                                    NPC.ai[3] = 222;
+                                    Arms[notChoice].ModNPC<Globbler_Arm>().Release();
+                                }
+                            }
                         }
-                    }
                 }
                 for (int i = 0; i < Arms.Length; i++)
                 {
@@ -115,13 +123,23 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
         }
 
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.frameCounter++ % 6 == 0)
+            {
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > frameHeight * 3)
+                    NPC.frame.Y = 0;
+            }
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D tex = TextureAssets.Npc[Type].Value;
 
             Vector2 drawPos = NPC.Bottom - screenPos;
 
-            spriteBatch.Draw(tex, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(tex.Width / 2, tex.Height / 2), NPC.scale, 0, 0);
+            spriteBatch.Draw(tex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(tex.Width / 2, tex.Height / 2 / Main.npcFrameCount[Type]), NPC.scale, 0, 0);
             return false;
         }
 
