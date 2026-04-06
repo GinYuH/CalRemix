@@ -71,8 +71,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
                 if (NPC.localAI[2] <= 0)
                 {
-                    NPC.ai[3] = 0;
-                    Swinging = false;
+                    //NPC.ai[3] = 0;
                 }
             }
             if (Latched)
@@ -95,11 +94,10 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                     segments[0].oldPosition = segments[0].position;
                     segments[0].position = dad.Center;
                     segments[^1].locked = false;
-                    if (Latched)
                     NPC.Center = segments[^1].position;
                 }
 
-                VerletSimulatedSegment.SimpleSimulation(segments, 10, 30, 1);
+                VerletSimulatedSegment.SimpleSimulation(segments, 10);
             }
             NPC.localAI[2]--;
         }

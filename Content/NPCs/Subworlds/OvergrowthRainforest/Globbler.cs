@@ -14,7 +14,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Enums;
@@ -79,6 +78,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 if (NPC.ai[3] <= 0)
                 {
                     int choice = Main.rand.Next(0, 2);
+                    int notChoice = (choice == 1) ? 0 : 1;
                     NPC randomArm = Arms[choice];
                     if (randomArm != null)
                     if (randomArm.ModNPC != null)
@@ -88,8 +88,8 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                             Globbler_Arm army = randomArm.ModNPC<Globbler_Arm>();
 
                             army.Launch();
-                            NPC.ai[3] = 30;
-                            NPC.localAI[0] = choice;
+                            NPC.ai[3] = 120;
+                            Arms[notChoice].ModNPC<Globbler_Arm>().Release();
                         }
                     }
                 }
@@ -112,18 +112,6 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
             }
             NPC.ai[3]--;
-
-            int choicer = (int)NPC.localAI[0];
-            if (Arms[choicer] != null && Arms[choicer].active && Arms[choicer].type == ModContent.NPCType<Globbler_Arm>())
-            {
-                NPC npcArm = Arms[choicer];
-                Globbler_Arm globArm = npcArm.ModNPC<Globbler_Arm>();
-                if (globArm.Latched)
-                {
-                    int other = (choicer == 1) ? 0 : 1;
-                    Arms[other].ModNPC<Globbler_Arm>().Release();
-                }
-            }
 
         }
 
