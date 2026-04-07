@@ -1,6 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Graphics.Primitives;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -64,14 +65,19 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
             if (NPC.ai[3] == 1)
             {
-                if (NPC.Center.Y < (dad.Center.Y - 16) && Collision.SolidTiles(NPC.position, NPC.width, NPC.height))
+                Point pt = NPC.Center.ToTileCoordinates();
+                if (NPC.Center.Y < (dad.Center.Y - 16) && Collision.SolidTiles(NPC.position, 20, 20))
                 {
-                    NPC.velocity = Vector2.Zero;
-                    NPC.ai[3] = 2;
+                    if (!CalamityUtils.ParanoidTileRetrieval(pt.X, pt.Y +1).IsTileSolidGround())
+                    {
+                        NPC.velocity = Vector2.Zero;
+                        NPC.ai[3] = 2;
+                    }
                 }
                 if (NPC.localAI[2] <= 0)
                 {
-                    //NPC.ai[3] = 0;
+                    NPC.ai[3] = 0;
+                    Swinging = false;
                 }
             }
             if (Latched)
@@ -102,16 +108,18 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.localAI[2]--;
         }
 
-        public void Launch()
+        public bool Launch()
         {
-            int dir = dad.velocity.X.DirectionalSign();
-            if (Main.rand.NextBool(5))
-                dir *= -1;
-
-            NPC.velocity = -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4) * 10;
-            NPC.ai[3] = 1;
-            NPC.localAI[2] = 90;
-            Swinging = true;
+            Vector2 aim = -Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(80)) * 10;
+            if (!Collision.CanHitLine(NPC.Center, 2, 2, NPC.Center + aim * 30, 2, 2))
+            {
+                NPC.velocity = aim;
+                NPC.ai[3] = 1;
+                NPC.localAI[2] = 90;
+                Swinging = true;
+                return true;
+            }
+            return false;
         }
 
         public void Release()
@@ -134,6 +142,8 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             spriteBatch.ExitShaderRegion();
+            if (segments == null)
+                return false;
             if (segments.Count > 0)
             {
                 List<Vector2> pts = new();
@@ -141,10 +151,11 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 {
                     pts.Add(segments[i].position);
                 }
-                PrimitiveRenderer.RenderTrail(pts, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f, Vector2 v) => 4), new PrimitiveSettings.VertexColorFunction((float f, Vector2 v) => Color.SeaGreen)));
+                PrimitiveRenderer.RenderTrail(pts, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f, Vector2 v) => 6), new PrimitiveSettings.VertexColorFunction((float f, Vector2 v) => Lighting.GetColor((v + screenPos).ToTileCoordinates()).MultiplyRGB(Color.SeaGreen))));
+                PrimitiveRenderer.RenderTrail(pts, new PrimitiveSettings(new PrimitiveSettings.VertexWidthFunction((float f, Vector2 v) => 4), new PrimitiveSettings.VertexColorFunction((float f, Vector2 v) => Lighting.GetColor((v + screenPos).ToTileCoordinates()).MultiplyRGB(Color.DarkSeaGreen))));
 
                 Texture2D arm = ModContent.Request<Texture2D>(Texture).Value;
-                spriteBatch.Draw(arm, segments[^1].position - Main.screenPosition, null, Lighting.GetColor(segments[^1].position.ToTileCoordinates()), segments[^1].position.DirectionTo(dad.Center).ToRotation(), arm.Size() / 2, NPC.scale, 0, 0);
+                spriteBatch.Draw(arm, segments[^1].position - Main.screenPosition, null, Lighting.GetColor(segments[^1].position.ToTileCoordinates()), segments[^1].position.DirectionTo(dad.Center).ToRotation() - MathHelper.PiOver2, new Vector2(arm.Width / 2, 0), NPC.scale, 0, 0);
             }
             return false;
         }

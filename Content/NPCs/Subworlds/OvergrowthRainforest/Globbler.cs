@@ -30,6 +30,10 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
     {
         public NPC[] Arms = new NPC[2];
 
+        public ref float SwingAttemptCooldown => ref NPC.ai[3];
+
+        public ref float InitialLaunch => ref NPC.ai[2];
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 4;
@@ -48,6 +52,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.HitSound = SoundID.NPCHit25;
             NPC.DeathSound = SoundID.NPCDeath28;
             NPC.noGravity = true;
+            NPC.noTileCollide = true;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToSickness = true;
@@ -63,7 +68,6 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
         public override void AI()
         {
-            NPC.velocity = Vector2.Zero;
             for (int i = 0; i < Arms.Length; i++)
             {
                 NPC n = Arms[i];
@@ -73,54 +77,74 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
             }
 
-            if (NPC.ai[2] == 0)
+            if (InitialLaunch == 0)
             {
-                NPC.ai[2] = 1;
+                InitialLaunch = 1;
                 NPC.velocity.X = Main.rand.NextBool().ToDirectionInt();
             }
             else
             {
-                if (NPC.ai[3] <= 0)
+                if (SwingAttemptCooldown <= 0)
                 {
                     int choice = Main.rand.Next(0, 2);
                     int notChoice = (choice == 1) ? 0 : 1;
                     NPC randomArm = Arms[choice];
-                    if (randomArm != null)
-                        if (randomArm.Center.Y > NPC.Center.Y - 28)
+                    if (ValidArmNPC(randomArm, out Globbler_Arm army))
+                    { 
+                        if (randomArm.Center.Y > NPC.Center.Y - 28 && !Collision.SolidTiles(randomArm.position, randomArm.width * 2, randomArm.height * 2))
                         {
-                            if (randomArm.ModNPC != null)
+                            if (army.Launch())
                             {
-                                if (randomArm.ModNPC<Globbler_Arm>() != null)
-                                {
-                                    Globbler_Arm army = randomArm.ModNPC<Globbler_Arm>();
-
-                                    army.Launch();
-                                    NPC.ai[3] = 222;
-                                    Arms[notChoice].ModNPC<Globbler_Arm>().Release();
-                                }
-                            }
-                        }
-                }
-                for (int i = 0; i < Arms.Length; i++)
-                {
-                    NPC queriedArm = Arms[i];
-                    if (queriedArm != null)
-                    if (queriedArm.ModNPC != null)
-                    {
-                        if (queriedArm.ModNPC<Globbler_Arm>() != null)
-                        {
-                            Globbler_Arm army = queriedArm.ModNPC<Globbler_Arm>();
-
-                            if (army.Swinging)
-                            {
-                                NPC.Center = army.segments[0].position;
+                                SwingAttemptCooldown = 222;
+                                Arms[notChoice].ModNPC<Globbler_Arm>().Release();
                             }
                         }
                     }
                 }
+                bool anySwining = false;
+                for (int i = 0; i < Arms.Length; i++)
+                {
+                    NPC queriedArm = Arms[i];
+                    if (ValidArmNPC(queriedArm, out Globbler_Arm army))
+                    {
+                        if (army.Swinging)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            if (army.segments != null)
+                            {
+                                Vector2 idealPos = army.segments[0].position;
+                                NPC.velocity = idealPos - NPC.Center;
+                                anySwining = true;
+                            }
+                        }
+                    }
+                }
+                if (!anySwining)
+                {
+                    if (NPC.velocity.Y < 12)
+                    {
+                        NPC.velocity.Y += 0.2f;
+                    }
+                }
             }
-            NPC.ai[3]--;
+            SwingAttemptCooldown--;
+        }
 
+        public bool ValidArmNPC(NPC n, out Globbler_Arm globArm)
+        {
+            globArm = null;
+            if (n == null)
+                return false;
+            if (!n.active)
+                return false;
+            if (n.type != ModContent.NPCType<Globbler_Arm>())
+                return false;
+            if (n.ModNPC<Globbler_Arm>() == null)
+                return false;
+            if (n.ModNPC<Globbler_Arm>().dad.whoAmI != NPC.whoAmI)
+                return false;
+            globArm = n.ModNPC<Globbler_Arm>();
+            return true;
         }
 
         public override void FindFrame(int frameHeight)

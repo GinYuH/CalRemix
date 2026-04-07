@@ -53,6 +53,7 @@ namespace CalRemix.Core.Subworlds
             list.Add(item: (ModContent.NPCType<Stapologe>(), 0.05f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
             list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
             list.Add(item: (ModContent.NPCType<Chimp>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
+            list.Add(item: (ModContent.NPCType<Globbler>(), 25f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY - 1).HasTile && !CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).HasTile && !playerWall));
             list.Add(item: (NPCID.GreenDragonfly, 0.04f, wallFunc));
             list.Add(item: (NPCID.Stinkbug, 0.05f, wallFunc));
 
