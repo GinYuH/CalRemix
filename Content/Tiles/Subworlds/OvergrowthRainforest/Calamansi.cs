@@ -210,7 +210,7 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
                 gravity += 6 * Position.Y % 6 * gravMod;
                 Vector2 oldPos = Segments[^1].oldPosition;
                 Vector2 headPos = Segments[^1].position;
-                Segments = VerletSimulatedSegment.SimpleSimulation(Segments, gravity, 10, 4);
+                Segments = VerletSimulatedSegment.SimpleSimulation(Segments, gravity, 1, 4);
                 Segments[0].locked = true;
                 Segments[0].oldPosition = Segments[0].position;
                 Segments[0].position = new Vector2(Position.X * 16, Position.Y * 16);

@@ -143,13 +143,16 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
             }
             else
             {
-                Segments = VerletSimulatedSegment.SimpleSimulation(Segments, 2, 30, 0.3f);
-                Segments[0].locked = true;
-                Segments[0].oldPosition = Segments[0].position;
-                Segments[0].position = new Vector2(Position.X * 16, Position.Y * 16);
-                Segments[^1].locked = true;
-                Segments[^1].oldPosition = Segments[^1].position;
-                Segments[^1].position = anchorPoint.ToVector2() * 16;
+                if (Main.GameUpdateCount % 4 == 0)
+                {
+                    Segments = VerletSimulatedSegment.SimpleSimulation(Segments, 2, 30, 0.3f);
+                    Segments[0].locked = true;
+                    Segments[0].oldPosition = Segments[0].position;
+                    Segments[0].position = new Vector2(Position.X * 16, Position.Y * 16);
+                    Segments[^1].locked = true;
+                    Segments[^1].oldPosition = Segments[^1].position;
+                    Segments[^1].position = anchorPoint.ToVector2() * 16;
+                }
             }
         }
     }
