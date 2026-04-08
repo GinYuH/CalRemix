@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.Graphics;
@@ -52,6 +53,23 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
             float maxRot = MathHelper.ToRadians(50);
             NPC.rotation = MathHelper.Lerp(-maxRot, maxRot, Utils.GetLerpValue(-6, 6, NPC.velocity.X, true));
+
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (p.getRect().Intersects(NPC.getRect()) && !p.dead && !p.HasIFrames())
+                {
+                    p.KillMe(PlayerDeathReason.ByNPC(NPC.whoAmI), 10000, 1);
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/StarvathenShrill"));
+                    NPC.Remix().GreenAI[0] = 0.01f;
+                }
+            }
+
+            if (NPC.Remix().GreenAI[0] > 0)
+            {
+                NPC.Remix().GreenAI[0] += 0.05f;
+                if (NPC.Remix().GreenAI[0] > 4)
+                    NPC.active = false;
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -61,11 +79,25 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             Texture2D legDistal = ModContent.Request<Texture2D>(Texture + "_Leg2").Value;
 
 
-            spriteBatch.Draw(legDistal, NPC.Center - screenPos + new Vector2(NPC.spriteDirection * 8, 8), null, drawColor, NPC.rotation + MathF.Sin(NPC.Calamity().newAI[0]) * 0.3f, new Vector2(NPC.spriteDirection == 1 ? legDistal.Width - 6 : 6, 2), NPC.scale, NPC.FlippedEffects(), 0f);
+            Vector2 pos = NPC.Center - screenPos;
+            Vector2 scale = new Vector2(NPC.scale);
 
-            spriteBatch.Draw(tex, NPC.Center - screenPos, null, drawColor, NPC.rotation, new Vector2(15, 51), NPC.scale, NPC.FlippedEffects(), 0f);
+            if (NPC.Remix().GreenAI[0] > 0)
+            {
+                float maxScale = Main.screenWidth / tex.Width;
 
-            spriteBatch.Draw(legProximal, NPC.Center - screenPos + new Vector2(NPC.spriteDirection * -8, 0), null, drawColor, NPC.rotation - MathF.Sin(NPC.Calamity().newAI[0]) * 0.3f, new Vector2(NPC.spriteDirection == 1 ? legProximal.Width - 10 : 10, 4), NPC.scale, NPC.FlippedEffects(), 0f);
+                scale = new Vector2(MathHelper.Lerp(1, maxScale, Utils.GetLerpValue(0, 1, NPC.Remix().GreenAI[0], false)));
+                pos = Main.ScreenSize.ToVector2() / 2;
+                NPC.rotation = 0;
+                Main.LocalPlayer.Calamity().GeneralScreenShakePower += 2;
+            }
+
+
+            spriteBatch.Draw(legDistal, pos + new Vector2(NPC.spriteDirection * 8, 8) * scale, null, drawColor, NPC.rotation + MathF.Sin(NPC.Calamity().newAI[0]) * 0.3f, new Vector2(NPC.spriteDirection == 1 ? legDistal.Width - 6 : 6, 2), scale, NPC.FlippedEffects(), 0f);
+
+            spriteBatch.Draw(tex, pos, null, drawColor, NPC.rotation, new Vector2(15, 51), scale, NPC.FlippedEffects(), 0f);
+
+            spriteBatch.Draw(legProximal, pos + new Vector2(NPC.spriteDirection * -8, 0) * scale, null, drawColor, NPC.rotation - MathF.Sin(NPC.Calamity().newAI[0]) * 0.3f, new Vector2(NPC.spriteDirection == 1 ? legProximal.Width - 10 : 10, 4), scale, NPC.FlippedEffects(), 0f);
 
             return false;
         }
