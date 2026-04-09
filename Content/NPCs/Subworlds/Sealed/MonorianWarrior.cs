@@ -71,7 +71,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.boss = true;
 			NPC.DR_NERD(0.1f);
-			SpawnModBiomes = [ModContent.GetInstance<VoidForestBiome>().Type];
+			SpawnModBiomes = [ModContent.GetInstance<BadlandsBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type];
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

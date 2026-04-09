@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.DeathSound = new SoundStyle("CalRemix/Assets/Sounds/SealedDeath");
             NPC.knockBackResist = 0f;
             NPC.noTileCollide = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<CarnelianForestBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<CarnelianForestBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
 
         public override void AI()

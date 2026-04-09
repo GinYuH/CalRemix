@@ -64,7 +64,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.GravityIgnoresLiquid = true;
             NPC.waterMovementSpeed = 1f;
             NPC.noGravity = true;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<GreatSeaBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<GreatSeaBiome>().Type, ModContent.GetInstance<GreatSeaWorldBiome>().Type };
         }
 
         public override void AI()

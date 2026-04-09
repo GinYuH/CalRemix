@@ -34,7 +34,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
             NPC.Calamity().VulnerableToCold = true;
-            SpawnModBiomes = [ ModContent.GetInstance<SealedFieldsBiome>().Type, ModContent.GetInstance<TurnipBiome>().Type ];
+            SpawnModBiomes = [ ModContent.GetInstance<SealedFieldsBiome>().Type, ModContent.GetInstance<TurnipBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type];
         }
 
         public override void AI()

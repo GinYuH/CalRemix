@@ -39,7 +39,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.DeathSound = DesertScourgeHead.RoarSound with { Pitch = -1 };
             NPC.GravityIgnoresLiquid = true;
             NPC.waterMovementSpeed = 1f;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<PrimordialCavesBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<PrimordialCavesBiome>().Type, ModContent.GetInstance<GreatSeaWorldBiome>().Type };
         }
 
         public override void AI()

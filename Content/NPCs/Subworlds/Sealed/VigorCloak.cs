@@ -38,7 +38,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.knockBackResist = 0f;
             NPC.dontTakeDamage = true;
             NPC.noTileCollide = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<VolcanicFieldBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<VolcanicFieldBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
         public override void AI()
         {

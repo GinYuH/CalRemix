@@ -48,7 +48,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = true;
             NPC.value = Item.buyPrice(gold: 1);
             NPC.rarity = 1;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<VoidForestBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
         public override void AI()
         {

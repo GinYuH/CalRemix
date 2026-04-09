@@ -24,7 +24,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.DeathSound = null;
             NPC.knockBackResist = 0f;
             NPC.noTileCollide = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<TurnipBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<TurnipBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
         public override void AI()
         {

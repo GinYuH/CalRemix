@@ -99,7 +99,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.boss = true;
             NPC.alpha = 255;
             NPC.dontTakeDamage = true;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<VoidForestBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
         }
 
