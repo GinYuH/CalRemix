@@ -2509,12 +2509,13 @@ namespace CalRemix
                         pool.Add((NPCID.None, (NPCSpawnInfo s) => true), 1f);
                         foreach (var v in IDS.Spawns())
                         {
-                            pool.Add((v.Item1, v.Item3), v.Item2);
+                            if (v.Item3.Invoke(spawnInfo))
+                            {
+                                pool.Add((v.Item1, v.Item3), v.Item2);
+                            }
                         }
 
                         var spawnEntry = pool.Get();
-                        if (!spawnEntry.Item2.Invoke(spawnInfo))
-                            return;
                         if (spawnEntry.Item1 != NPCID.None)
                         {
                             int spawnedNPC = NPCLoader.SpawnNPC(spawnEntry.Item1, checkPositionX, checkPositionY - 1);

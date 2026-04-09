@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.Calamity().VulnerableToSickness = false;
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToCold = true;
-            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type];
+            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type, ModContent.GetInstance<ForestFloorBiome>().Type];
         }
 
         public override void AI()

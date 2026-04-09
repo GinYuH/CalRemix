@@ -56,7 +56,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToSickness = true;
-            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type];
+            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type, ModContent.GetInstance<BigOlBranchesBiome>().Type];
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

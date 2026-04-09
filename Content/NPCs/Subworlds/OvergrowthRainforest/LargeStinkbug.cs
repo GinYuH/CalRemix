@@ -9,6 +9,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {
@@ -35,7 +36,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
             NPC.Calamity().VulnerableToCold = true;
-            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type];
+            SpawnModBiomes = [GetInstance<OvergrowthRainforestBiome>().Type, GetInstance<TitanicTrunksBiome>().Type, GetInstance<CanopiesBiome>().Type, GetInstance<ForestFloorBiome>().Type];
         }
 
         public override void AI()

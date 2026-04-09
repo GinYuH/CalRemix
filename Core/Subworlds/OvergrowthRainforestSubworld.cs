@@ -12,6 +12,7 @@ using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Walls;
+using CalRemix.Core.Biomes.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
@@ -45,19 +46,23 @@ namespace CalRemix.Core.Subworlds
             Point playerPoint = Main.LocalPlayer.Center.ToTileCoordinates();
             bool playerWall = CalamityUtils.ParanoidTileRetrieval(playerPoint.X, playerPoint.Y).WallType > WallID.None;
             Predicate<NPCSpawnInfo> wallFunc = new Predicate<NPCSpawnInfo>(t => (CalamityUtils.ParanoidTileRetrieval(t.SpawnTileX, t.SpawnTileY).WallType > WallID.None && playerWall) || !playerWall);
+            bool treeTop = Main.LocalPlayer.InModBiome<CanopiesBiome>();
+            bool trunk = Main.LocalPlayer.InModBiome<TitanicTrunksBiome>();
+            bool branches = Main.LocalPlayer.InModBiome<BigOlBranchesBiome>();
+            bool floor = Main.LocalPlayer.InModBiome<ForestFloorBiome>();
 
             // Main Jungle
-            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.6f, wallFunc));
-            list.Add(item: (ModContent.NPCType<MegaNeurofly>(), 0.6f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
-            list.Add(item: (ModContent.NPCType<Silverwing>(), 0.6f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType == ModContent.WallType<UnsafeTitanodendronLeafBlockWallPlaced>() && playerWall));
-            list.Add(item: (ModContent.NPCType<Calamachnid>(), 0.6f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
-            list.Add(item: (ModContent.NPCType<Stapologe>(), 0.05f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall));
-            list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
-            list.Add(item: (ModContent.NPCType<Chimp>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
-            list.Add(item: (ModContent.NPCType<Globbler>(), 25f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY - 1).HasTile && !CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).HasTile && !playerWall));
-            list.Add(item: (ModContent.NPCType<Starvathen>(), 1f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && !playerWall));
-            list.Add(item: (NPCID.GreenDragonfly, 0.04f, wallFunc));
-            list.Add(item: (NPCID.Stinkbug, 0.05f, wallFunc));
+            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.05f, wallFunc));
+            list.Add(item: (ModContent.NPCType<MegaNeurofly>(), 0.06f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall && trunk));
+            list.Add(item: (ModContent.NPCType<Silverwing>(), 0.05f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType == ModContent.WallType<UnsafeTitanodendronLeafBlockWallPlaced>() && playerWall && treeTop));
+            list.Add(item: (ModContent.NPCType<Calamachnid>(), 0.1f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall && (trunk || treeTop)));
+            list.Add(item: (ModContent.NPCType<Stapologe>(), 2f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && (trunk || branches) && NPC.CountNPCS(ModContent.NPCType<Stapologe>()) < 1));
+            list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n) && (floor || trunk || treeTop)));
+            list.Add(item: (ModContent.NPCType<Chimp>(), 8f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n) && (branches || trunk || treeTop)));
+            list.Add(item: (ModContent.NPCType<Globbler>(), 25f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY - 1).HasTile && !CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).HasTile && !playerWall && branches));
+            list.Add(item: (ModContent.NPCType<Starvathen>(), 2f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && !playerWall && floor));
+            list.Add(item: (NPCID.GreenDragonfly, 0.02f, wallFunc));
+            list.Add(item: (NPCID.Stinkbug, 0.02f, wallFunc));
 
             // Temple
             return list;

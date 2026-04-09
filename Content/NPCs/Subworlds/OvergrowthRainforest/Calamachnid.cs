@@ -57,7 +57,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
             NPC.Calamity().VulnerableToCold = true;
-            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type];
+            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type, ModContent.GetInstance<TitanicTrunksBiome>().Type, ModContent.GetInstance<CanopiesBiome>().Type];
         }
 
         List<VerletSimulatedSegment> segments = new List<VerletSimulatedSegment>();

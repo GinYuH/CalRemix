@@ -38,7 +38,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.noTileCollide = false;
             NPC.HitSound = SoundID.NPCHit4 with { Pitch = -0.4f };
             NPC.DeathSound = BeeBuzz;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<OvergrowthRainforestBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<OvergrowthRainforestBiome>().Type, ModContent.GetInstance<CanopiesBiome>().Type };
         }
 
         public override void AI()
