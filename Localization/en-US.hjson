@@ -213,7 +213,7 @@ Mods: {
 			}
 
 			BigOlBranchesBiome: {
-				DisplayName: '''Big Ol' Branches'''
+				DisplayName: Big Ol' Branches
 				TownNPCDialogueName: the Big Ol Branches Biome
 			}
 

@@ -63,10 +63,20 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             }
             CalRemixHelper.CreateVerletChain(ref segments, 20, dad.Center, [0]);
 
-            if (NPC.ai[3] == 1)
+            bool bothDrooped = NPC.ai[3] == 0;
+            foreach (NPC n in Main.ActiveNPCs)
+            {
+                if (n.type == Type && n.whoAmI != NPC.whoAmI && n.ai[0] == NPC.ai[0])
+                {
+                    if (n.ai[3] != 0)
+                        bothDrooped = false;
+                }
+            }
+
+            if (NPC.ai[3] == 1 || bothDrooped)
             {
                 Point pt = NPC.Center.ToTileCoordinates();
-                if (NPC.Center.Y < (dad.Center.Y - 16) && Collision.SolidTiles(NPC.position, 20, 20))
+                if ((NPC.Center.Y < (dad.Center.Y - 16) || bothDrooped) && Collision.SolidTiles(NPC.position, 20, 20))
                 {
                     if (!CalamityUtils.ParanoidTileRetrieval(pt.X, pt.Y +1).IsTileSolidGround())
                     {

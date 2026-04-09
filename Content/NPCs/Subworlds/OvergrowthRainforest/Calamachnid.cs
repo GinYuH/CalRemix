@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -168,6 +169,22 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             segments = VerletSimulatedSegment.SimpleSimulation(segments, 16, 10, 0.2f);
             segments[0].locked = false;
             return true;
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                NPC.Remix().GreenAI[i] = reader.ReadSingle();
+            }
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                writer.Write(NPC.Remix().GreenAI[i]);
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
