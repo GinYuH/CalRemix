@@ -128,7 +128,7 @@ Mods: {
 			}
 
 			GreatSeaBiome: {
-				DisplayName: Great Sea
+				DisplayName: Open Ocean
 				TownNPCDialogueName: the Great Sea Biome
 			}
 
@@ -230,6 +230,16 @@ Mods: {
 			TitanicTrunksBiome: {
 				DisplayName: Titanic Trunks
 				TownNPCDialogueName: the Titanic Trunks Biome
+			}
+
+			GreatSeaWorldBiome: {
+				DisplayName: Great Sea
+				TownNPCDialogueName: the Great Sea World Biome
+			}
+
+			SealedDimensionBiome: {
+				DisplayName: Sealed Dimension
+				TownNPCDialogueName: the Sealed Dimension Biome
 			}
 		}
 
