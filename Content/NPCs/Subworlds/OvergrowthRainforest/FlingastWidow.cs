@@ -183,6 +183,8 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+                return true;
             spriteBatch.ExitShaderRegion();
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Vector2 basePos = NPC.Center + Vector2.UnitX * 10 * NPC.rotation.DirectionalSign() + Vector2.UnitX * MathF.Sin(Main.GlobalTimeWrappedHourly * 10);
