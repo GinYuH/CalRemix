@@ -24,6 +24,7 @@ using CalamityMod.Projectiles.Typeless;
 using Terraria.Audio;
 using CalamityMod.NPCs.Ravager;
 using Terraria.DataStructures;
+using System.IO;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {
@@ -47,7 +48,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.behindTiles = true;
-            NPC.value = Item.buyPrice(silver: 1);
+            NPC.value = Item.buyPrice(gold: 1);
             NPC.HitSound = BetterSoundID.HitPossessed with { Pitch = -0.8f };
             NPC.DeathSound = BetterSoundID.DeathTortoise with { Pitch = -0.5f }; 
             NPC.Calamity().VulnerableToHeat = true;
@@ -79,6 +80,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
             if (NPC.ai[0] == 0)
             {
+                NPC.ai[1] = 1;
                 if (NPC.ai[2] <= 0 && NPC.velocity.X == 0)
                 {
                     NPC.velocity.X = (int)Main.rand.NextBool().ToDirectionInt() * 2;
@@ -93,6 +95,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
                 if (NPC.HasSight(targ.Center) && NPC.Distance(targ.Center) < 420)
                 {
+                    NPC.netUpdate = true;
                     NPC.ai[0] = 1;
                 }
                 NPC.ai[2]--;
@@ -117,6 +120,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
                 if (NPC.ai[2] > 260)
                 {
+                    NPC.netUpdate = true;
                     NPC.ai[0] = 2;
                     NPC.ai[2] = 0;
                 }
@@ -156,8 +160,8 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
                 if (NPC.ai[2] == smash)
                 {
+                    NPC.netUpdate = true;
                     SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact with { Pitch = -0.5f }, NPC.Center);
-                    //SoundEngine.PlaySound(BetterSoundID.ZombiePhantasmSphereExplosion with { Pitch = 0.5f }, NPC.Center);
                     SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/PopExplosion") with { Pitch = -0.7f, Volume = 12f }, NPC.Center);
                     Main.LocalPlayer.Calamity().GeneralScreenShakePower += 5;
                     Point pt = (NPC.Center + segments[0]).ToTileCoordinates();
@@ -189,7 +193,31 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 {
                     NPC.ai[2] = 0;
                     NPC.ai[0] = 1;
+                    NPC.netUpdate = true;
                 }
+            }
+            else if (NPC.ai[0] == 3)
+            {
+                if (NPC.ai[2] == 0)
+                {
+                    SoundEngine.PlaySound(BetterSoundID.DeathPillarShield, NPC.Center);
+                }
+                NPC.ai[2]++;
+                if (NPC.ai[2] >= 60)
+                {
+                    NPC.life = NPC.lifeMax;
+                    NPC.Transform(ModContent.NPCType<GigamothPupae>());
+                }
+                DefaultSegments(segSize);
+                NPC.ai[1] = 1;
+                NPC.netUpdate = true;
+            }
+
+            if (NPC.Remix().GreenAI[0]++ > CalamityUtils.SecondsToFrames(30) && NPC.ai[0] > 0 && NPC.ai[0] != 3)
+            {
+                NPC.ai[0] = 3;
+                NPC.ai[2] = 0;
+                NPC.netUpdate = true;
             }
 
             int num858 = 80;
@@ -256,13 +284,22 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             return false;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.Remix().GreenAI[0]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.Remix().GreenAI[0] = reader.ReadSingle();
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D body = ModContent.Request<Texture2D>(Texture + "_Body").Value;
             Texture2D tail = ModContent.Request<Texture2D>(Texture + "_Tail").Value;
             Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-            int segDiv = 5;
 
             BezierCurve cv = new BezierCurve(segments.ToArray());
             List<Vector2> finSeg = cv.GetPoints(11);
@@ -271,14 +308,15 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             {
                 Texture2D finale = i == 0 ? tex : i == (finSeg.Count - 1) ? tail : body;
                 float xSpeed = NPC.velocity.X == 0 ? MathF.Cos(Main.GlobalTimeWrappedHourly * 2) * i : 0;
-                float ySpeed = NPC.velocity.X != 0 ? MathF.Sin(i + Main.GlobalTimeWrappedHourly * 10) : 0;
+                float ySpeed = NPC.ai[0] == 3 ? 0 : (NPC.velocity.X != 0 ? MathF.Sin(i + Main.GlobalTimeWrappedHourly * 10) : 0);
+                float shrinkMult = NPC.ai[0] == 3 ? MathHelper.Lerp(1, 0, NPC.ai[2] / 60f) : 1;
 
-                Vector2 pos = NPC.Center + finSeg[i];
+                Vector2 pos = NPC.Center + finSeg[i] * shrinkMult;
 
                 Point p = pos.ToTileCoordinates();
 
                 if (NPC.ai[0] != 2)
-                    pos = new Vector2(pos.X + xSpeed, pos.Y + ySpeed * 5);
+                    pos = new Vector2((pos.X + xSpeed), pos.Y + ySpeed * 5);
 
                 Color ce = Lighting.GetColor(pos.ToTileCoordinates());
 
