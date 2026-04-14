@@ -45,6 +45,7 @@ using CalRemix.Content.NPCs.Bosses.Wulfwyrm;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
+using CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Projectiles;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Hostile;
@@ -1086,6 +1087,11 @@ namespace CalRemix
                         }
                     }
                 }
+            }
+
+            if (Player.webbed && NPC.AnyNPCs(ModContent.NPCType<GigamothLarva>()))
+            {
+                Player.velocity.Y = 12;
             }
         }
 

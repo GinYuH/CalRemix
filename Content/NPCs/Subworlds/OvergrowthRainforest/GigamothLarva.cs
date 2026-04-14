@@ -23,6 +23,7 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Projectiles.Typeless;
 using Terraria.Audio;
 using CalamityMod.NPCs.Ravager;
+using Terraria.DataStructures;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {
@@ -156,8 +157,33 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 if (NPC.ai[2] == smash)
                 {
                     SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact with { Pitch = -0.5f }, NPC.Center);
-                    SoundEngine.PlaySound(BetterSoundID.ZombiePhantasmSphereExplosion with { Pitch = 0.5f }, NPC.Center);
+                    //SoundEngine.PlaySound(BetterSoundID.ZombiePhantasmSphereExplosion with { Pitch = 0.5f }, NPC.Center);
+                    SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/PopExplosion") with { Pitch = -0.7f, Volume = 12f }, NPC.Center);
                     Main.LocalPlayer.Calamity().GeneralScreenShakePower += 5;
+                    Point pt = (NPC.Center + segments[0]).ToTileCoordinates();
+                    int searchAreaX = 15;
+                    int searchAreaY = 5;
+                    for (int i = pt.X - searchAreaX; i < pt.X + searchAreaX; i++)
+                    {
+                        for (int j = pt.Y - searchAreaY; j < pt.Y + searchAreaY; j++)
+                        {
+                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                            if (t.IsTileSolidGround() && (!above.IsTileSolidGround() || !above.HasTile))
+                            {
+                                WorldGen.KillTile(i, j, true, true);
+                            }
+                        }
+                    }
+                    Rectangle rect = Utils.CenteredRectangle(NPC.Center + segments[0], new Vector2(searchAreaX, searchAreaY) * 32);
+                    foreach (Player p in Main.ActivePlayers)
+                    {
+                        if (p.getRect().Intersects(rect))
+                        {
+                            p.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, 0, dodgeable: false);
+                        }
+                    }
+
                 }
                 if (NPC.ai[2] > wait)
                 {
