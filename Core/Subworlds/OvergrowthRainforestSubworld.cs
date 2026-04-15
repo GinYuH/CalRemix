@@ -128,6 +128,22 @@ namespace CalRemix.Core.Subworlds
             base.Update();
             SubworldUpdateMethods.UpdateTileEntities();
             SubworldUpdateMethods.UpdateTiles();
+            if (!NPC.AnyNPCs(ModContent.NPCType<WorldPecker>()))
+            {
+                foreach (Player p in Main.ActivePlayers)
+                {
+                    if (!p.behindBackWall && !p.dead)
+                    {
+                        if (p.Center.Y / 16 < Main.maxTilesY * OvergrowthRainforestGeneration.treeTopLevel * 2)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                NPC.NewNPC(new EntitySource_WorldEvent(), (int)p.Center.X, 0, ModContent.NPCType<WorldPecker>());
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override void DrawMenu(GameTime gameTime)

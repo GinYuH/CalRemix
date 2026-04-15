@@ -13,6 +13,7 @@ using Terraria.Audio;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using System.IO;
+using Terraria.DataStructures;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {
@@ -120,12 +121,12 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 // Follow
                 case 1:
                     {
-                        NPC.Center = Vector2.Lerp(NPC.Center, hoverPos + rotOff, 0.2f);
-                        if (Timer > 120)
+                        if (Timer > 150)
                         {
-                            //Timer = 0;
-                            //Phase = 2;
+                            Timer = 0;
+                            Phase = 2;
                         }
+                        NPC.Center = Vector2.Lerp(NPC.Center, hoverPos + rotOff, 0.04f);
                     }
                     break;
                 // Bite
@@ -134,12 +135,55 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                         int anti = 50;
                         int wait = anti + 10;
                         int strike = wait + 20;
-                        int strikeWait = strike + 10;
-                        int reelBack = strikeWait + 20;
+                        int strikeWait = strike + 3;
+                        int reelBack = strikeWait + 5;
+                        
+                        hoverPos = p.Center + Vector2.UnitX * NPC.direction * 400;
 
                         if (Timer <= 1)
                         {
                             OldPosition = NPC.Center;
+                            SavePosition = p.DirectionTo(NPC.Center) * 400;
+                        }
+                        else if (Timer < anti)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, OldPosition + SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(0, anti, Timer, true), 1));
+                        }
+                        else if (Timer < wait)
+                        {
+                            NPC.Center = Vector2.Lerp(NPC.Center, hoverPos + rotOff + SavePosition, 0.04f);
+                        }
+                        else if (Timer == wait)
+                        {
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer <= strike)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, p.Center - SavePosition, CalamityUtils.ExpInOutEasing(Utils.GetLerpValue(wait, strike, Timer, true), 1));
+                            if (Timer == (wait + ((strike - wait) / 2f)) || NPC.getRect().Intersects(p.getRect()))
+                                p.KillMe(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, NPC.direction);
+                        }
+                        else if (Timer < strikeWait)
+                        {
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer < reelBack)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, hoverPos + rotOff + SavePosition, CalamityUtils.SineInEasing(Utils.GetLerpValue(strikeWait, reelBack, Timer, true), 1));
+                        }
+                        else if (Timer == reelBack)
+                        {
+                            Phase = 3;
+                            Timer = 0;
+                        }
+
+                        if (Timer < wait)
+                        {
+                            NPC.Remix().GreenAI[0] = Utils.AngleLerp(0, MathHelper.ToRadians(30) * NPC.spriteDirection, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(anti - 10, wait, Timer, true), 1));
+                        }
+                        else if (Timer >= wait)
+                        {
+                            NPC.Remix().GreenAI[0] = Utils.AngleLerp(MathHelper.ToRadians(30) * NPC.spriteDirection, 0, CalamityUtils.ExpInEasing(Utils.GetLerpValue(wait, strike - 5, Timer, true), 1));
                         }
                     }
                     break;
@@ -162,6 +206,10 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                             for (int i = 0; i < 50; i++)
                                 Main.BestiaryTracker.Kills.RegisterKill(NPC);
                             NPC.active = false;
+                        }
+                        if (Timer > wait + 30)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? MathHelper.Pi : 0), Utils.GetLerpValue(wait + 30, wait + 70, Timer, true));
                         }
                     }
                     break;
@@ -220,7 +268,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
                 if (drawHead)
                 {
-                    spriteBatch.Draw(beak, segs[i] - screenPos + new Vector2(360 * NPC.spriteDirection, 40).RotatedBy(NPC.rotation), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(NPC.spriteDirection == -1 ? 0 : beak.Width, 0), NPC.scale, NPC.FlippedEffects(), 0);
+                    spriteBatch.Draw(beak, segs[i] - screenPos + new Vector2(60 * NPC.spriteDirection, 40).RotatedBy(NPC.rotation), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), NPC.Remix().GreenAI[0] + NPC.rotation, new Vector2(NPC.spriteDirection == 1 ? 0 : beak.Width, 0), NPC.scale, NPC.FlippedEffects(), 0);
                 }
                 spriteBatch.Draw(toUse, segs[i] - screenPos, null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(toUse.Width / 2, toUse.Height / 2), NPC.scale, NPC.FlippedEffects(), 0);
                 if (drawHead)
@@ -230,6 +278,11 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                     spriteBatch.Draw(eye, segs[i] - screenPos + eyePos.RotatedBy(NPC.rotation), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, eye.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
                 }
             }
+            return false;
+        }
+
+        public override bool CheckActive()
+        {
             return false;
         }
     }
