@@ -70,6 +70,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             }
             NPC.TargetClosest();
             Player p = Main.player[NPC.target];
+            NPC.spriteDirection = NPC.DirectionTo(p.Center).X.DirectionalSign();
             Vector2 hoverPos = p.Center + Vector2.UnitX * p.direction * 400;
             switch (Phase)
             {
@@ -80,8 +81,9 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                         int uncurl = spawnTime + 20;
                         if (Timer <= 1)
                         {
+                            NPC.position.Y = 0;
                             OldPosition = NPC.Center;
-                            SavePosition = NPC.Center + Vector2.UnitY * 500;
+                            SavePosition = NPC.Center + Vector2.UnitY * 800;
                         }
                         else if (Timer < spawnTime)
                         {
@@ -105,8 +107,8 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                         NPC.Center = Vector2.Lerp(NPC.Center, hoverPos, 0.2f);
                         if (Timer > 120)
                         {
-                            Timer = 0;
-                            Phase = 2;
+                            //Timer = 0;
+                            //Phase = 2;
                         }
                     }
                     break;
@@ -190,7 +192,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             Texture2D body = ModContent.Request<Texture2D>(Texture + "_Body").Value;
             Texture2D eye = ModContent.Request<Texture2D>(Texture + "_Eye").Value;
             Texture2D beak = ModContent.Request<Texture2D>(Texture + "_Jaw").Value;
-            List<Vector2> segs = new BezierCurve(segments.ToArray()).GetPoints(20);
+            List<Vector2> segs = new BezierCurve(segments.ToArray()).GetPoints((int)MathHelper.Max(NPC.Distance(segments[^1]) / 100, 10));
             for (int i = segs.Count - 1; i >= 0; i--)
             {
                 bool drawHead = i == 0;
@@ -202,12 +204,12 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
                 if (drawHead)
                 {
-                    spriteBatch.Draw(beak, segs[i] - screenPos + new Vector2(200 * NPC.spriteDirection, 40), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(beak.Width, 0), NPC.scale, NPC.FlippedEffects(), 0);
+                    spriteBatch.Draw(beak, segs[i] - screenPos + new Vector2(360 * NPC.spriteDirection, 40), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(NPC.spriteDirection == -1 ? 0 : beak.Width, 0), NPC.scale, NPC.FlippedEffects(), 0);
                 }
-                spriteBatch.Draw(toUse, segs[i] - screenPos, null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(toUse.Width, toUse.Height / 2), NPC.scale, NPC.FlippedEffects(), 0);
+                spriteBatch.Draw(toUse, segs[i] - screenPos, null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(toUse.Width / 2, toUse.Height / 2), NPC.scale, NPC.FlippedEffects(), 0);
                 if (drawHead)
                 {
-                    Vector2 eyePos = new Vector2(270 * NPC.spriteDirection, 60);
+                    Vector2 eyePos = new Vector2(100 * NPC.spriteDirection, 54);
                     eyePos = eyePos + (NPC.Center + eyePos).DirectionTo(Main.player[NPC.target].Center) * 3;
                     spriteBatch.Draw(eye, segs[i] - screenPos + eyePos, null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, eye.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
                 }
