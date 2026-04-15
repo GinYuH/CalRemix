@@ -2587,6 +2587,7 @@ namespace CalRemix
             dyeStats.Add(ItemType<StratusDye>(), new DyeStats(blue: 5, skyblue: -5));
             // Remix
             dyeStats.Add(ItemType<LucreciaDye>(), new DyeStats(purple: 10, pink: 10));
+            dyeStats.Add(ItemType<GraknightDye>(), new DyeStats(blue: 3, skyblue: 1));
         }
 
         private static void ManageItemsInUse(Player player, Item h, Item m, ref int c)
