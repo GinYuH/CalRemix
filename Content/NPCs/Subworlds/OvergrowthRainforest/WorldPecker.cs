@@ -68,35 +68,51 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                     segments.Add(NPC.Center);
                 }
             }
-            NPC.TargetClosest();
+            NPC.TargetClosest(false);
             Player p = Main.player[NPC.target];
-            NPC.spriteDirection = NPC.DirectionTo(p.Center).X.DirectionalSign();
-            Vector2 hoverPos = p.Center + Vector2.UnitX * p.direction * 400;
+            if (NPC.spriteDirection == 0 || NPC.direction == 0)
+            {
+                NPC.direction = Main.rand.NextBool().ToDirectionInt();
+                NPC.spriteDirection = -NPC.direction;
+            }
+            Vector2 hoverPos = p.Center + Vector2.UnitX * NPC.direction * 400;
+            NPC.localAI[0]++;
+            float spinTime = NPC.localAI[0] / 20f;
+            Vector2 rotOff = new Vector2(MathF.Cos(spinTime), MathF.Sin(spinTime)) * 12;
             switch (Phase)
             {
                 // Spawn
                 case 0:
                     {
-                        int spawnTime = 50;
-                        int uncurl = spawnTime + 20;
+                        int spawnTime = 120;
+                        int pause = spawnTime + 10;
+                        int uncurl = pause + 120;
                         if (Timer <= 1)
                         {
+                            NPC.rotation = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? MathHelper.Pi : 0);
                             NPC.position.Y = 0;
                             OldPosition = NPC.Center;
-                            SavePosition = NPC.Center + Vector2.UnitY * 800;
+                            SavePosition = NPC.Center + Vector2.UnitY * MathHelper.Max(800, p.Center.Y);
                         }
                         else if (Timer < spawnTime)
                         {
-                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInEasing(Utils.GetLerpValue(0, spawnTime, Timer, true), 1));
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineOutEasing(Utils.GetLerpValue(0, spawnTime, Timer, true), 1));
+                        }
+                        else if (Timer < pause)
+                        {
                         }
                         else if (Timer < uncurl)
                         {
-                            NPC.Center = Vector2.Lerp(NPC.Center, hoverPos, 0.2f);
+                            NPC.Center = Vector2.Lerp(NPC.Center, hoverPos + rotOff, Utils.GetLerpValue(pause, uncurl, Timer, true));
                         }
                         else if (Timer == uncurl)
                         {
                             Timer = 0;
                             Phase = 1;
+                        }
+                        if (Timer > spawnTime - 30)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, Utils.GetLerpValue(spawnTime + 20, spawnTime + 100, Timer, true));
                         }
                         segments[3] = OldPosition;
                     }
@@ -104,7 +120,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 // Follow
                 case 1:
                     {
-                        NPC.Center = Vector2.Lerp(NPC.Center, hoverPos, 0.2f);
+                        NPC.Center = Vector2.Lerp(NPC.Center, hoverPos + rotOff, 0.2f);
                         if (Timer > 120)
                         {
                             //Timer = 0;
@@ -192,7 +208,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             Texture2D body = ModContent.Request<Texture2D>(Texture + "_Body").Value;
             Texture2D eye = ModContent.Request<Texture2D>(Texture + "_Eye").Value;
             Texture2D beak = ModContent.Request<Texture2D>(Texture + "_Jaw").Value;
-            List<Vector2> segs = new BezierCurve(segments.ToArray()).GetPoints((int)MathHelper.Max(NPC.Distance(segments[^1]) / 100, 10));
+            List<Vector2> segs = new BezierCurve(segments.ToArray()).GetPoints((int)MathHelper.Max(NPC.Distance(segments[1]) / 50, 20));
             for (int i = segs.Count - 1; i >= 0; i--)
             {
                 bool drawHead = i == 0;
@@ -204,14 +220,14 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 }
                 if (drawHead)
                 {
-                    spriteBatch.Draw(beak, segs[i] - screenPos + new Vector2(360 * NPC.spriteDirection, 40), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(NPC.spriteDirection == -1 ? 0 : beak.Width, 0), NPC.scale, NPC.FlippedEffects(), 0);
+                    spriteBatch.Draw(beak, segs[i] - screenPos + new Vector2(360 * NPC.spriteDirection, 40).RotatedBy(NPC.rotation), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(NPC.spriteDirection == -1 ? 0 : beak.Width, 0), NPC.scale, NPC.FlippedEffects(), 0);
                 }
                 spriteBatch.Draw(toUse, segs[i] - screenPos, null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(toUse.Width / 2, toUse.Height / 2), NPC.scale, NPC.FlippedEffects(), 0);
                 if (drawHead)
                 {
                     Vector2 eyePos = new Vector2(100 * NPC.spriteDirection, 54);
                     eyePos = eyePos + (NPC.Center + eyePos).DirectionTo(Main.player[NPC.target].Center) * 3;
-                    spriteBatch.Draw(eye, segs[i] - screenPos + eyePos, null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, eye.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
+                    spriteBatch.Draw(eye, segs[i] - screenPos + eyePos.RotatedBy(NPC.rotation), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, eye.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
                 }
             }
             return false;
