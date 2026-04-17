@@ -2271,7 +2271,7 @@ namespace CalRemix
 
         public override void UpdateLifeRegen()
         {
-            Player.lifeRegen += (int)MathHelper.Min(dyesPink, 0);
+            Player.lifeRegen += (int)MathHelper.Max(dyesPink, 0);
             if (muraregen)
             {
                 Player.lifeRegen += 20;
@@ -2585,6 +2585,20 @@ namespace CalRemix
             dyeStats.Add(ItemType<ReaverDye>(), new DyeStats(green: 4, lime: 3));
             dyeStats.Add(ItemType<ShadowspecDye>(), new DyeStats(purple: 10, red: -10));
             dyeStats.Add(ItemType<StratusDye>(), new DyeStats(blue: 5, skyblue: -5));
+            dyeStats.Add(ItemType<AcidRainDye>(), new DyeStats(green: 2, lime: 1));
+            dyeStats.Add(ItemType<DaedalusDye>(), new DyeStats(blue: 2, purple: 2));
+            dyeStats.Add(ItemType<InvisibleDye>(), new DyeStats(silver: -1));
+            dyeStats.Add(ItemType<LivingShardDye>(), new DyeStats(green: 4, yellow: 1, skyblue: 1));
+            dyeStats.Add(ItemType<NecromanticDye>(), new DyeStats(brown: 3, blue: 2));
+            dyeStats.Add(ItemType<MeldDye>(), new DyeStats(green: 5, skyblue: 5, teal: 5));
+            dyeStats.Add(ItemType<PlagueGooDye>(), new DyeStats(green: 3, lime: 2));
+            dyeStats.Add(ItemType<PlaguePlateDye>(), new DyeStats(green: 4));
+            dyeStats.Add(ItemType<ProfanedCrystalDye>(), new DyeStats(pink: 5));
+            dyeStats.Add(ItemType<ProfanedRockDye>(), new DyeStats(brown: 4, orange: 2));
+            dyeStats.Add(ItemType<ScoriaDye>(), new DyeStats(blue: 3, red: 3));
+            dyeStats.Add(ItemType<SilvaDye>(), new DyeStats(green: 5, lime: 5));
+            dyeStats.Add(ItemType<TarragonDye>(), new DyeStats(green: 4, lime: 4));
+            dyeStats.Add(ItemType<WulfrumDye>(), new DyeStats(green: 1, blue: 1));
             // Remix
             dyeStats.Add(ItemType<LucreciaDye>(), new DyeStats(purple: 10, pink: 10));
             dyeStats.Add(ItemType<GraknightDye>(), new DyeStats(blue: 3, skyblue: 1));
