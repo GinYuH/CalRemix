@@ -31,7 +31,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.DeathSound = SoundID.DD2_OgreDeath with { Pitch = 0.4f };
             NPC.noTileCollide = false;
             NPC.value = Item.buyPrice(silver: 50);
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<VolcanicFieldBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<VolcanicFieldBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
         public override void AI()
         {

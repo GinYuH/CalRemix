@@ -2489,6 +2489,11 @@ Dyes: {
 		DisplayName: Lucrecia Dye
 		Tooltip: ""
 	}
+
+	GraknightDye: {
+		DisplayName: Graknight Dye
+		Tooltip: ""
+	}
 }
 
 AltaroftheAblessed: {

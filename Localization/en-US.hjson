@@ -128,7 +128,7 @@ Mods: {
 			}
 
 			GreatSeaBiome: {
-				DisplayName: Great Sea
+				DisplayName: Open Ocean
 				TownNPCDialogueName: the Great Sea Biome
 			}
 
@@ -203,13 +203,43 @@ Mods: {
 			}
 
 			WolfForestBiome: {
-				DisplayName: Wolf Forest Biome
+				DisplayName: Wolf Forest
 				TownNPCDialogueName: the Wolf Forest Biome
 			}
 
 			OvergrowthRainforestBiome: {
-				DisplayName: Overgrowth Rainforest Biome
+				DisplayName: Overgrowth Rainforest
 				TownNPCDialogueName: the Overgrowth Rainforest Biome
+			}
+
+			BigOlBranchesBiome: {
+				DisplayName: Big Ol' Branches
+				TownNPCDialogueName: the Big Ol Branches Biome
+			}
+
+			CanopiesBiome: {
+				DisplayName: The Canopies
+				TownNPCDialogueName: the Canopies Biome
+			}
+
+			ForestFloorBiome: {
+				DisplayName: Forest Floor
+				TownNPCDialogueName: the Forest Floor Biome
+			}
+
+			TitanicTrunksBiome: {
+				DisplayName: Titanic Trunks
+				TownNPCDialogueName: the Titanic Trunks Biome
+			}
+
+			GreatSeaWorldBiome: {
+				DisplayName: Great Sea
+				TownNPCDialogueName: the Great Sea World Biome
+			}
+
+			SealedDimensionBiome: {
+				DisplayName: Sealed Dimension
+				TownNPCDialogueName: the Sealed Dimension Biome
 			}
 		}
 

@@ -1,0 +1,290 @@
+﻿using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.ID;
+using Terraria.ModLoader;
+using CalRemix.Core.Biomes;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Terraria.GameContent;
+using System;
+using CalRemix.Core.Biomes.Subworlds;
+using CalamityMod;
+using Terraria.Audio;
+using System.Collections.Generic;
+using CalamityMod.DataStructures;
+using System.IO;
+using Terraria.DataStructures;
+
+namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
+{
+    public class WorldPecker : ModNPC
+    {
+        public ref float Timer => ref NPC.ai[0];
+
+        public ref float Phase => ref NPC.ai[1];
+
+        public Vector2 SavePosition
+        {
+            get => new Vector2(NPC.ai[2], NPC.ai[3]);
+            set
+            {
+                NPC.ai[2] = value.X;
+                NPC.ai[3] = value.Y;
+            }
+        }
+
+        public Vector2 OldPosition
+        {
+            get => new Vector2(NPC.localAI[2], NPC.localAI[3]);
+            set
+            {
+                NPC.localAI[2] = value.X;
+                NPC.localAI[3] = value.Y;
+            }
+        }
+
+        public List<Vector2> segments = new();
+
+        public override void SetDefaults()
+        {
+            NPC.aiStyle = -1;
+            NPC.damage = 20000;
+            NPC.width = 300;
+            NPC.height = 300;
+            NPC.defense = 999999;
+            NPC.lifeMax = 50000000;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.dontTakeDamage = true;
+            SpawnModBiomes = new int[] { ModContent.GetInstance<OvergrowthRainforestBiome>().Type, ModContent.GetInstance<CanopiesBiome>().Type };
+        }
+
+        public override void AI()
+        {
+            if (segments.Count <= 0)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    segments.Add(NPC.Center);
+                }
+            }
+            NPC.TargetClosest(false);
+            Player p = Main.player[NPC.target];
+            if (NPC.spriteDirection == 0 || NPC.direction == 0)
+            {
+                NPC.direction = Main.rand.NextBool().ToDirectionInt();
+                NPC.spriteDirection = -NPC.direction;
+            }
+            Vector2 hoverPos = p.Center + Vector2.UnitX * NPC.direction * 400;
+            NPC.localAI[0]++;
+            float spinTime = NPC.localAI[0] / 20f;
+            Vector2 rotOff = new Vector2(MathF.Cos(spinTime), MathF.Sin(spinTime)) * 12;
+            switch (Phase)
+            {
+                // Spawn
+                case 0:
+                    {
+                        int spawnTime = 120;
+                        int pause = spawnTime + 10;
+                        int uncurl = pause + 120;
+                        if (Timer <= 1)
+                        {
+                            NPC.rotation = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? MathHelper.Pi : 0);
+                            NPC.position.Y = 0;
+                            OldPosition = NPC.Center;
+                            SavePosition = NPC.Center + Vector2.UnitY * MathHelper.Max(800, p.Center.Y);
+                        }
+                        else if (Timer < spawnTime)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineOutEasing(Utils.GetLerpValue(0, spawnTime, Timer, true), 1));
+                        }
+                        else if (Timer < pause)
+                        {
+                        }
+                        else if (Timer < uncurl)
+                        {
+                            NPC.Center = Vector2.Lerp(NPC.Center, hoverPos + rotOff, Utils.GetLerpValue(pause, uncurl, Timer, true));
+                        }
+                        else if (Timer == uncurl)
+                        {
+                            Timer = 0;
+                            Phase = 1;
+                        }
+                        if (Timer > spawnTime - 30)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, Utils.GetLerpValue(spawnTime + 20, spawnTime + 100, Timer, true));
+                        }
+                        segments[3] = OldPosition;
+                    }
+                    break;
+                // Follow
+                case 1:
+                    {
+                        if (Timer > 150)
+                        {
+                            Timer = 0;
+                            Phase = 2;
+                        }
+                        NPC.Center = Vector2.Lerp(NPC.Center, hoverPos + rotOff, 0.04f);
+                    }
+                    break;
+                // Bite
+                case 2:
+                    {
+                        int anti = 50;
+                        int wait = anti + 10;
+                        int strike = wait + 20;
+                        int strikeWait = strike + 3;
+                        int reelBack = strikeWait + 5;
+                        
+                        hoverPos = p.Center + Vector2.UnitX * NPC.direction * 400;
+
+                        if (Timer <= 1)
+                        {
+                            OldPosition = NPC.Center;
+                            SavePosition = p.DirectionTo(NPC.Center) * 400;
+                        }
+                        else if (Timer < anti)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, OldPosition + SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(0, anti, Timer, true), 1));
+                        }
+                        else if (Timer < wait)
+                        {
+                            NPC.Center = Vector2.Lerp(NPC.Center, hoverPos + rotOff + SavePosition, 0.04f);
+                        }
+                        else if (Timer == wait)
+                        {
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer <= strike)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, p.Center - SavePosition, CalamityUtils.ExpInOutEasing(Utils.GetLerpValue(wait, strike, Timer, true), 1));
+                            if (Timer == (wait + ((strike - wait) / 2f)) || NPC.getRect().Intersects(p.getRect()))
+                                p.KillMe(PlayerDeathReason.ByNPC(NPC.whoAmI), NPC.damage, NPC.direction);
+                        }
+                        else if (Timer < strikeWait)
+                        {
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer < reelBack)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, hoverPos + rotOff + SavePosition, CalamityUtils.SineInEasing(Utils.GetLerpValue(strikeWait, reelBack, Timer, true), 1));
+                        }
+                        else if (Timer == reelBack)
+                        {
+                            Phase = 3;
+                            Timer = 0;
+                        }
+
+                        if (Timer < wait)
+                        {
+                            NPC.Remix().GreenAI[0] = Utils.AngleLerp(0, MathHelper.ToRadians(30) * NPC.spriteDirection, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(anti - 10, wait, Timer, true), 1));
+                        }
+                        else if (Timer >= wait)
+                        {
+                            NPC.Remix().GreenAI[0] = Utils.AngleLerp(MathHelper.ToRadians(30) * NPC.spriteDirection, 0, CalamityUtils.ExpInEasing(Utils.GetLerpValue(wait, strike - 5, Timer, true), 1));
+                        }
+                    }
+                    break;
+                // Despawn
+                case 3:
+                    {
+                        int wait = 40;
+                        int goHome = wait + 120;
+                        if (Timer <= 1)
+                        {
+                            OldPosition = NPC.Center;
+                            SavePosition = new Vector2(NPC.Center.X - NPC.direction * 200, -40);
+                        }
+                        else if (Timer > wait)
+                        {
+                            NPC.Center = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.ExpInEasing(Utils.GetLerpValue(wait, goHome, Timer, true), 1));
+                        }
+                        if (Timer > goHome)
+                        {
+                            for (int i = 0; i < 50; i++)
+                                Main.BestiaryTracker.Kills.RegisterKill(NPC);
+                            NPC.active = false;
+                        }
+                        if (Timer > wait + 30)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? MathHelper.Pi : 0), Utils.GetLerpValue(wait + 30, wait + 70, Timer, true));
+                        }
+                    }
+                    break;
+            }
+            segments[0] = NPC.Center;
+            Timer++;
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.localAI[2] = reader.ReadSingle();
+            NPC.localAI[3] = reader.ReadSingle();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.localAI[2]);
+            writer.Write(NPC.localAI[3]);
+        }
+
+        public void LerpBezier(Vector2 ctrlOne = default, Vector2 ctrlTwo = default)
+        {
+            if (ctrlOne != default)
+            {
+                segments[1] = Vector2.Lerp(segments[1], ctrlOne, NPC.localAI[1]);
+            }
+            if (ctrlTwo != default)
+            {
+                segments[2] = Vector2.Lerp(segments[2], ctrlTwo, NPC.localAI[1]);
+            }
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+        new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
+            });
+        }
+
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            return true;
+            Texture2D head = TextureAssets.Npc[Type].Value;
+            Texture2D body = ModContent.Request<Texture2D>(Texture + "_Body").Value;
+            Texture2D eye = ModContent.Request<Texture2D>(Texture + "_Eye").Value;
+            Texture2D beak = ModContent.Request<Texture2D>(Texture + "_Jaw").Value;
+            List<Vector2> segs = new BezierCurve(segments.ToArray()).GetPoints((int)MathHelper.Max(NPC.Distance(segments[1]) / 50, 20));
+            for (int i = segs.Count - 1; i >= 0; i--)
+            {
+                bool drawHead = i == 0;
+                Texture2D toUse = drawHead ? head : body;
+                float rot = NPC.rotation;
+                if (i > 0)
+                {
+                    rot = 0;
+                }
+                if (drawHead)
+                {
+                    spriteBatch.Draw(beak, segs[i] - screenPos + new Vector2(60 * NPC.spriteDirection, 40).RotatedBy(NPC.rotation), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), NPC.Remix().GreenAI[0] + NPC.rotation, new Vector2(NPC.spriteDirection == 1 ? 0 : beak.Width, 0), NPC.scale, NPC.FlippedEffects(), 0);
+                }
+                spriteBatch.Draw(toUse, segs[i] - screenPos, null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, new Vector2(toUse.Width / 2, toUse.Height / 2), NPC.scale, NPC.FlippedEffects(), 0);
+                if (drawHead)
+                {
+                    Vector2 eyePos = new Vector2(100 * NPC.spriteDirection, 54);
+                    eyePos = eyePos + (NPC.Center + eyePos).DirectionTo(Main.player[NPC.target].Center) * 3;
+                    spriteBatch.Draw(eye, segs[i] - screenPos + eyePos.RotatedBy(NPC.rotation), null, NPC.GetAlpha(Lighting.GetColor((segs[i]).ToTileCoordinates())), rot, eye.Size() / 2, NPC.scale, NPC.FlippedEffects(), 0);
+                }
+            }
+            return false;
+        }
+
+        public override bool CheckActive()
+        {
+            return false;
+        }
+    }
+}

@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.DeathSound = null;
             NPC.knockBackResist = 0f;
             NPC.noTileCollide = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<VoidForestBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
 
         public static void IncrementShadeQuest()

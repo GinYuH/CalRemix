@@ -12,6 +12,7 @@ using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Walls;
+using CalRemix.Core.Biomes.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI.ElementalSystem;
 using Microsoft.Xna.Framework;
@@ -32,7 +33,6 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
-using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -46,13 +46,25 @@ namespace CalRemix.Core.Subworlds
             Point playerPoint = Main.LocalPlayer.Center.ToTileCoordinates();
             bool playerWall = CalamityUtils.ParanoidTileRetrieval(playerPoint.X, playerPoint.Y).WallType > WallID.None;
             Predicate<NPCSpawnInfo> wallFunc = new Predicate<NPCSpawnInfo>(t => (CalamityUtils.ParanoidTileRetrieval(t.SpawnTileX, t.SpawnTileY).WallType > WallID.None && playerWall) || !playerWall);
+            bool treeTop = Main.LocalPlayer.InModBiome<CanopiesBiome>();
+            bool trunk = Main.LocalPlayer.InModBiome<TitanicTrunksBiome>();
+            bool branches = Main.LocalPlayer.InModBiome<BigOlBranchesBiome>();
+            bool floor = Main.LocalPlayer.InModBiome<ForestFloorBiome>();
 
             // Main Jungle
-            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.6f, wallFunc));
-            list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 16f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
-            list.Add(item: (ModContent.NPCType<Chimp>(), 16f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && wallFunc.Invoke(n)));
-            list.Add(item: (NPCID.GreenDragonfly, 0.04f, wallFunc));
-            list.Add(item: (NPCID.Stinkbug, 0.05f, wallFunc));
+            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.05f, wallFunc));
+            list.Add(item: (ModContent.NPCType<MegaNeurofly>(), 0.06f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall && trunk));
+            list.Add(item: (ModContent.NPCType<Silverwing>(), 0.05f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType == ModContent.WallType<UnsafeTitanodendronLeafBlockWallPlaced>() && playerWall && treeTop));
+            list.Add(item: (ModContent.NPCType<Calamachnid>(), 0.1f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall && (trunk || treeTop)));
+            list.Add(item: (ModContent.NPCType<Stapologe>(), 4f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && (trunk || branches) && NPC.CountNPCS(ModContent.NPCType<Stapologe>()) < 1));
+            list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).IsTileSolidGround() && wallFunc.Invoke(n) && (floor || trunk || treeTop)));
+            list.Add(item: (ModContent.NPCType<Chimp>(), 8f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).IsTileSolidGround() && wallFunc.Invoke(n) && (branches || trunk || treeTop)));
+            list.Add(item: (ModContent.NPCType<FlingastWidow>(), 16f, (NPCSpawnInfo n) => (CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX - 1, n.SpawnTileY).HasTile || CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX + 1, n.SpawnTileY).HasTile) && branches));
+            list.Add(item: (ModContent.NPCType<Globbler>(), 25f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY - 1).HasTile && !CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).HasTile && !playerWall && branches));
+            list.Add(item: (ModContent.NPCType<GigamothLarva>(), 2f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && branches));
+            list.Add(item: (ModContent.NPCType<Starvathen>(), 2f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).IsTileSolidGround() && !playerWall && floor));
+            list.Add(item: (NPCID.GreenDragonfly, 0.02f, wallFunc));
+            list.Add(item: (NPCID.Stinkbug, 0.02f, wallFunc));
 
             // Temple
             return list;
@@ -101,7 +113,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Update()
         {
-            Point p = Main.MouseWorld.ToTileCoordinates();
+            /*Point p = Main.MouseWorld.ToTileCoordinates();
             if (Main.mouseLeft && Main.LocalPlayer.selectedItem == 2)
             {
                 int k = p.X;
@@ -112,10 +124,26 @@ namespace CalRemix.Core.Subworlds
                 {
                     te.anchorPoint = new Point(k + 22, j);
                 }
-            }
+            }*/
             base.Update();
             SubworldUpdateMethods.UpdateTileEntities();
             SubworldUpdateMethods.UpdateTiles();
+            if (!NPC.AnyNPCs(ModContent.NPCType<WorldPecker>()))
+            {
+                foreach (Player p in Main.ActivePlayers)
+                {
+                    if (!p.behindBackWall && !p.dead)
+                    {
+                        if (p.Center.Y / 16 < Main.maxTilesY * OvergrowthRainforestGeneration.treeTopLevel * 2)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                NPC.NewNPC(new EntitySource_WorldEvent(), (int)p.Center.X, 0, ModContent.NPCType<WorldPecker>());
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override void DrawMenu(GameTime gameTime)
@@ -510,8 +538,9 @@ namespace CalRemix.Core.Subworlds
                         }
                         if (WorldGen.genRand.NextBool(4000))
                         {
-                            int rad = WorldGen.genRand.Next(8, 20);
-                            Rectangle rect = Utils.CenteredRectangle(new Vector2(i, j), Vector2.One * (rad * 2 + 1));
+                            int height = WorldGen.genRand.Next(8, 20);
+                            int width = (int)(height * WorldGen.genRand.NextFloat(0.2f, 0.4f));
+                            Rectangle rect = Utils.CenteredRectangle(new Vector2(i, j), new Vector2(width * 2 + 1, height * 2 + 1));
                             for (int k = rect.Left; k < rect.Right; k++)
                             {
                                 for (int l = rect.Top; l < rect.Bottom; l++)
@@ -521,10 +550,34 @@ namespace CalRemix.Core.Subworlds
                                         continue;
                                     if (wallo.WallType == leafWall)
                                         continue;
-                                    if (CalRemixHelper.WithinElipse(k, l, i, j, rad, rad))
+                                    if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(width, height), new Point(k, l)))
                                     {
-                                        if (WorldGen.genRand.NextBool() || CalRemixHelper.WithinElipse(k, l, i, j, rad / 2, rad / 2))
-                                            wallo.WallType = lichenWall;
+                                        wallo.WallType = lichenWall;
+
+                                        if (WorldGen.genRand.NextBool(3))
+                                        {
+                                            int heightS = WorldGen.genRand.Next(4, 10);
+                                            int widthS = (int)(heightS * WorldGen.genRand.NextFloat(0.3f, 0.6f));
+                                            Rectangle rectS = Utils.CenteredRectangle(new Vector2(k, l), new Vector2(widthS * 2 + 1, heightS * 2 + 1));
+                                            for (int m = rectS.Left; m < rectS.Right; m++)
+                                            {
+                                                for (int n  = rectS.Top;  n < rectS.Bottom; n++)
+                                                {
+                                                    if (WorldGen.genRand.NextBool(5))
+                                                    {
+                                                        if (CalRemixHelper.WithinRhombus(new Point(k, l), new Point(widthS, heightS), new Point(m, n)))
+                                                        {
+                                                            Tile walloS = CalamityUtils.ParanoidTileRetrieval(m, n);
+                                                            if (walloS.WallType <= WallID.None)
+                                                                continue;
+                                                            if (walloS.WallType == leafWall)
+                                                                continue;
+                                                            walloS.WallType = lichenWall;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

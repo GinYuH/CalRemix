@@ -47,7 +47,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = true;
             NPC.HitSound = BetterSoundID.ItemMagicMount;
             NPC.DeathSound = BetterSoundID.ItemBubblePop;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<BarrensBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<BarrensBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
             NPC.alpha = 50;
             NPC.rarity = 1;
             NPC.chaseable = false;

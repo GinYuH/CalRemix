@@ -98,7 +98,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToElectricity = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            SpawnModBiomes = [ModContent.GetInstance<VolcanicFieldBiome>().Type];
+            SpawnModBiomes = [ModContent.GetInstance<VolcanicFieldBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type];
             NPC.knockBackResist = 0f;
             NPC.value = Item.buyPrice(gold: 40);
             NPC.boss = true;

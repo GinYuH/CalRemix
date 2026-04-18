@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using CalamityMod.Projectiles.Boss;
 using Terraria.Audio;
+using CalamityMod;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -20,6 +21,11 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
         public NPC Body => Main.npc[BodyIndex];
 
         List<VerletSimulatedSegment> Segments = new List<VerletSimulatedSegment>();
+
+        public override void SetStaticDefaults()
+        {
+            this.HideFromBestiary();
+        }
 
         public override void SetDefaults()
         {

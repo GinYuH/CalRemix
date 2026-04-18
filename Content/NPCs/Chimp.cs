@@ -10,6 +10,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using static Terraria.ModLoader.ModContent;
 //using CalamityMod.CalPlayer;
 
 namespace CalRemix.Content.NPCs
@@ -39,7 +40,7 @@ namespace CalRemix.Content.NPCs
             NPC.Calamity().VulnerableToCold = true;
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToHeat = true;
-            SpawnModBiomes = [ModContent.GetInstance<OvergrowthRainforestBiome>().Type];
+            SpawnModBiomes = [GetInstance<OvergrowthRainforestBiome>().Type, GetInstance<TitanicTrunksBiome>().Type, GetInstance<CanopiesBiome>().Type, GetInstance<BigOlBranchesBiome>().Type];
         }
 
         public override void AI()

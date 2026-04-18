@@ -36,7 +36,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.friendly = true;
             NPC.chaseable = false;
             NPC.catchItem = (short)ModContent.ItemType<Items.Critters.TheBealed>();
-            SpawnModBiomes = new int[5] { ModContent.GetInstance<SealedFieldsBiome>().Type, ModContent.GetInstance<TurnipBiome>().Type, ModContent.GetInstance<BarrensBiome>().Type, ModContent.GetInstance<BadlandsBiome>().Type, ModContent.GetInstance<DarnwoodSwampBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<SealedFieldsBiome>().Type, ModContent.GetInstance<TurnipBiome>().Type, ModContent.GetInstance<BarrensBiome>().Type, ModContent.GetInstance<BadlandsBiome>().Type, ModContent.GetInstance<DarnwoodSwampBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
 
         public override void AI()

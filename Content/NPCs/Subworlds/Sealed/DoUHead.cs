@@ -39,7 +39,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.HitSound = DevourerofGodsHead.HitSound;
             NPC.DeathSound = DevourerofGodsHead.DeathAnimationSound;
             NPC.rarity = 1;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<BadlandsBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<BadlandsBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)

@@ -487,6 +487,20 @@ namespace CalRemix
             return mainArea == areaOneTwo + areaTwoThree + areaOneThreeLikeTheUser;
         }
 
+        /// <summary>
+        /// Checks if a point is inside of a quadrilateral with 4 given points. Points should be in a consistent clockwise or counter clockwise order
+        /// </summary>
+        /// <param name="point1">The first point</param>
+        /// <param name="point2">The second point</param>
+        /// <param name="point3">The third point</param>
+        /// <param name="point4">The fourth point</param>
+        /// <param name="toCheck">The point to check</param>
+        /// <returns>true if the point is inside</returns>
+        public static bool WithinQuad(Point point1, Point point2, Point point3, Point point4, Point toCheck)
+        {
+            return WithinTriangle(point1, point2, point3, toCheck) || WithinTriangle(point1, point3, point4, toCheck);
+        }
+
         public enum PerlinEase
         {
             /// <summary>
@@ -2293,6 +2307,250 @@ namespace CalRemix
         public static SoundStyle ItemShimmered => SoundID.Item176;
         public static SoundStyle ItemPoopSquish => SoundID.Item177;
         public static SoundStyle ItemWafflesIronTink => SoundID.Item178;
+
+
+        public static SoundStyle HitFlesh => SoundID.NPCHit1;
+        public static SoundStyle HitBoneSkeleton => SoundID.NPCHit2;
+        public static SoundStyle HitMeteor => SoundID.NPCHit3;
+        public static SoundStyle HitMetal => SoundID.NPCHit4;
+        public static SoundStyle HitMagicPixie => SoundID.NPCHit5;
+        public static SoundStyle HitWolf => SoundID.NPCHit6;
+        public static SoundStyle HitWyvern => SoundID.NPCHit7;
+        public static SoundStyle HitWallofFlesh => SoundID.NPCHit8;
+        public static SoundStyle HitLeechBrainFlesh => SoundID.NPCHit9;
+        public static SoundStyle HitPig => SoundID.NPCHit10;
+        public static SoundStyle HitSnow => SoundID.NPCHit11;
+        public static SoundStyle HitHorse => SoundID.NPCHit12;
+        public static SoundStyle HitBlood => SoundID.NPCHit13;
+        public static SoundStyle HitDuke => SoundID.NPCHit14;
+        public static SoundStyle HitDummyOne => SoundID.NPCHit15;
+        public static SoundStyle HitDummyTwo => SoundID.NPCHit16;
+        public static SoundStyle HitDummyThree => SoundID.NPCHit17;
+        public static SoundStyle HitBloodZombie => SoundID.NPCHit18;
+        public static SoundStyle HitDrippler => SoundID.NPCHit19;
+        public static SoundStyle HitBloodCrawler => SoundID.NPCHit20;
+        public static SoundStyle HitDemon => SoundID.NPCHit21;
+        public static SoundStyle HitDerpling => SoundID.NPCHit22;
+        public static SoundStyle HitElemental => SoundID.NPCHit23;
+        public static SoundStyle HitTortoise => SoundID.NPCHit24;
+        public static SoundStyle HitJellyfish => SoundID.NPCHit25;
+        public static SoundStyle HitLizard => SoundID.NPCHit26;
+        public static SoundStyle HitPigron => SoundID.NPCHit27;
+        public static SoundStyle HitVulture => SoundID.NPCHit28;
+        public static SoundStyle HitSpider => SoundID.NPCHit29;
+        public static SoundStyle HitNimbus => SoundID.NPCHit30;
+        public static SoundStyle HitAntlion => SoundID.NPCHit31;
+        public static SoundStyle HitAntlionSwarmer => SoundID.NPCHit32;
+        public static SoundStyle HitCrawdad => SoundID.NPCHit33;
+        public static SoundStyle HitDeadlySphere => SoundID.NPCHit34;
+        public static SoundStyle HitDrManFly => SoundID.NPCHit35;
+        public static SoundStyle HitDungeonSpiritGhost => SoundID.NPCHit36;
+        public static SoundStyle HitGhoul => SoundID.NPCHit37;
+        public static SoundStyle HitGiantShelly => SoundID.NPCHit38;
+        public static SoundStyle HitAlien => SoundID.NPCHit39;
+        public static SoundStyle HitGoblinSummoner => SoundID.NPCHit40;
+        public static SoundStyle HitGolem => SoundID.NPCHit41;
+        public static SoundStyle HitMartianDrone => SoundID.NPCHit42;
+        public static SoundStyle HitMartianBubbleRoxcalibur => SoundID.NPCHit43;
+        public static SoundStyle HitMothron => SoundID.NPCHit44;
+        public static SoundStyle HitLadybug => SoundID.NPCHit45;
+        public static SoundStyle HitParrot => SoundID.NPCHit46;
+        public static SoundStyle HitPossessed => SoundID.NPCHit47;
+        public static SoundStyle HitPsycho => SoundID.NPCHit48;
+        public static SoundStyle HitGhostReaper => SoundID.NPCHit49;
+        public static SoundStyle HitSalamander => SoundID.NPCHit50;
+        public static SoundStyle HitScutlixBirb => SoundID.NPCHit51;
+        public static SoundStyle HitShadowflame => SoundID.NPCHit52;
+        public static SoundStyle HitSparksTeslaTurret => SoundID.NPCHit53;
+        public static SoundStyle HitWraith => SoundID.NPCHit54;
+        public static SoundStyle HitCultist => SoundID.NPCHit55;
+        public static SoundStyle HitPhantasmDragonGrowl => SoundID.NPCHit56;
+        public static SoundStyle HitMoonLord => SoundID.NPCHit57;
+
+
+        public static SoundStyle DeathFlesh => SoundID.NPCDeath1;
+        public static SoundStyle DeathZombie => SoundID.NPCDeath2;
+        public static SoundStyle DeathMeteor => SoundID.NPCDeath3;
+        public static SoundStyle DeathBat => SoundID.NPCDeath4;
+        public static SoundStyle DeathMonster => SoundID.NPCDeath5;
+        public static SoundStyle DeathSpirit => SoundID.NPCDeath6;
+        public static SoundStyle DeathPixie => SoundID.NPCDeath7;
+        public static SoundStyle DeathWyvern => SoundID.NPCDeath8;
+        public static SoundStyle DeathSpitDrit => SoundID.NPCDeath9;
+        public static SoundStyle DeathWallofFlesh => SoundID.NPCDeath10;
+        public static SoundStyle DeathBrainofCthulhu => SoundID.NPCDeath11;
+        public static SoundStyle DeathBloodLeech => SoundID.NPCDeath12;
+        public static SoundStyle DeathLeechBurp => SoundID.NPCDeath13;
+        public static SoundStyle DeathExplosion => SoundID.NPCDeath14;
+        public static SoundStyle DeathSnow => SoundID.NPCDeath15;
+        public static SoundStyle DeathBeetle => SoundID.NPCDeath16;
+        public static SoundStyle DeathMedusa => SoundID.NPCDeath17;
+        public static SoundStyle DeathHorse => SoundID.NPCDeath18;
+        public static SoundStyle DeathSharkron => SoundID.NPCDeath19;
+        public static SoundStyle DeathFishron => SoundID.NPCDeath20;
+        public static SoundStyle DeathBloodZombie => SoundID.NPCDeath21;
+        public static SoundStyle DeathDrippler => SoundID.NPCDeath22;
+        public static SoundStyle DeathBloodCrawler => SoundID.NPCDeath23;
+        public static SoundStyle DeathDemon => SoundID.NPCDeath24;
+        public static SoundStyle DeathDerpling => SoundID.NPCDeath25;
+        public static SoundStyle DeathSnake => SoundID.NPCDeath26;
+        public static SoundStyle DeathTortoise => SoundID.NPCDeath27;
+        public static SoundStyle DeathJellyfish => SoundID.NPCDeath28;
+        public static SoundStyle DeathLizard => SoundID.NPCDeath29;
+        public static SoundStyle DeathPigron => SoundID.NPCDeath30;
+        public static SoundStyle DeathVulture => SoundID.NPCDeath31;
+        public static SoundStyle DeathSpider => SoundID.NPCDeath32;
+        public static SoundStyle DeathNimbus => SoundID.NPCDeath33;
+        public static SoundStyle DeathAntlion => SoundID.NPCDeath34;
+        public static SoundStyle DeathAntlionSwarmer => SoundID.NPCDeath35;
+        public static SoundStyle DeathCrawdad => SoundID.NPCDeath36;
+        public static SoundStyle DeathDeadlySphere => SoundID.NPCDeath37;
+        public static SoundStyle DeathDrManFly => SoundID.NPCDeath38;
+        public static SoundStyle DeathDungeonSpiritElemental => SoundID.NPCDeath39;
+        public static SoundStyle DeathGhoul => SoundID.NPCDeath40;
+        public static SoundStyle DeathGiantShelly => SoundID.NPCDeath41;
+        public static SoundStyle DeathGoblinSummoner => SoundID.NPCDeath42;
+        public static SoundStyle DeathGolem => SoundID.NPCDeath43;
+        public static SoundStyle DeathMartianDrone => SoundID.NPCDeath44;
+        public static SoundStyle DeathBubbleShieldPop => SoundID.NPCDeath45;
+        public static SoundStyle DeathMothron => SoundID.NPCDeath46;
+        public static SoundStyle DeathLadybug => SoundID.NPCDeath47;
+        public static SoundStyle DeathParrot => SoundID.NPCDeath48;
+        public static SoundStyle DeathPossessed => SoundID.NPCDeath49;
+        public static SoundStyle DeathPsycho => SoundID.NPCDeath50;
+        public static SoundStyle DeathReaper => SoundID.NPCDeath51;
+        public static SoundStyle DeathWraith => SoundID.NPCDeath52;
+        public static SoundStyle DeathSalamander => SoundID.NPCDeath53;
+        public static SoundStyle DeathScutlix => SoundID.NPCDeath54;
+        public static SoundStyle DeathShadowflame => SoundID.NPCDeath55;
+        public static SoundStyle DeathTeslaTurretSparks => SoundID.NPCDeath56;
+        public static SoundStyle DeathAlien => SoundID.NPCDeath57;
+        public static SoundStyle DeathPillarShield => SoundID.NPCDeath58;
+        public static SoundStyle DeathCultist => SoundID.NPCDeath59;
+        public static SoundStyle DeathPhantasmDragonRoar => SoundID.NPCDeath60;
+        public static SoundStyle DeathMoonLord => SoundID.NPCDeath61;
+        public static SoundStyle DeathMoonLordPart => SoundID.NPCDeath62;
+        public static SoundStyle DeathBalloon => SoundID.NPCDeath63;
+        public static SoundStyle DeathQueenSlimeFart => SoundID.NPCDeath64;
+        public static SoundStyle DeathEmpressofLight => SoundID.NPCDeath65;
+        public static SoundStyle DeathQueenBee => SoundID.NPCDeath66;
+
+
+        public static SoundStyle ZombieZombieOne => SoundID.Zombie1;
+        public static SoundStyle ZombieZombieTwo => SoundID.Zombie2;
+        public static SoundStyle ZombieZombieThree => SoundID.Zombie3;
+        public static SoundStyle ZombieZombieFour => SoundID.Zombie4;
+        public static SoundStyle ZombieGruntUnused => SoundID.Zombie5;
+        public static SoundStyle ZombieFrankenstein => SoundID.Zombie6;
+        public static SoundStyle ZombieVampireShark => SoundID.Zombie7;
+        public static SoundStyle ZombieFaceMonsterScary => SoundID.Zombie8;
+        public static SoundStyle ZombiePigron => SoundID.Zombie9;
+        public static SoundStyle ZombieDuckOne => SoundID.Zombie10;
+        public static SoundStyle ZombieDuckTwo => SoundID.Zombie11;
+        public static SoundStyle ZombieDuckEvil => SoundID.Zombie12;
+        public static SoundStyle ZombieFrog => SoundID.Zombie13;
+        public static SoundStyle ZombieBirdOne => SoundID.Zombie14;
+        public static SoundStyle ZombieRatMouse => SoundID.Zombie15;
+        public static SoundStyle ZombieBlueJayBird => SoundID.Zombie16;
+        public static SoundStyle ZombieCardinalBirdOne => SoundID.Zombie17;
+        public static SoundStyle ZombieBirdTwo => SoundID.Zombie18;
+        public static SoundStyle ZombieCardinalBirdTwo => SoundID.Zombie19;
+        public static SoundStyle ZombieDuke => SoundID.Zombie20;
+        public static SoundStyle ZombieBloodZombieOne => SoundID.Zombie21;
+        public static SoundStyle ZombieBloodZombieTwo => SoundID.Zombie22;
+        public static SoundStyle ZombieBloodZombieThree => SoundID.Zombie23;
+        public static SoundStyle ZombieBloodCrawlerOne => SoundID.Zombie24;
+        public static SoundStyle ZombieBloodCrawlerTwo => SoundID.Zombie25;
+        public static SoundStyle ZombieDemonOne => SoundID.Zombie26;
+        public static SoundStyle ZombieDemonTwo => SoundID.Zombie27;
+        public static SoundStyle ZombieDemonThree => SoundID.Zombie28;
+        public static SoundStyle ZombieDemonFour => SoundID.Zombie29;
+        public static SoundStyle ZombieDerplingOne => SoundID.Zombie30;
+        public static SoundStyle ZombieDerplingTwo => SoundID.Zombie31;
+        public static SoundStyle ZombieSnake => SoundID.Zombie32;
+        public static SoundStyle ZombieTortoise => SoundID.Zombie33;
+        public static SoundStyle ZombieJellyfishOne => SoundID.Zombie34;
+        public static SoundStyle ZombieJellyfishTwo => SoundID.Zombie35;
+        public static SoundStyle ZombieLizardOne => SoundID.Zombie36;
+        public static SoundStyle ZombieLizardTwo => SoundID.Zombie37;
+        public static SoundStyle ZombiePigronOne => SoundID.Zombie38;
+        public static SoundStyle ZombiePigronTwo => SoundID.Zombie39;
+        public static SoundStyle ZombiePigronThree => SoundID.Zombie40;
+        public static SoundStyle ZombieNimbusOne => SoundID.Zombie41;
+        public static SoundStyle ZombieNimbusTwo => SoundID.Zombie42;
+        public static SoundStyle ZombieNimbusThree => SoundID.Zombie43;
+        public static SoundStyle ZombieAntlion => SoundID.Zombie44;
+        public static SoundStyle ZombieAntlionSwarmerOne => SoundID.Zombie45;
+        public static SoundStyle ZombieAntlionSwarmerTwo => SoundID.Zombie46;
+        public static SoundStyle ZombieCrawdad => SoundID.Zombie47;
+        public static SoundStyle ZombieDeadlySphereOne => SoundID.Zombie48;
+        public static SoundStyle ZombieDeadlySphereTwo => SoundID.Zombie49;
+        public static SoundStyle ZombieDrManyFlyOne => SoundID.Zombie50;
+        public static SoundStyle ZombieDrManyFlyTwo => SoundID.Zombie51;
+        public static SoundStyle ZombieDrManyFlyThree => SoundID.Zombie52;
+        public static SoundStyle ZombieDungeonSpiritOne => SoundID.Zombie53;
+        public static SoundStyle ZombieDungeonSpiritTwo => SoundID.Zombie54;
+        public static SoundStyle ZombieGhoulOne => SoundID.Zombie55;
+        public static SoundStyle ZombieGhoulTwo => SoundID.Zombie56;
+        public static SoundStyle ZombieGiantShellyOne => SoundID.Zombie57;
+        public static SoundStyle ZombieGiantShellyTwo => SoundID.Zombie58;
+        public static SoundStyle ZombieGigaZapperOne => SoundID.Zombie59;
+        public static SoundStyle ZombieGigaZapperTwo => SoundID.Zombie60;
+        public static SoundStyle ZombieGoblinSummonerOne => SoundID.Zombie61;
+        public static SoundStyle ZombieGoblinSummonerTwo => SoundID.Zombie62;
+        public static SoundStyle ZombieGolemOne => SoundID.Zombie63;
+        public static SoundStyle ZombieGolemTwo => SoundID.Zombie64;
+        public static SoundStyle ZombieGolemThree => SoundID.Zombie65;
+        public static SoundStyle ZombieMartianDroneOne => SoundID.Zombie66;
+        public static SoundStyle ZombieMartianDroneTwo => SoundID.Zombie67;
+        public static SoundStyle ZombieMartianDroneThree => SoundID.Zombie68;
+        public static SoundStyle ZombieMartianWalkerOne => SoundID.Zombie69;
+        public static SoundStyle ZombieMartianWalkerTwo => SoundID.Zombie70;
+        public static SoundStyle ZombieMartianWalkerThree => SoundID.Zombie71;
+        public static SoundStyle ZombieMartianWalkerFour => SoundID.Zombie72;
+        public static SoundStyle ZombieMothron => SoundID.Zombie73;
+        public static SoundStyle ZombieLadybugOne => SoundID.Zombie74;
+        public static SoundStyle ZombieLadybugTwo => SoundID.Zombie75;
+        public static SoundStyle ZombieLadybugThree => SoundID.Zombie76;
+        public static SoundStyle ZombieLadybugFour => SoundID.Zombie77;
+        public static SoundStyle ZombieParrot => SoundID.Zombie78;
+        public static SoundStyle ZombiePosessedOne => SoundID.Zombie79;
+        public static SoundStyle ZombiePosessedTwo => SoundID.Zombie80;
+        public static SoundStyle ZombieReaperOne => SoundID.Zombie81;
+        public static SoundStyle ZombieReaperTwo => SoundID.Zombie82;
+        public static SoundStyle ZombieReaperThree => SoundID.Zombie83;
+        public static SoundStyle ZombieSalamanderOne => SoundID.Zombie84;
+        public static SoundStyle ZombieSalamanderTwo => SoundID.Zombie85;
+        public static SoundStyle ZombieScutlix => SoundID.Zombie86;
+        public static SoundStyle ZombieMartianUnused => SoundID.Zombie87;
+        public static SoundStyle ZombieCultistOne => SoundID.Zombie88;
+        public static SoundStyle ZombieCultistTwo => SoundID.Zombie89;
+        public static SoundStyle ZombieCultistThree => SoundID.Zombie90;
+        public static SoundStyle ZombieCultistFour => SoundID.Zombie91;
+        public static SoundStyle ZombieMoonLordSummon => SoundID.Zombie92;
+        public static SoundStyle ZombieMoonLordOne => SoundID.Zombie93;
+        public static SoundStyle ZombieMoonLordTwo => SoundID.Zombie94;
+        public static SoundStyle ZombieMoonLordThree => SoundID.Zombie95;
+        public static SoundStyle ZombieMoonLordFour => SoundID.Zombie96;
+        public static SoundStyle ZombieMoonLordFive => SoundID.Zombie97;
+        public static SoundStyle ZombieMoonLordSix => SoundID.Zombie98;
+        public static SoundStyle ZombieMoonLordSeven => SoundID.Zombie99;
+        public static SoundStyle ZombieTrueEyeOne => SoundID.Zombie100;
+        public static SoundStyle ZombieTrueEyeTwo => SoundID.Zombie101;
+        public static SoundStyle ZombiePhantasmSphereSqueel => SoundID.Zombie102;
+        public static SoundStyle ZombiePhantasmSphereExplosion => SoundID.Zombie103;
+        public static SoundStyle ZombiePHANTASMALDEATHRAY => SoundID.Zombie104;
+        public static SoundStyle ZombieCultistSummon => SoundID.Zombie105;
+        // I don't care about the 20 bird noises
+        public static SoundStyle ZombieDolphin => SoundID.Zombie109;
+        public static SoundStyle ZombieQueenSlimeOne => SoundID.Zombie115;
+        public static SoundStyle ZombieQueenSlimeTwo => SoundID.Zombie116;
+        public static SoundStyle ZombieQueenSlimeThree => SoundID.Zombie117;
+        public static SoundStyle ZombieClownOne => SoundID.Zombie121;
+        public static SoundStyle ZombieClownTwo => SoundID.Zombie122;
+        public static SoundStyle ZombieClownThree => SoundID.Zombie123;
+        public static SoundStyle ZombieTeethBomb => SoundID.Zombie124;
+        public static SoundStyle ZombieQueenBee => SoundID.Zombie125;
 
     }
 }

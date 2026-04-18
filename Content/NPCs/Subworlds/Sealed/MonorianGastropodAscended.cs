@@ -75,7 +75,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.value = Item.buyPrice(gold: 8);
             NPC.boss = true;
             NPC.chaseable = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<VoidForestBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
         }
 

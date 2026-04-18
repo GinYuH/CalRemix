@@ -42,7 +42,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = true;
             NPC.HitSound = Cryogen.HitSound;
             NPC.DeathSound = BetterSoundID.ItemBubblePop;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<CarnelianForestBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<CarnelianForestBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
             NPC.alpha = 50;
             NPC.rarity = 1;
             NPC.chaseable = false;

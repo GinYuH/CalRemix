@@ -62,7 +62,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = false;
             NPC.knockBackResist = 0;
             NPC.dontTakeDamageFromHostiles = true;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<SealedUndergroundBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<SealedUndergroundBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
 
         public override bool CanBeTalkedTo => State == 0;

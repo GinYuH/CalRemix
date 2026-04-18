@@ -39,7 +39,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             NPC.value = Item.buyPrice(0, 0, 40, 0);
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = CalamityMod.NPCs.Ravager.RavagerBody.LimbLossSound with { Pitch = 0.2f };
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<PrimordialCavesBiome>().Type };
+            SpawnModBiomes = new int[] { ModContent.GetInstance<PrimordialCavesBiome>().Type, ModContent.GetInstance<GreatSeaWorldBiome>().Type };
         }
 
         public override void AI()
