@@ -13,8 +13,8 @@ namespace CalRemix.Core.Biomes.Subworlds
     public class OvergrowthRainforestBiome : ModBiome
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Jungle;
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/NowhereIcon";
-        public override string BackgroundPath => "CalRemix/Core/Backgrounds/Subworlds/NowhereBG";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/OvergrowthRainforestIcon";
+        public override string BackgroundPath => "Terraria/Images/MapBG9";
         public override Color? BackgroundColor => Color.Green;
         public override string MapBackground => BackgroundPath;
         public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
@@ -28,8 +28,8 @@ namespace CalRemix.Core.Biomes.Subworlds
     public class TitanicTrunksBiome : ModBiome
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Jungle;
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/NowhereIcon";
-        public override string BackgroundPath => "CalRemix/Core/Backgrounds/Subworlds/NowhereBG";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/TitanicTrunksIcon";
+        public override string BackgroundPath => "Terraria/Images/MapBG9";
         public override Color? BackgroundColor => Color.Green;
         public override string MapBackground => BackgroundPath;
         public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
@@ -44,8 +44,8 @@ namespace CalRemix.Core.Biomes.Subworlds
     public class CanopiesBiome : ModBiome
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Jungle;
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/NowhereIcon";
-        public override string BackgroundPath => "CalRemix/Core/Backgrounds/Subworlds/NowhereBG";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/CanopiesIcon";
+        public override string BackgroundPath => "Terraria/Images/MapBG9";
         public override Color? BackgroundColor => Color.Green;
         public override string MapBackground => BackgroundPath;
         public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
@@ -60,8 +60,8 @@ namespace CalRemix.Core.Biomes.Subworlds
     public class BigOlBranchesBiome : ModBiome
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Jungle;
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/NowhereIcon";
-        public override string BackgroundPath => "CalRemix/Core/Backgrounds/Subworlds/NowhereBG";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/BigolBranchesIcon";
+        public override string BackgroundPath => "Terraria/Images/MapBG9";
         public override Color? BackgroundColor => Color.Green;
         public override string MapBackground => BackgroundPath;
         public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
@@ -76,8 +76,8 @@ namespace CalRemix.Core.Biomes.Subworlds
     public class ForestFloorBiome : ModBiome
     {
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Jungle;
-        public override string BestiaryIcon => "CalRemix/Core/Biomes/NowhereIcon";
-        public override string BackgroundPath => "CalRemix/Core/Backgrounds/Subworlds/NowhereBG";
+        public override string BestiaryIcon => "CalRemix/Core/Biomes/ForestFloorIcon";
+        public override string BackgroundPath => "Terraria/Images/MapBG9";
         public override Color? BackgroundColor => Color.Green;
         public override string MapBackground => BackgroundPath;
         public override void MapBackgroundColor(ref Color color) => color = BackgroundColor.Value;
