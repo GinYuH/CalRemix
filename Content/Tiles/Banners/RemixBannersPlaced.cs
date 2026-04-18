@@ -60,6 +60,9 @@ namespace CalRemix.Content.Tiles.Banners
     public class WulfrumCactusBannerPlaced : ModBannerTile
     {
     }
+    public class WulfrumSwarmerBannerPlaced : ModBannerTile
+    {
+    }
     public class GrablerBannerPlaced : ModBannerTile
     {
     }

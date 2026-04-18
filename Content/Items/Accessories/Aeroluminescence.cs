@@ -23,7 +23,10 @@ namespace CalRemix.Content.Items.Accessories
         {
             GetModItem(ItemType<AeroStone>()).UpdateAccessory(player, hideVisual);
             player.hasMagiluminescence = true;
-            Lighting.AddLight(player.Center, new Vector3(0, 0.4f, 0.6f));
+            if (!hideVisual)
+            {
+                Lighting.AddLight(player.Center, new Vector3(1f, 3f, 2.5f));
+            }
         }
 
         public override void AddRecipes()

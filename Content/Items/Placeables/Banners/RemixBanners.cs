@@ -128,4 +128,8 @@ namespace CalRemix.Content.Items.Placeables.Banners
     {
         public override int TileType => ModContent.TileType<GrablerBannerPlaced>();
     }
+    public class WulfrumSwarmerBanner : BaseBanner
+    {
+        public override int TileType => ModContent.TileType<WulfrumSwarmerBannerPlaced>();
+    }
 }

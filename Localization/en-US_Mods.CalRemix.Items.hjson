@@ -6675,3 +6675,8 @@ BloodyTooth: {
 	DisplayName: Bloody Tooth
 	Tooltip: ""
 }
+
+WulfrumSwarmerBanner: {
+	DisplayName: Wulfrum Swarmer Banner
+	Tooltip: ""
+}
