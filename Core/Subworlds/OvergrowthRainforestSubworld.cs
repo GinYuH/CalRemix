@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
+using CalamityMod.Enums;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
@@ -15,6 +16,7 @@ using CalRemix.Content.Walls;
 using CalRemix.Core.Biomes.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI.ElementalSystem;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using rail;
 using SubworldLibrary;
@@ -179,28 +181,9 @@ namespace CalRemix.Core.Subworlds
 
             //WorldGen.genRand.SetSeed(Main.rand.Next(0, 10000) + (int)(Main.GlobalTimeWrappedHourly * 2222));
 
-            // Basic tiles
-            for (int i = 0; i < Main.maxTilesX; i++)
-            {
-                for (int j = 0; j < Main.maxTilesY; j++)
-                {
-                    if (i < Main.maxTilesX * templePosition)
-                    {
-                        if (j > Main.maxTilesY * treeTopLevel)
-                        {
-                            {
-                                CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.StoneSlab);
-                            }
-                        }
-                    }
-                }
-            }
+            CalRemixHelper.PerlinSurface(new Rectangle((int)(0), (int)(Main.maxTilesY * groundLevel), Main.maxTilesX, (int)(Main.maxTilesY * (1 - groundLevel))), TileID.Mud, variance: 30);
 
-            progress.Set(0.25f);
-
-            CalRemixHelper.PerlinSurface(new Rectangle((int)(Main.maxTilesX * templePosition), (int)(Main.maxTilesY * groundLevel), Main.maxTilesX, (int)(Main.maxTilesY * (1 - groundLevel))), TileID.Mud, variance: 30);
-
-            PlaceTreeDungeons(progress);
+            /*PlaceTreeDungeons(progress);
 
             SpreadGrass();
 
@@ -208,13 +191,331 @@ namespace CalRemix.Core.Subworlds
 
             MakeBridges();
 
-            progress.Set(0.75f);
+            progress.Set(0.65f);
 
             Moss();
-            TreeHouse();
+            //TreeHouse();
             FinalizeGen();
 
+            progress.Set(0.75f);*/
+
+            GenerateTemple(progress);
+
             progress.Set(1f);
+        }
+
+        public static void GenerateTemple(GenerationProgress progress)
+        {
+            int templeTop = (int)(Main.maxTilesY * treeTopLevel);
+            int templeRight = (int)(Main.maxTilesX * templePosition);
+            int buffer = (int)(Main.maxTilesX * 0.01f);
+            int shaveTop = (int)(Main.maxTilesY * 0.03f);
+            int topWidth = buffer + (int)((templeRight - buffer) * 0.6f);
+            int bottomStart = (int)(Main.maxTilesY * groundLevel) + (int)(Main.maxTilesY * 0.05f);
+            int surface = (int)(Main.maxTilesY * groundLevel);
+
+            int rookWidth = (topWidth - buffer) / WorldGen.genRand.Next(5, 8);
+
+            // Main chunk
+            for (int i = buffer; i < topWidth; i++)
+            {
+                for (int j = templeTop; j < bottomStart; j++)
+                {
+                    if ((i % rookWidth < (rookWidth / 2) && j < templeTop + shaveTop) || j >= templeTop + shaveTop)
+                    {
+                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.StoneSlab);
+                    }
+                }
+            }
+            // Bottom chunk
+            for (int i = buffer; i < templeRight; i++)
+            {
+                for (int j = bottomStart; j < Main.maxTilesY - buffer; j++)
+                {
+                    CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.StoneSlab);
+                }
+            }
+            // Slope in 
+            Point t1 = new Point(topWidth, surface);
+            Point t2 = new Point(topWidth, bottomStart);
+            Point t3 = new Point(templeRight, bottomStart);
+            Rectangle slopeIn = Utils.BoundingRectangle([t1, t2, t3]);
+            for (int i = slopeIn.Left; i <= slopeIn.Right; i++)
+            {
+                for (int j = slopeIn.Top; j <= slopeIn.Bottom; j++)
+                {
+                    if (CalRemixHelper.WithinTriangle(t1, t2, t3, new Point(i, j)))
+                    {
+                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.StoneSlab);
+                    }
+                }
+            }
+            int roomWidth = 90;
+            int roomHeight = 40;
+            int roomSpacing = 40;
+            int roomRandomness = 4;
+
+            int possibleRoomsX = (topWidth - buffer + roomSpacing) / (roomWidth + roomSpacing);
+            int possibleRoomsY = (bottomStart - (templeTop + shaveTop) + roomSpacing) / (roomHeight + roomSpacing);
+
+            // Populate room types, this is random for now
+            TempleRoom[,] rooms = new TempleRoom[possibleRoomsX, possibleRoomsY];
+            List<TempleRoom.ConType> conTypes = new() { TempleRoom.ConType.Up, TempleRoom.ConType.Left, TempleRoom.ConType.Right, TempleRoom.ConType.Down };
+            List<TempleRoom> roomTypes = new();
+            for (int i = 0; i < 20; i++)
+            {
+                TempleRoom temp = new TempleRoom();
+                TempleRoom.ConType first = Utils.SelectRandom(Main.rand, [.. conTypes]);
+                TempleRoom.ConType second = first;
+                while (first == second)
+                {
+                    second = Utils.SelectRandom(Main.rand, [.. conTypes]);
+                }
+                TempleRoom.ConType third = first;
+                while (third == second || third == first)
+                {
+                    third = Utils.SelectRandom(Main.rand, [.. conTypes]);
+                }
+                temp.connections = first | second | third;
+                roomTypes.Add(temp);
+            }
+
+            // First room is always a horizontal corridor
+            TempleRoom lastRoom = new()
+            {
+                connections = TempleRoom.ConType.Left | TempleRoom.ConType.Right
+            };
+
+
+            Point oldPos = Point.Zero;
+            int xPos = possibleRoomsX - 1;
+            int yPos = possibleRoomsY - 1;
+            bool doManualGen = false;
+            for (int o = 0; o < 400; o++)
+            {
+                TempleRoom candidate = new();
+                // "Artificial" gen code. Runs after organic gen code backs itself into a corner
+                if (doManualGen)
+                {
+                    bool manualRoomValid = false;
+                    Point manualRoomPoint = Point.Zero;
+                    while (!manualRoomValid)
+                    {
+                        // Pick a rnadom room
+                        Point newp = new Point(Main.rand.Next(0, possibleRoomsX), Main.rand.Next(0, possibleRoomsY));
+                        TempleRoom potential = rooms[newp.X, newp.Y];
+                        // The room must be empty
+                        if (potential == null)
+                        {
+                            // Check adjacent rooms
+                            Point[] possibles = [
+                                new Point(newp.X - 1, newp.Y),
+                                new Point(newp.X + 1, newp.Y),
+                                new Point(newp.X, newp.Y + 1),
+                                new Point(newp.X, newp.Y - 1)
+                                ];
+                            Random.Shared.Shuffle(possibles);
+                            for (int k = 0; k < 4; k++)
+                            {
+                                Point adjacentRoom = possibles[k];
+                                if (RoomInbounds(possibleRoomsX, possibleRoomsY, adjacentRoom))
+                                {
+                                    if (rooms[adjacentRoom.X, adjacentRoom.Y] != null)
+                                    {
+                                        bool validConnection = false;
+                                        // If an adjacent room exists, then roll new room types until one is compatible with the adjacent room
+                                        for (int l = 0; l < 50; l++)
+                                        {
+                                            potential = Utils.SelectRandom(Main.rand, [.. roomTypes]);
+                                            // Congratulations, we got a room that is next to an existing adjacent room which also has an exit that can lead into this one
+                                            if (CompatiblerRooms(potential, rooms[adjacentRoom.X, adjacentRoom.Y]))
+                                            {
+                                                // The adjacent room is marked as the old room and will have a tunnel dug between it and our new room
+                                                oldPos = adjacentRoom;
+                                                manualRoomPoint = newp;
+                                                manualRoomValid = true;
+                                                validConnection = true;
+                                                break;
+                                            }
+                                        }
+                                        if (validConnection)
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // Set the position of our room if we found a successful room
+                    if (manualRoomPoint != Point.Zero)
+                    {
+                        xPos = manualRoomPoint.X;
+                        yPos = manualRoomPoint.Y;
+                    }
+                    // Otherwise loop again
+                    else
+                    {
+                        continue;
+                    }
+                }
+                // Clear out the room, probably removed once we get actual rooms
+                Point roomPos = new Point(buffer * 2 + xPos * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + yPos * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
+                for (int k = roomPos.X; k < roomPos.X + roomWidth; k++)
+                {
+                    for (int l = roomPos.Y; l < roomPos.Y + roomHeight; l++)
+                    {
+                        CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
+                        CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
+                    }
+                }
+
+                // Dig tunnels between two rooms
+                if (oldPos != Point.Zero || o == 0)
+                {
+                    int tunnelWidth = WorldGen.genRand.Next(4, 7);
+                    if (o == 0)
+                        tunnelWidth *= 3;
+                    Point mid = new Point(roomPos.X + roomWidth / 2, roomPos.Y + roomHeight / 2);
+                    Point oldMid = o == 0 ? new(mid.X + 300, mid.Y) :  (new Point(buffer * 2 + oldPos.X * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + oldPos.Y * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness)) + new Point(roomWidth / 2, roomHeight / 2));
+
+                    Point quad1 = new Point(mid.X - tunnelWidth, mid.Y - tunnelWidth);
+                    Point quad2 = new Point(mid.X + tunnelWidth, mid.Y + tunnelWidth);
+                    Point quad3 = new Point(oldMid.X - tunnelWidth, oldMid.Y - tunnelWidth);
+                    Point quad4 = new Point(oldMid.X + tunnelWidth, oldMid.Y + tunnelWidth);
+                    Rectangle path = Utils.BoundingRectangle([quad1, quad2, quad3, quad4]);
+                    for (int k = path.Left; k < path.Right; k++)
+                    {
+                        for (int l = path.Top; l < path.Bottom; l++)
+                        {
+                            if (CalRemixHelper.WithinQuad(quad1, quad2, quad3, quad4, new Point(k, l)))
+                            {
+                                bool hadTile = CalamityUtils.ParanoidTileRetrieval(k, l).HasTile;
+                                CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
+                                if (hadTile)
+                                    CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
+                            }
+                        }
+                    }
+                }
+
+                // Let rooms populate themselves on their own for a while
+                rooms[xPos, yPos] = lastRoom;
+                bool foundRoom = false;
+                TempleRoom.ConType connectionType = TempleRoom.ConType.None;
+                int tries = 0;
+                Point potNext = new();
+                if (!doManualGen)
+                {
+                    while (!foundRoom)
+                    {
+                        tries++;
+                        if (tries > 1000)
+                        {
+                            doManualGen = true;
+                            break;
+                        }
+                        // If no room is queried, select a random one
+                        if (candidate == default)
+                            candidate = Utils.SelectRandom(Main.rand, [.. roomTypes]);
+                        // Test if the rooms are compatible
+                        foreach (TempleRoom.ConType conOne in lastRoom.ConnectionTypes)
+                        {
+                            if (foundRoom)
+                                break;
+                            foreach (TempleRoom.ConType conTwo in candidate.ConnectionTypes)
+                            {
+                                if (ConnectionValid(conOne, conTwo))
+                                {
+                                    potNext = NextPosition(new Point(xPos, yPos), conOne);
+                                    // Check if the next room is empty and in bounds
+                                    if (RoomInbounds(possibleRoomsX, possibleRoomsY, new Point(xPos, yPos)))
+                                    {
+                                        if (rooms[potNext.X, potNext.Y] == null)
+                                        {
+                                            // We found an adjacent empty room that connects to this one, yey!
+                                            foundRoom = true;
+                                            connectionType = conOne;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // Move onto the next room
+                if (connectionType != TempleRoom.ConType.None)
+                {
+                    oldPos = new Point(xPos, yPos);
+                    xPos = potNext.X;
+                    yPos = potNext.Y;
+                    lastRoom = candidate;
+                }
+            }
+        }
+
+        public static bool CompatiblerRooms(TempleRoom roomOne, TempleRoom roomTwo)
+        {
+            foreach (var v in roomOne.ConnectionTypes)
+            {
+                foreach (var v2 in roomTwo.ConnectionTypes)
+                {
+                    if (ConnectionValid(v, v2))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool CompatibleRooms(TempleRoom roomOne, TempleRoom roomTwo)
+        {
+            foreach (var v in roomOne.ConnectionTypes)
+            {
+                foreach (var v2 in roomTwo.ConnectionTypes)
+                {
+                    if (ConnectionValid(v, v2))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool RoomInbounds(int maxX, int maxY, Point p)
+        {
+            if (p.X < 0 || p.Y < 0)
+                return false;
+            if (p.X >= maxX || p.Y >= maxY)
+                return false;
+            return true;
+        }
+
+        public static bool ConnectionValid(TempleRoom.ConType one, TempleRoom.ConType two)
+        {
+            if (one == TempleRoom.ConType.Up && two == TempleRoom.ConType.Down)
+                return true;
+            if (one == TempleRoom.ConType.Down && two == TempleRoom.ConType.Up)
+                return true;
+            if (one == TempleRoom.ConType.Left && two == TempleRoom.ConType.Right)
+                return true;
+            if (one == TempleRoom.ConType.Right && two == TempleRoom.ConType.Left)
+                return true;
+            return false;
+        }
+
+        public static Point NextPosition(Point currentPos, TempleRoom.ConType conType)
+        {
+            if (conType == TempleRoom.ConType.Up)
+                return new Point(currentPos.X, currentPos.Y - 1);
+            if (conType == TempleRoom.ConType.Down)
+                return new Point(currentPos.X, currentPos.Y + 1);
+            if (conType == TempleRoom.ConType.Left)
+                return new Point(currentPos.X - 1, currentPos.Y);
+            if (conType == TempleRoom.ConType.Right)
+                return new Point(currentPos.X + 1, currentPos.Y);
+            return Point.Zero;
         }
 
         public static void MakeBridges()
@@ -365,122 +666,6 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                 }
-            }
-        }
-
-        public static void Moss()
-        {
-            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
-            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
-            ushort mos = (ushort)ModContent.TileType<MossyTitanodendronWoodPlaced>();
-
-            int top = (int)(Main.maxTilesY * 0.4f);
-            int dungeon = (int)(Main.maxTilesX * templePosition);
-            int bottom = (int)(Main.maxTilesY * 0.6f);
-
-            int mossesPlaced = 0;
-            int tries = 0;
-
-            while (tries < 10000 && mossesPlaced < 40)
-            {
-                int x = WorldGen.genRand.Next(dungeon, Main.maxTilesX);
-                int y = WorldGen.genRand.Next(top, bottom);
-                Tile t = CalamityUtils.ParanoidTileRetrieval(x, y);
-                if (!t.HasTile || t.TileType != woodBlock || t.WallType == WallID.None)
-                {
-                    continue;
-                }
-                int mossRad = WorldGen.genRand.Next(8, 24);
-                Rectangle rect = Utils.CenteredRectangle(new Vector2(x, y), Vector2.One * (mossRad * 2 + 1));
-                bool aMossPlaced = false;
-                for (int i = rect.Left; i < rect.Right; i++)
-                {
-                    for (int j = rect.Top; j < rect.Bottom; j++)
-                    {
-                        Tile quer = CalamityUtils.ParanoidTileRetrieval(i, j);
-                        Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
-                        Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
-                        Tile up = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
-                        Tile down = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
-
-                        if (!(up.HasTile && up.WallType == WallID.None
-                            || left.HasTile && left.WallType == WallID.None
-                            || right.HasTile && right.WallType == WallID.None
-                            ||  down.HasTile && down.WallType == WallID.None))
-                        {
-                            if (!up.HasTile || !left.HasTile || !right.HasTile || !down.HasTile)
-                            { 
-                                if (CalRemixHelper.WithinElipse(i, j, x, y, mossRad, mossRad))
-                                {
-                                    quer.TileType = mos;
-                                    aMossPlaced = true;
-                                }
-                            }
-                        }
-                    }
-                }
-                if (aMossPlaced)
-                    mossesPlaced++;
-                tries++;
-            }
-        }
-
-        public static void TreeHouse()
-        {
-            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
-            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
-
-            int top = (int)(Main.maxTilesY * 0.4f);
-            int dungeon = (int)(Main.maxTilesX * templePosition);
-            int bottom = (int)(Main.maxTilesY * 0.6f);
-
-            bool hausPlaced = false;
-            int tries = 0;
-
-            while (tries < 10000 && !hausPlaced)
-            {
-                int x = WorldGen.genRand.Next(dungeon, Main.maxTilesX - dungeon);
-                for (int j = 50; j < 300; j++)
-                {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(x, j);
-                    Tile above = CalamityUtils.ParanoidTileRetrieval(x, j - 1);
-                    if (t.HasTile && t.TileType == leafBlock && !above.HasTile)
-                    {
-                        bool _ = false;
-                        SchematicManager.PlaceSchematic("Tree House", new Point(x, j + 5), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillTreeHouseChest));
-                        hausPlaced = true;
-                        break;
-                    }
-                }
-                tries++;
-            }
-        }
-
-        public static void FillTreeHouseChest(Chest c, int Type, bool place)
-        {
-            List<(int, int, int)> items = new List<(int, int, int)>();
-            items.Add((ItemID.JungleSpores, 89, 120));
-            items.Add((ItemID.Stinger, 89, 120));
-            items.Add((ItemID.Vine, 89, 120));
-            items.Add((ItemID.JungleKey, 1, 2));
-            items.Add((ModContent.ItemType<Needler>(), 1, 2));
-            items.Add((ModContent.ItemType<TrueCausticEdge>(), 1, 2));
-            items.Add((ModContent.ItemType<UelibloomOre>(), 12, 34));
-            items.Add((ModContent.ItemType<CrabLeaves>(), 23, 34));
-            items.Add((ItemID.JungleYoyo, 1, 2));
-            items.Add((ItemID.TempleKey, 1, 2));
-            items.Add((ItemID.JungleRose, 1, 2));
-            items.Add((ItemID.NaturesGift, 1, 2));
-            items.Add((ItemID.Uzi, 1, 2));
-
-            items = CalamityUtils.ShuffleArray(items.ToArray()).ToList();
-
-            for (int i = 0; i < WorldGen.genRand.Next(6, 11); i++)
-            {
-                (int, int, int) choice = items[i];
-                Item item = c.item[i];
-                item.SetDefaults(choice.Item1);
-                item.stack = WorldGen.genRand.Next(choice.Item2, choice.Item3);
             }
         }
 
@@ -654,6 +839,7 @@ namespace CalRemix.Core.Subworlds
             RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<OvergrowthRainforestDoor>());
         }
 
+        #region Trees
         public static void PlaceTreeDungeons(GenerationProgress prog)
         {
             ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
@@ -668,7 +854,7 @@ namespace CalRemix.Core.Subworlds
             for (int i = dungeon + padding * 2; i < Main.maxTilesX - padding * 2; i++)
             {
                 // Update gen progress each time a tree is made
-                prog.Set(MathHelper.Lerp(0.25f, 0.5f, i / (float)Main.maxTilesX));
+                prog.Set(MathHelper.Lerp(0.1f, 0.5f, i / (float)Main.maxTilesX));
                 if (treeCd <= 0 && WorldGen.genRand.NextBool(40))
                 {
                     CalRemixHelper.FindTopTile(i, out int y, TileID.Mud, top + 100);
@@ -1062,5 +1248,145 @@ namespace CalRemix.Core.Subworlds
                 }
             }
         }
+
+        public static void Moss()
+        {
+            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
+            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
+            ushort mos = (ushort)ModContent.TileType<MossyTitanodendronWoodPlaced>();
+
+            int top = (int)(Main.maxTilesY * 0.4f);
+            int dungeon = (int)(Main.maxTilesX * templePosition);
+            int bottom = (int)(Main.maxTilesY * 0.6f);
+
+            int mossesPlaced = 0;
+            int tries = 0;
+
+            while (tries < 10000 && mossesPlaced < 40)
+            {
+                int x = WorldGen.genRand.Next(dungeon, Main.maxTilesX);
+                int y = WorldGen.genRand.Next(top, bottom);
+                Tile t = CalamityUtils.ParanoidTileRetrieval(x, y);
+                if (!t.HasTile || t.TileType != woodBlock || t.WallType == WallID.None)
+                {
+                    continue;
+                }
+                int mossRad = WorldGen.genRand.Next(8, 24);
+                Rectangle rect = Utils.CenteredRectangle(new Vector2(x, y), Vector2.One * (mossRad * 2 + 1));
+                bool aMossPlaced = false;
+                for (int i = rect.Left; i < rect.Right; i++)
+                {
+                    for (int j = rect.Top; j < rect.Bottom; j++)
+                    {
+                        Tile quer = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
+                        Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                        Tile up = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                        Tile down = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
+
+                        if (!(up.HasTile && up.WallType == WallID.None
+                            || left.HasTile && left.WallType == WallID.None
+                            || right.HasTile && right.WallType == WallID.None
+                            || down.HasTile && down.WallType == WallID.None))
+                        {
+                            if (!up.HasTile || !left.HasTile || !right.HasTile || !down.HasTile)
+                            {
+                                if (CalRemixHelper.WithinElipse(i, j, x, y, mossRad, mossRad))
+                                {
+                                    quer.TileType = mos;
+                                    aMossPlaced = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (aMossPlaced)
+                    mossesPlaced++;
+                tries++;
+            }
+        }
+
+        public static void TreeHouse()
+        {
+            ushort woodBlock = (ushort)ModContent.TileType<TitanodendronWoodPlaced>();
+            ushort leafBlock = (ushort)ModContent.TileType<TitanodendronLeafBlockPlaced>();
+
+            int top = (int)(Main.maxTilesY * 0.4f);
+            int dungeon = (int)(Main.maxTilesX * templePosition);
+            int bottom = (int)(Main.maxTilesY * 0.6f);
+
+            bool hausPlaced = false;
+            int tries = 0;
+
+            while (tries < 10000 && !hausPlaced)
+            {
+                int x = WorldGen.genRand.Next(dungeon, Main.maxTilesX - dungeon);
+                for (int j = 50; j < 300; j++)
+                {
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(x, j);
+                    Tile above = CalamityUtils.ParanoidTileRetrieval(x, j - 1);
+                    if (t.HasTile && t.TileType == leafBlock && !above.HasTile)
+                    {
+                        bool _ = false;
+                        SchematicManager.PlaceSchematic("Tree House", new Point(x, j + 5), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillTreeHouseChest));
+                        hausPlaced = true;
+                        break;
+                    }
+                }
+                tries++;
+            }
+        }
+
+        public static void FillTreeHouseChest(Chest c, int Type, bool place)
+        {
+            List<(int, int, int)> items = new List<(int, int, int)>();
+            items.Add((ItemID.JungleSpores, 89, 120));
+            items.Add((ItemID.Stinger, 89, 120));
+            items.Add((ItemID.Vine, 89, 120));
+            items.Add((ItemID.JungleKey, 1, 2));
+            items.Add((ModContent.ItemType<Needler>(), 1, 2));
+            items.Add((ModContent.ItemType<TrueCausticEdge>(), 1, 2));
+            items.Add((ModContent.ItemType<UelibloomOre>(), 12, 34));
+            items.Add((ModContent.ItemType<CrabLeaves>(), 23, 34));
+            items.Add((ItemID.JungleYoyo, 1, 2));
+            items.Add((ItemID.TempleKey, 1, 2));
+            items.Add((ItemID.JungleRose, 1, 2));
+            items.Add((ItemID.NaturesGift, 1, 2));
+            items.Add((ItemID.Uzi, 1, 2));
+
+            items = CalamityUtils.ShuffleArray(items.ToArray()).ToList();
+
+            for (int i = 0; i < WorldGen.genRand.Next(6, 11); i++)
+            {
+                (int, int, int) choice = items[i];
+                Item item = c.item[i];
+                item.SetDefaults(choice.Item1);
+                item.stack = WorldGen.genRand.Next(choice.Item2, choice.Item3);
+            }
+        }
+
+        #endregion
+    }
+
+
+    public class TempleRoom
+    {
+        public enum ConType : byte
+        {
+            None = 0,
+            Down = 1,
+            Right = 2,
+            Left = 4,
+            Up = 8
+        }
+
+        public IEnumerable<ConType> ConnectionTypes => Enum.GetValues<ConType>().Where(flag => flag != ConType.None && connections.HasFlag(flag));
+
+        public bool LeftConnection => connections.HasFlag(ConType.Left);
+        public bool RightConnection => connections.HasFlag(ConType.Right);
+        public bool UpConnection => connections.HasFlag(ConType.Up);
+        public bool DownConnection => connections.HasFlag(ConType.Down);
+
+        public ConType connections;
     }
 }
