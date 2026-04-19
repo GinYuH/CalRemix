@@ -252,7 +252,8 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            return true;
+            if (NPC.IsABestiaryIconDummy)
+                return true;
             Texture2D head = TextureAssets.Npc[Type].Value;
             Texture2D body = ModContent.Request<Texture2D>(Texture + "_Body").Value;
             Texture2D eye = ModContent.Request<Texture2D>(Texture + "_Eye").Value;
