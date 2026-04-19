@@ -54,11 +54,11 @@ namespace CalRemix.Core.Subworlds
             bool floor = Main.LocalPlayer.InModBiome<ForestFloorBiome>();
 
             // Main Jungle
-            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.05f, wallFunc));
+            list.Add(item: (ModContent.NPCType<LionDogMoth>(), 0.02f, wallFunc));
             list.Add(item: (ModContent.NPCType<MegaNeurofly>(), 0.06f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall && trunk));
             list.Add(item: (ModContent.NPCType<Silverwing>(), 0.05f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType == ModContent.WallType<UnsafeTitanodendronLeafBlockWallPlaced>() && playerWall && treeTop));
-            list.Add(item: (ModContent.NPCType<Calamachnid>(), 0.1f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall && (trunk || treeTop)));
-            list.Add(item: (ModContent.NPCType<Stapologe>(), 4f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && (trunk || branches) && NPC.CountNPCS(ModContent.NPCType<Stapologe>()) < 1));
+            list.Add(item: (ModContent.NPCType<Calamachnid>(), 0.05f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY).WallType > WallID.None && playerWall && (trunk || treeTop)));
+            list.Add(item: (ModContent.NPCType<Stapologe>(), 3f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile && (trunk || branches) && NPC.CountNPCS(ModContent.NPCType<Stapologe>()) < 1));
             list.Add(item: (ModContent.NPCType<LargeStinkbug>(), 5f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).IsTileSolidGround() && wallFunc.Invoke(n) && (floor || trunk || treeTop)));
             list.Add(item: (ModContent.NPCType<Chimp>(), 8f, (NPCSpawnInfo n) => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).IsTileSolidGround() && wallFunc.Invoke(n) && (branches || trunk || treeTop)));
             list.Add(item: (ModContent.NPCType<FlingastWidow>(), 16f, (NPCSpawnInfo n) => (CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX - 1, n.SpawnTileY).HasTile || CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX + 1, n.SpawnTileY).HasTile) && branches));
