@@ -101,6 +101,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
             if (NPC.ai[1] > 0)
             {
                 scale = Vector2.Lerp(Vector2.One, Vector2.UnitY, Timer / 60f);
+                texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Pinnacles/HenryFrown").Value;
             }
             spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + texture.Height / 2), null, drawColor, NPC.rotation, new Vector2(texture.Width / 2, texture.Height), scale * NPC.scale, fx, 0f);
             spriteBatch.Draw(glow, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + texture.Height / 2), null, Color.White, NPC.rotation, new Vector2(texture.Width / 2, texture.Height), scale * NPC.scale, fx, 0f);

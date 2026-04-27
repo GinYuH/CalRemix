@@ -23,8 +23,20 @@ using System.IO;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
+    [AutoloadBossHead]
     public class Godraycaster : ModNPC
     {
+        public static int normalIcon;
+        public static int spazIcon;
+
+        public override void Load()
+        {
+            string normalIconPath = "CalRemix/Content/NPCs/Subworlds/Sealed/Godraycaster_Head_Boss";
+            string phase2IconPath = "CalRemix/Content/NPCs/Subworlds/Sealed/Godraytracer_Head_Boss";
+
+            normalIcon = Mod.AddBossHeadTexture(normalIconPath, -1);
+            spazIcon = Mod.AddBossHeadTexture(phase2IconPath, -1);
+        }
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
         public ref float State => ref NPC.ai[1];
@@ -97,7 +109,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToWater = true;
             NPC.Calamity().VulnerableToElectricity = true;
             NPC.Calamity().VulnerableToCold = true;
-            SpawnModBiomes = new[] { ModContent.GetInstance<SealedUndergroundBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type }; 
+            SpawnModBiomes = new[] { ModContent.GetInstance<SealedUndergroundBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
+        }
+
+        public override void BossHeadSlot(ref int index)
+        {
+            index = IsSecondEye ? spazIcon : normalIcon;
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
