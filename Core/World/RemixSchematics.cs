@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Schematics;
+using CalRemix.Core.Subworlds;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -30,11 +31,21 @@ namespace CalRemix.Core.World
         internal const string GrayTempleName = "Core/Schematics/grayTemple.csch";
         internal const string TreeHouseName = "Core/Schematics/treeHouse.csch";
 
+        public static Dictionary<string, TempleRoom> templeRoomTypes = new();
+
         internal static Dictionary<string, SchematicMetaTile[,]> TileMaps =>
             typeof(SchematicManager).GetField("TileMaps", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, SchematicMetaTile[,]>;
 
         internal static readonly MethodInfo ImportSchematicMethod = typeof(CalamitySchematicIO).GetMethod("ImportSchematic", BindingFlags.NonPublic | BindingFlags.Static);
 
+        public static void AddTempleRoom(string key, TempleRoom.ConType connections)
+        {
+            TempleRoom t = new();
+            t.connections = connections;
+            t.schematic = "Temple" + key;
+            TileMaps.Add("Temple" + key, LoadSchematic("Core/Schematics/Temple/Temple" + key + ".csch"));
+            templeRoomTypes.Add(key, t);
+        }
 
         public override void PostSetupContent()
         {
@@ -58,6 +69,16 @@ namespace CalRemix.Core.World
             TileMaps.Add("Bright Shrine", LoadSchematic(BrightShrineName));
             TileMaps.Add("Gray Temple", LoadSchematic(GrayTempleName));
             TileMaps.Add("Tree House", LoadSchematic(TreeHouseName));
+
+            AddTempleRoom("LU", TempleRoom.ConType.Left | TempleRoom.ConType.Up);
+            AddTempleRoom("DR", TempleRoom.ConType.Down | TempleRoom.ConType.Right);
+            AddTempleRoom("LD", TempleRoom.ConType.Left | TempleRoom.ConType.Down);
+            AddTempleRoom("LR", TempleRoom.ConType.Left | TempleRoom.ConType.Right);
+            AddTempleRoom("LR2", TempleRoom.ConType.Left | TempleRoom.ConType.Right);
+            AddTempleRoom("LU2", TempleRoom.ConType.Left | TempleRoom.ConType.Up);
+            AddTempleRoom("U", TempleRoom.ConType.Up);
+            AddTempleRoom("UR", TempleRoom.ConType.Right | TempleRoom.ConType.Up);
+            AddTempleRoom("LDR", TempleRoom.ConType.Left | TempleRoom.ConType.Right | TempleRoom.ConType.Up);
         }
 
 

@@ -277,7 +277,11 @@ namespace CalRemix.Core.Subworlds
                     third = Utils.SelectRandom(Main.rand, [.. conTypes]);
                 }
                 temp.connections = first | second | third;
-                roomTypes.Add(temp);
+                //roomTypes.Add(temp);
+            }
+            foreach (var v in RemixSchematics.templeRoomTypes)
+            {
+                roomTypes.Add(v.Value);
             }
 
             // First room is always a horizontal corridor
@@ -294,6 +298,7 @@ namespace CalRemix.Core.Subworlds
             for (int o = 0; o < 400; o++)
             {
                 TempleRoom candidate = new();
+                string roomKey = "";
                 // "Artificial" gen code. Runs after organic gen code backs itself into a corner
                 if (doManualGen)
                 {
@@ -328,13 +333,15 @@ namespace CalRemix.Core.Subworlds
                                         {
                                             potential = Utils.SelectRandom(Main.rand, [.. roomTypes]);
                                             // Congratulations, we got a room that is next to an existing adjacent room which also has an exit that can lead into this one
-                                            if (CompatiblerRooms(potential, rooms[adjacentRoom.X, adjacentRoom.Y]))
+                                            if (CompatibleRooms(potential, rooms[adjacentRoom.X, adjacentRoom.Y]))
                                             {
                                                 // The adjacent room is marked as the old room and will have a tunnel dug between it and our new room
                                                 oldPos = adjacentRoom;
                                                 manualRoomPoint = newp;
                                                 manualRoomValid = true;
                                                 validConnection = true;
+                                                if (potential.schematic != "")
+                                                    roomKey = potential.schematic;
                                                 break;
                                             }
                                         }
@@ -359,12 +366,21 @@ namespace CalRemix.Core.Subworlds
                 }
                 // Clear out the room, probably removed once we get actual rooms
                 Point roomPos = new Point(buffer * 2 + xPos * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + yPos * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
-                for (int k = roomPos.X; k < roomPos.X + roomWidth; k++)
+
+                if (roomKey != "")
                 {
-                    for (int l = roomPos.Y; l < roomPos.Y + roomHeight; l++)
+                    bool _ = false;
+                    SchematicManager.PlaceSchematic<Action<Chest>>(roomKey, roomPos, SchematicAnchor.TopLeft, ref _);
+                }
+                else
+                {
+                    for (int k = roomPos.X; k < roomPos.X + roomWidth; k++)
                     {
-                        CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
-                        CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
+                        for (int l = roomPos.Y; l < roomPos.Y + roomHeight; l++)
+                        {
+                            CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
+                            CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
+                        }
                     }
                 }
 
@@ -453,7 +469,13 @@ namespace CalRemix.Core.Subworlds
             }
         }
 
-        public static bool CompatiblerRooms(TempleRoom roomOne, TempleRoom roomTwo)
+        /// <summary>
+        /// Checks if two rooms are able to connect to each other
+        /// </summary>
+        /// <param name="roomOne"></param>
+        /// <param name="roomTwo"></param>
+        /// <returns></returns>
+        public static bool CompatibleRooms(TempleRoom roomOne, TempleRoom roomTwo)
         {
             foreach (var v in roomOne.ConnectionTypes)
             {
@@ -468,21 +490,13 @@ namespace CalRemix.Core.Subworlds
             return false;
         }
 
-        public bool CompatibleRooms(TempleRoom roomOne, TempleRoom roomTwo)
-        {
-            foreach (var v in roomOne.ConnectionTypes)
-            {
-                foreach (var v2 in roomTwo.ConnectionTypes)
-                {
-                    if (ConnectionValid(v, v2))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
+        /// <summary>
+        /// Checks if a room is within the bounds of the temple
+        /// </summary>
+        /// <param name="maxX"></param>
+        /// <param name="maxY"></param>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public static bool RoomInbounds(int maxX, int maxY, Point p)
         {
             if (p.X < 0 || p.Y < 0)
@@ -492,6 +506,12 @@ namespace CalRemix.Core.Subworlds
             return true;
         }
 
+        /// <summary>
+        /// Checks if two connections match up
+        /// </summary>
+        /// <param name="one"></param>
+        /// <param name="two"></param>
+        /// <returns></returns>
         public static bool ConnectionValid(TempleRoom.ConType one, TempleRoom.ConType two)
         {
             if (one == TempleRoom.ConType.Up && two == TempleRoom.ConType.Down)
@@ -505,6 +525,12 @@ namespace CalRemix.Core.Subworlds
             return false;
         }
 
+        /// <summary>
+        /// Goes to the next room given the room's position and what connection to look at
+        /// </summary>
+        /// <param name="currentPos"></param>
+        /// <param name="conType"></param>
+        /// <returns></returns>
         public static Point NextPosition(Point currentPos, TempleRoom.ConType conType)
         {
             if (conType == TempleRoom.ConType.Up)
@@ -1388,5 +1414,7 @@ namespace CalRemix.Core.Subworlds
         public bool DownConnection => connections.HasFlag(ConType.Down);
 
         public ConType connections;
+
+        public string schematic = "";
     }
 }
