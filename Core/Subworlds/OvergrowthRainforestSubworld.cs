@@ -25,6 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Reflection.Metadata.Ecma335;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -180,11 +181,11 @@ namespace CalRemix.Core.Subworlds
             int spawnX = (int)(Main.maxTilesX * 0.95f);
             Main.spawnTileX = spawnX;
 
-            //WorldGen.genRand.SetSeed(Main.rand.Next(0, 10000) + (int)(Main.GlobalTimeWrappedHourly * 2222));
+            WorldGen.genRand.SetSeed(Main.rand.Next(0, 10000) + (int)(Main.GlobalTimeWrappedHourly * 2222));
 
             CalRemixHelper.PerlinSurface(new Rectangle((int)(0), (int)(Main.maxTilesY * groundLevel), Main.maxTilesX, (int)(Main.maxTilesY * (1 - groundLevel))), TileID.Mud, variance: 30);
 
-            PlaceTreeDungeons(progress);
+            /*PlaceTreeDungeons(progress);
 
             SpreadGrass();
 
@@ -198,7 +199,7 @@ namespace CalRemix.Core.Subworlds
             //TreeHouse();
             FinalizeGen();
 
-            progress.Set(0.75f);
+            progress.Set(0.75f);*/
 
             GenerateTemple(progress);
 
@@ -316,7 +317,7 @@ namespace CalRemix.Core.Subworlds
                             for (int k = 0; k < 4; k++)
                             {
                                 Point adjacentRoom = possibles[k];
-                                if (RoomInbounds(possibleRoomsX, possibleRoomsY, adjacentRoom))
+                                if (RoomInbounds(possibleRoomsX, possibleRoomsY, adjacentRoom, rooms))
                                 {
                                     if (rooms[adjacentRoom.X, adjacentRoom.Y] != null)
                                     {
@@ -396,6 +397,9 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                 }
+                /*Point bounds = new Point(possibleRoomsX, possibleRoomsY);
+                if (newRoom != default)
+                    SetRoomConnection(bounds, new Point(xPos, yPos), ref newRoom, ref rooms);*/
 
                 // Special logic for the first room
                 rooms[xPos, yPos] = newRoom ?? lastRoom;
@@ -458,88 +462,85 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
-            /*for (int k = 0; k < 10; k++)
+            for (int i = 0; i < rooms.GetLength(0); i++)
             {
-                for (int i = 0; i < rooms.GetLength(0); i++)
+                for (int j = 0; j < rooms.GetLength(1); j++)
                 {
-                    for (int j = 0; j < rooms.GetLength(1); j++)
+                    TempleRoom r = rooms[i, j];
+                    if (r == null)
+                        continue;
+                    int attempts = 0;
+                    /*if (i == 0)
                     {
-                        TempleRoom r = rooms[i, j];
-                        if (r == null)
-                            continue;
-                        if (RoomInbounds(rooms.GetLength(0) - 1, rooms.GetLength(1) - 1, new Point(i - 1, j)))
+                        r.Left = false;
+                    }
+                    if (j == 0)
+                    {
+                        r.Up = false;
+                    }
+                    if (i == rooms.GetLength(0) - 1)
+                    {
+                        r.Right = false;
+                    }
+                    if (j == rooms.GetLength(1) - 1)
+                    {
+                        r.Down = false;
+                    }*/
+                    Point bounds = new Point(possibleRoomsX, possibleRoomsY);
+                    Point position = new Point(i, j);
+                    //SetRoomConnection(bounds, position, ref r, ref rooms);
+                    while (attempts < 100)
+                    {
+                        TempleRoom schematic = Utils.SelectRandom(WorldGen.genRand, roomLayouts.ToArray());
+                        if (schematic.Up == r.Up &&
+                            schematic.Down == r.Down &&
+                            schematic.Left == r.Left &&
+                            schematic.Right == r.Right
+                            )
                         {
-                            if (rooms[i - 1, j] != null)
-                            {
-                                if (rooms[i - 1, j].Left)
-                                {
-                                    rooms[i, j].Right = true;
-                                }
-                            }
+                            Point roomPos = new Point(buffer * 2 + i * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + j * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
+
+                            bool _ = false;
+                            SchematicManager.PlaceSchematic<Action<Chest>>(schematic.schematic, roomPos, SchematicAnchor.TopLeft, ref _);
+                            break;
                         }
-                        if (RoomInbounds(rooms.GetLength(0) - 1, rooms.GetLength(1) - 1, new Point(i, j - 1)))
-                        {
-                            if (rooms[i, j - 1] != null)
-                            {
-                                if (rooms[i, j - 1].Down)
-                                {
-                                    rooms[i, j].Up = true;
-                                }
-                            }
-                        }
-                        if (RoomInbounds(rooms.GetLength(0) - 1, rooms.GetLength(1) - 1, new Point(i + 1, j)))
-                        {
-                            if (rooms[i + 1, j] != null)
-                            {
-                                if (rooms[i + 1, j].Right)
-                                {
-                                    rooms[i, j].Left = true;
-                                }
-                            }
-                        }
-                        if (RoomInbounds(rooms.GetLength(0) - 1, rooms.GetLength(1) - 1, new Point(i, j + 1)))
-                        {
-                            if (rooms[i, j + 1] != null)
-                            {
-                                if (rooms[i + 1, j].Up)
-                                {
-                                    rooms[i, j].Down = true;
-                                }
-                            }
-                        }
+                        attempts++;
                     }
                 }
-            }*/
+            }
+        }
 
-            xPos = 1;
-            yPos = 0;
-            foreach (TempleRoom r in rooms)
+        public static void SetRoomConnection(Point bounds, Point roomPos, ref TempleRoom room, ref TempleRoom[,] rooms)
+        {
+            if (RoomInbounds(bounds.X, bounds.Y, roomPos, rooms))
             {
-                if (r == null)
-                    continue;
-                int attempts = 0;
-                while (attempts < 100)
+                if (RoomInbounds(bounds.X, bounds.Y, new Point(roomPos.X - 1, roomPos.Y), rooms))
                 {
-                    TempleRoom schematic = Utils.SelectRandom(WorldGen.genRand, roomLayouts.ToArray());
-                    if (schematic.Up == r.Up &&
-                        schematic.Down == r.Down &&
-                        schematic.Left == r.Left &&
-                        schematic.Right == r.Right
-                        )
-                    {
-                        Point roomPos = new Point(buffer * 2 + xPos * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + yPos * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
-
-                        bool _ = false;
-                        SchematicManager.PlaceSchematic<Action<Chest>>(schematic.schematic, roomPos, SchematicAnchor.TopLeft, ref _);
-                        break;
-                    }
-                    attempts++;
+                    if (room.Left)
+                        rooms[roomPos.X - 1, roomPos.Y].Right = true;
+                    if (rooms[roomPos.X - 1, roomPos.Y].Right)
+                        room.Left = true;
                 }
-                xPos++;
-                if (xPos > 3)
+                if (RoomInbounds(bounds.X, bounds.Y, new Point(roomPos.X + 1, roomPos.Y), rooms))
                 {
-                    yPos++;
-                    xPos = 0;
+                    if (room.Right)
+                        rooms[roomPos.X + 1, roomPos.Y].Left = true;
+                    if (rooms[roomPos.X + 1, roomPos.Y].Left)
+                        room.Right = true;
+                }
+                if (RoomInbounds(bounds.X, bounds.Y, new Point(roomPos.X, roomPos.Y - 1), rooms))
+                {
+                    if (room.Up)
+                        rooms[roomPos.X, roomPos.Y - 1].Down = true;
+                    if (rooms[roomPos.X, roomPos.Y - 1].Down)
+                        room.Up = true;
+                }
+                if (RoomInbounds(bounds.X, bounds.Y, new Point(roomPos.X, roomPos.Y + 1), rooms))
+                {
+                    if (room.Down)
+                        rooms[roomPos.X, roomPos.Y + 1].Up = true;
+                    if (rooms[roomPos.X, roomPos.Y + 1].Up)
+                        room.Down = true;
                 }
             }
         }
@@ -572,11 +573,13 @@ namespace CalRemix.Core.Subworlds
         /// <param name="maxY"></param>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static bool RoomInbounds(int maxX, int maxY, Point p)
+        public static bool RoomInbounds(int maxX, int maxY, Point p, TempleRoom[,] rooms)
         {
             if (p.X < 0 || p.Y < 0)
                 return false;
             if (p.X >= maxX || p.Y >= maxY)
+                return false;
+            if (rooms[p.X, p.Y] == default || rooms[p.X, p.Y] == null)
                 return false;
             return true;
         }
