@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -253,7 +254,7 @@ namespace CalRemix.Core.Subworlds
             int roomWidth = 90;
             int roomHeight = 40;
             int roomSpacing = 40;
-            int roomRandomness = 4;
+            int roomRandomness = 0;
 
             int possibleRoomsX = (topWidth - buffer + roomSpacing) / (roomWidth + roomSpacing);
             int possibleRoomsY = (bottomStart - (templeTop + shaveTop) + roomSpacing) / (roomHeight + roomSpacing);
@@ -262,6 +263,7 @@ namespace CalRemix.Core.Subworlds
             TempleRoom[,] rooms = new TempleRoom[possibleRoomsX, possibleRoomsY];
             List<TempleRoom.ConType> conTypes = new() { TempleRoom.ConType.Up, TempleRoom.ConType.Left, TempleRoom.ConType.Right, TempleRoom.ConType.Down };
             List<TempleRoom> roomTypes = new();
+            List<TempleRoom> roomLayouts= new();
             for (int i = 0; i < 20; i++)
             {
                 TempleRoom temp = new TempleRoom();
@@ -277,11 +279,11 @@ namespace CalRemix.Core.Subworlds
                     third = Utils.SelectRandom(Main.rand, [.. conTypes]);
                 }
                 temp.connections = first | second | third;
-                //roomTypes.Add(temp);
+                roomTypes.Add(temp);
             }
             foreach (var v in RemixSchematics.templeRoomTypes)
             {
-                roomTypes.Add(v.Value);
+                roomLayouts.Add(v.Value);
             }
 
             // First room is always a horizontal corridor
@@ -297,8 +299,8 @@ namespace CalRemix.Core.Subworlds
             bool doManualGen = false;
             for (int o = 0; o < 400; o++)
             {
-                TempleRoom candidate = new();
                 string roomKey = "";
+                TempleRoom newRoom = null;
                 // "Artificial" gen code. Runs after organic gen code backs itself into a corner
                 if (doManualGen)
                 {
@@ -340,8 +342,7 @@ namespace CalRemix.Core.Subworlds
                                                 manualRoomPoint = newp;
                                                 manualRoomValid = true;
                                                 validConnection = true;
-                                                if (potential.schematic != "")
-                                                    roomKey = potential.schematic;
+                                                newRoom = potential;
                                                 break;
                                             }
                                         }
@@ -367,22 +368,14 @@ namespace CalRemix.Core.Subworlds
                 // Clear out the room, probably removed once we get actual rooms
                 Point roomPos = new Point(buffer * 2 + xPos * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + yPos * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
 
-                if (roomKey != "")
+                /*for (int k = roomPos.X; k < roomPos.X + roomWidth; k++)
                 {
-                    bool _ = false;
-                    SchematicManager.PlaceSchematic<Action<Chest>>(roomKey, roomPos, SchematicAnchor.TopLeft, ref _);
-                }
-                else
-                {
-                    for (int k = roomPos.X; k < roomPos.X + roomWidth; k++)
+                    for (int l = roomPos.Y; l < roomPos.Y + roomHeight; l++)
                     {
-                        for (int l = roomPos.Y; l < roomPos.Y + roomHeight; l++)
-                        {
-                            CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
-                            CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
-                        }
+                        CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
+                        CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
                     }
-                }
+                }*/
 
                 // Dig tunnels between two rooms
                 if (oldPos != Point.Zero || o == 0)
@@ -402,7 +395,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         for (int l = path.Top; l < path.Bottom; l++)
                         {
-                            if (CalRemixHelper.WithinQuad(quad1, quad2, quad3, quad4, new Point(k, l)))
+                            if (CalRemixHelper.WithinQuad(quad1, quad3, quad4, quad2, new Point(k, l)))
                             {
                                 bool hadTile = CalamityUtils.ParanoidTileRetrieval(k, l).HasTile;
                                 CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
@@ -414,7 +407,7 @@ namespace CalRemix.Core.Subworlds
                 }
 
                 // Let rooms populate themselves on their own for a while
-                rooms[xPos, yPos] = lastRoom;
+                rooms[xPos, yPos] = newRoom ?? lastRoom;
                 bool foundRoom = false;
                 TempleRoom.ConType connectionType = TempleRoom.ConType.None;
                 int tries = 0;
@@ -430,20 +423,20 @@ namespace CalRemix.Core.Subworlds
                             break;
                         }
                         // If no room is queried, select a random one
-                        if (candidate == default)
-                            candidate = Utils.SelectRandom(Main.rand, [.. roomTypes]);
+                        if (newRoom == default)
+                            newRoom = Utils.SelectRandom(Main.rand, [.. roomTypes]);
                         // Test if the rooms are compatible
                         foreach (TempleRoom.ConType conOne in lastRoom.ConnectionTypes)
                         {
                             if (foundRoom)
                                 break;
-                            foreach (TempleRoom.ConType conTwo in candidate.ConnectionTypes)
+                            foreach (TempleRoom.ConType conTwo in newRoom.ConnectionTypes)
                             {
                                 if (ConnectionValid(conOne, conTwo))
                                 {
                                     potNext = NextPosition(new Point(xPos, yPos), conOne);
                                     // Check if the next room is empty and in bounds
-                                    if (RoomInbounds(possibleRoomsX, possibleRoomsY, new Point(xPos, yPos)))
+                                    if (RoomInbounds(possibleRoomsX, possibleRoomsY, new Point(xPos, yPos)) && rooms.GetLength(0) > potNext.X && rooms.GetLength(1) > potNext.Y)
                                     {
                                         if (rooms[potNext.X, potNext.Y] == null)
                                         {
@@ -457,6 +450,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
+                    doManualGen = true;
                 }
                 // Move onto the next room
                 if (connectionType != TempleRoom.ConType.None)
@@ -464,7 +458,39 @@ namespace CalRemix.Core.Subworlds
                     oldPos = new Point(xPos, yPos);
                     xPos = potNext.X;
                     yPos = potNext.Y;
-                    lastRoom = candidate;
+                    lastRoom = newRoom;
+                }
+            }
+
+            xPos = 0;
+            yPos = 0;
+            foreach (TempleRoom r in rooms)
+            {
+                if (r == null)
+                    continue;
+                int attempts = 0;
+                while (attempts < 100)
+                {
+                    TempleRoom schematic = Utils.SelectRandom(WorldGen.genRand, roomLayouts.ToArray());
+                    if (schematic.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Up) == r.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Up) &&
+                        schematic.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Down) == r.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Down) &&
+                        schematic.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Left) == r.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Left) &&
+                        schematic.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Right) == r.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Right)
+                        )
+                    {
+                        Point roomPos = new Point(buffer * 2 + xPos * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + yPos * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
+
+                        bool _ = false;
+                        SchematicManager.PlaceSchematic<Action<Chest>>(schematic.schematic, roomPos, SchematicAnchor.TopLeft, ref _);
+                        break;
+                    }
+                    attempts++;
+                }
+                xPos++;
+                if (xPos > 3)
+                {
+                    yPos++;
+                    xPos = 0;
                 }
             }
         }
