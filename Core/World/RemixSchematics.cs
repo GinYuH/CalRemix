@@ -82,6 +82,14 @@ namespace CalRemix.Core.World
             AddTempleRoom("U", up: true);
             AddTempleRoom("UR", up: true, right: true);
             AddTempleRoom("LDR", left: true, down: true, right: true);
+            AddTempleRoom("LUDR", up: true, right: true, left: true, down: true);
+            AddTempleRoom("LUR", up: true, right: true, left: true);
+            AddTempleRoom("LUD", up: true, left: true, down: true);
+            AddTempleRoom("L", left: true);
+            AddTempleRoom("UDR", up: true, right: true, down: true);
+            AddTempleRoom("UD", up: true, down: true);
+            AddTempleRoom("R", right: true);
+            AddTempleRoom("D", down: true);
         }
 
 
