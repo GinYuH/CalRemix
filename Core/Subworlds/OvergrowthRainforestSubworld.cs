@@ -261,25 +261,17 @@ namespace CalRemix.Core.Subworlds
 
             // Populate room types, this is random for now
             TempleRoom[,] rooms = new TempleRoom[possibleRoomsX, possibleRoomsY];
-            List<TempleRoom.ConType> conTypes = new() { TempleRoom.ConType.Up, TempleRoom.ConType.Left, TempleRoom.ConType.Right, TempleRoom.ConType.Down };
             List<TempleRoom> roomTypes = new();
-            List<TempleRoom> roomLayouts= new();
+            List<TempleRoom> roomLayouts = new();
             for (int i = 0; i < 20; i++)
             {
                 TempleRoom temp = new TempleRoom();
-                TempleRoom.ConType first = Utils.SelectRandom(Main.rand, [.. conTypes]);
-                TempleRoom.ConType second = first;
-                while (first == second)
-                {
-                    second = Utils.SelectRandom(Main.rand, [.. conTypes]);
-                }
-                TempleRoom.ConType third = first;
-                while (third == second || third == first)
-                {
-                    third = Utils.SelectRandom(Main.rand, [.. conTypes]);
-                }
-                temp.connections = first | second | third;
-                roomTypes.Add(temp);
+                temp.Up = WorldGen.genRand.NextBool(4);
+                temp.Down = WorldGen.genRand.NextBool(4);
+                temp.Left = WorldGen.genRand.NextBool(4);
+                temp.Right = WorldGen.genRand.NextBool(4);
+                if (temp.Up || temp.Down || temp.Left || temp.Right)
+                    roomTypes.Add(temp);
             }
             foreach (var v in RemixSchematics.templeRoomTypes)
             {
@@ -287,22 +279,21 @@ namespace CalRemix.Core.Subworlds
             }
 
             // First room is always a horizontal corridor
-            TempleRoom lastRoom = new()
-            {
-                connections = TempleRoom.ConType.Left | TempleRoom.ConType.Right
-            };
+            TempleRoom lastRoom = new();
+            lastRoom.Left = true;
+            lastRoom.Right = true;
 
 
             Point oldPos = Point.Zero;
             int xPos = possibleRoomsX - 1;
             int yPos = possibleRoomsY - 1;
-            bool doManualGen = false;
+            bool firstRoomPlaced = false;
             for (int o = 0; o < 400; o++)
             {
                 string roomKey = "";
                 TempleRoom newRoom = null;
                 // "Artificial" gen code. Runs after organic gen code backs itself into a corner
-                if (doManualGen)
+                if (firstRoomPlaced)
                 {
                     bool manualRoomValid = false;
                     Point manualRoomPoint = Point.Zero;
@@ -383,8 +374,8 @@ namespace CalRemix.Core.Subworlds
                     int tunnelWidth = WorldGen.genRand.Next(4, 7);
                     if (o == 0)
                         tunnelWidth *= 3;
-                    Point mid = new Point(roomPos.X + roomWidth / 2, roomPos.Y + roomHeight / 2);
-                    Point oldMid = o == 0 ? new(mid.X + 300, mid.Y) :  (new Point(buffer * 2 + oldPos.X * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + oldPos.Y * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness)) + new Point(roomWidth / 2, roomHeight / 2));
+                    Point mid = new Point(roomPos.X + roomWidth / 2, roomPos.Y + roomHeight - tunnelWidth);
+                    Point oldMid = o == 0 ? new(mid.X + 300, mid.Y) : (new Point(buffer * 2 + oldPos.X * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + oldPos.Y * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness)) + new Point(roomWidth / 2, roomHeight - tunnelWidth));
 
                     Point quad1 = new Point(mid.X - tunnelWidth, mid.Y - tunnelWidth);
                     Point quad2 = new Point(mid.X + tunnelWidth, mid.Y + tunnelWidth);
@@ -406,27 +397,32 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
 
-                // Let rooms populate themselves on their own for a while
+                // Special logic for the first room
                 rooms[xPos, yPos] = newRoom ?? lastRoom;
                 bool foundRoom = false;
-                TempleRoom.ConType connectionType = TempleRoom.ConType.None;
+                bool connectionType = false;
                 int tries = 0;
                 Point potNext = new();
-                if (!doManualGen)
+                if (!firstRoomPlaced)
                 {
                     while (!foundRoom)
                     {
                         tries++;
                         if (tries > 1000)
                         {
-                            doManualGen = true;
+                            firstRoomPlaced = true;
                             break;
                         }
                         // If no room is queried, select a random one
                         if (newRoom == default)
                             newRoom = Utils.SelectRandom(Main.rand, [.. roomTypes]);
                         // Test if the rooms are compatible
-                        foreach (TempleRoom.ConType conOne in lastRoom.ConnectionTypes)
+                        if (CompatibleRooms(newRoom, lastRoom))
+                        {
+                            foundRoom = true;
+                            connectionType = true;
+                        }
+                        /*foreach (TempleRoom.ConType conOne in lastRoom.ConnectionTypes)
                         {
                             if (foundRoom)
                                 break;
@@ -448,12 +444,12 @@ namespace CalRemix.Core.Subworlds
                                     }
                                 }
                             }
-                        }
+                        }*/
                     }
-                    doManualGen = true;
+                    firstRoomPlaced = true;
                 }
                 // Move onto the next room
-                if (connectionType != TempleRoom.ConType.None)
+                if (connectionType)
                 {
                     oldPos = new Point(xPos, yPos);
                     xPos = potNext.X;
@@ -462,7 +458,60 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
-            xPos = 0;
+            /*for (int k = 0; k < 10; k++)
+            {
+                for (int i = 0; i < rooms.GetLength(0); i++)
+                {
+                    for (int j = 0; j < rooms.GetLength(1); j++)
+                    {
+                        TempleRoom r = rooms[i, j];
+                        if (r == null)
+                            continue;
+                        if (RoomInbounds(rooms.GetLength(0) - 1, rooms.GetLength(1) - 1, new Point(i - 1, j)))
+                        {
+                            if (rooms[i - 1, j] != null)
+                            {
+                                if (rooms[i - 1, j].Left)
+                                {
+                                    rooms[i, j].Right = true;
+                                }
+                            }
+                        }
+                        if (RoomInbounds(rooms.GetLength(0) - 1, rooms.GetLength(1) - 1, new Point(i, j - 1)))
+                        {
+                            if (rooms[i, j - 1] != null)
+                            {
+                                if (rooms[i, j - 1].Down)
+                                {
+                                    rooms[i, j].Up = true;
+                                }
+                            }
+                        }
+                        if (RoomInbounds(rooms.GetLength(0) - 1, rooms.GetLength(1) - 1, new Point(i + 1, j)))
+                        {
+                            if (rooms[i + 1, j] != null)
+                            {
+                                if (rooms[i + 1, j].Right)
+                                {
+                                    rooms[i, j].Left = true;
+                                }
+                            }
+                        }
+                        if (RoomInbounds(rooms.GetLength(0) - 1, rooms.GetLength(1) - 1, new Point(i, j + 1)))
+                        {
+                            if (rooms[i, j + 1] != null)
+                            {
+                                if (rooms[i + 1, j].Up)
+                                {
+                                    rooms[i, j].Down = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }*/
+
+            xPos = 1;
             yPos = 0;
             foreach (TempleRoom r in rooms)
             {
@@ -472,10 +521,10 @@ namespace CalRemix.Core.Subworlds
                 while (attempts < 100)
                 {
                     TempleRoom schematic = Utils.SelectRandom(WorldGen.genRand, roomLayouts.ToArray());
-                    if (schematic.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Up) == r.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Up) &&
-                        schematic.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Down) == r.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Down) &&
-                        schematic.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Left) == r.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Left) &&
-                        schematic.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Right) == r.ConnectionTypes.Any((TempleRoom.ConType c) => c == TempleRoom.ConType.Right)
+                    if (schematic.Up == r.Up &&
+                        schematic.Down == r.Down &&
+                        schematic.Left == r.Left &&
+                        schematic.Right == r.Right
                         )
                     {
                         Point roomPos = new Point(buffer * 2 + xPos * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + yPos * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
@@ -503,16 +552,16 @@ namespace CalRemix.Core.Subworlds
         /// <returns></returns>
         public static bool CompatibleRooms(TempleRoom roomOne, TempleRoom roomTwo)
         {
-            foreach (var v in roomOne.ConnectionTypes)
-            {
-                foreach (var v2 in roomTwo.ConnectionTypes)
-                {
-                    if (ConnectionValid(v, v2))
-                    {
-                        return true;
-                    }
-                }
-            }
+            if (roomOne == null || roomTwo == null)
+                return false;
+            if (roomOne.Up && roomTwo.Down)
+                return true;
+            if (roomOne.Left && roomTwo.Right)
+                return true;
+            if (roomOne.Right && roomTwo.Left)
+                return true;
+            if (roomOne.Down && roomTwo.Up)
+                return true;
             return false;
         }
 
@@ -533,39 +582,20 @@ namespace CalRemix.Core.Subworlds
         }
 
         /// <summary>
-        /// Checks if two connections match up
-        /// </summary>
-        /// <param name="one"></param>
-        /// <param name="two"></param>
-        /// <returns></returns>
-        public static bool ConnectionValid(TempleRoom.ConType one, TempleRoom.ConType two)
-        {
-            if (one == TempleRoom.ConType.Up && two == TempleRoom.ConType.Down)
-                return true;
-            if (one == TempleRoom.ConType.Down && two == TempleRoom.ConType.Up)
-                return true;
-            if (one == TempleRoom.ConType.Left && two == TempleRoom.ConType.Right)
-                return true;
-            if (one == TempleRoom.ConType.Right && two == TempleRoom.ConType.Left)
-                return true;
-            return false;
-        }
-
-        /// <summary>
         /// Goes to the next room given the room's position and what connection to look at
         /// </summary>
         /// <param name="currentPos"></param>
         /// <param name="conType"></param>
         /// <returns></returns>
-        public static Point NextPosition(Point currentPos, TempleRoom.ConType conType)
+        public static Point NextPosition(Point currentPos, bool up = false, bool down = false, bool left = false, bool right = false)
         {
-            if (conType == TempleRoom.ConType.Up)
+            if (up)
                 return new Point(currentPos.X, currentPos.Y - 1);
-            if (conType == TempleRoom.ConType.Down)
+            if (down)
                 return new Point(currentPos.X, currentPos.Y + 1);
-            if (conType == TempleRoom.ConType.Left)
+            if (left)
                 return new Point(currentPos.X - 1, currentPos.Y);
-            if (conType == TempleRoom.ConType.Right)
+            if (right)
                 return new Point(currentPos.X + 1, currentPos.Y);
             return Point.Zero;
         }
@@ -1423,24 +1453,11 @@ namespace CalRemix.Core.Subworlds
 
     public class TempleRoom
     {
-        public enum ConType : byte
-        {
-            None = 0,
-            Down = 1,
-            Right = 2,
-            Left = 4,
-            Up = 8
-        }
-
-        public IEnumerable<ConType> ConnectionTypes => Enum.GetValues<ConType>().Where(flag => flag != ConType.None && connections.HasFlag(flag));
-
-        public bool LeftConnection => connections.HasFlag(ConType.Left);
-        public bool RightConnection => connections.HasFlag(ConType.Right);
-        public bool UpConnection => connections.HasFlag(ConType.Up);
-        public bool DownConnection => connections.HasFlag(ConType.Down);
-
-        public ConType connections;
-
         public string schematic = "";
+
+        public bool Right = false;
+        public bool Left = false;
+        public bool Up = false;
+        public bool Down = false;
     }
 }

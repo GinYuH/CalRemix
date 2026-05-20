@@ -38,11 +38,14 @@ namespace CalRemix.Core.World
 
         internal static readonly MethodInfo ImportSchematicMethod = typeof(CalamitySchematicIO).GetMethod("ImportSchematic", BindingFlags.NonPublic | BindingFlags.Static);
 
-        public static void AddTempleRoom(string key, TempleRoom.ConType connections)
+        public static void AddTempleRoom(string key, bool up = false, bool down = false, bool left = false, bool right = false)
         {
             TempleRoom t = new();
-            t.connections = connections;
             t.schematic = "Temple" + key;
+            t.Left = left;
+            t.Right = right;
+            t.Up = up;
+            t.Down = down;
             TileMaps.Add("Temple" + key, LoadSchematic("Core/Schematics/Temple/Temple" + key + ".csch"));
             templeRoomTypes.Add(key, t);
         }
@@ -70,15 +73,15 @@ namespace CalRemix.Core.World
             TileMaps.Add("Gray Temple", LoadSchematic(GrayTempleName));
             TileMaps.Add("Tree House", LoadSchematic(TreeHouseName));
 
-            AddTempleRoom("LU", TempleRoom.ConType.Left | TempleRoom.ConType.Up);
-            AddTempleRoom("DR", TempleRoom.ConType.Down | TempleRoom.ConType.Right);
-            AddTempleRoom("LD", TempleRoom.ConType.Left | TempleRoom.ConType.Down);
-            AddTempleRoom("LR", TempleRoom.ConType.Left | TempleRoom.ConType.Right);
-            AddTempleRoom("LR2", TempleRoom.ConType.Left | TempleRoom.ConType.Right);
-            AddTempleRoom("LU2", TempleRoom.ConType.Left | TempleRoom.ConType.Up);
-            AddTempleRoom("U", TempleRoom.ConType.Up);
-            AddTempleRoom("UR", TempleRoom.ConType.Right | TempleRoom.ConType.Up);
-            AddTempleRoom("LDR", TempleRoom.ConType.Left | TempleRoom.ConType.Right | TempleRoom.ConType.Up);
+            AddTempleRoom("LU", left: true, up: true);
+            AddTempleRoom("DR", down: true, right: true);
+            AddTempleRoom("LD", left: true, down: true);
+            AddTempleRoom("LR", left: true, right: true);
+            AddTempleRoom("LR2", left: true, right: true);
+            AddTempleRoom("LU2", left: true, up: true);
+            AddTempleRoom("U", up: true);
+            AddTempleRoom("UR", up: true, right: true);
+            AddTempleRoom("LDR", left: true, down: true, right: true);
         }
 
 
