@@ -282,11 +282,6 @@ namespace CalRemix.Core.Subworlds
                 roomLayouts.Add(v.Value);
             }
 
-            // First room is always a horizontal corridor
-            TempleRoom lastRoom = new();
-            lastRoom.Left = true;
-            lastRoom.Right = true;
-
 
             Point oldPos = Point.Zero;
             int xPos = possibleRoomsX - 1;
@@ -336,7 +331,8 @@ namespace CalRemix.Core.Subworlds
                                                 manualRoomPoint = newp;
                                                 manualRoomValid = true;
                                                 validConnection = true;
-                                                newRoom = potential;
+                                                newRoom = new TempleRoom() { Up = potential.Up, Left = potential.Left, Right = potential.Right, Down = potential.Down };
+                                                newRoom.position = newp;
                                                 break;
                                             }
                                         }
@@ -359,109 +355,43 @@ namespace CalRemix.Core.Subworlds
                         continue;
                     }
                 }
+                else
+                {
+                    newRoom = new() { position = new Point(possibleRoomsX - 1, possibleRoomsY - 1), Left = true, Right = true, Up = true };
+                    oldPos = newRoom.position;
+                    firstRoomPlaced = true;
+                }
+
+                // Force certain rooms to have more entrances 
+                if ((newRoom.position.X == 1 && newRoom.position.Y > possibleRoomsY / 2) || (newRoom.position.X == possibleRoomsY - 1 && newRoom.position.Y < 3))
+                {
+                    newRoom.Up = true;
+                    newRoom.Down = true;
+                    if (WorldGen.genRand.NextBool(3))
+                    {
+                        if (WorldGen.genRand.NextBool())
+                            newRoom.Left = true;
+                        else
+                            newRoom.Right = true;
+                    }
+                }
+
                 // Clear out the room, probably removed once we get actual rooms
                 Point roomPos = new Point(buffer * 2 + xPos * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + yPos * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
 
-                /*for (int k = roomPos.X; k < roomPos.X + roomWidth; k++)
-                {
-                    for (int l = roomPos.Y; l < roomPos.Y + roomHeight; l++)
-                    {
-                        CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
-                        CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
-                    }
-                }*/
-
-                // Dig tunnels between two rooms
                 if (o == 0)
                 {
                     int tunnelWidth = WorldGen.genRand.Next(4, 7);
-                    if (o == 0)
-                        tunnelWidth *= 3;
                     Point mid = new Point(roomPos.X + roomWidth / 2, roomPos.Y + roomHeight - tunnelWidth);
                     Point oldMid = o == 0 ? new(mid.X + 300, mid.Y) : (new Point(buffer * 2 + oldPos.X * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + oldPos.Y * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness)) + new Point(roomWidth / 2, roomHeight - tunnelWidth));
-
-                    Point quad1 = new Point(mid.X - tunnelWidth, mid.Y - tunnelWidth);
-                    Point quad2 = new Point(mid.X + tunnelWidth, mid.Y + tunnelWidth);
-                    Point quad3 = new Point(oldMid.X - tunnelWidth, oldMid.Y - tunnelWidth);
-                    Point quad4 = new Point(oldMid.X + tunnelWidth, oldMid.Y + tunnelWidth);
-                    Rectangle path = Utils.BoundingRectangle([quad1, quad2, quad3, quad4]);
-                    for (int k = path.Left; k < path.Right; k++)
-                    {
-                        for (int l = path.Top; l < path.Bottom; l++)
-                        {
-                            if (CalRemixHelper.WithinQuad(quad1, quad3, quad4, quad2, new Point(k, l)))
-                            {
-                                bool hadTile = CalamityUtils.ParanoidTileRetrieval(k, l).HasTile;
-                                CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
-                                if (hadTile)
-                                    CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
-                            }
-                        }
-                    }
+                    DigTempleTunnel(mid, oldMid, tunnelWidth);
                 }
-                /*Point bounds = new Point(possibleRoomsX, possibleRoomsY);
-                if (newRoom != default)
-                    SetRoomConnection(bounds, new Point(xPos, yPos), ref newRoom, ref rooms);*/
-
-                // Special logic for the first room
-                Rooms[xPos, yPos] = newRoom ?? lastRoom;
-                Rooms[xPos, yPos].position = new Point(xPos, yPos);
-                bool foundRoom = false;
-                bool connectionType = false;
-                int tries = 0;
-                Point potNext = new();
-                if (!firstRoomPlaced)
+                if (Rooms[xPos, yPos] == null || Rooms[xPos, yPos] == default)
                 {
-                    while (!foundRoom)
+                    if (newRoom != null)
                     {
-                        tries++;
-                        if (tries > 1000)
-                        {
-                            firstRoomPlaced = true;
-                            break;
-                        }
-                        // If no room is queried, select a random one
-                        if (newRoom == default)
-                            newRoom = Utils.SelectRandom(Main.rand, [.. roomTypes]);
-                        // Test if the rooms are compatible
-                        if (CompatibleRooms(newRoom, lastRoom, false))
-                        {
-                            foundRoom = true;
-                            connectionType = true;
-                        }
-                        /*foreach (TempleRoom.ConType conOne in lastRoom.ConnectionTypes)
-                        {
-                            if (foundRoom)
-                                break;
-                            foreach (TempleRoom.ConType conTwo in newRoom.ConnectionTypes)
-                            {
-                                if (ConnectionValid(conOne, conTwo))
-                                {
-                                    potNext = NextPosition(new Point(xPos, yPos), conOne);
-                                    // Check if the next room is empty and in bounds
-                                    if (RoomInbounds(possibleRoomsX, possibleRoomsY, new Point(xPos, yPos)) && rooms.GetLength(0) > potNext.X && rooms.GetLength(1) > potNext.Y)
-                                    {
-                                        if (rooms[potNext.X, potNext.Y] == null)
-                                        {
-                                            // We found an adjacent empty room that connects to this one, yey!
-                                            foundRoom = true;
-                                            connectionType = conOne;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }*/
+                        Rooms[newRoom.position.X, newRoom.position.Y] = newRoom;
                     }
-                    firstRoomPlaced = true;
-                }
-                // Move onto the next room
-                if (connectionType)
-                {
-                    oldPos = new Point(xPos, yPos);
-                    xPos = potNext.X;
-                    yPos = potNext.Y;
-                    lastRoom = newRoom;
                 }
             }
 
@@ -473,23 +403,39 @@ namespace CalRemix.Core.Subworlds
                     if (queriedRoom == null)
                         continue;
                     int attempts = 0;
+                    Point roomPos = RoomWorldPosition(new Point(i, j));
                     if (i == 0)
                     {
-                        queriedRoom.Left = false;
+                        if (queriedRoom.Left)
+                        {
+                            queriedRoom.Left = false;
+                            queriedRoom.Right = true;
+                        }
                     }
                     if (j == 0)
                     {
-                        queriedRoom.Up = false;
+                        if (queriedRoom.Up)
+                        {
+                            queriedRoom.Up = false;
+                            queriedRoom.Down = true;
+                        }
                     }
-                    if (i == possibleRoomsX - 1)
+                    if (i == possibleRoomsX - 1 && j != possibleRoomsY - 1)
                     {
-                        queriedRoom.Right = false;
+                        if (queriedRoom.Right)
+                        {
+                            queriedRoom.Right = false;
+                            queriedRoom.Left = true;
+                        }
                     }
                     if (j == possibleRoomsY - 1)
                     {
-                        queriedRoom.Down = false;
+                        if (queriedRoom.Down)
+                        {
+                            queriedRoom.Down = false;
+                            queriedRoom.Up = true;
+                        }
                     }
-                    Point roomPos = RoomWorldPosition(new Point(i, j));
                     SetRoomConnection(new Point(i, j));
 
                     while (attempts < 100)
@@ -503,42 +449,10 @@ namespace CalRemix.Core.Subworlds
                         {
                             bool _ = false;
                             SchematicManager.PlaceSchematic<Action<Chest>>(schematic.schematic, roomPos, SchematicAnchor.TopLeft, ref _);
-
-                            for (int k = 0; k < 22; k++)
-                            {
-                                for (int l = 0; l < 22; l++)
-                                {
-                                    if (schematic.Up && Main.rand.NextBool(4))
-                                    CalamityUtils.ParanoidTileRetrieval(roomPos.X + k, roomPos.Y + l).ResetToType(TileID.RubyGemspark);
-                                    if (schematic.Down && Main.rand.NextBool(4))
-                                        CalamityUtils.ParanoidTileRetrieval(roomPos.X + k, roomPos.Y + l).ResetToType(TileID.SapphireGemspark);
-                                    if (schematic.Left && Main.rand.NextBool(4))
-                                        CalamityUtils.ParanoidTileRetrieval(roomPos.X + k, roomPos.Y + l).ResetToType(TileID.EmeraldGemspark);
-                                    if (schematic.Right && Main.rand.NextBool(4))
-                                        CalamityUtils.ParanoidTileRetrieval(roomPos.X + k, roomPos.Y + l).ResetToType(TileID.TopazGemspark);
-                                }
-                            }
                             break;
                         }
                         attempts++;
                     }
-                }
-            }
-
-            for (int i = 0; i < possibleRoomsX; i++)
-            {
-                for (int j = 0; j < possibleRoomsY; j++)
-                {
-                    Point bounds = new Point(possibleRoomsX, possibleRoomsY);
-                    Point position = new Point(i, j);
-                    TempleRoom queriedRoom = Rooms[i, j];
-                    if (queriedRoom == null)
-                        continue;
-
-
-                    Point roomPos = new Point(buffer * 2 + i * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + j * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
-
-                    Point roomCenter = roomPos + new Point(roomWidth / 2, roomHeight - 6);
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i + 1, j))))
                     {
                         DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i + 1, j)), 2, WallID.TopazGemspark);
@@ -583,6 +497,7 @@ namespace CalRemix.Core.Subworlds
 
         public static void DigTempleTunnel(Point one, Point two, int radius, int wallType = 147)
         {
+            wallType = WallID.StoneSlab;
             int tunnelWidth = radius;
             Point mid = one;
             Point oldMid = two;
@@ -600,9 +515,9 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (CalamityUtils.ParanoidTileRetrieval(k, l).TileType == TileID.StoneSlab)
                         {
-                            bool hadTile = true; // CalamityUtils.ParanoidTileRetrieval(k, l).HasTile;
+                            bool hadTile = CalamityUtils.ParanoidTileRetrieval(k, l).HasTile;
                             CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
-                            if (hadTile && Main.rand.NextBool())
+                            if (hadTile)
                                 CalamityUtils.ParanoidTileRetrieval(k, l).WallType = (ushort)wallType;
                         }
                     }
