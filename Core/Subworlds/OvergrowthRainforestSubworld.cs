@@ -188,7 +188,7 @@ namespace CalRemix.Core.Subworlds
 
             CalRemixHelper.PerlinSurface(new Rectangle((int)(0), (int)(Main.maxTilesY * groundLevel), Main.maxTilesX, (int)(Main.maxTilesY * (1 - groundLevel))), TileID.Mud, variance: 30);
 
-            /*PlaceTreeDungeons(progress);
+            PlaceTreeDungeons(progress);
 
             SpreadGrass();
 
@@ -199,10 +199,10 @@ namespace CalRemix.Core.Subworlds
             progress.Set(0.65f);
 
             Moss();
-            //TreeHouse();
+            TreeHouse();
             FinalizeGen();
 
-            progress.Set(0.75f);*/
+            progress.Set(0.75f);
 
             GenerateTemple(progress);
 
