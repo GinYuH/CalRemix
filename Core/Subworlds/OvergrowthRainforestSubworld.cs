@@ -289,6 +289,7 @@ namespace CalRemix.Core.Subworlds
             bool firstRoomPlaced = false;
             for (int o = 0; o < 400; o++)
             {
+                progress.Set(MathHelper.Lerp(0.7f, 0.8f, o / 400f));
                 TempleRoom newRoom = null;
                 // "Artificial" gen code. Runs after organic gen code backs itself into a corner
                 if (firstRoomPlaced)
@@ -395,10 +396,14 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
+            progress.Set(0.8f);
+
+            int iters = 0;
             for (int i = 0; i < possibleRoomsX; i++)
             {
                 for (int j = 0; j < possibleRoomsY; j++)
                 {
+                    progress.Set(MathHelper.Lerp(0.8f, 1f, iters / (float)(possibleRoomsX * possibleRoomsY)));
                     TempleRoom queriedRoom = Rooms[i, j];
                     if (queriedRoom == null)
                         continue;
@@ -455,20 +460,21 @@ namespace CalRemix.Core.Subworlds
                     }
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i + 1, j))))
                     {
-                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i + 1, j)), 2, WallID.TopazGemspark);
+                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i + 1, j)), 4);
                     }
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i - 1, j))))
                     {
-                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i - 1, j)), 2, WallID.EmeraldGemspark);
+                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i - 1, j)), 4);
                     }
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i, j + 1))))
                     {
-                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i, j + 1)), 2, WallID.SapphireGemspark);
+                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i, j + 1)), 4);
                     }
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i, j - 1))))
                     {
-                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i, j - 1)), 2, WallID.RubyGemspark);
+                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i, j - 1)), 4);
                     }
+                    iters++;
                 }
             }
         }
@@ -495,9 +501,14 @@ namespace CalRemix.Core.Subworlds
             return new Point(buffer * 2 + coords.X * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + coords.Y * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
         }
 
-        public static void DigTempleTunnel(Point one, Point two, int radius, int wallType = 147)
+        /// <summary>
+        /// Digs a quad tunnel from point A to point B
+        /// </summary>
+        /// <param name="one"></param>
+        /// <param name="two"></param>
+        /// <param name="radius"></param>
+        public static void DigTempleTunnel(Point one, Point two, int radius)
         {
-            wallType = WallID.StoneSlab;
             int tunnelWidth = radius;
             Point mid = one;
             Point oldMid = two;
@@ -518,13 +529,17 @@ namespace CalRemix.Core.Subworlds
                             bool hadTile = CalamityUtils.ParanoidTileRetrieval(k, l).HasTile;
                             CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
                             if (hadTile)
-                                CalamityUtils.ParanoidTileRetrieval(k, l).WallType = (ushort)wallType;
+                                CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
                         }
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Fixes up inconsistent connections of adjacent rooms
+        /// </summary>
+        /// <param name="roomPos"></param>
         public static void SetRoomConnection(Point roomPos)
         {
             Point bounds = new Point(Rooms.GetLength(0), Rooms.GetLength(1));
@@ -558,6 +573,11 @@ namespace CalRemix.Core.Subworlds
             }
         }
 
+        /// <summary>
+        /// Safely retrieves a room
+        /// </summary>
+        /// <param name="coords"></param>
+        /// <returns></returns>
         public static TempleRoom SafeRoom(Point coords)
         {
             if (RoomInbounds(coords))
@@ -572,6 +592,7 @@ namespace CalRemix.Core.Subworlds
         /// </summary>
         /// <param name="roomOne"></param>
         /// <param name="roomTwo"></param>
+        /// <param name="checkPosition">Check the positions of thw two rooms to see if they are compatible. Do not use this for rooms not in the array</param>
         /// <returns></returns>
         public static bool CompatibleRooms(TempleRoom roomOne, TempleRoom roomTwo, bool checkPosition = true)
         {
@@ -603,10 +624,8 @@ namespace CalRemix.Core.Subworlds
         }
 
         /// <summary>
-        /// Checks if a room is within the bounds of the temple
+        /// Checks if a room is within the bounds of the temple array
         /// </summary>
-        /// <param name="maxX"></param>
-        /// <param name="maxY"></param>
         /// <param name="p"></param>
         /// <returns></returns>
         public static bool RoomInbounds(Point p)
@@ -620,25 +639,6 @@ namespace CalRemix.Core.Subworlds
             if (Rooms[p.X, p.Y] == default || Rooms[p.X, p.Y] == null)
                 return false;
             return true;
-        }
-
-        /// <summary>
-        /// Goes to the next room given the room's position and what connection to look at
-        /// </summary>
-        /// <param name="currentPos"></param>
-        /// <param name="conType"></param>
-        /// <returns></returns>
-        public static Point NextPosition(Point currentPos, bool up = false, bool down = false, bool left = false, bool right = false)
-        {
-            if (up)
-                return new Point(currentPos.X, currentPos.Y - 1);
-            if (down)
-                return new Point(currentPos.X, currentPos.Y + 1);
-            if (left)
-                return new Point(currentPos.X - 1, currentPos.Y);
-            if (right)
-                return new Point(currentPos.X + 1, currentPos.Y);
-            return Point.Zero;
         }
 
         public static void MakeBridges()
@@ -917,7 +917,6 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
             }
-
 
             int toothAttempts = 0;
             int dungeon = (int)(Main.maxTilesX * templePosition);
