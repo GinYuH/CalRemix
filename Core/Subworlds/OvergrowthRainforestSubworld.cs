@@ -170,6 +170,9 @@ namespace CalRemix.Core.Subworlds
         public static float groundLevel = 0.7f;
         public static float treeTopLevel = 0.05f;
         public static float templePosition = 0.22f;
+        public static int roomAmountX = 0;
+        public static int roomAmountY = 0;
+        public static int startDungeonRoomsY => 80;
 
         public static TempleRoom[,] Rooms;
 
@@ -188,7 +191,7 @@ namespace CalRemix.Core.Subworlds
 
             CalRemixHelper.PerlinSurface(new Rectangle((int)(0), (int)(Main.maxTilesY * groundLevel), Main.maxTilesX, (int)(Main.maxTilesY * (1 - groundLevel))), TileID.Mud, variance: 30);
 
-            PlaceTreeDungeons(progress);
+            /*PlaceTreeDungeons(progress);
 
             SpreadGrass();
 
@@ -200,7 +203,7 @@ namespace CalRemix.Core.Subworlds
 
             Moss();
             TreeHouse();
-            FinalizeGen();
+            FinalizeGen();*/
 
             progress.Set(0.75f);
 
@@ -262,6 +265,8 @@ namespace CalRemix.Core.Subworlds
 
             int possibleRoomsX = (topWidth - buffer + roomSpacing) / (roomWidth + roomSpacing);
             int possibleRoomsY = (bottomStart - (templeTop + shaveTop) + roomSpacing) / (roomHeight + roomSpacing);
+            roomAmountX = possibleRoomsX;
+            roomAmountY = possibleRoomsY;
 
             // Populate room types, this is random for now
             Rooms = new TempleRoom[possibleRoomsX, possibleRoomsY];
@@ -383,9 +388,9 @@ namespace CalRemix.Core.Subworlds
                 if (o == 0)
                 {
                     int tunnelWidth = WorldGen.genRand.Next(4, 7);
-                    Point mid = new Point(roomPos.X + roomWidth / 2, roomPos.Y + roomHeight - tunnelWidth);
-                    Point oldMid = o == 0 ? new(mid.X + 300, mid.Y) : (new Point(buffer * 2 + oldPos.X * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + oldPos.Y * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness)) + new Point(roomWidth / 2, roomHeight - tunnelWidth));
-                    DigTempleTunnel(mid, oldMid, tunnelWidth);
+                    Point startEntrance = RoomWorldAnchor(new Point(roomAmountX - 1, roomAmountY - 1));
+                    Point endEntrance = startEntrance + new Point(200, 0);
+                    DigTempleTunnel(RoomWorldAnchor(new Point(roomAmountX - 1, roomAmountY - 1)), endEntrance, tunnelWidth);
                 }
                 if (Rooms[xPos, yPos] == null || Rooms[xPos, yPos] == default)
                 {
@@ -490,15 +495,18 @@ namespace CalRemix.Core.Subworlds
             int templeTop = (int)(Main.maxTilesY * treeTopLevel);
             int templeRight = (int)(Main.maxTilesX * templePosition);
             int buffer = (int)(Main.maxTilesX * 0.01f);
-            int shaveTop = (int)(Main.maxTilesY * 0.03f);
             int topWidth = buffer + (int)((templeRight - buffer) * 0.6f);
-            int bottomStart = (int)(Main.maxTilesY * groundLevel) + (int)(Main.maxTilesY * 0.05f);
-            int surface = (int)(Main.maxTilesY * groundLevel);
+            int shaveTop = (int)(Main.maxTilesY * 0.03f);
             int roomWidth = 90;
             int roomHeight = 40;
-            int roomSpacing = 40;
+            int roomSpacing = 20;
             int roomRandomness = 0;
-            return new Point(buffer * 2 + coords.X * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + coords.Y * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
+
+            int templeWidth = templeRight - buffer;
+            int roomandcorridwidth = roomWidth * roomAmountX + roomSpacing * (roomAmountX - 1);
+            int remainingRoom = topWidth - roomandcorridwidth;
+
+            return new Point(buffer + (remainingRoom / 2) + coords.X * (coords.X != 0  ? roomWidth + roomSpacing : 0) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), startDungeonRoomsY + (templeTop + shaveTop + buffer) + coords.Y * (roomHeight + roomSpacing) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
         }
 
         /// <summary>
