@@ -373,26 +373,21 @@ namespace CalRemix.Core.Subworlds
                     currenPos = currentRoom.position;
                     if (currentRoom.position == destination)
                     {
-                        Point czeck = new Point(22, 22);
+                        List<Point> remainingRooms = new();
                         for (int i = 0; i < roomAmountX; i++)
                         {
                             for (int j = 0; j < roomAmountY; j++)
                             {
                                 if (Rooms[i, j] == null && !(i == 0 && j == 0))
                                 {
-                                    czeck = new Point(i, j);
-                                    break;
+                                    remainingRooms.Add(new Point(i, j));
                                 }
                             }
-                            if (czeck != new Point(22, 22))
-                            {
-                                break;
-                            }
                         }
-                        if (czeck == new Point(22, 22))
+                        if (remainingRooms.Count <= 0)
                             break;
                         else
-                            destination = czeck;
+                            destination = Utils.SelectRandom(Main.rand, remainingRooms.ToArray());
                     }
                 }
             }
