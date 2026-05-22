@@ -19,6 +19,7 @@ using CalRemix.UI.ElementalSystem;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using rail;
+using Steamworks;
 using SubworldLibrary;
 using System;
 using System.Collections;
@@ -292,18 +293,20 @@ namespace CalRemix.Core.Subworlds
             int xPos = possibleRoomsX - 1;
             int yPos = possibleRoomsY - 1;
             bool firstRoomPlaced = false;
-            TempleRoom newRoom = null;
-            for (int o = 0; o < 800; o++)
+            Point currenPos = Point.Zero;
+            Point destination = new Point(roomAmountX - 1, 0);
+            for (int o = 0; o < 10000; o++)
             {
-                progress.Set(MathHelper.Lerp(0.7f, 0.8f, o / 400f));
-                // "Artificial" gen code. Runs after organic gen code backs itself into a corner
+                TempleRoom currentRoom = null;
+                progress.Set(MathHelper.Lerp(0.7f, 0.8f, o / 10000f));
+                bool skip = false;
                 if (firstRoomPlaced)
                 {
                     bool foundARoom = false;
                     while (!foundARoom)
                     {
                         // Pick a rnadom room
-                        Point newp = newRoom.position;
+                        Point newp = currenPos;
                         // Check adjacent rooms
                         Point[] possibles = [
                             new Point(newp.X - 1, newp.Y),
@@ -314,22 +317,32 @@ namespace CalRemix.Core.Subworlds
                         Random.Shared.Shuffle(possibles);
                         for (int k = 0; k < 4; k++)
                         {
-                            Point adjacentRoom = possibles[k];
-                            if (RoomInbounds(adjacentRoom))
+                            Point roomTwoPos = possibles[k];
+                            if (RoomInbounds(roomTwoPos))
                             {
+                                int atts = 0;
                                 // If an adjacent room exists, then roll new room types until one is compatible with the adjacent room
-                                while (!foundARoom)
+                                while (atts < 30)
                                 {
-                                    TempleRoom adjacentRoomRoom = Utils.SelectRandom(Main.rand, roomTypes.ToArray());
+                                    TempleRoom roomTwo = Utils.SelectRandom(Main.rand, roomTypes.ToArray());
                                     // Congratulations, we got a room that is next to an existing adjacent room which also has an exit that can lead into this one
-                                    if (CompatibleRooms(newRoom, adjacentRoomRoom, false))
+                                    if (CompatibleRooms(SafeRoom(new Point(currenPos.X, currenPos.Y)), roomTwo, currenPos, roomTwoPos, true) || Rooms[roomTwoPos.X, roomTwoPos.Y] != null)
                                     {
                                         // The adjacent room is marked as the old room and will have a tunnel dug between it and our new room
                                         foundARoom = true;
-                                        newRoom = new TempleRoom() { Up = adjacentRoomRoom.Up, Left = adjacentRoomRoom.Left, Right = adjacentRoomRoom.Right, Down = adjacentRoomRoom.Down };
-                                        newRoom.position = adjacentRoom;
+                                        if (Rooms[roomTwoPos.X, roomTwoPos.Y] != null)
+                                        {
+                                            skip = true;
+                                        }
+                                        else
+                                        {
+                                            currentRoom = new TempleRoom() { Up = roomTwo.Up, Left = roomTwo.Left, Right = roomTwo.Right, Down = roomTwo.Down };
+                                            currentRoom.position = roomTwoPos;
+                                        }
+                                        currenPos = roomTwoPos;
                                         break;
                                     }
+                                    atts++;
                                 }
                                 if (foundARoom)
                                     break;
@@ -339,9 +352,13 @@ namespace CalRemix.Core.Subworlds
                 }
                 else
                 {
-                    newRoom = new() { position = new Point(possibleRoomsX - 1, possibleRoomsY - 1), Left = true, Right = true, Up = true };
+                    currentRoom = new() { position = new Point(possibleRoomsX - 1, possibleRoomsY - 1), Left = true, Right = true, Up = true };
+                    currenPos = currentRoom.position;
                     firstRoomPlaced = true;
                 }
+
+                if (skip)
+                    continue;
 
                 if (o == 0)
                 {
@@ -350,12 +367,32 @@ namespace CalRemix.Core.Subworlds
                     Point endEntrance = startEntrance + new Point(200, 0);
                     DigTempleTunnel(RoomWorldAnchor(new Point(roomAmountX - 1, roomAmountY - 1)), endEntrance, tunnelWidth);
                 }
-                if (newRoom != null)
+                if (currentRoom != null)
                 {
-                    Rooms[newRoom.position.X, newRoom.position.Y] = newRoom;
-                    if (newRoom.position.X == roomAmountX - 1 && newRoom.position.Y == 0)
+                    Rooms[currentRoom.position.X, currentRoom.position.Y] = currentRoom;
+                    currenPos = currentRoom.position;
+                    if (currentRoom.position == destination)
                     {
-                        break;
+                        Point czeck = new Point(22, 22);
+                        for (int i = 0; i < roomAmountX; i++)
+                        {
+                            for (int j = 0; j < roomAmountY; j++)
+                            {
+                                if (Rooms[i, j] == null && !(i == 0 && j == 0))
+                                {
+                                    czeck = new Point(i, j);
+                                    break;
+                                }
+                            }
+                            if (czeck != new Point(22, 22))
+                            {
+                                break;
+                            }
+                        }
+                        if (czeck == new Point(22, 22))
+                            break;
+                        else
+                            destination = czeck;
                     }
                 }
             }
@@ -564,30 +601,35 @@ namespace CalRemix.Core.Subworlds
         /// <param name="roomTwo"></param>
         /// <param name="checkPosition">Check the positions of thw two rooms to see if they are compatible. Do not use this for rooms not in the array</param>
         /// <returns></returns>
-        public static bool CompatibleRooms(TempleRoom roomOne, TempleRoom roomTwo, bool checkPosition = true)
+        public static bool CompatibleRooms(TempleRoom roomOne, TempleRoom roomTwo, Point roomTwoPoint = default, Point roomOnePoint = default, bool checkOnlyTwo = false)
         {
             if (roomOne == null || roomTwo == null)
                 return false;
-            if (checkPosition)
+            if (roomOnePoint == default)
+                roomOnePoint = roomOne.position;
+            if (roomTwoPoint == default)
+                roomTwoPoint = roomTwo.position;
+
+            if (checkOnlyTwo)
             {
-                if (roomOne.Up && roomTwo.Down && roomOne.position.Y == roomTwo.position.Y + 1)
+                if (roomTwo.Up && roomOnePoint.Y == roomTwoPoint.Y - 1)
                     return true;
-                if (roomOne.Left && roomTwo.Right && roomOne.position.X == roomTwo.position.X + 1)
+                if (roomTwo.Left && roomOnePoint.X == roomTwoPoint.X + 1)
                     return true;
-                if (roomOne.Right && roomTwo.Left && roomOne.position.X == roomTwo.position.X - 1)
+                if (roomTwo.Right && roomOnePoint.X == roomTwoPoint.X - 1)
                     return true;
-                if (roomOne.Down && roomTwo.Up && roomOne.position.Y == roomTwo.position.Y - 1)
+                if (roomTwo.Down && roomOnePoint.Y == roomTwoPoint.Y + 1)
                     return true;
             }
             else
             {
-                if (roomOne.Up && roomTwo.Down)
+                if (roomOne.Up && roomTwo.Down && roomOnePoint.Y == roomTwoPoint.Y + 1)
                     return true;
-                if (roomOne.Left && roomTwo.Right)
+                if (roomOne.Left && roomTwo.Right && roomOnePoint.X == roomTwoPoint.X + 1)
                     return true;
-                if (roomOne.Right && roomTwo.Left)
+                if (roomOne.Right && roomTwo.Left && roomOnePoint.X == roomTwoPoint.X - 1)
                     return true;
-                if (roomOne.Down && roomTwo.Up)
+                if (roomOne.Down && roomTwo.Up && roomOnePoint.Y == roomTwoPoint.Y - 1)
                     return true;
             }
             return false;
