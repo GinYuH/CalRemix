@@ -23,6 +23,7 @@ using SubworldLibrary;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net.Mail;
 using System.Reflection.Metadata.Ecma335;
@@ -288,102 +289,59 @@ namespace CalRemix.Core.Subworlds
             }
 
 
-            Point oldPos = Point.Zero;
             int xPos = possibleRoomsX - 1;
             int yPos = possibleRoomsY - 1;
             bool firstRoomPlaced = false;
-            for (int o = 0; o < 400; o++)
+            TempleRoom newRoom = null;
+            for (int o = 0; o < 800; o++)
             {
                 progress.Set(MathHelper.Lerp(0.7f, 0.8f, o / 400f));
-                TempleRoom newRoom = null;
                 // "Artificial" gen code. Runs after organic gen code backs itself into a corner
                 if (firstRoomPlaced)
                 {
-                    bool manualRoomValid = false;
-                    Point manualRoomPoint = Point.Zero;
-                    while (!manualRoomValid)
+                    bool foundARoom = false;
+                    while (!foundARoom)
                     {
                         // Pick a rnadom room
-                        Point newp = new Point(Main.rand.Next(0, possibleRoomsX), Main.rand.Next(0, possibleRoomsY));
-                        TempleRoom potential = Rooms[newp.X, newp.Y];
-                        // The room must be empty
-                        if (potential == null)
+                        Point newp = newRoom.position;
+                        // Check adjacent rooms
+                        Point[] possibles = [
+                            new Point(newp.X - 1, newp.Y),
+                            new Point(newp.X + 1, newp.Y),
+                            new Point(newp.X, newp.Y + 1),
+                            new Point(newp.X, newp.Y - 1)
+                            ];
+                        Random.Shared.Shuffle(possibles);
+                        for (int k = 0; k < 4; k++)
                         {
-                            // Check adjacent rooms
-                            Point[] possibles = [
-                                new Point(newp.X - 1, newp.Y),
-                                new Point(newp.X + 1, newp.Y),
-                                new Point(newp.X, newp.Y + 1),
-                                new Point(newp.X, newp.Y - 1)
-                                ];
-                            Random.Shared.Shuffle(possibles);
-                            for (int k = 0; k < 4; k++)
+                            Point adjacentRoom = possibles[k];
+                            if (RoomInbounds(adjacentRoom))
                             {
-                                Point adjacentRoom = possibles[k];
-                                if (RoomInbounds(adjacentRoom))
+                                // If an adjacent room exists, then roll new room types until one is compatible with the adjacent room
+                                while (!foundARoom)
                                 {
-                                    if (Rooms[adjacentRoom.X, adjacentRoom.Y] != null)
+                                    TempleRoom adjacentRoomRoom = Utils.SelectRandom(Main.rand, roomTypes.ToArray());
+                                    // Congratulations, we got a room that is next to an existing adjacent room which also has an exit that can lead into this one
+                                    if (CompatibleRooms(newRoom, adjacentRoomRoom, false))
                                     {
-                                        bool validConnection = false;
-                                        // If an adjacent room exists, then roll new room types until one is compatible with the adjacent room
-                                        for (int l = 0; l < 50; l++)
-                                        {
-                                            potential = Utils.SelectRandom(Main.rand, [.. roomTypes]);
-                                            // Congratulations, we got a room that is next to an existing adjacent room which also has an exit that can lead into this one
-                                            if (CompatibleRooms(potential, Rooms[adjacentRoom.X, adjacentRoom.Y], false))
-                                            {
-                                                // The adjacent room is marked as the old room and will have a tunnel dug between it and our new room
-                                                oldPos = adjacentRoom;
-                                                manualRoomPoint = newp;
-                                                manualRoomValid = true;
-                                                validConnection = true;
-                                                newRoom = new TempleRoom() { Up = potential.Up, Left = potential.Left, Right = potential.Right, Down = potential.Down };
-                                                newRoom.position = newp;
-                                                break;
-                                            }
-                                        }
-                                        if (validConnection)
-                                            break;
+                                        // The adjacent room is marked as the old room and will have a tunnel dug between it and our new room
+                                        foundARoom = true;
+                                        newRoom = new TempleRoom() { Up = adjacentRoomRoom.Up, Left = adjacentRoomRoom.Left, Right = adjacentRoomRoom.Right, Down = adjacentRoomRoom.Down };
+                                        newRoom.position = adjacentRoom;
+                                        break;
                                     }
                                 }
+                                if (foundARoom)
+                                    break;
                             }
                         }
-                    }
-                    // Set the position of our room if we found a successful room
-                    if (manualRoomPoint != Point.Zero)
-                    {
-                        xPos = manualRoomPoint.X;
-                        yPos = manualRoomPoint.Y;
-                    }
-                    // Otherwise loop again
-                    else
-                    {
-                        continue;
                     }
                 }
                 else
                 {
                     newRoom = new() { position = new Point(possibleRoomsX - 1, possibleRoomsY - 1), Left = true, Right = true, Up = true };
-                    oldPos = newRoom.position;
                     firstRoomPlaced = true;
                 }
-
-                // Force certain rooms to have more entrances 
-                if ((newRoom.position.X == 1 && newRoom.position.Y > possibleRoomsY / 2) || (newRoom.position.X == possibleRoomsY - 1 && newRoom.position.Y < 3))
-                {
-                    newRoom.Up = true;
-                    newRoom.Down = true;
-                    if (WorldGen.genRand.NextBool(3))
-                    {
-                        if (WorldGen.genRand.NextBool())
-                            newRoom.Left = true;
-                        else
-                            newRoom.Right = true;
-                    }
-                }
-
-                // Clear out the room, probably removed once we get actual rooms
-                Point roomPos = new Point(buffer * 2 + xPos * (roomWidth + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness), (templeTop + shaveTop + buffer) + yPos * (roomHeight + roomSpacing / 2) + WorldGen.genRand.Next(-roomRandomness, roomRandomness));
 
                 if (o == 0)
                 {
@@ -392,11 +350,12 @@ namespace CalRemix.Core.Subworlds
                     Point endEntrance = startEntrance + new Point(200, 0);
                     DigTempleTunnel(RoomWorldAnchor(new Point(roomAmountX - 1, roomAmountY - 1)), endEntrance, tunnelWidth);
                 }
-                if (Rooms[xPos, yPos] == null || Rooms[xPos, yPos] == default)
+                if (newRoom != null)
                 {
-                    if (newRoom != null)
+                    Rooms[newRoom.position.X, newRoom.position.Y] = newRoom;
+                    if (newRoom.position.X == roomAmountX - 1 && newRoom.position.Y == 0)
                     {
-                        Rooms[newRoom.position.X, newRoom.position.Y] = newRoom;
+                        break;
                     }
                 }
             }
@@ -590,7 +549,10 @@ namespace CalRemix.Core.Subworlds
         {
             if (RoomInbounds(coords))
             {
-                return Rooms[coords.X, coords.Y];
+                if (Rooms[coords.X, coords.Y] != null)
+                {
+                    return Rooms[coords.X, coords.Y];
+                }
             }
             return new TempleRoom() { Down = false, Left = false, Right = false, Up = false, position = new Point(22, 22) };
         }
@@ -643,8 +605,6 @@ namespace CalRemix.Core.Subworlds
             if (p.X < 0 || p.Y < 0)
                 return false;
             if (p.X >= maxX || p.Y >= maxY)
-                return false;
-            if (Rooms[p.X, p.Y] == default || Rooms[p.X, p.Y] == null)
                 return false;
             return true;
         }
