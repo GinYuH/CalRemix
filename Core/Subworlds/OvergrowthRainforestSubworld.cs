@@ -174,7 +174,7 @@ namespace CalRemix.Core.Subworlds
         public static float templePosition = 0.22f;
         public static int roomAmountX = 0;
         public static int roomAmountY = 0;
-        public static int startDungeonRoomsY => 80;
+        public static int startDungeonRoomsY => 120;
 
         public static TempleRoom[,] Rooms;
 
@@ -311,11 +311,15 @@ namespace CalRemix.Core.Subworlds
                         Point[] possibles = [
                             new Point(newp.X - 1, newp.Y),
                             new Point(newp.X + 1, newp.Y),
+                            new Point(newp.X - 1, newp.Y),
+                            new Point(newp.X + 1, newp.Y),
+                            new Point(newp.X - 1, newp.Y),
+                            new Point(newp.X + 1, newp.Y),
                             new Point(newp.X, newp.Y + 1),
                             new Point(newp.X, newp.Y - 1)
                             ];
                         Random.Shared.Shuffle(possibles);
-                        for (int k = 0; k < 4; k++)
+                        for (int k = 0; k < possibles.Length; k++)
                         {
                             Point roomTwoPos = possibles[k];
                             if (RoomInbounds(roomTwoPos))
@@ -600,6 +604,8 @@ namespace CalRemix.Core.Subworlds
         {
             if (roomOne == null || roomTwo == null)
                 return false;
+            if (checkOnlyTwo && roomTwoPoint == Point.Zero)
+                return false;
             if (roomOnePoint == default)
                 roomOnePoint = roomOne.position;
             if (roomTwoPoint == default)
@@ -642,6 +648,8 @@ namespace CalRemix.Core.Subworlds
             if (p.X < 0 || p.Y < 0)
                 return false;
             if (p.X >= maxX || p.Y >= maxY)
+                return false;
+            if (p.X == 0 && p.Y == 0)
                 return false;
             return true;
         }
