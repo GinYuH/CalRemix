@@ -1115,8 +1115,7 @@ namespace CalRemix
                 BuffType<HolyFlames>(),
                 BuffType<GodSlayerInferno>(),
                 BuffID.Chilled,
-                BuffID.Frozen,
-                BuffType<GlacialState>(),
+                BuffID.Frozen
             };
                 for (var i = 0; i < immuneDebuffs.Length; ++i)
                     Player.buffImmune[immuneDebuffs[i]] = false;

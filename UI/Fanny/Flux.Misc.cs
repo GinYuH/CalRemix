@@ -59,9 +59,6 @@ namespace CalRemix.UI
             HelperMessage.New("FluxFishAlert", "Watch out! It looks like the sealife of the Abyss caught on to your tricks.",
                 "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<FishAlert>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
                 .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
-            HelperMessage.New("FluxGlacialState", "Are you good in there? You look like a frozen caveman...",
-                "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<GlacialState>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)
-                .SpokenByAnotherHelper(ScreenHelpersUIState.Flux);
             // also not doing godslayer inferno, ditto
             HelperMessage.New("FluxHolyFlames", "You might want to be careful... It looks like you're on fire...",
                 "FluxDefault", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff<HolyFlames>() && Main.LocalPlayer.GetModPlayer<FluxPlayer>().isFluxAwake, cooldown: 30, onlyPlayOnce: false)

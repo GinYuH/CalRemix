@@ -102,7 +102,7 @@ namespace CalRemix.Content.Items.Accessories
                 AddIngredient(ItemID.RoyalGel).
                 AddIngredient(ItemID.VolatileGelatin).
                 AddIngredient(ItemType<NucleateGello>()).
-                AddIngredient(ItemType<MeldConstruct>()).
+                AddIngredient(ItemType<MeldBlob>()).
                 AddIngredient(ItemID.LunarBar, 10).
                 AddTile(TileID.LunarCraftingStation).
                 Register();

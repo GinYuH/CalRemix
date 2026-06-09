@@ -62,7 +62,7 @@ namespace CalRemix.Content.Items.Accessories
             caPlayer.brimElemental = true;
             caPlayer.waterElemental = true;
             caPlayer.sandElemental = true;
-            caPlayer.rareSandElemental = true;
+            caPlayer.oasisElemental = true;
             caPlayer.cloudElemental = true;
             caPlayer.MutatedTruffleBool = true;
             caPlayer.miniOldDuke = true;

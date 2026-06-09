@@ -9,7 +9,7 @@ Assortegelatin: {
 }
 
 CalamitousSoulArtifact: {
-	DisplayName: Calamitous Soul Artifact
+	DisplayName: Sentimental Resentment
 	Tooltip:
 		'''
 		Pain
@@ -815,7 +815,7 @@ RearGar: {
 
 SideGar: {
 	DisplayName: Side Gar
-	Tooltip: Right click to extract galactica singularities
+	Tooltip: Right click to extract elemental bars
 }
 
 PlaguedFirefly: {

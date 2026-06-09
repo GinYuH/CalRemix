@@ -65,7 +65,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.BuffType<GlacialState>(), 120);
+            target.AddBuff(BuffID.Frozen, 120);
         }
     }
 }

@@ -43,10 +43,10 @@ namespace CalRemix.Content.Items.Accessories
             player.GetModPlayer<CalRemixPlayer>().cart = true;
             float bonus = CalculateBonus(player);
             player.GetDamage<GenericDamageClass>() += bonus;
-            ModContent.GetModItem(ModContent.ItemType<DimensionalSoulArtifact>()).UpdateAccessory(player, hideVisual);
-            ModContent.GetModItem(ModContent.ItemType<EldritchSoulArtifact>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<CrushingEgo>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<FragmentsOfAnotherWorld>()).UpdateAccessory(player, hideVisual);
             ModContent.GetModItem(ModContent.ItemType<PhantomicArtifact>()).UpdateAccessory(player, hideVisual);
-            ModContent.GetModItem(ModContent.ItemType<AuricSoulArtifact>()).UpdateAccessory(player, hideVisual);
+            ModContent.GetModItem(ModContent.ItemType<FadedIdolatry>()).UpdateAccessory(player, hideVisual);
         }
         private static float CalculateBonus(Player player)
         {
@@ -101,10 +101,10 @@ namespace CalRemix.Content.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<AuricSoulArtifact>(1).
-                AddIngredient<DimensionalSoulArtifact>(1).
+                AddIngredient<FadedIdolatry>(1).
+                AddIngredient<CrushingEgo>(1).
                 AddIngredient<PhantomicArtifact>(1).
-                AddIngredient<EldritchSoulArtifact>(1).
+                AddIngredient<FragmentsOfAnotherWorld>(1).
                 AddIngredient<Havocplate>(60).
                 AddIngredient<AshesofAnnihilation>(5).
                 AddIngredient<ExodiumCluster>(25).

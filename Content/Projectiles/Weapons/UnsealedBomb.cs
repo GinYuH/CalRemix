@@ -17,8 +17,8 @@ namespace CalRemix.Content.Projectiles.Weapons
 		}
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ModContent.ProjectileType<SealedSingularityProj>());
-            AIType = ModContent.ProjectileType<SealedSingularityProj>();
+            Projectile.CloneDefaults(ModContent.ProjectileType<SealedSingularityProjectile>());
+            AIType = ModContent.ProjectileType<SealedSingularityProjectile>();
         }
         public override void OnKill(int timeLeft)
         {

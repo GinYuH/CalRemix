@@ -383,16 +383,14 @@ namespace CalRemix
                     Replace(recipe, ItemType<RuinousSoul>(), ItemType<HauntedBar>());
                     recipe.RemoveIngredient(ItemType<Necroplasm>());
                 }
-                if (!recipe.HasResult(ItemType<ElementalBar>()) && recipe.HasIngredient(ItemID.LunarBar) && recipe.HasIngredient(ItemType<LifeAlloy>()) && recipe.HasIngredient(ItemType<GalacticaSingularity>()))
+                if (!recipe.HasResult(ItemType<ElementalBar>()) && recipe.HasIngredient(ItemID.LunarBar) && recipe.HasIngredient(ItemType<LifeAlloy>()))
                 {
                     recipe.TryGetIngredient(ItemID.LunarBar, out Item lunarBar);
                     recipe.TryGetIngredient(ItemType<LifeAlloy>(), out Item lifeAlloy);
-                    recipe.TryGetIngredient(ItemType<GalacticaSingularity>(), out Item galacticaSingularity);
-                    if (galacticaSingularity.stack % 5 == 0 && galacticaSingularity.stack > 1 && galacticaSingularity.stack == lunarBar.stack && galacticaSingularity.stack == lifeAlloy.stack)
+                    if (lifeAlloy.stack == lunarBar.stack)
                     {
-                        Replace(recipe, ItemType<GalacticaSingularity>(), ItemType<ElementalBar>(), galacticaSingularity.stack / 5);
+                        Replace(recipe, ItemType<LifeAlloy>(), ItemType<ElementalBar>(), lifeAlloy.stack);
                         recipe.RemoveIngredient(ItemID.LunarBar);
-                        recipe.RemoveIngredient(ItemType<LifeAlloy>());
                     }
                 }
                 if (recipe.HasResult(ItemType<PrismaticHelmet>()) || recipe.HasResult(ItemType<PrismaticRegalia>()) || recipe.HasResult(ItemType<PrismaticGreaves>()))
@@ -546,9 +544,9 @@ namespace CalRemix
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("EyeofDesolation"), () => !CalRemixWorld.clamitas));
                 }
-                if (recipe.HasResult(ItemType<GalacticaSingularity>()))
+                //if (recipe.HasResult(ItemType<GalacticaSingularity>()))
                 {
-                    recipe.AddCondition(new Condition(LockedRecipe("GalacticaSingularity"), () => !CalRemixWorld.sidegar));
+                   // recipe.AddCondition(new Condition(LockedRecipe("GalacticaSingularity"), () => !CalRemixWorld.sidegar));
                 }
                 if (recipe.HasResult(ItemType<FearmongerGreathelm>()))
                 {
@@ -628,7 +626,7 @@ namespace CalRemix
                     recipe.AddIngredient<ManaPolarizer>();
                     recipe.AddIngredient<FrostFlare>();
                     recipe.AddIngredient<CorrosiveSpine>();
-                    recipe.AddIngredient<VoidofExtinction>();
+                    recipe.AddIngredient<Apollyon>();
                     recipe.AddIngredient<LeviathanAmbergris>();
                     recipe.AddIngredient(ItemID.SporeSac);
                     recipe.AddIngredient<TheCamper>();

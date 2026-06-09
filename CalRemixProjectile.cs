@@ -442,7 +442,7 @@ namespace CalRemix.Content.Projectiles
                 target.AddBuff(BuffType<GodSlayerInferno>(), 60);
                 if (modPlayer.tvo)
                 {
-                    target.AddBuff(BuffType<GlacialState>(), 60);
+                    target.AddBuff(BuffID.Frozen, 60);
                 }
             }
             if (modPlayer.wormMeal && projectile.DamageType == DamageClass.Summon)
@@ -588,7 +588,7 @@ namespace CalRemix.Content.Projectiles
         public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info)
         {
             if (hyperCharged)
-                target.AddBuff(BuffType<GlacialState>(), 50);
+                target.AddBuff(BuffID.Frozen, 50);
         }
 
         public override bool PreDraw(Projectile projectile, ref Color lightColor)

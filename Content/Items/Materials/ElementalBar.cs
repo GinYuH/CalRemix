@@ -1,4 +1,5 @@
 using CalamityMod.Items.Materials;
+using CalRemix.Core.World;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,10 +22,15 @@ namespace CalRemix.Content.Items.Materials
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.LunarBar, 5).
-                AddIngredient<LifeAlloy>(5).
-                AddIngredient<GalacticaSingularity>(5).
+                AddIngredient(ItemID.LunarBar).
+                AddIngredient<LifeAlloy>().
+                AddIngredient(ItemID.FragmentSolar).
+                AddIngredient(ItemID.FragmentVortex).
+                AddIngredient(ItemID.FragmentNebula).
+                AddIngredient(ItemID.FragmentStardust).
+                AddIngredient<MeldBlob>().
                 AddTile(TileID.LunarCraftingStation).
+                AddCondition(new Condition(Recipes.LockedRecipe("GalacticaSingularity"), () => !CalRemixWorld.sidegar)).
                 Register();
         }
     }

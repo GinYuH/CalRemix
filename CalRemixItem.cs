@@ -1008,7 +1008,7 @@ namespace CalRemix
                 if (!hideVisual)
                     GetModItem(ItemType<ManaPolarizer>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<FrostFlare>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<VoidofExtinction>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<Apollyon>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<ToxicHeart>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<AlchemicalDecanter>()).UpdateAccessory(player, hideVisual);

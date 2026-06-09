@@ -7,6 +7,7 @@ using CalamityMod.Items.Placeables.SunkenSea;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Summon;
 using CalamityMod.Tiles.Furniture.CraftingStations;
+using CalRemix.Content.Items.Materials;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,9 +96,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 AddIngredient<DemeterStormbow>(1).
                 AddIngredient(ItemID.Cobweb, 15).
                 AddIngredient(ItemID.DaedalusStormbow, 1).
-                AddIngredient(ItemID.LunarBar, 5).
-                AddIngredient<LifeAlloy>(5).
-                AddIngredient<GalacticaSingularity>(5).
+                AddIngredient<ElementalBar>(5).
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }

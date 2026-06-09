@@ -1,4 +1,5 @@
 using CalamityMod;
+using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Rogue;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -17,8 +18,8 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ModContent.ProjectileType<SealedSingularityBlackhole>());
-            AIType = ModContent.ProjectileType<SealedSingularityBlackhole>();
+            Projectile.CloneDefaults(ModContent.ProjectileType<VoidBlast>());
+            AIType = ModContent.ProjectileType<VoidBlast>();
             Projectile.timeLeft = 300;
         }
         public override void OnSpawn(IEntitySource source)
@@ -33,6 +34,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void AI()
         {
+            Projectile.Kill();
             int frameGate = 6;
 
             Projectile.frameCounter++;

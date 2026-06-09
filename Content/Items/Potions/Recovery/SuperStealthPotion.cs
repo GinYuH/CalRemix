@@ -41,7 +41,7 @@ namespace CalRemix.Content.Items.Potions.Recovery
         {
             CreateRecipe(4).
                 AddIngredient<GreaterStealthPotion>(4).
-                AddIngredient<MeldConstruct>().
+                AddIngredient<MeldBlob>().
                 AddTile(TileID.Bottles).
                 Register();
         }

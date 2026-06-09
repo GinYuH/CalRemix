@@ -311,12 +311,13 @@ Mods: {
 			DesertMedallion: Drops from Cnidrions after defeating the Wulfrum Excavator.
 			CryoKey: Drops from Primal Aspids in the snow biome at night.
 			EyeofDesolation: Drops from Clamitas in the Brimstone Crags.
-			GalacticaSingularity: Fish Side Gars from Godseeker Mode space.
+			ElementalBar: Fish Side Gars from Godseeker Mode space.
 			FearmongerGreathelm: Obtain by making an enemy walk on Grimesand.
 			FearmongerPlateMail: Obtain by making an enemy walk on Grimesand.
 			FearmongerGreaves: Obtain by making an enemy walk on Grimesand.
 			Seafood: Make the other Seafood.
 			ProfanedShard: Drops from Yggdrasil Ents in Hallow and Hell.
+			GalacticaSingularity: Mods.CalRemix.Condition.GalacticaSingularity
 		}
 
 		WorldGen.BlessedWithGoldOrPlatinumMessage: Your world has been blessed with Gold and/or Platinum!

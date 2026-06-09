@@ -9,6 +9,7 @@ using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
+using CalRemix.Content.Items.Materials;
 namespace CalRemix.Content.Items.Weapons
 {
     public class WrathoftheCosmos : ModItem
@@ -48,7 +49,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ModContent.ItemType<StarShower>()).
                 AddIngredient(ModContent.ItemType<CosmiliteBar>(), 12).
                 AddIngredient(ModContent.ItemType<AscendantSpiritEssence>(), 4).
-                AddIngredient(ModContent.ItemType<GalacticaSingularity>(), 15).
+                AddIngredient(ModContent.ItemType<ElementalBar>(), 15).
                 AddTile(ModContent.TileType<CosmicAnvil>()).
                 Register();
         }

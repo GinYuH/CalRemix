@@ -606,7 +606,7 @@ namespace CalRemix.UI.Anomaly109
                     CalRemixWorld.AddLootDynamically(ItemID.JungleFishingCrate);
                 }
             }, () => CalRemixWorld.reargar));
-            options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and Galactica Singularity recipe removal", () => { CalRemixWorld.sidegar = !CalRemixWorld.sidegar; }, () => CalRemixWorld.sidegar));
+            options.Add(new Anomaly109Option("driveflash", "side_gars", "Toggles Side Gars and the Elemental Bar recipe", () => { CalRemixWorld.sidegar = !CalRemixWorld.sidegar; }, () => CalRemixWorld.sidegar));
             options.Add(new Anomaly109Option("reapershark", "front_gars", "Toggles Front Gars and Reaper Tooth drop removal", () =>
             {
                 CalRemixWorld.frontgar = !CalRemixWorld.frontgar;

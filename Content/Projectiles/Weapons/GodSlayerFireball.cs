@@ -9,10 +9,10 @@ namespace CalRemix.Content.Projectiles.Weapons
 {
     public class GodSlayerFireball : ModProjectile
     {
-        public override string Texture => "CalamityMod/Projectiles/Boss/DoGDeath";
+        public override string Texture => "CalamityMod/Projectiles/Boss/DoGBeam";
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 2;
         }
         public override void SetDefaults()
         {

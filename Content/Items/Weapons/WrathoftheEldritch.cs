@@ -9,6 +9,7 @@ using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
+using CalRemix.Content.Items.Materials;
 namespace CalRemix.Content.Items.Weapons
 {
     public class WrathoftheEldritch : ModItem
@@ -48,7 +49,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ItemID.LunarBar, 10).
                 AddIngredient(ItemID.FragmentNebula, 12).
                 AddIngredient(ModContent.ItemType<ExodiumCluster>(), 15).
-                AddIngredient(ModContent.ItemType<GalacticaSingularity>(), 5).
+                AddIngredient(ModContent.ItemType<ElementalBar>(), 5).
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }
