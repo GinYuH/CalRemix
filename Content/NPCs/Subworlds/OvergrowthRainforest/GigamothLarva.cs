@@ -271,8 +271,8 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
         public void LerpBezier(params Vector2[] values)
         {
-            //if (NPC.spriteDirection == -1)
-                //values.Reverse();
+            if (NPC.spriteDirection == -1)
+                values.Reverse();
             for (int i = 0; i < values.Length; i++)
             {
                 segments[i] = Vector2.Lerp(segments[i], values[i], NPC.ai[1]);
