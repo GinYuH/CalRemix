@@ -104,6 +104,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 else
                 {
                     Projectile.Center = n.Center - relativePosition;
+                    Projectile.velocity = Vector2.Zero;
                 }
             }
         }
