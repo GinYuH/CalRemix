@@ -6,8 +6,6 @@ namespace CalRemix.Content.Items.Misc
 {
     public class PusSac : ModItem
     {
-        public override string Texture => "CalamityMod/Items/Accessories/PusSac";
-
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Quest;

@@ -150,6 +150,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<AnechoicCoating>(), "AnechoicCoating" },
             { ItemType<ExoPrism>(), "ExoPrism" },
             { ItemType<BloodOrb>(), "BloodOrb" },
+            { ItemType<ElementalGauntlet>(), "ElementalGauntlet" },
             #region Desert Scourge
             { ItemType<DesertScourgeBag>(), "DS/Bag" },
             { ItemType<DesertMedallion>(), "DS/DesertMedallion" },

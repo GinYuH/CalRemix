@@ -15,8 +15,6 @@ namespace CalRemix.Content.Items.Weapons
 {
     public class NamelessMurasama : ModItem
     {
-        public override string Texture => "CalamityMod/Items/Weapons/UHFMurasama";
-
         public static SoundStyle LongCoolSlash = new SoundStyle("CalRemix/Assets/Sounds/LongCoolSlash");
         public static SoundStyle MurasamaCut = new SoundStyle("CalRemix/Assets/Sounds/SwiftSlice", 2);
         public static SoundStyle MurasamaTornado = new SoundStyle("CalRemix/Assets/Sounds/ReverbSliceQuick");

@@ -61,7 +61,7 @@ namespace CalRemix.Content.Items.Weapons
                 {
                     if (n.Distance(player.Center) < 640)
                     {
-                        n.AddBuff(ModContent.BuffType<GlacialState>(), 300);
+                        n.AddBuff(BuffID.Frozen, 300);
                     }
                 }
             }

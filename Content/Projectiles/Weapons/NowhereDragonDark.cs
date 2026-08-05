@@ -68,7 +68,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                         Vector2 dest = npc.Center - Projectile.Center;
                         dest.Normalize();
                         Vector2 laserVel = dest * 5;
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, laserVel.RotatedByRandom(MathHelper.PiOver4), ModContent.ProjectileType<VoidConcentrationOrb>(), Projectile.damage, 0f, Projectile.owner);
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, laserVel.RotatedByRandom(MathHelper.PiOver4), ModContent.ProjectileType<VoidConcentrationBeam>(), Projectile.damage, 0f, Projectile.owner);
                         Projectile.netUpdate = true;
                     }
                 }

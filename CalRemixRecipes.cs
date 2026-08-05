@@ -682,7 +682,7 @@ namespace CalRemix
                     recipe.AddIngredient<BloodflareCore>();
                     recipe.AddIngredient<FleshTotem>();
                 }
-                if (recipe.HasResult(ItemType<VoidofExtinction>()))
+                if (recipe.HasResult(ItemType<Apollyon>()))
                 {
                     recipe.AddIngredient<VoidofCalamity>();
                     recipe.AddIngredient<SlagsplitterPauldron>();

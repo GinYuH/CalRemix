@@ -46,6 +46,7 @@ using CalRemix.Content.Prefixes;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
+using CalRemix.Core.Retheme;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
@@ -562,6 +563,12 @@ namespace CalRemix
                 Texture2D buffed = Request<Texture2D>("CalRemix/Assets/ExtraTextures/Buffed").Value;
                 spriteBatch.Draw(buffed, position, buffed.Frame(1, 8, 0, BuffedFrameCounter), Color.White, 0, new Vector2(buffed.Size().X / 2, buffed.Size().Y / 16), 1, 0, 0);
                 BuffedFrameTimer--;
+                return false;
+            }
+            if (item.type == ItemType<ElementalGauntlet>())
+            {
+                Texture2D gauntlet = TextureAssets.Item[item.type].Value;
+                spriteBatch.Draw(gauntlet, position, null, Color.White, 0, new Vector2(gauntlet.Size().X / 2, gauntlet.Size().Y / 2), 1, 0, 0);
                 return false;
             }
             return true;
@@ -1096,7 +1103,7 @@ namespace CalRemix
                 GetModItem(ItemType<VampiricTalisman>()).UpdateAccessory(player, hideVisual);
                 player.luck += 0.22f;
             }
-            if (item.type == ItemType<VoidofExtinction>())
+            if (item.type == ItemType<Apollyon>())
             {
                 GetModItem(ItemType<VoidofCalamity>()).UpdateAccessory(player, hideVisual);
                 GetModItem(ItemType<SlagsplitterPauldron>()).UpdateAccessory(player, hideVisual);
@@ -1365,7 +1372,7 @@ namespace CalRemix
                 AddRemixTooltip(item, ItemType<PhantomicArtifact>(), tooltips);
                 AddRemixTooltip(item, ItemType<Nanotech>(), tooltips);
                 AddRemixTooltip(item, ItemType<ChaliceOfTheBloodGod>(), tooltips);
-                AddRemixTooltip(item, ItemType<VoidofExtinction>(), tooltips);
+                AddRemixTooltip(item, ItemType<Apollyon>(), tooltips);
                 AddRemixTooltip(item, ItemType<GrandGelatin>(), tooltips);
                 AddRemixTooltip(item, ItemType<TheAbsorber>(), tooltips);
                 AddRemixTooltip(item, ItemType<TheSponge>(), tooltips);

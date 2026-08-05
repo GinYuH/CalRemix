@@ -240,7 +240,7 @@ namespace CalRemix
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<ManaPolarizer>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<FrostFlare>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<CorrosiveSpine>(), 1));
-            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<VoidofExtinction>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<Apollyon>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<LeviathanAmbergris>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemID.SporeSac, 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<TheCamper>(), 1));
@@ -255,10 +255,10 @@ namespace CalRemix
             accessoryCrafts.Add((ItemType<ChaliceOfTheBloodGod>(), ItemType<BloodyWormScarf>(), 1));
             accessoryCrafts.Add((ItemType<ChaliceOfTheBloodGod>(), ItemType<BloodflareCore>(), 1));
             accessoryCrafts.Add((ItemType<ChaliceOfTheBloodGod>(), ItemType<FleshTotem>(), 1));
-            accessoryCrafts.Add((ItemType<VoidofExtinction>(), ItemType<VoidofCalamity>(), 1));
-            accessoryCrafts.Add((ItemType<VoidofExtinction>(), ItemType<SlagsplitterPauldron>(), 1));
-            accessoryCrafts.Add((ItemType<VoidofExtinction>(), ItemType<TheBee>(), 1));
-            accessoryCrafts.Add((ItemType<VoidofExtinction>(), ItemType<NecklaceofVexation>(), 1));
+            accessoryCrafts.Add((ItemType<Apollyon>(), ItemType<VoidofCalamity>(), 1));
+            accessoryCrafts.Add((ItemType<Apollyon>(), ItemType<SlagsplitterPauldron>(), 1));
+            accessoryCrafts.Add((ItemType<Apollyon>(), ItemType<TheBee>(), 1));
+            accessoryCrafts.Add((ItemType<Apollyon>(), ItemType<NecklaceofVexation>(), 1));
             accessoryCrafts.Add((ItemType<StatisVoidSash>(), ItemType<EvasionScarf>(), 1));
             accessoryCrafts.Add((ItemType<Nanotech>(), ItemType<VampiricTalisman>(), 1));
             accessoryCrafts.Add((ItemType<Nanotech>(), ItemType<OldDie>(), 1));

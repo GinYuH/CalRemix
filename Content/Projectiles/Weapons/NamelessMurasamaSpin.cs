@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     {
         public VertexStrip TrailDrawer;
         Player Owner => Main.player[Projectile.owner];
-        public override string Texture => "CalamityMod/Items/Weapons/UHFMurasama";
+        public override string Texture => "CalRemix/Content/Items/Weapons/NamelessMurasama";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Cigar Cinder");
