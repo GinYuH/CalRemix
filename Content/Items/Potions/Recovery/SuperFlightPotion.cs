@@ -1,4 +1,5 @@
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.Materials;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace CalRemix.Content.Items.Potions.Recovery
         {
             CreateRecipe(4).
                 AddIngredient<GreaterFlightPotion>(4).
-                AddIngredient<GalacticaSingularity>().
+                AddIngredient<ElementalBar>().
                 AddTile(TileID.Bottles).
                 Register();
         }

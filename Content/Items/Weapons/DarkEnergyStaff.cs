@@ -2,6 +2,7 @@ using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Rarities;
+using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -49,7 +50,7 @@ public class DarkEnergyStaff : ModItem
         CreateRecipe().
             AddIngredient<SanctifiedSpark>(1).
             AddIngredient<DarkPlasma>(2).
-            AddIngredient<GalacticaSingularity>(5).
+            AddIngredient<ElementalBar>(5).
             AddTile(TileID.LunarCraftingStation).
             Register();
     }

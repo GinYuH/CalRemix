@@ -138,7 +138,6 @@ namespace CalRemix.Core.Retheme
             { ItemType<Violence>(), "Violence" },
             { ItemType<WulfrumMetalScrap>(), "Bars/WulfrumBar" },
             { ItemType<LifeAlloy>(), "Bars/LifeAlloy" },
-            { ItemType<MeldConstruct>(), "Bars/MeldBar" },
             { ItemType<FetidEmesis>(), "FetidEmesis" },
             { ItemType<TheOldReaper>(), "TheReaper" },
             { ItemType<CadaverousCarrion>(), "CadaverousCarrion" },
@@ -338,7 +337,6 @@ namespace CalRemix.Core.Retheme
         [
             ItemType<WulfrumMetalScrap>(),
             ItemType<LifeAlloy>(),
-            ItemType<MeldConstruct>(),
             ItemType<MajesticGuard>(),
             ItemType<GrandGuardian>(),
             ItemType<Earth>(),

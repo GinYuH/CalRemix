@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using CalamityMod.Items.Materials;
+using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Bags
 {
@@ -32,7 +33,7 @@ namespace CalRemix.Content.Items.Bags
         }
         public override void RightClick(Player player)
         {
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<GalacticaSingularity>(), Main.rand.Next(5, 16));
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ElementalBar>(), Main.rand.Next(5, 16));
         }
     }
 }

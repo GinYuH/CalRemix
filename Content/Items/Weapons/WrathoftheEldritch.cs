@@ -50,7 +50,7 @@ namespace CalRemix.Content.Items.Weapons
                 AddIngredient(ItemID.LunarBar, 10).
                 AddIngredient(ItemID.FragmentNebula, 12).
                 AddIngredient(ModContent.ItemType<ExodiumCluster>(), 15).
-                AddIngredient(ModContent.ItemType<GalacticaSingularity>(), 5).
+                AddIngredient(ModContent.ItemType<ElementalBar>(), 5).
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }

@@ -114,7 +114,7 @@ namespace CalRemix
             {
                 CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
             }
-            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<ElementalinaBottle>()) || player.HasItem(ItemType<RareElementalinaBottle>()) || player.HasItem(ItemType<RoseStone>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
+            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<ElementalinaBottle>()) || player.HasItem(ItemType<OasisElementalinaBottle>()) || player.HasItem(ItemType<RoseStone>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
             if (type == TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
             {
                 SoundEngine.PlaySound(SoundID.Item14, player.Center);
@@ -361,7 +361,7 @@ namespace CalRemix
                         if (type == OnyxExcavatorTile && RemixDowned.downedEarthElemental)
                         {
                             Player player = Main.LocalPlayer;
-                            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<ElementalinaBottle>()) || player.HasItem(ItemType<RareElementalinaBottle>()) || player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
+                            bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<ElementalinaBottle>()) || player.HasItem(ItemType<OasisElementalinaBottle>()) || player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
                             if (e)
                                 KinsmanMessage.ActivateMessage();
                         }

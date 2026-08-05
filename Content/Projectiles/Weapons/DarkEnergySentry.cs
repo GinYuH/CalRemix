@@ -63,7 +63,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             NPC npc = Projectile.Center.MinionHoming(550f, Main.player[Projectile.owner]);
             if (npc != null)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(npc.Center) * 12f, ModContent.ProjectileType<VoidConcentrationOrb>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(npc.Center) * 12f, ModContent.ProjectileType<VoidConcentrationBeam>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
                 Projectile.ai[0] = 8f;
             }
         }

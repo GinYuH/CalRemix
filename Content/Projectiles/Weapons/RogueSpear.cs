@@ -149,7 +149,7 @@ namespace CalRemix.Content.Projectiles.Weapons
     public class EclipseFall : RogueSpear
     {
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/EclipsesFall";
-        public override int ProjType => ModContent.ProjectileType<EclipsesFallMain>();
+        public override int ProjType => ModContent.ProjectileType<EclipsesFall_Javelin>();
     }
 
     public class AtomSplitter : RogueSpear

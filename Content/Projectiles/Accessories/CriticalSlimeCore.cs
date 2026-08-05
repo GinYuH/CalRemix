@@ -22,7 +22,7 @@ namespace CalRemix.Content.Projectiles.Accessories
         public Particle ring2;
         private int laserdirection = 1;
         public int MAXDMG = 300;
-        public override string Texture => "CalamityMod/NPCs/Noxus/Noxus";
+        public override string Texture => "CalRemix/Content/NPCs/Bosses/Noxus/NoxusEgg";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Critical Slime Core");

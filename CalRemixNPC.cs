@@ -1230,8 +1230,8 @@ namespace CalRemix
             }
             if ((!CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses && !CalamityNPCSets.ScalesHealthLikeBoss[npc.type]) || RemixDowned.downedNoxus)
             {
-                if (npc.GetGlobalNPC<CalamityGlobalNPC>().pearlAura)
-                    npc.AddBuff(BuffType<CalamityMod.Buffs.StatDebuffs.GlacialState>(), 60);
+                if (npc.GetGlobalNPC<CalamityMod.NPCs.CalamityGlobalNPC>().pearlAura)
+                    npc.AddBuff(BuffID.Frozen, 60);
                 foreach (Player p in Main.ActivePlayers)
                 {
                     if (p.Remix().voidArmor)
@@ -1382,7 +1382,7 @@ namespace CalRemix
 
             #endregion
             #region Hardmode
-            if (npc.type == NPCID.ManEater || CalamityNPCTypeSets.Hornet[npc.type] || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            if (npc.type == NPCID.ManEater || /*CalamityNPCTypeSets.Hornet[npc.type] ||*/ npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
             {
                 LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ItemType<EssenceofBabil>(), 4, hideLootReport: !Main.hardMode);
@@ -1504,7 +1504,7 @@ namespace CalRemix
                 npcLoot.Add(ItemID.RodofDiscord, new Fraction(1, 32));
                 npcLoot.Add(ItemID.RodOfHarmony, new Fraction(1, 64), 1, 200);
             }
-            if ((CalamityNPCSets.IsBuffedDungeonEnemy[npc.type] && npc.type != NPCID.Paladin) || CalamityNPCTypeSets.AngryBones[npc.type] || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            if ((CalamityNPCSets.IsBuffedDungeonEnemy[npc.type] && npc.type != NPCID.Paladin) || CalamityNPCTypeSets.Skeleton[npc.type] || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
             {
                 LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
@@ -1586,7 +1586,7 @@ namespace CalRemix
             {
                 npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<BloodredReactiveEssence>(), 10);
             }
-            if (npc.type == NPCID.ManEater || CalamityNPCTypeSets.Hornet[npc.type] || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
+            if (npc.type == NPCID.ManEater /*|| CalamityNPCTypeSets.Hornet[npc.type]*/ || npc.type == NPCID.SpikedJungleSlime || npc.type == NPCID.JungleSlime)
             {
                 npcLoot.AddIf(() => RemixDowned.downedNoxus, ItemType<AccidatedReactiveEssence>(), 20);
             }
