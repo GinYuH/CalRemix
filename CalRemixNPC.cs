@@ -1353,6 +1353,10 @@ namespace CalRemix
             }
             if (npc.type == NPCType<HiveTumor>())
             {
+                npcLoot.AddIf(() => Main.hardMode, ItemType<WisdomTeethFragments>());
+            }
+            if (npc.type == NPCType<HiveTumor>())
+            {
                 npcLoot.AddIf(() => CalRemixWorld.grimesandToggle, ItemID.DemoniteOre, 1, 10, 26, ui: !CalRemixWorld.grimesandToggle);
             }
             if (npc.type == NPCType<PerforatorCyst>())
