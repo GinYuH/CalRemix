@@ -37,9 +37,9 @@ namespace CalRemix.Content.Items.Placeables
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
 
-            CreateRecipe(100).
+            CreateRecipe(1000).
                 AddIngredient(ModContent.ItemType<DeliciousMeat>()).
-                AddIngredient(ItemID.StoneBlock, 100).
+                AddIngredient(ItemID.StoneBlock, 1000).
                 AddTile(TileID.Anvils).
                 Register();
         }
