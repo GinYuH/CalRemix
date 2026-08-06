@@ -2756,6 +2756,16 @@ Weapons: {
 				Stealth strikes will make the sickle travel further and faster, and hit enemies more frequently
 				'''
 		}
+
+		WisdomTeethFragments: {
+			DisplayName: Wisdom Teeth Fragments
+			Tooltip:
+				'''
+				Throws bloody teeth that were removed from their host later than they should have
+				Teeth chew on enemies
+				Stealth strikes cause a full mouth of teeth to be thrown out
+				'''
+		}
 	}
 }
 
