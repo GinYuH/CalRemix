@@ -200,16 +200,16 @@ namespace CalRemix
             #endregion
 
             #region Delicious Meat
-            deliciousMeatCrafts.Add((ItemType<Abaddon>(), ItemType<DeliciousMeat>(), 100));
-            deliciousMeatCrafts.Add((ItemType<DefiledGreatsword>(), ItemType<DeliciousMeat>(), 800));
-            deliciousMeatCrafts.Add((ItemType<DraedonsForge>(), ItemType<DeliciousMeat>(), 65536));
-            deliciousMeatCrafts.Add((ItemType<EssentialEssenceBar>(), ItemType<DeliciousMeat>(), 55));
-            deliciousMeatCrafts.Add((ItemID.MoneyTrough, ItemType<DeliciousMeat>(), 100));
-            deliciousMeatCrafts.Add((ItemType<RuinMedallion>(), ItemType<DeliciousMeat>(), 50));
-            deliciousMeatCrafts.Add((ItemType<SupremeHealingPotion>(), ItemType<DeliciousMeat>(), 8192));
+            deliciousMeatCrafts.Add((ItemType<Abaddon>(), ItemType<DeliciousMeat>(), 1));
+            deliciousMeatCrafts.Add((ItemType<DefiledGreatsword>(), ItemType<DeliciousMeat>(), 3));
+            deliciousMeatCrafts.Add((ItemType<DraedonsForge>(), ItemType<DeliciousMeat>(), 65));
+            deliciousMeatCrafts.Add((ItemType<EssentialEssenceBar>(), ItemType<DeliciousMeat>(), 1));
+            deliciousMeatCrafts.Add((ItemID.MoneyTrough, ItemType<DeliciousMeat>(), 2));
+            deliciousMeatCrafts.Add((ItemType<RuinMedallion>(), ItemType<DeliciousMeat>(), 1));
+            deliciousMeatCrafts.Add((ItemType<SupremeHealingPotion>(), ItemType<DeliciousMeat>(), 5));
             deliciousMeatCrafts.Add((ItemType<TyrantShield>(), ItemType<DeliciousMeat>(), 349));
-            deliciousMeatCrafts.Add((ItemType<ZenPotion>(), ItemType<DeliciousMeat>(), 256));
-            deliciousMeatCrafts.Add((ItemType<ZergPotion>(), ItemType<DeliciousMeat>(), 256));
+            deliciousMeatCrafts.Add((ItemType<ZenPotion>(), ItemType<DeliciousMeat>(), 1));
+            deliciousMeatCrafts.Add((ItemType<ZergPotion>(), ItemType<DeliciousMeat>(), 1));
             #endregion
 
             #region Accessory Additions

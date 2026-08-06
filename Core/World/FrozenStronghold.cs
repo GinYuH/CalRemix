@@ -158,7 +158,7 @@ namespace CalRemix.Core.World
             items.Add((ModContent.ItemType<FrostFlare>(), 1, 2), 60);
 
             // Permafrost
-            items.Add((ModContent.ItemType<DeliciousMeat>(), 6000, 9999), 300);
+            items.Add((ModContent.ItemType<DeliciousMeat>(), 1, 2), 300);
             items.Add((ModContent.ItemType<FrostbiteBlaster>(), 1, 2), 60);
             items.Add((ModContent.ItemType<IcicleTrident>(), 1, 2), 60);
             items.Add((ModContent.ItemType<IceStar>(), 40, 168), 60);
