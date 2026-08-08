@@ -633,7 +633,7 @@ namespace CalRemix
                     recipe.AddIngredient<AlchemicalDecanter>();
                     recipe.AddIngredient<ToxicHeart>();
                     recipe.AddIngredient<DynamoStemCells>();
-                    recipe.AddIngredient<BlazingCore>();
+                    recipe.AddIngredient<DivineProvidence>();
                     recipe.AddIngredient<TheEvolution>();
                     recipe.AddIngredient<Affliction>();
                     recipe.AddIngredient<OldDukeScales>();

@@ -947,6 +947,10 @@ namespace CalRemix
         {
             CalamityPlayer calplayer = player.GetModPlayer<CalamityPlayer>();
             CalRemixPlayer modplayer = player.GetModPlayer<CalRemixPlayer>();
+            if (item.type == ItemType<SoulofCryogen>())
+            {
+                modplayer.cryogenSoul = true;
+            }
             if (item.type == ItemType<GrandGelatin>())
             {
                 modplayer.miragel = true;
@@ -1022,7 +1026,7 @@ namespace CalRemix
                 GetModItem(ItemType<Abaddon>()).UpdateAccessory(player, hideVisual);
                 player.magmaStone = true;
                 GetModItem(ItemType<DynamoStemCells>()).UpdateAccessory(player, hideVisual);
-                GetModItem(ItemType<BlazingCore>()).UpdateAccessory(player, hideVisual);
+                GetModItem(ItemType<DivineProvidence>()).UpdateAccessory(player, hideVisual);
             }
         }
 

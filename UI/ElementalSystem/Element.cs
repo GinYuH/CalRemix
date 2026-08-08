@@ -46,7 +46,7 @@ namespace CalRemix.UI.ElementalSystem
             soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().pathogenSoul, Element.Unholy);
             soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().pyrogenSoul, Element.Fire);
             soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().oxygenSoul, Element.Wind);
-            soulBoosts.Add((Player p) => p.Calamity() != null && p.Calamity().cryogenSoul, Element.Cold);
+            soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().cryogenSoul, Element.Cold);
             soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().carcinogenSoul, Element.Dark);
             soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().phytogenSoul, Element.Poison);
             soulBoosts.Add((Player p) => p.Remix() != null && p.Remix().hydrogenSoul, Element.Water);

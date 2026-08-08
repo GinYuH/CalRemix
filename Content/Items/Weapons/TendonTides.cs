@@ -43,7 +43,7 @@ public class TendonTides : ModItem
     {
         CreateRecipe().
             AddIngredient<TenebrisTides>(1).
-            AddIngredient<BloodstoneCore>(7).
+            AddIngredient<Bloodstone>(7).
             AddIngredient(ItemID.SoulofFright,10).
             AddTile(TileID.LunarCraftingStation).
             Register();

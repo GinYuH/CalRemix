@@ -28,7 +28,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.ai[2]++;
             if (Main.rand.NextBool(10))
             {
-                int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RancorFog>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RancorLargeCinder>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 Main.projectile[p].DamageType = DamageClass.Ranged;
                 Main.projectile[p].penetrate = -1;
             }

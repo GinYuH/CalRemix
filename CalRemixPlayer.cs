@@ -202,6 +202,7 @@ namespace CalRemix
         public bool oxygenSoul;
         public bool phytogenSoul;
         public bool pyrogenSoul;
+        public bool cryogenSoul;
 
         public int blazeCount = 0;
         public bool blaze;
@@ -445,7 +446,7 @@ namespace CalRemix
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
 		{
-			if (CalamityKeybinds.SpectralVeilHotKey.JustPressed && roguebox)
+			if (CalamityKeybinds.Accessory1.JustPressed && roguebox)
 			{
 				if (!Player.HasCooldown(EclipseAuraCooldown.ID) && Player.GetModPlayer<CalRemixPlayer>().eclipseaura <= -1)
 				{
@@ -1331,6 +1332,7 @@ namespace CalRemix
             pyrogenSoul = false;
 			oxygenSoul = false;
 			pathogenSoul = false;
+            cryogenSoul = false;
             genActive = false;
 			dyesRed = 0;
 			dyesOrange = 0;

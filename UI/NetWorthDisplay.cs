@@ -315,7 +315,7 @@ namespace CalRemix.UI
              { ItemType<TheEvolution>(), Item.buyPrice(platinum: 42, gold: 49, silver: 40, copper: 64)  },
              { ItemType<Affliction>(), Item.buyPrice(platinum: 67, gold: 79, silver: 4, copper: 50)  },
              { ItemType<OldDukeScales>(), Item.buyPrice(platinum: 92, gold: 4, silver: 37, copper: 31)  },
-             { ItemType<BlazingCore>(), Item.buyPrice(platinum: 128, gold: 36, silver: 16, copper: 57)  },
+             { ItemType<DivineProvidence>(), Item.buyPrice(platinum: 128, gold: 36, silver: 16, copper: 57)  },
              { ItemType<NebulousCore>(), Item.buyPrice(platinum: 232, gold: 69, silver: 3, copper: 77)  },
              { ItemType<YharimsGift>(), Item.buyPrice(platinum: 366, gold: 66, silver: 63, copper: 29) },
              { ItemType<ExoThrone>(), Item.buyPrice(platinum: 499) },

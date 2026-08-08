@@ -65,9 +65,7 @@ namespace CalRemix.Content.Items.Accessories
             caPlayer.oasisElemental = true;
             caPlayer.cloudElemental = true;
             caPlayer.MutatedTruffleBool = true;
-            caPlayer.miniOldDuke = true;
             caPlayer.allElementals = true;
-            caPlayer.elementalHeart = true;
             caPlayer.virili = true;
 
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();

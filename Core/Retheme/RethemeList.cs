@@ -201,8 +201,7 @@ namespace CalRemix.Core.Retheme
             { ItemType<ManaPolarizer>(), "SlimeGod/Polarizer" },
             { ItemType<AbyssalTome>(), "SlimeGod/AbyssalTome" },
             { ItemType<EldritchTome>(), "SlimeGod/EldritchTome" },
-            { ItemType<CrimslimeStaff>(), "SlimeGod/CrimslimeStaff" },
-            { ItemType<CorroslimeStaff>(), "SlimeGod/CorroslimeStaff" },
+            { ItemType<BlightedSlimeStaff>(), "SlimeGod/CorroslimeStaff" },
             #endregion
             #region Levis
             { ItemType<LeviathanBag>(), "Levi/Bag" },
