@@ -45,7 +45,7 @@ public class TendonTides : ModItem
         CreateRecipe().
             AddIngredient<TenebrisTides>(1).
             AddIngredient(ModContent.ItemType<VirisiteTear>(), 5).
-            AddIngredient<BloodstoneCore>(7).
+            AddIngredient<Bloodstone>(7).
             AddIngredient(ItemID.SoulofFright,10).
             AddTile(TileID.MythrilAnvil).
             Register();

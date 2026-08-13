@@ -44,8 +44,6 @@ namespace CalRemix.Core.Retheme
             IL.CalamityMod.Projectiles.Magic.BloodBeam.AI += BloodBeam;
             MonoModHooks.Modify(typeof(ToothBallProjectile).GetMethod("get_Texture", BindingFlags.Public | BindingFlags.Instance), ToothBallProjectile);
             IL.CalamityMod.Projectiles.Magic.EldritchTentacle.AI += EldritchTentacle;
-            //.CalamityMod.Projectiles.Summon.CrimslimeMinion.PreDraw += CrimslimeMinion;
-            //IL.CalamityMod.Projectiles.Summon.CorroslimeMinion.PreDraw += CorroslimeMinion;
 
             IL.CalamityMod.Projectiles.Summon.GastricBelcher.PreDraw += GastricBelcher;
             IL.CalamityMod.Projectiles.Rogue.LeonidProgenitorBombshell.PreDraw += LeonidProgenitorBombshell;

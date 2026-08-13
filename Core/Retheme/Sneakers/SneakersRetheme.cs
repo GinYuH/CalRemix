@@ -81,7 +81,7 @@ namespace CalRemix.Core.Retheme
               ItemType<TheEvolution>(),
               ItemType<Affliction>(), 
               ItemType<OldDukeScales>(),
-              ItemType<BlazingCore>(), 
+              ItemType<DivineProvidence>(), 
               ItemType<NebulousCore>(),
               ItemType<YharimsGift>(), 
               ItemType<ExoThrone>(), 
@@ -364,7 +364,7 @@ namespace CalRemix.Core.Retheme
             if (CalRemixWorld.sneakerheadMode && !unloading)
             {
                 //Unanimate animated items
-                UnanimateItem(ItemType<BlazingCore>());
+                UnanimateItem(ItemType<DivineProvidence>());
                 UnanimateItem(ItemType<DynamoStemCells>());
                 UnanimateItem(ItemType<TheEvolution>());
                 UnanimateItem(ItemType<Calamity>());
@@ -374,7 +374,7 @@ namespace CalRemix.Core.Retheme
                 if (!unloading)
                 {
                     //Reanimate animated items
-                    GetInstance<BlazingCore>().SetStaticDefaults();
+                    GetInstance<DivineProvidence>().SetStaticDefaults();
                     GetInstance<DynamoStemCells>().SetStaticDefaults();
                     GetInstance<TheEvolution>().SetStaticDefaults();
                     GetInstance<Calamity>().SetStaticDefaults();
@@ -556,7 +556,7 @@ namespace CalRemix.Core.Retheme
              { ItemType<TheEvolution>(), "TheEvolution" },
              { ItemType<Affliction>(), "Affliction" },
              { ItemType<OldDukeScales>(), "OldDukesScales" },
-             { ItemType<BlazingCore>(), "BlazingCore" },
+             { ItemType<DivineProvidence>(), "BlazingCore" },
              { ItemType<NebulousCore>(), "NebulousCore" },
              { ItemType<YharimsGift>(), "YharimsGift" },
              { ItemType<ExoThrone>(), "ExoBox" },
@@ -621,7 +621,7 @@ namespace CalRemix.Core.Retheme
              { ItemType<TheEvolution>(),  ShoeBrand.Yeezy  },
              { ItemType<Affliction>(),  ShoeBrand.Yeezy  },
              { ItemType<OldDukeScales>(),  ShoeBrand.NewBalance  },
-             { ItemType<BlazingCore>(),  ShoeBrand.Skechers  },
+             { ItemType<DivineProvidence>(),  ShoeBrand.Skechers  },
              { ItemType<NebulousCore>(), ShoeBrand.NewBalance  },
              { ItemType<YharimsGift>(),  ShoeBrand.Nike  },
              { ItemType<ExoThrone>(), ShoeBrand.Nike  },

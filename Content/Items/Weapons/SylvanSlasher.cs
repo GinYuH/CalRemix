@@ -48,7 +48,7 @@ public class SylvanSlasher: RogueWeapon
     public override void AddRecipes()
     {
         CreateRecipe().
-            AddIngredient<SlickCane>(1).
+            AddIngredient<WalkingCane>(1).
             AddIngredient(ItemID.LeafWand).
             AddIngredient<EssenceofBabil>(16).
             AddIngredient<SeaPrism>(10).

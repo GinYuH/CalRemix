@@ -59,7 +59,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                 {
                     if (Projectile.ai[1] % 1 == 0)
                     {
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RancorFog>(), Projectile.damage, 0);
+                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RancorLargeCinder>(), Projectile.damage, 0);
                         if (p.WithinBounds(Main.maxProjectiles))
                         {
                             Main.projectile[p].DamageType = ModContent.GetInstance<RogueDamageClass>();
