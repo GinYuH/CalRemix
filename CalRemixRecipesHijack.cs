@@ -247,7 +247,7 @@ namespace CalRemix
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<AlchemicalDecanter>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<ToxicHeart>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<DynamoStemCells>(), 1));
-            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<BlazingCore>(), 1));
+            accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<DivineProvidence>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<TheEvolution>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<Affliction>(), 1));
             accessoryCrafts.Add((ItemType<TheAmalgam>(), ItemType<OldDukeScales>(), 1));

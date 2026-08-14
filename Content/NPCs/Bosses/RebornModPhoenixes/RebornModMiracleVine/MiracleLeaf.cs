@@ -1,4 +1,5 @@
-﻿using CalamityMod.Projectiles.Magic;
+﻿using CalamityMod.Projectiles.Boss;
+using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -48,14 +49,16 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine
                         #region should be last thorn
                         if (Projectile.ai[1] >= 13f) // change for max parts
                         {
-                            num14 = ModContent.ProjectileType<BrimstoneHellfireballFriendly>();
+                            num14 = ModContent.ProjectileType<BrimstoneHellfireball>();
                         }
                         else
-                            num14 = ModContent.ProjectileType<BrimstoneHellfireballFriendly>();
+                            num14 = ModContent.ProjectileType<BrimstoneHellfireball>();
                         #endregion
                         int num15 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), new Vector2(Projectile.position.X + Projectile.velocity.X + (float)(Projectile.width / 2), Projectile.position.Y + Projectile.velocity.Y + (float)(Projectile.height / 2)), Projectile.velocity, num14, Projectile.damage, Projectile.knockBack, Projectile.owner);
                         Main.projectile[num15].damage = Projectile.damage;
                         Main.projectile[num15].ai[1] = Projectile.ai[1] + 1f;
+                        Main.projectile[num15].friendly = true;
+                        Main.projectile[num15].hostile = false;
                         NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num15, 0f, 0f, 0f, 0);
                         #region funtime
                         /*
