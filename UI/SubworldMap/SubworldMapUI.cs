@@ -24,7 +24,8 @@ namespace CalRemix.UI.SubworldMap
         {
             if (Main.LocalPlayer.TryGetModPlayer<CalRemixPlayer>(out var player))
             {
-                if (!player.submapUIUnlocked)
+                if (!NPC.downedGolemBoss)
+                //if (!player.submapUIUnlocked)
                     return;
             }
             else
@@ -106,7 +107,7 @@ namespace CalRemix.UI.SubworldMap
 
             bool DEV_UNLOCKALL = true; // Public should be false
             bool DEV_CANTELEPORT = true; // Public should be false
-            bool DEV_CANMOVE = true; // Public should be false
+            bool DEV_CANMOVE = false; // Public should be false
             bool DEV_DRAGENTIRE = true; // Public should be true
 
             string hovered = "";
