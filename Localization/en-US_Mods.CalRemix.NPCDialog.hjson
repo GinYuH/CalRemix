@@ -443,3 +443,22 @@ Henry: {
 		2: Get swinging! Get winning!
 	}
 }
+
+Coffargus: {
+	Dialogue: {
+		0: hhhhhhhhhhh
+		1:
+			'''
+			hhhhhhhhhhh
+			hhhhhhhhhhh
+			'''
+		2: !?
+		3: Spoon... scooped... deposited...
+		4: From, that way.
+	}
+
+	Repeat: {
+		0: Spoon, scooped, desposited...
+		1: That way.
+	}
+}

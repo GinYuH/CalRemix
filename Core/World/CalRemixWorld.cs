@@ -702,6 +702,13 @@ namespace CalRemix.Core.World
                 }
             }
             eaterTimer--;
+            if (postGenUpdate && Main.dayTime && NPC.downedBoss3 && !NPC.AnyNPCs(NPCType<Coffargus>()) && !RemixDowned.downedCarcinogen)
+            {
+                int num41 = NPC.NewNPC(NPC.GetSource_TownSpawn(), Main.dungeonX * 16 + 8, Main.dungeonY * 16, NPCType<Coffargus>());
+                Main.npc[num41].homeless = false;
+                Main.npc[num41].homeTileX = Main.dungeonX;
+                Main.npc[num41].homeTileY = Main.dungeonY;
+            }
         }
 
         public static void ExcavatorSummon()

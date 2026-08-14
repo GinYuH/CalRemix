@@ -250,6 +250,10 @@ namespace CalRemix.UI
             RegisterNPC(new(ModContent.NPCType<Henry>(),
             ["Dialogue", "Repeat"],
             new Color(155, 171, 117), new Color(194, 255, 67)));
+
+            RegisterNPC(new(ModContent.NPCType<Coffargus>(),
+            ["Dialogue", "Repeat"],
+            new Color(206, 237, 157), new Color(33, 38, 25)));
         }
 
         public static NPCDialogueSet RegisterNPC(NPCDialogueSet set)
