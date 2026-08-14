@@ -467,7 +467,7 @@ namespace CalRemix
                 {
                     if (type == TileID.ShadowOrbs)
                     {
-                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 10, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
+                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 20, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
 
                         CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
                         CalRemixWorld.generatedGrime = true;

@@ -1266,6 +1266,7 @@ namespace CalRemix
             {
                 shop.Add(new NPCShop.Entry(ItemType<LesserStealthPotion>()));
                 shop.Add(new NPCShop.Entry(ItemType<WoodBag>()));
+                shop.Add(new NPCShop.Entry(ItemID.Book));
             }
             if (shop.NpcType == NPCType<Bandit>())
             {
