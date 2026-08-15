@@ -61,11 +61,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
 
         public override void OnEnd(string key)
         {
-            Main.LocalPlayer.Remix().wapUnlocked = true;
-            SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact);
-            for (int i = 0; i < 10; i++)
+            if (!Main.LocalPlayer.Remix().wapUnlocked)
             {
-                GeneralParticleHandler.SpawnParticle(new SparkleParticle(Main.LocalPlayer.Center, Main.rand.NextVector2CircularEdge(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(3, 5), Color.Cyan, Color.DarkCyan, Main.rand.NextFloat(0.3f, 0.8f), 30));
+                Main.LocalPlayer.Remix().wapUnlocked = true;
+                SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact);
+                for (int i = 0; i < 10; i++)
+                {
+                    GeneralParticleHandler.SpawnParticle(new SparkleParticle(Main.LocalPlayer.Center, Main.rand.NextVector2CircularEdge(10, 10).SafeNormalize(Vector2.UnitY) * Main.rand.NextFloat(3, 5), Color.Cyan, Color.DarkCyan, Main.rand.NextFloat(0.3f, 0.8f), 30));
+                }
             }
         }
 
