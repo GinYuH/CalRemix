@@ -60,20 +60,17 @@ namespace CalRemix.Content.NPCs.Minibosses
             AIType = -1;
             NPC.width = 176;
             NPC.height = 176;
-            NPC.lifeMax = Main.hardMode ? 30000 : 5000;
+            NPC.lifeMax = Main.hardMode ? 8000 : 1400;
             NPC.defense = Main.hardMode ? 40 : 15;
-            NPC.damage = Main.hardMode ? 120 : 70;
-            if (CalamityWorld.death)
-                NPC.damage = Main.hardMode ? 316 : 168;
-            else if (CalamityWorld.revenge)
-                NPC.damage = Main.hardMode ? 288 : 184;
-            NPC.DR_NERD(0.35f);
+            NPC.damage = Main.hardMode ? 110 : 60;
+            NPC.DR_NERD(0.15f);
             NPC.knockBackResist = 0f;
             NPC.value = Main.hardMode ? Item.buyPrice(gold: 20) : Item.buyPrice(gold: 5);
             NPC.lavaImmune = true;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.Calamity().VulnerableToHeat = false;
+            NPC.Calamity().VulnerableToWater = true;
             NPC.rarity = 4;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<BrimstoneCragsBiome>().Type };
         }
@@ -394,14 +391,13 @@ namespace CalRemix.Content.NPCs.Minibosses
         }
         private static int GetDamage()
         {
-
-            int damage = 80 / 2;
-            if (CalamityWorld.death)
-                damage = 200 / 4;
-            else if (CalamityWorld.revenge)
-                damage = 160 / 4;
-            else if (Main.expertMode)
-                damage = 120 / 4;
+            int damage = 30;
+            if (Main.expertMode)
+                damage = 20;
+            if (Main.hardMode)
+            {
+                return (int)(damage * 1.5f);
+            }
             return damage;
         }
         private static int GetDarts()
