@@ -72,6 +72,10 @@ namespace CalRemix.Core.World
             {
                 return false;
             }
+            if (origin.X < (int)(Main.maxTilesX * 0.1) || origin.X > (int)(Main.maxTilesX * 0.9))
+            {
+                return false;
+            }
             return !GenBase._tiles[origin.X, origin.Y].HasTile;
         }
 
