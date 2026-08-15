@@ -234,6 +234,40 @@ TheCalamity: {
 Ogslime: {
 	DisplayName: Ogslime
 	Census.SpawnCondition: Kill a Wandering Eye while wearing Titan Heart armor
+	Phrase1: is a
+	Phrase2: brings
+	Phrase3: an aspect of
+	Phrase4: surrounded
+	Phrase5: run up against
+	Phrase6: fighting
+	Phrase7: weakened
+	Phrase8: by
+	Phrase9: above
+	Phrase10: on top of
+	Phrase11: punctuated by
+	Phrase12: opened
+	Phrase13: beyond
+	Phrase14: abstracted
+	Phrase15: team up on
+	Phrase16: join
+	Phrase17: conglomerate
+	Phrase18: fuses
+	Phrase19: usurp the
+	Phrase20: ultimately
+	Phrase21: reward:
+	Phrase22: versus
+	Phrase23: lives happily ever after with
+	Phrase24: the parent of
+	Phrase25: stuck in
+	Phrase26: villainizes
+	Phrase27: victimizes
+	Phrase28: written by
+	Phrase29: slammed
+	Phrase30: punches
+	Phrase31: or
+	Phrase32: their
+	Phrase33: scared by
+	And: and
 }
 
 EvilAnimatronic.DisplayName: Evil Animatronic
