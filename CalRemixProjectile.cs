@@ -31,6 +31,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
@@ -606,6 +607,25 @@ namespace CalRemix
         {
             if (hyperCharged)
                 target.AddBuff(BuffID.Frozen, 50);
+        }
+
+        public override bool CanHitPlayer(Projectile projectile, Player target)
+        {
+            if (projectile.type == ProjectileType<DestroyerCursedLaser>())
+            {
+                SoundEngine.PlaySound(BetterSoundID.ItemManaCrystal, target.Center);
+                target.Heal(projectile.damage);
+                projectile.active = false;
+                return false;
+            }
+            if (projectile.type == ProjectileType<DestroyerElectricLaser>())
+            {
+                if (target.velocity.Length() < 1)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
