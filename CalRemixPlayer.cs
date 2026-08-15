@@ -715,21 +715,24 @@ namespace CalRemix
                 }
             }
 
-            if (GetInstance<AcroToggle>().CurrentState == 0)
+            if (wapUnlocked)
             {
-                if (Main.LocalPlayer.miscEquips[4] != null && Main.LocalPlayer.miscEquips[4].type > ItemID.None)
+                if (GetInstance<AcroToggle>().CurrentState == 0)
                 {
-                    if (Player.TryGetModPlayer(out WulfrumPackPlayer mp))
+                    if (Main.LocalPlayer.miscEquips[4] != null && Main.LocalPlayer.miscEquips[4].type > ItemID.None)
                     {
-                        mp.WulfrumPackEquipped = true;
-                        mp.PackItem = Main.LocalPlayer.miscEquips[4];
-                        Main.LocalPlayer.maxFallSpeed *= 1.25f;
+                        if (Player.TryGetModPlayer(out WulfrumPackPlayer mp))
+                        {
+                            mp.WulfrumPackEquipped = true;
+                            mp.PackItem = Main.LocalPlayer.miscEquips[4];
+                            Main.LocalPlayer.maxFallSpeed *= 1.25f;
+                        }
                     }
-                }
-                else
-                {
-                    Main.LocalPlayer.miscEquips[4].SetDefaults(ItemID.GrapplingHook);
-                    Main.LocalPlayer.miscEquips[4].value = 0;
+                    else
+                    {
+                        Main.LocalPlayer.miscEquips[4].SetDefaults(ItemID.GrapplingHook);
+                        Main.LocalPlayer.miscEquips[4].value = 0;
+                    }
                 }
             }
         }
