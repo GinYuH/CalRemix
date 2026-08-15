@@ -69,7 +69,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
             NPC.height = 88;
             NPC.defense = 15;
             NPC.DR_NERD(0.3f);
-            NPC.LifeMaxNERB(30000, 36000, 300000);
+            NPC.LifeMaxNERB(20000, 28000, 300000);
             double HPBoost = CalamityServerConfig.Instance.BossHealthBoost * 0.01;
             NPC.lifeMax += (int)(NPC.lifeMax * HPBoost);
             NPC.aiStyle = -1;
