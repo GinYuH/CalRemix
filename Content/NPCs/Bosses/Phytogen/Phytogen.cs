@@ -252,7 +252,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                         // Enrage if you attack her fronds
                         foreach (NPC n in Main.npc)
                         {
-                            if (n.active && n.ai[0] == NPC.whoAmI && n.life > 0 && n.life / n.lifeMax < 0.9f && n.type == ModContent.NPCType<PineappleFrond>())
+                            if (n.active && n.ai[0] == NPC.whoAmI && n.life > 0 && n.life / (float)n.lifeMax < 0.9f && n.type == ModContent.NPCType<PineappleFrond>())
                             {
                                 NPC.ai[1] = 0;
                                 NPC.ai[2] = 0;
