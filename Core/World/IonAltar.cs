@@ -18,55 +18,42 @@ namespace CalRemix.Core.World
             bool shouldBreak = false;
             int xMin = dungeonRight ? (int)(Main.maxTilesX * 0.66f) : 50;
             int xMax = dungeonRight ? (Main.maxTilesX - 50) : (int)(Main.maxTilesX * 0.33f);
-            for (int z = 0; z < 2222; z++)
+            for (int z = 0; z < 5000; z++)
             {
                 if (shouldBreak)
-                {
                     break;
-                }
-                for (int i = xMin; i < xMax; i++)
+                int x = WorldGen.genRand.Next(xMin, xMax);
+                for (int i = 30; i < (int)(Main.maxTilesY * 0.5f); i++)
                 {
-                    if (shouldBreak)
+                    Tile t = CalamityUtils.ParanoidTileRetrieval(x, i);
+                    if (t.HasTile)
                     {
-                        break;
-                    }
-                    for (int j = 0; j < Main.maxTilesY / 2; j++)
-                    {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                        Tile te = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
-                        if (shouldBreak)
+                        if (t.TileType == ModContent.TileType<SulphurousSand>())
                         {
-                            break;
-                        }
-                        if (t != null)
-                        {
-                            if (t.TileType == ModContent.TileType<SulphurousSand>())
+                            // check for tiles above, this is ignored if we are on attempt 50
+                            for (int l = 2; l < 22; l++)
                             {
-                                if (Main.rand.NextBool(128))
+                                Tile above = CalamityUtils.ParanoidTileRetrieval(x, i - l);
+                                if (WorldGen.SolidOrSlopedTile(above) && z < 300)
+                                    break;
+                                bool liquidCheck = above.LiquidAmount <= 0;
+                                // If there truly are no dry blocks, increasingly add more wet room
+                                if (z > 100)
                                 {
-                                    // check for tiles above, this is ignored if we are on attempt 50
-                                    for (int l = 2; l < 22; l++)
-                                    {
-                                        Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - l);
-                                        if (WorldGen.SolidOrSlopedTile(above) && z < 50)
-                                            break;
-
-                                        bool liquidCheck = above.LiquidAmount <= 0;
-                                        // If there truly are no dry blocks, increasingly add more wet room
-                                        if (z > 100)
-                                        {
-                                            liquidCheck = above.LiquidAmount <= z * 5;
-                                        }
-                                        bool _ = false;
-                                        SchematicManager.PlaceSchematic<Action<Chest>>("Ion Altar", new Point(i, j), SchematicAnchor.CenterLeft, ref _);
-                                        Vector2 schematicSize = new Vector2(RemixSchematics.TileMaps["Ion Altar"].GetLength(0), RemixSchematics.TileMaps["Ion Altar"].GetLength(1));
-                                        CalamityUtils.AddProtectedStructure(new Rectangle(i, j, (int)schematicSize.X, (int)schematicSize.Y), 4);
-                                        shouldBreak = true;
-                                        if (shouldBreak)
-                                            break;
-                                    }
+                                    liquidCheck = above.LiquidAmount <= z * 5;
                                 }
+                                bool _ = false;
+                                SchematicManager.PlaceSchematic<Action<Chest>>("Ion Altar", new Point(x, i), SchematicAnchor.CenterLeft, ref _);
+                                Vector2 schematicSize = new Vector2(RemixSchematics.TileMaps["Ion Altar"].GetLength(0), RemixSchematics.TileMaps["Ion Altar"].GetLength(1));
+                                CalamityUtils.AddProtectedStructure(new Rectangle(x, i, (int)schematicSize.X, (int)schematicSize.Y), 4);
+                                shouldBreak = true;
+                                if (shouldBreak)
+                                    break;
                             }
+                        }
+                        else
+                        {
+                            continue;
                         }
                     }
                 }
