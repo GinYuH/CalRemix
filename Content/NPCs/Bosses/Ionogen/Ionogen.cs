@@ -240,7 +240,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                         RNGLightning(100);
                         break;
                     }
-                // Spawn lightning in random directions while moving towards the player and succing them in occasionally
+                // Spawn lightning in random directions while moving towards the player
                 case (int)PhaseType.Magnet:
                     {
                         int startSucc = 60; // When to start succing
@@ -256,7 +256,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                         // Pull the player in 
                         if (NPC.ai[1] > startSucc)
                         {
-                            if (NPC.ai[2] % succRate == 0)
+                            if (Main.getGoodWorld && NPC.ai[2] % succRate == 0)
                             {
                                 Vector2 pDirToIo = Target.DirectionTo(NPC.Center);
                                 Target.velocity += pDirToIo * succStrength;
