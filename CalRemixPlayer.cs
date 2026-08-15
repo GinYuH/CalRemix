@@ -502,13 +502,6 @@ namespace CalRemix
 					Player.GetModPlayer<CalRemixPlayer>().eclipseaura = 300;
 				}
 			}
-			if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
-            {
-                if (!Player.HasCooldown(EclipseAuraCooldown.ID) && Player.GetModPlayer<CalRemixPlayer>().eclipseaura <= -1)
-                {
-                    Player.GetModPlayer<CalRemixPlayer>().eclipseaura = 300;
-                }
-            }
             if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
             {
                 if (!Player.HasCooldown(BaroclawCooldown.ID))
