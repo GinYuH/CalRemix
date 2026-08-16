@@ -38,6 +38,12 @@ namespace CalRemix.Content.Items.SummonItems
             }
             if (RemixDowned.downedDraedon && player.Distance(SealedSubworldData.tentPos) < 1000)
             {
+                int draetype = ModContent.NPCType<DreadonFriendly>();
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (n.type == draetype && n.active && n.ai[1] != 0)
+                        return false;
+                }
                 return true;
             }
             return false;
