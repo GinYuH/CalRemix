@@ -5879,7 +5879,7 @@ ParadiseBlade: {
 }
 
 ShadesBane: {
-	DisplayName: Shades Bane
+	DisplayName: Shade's Bane
 	Tooltip:
 		'''
 		Increases maximum health by 100 while held
