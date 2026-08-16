@@ -18,7 +18,7 @@ namespace CalRemix.Content.Items.SummonItems
             Item.useAnimation = 30;
             Item.useTime = 45;
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.consumable = false;
+            Item.consumable = true;
         }
 
         public override bool? UseItem(Player player)
