@@ -129,7 +129,7 @@ namespace CalRemix.Content.NPCs
                     }
                 }
             }
-            else if (asbestosLocation != Vector2.Zero && Timer % 120 == 0 && !CalamityPlayer.areThereAnyDamnBosses)
+            else if (asbestosLocation != Vector2.Zero && Timer % 120 == 0 && !CalamityPlayer.areThereAnyDamnBosses && State == 1)
             {
                 Vector2 pos = NPC.Bottom + new Vector2(40, -40);
                 int iterAmt = 500;

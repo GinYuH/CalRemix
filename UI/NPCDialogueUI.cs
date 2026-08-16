@@ -105,6 +105,14 @@ namespace CalRemix.UI
             else
             {
                 ResetDialogue();
+                foreach (NPC n in Main.ActiveNPCs)
+                {
+                    if (n.ModNPC is DialogueNPC dp)
+                    {
+                        if (dp.CanBeTalkedTo)
+                            DrawDialogueIcon(spriteBatch, n);
+                    }
+                }
             }
         }
 
@@ -187,6 +195,13 @@ namespace CalRemix.UI
         public static bool HasReadDialogue(Player p, int index, string key)
         {
             return HasReadDialogue(p, Main.npc[index].ModNPC.Name + "." + key);
+        }
+
+        public static void DrawDialogueIcon(SpriteBatch spriteBatch, NPC n)
+        {
+            Texture2D icon = ModContent.Request<Texture2D>("CalRemix/UI/Prompt").Value;
+            Vector2 offset = n.Top - Main.screenPosition + Vector2.UnitY * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 3) * 5;
+            spriteBatch.Draw(icon, offset - Vector2.UnitY * 26, null, Color.White, 0f, new Vector2(icon.Width / 2, icon.Height), new Vector2(1 + 0.05f * MathF.Cos(Main.GlobalTimeWrappedHourly * 3), 1 + 0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly * 3)), SpriteEffects.None, 0);
         }
     }
 

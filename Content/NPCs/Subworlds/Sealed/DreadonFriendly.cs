@@ -65,7 +65,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             SpawnModBiomes = new int[] { ModContent.GetInstance<SealedUndergroundBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
         }
 
-        public override bool CanBeTalkedTo => State == 0;
+        public override bool CanBeTalkedTo => State == 0 && !IsFlying;
 
         public override void AI()
         {
