@@ -59,8 +59,6 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
             }
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.InSulphur() && spawnInfo.Water ? 0.4f : 0f;
-
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
