@@ -1,4 +1,5 @@
-﻿using CalamityMod.NPCs.Cryogen;
+﻿using CalamityMod;
+using CalamityMod.NPCs.Cryogen;
 using CalamityMod.Sounds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -80,6 +81,8 @@ namespace CalRemix.UI.Title
 
         public static List<MenuItem> MenuItems { get; internal set; } = new List<MenuItem>();
         public static List<MenuGore> MenuGores { get; internal set; } = new List<MenuGore>();
+        public static MenuItem SelectedItem = null;
+        public static Vector2 MouseOld = Vector2.Zero;
         public override bool PreDrawLogo(SpriteBatch spriteBatch, ref Vector2 logoDrawCenter, ref float logoRotation, ref float logoScale, ref Color drawColor)
         {
             // Floating Items
@@ -123,7 +126,26 @@ namespace CalRemix.UI.Title
                         }
                     }
                 }
+                if (SelectedItem != null)
+                if (MenuItems[k] == SelectedItem)
+                {
+                    SelectedItem.center = Main.MouseScreen;
+                }
+                if (SelectedItem == null && Utils.CenteredRectangle(MenuItems[k].center, MenuItems[k].texture.Size() * scale).Intersects(Utils.CenteredRectangle(Main.MouseScreen, Vector2.One * 10)))
+                {
+                    if (Main.mouseLeft)
+                    {
+                        SelectedItem = MenuItems[k];
+                        SoundEngine.PlaySound(CommonCalamitySounds.ExoHitSound with { PitchVariance = 1, Pitch = 1 });
+                    }
+                }
                 spriteBatch.Draw(MenuItems[k].texture, MenuItems[k].center, null, Color.White, MenuItems[k].rotation, MenuItems[k].texture.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+            }
+            if (SelectedItem != null &&!Main.mouseLeft)
+            {
+                SelectedItem.velocity = CalamityUtils.ClampMagnitude((Main.MouseScreen - MouseOld) / 2, 0.5f, 999);
+                MenuItems.Add(SelectedItem);
+                SelectedItem = null;
             }
 
             // Logo and Final Stuff
@@ -186,6 +208,8 @@ namespace CalRemix.UI.Title
                 spriteBatch.Draw(Logo.Value, new Vector2((float)Main.screenWidth / 2f, 111f) + menuOffset, null, Color.White, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
                 spriteBatch.Draw(Glow, new Vector2((float)Main.screenWidth / 2f, 111f) + menuOffset, null, Main.DiscoColor, 0, Logo.Value.Size() * 0.5f, 0.45f, SpriteEffects.None, 0f);
             }
+
+            MouseOld = Main.MouseScreen;
 
             return false;
         }
