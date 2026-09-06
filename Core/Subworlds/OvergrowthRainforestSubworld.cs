@@ -5,6 +5,8 @@ using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Schematics;
+using CalamityMod.Tiles.FurnitureShellstone;
+using CalamityMod.Tiles.SunkenSea;
 using CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.NPCs;
@@ -12,6 +14,7 @@ using CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest;
 using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
+using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple;
 using CalRemix.Content.Walls;
 using CalRemix.Core.Biomes.Subworlds;
 using CalRemix.Core.World;
@@ -226,6 +229,11 @@ namespace CalRemix.Core.Subworlds
 
             int rookWidth = (topWidth - buffer) / WorldGen.genRand.Next(5, 8);
 
+            ushort brickType = (ushort)ModContent.TileType<PhylliteBrickPlaced>();
+            ushort idolType = (ushort)ModContent.TileType<IdolizedPhylliteBrickPlaced>();
+            ushort chasedType = (ushort)ModContent.TileType<EtchedPhylliteBrickPlaced>();
+            ushort wallType = (ushort)ModContent.WallType<PhylliteBrickWallPlaced>();
+
             // Main chunk
             for (int i = buffer; i < topWidth; i++)
             {
@@ -233,7 +241,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if ((i % rookWidth < (rookWidth / 2) && j < templeTop + shaveTop) || j >= templeTop + shaveTop)
                     {
-                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.StoneSlab);
+                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(brickType);
                     }
                 }
             }
@@ -242,7 +250,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = bottomStart; j < Main.maxTilesY - buffer; j++)
                 {
-                    CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.StoneSlab);
+                    CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(brickType);
                 }
             }
             // Slope in 
@@ -256,7 +264,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (CalRemixHelper.WithinTriangle(t1, t2, t3, new Point(i, j)))
                     {
-                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(TileID.StoneSlab);
+                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(brickType);
                     }
                 }
             }
@@ -477,6 +485,54 @@ namespace CalRemix.Core.Subworlds
                     iters++;
                 }
             }
+
+            ushort shell = (ushort)ModContent.TileType<ShellstoneSlab>();
+            for (int i = buffer; i < topWidth; i++)
+            {
+                for (int j = templeTop + shaveTop; j < Main.maxTilesY; j++)
+                {
+                    Tile t = Framing.GetTileSafely(i, j);
+                    if (t.TileType == brickType)
+                    {
+                        bool sbe = false;
+                        if (WorldGen.genRand.NextBool(50))
+                        {
+                            t.TileType = idolType;
+                        }
+                        else if (WorldGen.genRand.NextBool(200))
+                        {
+                            for (int k = i - 1; k < i + 3; k++)
+                            {
+                                if (sbe)
+                                    break;
+                                for (int l = j - 1; l < j + 3; l++)
+                                {
+                                    if (Framing.GetTileSafely(k, l).TileType == chasedType || Framing.GetTileSafely(k, l).TileType != brickType)
+                                    {
+                                        sbe = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!sbe)
+                            {
+                                for (int k = i; k < i + 2; k++)
+                                {
+                                    for (int l = j; l < j + 2; l++)
+                                    {
+                                        Framing.GetTileSafely(k, l).TileType = chasedType;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    t.WallType = wallType;
+                    if (t.TileType == shell)
+                    {
+                        t.TileType = brickType;
+                    }
+                }
+            }
         }
 
         public static Point RoomWorldAnchor(Point coords)
@@ -515,6 +571,8 @@ namespace CalRemix.Core.Subworlds
             int tunnelWidth = radius;
             Point mid = one;
             Point oldMid = two;
+            ushort brickType = (ushort)ModContent.TileType<PhylliteBrickPlaced>();
+            ushort wallType = (ushort)ModContent.WallType<PhylliteBrickWallPlaced>();
 
             Point quad1 = new Point(mid.X - tunnelWidth, mid.Y - tunnelWidth);
             Point quad2 = new Point(mid.X + tunnelWidth, mid.Y + tunnelWidth);
@@ -527,12 +585,12 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (CalRemixHelper.WithinQuad(quad1, quad3, quad4, quad2, new Point(k, l)))
                     {
-                        if (CalamityUtils.ParanoidTileRetrieval(k, l).TileType == TileID.StoneSlab)
+                        if (CalamityUtils.ParanoidTileRetrieval(k, l).TileType == brickType)
                         {
                             bool hadTile = CalamityUtils.ParanoidTileRetrieval(k, l).HasTile;
                             CalamityUtils.ParanoidTileRetrieval(k, l).ClearTile();
                             if (hadTile)
-                                CalamityUtils.ParanoidTileRetrieval(k, l).WallType = WallID.StoneSlab;
+                                CalamityUtils.ParanoidTileRetrieval(k, l).WallType = wallType;
                         }
                     }
                 }

@@ -6695,3 +6695,33 @@ WulfrumSwarmerBanner: {
 	DisplayName: Wulfrum Swarmer Banner
 	Tooltip: ""
 }
+
+EtchedPhylliteBrick: {
+	DisplayName: Etched Phyllite Brick
+	Tooltip: ""
+}
+
+IdolizedPhylliteBrick: {
+	DisplayName: Idolized Phyllite Brick
+	Tooltip: ""
+}
+
+Phyllite: {
+	DisplayName: Phyllite
+	Tooltip: ""
+}
+
+PhylliteBrick: {
+	DisplayName: Phyllite Brick
+	Tooltip: ""
+}
+
+PhylliteBrickWall: {
+	DisplayName: Phyllite Brick Wall
+	Tooltip: ""
+}
+
+PhylliteWall: {
+	DisplayName: Phyllite Wall
+	Tooltip: ""
+}
