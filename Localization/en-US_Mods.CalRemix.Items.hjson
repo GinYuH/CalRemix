@@ -6725,3 +6725,8 @@ PhylliteWall: {
 	DisplayName: Phyllite Wall
 	Tooltip: ""
 }
+
+LargePhylliteBrick: {
+	DisplayName: Phyllite Slab
+	Tooltip: ""
+}

@@ -28,6 +28,13 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest.Templ
             Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<EtchedPhylliteBrickPlaced>());
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<PhylliteBrick>(), 2)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
     }
     public class PhylliteBrick : ModItem
     {
@@ -42,6 +49,10 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest.Templ
                 .AddIngredient(ModContent.ItemType<PhylliteBrickWall>(), 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<Phyllite>())
+                .AddTile(TileID.Furnaces)
+                .Register();
         }
     }
     public class IdolizedPhylliteBrick : ModItem
@@ -51,6 +62,28 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest.Templ
             Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<IdolizedPhylliteBrickPlaced>());
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<PhylliteBrick>(), 2)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
+    }
+    public class LargePhylliteBrick : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 100;
+        }
+        public override void SetDefaults() => Item.DefaultToPlaceableTile(ModContent.TileType<LargePhylliteBrickPlaced>());
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<PhylliteBrick>(), 2)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
     }
     public class PhylliteBrickWall : ModItem
     {

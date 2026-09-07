@@ -46,9 +46,12 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
             AddMapEntry(new Color(103, 80, 67));
             HitSound = SoundID.Tink;
             DustType = DustID.Clay;
-            Main.tileMerge[Type][ModContent.TileType<IdolizedPhylliteBrickPlaced>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<PhyllitePlaced>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<EtchedPhylliteBrickPlaced>()] = true;
+            Main.tileBrick[Type] = true;
+            //Main.tileMerge[Type][ModContent.TileType<IdolizedPhylliteBrickPlaced>()] = true;
+            //Main.tileMerge[Type][ModContent.TileType<PhyllitePlaced>()] = true;
+            //Main.tileMerge[Type][ModContent.TileType<EtchedPhylliteBrickPlaced>()] = true;
+            //Main.tileMerge[Type][ModContent.TileType<LargePhylliteBrickPlaced>()] = true;
+            TileID.Sets.BlockMergesWithMergeAllBlock[Type] = true;
         }
     }
     public class EtchedPhylliteBrickPlaced : ModTile
@@ -85,6 +88,30 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
             {
                 frameXOffset = 234;
             }
+        }
+    }
+    public class LargePhylliteBrickPlaced : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = false;
+            Main.tileBlockLight[Type] = true;
+            AddMapEntry(new Color(103, 80, 67));
+            HitSound = SoundID.Tink;
+            DustType = DustID.Clay;
+            AnimationFrameHeight = 90;
+            Main.tileBrick[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<PhyllitePlaced>()] = true;
+            Main.tileMerge[Type][ModContent.TileType<PhylliteBrickPlaced>()] = true;
+        }
+
+        public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
+        {
+            int xPos = i % 4;
+            int yPos = j % 4;
+            frameXOffset = xPos * 234;
+            frameYOffset = yPos * AnimationFrameHeight;
         }
     }
 }

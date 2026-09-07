@@ -229,9 +229,10 @@ namespace CalRemix.Core.Subworlds
 
             int rookWidth = (topWidth - buffer) / WorldGen.genRand.Next(5, 8);
 
-            ushort brickType = (ushort)ModContent.TileType<PhylliteBrickPlaced>();
+            ushort brickType = (ushort)ModContent.TileType<LargePhylliteBrickPlaced>();
             ushort idolType = (ushort)ModContent.TileType<IdolizedPhylliteBrickPlaced>();
             ushort chasedType = (ushort)ModContent.TileType<EtchedPhylliteBrickPlaced>();
+            ushort bigType = (ushort)ModContent.TileType<PhylliteBrickPlaced>();
             ushort wallType = (ushort)ModContent.WallType<PhylliteBrickWallPlaced>();
 
             // Main chunk
@@ -492,6 +493,25 @@ namespace CalRemix.Core.Subworlds
                 for (int j = templeTop + shaveTop; j < Main.maxTilesY; j++)
                 {
                     Tile t = Framing.GetTileSafely(i, j);
+                    if (!t.HasTile || !t.IsTileSolid())
+                    {
+                        Tile above = Framing.GetTileSafely(i, j - 1);
+                        Tile below = Framing.GetTileSafely(i, j + 1);
+                        /*if (above.HasTile && (above.TileType == brickType || above.TileType == idolType))
+                        {
+                            for (int k = j - 1; k > j - 4; k--)
+                            {
+                                Framing.GetTileSafely(i, k).TileType = bigType;
+                            }
+                        }*/
+                        if (below.HasTile && (below.TileType == brickType || below.TileType == idolType || below.TileType == shell))
+                        {
+                            for (int k = j + 1; k < j + 4; k++)
+                            {
+                                Framing.GetTileSafely(i, k).TileType = bigType;
+                            }
+                        }
+                    }
                     if (t.TileType == brickType)
                     {
                         bool sbe = false;
@@ -507,7 +527,8 @@ namespace CalRemix.Core.Subworlds
                                     break;
                                 for (int l = j - 1; l < j + 3; l++)
                                 {
-                                    if (Framing.GetTileSafely(k, l).TileType == chasedType || Framing.GetTileSafely(k, l).TileType != brickType)
+                                    Tile te = Framing.GetTileSafely(k, l);
+                                    if (te.TileType == chasedType || te.TileType != brickType)
                                     {
                                         sbe = true;
                                         break;
@@ -525,6 +546,35 @@ namespace CalRemix.Core.Subworlds
                                 }
                             }
                         }
+                        /*else if (WorldGen.genRand.NextBool(300))
+                        {
+                            int globSizeX = WorldGen.genRand.Next(4, 9);
+                            int globSizeY = globSizeX / 2;
+                            for (int k = i - 1; k < i + globSizeX + 2; k++)
+                            {
+                                if (sbe)
+                                    break;
+                                for (int l = j - 1; l < j + globSizeY + 2; l++)
+                                {
+                                    Tile te = Framing.GetTileSafely(k, l);
+                                    if (te.TileType == chasedType || te.TileType == bigType || te.TileType != brickType)
+                                    {
+                                        sbe = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!sbe)
+                            {
+                                for (int k = i; k < i + globSizeX; k++)
+                                {
+                                    for (int l = j; l < j + globSizeY; l++)
+                                    {
+                                        Framing.GetTileSafely(k, l).TileType = bigType;
+                                    }
+                                }
+                            }
+                        }*/
                     }
                     t.WallType = wallType;
                     if (t.TileType == shell)
@@ -571,7 +621,7 @@ namespace CalRemix.Core.Subworlds
             int tunnelWidth = radius;
             Point mid = one;
             Point oldMid = two;
-            ushort brickType = (ushort)ModContent.TileType<PhylliteBrickPlaced>();
+            ushort brickType = (ushort)ModContent.TileType<LargePhylliteBrickPlaced>();
             ushort wallType = (ushort)ModContent.WallType<PhylliteBrickWallPlaced>();
 
             Point quad1 = new Point(mid.X - tunnelWidth, mid.Y - tunnelWidth);
