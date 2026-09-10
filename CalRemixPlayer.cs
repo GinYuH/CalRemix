@@ -171,6 +171,7 @@ namespace CalRemix
         public bool ZoneLife;
         public bool ZonePlague;
         public bool ZonePlagueDesert;
+        public TempleRoom currentTempleRoom = null;
 
         // Accessories
         public bool brimPortal;

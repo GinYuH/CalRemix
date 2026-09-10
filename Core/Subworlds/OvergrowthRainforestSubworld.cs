@@ -154,6 +154,31 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
             }
+
+            foreach (Player p in Main.ActivePlayers)
+            {
+                bool foundAnythin = false;
+                foreach (TempleRoom r in OvergrowthRainforestGeneration.Rooms)
+                {
+                    if (r == null)
+                        continue;
+                    Point worldPos = OvergrowthRainforestGeneration.RoomWorldPosition(r.position);
+                    Rectangle roomRect = new Rectangle(worldPos.X * 16, worldPos.Y * 16, 90 * 16, 40 * 16);
+                    if (p.getRect().Intersects(roomRect))
+                    {
+                        if (p.Remix().currentTempleRoom != r)
+                        {
+                            p.Remix().currentTempleRoom = r;
+                        }
+                        foundAnythin = true;
+                        break;
+                    }
+                }
+                if (!foundAnythin)
+                {
+                    p.Remix().currentTempleRoom = null;
+                }
+            }
         }
 
         public override void DrawMenu(GameTime gameTime)
@@ -1622,5 +1647,7 @@ namespace CalRemix.Core.Subworlds
         public bool Down = false;
 
         public Point position;
+
+        public bool completed = false;
     }
 }
