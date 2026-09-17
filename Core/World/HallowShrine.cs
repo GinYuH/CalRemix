@@ -7,6 +7,7 @@ using System;
 using CalRemix.Content.Items.Placeables;
 using Terraria.ID;
 using CalamityMod.Items.Potions;
+using Terraria.DataStructures;
 
 namespace CalRemix.Core.World
 {
@@ -40,8 +41,10 @@ namespace CalRemix.Core.World
                             Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                             if (t != null && t.HasTile && (t.TileType == TileID.Pearlstone || t.TileType == TileID.HallowSandstone || t.TileType == TileID.HallowedIce))
                             {
-                                bool _ = false;
-                                SchematicManager.PlaceSchematic("Hallow Shrine", new Point(i, j), SchematicAnchor.CenterLeft, ref _, new Action<Chest, int, bool>(FillHallowChest));
+                                Point16 pointo = StructureHelper.API.Generator.GetStructureDimensions("CalRemix/Core/Schematics/Hallow Shrine", CalRemix.instance);
+                                StructureHelper.API.Generator.GenerateStructure("CalRemix/Core/Schematics/Hallow Shrine", new Point16(i - (pointo.X / 2), j + (pointo.Y / 2)), CalRemix.instance);
+                                //bool _ = false;
+                                //SchematicManager.PlaceSchematic("Hallow Shrine", new Point(i, j), SchematicAnchor.CenterLeft, ref _, new Action<Chest, int, bool>(FillHallowChest));
                                 shouldbreak = true;
                                 break;
                             }
