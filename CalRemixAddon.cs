@@ -74,6 +74,7 @@ namespace CalRemix
         internal static Mod Remnants;
         internal static Mod Spirit;
         internal static Mod Thorium;
+        internal static Mod FargoMutant;
 
         internal static Type calvalFanny = null;
         internal static Type calvalFannyBox = null;
@@ -121,6 +122,7 @@ namespace CalRemix
             ModLoader.TryGetMod("Remnants", out Remnants);
             ModLoader.TryGetMod("SpiritMod", out Spirit);
             ModLoader.TryGetMod("ThoriumMod", out Thorium);
+            ModLoader.TryGetMod("Fargowiltas", out FargoMutant);
         }
         public override void Unload()
         {
@@ -139,6 +141,7 @@ namespace CalRemix
             Remnants = null;
             Spirit = null;
             Thorium = null;
+            FargoMutant = null;
         }
         public override void PostSetupContent()
         {

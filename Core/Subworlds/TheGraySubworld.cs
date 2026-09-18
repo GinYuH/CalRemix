@@ -1,6 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Schematics;
 using CalamityMod.Tiles.FurnitureAshen;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Materials;
@@ -149,8 +148,7 @@ namespace CalRemix.Core.Subworlds
                     spawnX++;
                 if (spawnY % 2 != 0)
                     spawnY--;
-                bool _ = false;
-                SchematicManager.PlaceSchematic("Gray Temple", new Point(spawnX, spawnY), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillGrayChest));
+                CalRemixHelper.PlaceSchematic("Gray Temple", new Point(spawnX, spawnY), CalRemixHelper.SchematicAnchorType.BottomMiddle);
             }
 
             int brick = ModContent.TileType<BlueMazeBrickPlaced>();

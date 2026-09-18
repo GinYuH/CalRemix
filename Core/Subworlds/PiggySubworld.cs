@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Schematics;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System;
@@ -167,10 +166,9 @@ namespace CalRemix.Core.Subworlds
             int house1 = (int)(Main.maxTilesX * 0.33f);
             int house2 = (int)(Main.maxTilesX * 0.5f);
             int house3 = (int)(Main.maxTilesX * 0.65f);
-            bool _ = false;
-            SchematicManager.PlaceSchematic<Action<Chest>>("Piggy Straw", new Point(house1, ground + 1), SchematicAnchor.BottomCenter, ref _);
-            SchematicManager.PlaceSchematic<Action<Chest>>("Piggy Stick", new Point(house2, ground + 1), SchematicAnchor.BottomCenter, ref _);
-            SchematicManager.PlaceSchematic<Action<Chest>>("Piggy Brick", new Point(house3, ground + 1), SchematicAnchor.BottomCenter, ref _);
+            CalRemixHelper.PlaceSchematic("Piggy Straw", new Point(house1, ground + 1), CalRemixHelper.SchematicAnchorType.BottomMiddle);
+            CalRemixHelper.PlaceSchematic("Piggy Stick", new Point(house1, ground + 1), CalRemixHelper.SchematicAnchorType.BottomMiddle);
+            CalRemixHelper.PlaceSchematic("Piggy Brick", new Point(house1, ground + 1), CalRemixHelper.SchematicAnchorType.BottomMiddle);
         }
     }
 }

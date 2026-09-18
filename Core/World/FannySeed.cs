@@ -1,6 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Schematics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.DataStructures;

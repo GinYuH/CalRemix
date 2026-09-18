@@ -13,8 +13,6 @@ using Terraria.Graphics.Effects;
 using CalamityMod;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using Terraria.Utilities;
-using CalamityMod.Schematics;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
 using CalRemix.Content.NPCs.Subworlds.Sealed;

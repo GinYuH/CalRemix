@@ -131,7 +131,7 @@ namespace CalRemix.UI.Title
                 {
                     SelectedItem.center = Main.MouseScreen;
                 }
-                if (SelectedItem == null && Utils.CenteredRectangle(MenuItems[k].center, MenuItems[k].texture.Size() * scale).Intersects(Utils.CenteredRectangle(Main.MouseScreen, Vector2.One * 10)))
+                if (Main.hasFocus && SelectedItem == null && Utils.CenteredRectangle(MenuItems[k].center, MenuItems[k].texture.Size() * scale).Intersects(Utils.CenteredRectangle(Main.MouseScreen, Vector2.One * 10)))
                 {
                     if (Main.mouseLeft)
                     {

@@ -47,10 +47,9 @@ namespace CalRemix.Core.World
                                 continue;
                             }
 
-                            bool _ = false;
-                            SchematicManager.PlaceSchematic<Action<Chest>>("Origen Workshop", new Point(i, j), SchematicAnchor.CenterLeft, ref _);
-                            Vector2 schematicSize = new Vector2(RemixSchematics.TileMaps["Origen Workshop"].GetLength(0), RemixSchematics.TileMaps["Origen Workshop"].GetLength(1));
-                            CalamityUtils.AddProtectedStructure(new Rectangle(i, j, (int)schematicSize.X, (int)schematicSize.Y), 4);
+                            CalRemixHelper.PlaceSchematic("Origen Workshop", new Point(i, j), CalRemixHelper.SchematicAnchorType.Center);
+                            Point schematicSize = CalRemixHelper.SchematicSize("Origen Workshop");
+                            CalRemixHelper.AddProtectedStructure(new Rectangle(i, j, schematicSize.X, schematicSize.Y), 4);
                             generated = true;
                         }
                     }

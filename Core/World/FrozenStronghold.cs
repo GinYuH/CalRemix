@@ -44,9 +44,9 @@ namespace CalRemix.Core.World
                 }
                 int i = WorldGen.genRand.Next(GenVars.snowOriginLeft - 200, GenVars.snowOriginRight + 200);
                 int j = WorldGen.genRand.Next(snowTop, snowBottom);
-                
+
                 // At attempt 199 dont bother with rng and just generate the stronghold immediately
-                Vector2 schematicSize = new Vector2(RemixSchematics.TileMaps["Frozen Stronghold"].GetLength(0), RemixSchematics.TileMaps["Frozen Stronghold"].GetLength(1));
+                Vector2 schematicSize = CalRemixHelper.SchematicSize("Frozen Stronghold").ToVector2();
                 //This generates insanely early so there shoooooouldnt be any structures to avoid...?
                 //if (GenVars.structures.CanPlace(new Rectangle(i, j, (int)schematicSize.X, (int)schematicSize.Y)))
                 {
@@ -88,10 +88,9 @@ namespace CalRemix.Core.World
                         // Place the structure if the check passes
                         if (canGen)
                         {
-                            bool _ = false;
                             int newj = j + 30;
-                            SchematicManager.PlaceSchematic("Frozen Stronghold", new Point(i, newj), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillStrongholdChest));
-                            CalamityUtils.AddProtectedStructure(new Rectangle(i - (int)(schematicSize.X / 2), newj - (int)schematicSize.Y, (int)schematicSize.X, (int)schematicSize.Y), 4);
+                            CalRemixHelper.PlaceSchematic("Frozen Stronghold", new Point(i, newj), CalRemixHelper.SchematicAnchorType.BottomMiddle);
+                            CalRemixHelper.AddProtectedStructure(new Rectangle(i - (int)(schematicSize.X / 2), newj - (int)schematicSize.Y, (int)schematicSize.X, (int)schematicSize.Y), 4);
                             shouldbreak = true;
                             break;
                         }

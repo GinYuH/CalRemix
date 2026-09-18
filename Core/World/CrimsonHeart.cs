@@ -66,10 +66,9 @@ namespace CalRemix.Core.World
                             {
                                 if (WorldGen.InWorld(x, y, 1))
                                 {
-                                    bool _ = false;
-                                    SchematicManager.PlaceSchematic<Action<Chest>>("Crimson Heart", new Point(x, y), SchematicAnchor.CenterLeft, ref _);
-                                    Vector2 schematicSize = new Vector2(RemixSchematics.TileMaps["Crimson Heart"].GetLength(0), RemixSchematics.TileMaps["Crimson Heart"].GetLength(1));
-                                    CalamityUtils.AddProtectedStructure(new Rectangle(x, y, (int)schematicSize.X, (int)schematicSize.Y), 4);
+                                    CalRemixHelper.PlaceSchematic("Crimson Heart", new Point(x, y), CalRemixHelper.SchematicAnchorType.Center);
+                                    Point schematicSize = CalRemixHelper.SchematicSize("Crimson Heart");
+                                    CalRemixHelper.AddProtectedStructure(new Rectangle(x, y, schematicSize.X, schematicSize.Y), 4);
                                     gennedMeld = true;
                                     break;
                                 }

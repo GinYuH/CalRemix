@@ -8,7 +8,6 @@ using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.DesertScourge;
 using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.Schematics;
 using CalamityMod.Tiles;
 using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.Tiles.FurnitureStratus;
@@ -574,32 +573,7 @@ namespace CalRemix.Core.World
         {
             if (Main.mouseLeft)
             {
-               // Main.NewText("Tile: " + Framing.GetTileSafely(Main.MouseWorld.ToTileCoordinates()).TileType + " Wall: " + Framing.GetTileSafely(Main.MouseWorld.ToTileCoordinates()).WallType);
-                /*if (Main.LocalPlayer.selectedItem == 0 && Main.mouseLeftRelease)
-                {
-                    bool _ = false;
-                    SchematicManager.PlaceSchematic<Action<Chest>>("Frozen Stronghold", Main.MouseWorld.ToTileCoordinates(), SchematicAnchor.Center, ref _);
-                }
-                else if (Main.LocalPlayer.selectedItem == 2)
-                {
-                    Point center = Main.MouseWorld.ToTileCoordinates();
-                    int size = 10;
-                    for (int i = center.X - size; i < center.X + size; i++)
-                    {
-                        for (int j = center.Y - size; j < center.Y + size; j++)
-                        {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                            if (!t.HasTile && t.WallType == 0)
-                            {
-                                t.ResetToType(699);
-                            }
-                            if (t.WallType == 0)
-                            {
-                                t.WallType = 348;
-                            }
-                        }
-                    }
-                //}*/
+                //PlaceSchematic("Hallow Shrine", Main.MouseWorld.ToTileCoordinates(), (SchematicAnchorType)Main.LocalPlayer.selectedItem);
             }
             if (worldLoadCounter < 180)
                 worldLoadCounter++;

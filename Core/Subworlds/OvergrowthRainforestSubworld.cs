@@ -4,7 +4,6 @@ using CalamityMod.Enums;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Schematics;
 using CalamityMod.Tiles.FurnitureShellstone;
 using CalamityMod.Tiles.SunkenSea;
 using CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest;
@@ -487,7 +486,7 @@ namespace CalRemix.Core.Subworlds
                             )
                         {
                             bool _ = false;
-                            SchematicManager.PlaceSchematic<Action<Chest>>(schematic.schematic, roomPos, SchematicAnchor.TopLeft, ref _);
+                            //SchematicManager.PlaceSchematic<Action<Chest>>(schematic.schematic, roomPos, SchematicAnchor.TopLeft, ref _);
                             break;
                         }
                         attempts++;
@@ -1595,8 +1594,7 @@ namespace CalRemix.Core.Subworlds
                     Tile above = CalamityUtils.ParanoidTileRetrieval(x, j - 1);
                     if (t.HasTile && t.TileType == leafBlock && !above.HasTile)
                     {
-                        bool _ = false;
-                        SchematicManager.PlaceSchematic("Tree House", new Point(x, j + 5), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillTreeHouseChest));
+                        CalRemixHelper.PlaceSchematic("Tree House", new Point(x, j + 5), CalRemixHelper.SchematicAnchorType.BottomMiddle);
                         hausPlaced = true;
                         break;
                     }

@@ -22,6 +22,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.WorldBuilding;
 
 namespace CalRemix
 {
@@ -2074,6 +2075,80 @@ namespace CalRemix
         public static bool GetHighlight(this Tile t)
         {
             return t.Get<TileWallBrightnessInvisibilityData>().IsTileFullbright;
+        }
+
+        public static void PlaceSchematic(string name, Point position, SchematicAnchorType anchorType = SchematicAnchorType.TopLeft)
+        {
+            if (anchorType != SchematicAnchorType.TopLeft)
+            {
+                Point16 dimensions = StructureHelper.API.Generator.GetStructureDimensions("Core/Schematics/" + name, CalRemix.instance);
+                switch (anchorType)
+                {
+                    case SchematicAnchorType.Center:
+                        position.X -= dimensions.X / 2;
+                        position.Y -= dimensions.Y / 2;
+                        break;
+                    case SchematicAnchorType.TopMiddle:
+                        position.X -= dimensions.X / 2;
+                        break;
+                    case SchematicAnchorType.TopRight:
+                        position.X -= dimensions.X;
+                        break;
+                    case SchematicAnchorType.MiddleLeft:
+                        position.Y -= dimensions.Y / 2;
+                        break;
+                    case SchematicAnchorType.MiddleRight:
+                        position.X -= dimensions.X;
+                        position.Y -= dimensions.Y / 2;
+                        break;
+                    case SchematicAnchorType.BottomLeft:
+                        position.Y -= dimensions.Y;
+                        break;
+                    case SchematicAnchorType.BottomMiddle:
+                        position.X -= dimensions.X / 2;
+                        position.Y -= dimensions.Y;
+                        break;
+                    case SchematicAnchorType.BottomRight:
+                        position.X -= dimensions.X;
+                        position.Y -= dimensions.Y;
+                        break;
+                }
+            }
+            Point16 realPos = new Point16(position.X, position.Y);
+            StructureHelper.API.Generator.GenerateStructure("Core/Schematics/" + name, realPos, CalRemix.instance);
+        }
+
+
+        public static void AddProtectedStructure(Rectangle area, int padding = 0)
+        {
+            GenVars.structures.AddProtectedStructure(area, padding);
+            Rectangle rectangle = new Rectangle(area.X, area.Y, area.Width, area.Height);
+            rectangle.Inflate(padding, padding);
+            Mod fargos = CalRemixAddon.FargoMutant;
+            rectangle.X *= 16;
+            rectangle.Y *= 16;
+            rectangle.Width *= 16;
+            rectangle.Height *= 16;
+            fargos?.Call("AddIndestructibleRectangle", rectangle);
+        }
+
+        public static Point SchematicSize(string name)
+        {
+            Point16 dimensions = StructureHelper.API.Generator.GetStructureDimensions("Core/Schematics/" + name, CalRemix.instance);
+            return new Point(dimensions.X, dimensions.Y);
+        }
+
+        public enum SchematicAnchorType
+        {
+            Center = 0,
+            TopLeft = 1,
+            TopMiddle = 2,
+            TopRight = 3,
+            MiddleLeft = 4,
+            MiddleRight = 5,
+            BottomLeft = 6,
+            BottomMiddle = 7,
+            BottomRight = 8
         }
     }
 

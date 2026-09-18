@@ -1,33 +1,34 @@
-﻿using System.Collections.Generic;
-using Terraria;
-using SubworldLibrary;
-using Terraria.WorldBuilding;
-using Terraria.IO;
-using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using Terraria.ID;
-using CalRemix.Core.World;
-using Terraria.Graphics.Effects;
-using CalamityMod;
-using CalRemix.Core.Biomes;
+﻿using CalamityMod;
+using CalamityMod.World;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
+using CalRemix.Content.Items.Potions;
+using CalRemix.Content.Items.SummonItems;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.NPCs;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using Terraria.Utilities;
-using CalamityMod.Schematics;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
-using Terraria.ModLoader.IO;
+using CalRemix.Core.Biomes;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
+using SubworldLibrary;
+using System;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.DataStructures;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalRemix.Content.Items.SummonItems;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Potions;
-using CalamityMod.World;
+using Terraria.GameContent;
+using Terraria.GameContent.Biomes.CaveHouse;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
+using Terraria.IO;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using Terraria.Utilities;
+using Terraria.WorldBuilding;
 using static CalRemix.CalRemixHelper;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.Items.Weapons;
+using static FastNoiseLite;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -618,7 +619,7 @@ namespace CalRemix.Core.Subworlds
                             if (spikeCount == 6)
                             {
                                 bool _ = false;
-                                SchematicManager.PlaceSchematic<Action<Chest>>("Bright Shrine", new Point(i, j + 4), SchematicAnchor.BottomCenter, ref _);
+                                PlaceSchematic("Bright Shrine", new Point(i, j + 4), SchematicAnchorType.BottomMiddle);
                                 SealedSubworldData.brightShrinePos = new Vector2(i, j - 4) * 16;
                                 cd = 30;
                             }
@@ -690,16 +691,14 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (WorldGen.genRand.NextBool(10) && turnipCooldown <= 0)
                         {
-                            bool _ = false;
                             string chem = turnipsPlaced == 5 ? "Sealed Citadel" : "Turnip";
                             int offset = turnipsPlaced == 5 ? 3 : 2;
                             if (chem == "Turnip")
-                                SchematicManager.PlaceSchematic<Action<Chest>>(chem, new Point(i, j + offset), SchematicAnchor.BottomCenter, ref _);
+                                PlaceSchematic(chem, new Point(i, j + offset), SchematicAnchorType.BottomMiddle);
                             else
                             {
-                                SchematicManager.PlaceSchematic(chem, new Point(i, j + offset), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillCitadelChest));
-
-                                SealedSubworldData.citadelPos = new Vector2(i, j - RemixSchematics.TileMaps[chem].GetLength(1)) * 16;
+                                PlaceSchematic(chem, new Point(i, j + offset), SchematicAnchorType.BottomMiddle);
+                                SealedSubworldData.citadelPos = new Vector2(i, j - StructureHelper.API.Generator.GetStructureDimensions("Core/Schematics/Sealed Citadel", CalRemix.instance).Y) * 16;
                             }
                             turnipCooldown = 30;
                             turnipsPlaced++;
@@ -708,25 +707,6 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
                 turnipCooldown--;
-            }
-        }
-
-
-        public static void FillCitadelChest(Chest c, int Type, bool place)
-        {
-            List<(int, int, int)> lootfr = new()
-            {
-                { (ModContent.ItemType<ExtremelyStrangePuppet>(), 1, 1) },
-                { (ModContent.ItemType<StrangePuppet>(), 3, 9) },
-                { (ModContent.ItemType<FrozenSealedTear>(), 1, 4) },
-                { (ModContent.ItemType<SealToken>(), 6, 14) },
-            };
-            (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
-            for (int i = 0; i < loot.Length; i++)
-            {
-                Item item = c.item[i];
-                item.SetDefaults(loot[i].Item1);
-                item.stack = WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
             }
         }
 
@@ -769,8 +749,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (WorldGen.genRand.NextBool(10) && volcanoCooldown <= 0)
                         {
-                            bool _ = false;
-                            SchematicManager.PlaceSchematic<Action<Chest>>("Plumestone", new Point(i, j + 4), SchematicAnchor.BottomCenter, ref _);
+                            PlaceSchematic("Plumestone", new Point(i, j + 4), SchematicAnchorType.BottomMiddle);
                             volcanoCooldown = 20;
                             volcanosPlaced++;
                             if (volcanosPlaced == 5)
@@ -797,7 +776,6 @@ namespace CalRemix.Core.Subworlds
             WeightedRandom<string> houseTypes = new();
             string prefix = "Sealed House ";
             houseTypes.Add(prefix + "Small", 0.65f);
-            houseTypes.Add(prefix + "SmallBaby", 0.65f);
             houseTypes.Add(prefix + "Large", 0.6f);
             houseTypes.Add(prefix + "Library", 0.4f);
             houseTypes.Add(prefix + "Church", 0.2f);
@@ -820,17 +798,9 @@ namespace CalRemix.Core.Subworlds
                                 houseType = prefix + "Church";
                                 generatedChurch = true;
                             }
-                            bool _ = false;
-                            if (houseType.Contains("Church"))
-                                SchematicManager.PlaceSchematic(houseType, new Point(i, j + 1), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillChurchChest));
-                            else if (houseType.Contains("Library"))
-                                SchematicManager.PlaceSchematic(houseType, new Point(i, j + 1), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillLibraryChest));
-                            else if (houseType.Contains("Large"))
-                                SchematicManager.PlaceSchematic(houseType, new Point(i, j + 1), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillLargeChest));
-                            else
-                                SchematicManager.PlaceSchematic<Action<Chest>>(houseType, new Point(i, j + 1), SchematicAnchor.BottomCenter, ref _);
+                            PlaceSchematic(houseType, new Point(i, j + 1), SchematicAnchorType.BottomMiddle);
 
-                            hausCooldown = (int)(RemixSchematics.TileMaps[prefix + "Library"].GetLength(0));
+                            hausCooldown = StructureHelper.API.Generator.GetStructureDimensions("Core/Schematics/" + houseType, CalRemix.instance).X;
                             housesGenerated++;
                         }
                         else if (WorldGen.genRand.NextBool(25))
@@ -849,88 +819,11 @@ namespace CalRemix.Core.Subworlds
             }
 
             Point chamberPoint = new Point(villageStart + 100, caveTile);
-            bool _2 = false;
-            SchematicManager.PlaceSchematic("Sealed Chamber", chamberPoint, SchematicAnchor.Center, ref _2, new Action<Chest, int, bool>(FillCultChest));
-            Vector2 strucSize = new((int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(1)), (int)(RemixSchematics.TileMaps["Sealed Chamber"].GetLength(0)));
+            PlaceSchematic("Sealed Chamber", chamberPoint, SchematicAnchorType.Center);
+            Point16 siz = StructureHelper.API.Generator.GetStructureDimensions("Core/Schematics/Sealed Chamber", CalRemix.instance);
+            Vector2 strucSize = siz.ToVector2();
             SealedSubworldData.tentPos = new Vector2(chamberPoint.X - 38, chamberPoint.Y + 32) * 16;
             SealedSubworldData.cultPos = new Vector2(chamberPoint.X + 85, chamberPoint.Y + 15) * 16;
-        }
-
-        public static void FillChurchChest(Chest c, int Type, bool place)
-        {
-            List<(int, int, int)> lootfr = new()
-            {
-                { (ModContent.ItemType<NullOrb>(), 1, 1) },
-                { (ModContent.ItemType<BabySealedPuppet>(), 10, 15) },
-                { (ModContent.ItemType<RotPearl>(), 3, 6) },
-                { (ModContent.ItemType<SealToken>(), 3, 7) },
-                { (ModContent.ItemType<MysteriousGraySlab>(), 5, 11) },
-            };
-            (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
-            for (int i = 0; i < loot.Length; i++)
-            {
-                Item item = c.item[i];
-                item.SetDefaults(loot[i].Item1);
-                item.stack = WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
-            }
-        }
-        public static void FillLibraryChest(Chest c, int Type, bool place)
-        {
-            List<(int, int, int)> lootfr = new()
-            {
-                { (ModContent.ItemType<SealToken>(), 7, 18) },
-                { (ModContent.ItemType<SealedFruit>(), 4, 10) },
-                { (ModContent.ItemType<Coke>(), 1, 5) },
-                { (ModContent.ItemType<CarnelianRose>(), 1, 3) },
-                { (ModContent.ItemType<CarnelianiteOre>(), 1, 2) },
-                { (ModContent.ItemType<CarnelianWood>(), 20, 40) },
-            };
-            (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
-            for (int i = 0; i < loot.Length; i++)
-            {
-                Item item = c.item[i];
-                item.SetDefaults(loot[i].Item1);
-                item.stack = WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
-            }
-        }
-        public static void FillLargeChest(Chest c, int Type, bool place)
-        {
-            List<(int, int, int)> lootfr = new()
-            {
-                { (ModContent.ItemType<SealloyBar>(), 1, 4) },
-                { (ModContent.ItemType<SealedFruit>(), 4, 8) },
-                { (ModContent.ItemType<SealToken>(), 2, 6) },
-                { (ModContent.ItemType<Forknife>(), 1, 1) },
-                { (ModContent.ItemType<MysteriousGraySlab>(), 3, 7) },
-            };
-            (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
-            for (int i = 0; i < loot.Length; i++)
-            {
-                Item item = c.item[i];
-                item.SetDefaults(loot[i].Item1);
-                int stak = (loot[i].Item2 == loot[i].Item3) ? loot[i].Item2 : WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
-                item.stack = stak;
-            }
-        }
-        public static void FillCultChest(Chest c, int Type, bool place)
-        {
-            List<(int, int, int)> lootfr = new()
-            {
-                { (ModContent.ItemType<Veinroot>(), 20, 40) },
-                { (ModContent.ItemType<NauseatingPowder>(), 5, 10) },
-                { (ModContent.ItemType<RotPearl>(), 7, 14) },
-                { (ModContent.ItemType<RottedTendril>(), 3, 9) },
-                { (ModContent.ItemType<SealToken>(), 10, 15) },
-                { (ModContent.ItemType<FrozenSealedTear>(), 3, 8) },
-                { (ModContent.ItemType<AbnormalEye>(), 1, 1) },
-            };
-            (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
-            for (int i = 0; i < loot.Length; i++)
-            {
-                Item item = c.item[i];
-                item.SetDefaults(loot[i].Item1);
-                item.stack = WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
-            }
         }
 
         public static void GenerateCarnelian()
@@ -1104,29 +997,13 @@ namespace CalRemix.Core.Subworlds
                             {
                                 placedShrine = true;
 
-                                bool _ = false;
-                                SchematicManager.PlaceSchematic("Monorian Shrine", new Point(i, j + 1), SchematicAnchor.BottomCenter, ref _, new Action<Chest, int, bool>(FillMonoriumChest));
+                                PlaceSchematic("Monorian Shrine", new Point(i, j + 1), SchematicAnchorType.BottomMiddle);
                                 SealedSubworldData.monorianShrinePos = new Vector2(i, j - 4) * 16;
                             }
                             treesPlaecd++;
                         }
                     }
                 }
-            }
-        }
-
-        public static void FillMonoriumChest(Chest c, int Type, bool place)
-        {
-            List<(int, int, int)> lootfr = new()
-            {
-                { (ModContent.ItemType<MonoriumOre>(), 7, 12) },
-            };
-            (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
-            for (int i = 0; i < loot.Length; i++)
-            {
-                Item item = c.item[i];
-                item.SetDefaults(loot[i].Item1);
-                item.stack = WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
             }
         }
 

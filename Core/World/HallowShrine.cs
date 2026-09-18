@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.Schematics;
 using CalamityMod;
 using System;
 using CalRemix.Content.Items.Placeables;
@@ -41,10 +40,7 @@ namespace CalRemix.Core.World
                             Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                             if (t != null && t.HasTile && (t.TileType == TileID.Pearlstone || t.TileType == TileID.HallowSandstone || t.TileType == TileID.HallowedIce))
                             {
-                                Point16 pointo = StructureHelper.API.Generator.GetStructureDimensions("CalRemix/Core/Schematics/Hallow Shrine", CalRemix.instance);
-                                StructureHelper.API.Generator.GenerateStructure("CalRemix/Core/Schematics/Hallow Shrine", new Point16(i - (pointo.X / 2), j + (pointo.Y / 2)), CalRemix.instance);
-                                //bool _ = false;
-                                //SchematicManager.PlaceSchematic("Hallow Shrine", new Point(i, j), SchematicAnchor.CenterLeft, ref _, new Action<Chest, int, bool>(FillHallowChest));
+                                CalRemixHelper.PlaceSchematic("Hallow Shrine", new Point(i, j), CalRemixHelper.SchematicAnchorType.BottomLeft);
                                 shouldbreak = true;
                                 break;
                             }
@@ -52,25 +48,6 @@ namespace CalRemix.Core.World
                     }
                 }
             }
-        }
-
-        public static void FillHallowChest(Chest c, int Type, bool place)
-        {
-            c.item[0].SetDefaults(ModContent.ItemType<HallowEffigy>());
-            c.item[1].SetDefaults(ItemID.SoulofLight);
-            c.item[1].stack = Main.rand.Next(24, 29);
-            c.item[2].SetDefaults(ItemID.HallowedTorch);
-            c.item[2].stack = Main.rand.Next(100, 111);
-            c.item[3].SetDefaults(ItemID.PlatinumCoin);
-            c.item[3].stack = Main.rand.Next(1, 5);
-            c.item[4].SetDefaults(ItemID.GreaterHealingPotion);
-            c.item[4].stack = Main.rand.Next(10, 13);
-            c.item[5].SetDefaults(ItemID.ShinePotion);
-            c.item[5].stack = Main.rand.Next(10, 13);
-            c.item[6].SetDefaults(ModContent.ItemType<SoaringPotion>());
-            c.item[6].stack = Main.rand.Next(10, 13);
-            c.item[7].SetDefaults(ModContent.ItemType<PhotosynthesisPotion>());
-            c.item[7].stack = Main.rand.Next(10, 13);
         }
     }
 }
