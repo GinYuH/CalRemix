@@ -2202,7 +2202,7 @@ namespace CalRemix
                         ScreenHelperManager.fannyTimesFrozen++;
                         Anomaly109UI.fannyFreezeTime = 0;
                     }
-                    CalRemixWorld.ShrineTimer = 3000;
+                    CalRemixWorld.ShrineTimer = 1500;
                 }
             }
 

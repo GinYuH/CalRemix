@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.Schematics;
 using CalamityMod;
 using System;
 using CalRemix.Content.Items.Placeables;
@@ -36,60 +35,28 @@ namespace CalRemix.Core.World
         };
         public static void GenerateAstralShrine()
         {
-            if (!Main.hardMode)
-                return;
-            bool shouldbreak = false;
-            for (int att = 0; att < 200; att++)
+            int atts = 0;
+            while (atts < 100000)
             {
-                if (shouldbreak)
+                int minX = 200;
+                int maxX = Main.maxTilesX - 200;
+                int minY = (int)Main.worldSurface - 30;
+                int maxY = Main.maxTilesY - 100;
+
+                Point p = new Point(WorldGen.genRand.Next(minX, maxX), WorldGen.genRand.Next(minY, maxY));
+
+                Tile t = Framing.GetTileSafely(p);
+
+                if (t.HasTile && astrallist.Contains(t.TileType))
                 {
+                    CalRemixHelper.PlaceSchematic("Astral Shrine", new Point(p.X, p.Y));
                     break;
                 }
-                for (int i = 200; i < Main.maxTilesX - 200; i++)
+                else
                 {
-                    if (shouldbreak)
-                    {
-                        break;
-                    }
-                    for (int j = (int)(Main.worldSurface); j < Main.maxTilesY - 100; j++)
-                    {
-                        if (shouldbreak)
-                        {
-                            break;
-                        }
-                        if (Main.rand.NextBool(2222))
-                        {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                            if (t != null && t.HasTile && astrallist.Contains(t.TileType))
-                            {
-                                bool _ = false;
-                                SchematicManager.PlaceSchematic("Hallow Shrine", new Point(i, j), SchematicAnchor.CenterLeft, ref _, new Action<Chest, int, bool>(FillAstralChest));
-                                shouldbreak = true;
-                                break;
-                            }
-                        }
-                    }
+                    atts++;
                 }
             }
-        }
-
-        public static void FillAstralChest(Chest c, int Type, bool place)
-        {
-            c.item[0].SetDefaults(ModContent.ItemType<AstralEffigy>());
-            c.item[1].SetDefaults(ModContent.ItemType<StarblightSoot>());
-            c.item[1].stack = Main.rand.Next(24, 29);
-            c.item[2].SetDefaults(ModContent.ItemType<CalamityMod.Items.Placeables.Furniture.AstralTorch>());
-            c.item[2].stack = Main.rand.Next(100, 111);
-            c.item[3].SetDefaults(ItemID.PlatinumCoin);
-            c.item[3].stack = Main.rand.Next(1, 5);
-            c.item[4].SetDefaults(ItemID.GreaterHealingPotion);
-            c.item[4].stack = Main.rand.Next(10, 13);
-            c.item[5].SetDefaults(ItemID.MagicPowerPotion);
-            c.item[5].stack = Main.rand.Next(10, 13);
-            c.item[6].SetDefaults(ModContent.ItemType<GravityNormalizerPotion>());
-            c.item[6].stack = Main.rand.Next(10, 13);
-            c.item[7].SetDefaults(ModContent.ItemType<AstralInjection>());
-            c.item[7].stack = Main.rand.Next(10, 13);
         }
     }
 }

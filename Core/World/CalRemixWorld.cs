@@ -782,8 +782,8 @@ namespace CalRemix.Core.World
                 {
                     if (ShrineTimer == 0)
                     {
-                        ThreadPool.QueueUserWorkItem(_ => HallowShrine.GenerateHallowShrine(), this);
-                        ThreadPool.QueueUserWorkItem(_ => AstralShrine.GenerateAstralShrine(), this);
+                        HallowShrine.GenerateHallowShrine();
+                        AstralShrine.GenerateAstralShrine();
 
                         Color messageColor = Color.Magenta;
                         CalamityUtils.BroadcastLocalizedText("Shrines appear within the newly spread infections!", messageColor);

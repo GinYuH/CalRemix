@@ -317,7 +317,7 @@ namespace CalRemix.Core.Subworlds
                 if (temp.Up || temp.Down || temp.Left || temp.Right)
                     roomTypes.Add(temp);
             }
-            foreach (var v in RemixSchematics.templeRoomTypes)
+            foreach (var v in TempleRoomManager.templeRoomTypes)
             {
                 roomLayouts.Add(v.Value);
             }
@@ -485,8 +485,7 @@ namespace CalRemix.Core.Subworlds
                             schematic.Right == queriedRoom.Right
                             )
                         {
-                            bool _ = false;
-                            //SchematicManager.PlaceSchematic<Action<Chest>>(schematic.schematic, roomPos, SchematicAnchor.TopLeft, ref _);
+                            CalRemixHelper.PlaceSchematic("Temple/" + schematic.schematic, roomPos);
                             break;
                         }
                         attempts++;
@@ -511,7 +510,6 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
-            ushort shell = (ushort)ModContent.TileType<ShellstoneSlab>();
             for (int i = buffer; i < topWidth; i++)
             {
                 for (int j = templeTop + shaveTop; j < Main.maxTilesY; j++)
@@ -528,7 +526,7 @@ namespace CalRemix.Core.Subworlds
                                 Framing.GetTileSafely(i, k).TileType = bigType;
                             }
                         }*/
-                        if (below.HasTile && (below.TileType == brickType || below.TileType == idolType || below.TileType == shell))
+                        if (below.HasTile && (below.TileType == brickType || below.TileType == idolType))
                         {
                             for (int k = j + 1; k < j + 4; k++)
                             {
@@ -601,10 +599,6 @@ namespace CalRemix.Core.Subworlds
                         }*/
                     }
                     t.WallType = wallType;
-                    if (t.TileType == shell)
-                    {
-                        t.TileType = brickType;
-                    }
                 }
             }
         }
@@ -1647,5 +1641,43 @@ namespace CalRemix.Core.Subworlds
         public Point position;
 
         public bool completed = false;
+    }
+
+    public class TempleRoomManager : ModSystem
+    {
+        public static Dictionary<string, TempleRoom> templeRoomTypes = new();
+        public static void AddTempleRoom(string key)
+        {
+            TempleRoom t = new();
+            t.schematic = key;
+            if (key.Contains('L'))
+                t.Left = true;
+            if (key.Contains('R'))
+                t.Right = true;
+            if (key.Contains('U'))
+                t.Up = true;
+            if (key.Contains('D'))
+                t.Down = true;
+            templeRoomTypes.Add(key, t);
+        }
+
+        public override void PostSetupContent()
+        {
+            AddTempleRoom("LU");
+            AddTempleRoom("RD");
+            AddTempleRoom("LD");
+            AddTempleRoom("LR");
+            AddTempleRoom("U");
+            AddTempleRoom("UR");
+            AddTempleRoom("LDR");
+            AddTempleRoom("LUDR");
+            AddTempleRoom("LUR");
+            AddTempleRoom("LUD");
+            AddTempleRoom("L");
+            AddTempleRoom("UDR");
+            AddTempleRoom("UD");
+            AddTempleRoom("R");
+            AddTempleRoom("D");
+        }
     }
 }

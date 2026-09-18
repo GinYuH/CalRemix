@@ -40,7 +40,7 @@ namespace CalRemix.Core.World
                             Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
                             if (t != null && t.HasTile && (t.TileType == TileID.Pearlstone || t.TileType == TileID.HallowSandstone || t.TileType == TileID.HallowedIce))
                             {
-                                CalRemixHelper.PlaceSchematic("Hallow Shrine", new Point(i, j), CalRemixHelper.SchematicAnchorType.BottomLeft);
+                                CalRemixHelper.PlaceSchematic("Hallow Shrine", new Point(i, j));
                                 shouldbreak = true;
                                 break;
                             }

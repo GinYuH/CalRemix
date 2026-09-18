@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.Schematics;
 using CalamityMod;
 using System;
 using CalRemix.Content.Items.Placeables;
