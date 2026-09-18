@@ -492,19 +492,19 @@ namespace CalRemix.Core.Subworlds
                     }
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i + 1, j))))
                     {
-                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i + 1, j)), 4);
+                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i + 1, j)), 5);
                     }
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i - 1, j))))
                     {
-                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i - 1, j)), 4);
+                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i - 1, j)), 5);
                     }
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i, j + 1))))
                     {
-                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i, j + 1)), 4);
+                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i, j + 1)), 5);
                     }
                     if (CompatibleRooms(queriedRoom, SafeRoom(new Point(i, j - 1))))
                     {
-                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i, j - 1)), 4);
+                        DigTempleTunnel(RoomWorldAnchor(new Point(i, j)), RoomWorldAnchor(new Point(i, j - 1)), 5);
                     }
                     iters++;
                 }
