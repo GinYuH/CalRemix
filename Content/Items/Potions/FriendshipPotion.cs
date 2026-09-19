@@ -26,7 +26,7 @@ namespace CalRemix.Content.Items.Potions
             Item.rare = ItemRarityID.Purple;
             Item.value = Item.buyPrice(gold: 1);
             Item.buffType = ModContent.BuffType<FriendshipBuff>();
-            Item.buffTime = CalamityUtils.SecondsToFrames(60);
+            Item.buffTime = CalRemixHelper.SecondsToFrames(60);
 
         }
 

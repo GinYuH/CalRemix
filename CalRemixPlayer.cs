@@ -503,7 +503,7 @@ namespace CalRemix
 					Player.GetModPlayer<CalRemixPlayer>().eclipseaura = 300;
 				}
 			}
-            if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalamityUtils.CountProjectiles(ProjectileType<Claw>()) <= 0)
+            if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalRemixHelper.CountProjectiles(ProjectileType<Claw>()) <= 0)
             {
                 if (!Player.HasCooldown(BaroclawCooldown.ID))
                 {
@@ -765,7 +765,7 @@ namespace CalRemix
             }
 
             if (ChampionRa && CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(BuffType<DroneCool>()) &&
-                !CalamityUtils.AnyProjectiles(ProjectileType<RajahDrone>()))
+                !CalRemixHelper.AnyProjectiles(ProjectileType<RajahDrone>()))
             {
                 Vector2 vector2;
                 vector2.X = Main.mouseX + Main.screenPosition.X;
@@ -1376,7 +1376,7 @@ namespace CalRemix
             if (eclipseaura == 0)
             {
                 int duration = tvo ? 30 : 20;
-                Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalamityUtils.SecondsToFrames(duration));
+                Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalRemixHelper.SecondsToFrames(duration));
             }
             #endregion
             if (halEffigy)
@@ -1586,7 +1586,7 @@ namespace CalRemix
             {
                 if (Player.wet || Main.raining)
                 {
-                    Player.AddBuff(BuffType<Springlocked>(), CalamityUtils.SecondsToFrames(60));
+                    Player.AddBuff(BuffType<Springlocked>(), CalRemixHelper.SecondsToFrames(60));
                 }
             }
 
@@ -1781,7 +1781,7 @@ namespace CalRemix
                 calamitizedHitCooldown = 0;
                 calamitizedCounter = 0;
             }
-            if (!CalamityUtils.AnyProjectiles(ProjectileType<Fridge>()))
+            if (!CalRemixHelper.AnyProjectiles(ProjectileType<Fridge>()))
             {
                 fridge = false;
             }
@@ -1957,7 +1957,7 @@ namespace CalRemix
         {
             if (salvageSuit && info.Damage >= 100)
             {
-                Player.AddBuff(BuffType<Springlocked>(), CalamityUtils.SecondsToFrames(60));
+                Player.AddBuff(BuffType<Springlocked>(), CalRemixHelper.SecondsToFrames(60));
             }
             if (sealedArmor)
             {
@@ -2415,7 +2415,7 @@ namespace CalRemix
                     Console.WriteLine(e);
                 }
                 if (npc is null)
-                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
+                    CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
                 else
                 {
                     string f = CalRemixHelper.LocalText("StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);

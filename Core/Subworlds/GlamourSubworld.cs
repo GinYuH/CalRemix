@@ -122,12 +122,12 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (t.WallType == bigWall)
                     {
                         if (i % 2 != 0)
                         {
-                            Tile left = CalamityUtils.ParanoidTileRetrieval(i - 1, j);
+                            Tile left = CalRemixHelper.ParanoidTileRetrieval(i - 1, j);
                             if (left.WallType == 0)
                             {
                                 left.WallType = bigWall;
@@ -135,7 +135,7 @@ namespace CalRemix.Core.Subworlds
                         }
                         else
                         {
-                            Tile right = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                            Tile right = CalRemixHelper.ParanoidTileRetrieval(i + 1, j);
                             if (right.WallType == 0)
                             {
                                 right.WallType = bigWall;
@@ -143,7 +143,7 @@ namespace CalRemix.Core.Subworlds
                         }
                         if (j % 2 != 0)
                         {
-                            Tile up = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                            Tile up = CalRemixHelper.ParanoidTileRetrieval(i, j - 1);
                             if (up.WallType == 0)
                             {
                                 up.WallType = bigWall;
@@ -151,7 +151,7 @@ namespace CalRemix.Core.Subworlds
                         }
                         else
                         {
-                            Tile down = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
+                            Tile down = CalRemixHelper.ParanoidTileRetrieval(i, j + 1);
                             if (down.WallType == 0)
                             {
                                 down.WallType = bigWall;
@@ -169,7 +169,7 @@ namespace CalRemix.Core.Subworlds
                     bool edge = false;
                     if (WorldGen.genRand.NextBool(22))
                         continue;
-                    if (CalamityUtils.ParanoidTileRetrieval(i, j).WallType != bigWall)
+                    if (CalRemixHelper.ParanoidTileRetrieval(i, j).WallType != bigWall)
                         continue;
 
                     for (int k = i - 1; k <= i + 1; k++)
@@ -178,7 +178,7 @@ namespace CalRemix.Core.Subworlds
                             break;
                         for (int l = j - 1; l <= j + 1; l++)
                         {
-                            if (CalamityUtils.ParanoidTileRetrieval(k, l).WallType == 0)
+                            if (CalRemixHelper.ParanoidTileRetrieval(k, l).WallType == 0)
                             {
                                 edge = true;
                                 break;
@@ -195,7 +195,7 @@ namespace CalRemix.Core.Subworlds
                         {
                             for (int l = diamondArea.Top; l < diamondArea.Bottom; l++)
                             {
-                                Tile targ = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                Tile targ = CalRemixHelper.ParanoidTileRetrieval(k, l);
                                 if (targ.WallType != 0)
                                     continue;
                                 if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(xDim, yDim), new Point(k, l)))
@@ -214,7 +214,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (CalRemixHelper.WithinElipse(i, j, island.Center.X, island.Center.Y, island.Width / 2, island.Height / 2))
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         if (t.HasTile)
                         {
                             t.TileType = (j == island.Top + 1 ? TileID.Grass : TileID.Dirt);

@@ -27,7 +27,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest
             Item.maxStack = 9999;
             Item.consumable = true;
             Item.buffType = ModContent.BuffType<WhisperingDeath>();
-            Item.buffTime = CalamityUtils.SecondsToFrames(60);
+            Item.buffTime = CalRemixHelper.SecondsToFrames(60);
             Item.width = 12;
             Item.height = 12;
         }
@@ -35,7 +35,7 @@ namespace CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest
         public override bool OnPickup(Player player)
         {
             if (player.ItemSpace(Item).CanTakeItem)
-            CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.BloodyTooth", Color.Crimson);
+            CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.BloodyTooth", Color.Crimson);
             return true;
         }
     }

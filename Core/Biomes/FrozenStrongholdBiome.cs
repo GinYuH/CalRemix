@@ -45,7 +45,7 @@ namespace CalRemix.Core.Biomes
             bool tileBelow = false;
             for (int j = pointo.Y - searchRange; j < pointo.Y + searchRange; j++)
             {
-                Tile t = CalamityUtils.ParanoidTileRetrieval(pointo.X, j);
+                Tile t = CalRemixHelper.ParanoidTileRetrieval(pointo.X, j);
                 if (t.TileType == Flake || t.TileType == Cryonic)
                 {
                     if (j < pointo.Y)

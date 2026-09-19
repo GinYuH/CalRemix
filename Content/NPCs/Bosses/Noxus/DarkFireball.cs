@@ -105,7 +105,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
 
             Color drawColor = Color.White;
             drawColor.A = (byte)(drawColor.A * alphaFactor);
-            CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], drawColor);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], drawColor);
             return false;
         }
     }

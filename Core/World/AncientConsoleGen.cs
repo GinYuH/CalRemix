@@ -29,7 +29,7 @@ namespace CalRemix.Core.World
                     break;
                 for (int j = Main.UnderworldLayer; j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (t.TileType == grass)
                     {
                         for (int k = i; k < i + 3; k++)

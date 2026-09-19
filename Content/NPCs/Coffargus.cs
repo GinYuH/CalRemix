@@ -100,7 +100,7 @@ namespace CalRemix.Content.NPCs
                             break;
                         for (int j = (int)NPC.Bottom.Y / 16; j < Main.UnderworldLayer; j += 20)
                         {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                             if (t.TileType == bestos)
                             {
                                 asbestosLocation = new Vector2(i * 16, j * 16);
@@ -118,7 +118,7 @@ namespace CalRemix.Content.NPCs
                             break;
                         for (int j = (int)NPC.Bottom.Y / 16; j < Main.UnderworldLayer; j += 20)
                         {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                             if (t.TileType == bestos && t.HasTile)
                             {
                                 asbestosLocation = new Vector2(i * 16, j * 16);

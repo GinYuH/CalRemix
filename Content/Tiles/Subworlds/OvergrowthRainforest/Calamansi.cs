@@ -238,7 +238,7 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
                     Segments[^1].position += segMvt;
                 }
                 Point pt = Segments[^1].position.ToTileCoordinates();
-                Tile t = CalamityUtils.ParanoidTileRetrieval(pt.X, pt.Y);
+                Tile t = CalRemixHelper.ParanoidTileRetrieval(pt.X, pt.Y);
                 if (t.IsTileSolid())
                     Segments[^1].position = Segments[^1].oldPosition;
             }

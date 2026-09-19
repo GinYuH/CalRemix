@@ -29,7 +29,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D tex = Projectile.ai[1] == 0 ? ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PathogenCell1").Value : ModContent.Request<Texture2D>("CalRemix/Content/Projectiles/Hostile/PathogenCell2").Value;
-            CalamityUtils.DrawAfterimagesCentered(Projectile, 0, lightColor, 3, tex);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, 0, lightColor, 3, tex);
             return false;
         }
         public override void OnKill(int timeLeft)

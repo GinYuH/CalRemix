@@ -123,7 +123,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
             int yharChance = 432000;
             if (Main.zenithWorld) yharChance /= 6;
 
-            bool anyYhars = CalamityUtils.CountProjectiles(ModContent.ProjectileType<JungleDragonYharon>()) > 0;
+            bool anyYhars = CalRemixHelper.CountProjectiles(ModContent.ProjectileType<JungleDragonYharon>()) > 0;
             /*if (Main.LocalPlayer.controlUseTile)
             {
                 yharChance = 1;
@@ -134,7 +134,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), (int)NPC.Center.X + 3000, NPC.Center.Y, -60, 0, ModContent.ProjectileType<JungleDragonYharon>(), 0, 0, Main.myPlayer);
-                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.YharonAwakens", Color.MediumPurple); 
+                    CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.YharonAwakens", Color.MediumPurple); 
                     SoundEngine.PlaySound(CalamityMod.NPCs.Yharon.Yharon.FireSound);
                 }
             }

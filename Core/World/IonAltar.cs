@@ -25,7 +25,7 @@ namespace CalRemix.Core.World
                 int x = WorldGen.genRand.Next(xMin, xMax);
                 for (int i = 30; i < (int)(Main.maxTilesY * 0.5f); i++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(x, i);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(x, i);
                     if (t.HasTile)
                     {
                         if (t.TileType == ModContent.TileType<SulphurousSand>())
@@ -33,7 +33,7 @@ namespace CalRemix.Core.World
                             // check for tiles above, this is ignored if we are on attempt 50
                             for (int l = 2; l < 22; l++)
                             {
-                                Tile above = CalamityUtils.ParanoidTileRetrieval(x, i - l);
+                                Tile above = CalRemixHelper.ParanoidTileRetrieval(x, i - l);
                                 if (WorldGen.SolidOrSlopedTile(above) && z < 300)
                                     break;
                                 bool liquidCheck = above.LiquidAmount <= 0;
@@ -70,7 +70,7 @@ namespace CalRemix.Core.World
                 }
                 for (int j = 0; j < Main.maxTilesY - 80; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
 
                     if (t.TileFrameX != 0 || t.TileFrameY != 0)
                         continue;

@@ -58,7 +58,7 @@ namespace CalRemix.Content.Items.Bags
         public override void RightClick(Player player)
         {
             Point p = player.Bottom.ToTileCoordinates();
-            Tile t = CalamityUtils.ParanoidTileRetrieval(p.X, p.Y);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(p.X, p.Y);
             if (!t.HasTile && t.LiquidAmount <= 0)
             {
                 t.LiquidType = LiquidID.Lava;

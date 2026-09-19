@@ -27,7 +27,7 @@ namespace CalRemix.Core.World
                             break;
                         if (Main.rand.NextBool(100))
                         {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                             if (!t.HasTile)
                                 continue;
                             if (t.TileType != TileID.SnowBlock)

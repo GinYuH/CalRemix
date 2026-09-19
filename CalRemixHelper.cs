@@ -17,6 +17,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
@@ -735,7 +736,7 @@ namespace CalRemix
         {
             for (int y = start; y < Main.maxTilesY; y++)
             {
-                Tile t = CalamityUtils.ParanoidTileRetrieval(i, y);
+                Tile t = CalRemixHelper.ParanoidTileRetrieval(i, y);
                 if (t.HasTile && t.IsTileSolid() && (tileType == -1 || t.TileType == tileType))
                 {
                     j = y;
@@ -743,7 +744,7 @@ namespace CalRemix
                 }
             }
             j = 0;
-            return CalamityUtils.ParanoidTileRetrieval(i, 0);
+            return CalRemixHelper.ParanoidTileRetrieval(i, 0);
         }
 
         //UGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
@@ -2150,6 +2151,268 @@ namespace CalRemix
             BottomMiddle = 7,
             BottomRight = 8
         }
+
+        #region CalamityUtils refugees
+        public static Tile ParanoidTileRetrieval(int x, int y)
+        {
+            if (!WorldGen.InWorld(x, y))
+            {
+                return default;
+            }
+
+            return Main.tile[x, y];
+        }
+
+        public static void DrawAfterimagesCentered(Projectile proj, int mode, Color lightColor, int typeOneIncrement = 1, Texture2D texture = null, bool drawCentered = true, bool shrink = false, int armorShaderToUse = 0)
+        {
+            if (texture == null)
+            {
+                texture = TextureAssets.Projectile[proj.type].Value;
+            }
+
+            int num = texture.Height / Main.projFrames[proj.type];
+            int y = num * proj.frame;
+            float scale = proj.scale;
+            float rotation = proj.rotation;
+            Rectangle rectangle = new Rectangle(0, y, texture.Width, num);
+            Vector2 origin = rectangle.Size() / 2f;
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            if (proj.spriteDirection == -1)
+            {
+                spriteEffects = SpriteEffects.FlipHorizontally;
+            }
+
+            bool flag = false;
+            if (CalamityClientConfig.Instance.Afterimages)
+            {
+                Vector2 vector = (drawCentered ? (proj.Size / 2f) : Vector2.Zero);
+                Color alpha = proj.GetAlpha(lightColor);
+                switch (mode)
+                {
+                    case 0:
+                        {
+                            for (int j = 0; j < proj.oldPos.Length; j++)
+                            {
+                                Vector2 position2 = proj.oldPos[j] + vector - Main.screenPosition + new Vector2(0f, proj.gfxOffY);
+                                float num3 = (float)(proj.oldPos.Length - j) / (float)proj.oldPos.Length;
+                                Color color2 = alpha * num3;
+                                DrawData drawData = new DrawData(texture, position2, rectangle, color2);
+                                drawData.rotation = rotation;
+                                drawData.origin = origin;
+                                drawData.effect = spriteEffects;
+                                DrawData value2 = drawData;
+                                GameShaders.Armor.Apply(armorShaderToUse, proj, value2);
+                                Main.spriteBatch.Draw(texture, position2, rectangle, color2, rotation, origin, shrink ? (scale * num3) : scale, spriteEffects, 0f);
+                            }
+
+                            break;
+                        }
+                    case 1:
+                        {
+                            int num4 = Math.Max(1, typeOneIncrement);
+                            Color color3 = alpha;
+                            int num5 = ProjectileID.Sets.TrailCacheLength[proj.type];
+                            float num6 = (float)num5 * 1.5f;
+                            for (int k = 0; k < num5; k += num4)
+                            {
+                                Vector2 position3 = proj.oldPos[k] + vector - Main.screenPosition + new Vector2(0f, proj.gfxOffY);
+                                float num7 = (float)(proj.oldPos.Length - k) / (float)proj.oldPos.Length;
+                                if (k > 0)
+                                {
+                                    float num8 = num5 - k;
+                                    color3 *= num8 / num6;
+                                }
+
+                                DrawData drawData = new DrawData(texture, position3, rectangle, color3);
+                                drawData.rotation = rotation;
+                                drawData.origin = origin;
+                                drawData.effect = spriteEffects;
+                                DrawData value3 = drawData;
+                                GameShaders.Armor.Apply(armorShaderToUse, proj, value3);
+                                Main.spriteBatch.Draw(texture, position3, rectangle, color3, rotation, origin, shrink ? (scale * num7) : scale, spriteEffects, 0f);
+                            }
+
+                            break;
+                        }
+                    case 2:
+                        {
+                            for (int i = 0; i < proj.oldPos.Length; i++)
+                            {
+                                float rotation2 = proj.oldRot[i];
+                                SpriteEffects effects = ((proj.oldSpriteDirection[i] == -1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+                                Vector2 position = proj.oldPos[i] + vector - Main.screenPosition + new Vector2(0f, proj.gfxOffY);
+                                float num2 = (float)(proj.oldPos.Length - i) / (float)proj.oldPos.Length;
+                                Color color = alpha * num2;
+                                DrawData drawData = new DrawData(texture, position, rectangle, color);
+                                drawData.rotation = rotation;
+                                drawData.origin = origin;
+                                drawData.effect = spriteEffects;
+                                DrawData value = drawData;
+                                GameShaders.Armor.Apply(armorShaderToUse, proj, value);
+                                Main.spriteBatch.Draw(texture, position, rectangle, color, rotation2, origin, shrink ? (scale * num2) : scale, effects, 0f);
+                            }
+
+                            break;
+                        }
+                    default:
+                        flag = true;
+                        break;
+                }
+            }
+
+            if (!CalamityClientConfig.Instance.Afterimages || ProjectileID.Sets.TrailCacheLength[proj.type] <= 0 || flag)
+            {
+                Vector2 vector2 = (drawCentered ? proj.Center : proj.position);
+                Vector2 position4 = vector2 - Main.screenPosition + new Vector2(0f, proj.gfxOffY);
+                DrawData value4 = new DrawData(texture, position4, rectangle, proj.GetAlpha(lightColor));
+                GameShaders.Armor.Apply(armorShaderToUse, proj, value4);
+                Main.spriteBatch.Draw(texture, position4, rectangle, proj.GetAlpha(lightColor), rotation, origin, scale, spriteEffects, 0f);
+            }
+        }
+
+        public static NPC SpawnBossBetter(Vector2 relativeSpawnPosition, int bossType, BaseBossSpawnContext spawnContext = null, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f, float ai3 = 0f)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                return null;
+            }
+
+            if (spawnContext == null)
+            {
+                spawnContext = new ExactPositionBossSpawnContext();
+            }
+
+            Vector2 position = spawnContext.DetermineSpawnPosition(relativeSpawnPosition);
+            int num = NPC.NewNPC(NPC.GetBossSpawnSource(Player.FindClosest(position, 1, 1)), (int)position.X, (int)position.Y, bossType, 0, ai0, ai1, ai2, ai3);
+            if (Main.npc.IndexInRange(num))
+            {
+                BossAwakenMessage(num);
+                return Main.npc[num];
+            }
+
+            return null;
+        }
+
+        public static void BossAwakenMessage(int npcIndex)
+        {
+            string typeName = Main.npc[npcIndex].TypeName;
+            if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                Main.NewText(Language.GetTextValue("Announcement.HasAwoken", typeName), new Color(175, 75, 255));
+            }
+            else if (Main.dedServ)
+            {
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[npcIndex].GetTypeNetName()), new Color(175, 75, 255));
+            }
+        }
+        public static bool AnyProjectiles(int projectileID)
+        {
+            ActiveEntityIterator<Projectile>.Enumerator enumerator = Main.ActiveProjectiles.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Projectile current = enumerator.Current;
+                if (current.type != projectileID)
+                {
+                    continue;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public static int SecondsToFrames(int seconds)
+        {
+            return seconds * 60;
+        }
+
+        public static int SecondsToFrames(float seconds)
+        {
+            return (int)MathF.Round(seconds * 60f);
+        }
+
+        public static int MinutesToFrames(int minutes)
+        {
+            return minutes * 3600;
+        }
+
+        public static bool WithinBounds(this int index, int cap)
+        {
+            return index >= 0 && index < cap;
+        }
+
+        public static void BroadcastLocalizedText(string key, Color? textColor = null)
+        {
+            if (!textColor.HasValue)
+            {
+                textColor = Color.White;
+            }
+
+            if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                Main.NewText(Language.GetTextValue(key), textColor.Value);
+            }
+            else if (Main.dedServ)
+            {
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey(key), textColor.Value);
+            }
+        }
+
+        public static void BroadcastFormattedText(string key, Color textColor, params object[] args)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                Main.NewText(Language.GetOrRegister(key).Format(args), textColor);
+            }
+            else if (Main.dedServ)
+            {
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey(key, args), textColor);
+            }
+        }
+
+        public static void SpawnOre(int type, double frequency, float verticalStartFactor, float verticalEndFactor, int strengthMin, int strengthMax, params int[] convertibleTiles)
+        {
+            int maxTilesX = Main.maxTilesX;
+            int maxTilesY = Main.maxTilesY;
+            if (Main.netMode == 1)
+            {
+                return;
+            }
+
+            for (int i = 0; i < (int)((double)(maxTilesX * maxTilesY) * frequency); i++)
+            {
+                int num = WorldGen.genRand.Next(0, maxTilesX);
+                int num2 = WorldGen.genRand.Next((int)((float)maxTilesY * verticalStartFactor), (int)((float)maxTilesY * verticalEndFactor));
+                if (convertibleTiles.Length == 0 || ((ReadOnlySpan<int>)convertibleTiles).Contains((int)ParanoidTileRetrieval(num, num2).TileType))
+                {
+                    WorldGen.OreRunner(num, num2, WorldGen.genRand.Next(strengthMin, strengthMax), WorldGen.genRand.Next(3, 8), (ushort)type);
+                }
+            }
+        }
+
+        public static void SpawnOre(int type, double frequency, float verticalStartFactor, float verticalEndFactor, int strengthMin, int strengthMax, List<int> convertibleTiles)
+        {
+            int[] array = new int[convertibleTiles.Count];
+            convertibleTiles.CopyTo(array);
+            SpawnOre(type, frequency, verticalStartFactor, verticalEndFactor, strengthMin, strengthMax, array);
+        }
+
+        public static int CountProjectiles(int projectileID)
+        {
+            return Main.projectile.Count((Projectile proj) => proj.type == projectileID && proj.active);
+        }
+
+        public static T FindTileEntity<T>(int i, int j, int width, int height, int sheetSquare = 16) where T : ModTileEntity
+        {
+            Tile tile = Main.tile[i, j];
+            int x = i - tile.TileFrameX % (width * sheetSquare) / sheetSquare;
+            int y = j - tile.TileFrameY % (height * sheetSquare) / sheetSquare;
+            int type = ModContent.GetInstance<T>().Type;
+            TileEntity value;
+            return (TileEntity.ByPosition.TryGetValue(new Point16(x, y), out value) && value.type == type) ? ((T)value) : null;
+        }
+        #endregion
     }
 
     public static class RarityHelper

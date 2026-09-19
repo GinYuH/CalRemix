@@ -135,7 +135,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (CalRemixHelper.WithinElipse(i, j, arenaArea.Center.X, arenaArea.Center.Y, arenaArea.Width / 2, arenaArea.Height / 2))
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         t.ClearEverything();
                     }
                 }
@@ -150,7 +150,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (CalRemixHelper.WithinElipse(i, j, arenaArea.Center.X, arenaArea.Center.Y, arenaArea.Width / 2, arenaArea.Height / 2))
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         t.ResetToType((ushort)ModContent.TileType<VirisitePlaced>());
                     }
                 }
@@ -160,7 +160,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = surfaceHeight + 10; j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (!t.HasTile)
                         t.LiquidAmount = 255;
                 }

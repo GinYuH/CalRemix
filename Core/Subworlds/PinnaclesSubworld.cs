@@ -138,7 +138,7 @@ namespace CalRemix.Core.Subworlds
 
             for (int i = 0; i < Main.maxTilesY; i++)
             {
-                if (CalamityUtils.ParanoidTileRetrieval((int)(Main.maxTilesX / 2), i).HasTile)
+                if (CalRemixHelper.ParanoidTileRetrieval((int)(Main.maxTilesX / 2), i).HasTile)
                 {
                     bishopY = i;
                     break;
@@ -160,7 +160,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (CalRemixHelper.WithinElipse(i, j, 0, topY, topWidth, topHeight / 2))
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         t.ResetToType(stone);
                         t.SetHighlight(true);
                     }
@@ -172,8 +172,8 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = 0; j < (int)(Main.maxTilesY * 0.3f); j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                    if (t.TileType == ash && !CalamityUtils.ParanoidTileRetrieval(i + 1, j).HasTile)
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                    if (t.TileType == ash && !CalRemixHelper.ParanoidTileRetrieval(i + 1, j).HasTile)
                     {
                         if (WorldGen.genRand.NextBool())
                         {
@@ -196,7 +196,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (CalRemixHelper.WithinElipse(i, j, 0, bottomY, bottomWidth, bottomHeight / 2))
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         t.ResetToType(stone);
                         t.SetHighlight(true);
                     }
@@ -212,7 +212,7 @@ namespace CalRemix.Core.Subworlds
                     if (!WorldGen.genRand.NextBool(11))
                         continue;
 
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (t.TileType != stone)
                         continue;
 
@@ -222,9 +222,9 @@ namespace CalRemix.Core.Subworlds
                     bool ground = false;
                     bool air = false;
 
-                    if (!CalamityUtils.ParanoidTileRetrieval(i, j - 1).HasTile && stamCD <= 0)
+                    if (!CalRemixHelper.ParanoidTileRetrieval(i, j - 1).HasTile && stamCD <= 0)
                         ground = true;
-                    if (!CalamityUtils.ParanoidTileRetrieval(i, j + 1).HasTile && stacCD <= 0)
+                    if (!CalRemixHelper.ParanoidTileRetrieval(i, j + 1).HasTile && stacCD <= 0)
                         air = true;
                     if (!ground && !air)
                         continue;
@@ -236,7 +236,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         for (int l = j - height / 2; l < j + height / 2; l++)
                         {
-                            Tile newT = CalamityUtils.ParanoidTileRetrieval(k, l);
+                            Tile newT = CalRemixHelper.ParanoidTileRetrieval(k, l);
                             if (newT.HasTile)
                                 continue;
                             if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(width / 2, height / 2), new Point(k, l)))
@@ -260,7 +260,7 @@ namespace CalRemix.Core.Subworlds
 
             for (int i = 0; i < Main.maxTilesY; i++)
             {
-                if (CalamityUtils.ParanoidTileRetrieval(concrete + 100, i).HasTile)
+                if (CalRemixHelper.ParanoidTileRetrieval(concrete + 100, i).HasTile)
                 {
                     frogY = i;
                     break;
@@ -289,7 +289,7 @@ namespace CalRemix.Core.Subworlds
                         continue;
 
                     // If a tile is highlighted, spawn rhombuses 
-                    if (CalamityUtils.ParanoidTileRetrieval(i, j).GetHighlight())
+                    if (CalRemixHelper.ParanoidTileRetrieval(i, j).GetHighlight())
                     {
                         int xDim = WorldGen.genRand.Next(4, 10);
                         int yDim = WorldGen.genRand.Next(4, 10);
@@ -298,7 +298,7 @@ namespace CalRemix.Core.Subworlds
                         {
                             for (int l = diamondArea.Top; l < diamondArea.Bottom; l++)
                             {
-                                Tile targ = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                Tile targ = CalRemixHelper.ParanoidTileRetrieval(k, l);
                                 if (targ.HasTile)
                                     continue;
                                 if (CalRemixHelper.WithinRhombus(new Point(i, j), new Point(xDim, yDim), new Point(k, l)))
@@ -317,7 +317,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     for (int j = 0; j < Main.maxTilesY; j++)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         // Reset highlights
                         if (t.GetHighlight())
                         {
@@ -329,19 +329,19 @@ namespace CalRemix.Core.Subworlds
 
                         // Check adjacent tile counts
                         int surroundingCounts = 0;
-                        if (CalamityUtils.ParanoidTileRetrieval(i + 1, j).HasTile)
+                        if (CalRemixHelper.ParanoidTileRetrieval(i + 1, j).HasTile)
                         {
                             surroundingCounts++;
                         }
-                        if (CalamityUtils.ParanoidTileRetrieval(i - 1, j).HasTile)
+                        if (CalRemixHelper.ParanoidTileRetrieval(i - 1, j).HasTile)
                         {
                             surroundingCounts++;
                         }
-                        if (CalamityUtils.ParanoidTileRetrieval(i, j + 1).HasTile)
+                        if (CalRemixHelper.ParanoidTileRetrieval(i, j + 1).HasTile)
                         {
                             surroundingCounts++;
                         }
-                        if (CalamityUtils.ParanoidTileRetrieval(i, j - 1).HasTile)
+                        if (CalRemixHelper.ParanoidTileRetrieval(i, j - 1).HasTile)
                         {
                             surroundingCounts++;
                         }
@@ -383,7 +383,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     for (int j = orb.Top; j < orb.Bottom; j++)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         if (t.HasTile)
                             continue;
                         if (CalRemixHelper.WithinElipse(i, j, orb.Center.X, orb.Center.Y, orb.Width / 2, orb.Height / 2))
@@ -409,7 +409,7 @@ namespace CalRemix.Core.Subworlds
                         continue;
 
                     // If a tile is highlighted, spawn rhombuses 
-                    if (CalamityUtils.ParanoidTileRetrieval(i, j).GetHighlight())
+                    if (CalRemixHelper.ParanoidTileRetrieval(i, j).GetHighlight())
                     {
                         int xDim = WorldGen.genRand.Next(2, 5);
                         int yDim = WorldGen.genRand.Next(2, 5);
@@ -418,13 +418,13 @@ namespace CalRemix.Core.Subworlds
                         {
                             for (int l = diamondArea.Top; l < diamondArea.Bottom; l++)
                             {
-                                Tile targ = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                Tile targ = CalRemixHelper.ParanoidTileRetrieval(k, l);
                                 if (targ.HasTile)
                                     continue;
                                 bool sb = false;
                                 for (int m = l; m < l + 10; m++)
                                 {
-                                    if (CalamityUtils.ParanoidTileRetrieval(k, m).TileType == ash)
+                                    if (CalRemixHelper.ParanoidTileRetrieval(k, m).TileType == ash)
                                     {
                                         sb = true;
                                         break;
@@ -454,7 +454,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     // Reset highlights
                     if (t.GetHighlight())
                     {
@@ -462,7 +462,7 @@ namespace CalRemix.Core.Subworlds
                     }
                     if (t.TileType != ash)
                         continue;
-                    Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                    Tile above = CalRemixHelper.ParanoidTileRetrieval(i, j - 1);
                     if (!above.HasTile && t.HasTile)
                     {
                         if (WorldGen.genRand.NextBool(10))

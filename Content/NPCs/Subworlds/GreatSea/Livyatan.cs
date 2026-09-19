@@ -481,7 +481,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                             for (int j = 0; j < (int)(NPC.height); j++)
                             {
                                 Point start = NPC.position.ToTileCoordinates();
-                                Tile t = CalamityUtils.ParanoidTileRetrieval(start.X + i, start.Y + j);
+                                Tile t = CalRemixHelper.ParanoidTileRetrieval(start.X + i, start.Y + j);
                                 if (t.TileType == ModContent.TileType<SyringodiumPlaced>())
                                 {
                                     WorldGen.KillTile(start.X + i, start.Y + j, noItem: true);

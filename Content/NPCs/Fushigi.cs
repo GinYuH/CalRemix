@@ -67,8 +67,8 @@ namespace CalRemix.Content.NPCs
             }
             if (NPC.position.Y < 656)
             {
-                CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.LightBlue);
-                int oxTime = Main.rand.Next(CalamityUtils.SecondsToFrames(60 * 12), CalamityUtils.SecondsToFrames(60 * 16));
+                CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.LightBlue);
+                int oxTime = Main.rand.Next(CalRemixHelper.SecondsToFrames(60 * 12), CalRemixHelper.SecondsToFrames(60 * 16));
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     CalRemixWorld.oxydayTime = oxTime;

@@ -333,7 +333,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             }
                         }
                         TileClipping();
-                        if (Timer > 180 && !CalamityUtils.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
+                        if (Timer > 180 && !CalRemixHelper.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
                         {
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
@@ -368,7 +368,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                             }
                         }
                         TileClipping();
-                        if (Timer > 180 && !CalamityUtils.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
+                        if (Timer > 180 && !CalRemixHelper.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
                         {
                             Timer = 0;
                             Phase = (int)Attacks.Normal;
@@ -485,7 +485,7 @@ namespace CalRemix.Content.NPCs.Eclipse
                 }
             }
 
-            if (CalamityUtils.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
+            if (CalRemixHelper.AnyProjectiles(ModContent.ProjectileType<CrimsonKaijuHand>()))
             {
                 NPC.frame.Y = frameHeight * 5;
             }    

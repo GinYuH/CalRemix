@@ -54,7 +54,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Glamour
         {
             if (!SubworldSystem.IsActive<GlamourSubworld>())
                 return;
-            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
             if (t.TileFrameX == 0 && t.TileFrameY == 0)
             {
                 if (closer)
@@ -62,13 +62,13 @@ namespace CalRemix.Content.Tiles.Subworlds.Glamour
                     if (Main.LocalPlayer.Distance(new Microsoft.Xna.Framework.Vector2(i + 6, j + 13) * 16) < 200)
                     {
                         timer++;
-                        if (timer > CalamityUtils.SecondsToFrames(1) && timer % (int)(MathHelper.Lerp(22, 2, Utils.GetLerpValue(CalamityUtils.SecondsToFrames(1), CalamityUtils.SecondsToFrames(5), timer, true))) == 0)
+                        if (timer > CalRemixHelper.SecondsToFrames(1) && timer % (int)(MathHelper.Lerp(22, 2, Utils.GetLerpValue(CalRemixHelper.SecondsToFrames(1), CalRemixHelper.SecondsToFrames(5), timer, true))) == 0)
                         {
                             SoundEngine.PlaySound(RavagerBody.HitSound with { Pitch = 1 }, new Vector2(i, j) * 16);
                         }
                     }
                 }
-                if (timer >= CalamityUtils.SecondsToFrames(5))
+                if (timer >= CalRemixHelper.SecondsToFrames(5))
                 {
                     SoundEngine.PlaySound(RavagerBody.LimbLossSound with { Pitch = -1f }, new Vector2(i + 8, j) * 16);
                     Main.LocalPlayer.Calamity().GeneralScreenShakePower = 20;
@@ -87,10 +87,10 @@ namespace CalRemix.Content.Tiles.Subworlds.Glamour
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
             if (t.TileFrameX == 0 && t.TileFrameY == 0)
             {
-                Vector2 extraOff = Main.rand.NextVector2Circular(1, 1) * Utils.GetLerpValue(CalamityUtils.SecondsToFrames(0.5f), CalamityUtils.SecondsToFrames(5), timer, true) * 22;
+                Vector2 extraOff = Main.rand.NextVector2Circular(1, 1) * Utils.GetLerpValue(CalRemixHelper.SecondsToFrames(0.5f), CalRemixHelper.SecondsToFrames(5), timer, true) * 22;
                 spriteBatch.Draw(full.Value, new Vector2(i + 6, j + 14) * 16 + CalamityUtils.TileDrawOffset - Main.screenPosition + extraOff, null, Lighting.GetColor(i, j), 0, new Vector2(full.Value.Width / 2, full.Value.Height), 1, 0, 0);
             }
             return false;

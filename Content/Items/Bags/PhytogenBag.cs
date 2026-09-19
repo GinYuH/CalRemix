@@ -64,7 +64,7 @@ namespace CalRemix.Content.Items.Bags
             {
                 for (int j = p.Y - rad; j < p.Y + rad; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (t.HasTile && TileID.Sets.CanBeClearedDuringOreRunner[t.TileType])
                     {
                         t.TileType = (ushort)ModContent.TileType<PlantyMush>();

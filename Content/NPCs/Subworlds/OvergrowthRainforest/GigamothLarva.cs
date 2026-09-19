@@ -171,8 +171,8 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                     {
                         for (int j = pt.Y - searchAreaY; j < pt.Y + searchAreaY; j++)
                         {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                            Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                            Tile above = CalRemixHelper.ParanoidTileRetrieval(i, j - 1);
                             if (t.IsTileSolidGround() && (!above.IsTileSolidGround() || !above.HasTile))
                             {
                                 WorldGen.KillTile(i, j, true, true);
@@ -213,7 +213,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 NPC.netUpdate = true;
             }
 
-            if (NPC.Remix().GreenAI[0]++ > CalamityUtils.SecondsToFrames(30) && NPC.ai[0] > 0 && NPC.ai[0] != 3)
+            if (NPC.Remix().GreenAI[0]++ > CalRemixHelper.SecondsToFrames(30) && NPC.ai[0] > 0 && NPC.ai[0] != 3)
             {
                 NPC.ai[0] = 3;
                 NPC.ai[2] = 0;

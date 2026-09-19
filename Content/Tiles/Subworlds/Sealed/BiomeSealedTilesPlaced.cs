@@ -67,9 +67,9 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            Tile above = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
-            Tile side = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
-            Tile aboveSide = CalamityUtils.ParanoidTileRetrieval(i + 1, j - 1);
+            Tile above = CalRemixHelper.ParanoidTileRetrieval(i, j - 1);
+            Tile side = CalRemixHelper.ParanoidTileRetrieval(i + 1, j);
+            Tile aboveSide = CalRemixHelper.ParanoidTileRetrieval(i + 1, j - 1);
             if (!above.HasTile && side.HasTile && !aboveSide.HasTile && side.TileType == Type)
             {
                 if (Main.rand.NextBool(5))

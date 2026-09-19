@@ -70,7 +70,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         public override void AI()
         {
             Point p = NPC.Bottom.ToSafeTileCoordinates();
-            Tile t = CalamityUtils.ParanoidTileRetrieval(p.X, p.Y);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(p.X, p.Y);
             if (t.HasTile && (TileID.Sets.Grass[t.TileType] || TileID.Sets.Dirt[t.TileType] || TileID.Sets.Mud[t.TileType] || TileID.Sets.Stone[t.TileType]))
             {
                 t.ResetToType((ushort)ModContent.TileType<PlantyMush>());
@@ -124,7 +124,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             {
                 if (Main.LocalPlayer.BuyItem(Item.buyPrice(gold: 1)))
                 {
-                    Main.LocalPlayer.AddBuff(BuffID.DryadsWard, CalamityUtils.SecondsToFrames(600));
+                    Main.LocalPlayer.AddBuff(BuffID.DryadsWard, CalRemixHelper.SecondsToFrames(600));
                     SoundEngine.PlaySound(SoundID.CoinPickup);
                 }
             }

@@ -64,7 +64,7 @@ namespace CalRemix.Content.NPCs
                         NPC.Remix().GreenAI[1] = 1;
                     }
                 }
-                if (CalamityUtils.CountProjectiles(ModContent.ProjectileType < SporeGasPlantera > ()) < 20)
+                if (CalRemixHelper.CountProjectiles(ModContent.ProjectileType < SporeGasPlantera > ()) < 20)
                 {
                     if (NPC.Remix().GreenAI[0] % (150 + Main.rand.Next(0, 20)) == 0)
                     {

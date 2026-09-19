@@ -47,11 +47,11 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Cryonix
         {
             RemixDowned.downedCryonix = true;
 
-            CalamityUtils.SpawnOre(ModContent.TileType<CryonicOre>(), 15E-05, 0.45f, 0.7f, 3, 8, TileID.SnowBlock, TileID.IceBlock, TileID.CorruptIce, TileID.FleshIce, TileID.HallowedIce, ModContent.TileType<AstralSnow>(), ModContent.TileType<AstralIce>());
+            CalRemixHelper.SpawnOre(ModContent.TileType<CryonicOre>(), 15E-05, 0.45f, 0.7f, 3, 8, TileID.SnowBlock, TileID.IceBlock, TileID.CorruptIce, TileID.FleshIce, TileID.HallowedIce, ModContent.TileType<AstralSnow>(), ModContent.TileType<AstralIce>());
 
             string key = "Mods.CalamityMod.Status.Progression.IceOreText";
             Color messageColor = Color.LightSkyBlue;
-            CalamityUtils.BroadcastLocalizedText(key, messageColor);
+            CalRemixHelper.BroadcastLocalizedText(key, messageColor);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

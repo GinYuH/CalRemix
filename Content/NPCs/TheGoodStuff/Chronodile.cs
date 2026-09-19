@@ -61,7 +61,7 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
         public override bool PreAI()
         {
             Point pos = NPC.Center.ToTileCoordinates();
-            Tile t = CalamityUtils.ParanoidTileRetrieval(pos.X, pos.Y);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(pos.X, pos.Y);
             if (t.LiquidAmount < 100)
                 NPC.Calamity().newAI[0]++;
             else

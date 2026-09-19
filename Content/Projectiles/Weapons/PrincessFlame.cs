@@ -107,7 +107,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             lightColor = Color.Lerp(lightColor, Color.White, 0.8f);
             lightColor.A /= 4;
-            CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor);
             return false;
         }
         public override void OnKill(int timeLeft)

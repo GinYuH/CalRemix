@@ -58,7 +58,7 @@ namespace CalRemix.Content.NPCs
             if (NPC.HasPlayerTarget)
             {
                 Player targ = Main.player[NPC.target];
-                if (targ.Distance(NPC.Center) < 980 && CalamityUtils.CountProjectiles(ModContent.ProjectileType<OgsculeBeamHostile>()) < 1)
+                if (targ.Distance(NPC.Center) < 980 && CalRemixHelper.CountProjectiles(ModContent.ProjectileType<OgsculeBeamHostile>()) < 1)
                 {
                     NPC.ai[0] = 22;
                     NPC.dontTakeDamage = false;

@@ -49,7 +49,7 @@ namespace CalRemix.Core.World
                 //This generates insanely early so there shoooooouldnt be any structures to avoid...?
                 //if (GenVars.structures.CanPlace(new Rectangle(i, j, (int)schematicSize.X, (int)schematicSize.Y)))
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     // Check if it's a snow biome block
                     // Astral doesn't gen on worldgen, but those blocks are here either for testing or if astral ever gets put on worldgen by some mod
                     if (t != null && t.HasTile && (t.TileType == TileID.BreakableIce || t.TileType == TileID.SnowBlock || t.TileType == TileID.IceBlock || t.TileType == assSnow || t.TileType == assIce))
@@ -68,7 +68,7 @@ namespace CalRemix.Core.World
                                 blocksToCheck = (int)(blocksToCheck * 0.5f);
                             for (int m = j - 1; m > (j - blocksToCheck); m--)
                             {
-                                Tile turd = CalamityUtils.ParanoidTileRetrieval(i, m);
+                                Tile turd = CalRemixHelper.ParanoidTileRetrieval(i, m);
                                 if (turd != null)
                                 {
                                     // If a block is found, cancel this gen attempt

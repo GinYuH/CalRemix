@@ -326,11 +326,11 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus.Purity
 
         public static int NightmareDeathrayDamage => Main.expertMode ? 750 : 480;
 
-        public static int DebuffDuration_RegularAttack => CalamityUtils.SecondsToFrames(5f);
+        public static int DebuffDuration_RegularAttack => CalRemixHelper.SecondsToFrames(5f);
 
-        public static int DebuffDuration_PowerfulAttack => CalamityUtils.SecondsToFrames(10f);
+        public static int DebuffDuration_PowerfulAttack => CalRemixHelper.SecondsToFrames(10f);
 
-        public static int IdealFightDuration => CalamityUtils.SecondsToFrames(180f);
+        public static int IdealFightDuration => CalRemixHelper.SecondsToFrames(180f);
 
         public static float MaxTimedDRDamageReduction => 0.45f;
 

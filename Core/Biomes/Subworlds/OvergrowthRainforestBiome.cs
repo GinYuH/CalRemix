@@ -36,7 +36,7 @@ namespace CalRemix.Core.Biomes.Subworlds
         public override bool IsBiomeActive(Player player)
         {
             Point pos = player.Center.ToTileCoordinates();
-            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>() && CalamityUtils.ParanoidTileRetrieval(pos.X, pos.Y).WallType == ModContent.WallType<UnsafeTitanodendronWoodWallPlaced>();
+            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>() && CalRemixHelper.ParanoidTileRetrieval(pos.X, pos.Y).WallType == ModContent.WallType<UnsafeTitanodendronWoodWallPlaced>();
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => MusicID.OtherworldlyJungle;
@@ -52,7 +52,7 @@ namespace CalRemix.Core.Biomes.Subworlds
         public override bool IsBiomeActive(Player player)
         {
             Point pos = player.Center.ToTileCoordinates();
-            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>() && CalamityUtils.ParanoidTileRetrieval(pos.X, pos.Y).WallType == ModContent.WallType<UnsafeTitanodendronLeafBlockWallPlaced>();
+            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>() && CalRemixHelper.ParanoidTileRetrieval(pos.X, pos.Y).WallType == ModContent.WallType<UnsafeTitanodendronLeafBlockWallPlaced>();
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => MusicID.OtherworldlyJungle;
@@ -68,7 +68,7 @@ namespace CalRemix.Core.Biomes.Subworlds
         public override bool IsBiomeActive(Player player)
         {
             Point pos = player.Center.ToTileCoordinates();
-            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>() && CalamityUtils.ParanoidTileRetrieval(pos.X, pos.Y).WallType <= WallID.None && Main.LocalPlayer.Center.Y / 16 > OvergrowthRainforestGeneration.treeTopLevel * Main.maxTilesY && Main.LocalPlayer.Center.Y / 16 < OvergrowthRainforestGeneration.groundLevel * Main.maxTilesY - 100;
+            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>() && CalRemixHelper.ParanoidTileRetrieval(pos.X, pos.Y).WallType <= WallID.None && Main.LocalPlayer.Center.Y / 16 > OvergrowthRainforestGeneration.treeTopLevel * Main.maxTilesY && Main.LocalPlayer.Center.Y / 16 < OvergrowthRainforestGeneration.groundLevel * Main.maxTilesY - 100;
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => MusicID.OtherworldlyJungle;
@@ -84,7 +84,7 @@ namespace CalRemix.Core.Biomes.Subworlds
         public override bool IsBiomeActive(Player player)
         {
             Point pos = player.Center.ToTileCoordinates();
-            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>() && CalamityUtils.ParanoidTileRetrieval(pos.X, pos.Y).WallType <= WallID.None && !player.InModBiome<BigOlBranchesBiome>() && Main.LocalPlayer.Center.Y / 16 > OvergrowthRainforestGeneration.treeTopLevel * Main.maxTilesY;
+            return SubworldSystem.IsActive<OvergrowthRainforestSubworld>() && CalRemixHelper.ParanoidTileRetrieval(pos.X, pos.Y).WallType <= WallID.None && !player.InModBiome<BigOlBranchesBiome>() && Main.LocalPlayer.Center.Y / 16 > OvergrowthRainforestGeneration.treeTopLevel * Main.maxTilesY;
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => MusicID.OtherworldlyJungle;

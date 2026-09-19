@@ -78,7 +78,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
             int groundHeight = 0;
             for (int i = 0; i < 10; i++)
             {
-                if (CalamityUtils.ParanoidTileRetrieval(p.X, p.Y + i).HasTile && CalamityUtils.ParanoidTileRetrieval(p.X, p.Y + i).IsTileSolidGround())
+                if (CalRemixHelper.ParanoidTileRetrieval(p.X, p.Y + i).HasTile && CalRemixHelper.ParanoidTileRetrieval(p.X, p.Y + i).IsTileSolidGround())
                 {
                     groundHeight++;
                 }

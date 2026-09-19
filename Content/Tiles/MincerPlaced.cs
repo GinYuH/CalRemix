@@ -66,7 +66,7 @@ namespace CalRemix.Content.Tiles
             int top = j - tile.TileFrameY % (Height * SheetSquare) / SheetSquare;
 
             // Kill the hosted tile entity directly and immediately.
-            MincerTE mincentity = CalamityUtils.FindTileEntity<MincerTE>(i, j, Width, Height, SheetSquare);
+            MincerTE mincentity = CalRemixHelper.FindTileEntity<MincerTE>(i, j, Width, Height, SheetSquare);
             mincentity?.Kill(left, top);
         }
 
@@ -87,7 +87,7 @@ namespace CalRemix.Content.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            MincerTE te = CalamityUtils.FindTileEntity<MincerTE>(i, j, 2, 3);
+            MincerTE te = CalRemixHelper.FindTileEntity<MincerTE>(i, j, 2, 3);
             if (te == null)
                 return false;
             int id = GetAvailableMince();
@@ -102,7 +102,7 @@ namespace CalRemix.Content.Tiles
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            MincerTE te = CalamityUtils.FindTileEntity<MincerTE>(i, j, 2, 3);
+            MincerTE te = CalRemixHelper.FindTileEntity<MincerTE>(i, j, 2, 3);
             if (te == null)
                 return false;
             if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)

@@ -17,7 +17,7 @@ namespace CalRemix.Core.World
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (t != null && t.HasTile)
                     {
                         switch (t.TileType)

@@ -65,7 +65,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 // we gyatta get the highest bit of collision from the spawned point so it looks nice and chill
                 for (int ii = 0; ii < 222; ii++)
                 {
-                    Tile proposedTile = CalamityUtils.ParanoidTileRetrieval((int)(cursorPos.X / 16), (int)((cursorPos.Y / 16) + ii));
+                    Tile proposedTile = CalRemixHelper.ParanoidTileRetrieval((int)(cursorPos.X / 16), (int)((cursorPos.Y / 16) + ii));
                     if (proposedTile != null)
                         if (proposedTile.IsTileSolid())
                         {

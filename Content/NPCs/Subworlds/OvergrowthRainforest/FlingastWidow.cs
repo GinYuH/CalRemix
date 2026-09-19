@@ -76,26 +76,26 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                     {
                         int x = (int)(NPC.Center.X / 16f) + Main.rand.Next(-50, 50);
                         int y = (int)(NPC.Center.Y / 16f) + Main.rand.Next(-50, 50);
-                        Tile tile = CalamityUtils.ParanoidTileRetrieval(x, y);
+                        Tile tile = CalRemixHelper.ParanoidTileRetrieval(x, y);
 
                         // Try again if the tile isn't solid or isn't exposed to air.
-                        if (!WorldGen.SolidTile(tile) || (CalamityUtils.ParanoidTileRetrieval(x - 1, y).HasTile && CalamityUtils.ParanoidTileRetrieval(x + 1, y).HasTile))
+                        if (!WorldGen.SolidTile(tile) || (CalRemixHelper.ParanoidTileRetrieval(x - 1, y).HasTile && CalRemixHelper.ParanoidTileRetrieval(x + 1, y).HasTile))
                             continue;
 
 
-                        bool faceRight = CalamityUtils.ParanoidTileRetrieval(x - 1, y).HasTile;
+                        bool faceRight = CalRemixHelper.ParanoidTileRetrieval(x - 1, y).HasTile;
                         bool sb = false;
 
                         int lootry = 0;
                         for (int j = y - 5; j < y + 5; j++)
                         {
                             lootry++;
-                            if (CalamityUtils.ParanoidTileRetrieval(x + faceRight.ToDirectionInt(), j).HasTile)
+                            if (CalRemixHelper.ParanoidTileRetrieval(x + faceRight.ToDirectionInt(), j).HasTile)
                             {
                                 sb = true;
                                 break;
                             }
-                            if (!CalamityUtils.ParanoidTileRetrieval(x, j).HasTile)
+                            if (!CalRemixHelper.ParanoidTileRetrieval(x, j).HasTile)
                             {
                                 sb = true;
                                 break;

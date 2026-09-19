@@ -20,7 +20,7 @@ namespace CalRemix.Content.Tiles
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j - 1);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j - 1);
             if (TileID.Sets.Torch[t.TileType])
             {
                 WorldGen.KillTile(i, j - 1);

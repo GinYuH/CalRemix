@@ -152,7 +152,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            if (CalamityUtils.ParanoidTileRetrieval(i + 1, j).TileType != TileID.Trees && CalamityUtils.ParanoidTileRetrieval(i - 1, j).TileType != TileID.Trees)
+            if (CalRemixHelper.ParanoidTileRetrieval(i + 1, j).TileType != TileID.Trees && CalRemixHelper.ParanoidTileRetrieval(i - 1, j).TileType != TileID.Trees)
             {
                 WorldGen.KillTile(i, j);
             }

@@ -68,7 +68,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 			lightColor = new Color(255 * Projectile.Opacity, 255 * Projectile.Opacity, 255 * Projectile.Opacity);
 			Vector2 drawOffset = Projectile.velocity.SafeNormalize(Vector2.Zero) * -30f;
 			Projectile.Center += drawOffset;
-			CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor, 1);
+			CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor, 1);
 			Projectile.Center -= drawOffset;
 			return false;
 		}

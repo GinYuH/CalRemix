@@ -45,19 +45,19 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss.Supreme
 
             if (NPC.ai[0] == 120)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.1", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.1", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 240)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.2", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.2", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 360)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.3", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.3", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 480)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.4", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.4", new Color(107, 137, 179));
             }
             if (NPC.ai[0] >= 600)
             {
@@ -67,7 +67,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss.Supreme
             }
             if (NPC.ai[0] == 600)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.Elipse", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.Elipse", new Color(107, 137, 179));
             }
             if (NPC.ai[0] >= 840)
             {
@@ -76,27 +76,27 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss.Supreme
             }
             if (NPC.ai[0] == 840)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.5", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.5", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 960)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.6", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.6", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 1080)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.7", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.7", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 1200)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.8", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.8", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 1380)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.9", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.9", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 1540)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.10", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.10", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 1660)
             {
@@ -124,21 +124,21 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss.Supreme
             }
             if (NPC.ai[0] == 1780)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.12", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.12", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 1900)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.13", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.13", new Color(107, 137, 179));
             }
             if (NPC.ai[0] == 2020)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.14", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.14", new Color(107, 137, 179));
             }
             if (NPC.ai[0] >= 2180)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.15", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.15", new Color(107, 137, 179));
                 RemixDowned.downedRajahsRevenge = true;
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.16", Color.Green);
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Defeat.16", Color.Green);
                 int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<SupremeRajahLeave>(), 0, 0, Main.myPlayer);
                 Main.projectile[p].position = NPC.position;
                 NPC.active = false;

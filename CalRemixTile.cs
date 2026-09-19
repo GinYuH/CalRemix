@@ -112,7 +112,7 @@ namespace CalRemix
             }
             if (type == TileType<WulfrumLure>() && player.HeldItem.type == ItemType<DraedonPowerCell>())
             {
-                CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
+                CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
             }
             bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<ElementalinaBottle>()) || player.HasItem(ItemType<OasisElementalinaBottle>()) || player.HasItem(ItemType<RoseStone>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
             if (type == TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
@@ -339,7 +339,7 @@ namespace CalRemix
             Tile t = Main.tile[i, j];
             if (type == IonCubePlaced && t.TileFrameX == 0 && t.TileFrameY == 0)
             {
-                IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
+                IonCubeTE cube = CalRemixHelper.FindTileEntity<IonCubeTE>(i, j, 1, 1);
                 if (cube == null)
                 {
                     TileEntity.PlaceEntityNet(i, j, TileEntityType<IonCubeTE>());
@@ -467,9 +467,9 @@ namespace CalRemix
                 {
                     if (type == TileID.ShadowOrbs)
                     {
-                        CalamityMod.CalamityUtils.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 20, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
+                        CalRemixHelper.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 20, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
 
-                        CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
+                        CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
                         CalRemixWorld.generatedGrime = true;
                         CalRemixWorld.UpdateWorldBool();
                     }

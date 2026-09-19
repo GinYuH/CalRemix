@@ -84,7 +84,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
         {
             Color drawColor = Color.White;
             drawColor.A = (byte)Remap(Projectile.velocity.Length(), 3f, 13f, 255f, 0f);
-            CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], drawColor);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], drawColor);
 
             // Draw a pulsating overlay if moving very slowly.
             float overlayOpacity = GetLerpValue(2.4f, 0.01f, Projectile.velocity.Length(), true) * 0.3f;

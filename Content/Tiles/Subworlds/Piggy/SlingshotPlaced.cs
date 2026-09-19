@@ -136,7 +136,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
                     {
                         for (int j = tileCords.Y - rad; j < tileCords.Y + 2; j++)
                         {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
 
                             int effectiveNess = 0;
 
@@ -190,7 +190,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Piggy
             {
                 Player.chaosState = true;
                 Point pt = Main.MouseWorld.ToTileCoordinates();
-                Tile t = CalamityUtils.ParanoidTileRetrieval(pt.X, pt.Y);
+                Tile t = CalRemixHelper.ParanoidTileRetrieval(pt.X, pt.Y);
                 if (t.TileType == ModContent.TileType<SlingshotPlaced>())
                 {
                     Point tileFrame = new Point(t.TileFrameX / 18, t.TileFrameY / 18);

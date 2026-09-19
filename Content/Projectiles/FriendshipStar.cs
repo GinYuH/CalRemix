@@ -78,7 +78,7 @@ namespace CalRemix.Content.Projectiles
         public override bool PreDraw(ref Color lightColor)
         {
             Projectile.DrawStarTrail(StarColor(), StarColor() * 1.4f);
-            CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor, 2);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor, 2);
             return false;
         }
 

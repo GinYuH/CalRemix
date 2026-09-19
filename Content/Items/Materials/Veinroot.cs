@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Materials
             Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
             Item.buffType = BuffID.WellFed;
-            Item.buffTime = CalamityUtils.SecondsToFrames(180);
+            Item.buffTime = CalRemixHelper.SecondsToFrames(180);
         }
     }
 }

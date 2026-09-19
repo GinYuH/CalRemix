@@ -33,7 +33,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void OnKill(int timeLeft)
         {
-            Main.player[Projectile.owner].AddCooldown("NowhereAura", CalamityUtils.SecondsToFrames(25));
+            Main.player[Projectile.owner].AddCooldown("NowhereAura", CalRemixHelper.SecondsToFrames(25));
         }
     }
 }

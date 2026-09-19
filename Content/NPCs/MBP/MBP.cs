@@ -22,19 +22,19 @@ namespace CalRemix.Content.NPCs.MBP
     {
         public const string MBPSoundPath = "CalRemix/Assets/Sounds/MBP/";
 
-        public static int QuestionGate => CalamityUtils.SecondsToFrames(3);
+        public static int QuestionGate => CalRemixHelper.SecondsToFrames(3);
 
-        public static int RawrGate => CalamityUtils.SecondsToFrames(5);
+        public static int RawrGate => CalRemixHelper.SecondsToFrames(5);
 
-        public static int RequestGate => CalamityUtils.SecondsToFrames(7);
+        public static int RequestGate => CalRemixHelper.SecondsToFrames(7);
 
-        public static int DeathRevGate => CalamityUtils.SecondsToFrames(11);
+        public static int DeathRevGate => CalRemixHelper.SecondsToFrames(11);
 
-        public static int MoreBloodGate => CalamityUtils.SecondsToFrames(16);
+        public static int MoreBloodGate => CalRemixHelper.SecondsToFrames(16);
 
-        public static int SnapGate => CalamityUtils.SecondsToFrames(21);
+        public static int SnapGate => CalRemixHelper.SecondsToFrames(21);
 
-        public static int DieGate => CalamityUtils.SecondsToFrames(24);
+        public static int DieGate => CalRemixHelper.SecondsToFrames(24);
 
         public ref float Timer => ref NPC.ai[2];
 
@@ -88,7 +88,7 @@ namespace CalRemix.Content.NPCs.MBP
             else if (NPC.ai[0] == 1)
             {
                 Timer++;
-                if (Timer == CalamityUtils.SecondsToFrames(1))
+                if (Timer == CalRemixHelper.SecondsToFrames(1))
                 {
                     SoundEngine.PlaySound(new SoundStyle(MBPSoundPath + "1HmmHmm"));
                 }

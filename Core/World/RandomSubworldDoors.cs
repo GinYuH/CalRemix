@@ -48,8 +48,8 @@ namespace CalRemix.Core.World
                         }
                         if (Main.rand.NextBool(worldSize))
                         {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
-                            Tile next = CalamityUtils.ParanoidTileRetrieval(i + 1, j);
+                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                            Tile next = CalRemixHelper.ParanoidTileRetrieval(i + 1, j);
                             if (t != null && t.HasTile && t.IsTileSolidGround() && next != null && next.HasTile && next.IsTileSolidGround())
                             {
                                 bool emptySpace = true;
@@ -57,7 +57,7 @@ namespace CalRemix.Core.World
                                 {
                                     for (int l = j - 1; l > j - 4; l--)
                                     {
-                                        Tile u = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                        Tile u = CalRemixHelper.ParanoidTileRetrieval(k, l);
                                         if (u == null || u.HasTile)
                                         {
                                             emptySpace = false;

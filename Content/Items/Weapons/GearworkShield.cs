@@ -108,7 +108,7 @@ public class GearworkShield: RogueWeapon
                     }
                 }
                 recorded = false;
-                player.AddCooldown(GearworkCooldown.ID, CalamityUtils.SecondsToFrames(60));
+                player.AddCooldown(GearworkCooldown.ID, CalRemixHelper.SecondsToFrames(60));
             }
             else if (!player.HasCooldown(GearworkCooldown.ID) && !recorded)
                 CombatText.NewText(player.getRect(), Color.LightSalmon, CalRemixHelper.LocalText("StatusText.GearworkNA").Value, true);

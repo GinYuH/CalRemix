@@ -284,7 +284,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                 {
                     if (Main.rand.NextBool(20))
                     {
-                        target.AddBuff(ModContent.BuffType<Scorinfestation>(), CalamityUtils.SecondsToFrames(300));
+                        target.AddBuff(ModContent.BuffType<Scorinfestation>(), CalRemixHelper.SecondsToFrames(300));
                     }
                 }
                 else

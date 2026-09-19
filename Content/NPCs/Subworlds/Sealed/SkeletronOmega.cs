@@ -212,7 +212,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                                     SoundEngine.PlaySound(AresTeslaCannon.TeslaOrbShootSound with { Pitch = -0.4f }, NPC.Center);
                                     SoundEngine.PlaySound(AresGaussNuke.NukeExplosionSound, NPC.Center);
                                     Point pos = p.Bottom.ToTileCoordinates();
-                                    Tile t = CalamityUtils.ParanoidTileRetrieval(pos.X, pos.Y);
+                                    Tile t = CalRemixHelper.ParanoidTileRetrieval(pos.X, pos.Y);
                                     if (t.IsTileSolidGround() && p.velocity == Vector2.Zero)
                                     {
                                         p.velocity.Y = -8;

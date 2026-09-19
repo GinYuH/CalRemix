@@ -47,7 +47,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                 {
                     texture = ModContent.Request<Texture2D>(Texture + (Projectile.ai[0] + 1)).Value;
                 }
-                CalamityUtils.DrawAfterimagesCentered(Projectile, 0, Color.Purple, 3, texture);
+                CalRemixHelper.DrawAfterimagesCentered(Projectile, 0, Color.Purple, 3, texture);
                 CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Violet, lightColor, 4, texture);
             }
             

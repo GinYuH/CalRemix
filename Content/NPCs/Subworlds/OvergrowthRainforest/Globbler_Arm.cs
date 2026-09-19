@@ -78,7 +78,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 Point pt = NPC.Center.ToTileCoordinates();
                 if ((NPC.Center.Y < (dad.Center.Y - 16) || bothDrooped) && Collision.SolidTiles(NPC.position, 20, 20))
                 {
-                    if (!CalamityUtils.ParanoidTileRetrieval(pt.X, pt.Y +1).IsTileSolidGround())
+                    if (!CalRemixHelper.ParanoidTileRetrieval(pt.X, pt.Y +1).IsTileSolidGround())
                     {
                         NPC.velocity = Vector2.Zero;
                         NPC.ai[3] = 2;

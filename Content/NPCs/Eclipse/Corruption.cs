@@ -184,8 +184,8 @@ namespace CalRemix.Content.NPCs.Eclipse
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             if (Main.rand.NextBool(4))
-            target.AddBuff(BuffID.Cursed, CalamityUtils.SecondsToFrames(25));
-            target.AddBuff(ModContent.BuffType<Vaporfied>(), CalamityUtils.SecondsToFrames(4));
+            target.AddBuff(BuffID.Cursed, CalRemixHelper.SecondsToFrames(25));
+            target.AddBuff(ModContent.BuffType<Vaporfied>(), CalRemixHelper.SecondsToFrames(4));
         }
     }
 }

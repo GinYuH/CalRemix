@@ -81,10 +81,10 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 {
                     int x = (int)(NPC.Center.X / 16f) + Main.rand.Next(-50, 50);
                     int y = (int)(NPC.Center.Y / 16f) + Main.rand.Next(-50, 50);
-                    Tile tile = CalamityUtils.ParanoidTileRetrieval(x, y);
+                    Tile tile = CalRemixHelper.ParanoidTileRetrieval(x, y);
 
                     // Try again if the tile isn't solid or isn't exposed to air.
-                    if (!WorldGen.SolidTile(tile) || CalamityUtils.ParanoidTileRetrieval(x, y - 1).HasTile)
+                    if (!WorldGen.SolidTile(tile) || CalRemixHelper.ParanoidTileRetrieval(x, y - 1).HasTile)
                         continue;
 
                     // Try again if there's no open water near the tile.

@@ -34,7 +34,7 @@ namespace CalRemix.Content.Items.Potions
             Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
             Item.buffType = BuffID.WellFed;
-            Item.buffTime = CalamityUtils.SecondsToFrames(180);
+            Item.buffTime = CalRemixHelper.SecondsToFrames(180);
         }
 
         public override bool? UseItem(Player player)

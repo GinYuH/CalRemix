@@ -85,7 +85,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             if (Projectile.timeLeft > TimeLeft - 5)
                 return false;
 
-            CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor, 2);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor, 2);
             return false;
         }
 

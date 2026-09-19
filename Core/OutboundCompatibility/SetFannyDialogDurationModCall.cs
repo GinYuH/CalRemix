@@ -30,7 +30,7 @@ namespace CalRemix.Core.OutboundCompatibility
         {
             HelperMessage message = (HelperMessage)args[0];
             float dialogDuration = (float)args[1];
-            message.messageDuration = CalamityUtils.SecondsToFrames(dialogDuration);
+            message.messageDuration = CalRemixHelper.SecondsToFrames(dialogDuration);
 
             return message;
         }

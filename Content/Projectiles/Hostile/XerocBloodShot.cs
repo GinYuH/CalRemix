@@ -40,7 +40,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                 Projectile.velocity.Normalize();
                 Projectile.velocity *= scaleFactor;
             }
-            int ct = CalamityUtils.CountProjectiles(Type);
+            int ct = CalRemixHelper.CountProjectiles(Type);
             int dustAmt = (int)MathHelper.Max(1, (int)MathHelper.Lerp(4, 1, ct / 22f));
             for (int i = 0; i < dustAmt; i++)
             Dust.NewDust(Projectile.position, 22, 22, DustID.Blood, Scale: Main.rand.NextFloat(1, 4));

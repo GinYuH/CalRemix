@@ -56,7 +56,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D wreath = Projectile.Calamity().stealthStrike ? ModContent.Request<Texture2D>("CalRemix/Assets/ExtraTextures/DarkWreath").Value : TextureAssets.Projectile[Type].Value;
-            CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor, texture: wreath);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], lightColor, texture: wreath);
             return false;
         }
     }

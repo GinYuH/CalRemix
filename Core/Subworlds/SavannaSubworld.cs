@@ -86,10 +86,10 @@ namespace CalRemix.Core.Subworlds
 
             for (int i = 0; i < Main.maxTilesX; i++)
             {
-                CalamityUtils.ParanoidTileRetrieval(i, spawnY).ResetToType(TileID.Stone);
-                CalamityUtils.ParanoidTileRetrieval(i, spawnY).Get<TileWallBrightnessInvisibilityData>().IsTileInvisible = true;
-                CalamityUtils.ParanoidTileRetrieval(i, roof).ResetToType(TileID.Stone);
-                CalamityUtils.ParanoidTileRetrieval(i, roof).Get<TileWallBrightnessInvisibilityData>().IsTileInvisible = true;
+                CalRemixHelper.ParanoidTileRetrieval(i, spawnY).ResetToType(TileID.Stone);
+                CalRemixHelper.ParanoidTileRetrieval(i, spawnY).Get<TileWallBrightnessInvisibilityData>().IsTileInvisible = true;
+                CalRemixHelper.ParanoidTileRetrieval(i, roof).ResetToType(TileID.Stone);
+                CalRemixHelper.ParanoidTileRetrieval(i, roof).Get<TileWallBrightnessInvisibilityData>().IsTileInvisible = true;
             }
 
             Main.spawnTileX = spawnX - 3;

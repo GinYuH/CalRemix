@@ -126,7 +126,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             {
                 for (int j = -2; j <= 2; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval((int)(proj.Center.X / 16) + i, (int)(proj.Center.Y / 16) + j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval((int)(proj.Center.X / 16) + i, (int)(proj.Center.Y / 16) + j);
 
                     if (t.HasTile)
                     {

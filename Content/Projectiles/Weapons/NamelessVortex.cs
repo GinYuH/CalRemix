@@ -96,7 +96,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
             Main.EntitySpriteDraw(bloom, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, bloom.Size() / 2, 0.2f * Projectile.scale, 0);
             Main.spriteBatch.ExitShaderRegion();
-            //CalamityUtils.DrawAfterimagesCentered(Projectile, 1, Color.White * 0.4f);
+            //CalRemixHelper.DrawAfterimagesCentered(Projectile, 1, Color.White * 0.4f);
             return false;
         }
 

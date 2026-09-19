@@ -108,7 +108,7 @@ namespace CalRemix.Content.Projectiles.Accessories
             }
             if (Main.LocalPlayer == Main.player[Projectile.owner])
             {
-                Main.LocalPlayer.AddCooldown(BaroclawCooldown.ID, CalamityUtils.SecondsToFrames(5));
+                Main.LocalPlayer.AddCooldown(BaroclawCooldown.ID, CalRemixHelper.SecondsToFrames(5));
             }
             if (Main.netMode != NetmodeID.Server)
             {

@@ -57,7 +57,7 @@ namespace CalRemix.Content.Items.SummonItems
         {
             if (!RemixDowned.downedRajahsRevenge)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.DiamondCarrot.1", new Color(107, 137, 179));
+                if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.DiamondCarrot.1", new Color(107, 137, 179));
             }
             else
             {

@@ -33,7 +33,7 @@ namespace CalRemix.Content.Tiles.Subworlds.Glamour
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D tex = gray.Value;
-            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
             float edge = Main.maxTilesX * 0.86f * 16;
             float edgeEnd = Main.maxTilesX * 0.91f * 16;
             float fadeOff = Utils.GetLerpValue(edgeEnd, edge, Main.LocalPlayer.Center.X, true);

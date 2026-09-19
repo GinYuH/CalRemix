@@ -68,7 +68,7 @@ namespace CalRemix.Core.Subworlds
         {
             SkyManager.Instance["Ambience"].Deactivate();
             int light = ModContent.ProjectileType<LightOrbGuiding>();
-            if (!CalamityUtils.AnyProjectiles(light) && !Main.LocalPlayer.HasItem(ModContent.ItemType<ParadiseInfusedMurasama>()) && !Main.LocalPlayer.HasItem(ModContent.ItemType<Combosama>()))
+            if (!CalRemixHelper.AnyProjectiles(light) && !Main.LocalPlayer.HasItem(ModContent.ItemType<ParadiseInfusedMurasama>()) && !Main.LocalPlayer.HasItem(ModContent.ItemType<Combosama>()))
             {
                 Lighting.Clear();
             }
@@ -125,7 +125,7 @@ namespace CalRemix.Core.Subworlds
             Main.spawnTileX = (int)(Main.maxTilesX / 2f);
             for (int i = 0; i < Main.maxTilesY; i++)
             {
-                if (CalamityUtils.ParanoidTileRetrieval(Main.spawnTileX, i).HasTile)
+                if (CalRemixHelper.ParanoidTileRetrieval(Main.spawnTileX, i).HasTile)
                 {
                     Main.spawnTileY = i - 1;
                     break;
@@ -138,7 +138,7 @@ namespace CalRemix.Core.Subworlds
                 int spawnY = 0;
                 for (int i = 0; i < Main.maxTilesY; i++)
                 {
-                    if (CalamityUtils.ParanoidTileRetrieval(Main.spawnTileX, i).HasTile)
+                    if (CalRemixHelper.ParanoidTileRetrieval(Main.spawnTileX, i).HasTile)
                     {
                         spawnY = i;
                         break;
@@ -162,7 +162,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if ((i % 4 < 2 && j % 4 >= 2) || (j % 4 < 2 && i % 4 >= 2))
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         if (t.TileType == brick)
                         {
                             t.TileType = (ushort)ybrick;
@@ -176,39 +176,6 @@ namespace CalRemix.Core.Subworlds
             }
 
             RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<TheGrayDoor>());
-        }
-        public static void FillGrayChest(Chest c, int Type, bool place)
-        {
-            List<(int, int, int)> lootfr = new()
-            {
-                { (ModContent.ItemType<SealedBlackSand>(), 40, 80) },
-                { (ModContent.ItemType<RotPearl>(), 8, 19) },
-                { (ModContent.ItemType<FrozenSealedTear>(), 3, 9) },
-                { (ModContent.ItemType<Delirious>(), 1, 2) },
-                { (ModContent.ItemType<Forknife>(), 1, 2) },
-                { (ModContent.ItemType<SoftScarf>(), 1, 2) },
-                { (ModContent.ItemType<Murasama>(), 1, 2) },
-                { (ModContent.ItemType<Delirium>(), 1, 2) },
-                { (ModContent.ItemType<MonorianGem>(), 1, 2) },
-            };
-            (int, int, int)[] loot = CalamityUtils.ShuffleArray(lootfr.ToArray());
-            for (int i = 0; i < loot.Length; i++)
-            {
-                if (i == 0)
-                {
-                    c.item[i].SetDefaults(ModContent.ItemType<RoyalGuardianSword>());
-                }
-                else if (i == 1)
-                {
-                    c.item[i].SetDefaults(ModContent.ItemType<VoidWings>());
-                }
-                else
-                {
-                    Item item = c.item[i];
-                    item.SetDefaults(loot[i].Item1);
-                    item.stack = WorldGen.genRand.Next(loot[i].Item2, loot[i].Item3);
-                }
-            }
         }
     }
 }

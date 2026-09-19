@@ -26,7 +26,7 @@ namespace CalRemix.Content.Items.Potions
             Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
             Item.buffType = BuffID.WellFed2;
-            Item.buffTime = CalamityUtils.SecondsToFrames(180);
+            Item.buffTime = CalRemixHelper.SecondsToFrames(180);
         }
 
         public override void AddRecipes()

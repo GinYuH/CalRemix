@@ -6,24 +6,31 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
 {
     public abstract class TempleTE : ModTileEntity
     {
-        public Point designatedRoom = new Point(0, 0);
+        public Point roomCoords = new Point(0, 0);
 
         public virtual int tileID { get; set; }
+
+        public TempleRoom DesignatedRoom => OvergrowthRainforestGeneration.Rooms[roomCoords.X, roomCoords.Y];
+
+        public bool RoomIsActive => OvergrowthRainforestGeneration.RoomActive(OvergrowthRainforestGeneration.SafeRoom(roomCoords));
 
 
         public override bool IsTileValidForEntity(int x, int y)
         {
+            return true;
             Tile tile = Main.tile[x, y];
             return tile.HasTile && tile.TileType == tileID;
         }
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
+            Main.NewText(this.Name);
             TileObjectData tileData = TileObjectData.GetTileData(type, style, alternate);
 
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -51,17 +58,8 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
         {
             if (OvergrowthRainforestGeneration.Rooms == null)
                 return;
-            bool anyPlayers = false;
-            foreach (Player p in Main.ActivePlayers)
-            {
-                if (p.Remix().currentTempleRoom == OvergrowthRainforestGeneration.SafeRoom(designatedRoom))
-                {
-                    anyPlayers = true;
-                    break;
-                }
-            }
 
-            if (!anyPlayers)
+            if (DesignatedRoom == null)
             {
                 ResetObject();
                 return;
@@ -78,6 +76,18 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
         public virtual void ResetObject()
         {
 
+        }
+
+        public override void SaveData(TagCompound tag)
+        {
+            tag.Add("roomCoordsX", roomCoords.X);
+            tag.Add("roomCoordsY", roomCoords.Y);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            roomCoords.X = tag.GetInt("roomCoordsX");
+            roomCoords.Y = tag.GetInt("roomCoordsY");
         }
     }
 }

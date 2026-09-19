@@ -78,7 +78,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
         public override bool PreDraw(ref Color lightColor)
         {
             Color drawColor = Color.White;
-            CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], drawColor);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], drawColor);
             return false;
         }
     }

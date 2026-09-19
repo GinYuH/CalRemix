@@ -85,7 +85,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override bool PreDraw(ref Color lightColor)
         {
             CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.Red * 0.4f, lightColor, 8);
-            CalamityUtils.DrawAfterimagesCentered(Projectile, 0, lightColor, 3);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, 0, lightColor, 3);
             return false;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)

@@ -84,7 +84,7 @@ namespace CalRemix.Content.NPCs
                                 break;
                             for (int y = loc.Y; y < loc.Y + 100; y++)
                             {
-                                Tile t = CalamityUtils.ParanoidTileRetrieval(x, y);
+                                Tile t = CalRemixHelper.ParanoidTileRetrieval(x, y);
                                 if (t.IsTileSolid())
                                 {
                                     legDests[i] = new Vector2(x, y) * 16;
@@ -103,7 +103,7 @@ namespace CalRemix.Content.NPCs
                                 break;
                             for (int y = loc.Y; y < loc.Y + 100; y++)
                             {
-                                Tile t = CalamityUtils.ParanoidTileRetrieval(x, y);
+                                Tile t = CalRemixHelper.ParanoidTileRetrieval(x, y);
                                 if (t.IsTileSolid())
                                 {
                                     legDests[i] = new Vector2(x, y) * 16;

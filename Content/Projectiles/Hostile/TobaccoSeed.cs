@@ -37,7 +37,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override bool PreDraw(ref Color lightColor)
         {
-            CalamityUtils.DrawAfterimagesCentered(Projectile, 0, lightColor, 3);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, 0, lightColor, 3);
             return false;
         }
     }

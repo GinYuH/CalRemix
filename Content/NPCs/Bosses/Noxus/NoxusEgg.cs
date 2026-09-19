@@ -535,7 +535,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 for (int i = 0; i < NPC.width; i += Main.rand.Next(2, 6))
                 {
                     Point p = new((int)(NPC.BottomLeft.X + i) / 16, (int)(NPC.BottomLeft.Y / 16f) - 1);
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(p.X, p.Y);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(p.X, p.Y);
                     if (t.HasUnactuatedTile)
                     {
                         for (int j = 0; j < 3; j++)

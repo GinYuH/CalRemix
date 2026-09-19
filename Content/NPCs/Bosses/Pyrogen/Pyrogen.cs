@@ -1090,7 +1090,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             }
 
             // only start ticking down to the bomb when no more fragments are left
-            if ((!(AttackTimer == stopAbsorbing && CalamityUtils.AnyProjectiles(ModContent.ProjectileType<ObsidianFragment>()))) || end)
+            if ((!(AttackTimer == stopAbsorbing && CalRemixHelper.AnyProjectiles(ModContent.ProjectileType<ObsidianFragment>()))) || end)
             {
                 AttackTimer++;
             }
@@ -1285,7 +1285,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         break;
                     for (int y = -safeRadius; y < safeRadius; y++)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval((int)(teleportPos.X / 16f) + x, (int)(teleportPos.Y / 16f) + y);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval((int)(teleportPos.X / 16f) + x, (int)(teleportPos.Y / 16f) + y);
                         if (t.HasUnactuatedTile)
                         {
                             foundTile = true;
@@ -1477,7 +1477,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
             {
                 for (int j = p.Y - rad; j < p.Y + rad; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (Main.zenithWorld)
                     {
                         if (!t.HasTile)

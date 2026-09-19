@@ -181,10 +181,10 @@ namespace CalRemix.Content.NPCs.Eclipse
             {
                 for (int j = pos.Y - dist; j <= pos.Y + dist; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (t.LiquidAmount == 255)
                     {
-                        Tile t2 = CalamityUtils.ParanoidTileRetrieval(i, j + 1);
+                        Tile t2 = CalRemixHelper.ParanoidTileRetrieval(i, j + 1);
                         if (t2.LiquidAmount == 255)
                         {
                             validTiles.Add(new Point(i, j));

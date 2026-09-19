@@ -182,7 +182,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 if (NPC.ai[3] != 0 && !DefenseLine && !RemixDowned.downedRajahsRevenge && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     DefenseLine = true;
-                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Chat", Color.MediumPurple);
+                    CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.SupremeRajah.Chat", Color.MediumPurple);
 
                 }
                 if (NPC.life <= NPC.lifeMax / 7 && !SayLine && Main.netMode != NetmodeID.MultiplayerClient)
@@ -287,7 +287,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 {
                     if (isSupreme)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.6", new Color(107, 137, 179));
+                        if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.6", new Color(107, 137, 179));
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<SupremeRajahBookIt>(), damage, 0, Main.myPlayer);
@@ -295,7 +295,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                     }
                     else
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.2", new Color(107, 137, 179));
+                        if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.2", new Color(107, 137, 179));
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<RajahBookIt>(), damage, 0, Main.myPlayer);
@@ -313,7 +313,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 NPC.TargetClosest(true);
                 if (Math.Abs(NPC.Center.X - target.Center.X) + Math.Abs(NPC.Center.Y - target.Center.Y) > 10000)
                 {
-                    if (Main.netMode != 1) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.3", new Color(107, 137, 179));
+                    if (Main.netMode != 1) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.3", new Color(107, 137, 179));
                     if (Main.netMode != 1)
                     {
                         if (isSupreme)
@@ -504,7 +504,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                         internalAI[3] = 0;
                         if (internalAI[1] == 0)
                         {
-                            if (NPC.CountNPCS(ModContent.NPCType<RabbitcopterSoldier>()) + CalamityUtils.CountProjectiles(ModContent.ProjectileType<BunnySummon1>()) < 5)
+                            if (NPC.CountNPCS(ModContent.NPCType<RabbitcopterSoldier>()) + CalRemixHelper.CountProjectiles(ModContent.ProjectileType<BunnySummon1>()) < 5)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), StaffPos, Vector2.Zero, ModContent.ProjectileType<BunnySummon1>(), 0, 0, Main.myPlayer, Main.rand.Next((int)NPC.Center.X - 200, (int)NPC.Center.X + 200), Main.rand.Next((int)NPC.Center.Y - 200, (int)NPC.Center.Y - 50));
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), StaffPos, Vector2.Zero, ModContent.ProjectileType<BunnySummon1>(), 0, 0, Main.myPlayer, Main.rand.Next((int)NPC.Center.X - 200, (int)NPC.Center.X + 200), Main.rand.Next((int)NPC.Center.Y - 200, (int)NPC.Center.Y - 50));
@@ -520,7 +520,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                             }
                             if (NPC.ai[1] == 0)
                             {
-                                if (NPC.CountNPCS(ModContent.NPCType<RabbitcopterSoldier>()) + CalamityUtils.CountProjectiles(ModContent.ProjectileType<BunnySummon1>()) < 5)
+                                if (NPC.CountNPCS(ModContent.NPCType<RabbitcopterSoldier>()) + CalRemixHelper.CountProjectiles(ModContent.ProjectileType<BunnySummon1>()) < 5)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), StaffPos, Vector2.Zero, ModContent.ProjectileType<BunnySummon1>(), 0, 0, Main.myPlayer, Main.rand.Next((int)NPC.Center.X - 500, (int)NPC.Center.X + 500), Main.rand.Next((int)NPC.Center.Y - 200, (int)NPC.Center.Y - 50));
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), StaffPos, Vector2.Zero, ModContent.ProjectileType<BunnySummon1>(), 0, 0, Main.myPlayer, Main.rand.Next((int)NPC.Center.X - 500, (int)NPC.Center.X + 500), Main.rand.Next((int)NPC.Center.Y - 200, (int)NPC.Center.Y - 50));
@@ -529,7 +529,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                             }
                             else if (NPC.ai[1] == 1)
                             {
-                                if (NPC.CountNPCS(ModContent.NPCType<BunnyBrawler>()) + CalamityUtils.CountProjectiles(ModContent.ProjectileType<BunnySummon2>()) < 5)
+                                if (NPC.CountNPCS(ModContent.NPCType<BunnyBrawler>()) + CalRemixHelper.CountProjectiles(ModContent.ProjectileType<BunnySummon2>()) < 5)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), StaffPos, Vector2.Zero, ModContent.ProjectileType<BunnySummon2>(), 0, 0, Main.myPlayer, Main.rand.Next((int)NPC.Center.X - 500, (int)NPC.Center.X + 500), Main.rand.Next((int)NPC.Center.Y - 200, (int)NPC.Center.Y - 50));
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), StaffPos, Vector2.Zero, ModContent.ProjectileType<BunnySummon2>(), 0, 0, Main.myPlayer, Main.rand.Next((int)NPC.Center.X - 500, (int)NPC.Center.X + 500), Main.rand.Next((int)NPC.Center.Y - 200, (int)NPC.Center.Y - 50));
@@ -537,7 +537,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                             }
                             else if (NPC.ai[1] == 2)
                             {
-                                if (NPC.CountNPCS(ModContent.NPCType<BunnyBattler>()) + CalamityUtils.CountProjectiles(ModContent.ProjectileType<BunnySummon3>()) < 8)
+                                if (NPC.CountNPCS(ModContent.NPCType<BunnyBattler>()) + CalRemixHelper.CountProjectiles(ModContent.ProjectileType<BunnySummon3>()) < 8)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), StaffPos, Vector2.Zero, ModContent.ProjectileType<BunnySummon3>(), 0, 0, Main.myPlayer, Main.rand.Next((int)NPC.Center.X - 500, (int)NPC.Center.X + 500), Main.rand.Next((int)NPC.Center.Y - 200, (int)NPC.Center.Y - 50));
 
@@ -669,7 +669,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 }
                 else if (NPC.ai[3] == 7) //Carrot Farmer
                 {
-                    if (!CalamityUtils.AnyProjectiles(ModContent.ProjectileType<CarrotFarmerR>()))
+                    if (!CalRemixHelper.AnyProjectiles(ModContent.ProjectileType<CarrotFarmerR>()))
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, 0f, 0f, ModContent.ProjectileType<CarrotFarmerR>(), damage, 3f, Main.myPlayer, NPC.whoAmI);
                         NPC.netUpdate = true;
@@ -1153,7 +1153,7 @@ namespace CalRemix.Content.NPCs.Bosses.RajahBoss
                 int bunnyKills = NPC.killCount[Item.NPCtoBanner(NPCID.Bunny)];
                 if (bunnyKills >= 100)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient) CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.4", new Color(107, 137, 179));
+                    if (Main.netMode != NetmodeID.MultiplayerClient) CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.Rajah.4", new Color(107, 137, 179));
                 }
                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.ProjectileType<RajahBookIt>(), 100, 0, Main.myPlayer);
             }

@@ -153,7 +153,7 @@ namespace CalRemix.Content.Items.Accessories
                             Main.projectile[p].originalDamage = 20000;
                         Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().tvoproj = true;
                     }
-                    Main.LocalPlayer.AddCooldown(MagnaCoreCooldown.ID, CalamityUtils.SecondsToFrames(10));
+                    Main.LocalPlayer.AddCooldown(MagnaCoreCooldown.ID, CalRemixHelper.SecondsToFrames(10));
                 }
             }
         }

@@ -85,7 +85,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public void AbsolutelyFuckingAnnihilateTrees(int x, int y)
         {
-            Tile tileAtPosition = CalamityUtils.ParanoidTileRetrieval(x, y);
+            Tile tileAtPosition = CalRemixHelper.ParanoidTileRetrieval(x, y);
 
             // Ignore tiles that are not active and are not breakable by axes.
             if (!tileAtPosition.HasTile || !Main.tileAxe[tileAtPosition.TileType])

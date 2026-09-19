@@ -231,7 +231,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override bool PreDraw(ref Color lightColor)
         {
             if (Flying)
-                CalamityUtils.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Type], lightColor);
+                CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Type], lightColor);
             Texture2D texture = TextureAssets.Projectile[Type].Value;
             Texture2D texture2 = ModContent.Request<Texture2D>(Texture + "glow").Value;
             Rectangle rect = new(0, texture.Height / 2 * Projectile.frame, texture.Width, texture.Height / 2);

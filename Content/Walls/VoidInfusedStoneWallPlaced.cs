@@ -25,7 +25,7 @@ namespace CalRemix.Content.Walls
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            //if (CalamityUtils.ParanoidTileRetrieval(i, j).IsTileSolid())
+            //if (CalRemixHelper.ParanoidTileRetrieval(i, j).IsTileSolid())
                 //return false;
             int squareSpace = 4;
             int xMod = i % squareSpace;

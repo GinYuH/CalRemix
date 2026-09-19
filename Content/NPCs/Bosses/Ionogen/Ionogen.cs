@@ -185,7 +185,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
                                 }                                
                             }
                             // Ngl this sound doesn't even sound very electricky, but Teslastaff and Crystal Gauntlets already use it so meh
-                            if (CalamityUtils.AnyProjectiles(ModContent.ProjectileType<IonogenLightning>()) && NPC.ai[1] % 5 == 0)
+                            if (CalRemixHelper.AnyProjectiles(ModContent.ProjectileType<IonogenLightning>()) && NPC.ai[1] % 5 == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.DD2_LightningBugZap, NPC.Center);
                             }

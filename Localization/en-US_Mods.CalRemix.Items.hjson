@@ -6730,3 +6730,33 @@ LargePhylliteBrick: {
 	DisplayName: Phyllite Slab
 	Tooltip: ""
 }
+
+ChimpItem: {
+	DisplayName: Chimp Item
+	Tooltip: ""
+}
+
+LargeStinkbugItem: {
+	DisplayName: Large Stinkbug Item
+	Tooltip: ""
+}
+
+GigamothLarvaItem: {
+	DisplayName: Gigamoth Larva Item
+	Tooltip: ""
+}
+
+ChimpEnemySpawnerItem: {
+	DisplayName: Chimp Enemy Spawner Item
+	Tooltip: ""
+}
+
+LargeStinkbugEnemySpawnerItem: {
+	DisplayName: Large Stinkbug Enemy Spawner Item
+	Tooltip: ""
+}
+
+GigamothLarvaEnemySpawnerItem: {
+	DisplayName: Gigamoth Larva Enemy Spawner Item
+	Tooltip: ""
+}

@@ -44,7 +44,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                     p.damage = Projectile.damage;
                     SoundEngine.PlaySound(SoundID.PlayerKilled);
                     if (!Owner.HasCooldown(TyrantCooldown.ID))
-                        Owner.AddCooldown(TyrantCooldown.ID, CalamityUtils.SecondsToFrames(60));
+                        Owner.AddCooldown(TyrantCooldown.ID, CalRemixHelper.SecondsToFrames(60));
                     Projectile.Kill();
                 }
             }
@@ -66,7 +66,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             SoundEngine.PlaySound(SoundID.PlayerKilled);
             if (!Owner.HasCooldown(TyrantCooldown.ID))
-                Owner.AddCooldown(TyrantCooldown.ID, CalamityUtils.SecondsToFrames(60));
+                Owner.AddCooldown(TyrantCooldown.ID, CalRemixHelper.SecondsToFrames(60));
             Projectile.Kill();
         }
     }

@@ -23,7 +23,7 @@ namespace CalRemix.Core.Subworlds
     {
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
-            Predicate<NPCSpawnInfo> tile = new Predicate<NPCSpawnInfo>(n => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile);
+            Predicate<NPCSpawnInfo> tile = new Predicate<NPCSpawnInfo>(n => CalRemixHelper.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile);
 
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
             // Main Great Sea
@@ -169,7 +169,7 @@ namespace CalRemix.Core.Subworlds
                 progress.Value = 0.9f + MathHelper.Lerp(0f, 0.1f, i / (float)Main.maxTilesX);
                 for (int j = (int)(Main.maxTilesY * seaLevel); j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     t.LiquidAmount = 255;
                     t.LiquidType = LiquidID.Water;
                 }
@@ -224,10 +224,10 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = 0; j < (int)(Main.maxTilesY * groundBottom); j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (!t.HasTile)
                     {
-                        if (CalamityUtils.ParanoidTileRetrieval(i, j + 1).TileType == grass)
+                        if (CalRemixHelper.ParanoidTileRetrieval(i, j + 1).TileType == grass)
                         {
                             if (Main.rand.NextBool(60))
                             {

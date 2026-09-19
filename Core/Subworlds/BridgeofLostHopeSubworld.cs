@@ -90,8 +90,8 @@ namespace CalRemix.Core.Subworlds
 
             for (int i = 0; i < Main.maxTilesX; i++)
             {
-                CalamityUtils.ParanoidTileRetrieval(i, spawnY).ResetToType(TileID.Stone);
-                CalamityUtils.ParanoidTileRetrieval(i, spawnY - 5).ResetToType(TileID.Stone);
+                CalRemixHelper.ParanoidTileRetrieval(i, spawnY).ResetToType(TileID.Stone);
+                CalRemixHelper.ParanoidTileRetrieval(i, spawnY - 5).ResetToType(TileID.Stone);
             }
 
             Main.spawnTileX = spawnX - 3;

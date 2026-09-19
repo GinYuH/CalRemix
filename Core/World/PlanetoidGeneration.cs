@@ -101,7 +101,7 @@ namespace CalRemix.Core.World
                         }
                     }
                     Color messageColor = Color.Magenta;
-                    CalamityUtils.BroadcastLocalizedText("Rifts materialize in the upper atmosphere...", messageColor);
+                    CalRemixHelper.BroadcastLocalizedText("Rifts materialize in the upper atmosphere...", messageColor);
                     CalRemixWorld.generatedCosmiliteSlag = true;
                     CalRemixWorld.UpdateWorldBool();
                 }

@@ -158,15 +158,15 @@ namespace CalRemix.Content.NPCs
                         SoundEngine.PlaySound(SoundID.Dig with { MaxInstances = -1, Volume = 2f, Pitch = -1.2f }, NPC.position);
                         for (int i = 0; i < 5; i++)
                         {
-                            if (CalamityUtils.ParanoidTileRetrieval((int)(NPC.Center.X) / 16, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalamityUtils.ParanoidTileRetrieval((int)(NPC.Center.X) / 16, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
+                            if (CalRemixHelper.ParanoidTileRetrieval((int)(NPC.Center.X) / 16, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalRemixHelper.ParanoidTileRetrieval((int)(NPC.Center.X) / 16, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
                             {
                                 WorldGen.KillTile((int)(NPC.Center.X) / 16, ((int)TeleLocationY / 16) - 1, true, true);
                             }
-                            if (CalamityUtils.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) - 1, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalamityUtils.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) - 1, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
+                            if (CalRemixHelper.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) - 1, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalRemixHelper.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) - 1, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
                             {
                                 WorldGen.KillTile(((int)(NPC.Center.X) / 16) - 1, ((int)TeleLocationY / 16) - 1, true, true);
                             }
-                            if (CalamityUtils.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) + 1, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalamityUtils.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) + 1, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
+                            if (CalRemixHelper.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) + 1, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalRemixHelper.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) + 1, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
                             {
                                 WorldGen.KillTile(((int)(NPC.Center.X) / 16) + 1, ((int)TeleLocationY / 16) - 1, true, true);
                             }
@@ -179,14 +179,14 @@ namespace CalRemix.Content.NPCs
                     NPC.position.Y -= movementRateEntering;
 
                     // check if the tile at the pelvis point ISNT a tile
-                    bool checkPelvisTileIsSolid = CalamityUtils.ParanoidTileRetrieval((int)spotAtPelvisTileCoords.X, (int)spotAtPelvisTileCoords.Y).IsTileSolid() && CalamityUtils.ParanoidTileRetrieval((int)spotAtPelvisTileCoords.X, (int)spotAtPelvisTileCoords.Y).IsTileSolidGround();
+                    bool checkPelvisTileIsSolid = CalRemixHelper.ParanoidTileRetrieval((int)spotAtPelvisTileCoords.X, (int)spotAtPelvisTileCoords.Y).IsTileSolid() && CalRemixHelper.ParanoidTileRetrieval((int)spotAtPelvisTileCoords.X, (int)spotAtPelvisTileCoords.Y).IsTileSolidGround();
                     bool checkPelvisIsInLava = Collision.LavaCollision(spotAtPelvis, 8, 8);
                     bool checkPelvisIsInRightSpot = spotAtPelvis.Y < TeleLocationY;
                     // if we take too long to find a nice place to stop at, then reduce the radius we check for tiles
                     Vector2 spotToRaycastTo = Timer >= 40 ? spotAbovePelvis : spotAtChest;
                     // if the head hits the ceiling prematurely then FUCK!!!!!!!
                     // we also make sure that there are tiles between them, so this cant trigger while burrowing out of tiles
-                    bool checkTopOfHeadIsSolid = CalamityUtils.ParanoidTileRetrieval((int)NPC.Center.X / 16, (int)NPC.position.Y / 16).IsTileSolid() && CalamityUtils.ParanoidTileRetrieval((int)NPC.Center.X / 16, (int)NPC.position.Y / 16).IsTileSolidGround();
+                    bool checkTopOfHeadIsSolid = CalRemixHelper.ParanoidTileRetrieval((int)NPC.Center.X / 16, (int)NPC.position.Y / 16).IsTileSolid() && CalRemixHelper.ParanoidTileRetrieval((int)NPC.Center.X / 16, (int)NPC.position.Y / 16).IsTileSolidGround();
                     bool headHittingCeiling = Timer >= 10 && !Collision.CanHitLine(spotAboveHead, 2, 2, spotAtHalfHead, 2, 2) && checkPelvisTileIsSolid && checkTopOfHeadIsSolid;
                     if (headHittingCeiling || !checkPelvisTileIsSolid && checkPelvisIsInRightSpot && Collision.CanHitLine(spotAtPelvis, 2, 2, spotToRaycastTo, 2, 2))
                     {
@@ -242,15 +242,15 @@ namespace CalRemix.Content.NPCs
                         // originally i was going to get the dust and make it bigger, but                     .
                         for (int i = 0; i < 3; i++)
                         {
-                            if (CalamityUtils.ParanoidTileRetrieval((int)(NPC.Center.X) / 16, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalamityUtils.ParanoidTileRetrieval((int)(NPC.Center.X) / 16, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
+                            if (CalRemixHelper.ParanoidTileRetrieval((int)(NPC.Center.X) / 16, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalRemixHelper.ParanoidTileRetrieval((int)(NPC.Center.X) / 16, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
                             {
                                 WorldGen.KillTile((int)(NPC.Center.X) / 16, ((int)TeleLocationY / 16) - 1, true, true);
                             }
-                            if (CalamityUtils.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) - 1, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalamityUtils.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) - 1, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
+                            if (CalRemixHelper.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) - 1, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalRemixHelper.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) - 1, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
                             {
                                 WorldGen.KillTile(((int)(NPC.Center.X) / 16) - 1, ((int)TeleLocationY / 16) - 1, true, true);
                             }
-                            if (CalamityUtils.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) + 1, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalamityUtils.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) + 1, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
+                            if (CalRemixHelper.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) + 1, (int)(TeleLocationY / 16) - 1).IsTileSolid() && CalRemixHelper.ParanoidTileRetrieval(((int)(NPC.Center.X) / 16) + 1, (int)(TeleLocationY / 16) - 1).IsTileSolidGround())
                             {
                                 WorldGen.KillTile(((int)(NPC.Center.X) / 16) + 1, ((int)TeleLocationY / 16) - 1, true, true);
                             }

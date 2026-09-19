@@ -52,7 +52,7 @@ namespace CalRemix.Content.Tiles
         {
             if (NPC.AnyNPCs(ModContent.NPCType<Ionogen>()))
                 return false;
-            IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
+            IonCubeTE cube = CalRemixHelper.FindTileEntity<IonCubeTE>(i, j, 1, 1);
             if (cube != null)
             {
                 CalRemixPlayer player = Main.LocalPlayer.GetModPlayer<CalRemixPlayer>();
@@ -108,7 +108,7 @@ namespace CalRemix.Content.Tiles
         {
             if (fail)
                 return;
-            IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
+            IonCubeTE cube = CalRemixHelper.FindTileEntity<IonCubeTE>(i, j, 1, 1);
             cube?.Kill(i, j);
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -146,7 +146,7 @@ namespace CalRemix.Content.Tiles
         public static void DrawGuy(SpriteBatch sb, int i, int j)
         {
             Tile tile = Main.tile[i, j];
-            IonCubeTE cube = CalamityUtils.FindTileEntity<IonCubeTE>(i, j, 1, 1);
+            IonCubeTE cube = CalRemixHelper.FindTileEntity<IonCubeTE>(i, j, 1, 1);
             if (cube != null)
             {
                 DoGuyBehaviour(cube);

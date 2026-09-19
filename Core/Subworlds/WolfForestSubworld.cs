@@ -25,7 +25,7 @@ namespace CalRemix.Core.Subworlds
         public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
         {
             List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
-            list.Add(item: (ModContent.NPCType<DireWolf>(), 1, n => CalamityUtils.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile));
+            list.Add(item: (ModContent.NPCType<DireWolf>(), 1, n => CalRemixHelper.ParanoidTileRetrieval(n.SpawnTileX, n.SpawnTileY + 1).HasTile));
             return list;
         }
 
@@ -88,7 +88,7 @@ namespace CalRemix.Core.Subworlds
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     bool validSnow = false;
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (t.TileType == earth && t.HasTile)
                     {
                         bool hasAir = false;
@@ -102,7 +102,7 @@ namespace CalRemix.Core.Subworlds
                                 {
                                     continue;
                                 }
-                                if (!CalamityUtils.ParanoidTileRetrieval(k, l).HasTile)
+                                if (!CalRemixHelper.ParanoidTileRetrieval(k, l).HasTile)
                                 {
                                     hasAir = true;
                                     break;
@@ -111,17 +111,17 @@ namespace CalRemix.Core.Subworlds
                         }
                         if (hasAir)
                         {
-                            CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType(snow);
+                            CalRemixHelper.ParanoidTileRetrieval(i, j).ResetToType(snow);
                         }
 
-                        if (!CalamityUtils.ParanoidTileRetrieval(i, j - 1).HasTile && treeCd <= 0)
+                        if (!CalRemixHelper.ParanoidTileRetrieval(i, j - 1).HasTile && treeCd <= 0)
                         {
                             if (WorldGen.genRand.NextBool(5))
                             {
                                 int treeHeight = WorldGen.genRand.Next(3, 13);
                                 for (int k = j - 1; k > j - treeHeight; k--)
                                 {
-                                    CalamityUtils.ParanoidTileRetrieval(i, k).WallType = tree;
+                                    CalRemixHelper.ParanoidTileRetrieval(i, k).WallType = tree;
                                 }
                                 treeCd = 2;
                             }
@@ -134,7 +134,7 @@ namespace CalRemix.Core.Subworlds
             Main.spawnTileX = (int)(Main.maxTilesX * 0.5f);
             for (int i = 0; i < Main.maxTilesY; i++)
             {
-                if (CalamityUtils.ParanoidTileRetrieval(Main.spawnTileX, i).HasTile)
+                if (CalRemixHelper.ParanoidTileRetrieval(Main.spawnTileX, i).HasTile)
                 {
                     Main.spawnTileY = i;
                     break;

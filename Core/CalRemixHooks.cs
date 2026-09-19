@@ -296,7 +296,7 @@ namespace CalRemix.Core
 
                 AchievementsHelper.CheckMechaMayhem();
 
-                CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.TripletsBossText", new Color(175, 75, 255));
+                CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.TripletsBossText", new Color(175, 75, 255));
                 return;
             }
             else
@@ -368,7 +368,7 @@ namespace CalRemix.Core
                 {
                     for (int j = pos.Y - checkRange; j < pos.Y + checkRange; j++)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         if (t.TileType == grass)
                         {
                             HorizonGrass.DrawHorizonGrass(i, j, Main.spriteBatch, true);
@@ -387,7 +387,7 @@ namespace CalRemix.Core
                 {
                     for (int j = pos.Y - 2; j < pos.Y + 2; j++)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         if (t.TileType == grass)
                         {
                             HorizonGrass.DrawHorizonGrass(i, j, Main.spriteBatch, true);
@@ -1248,12 +1248,12 @@ namespace CalRemix.Core
                 Vector2 mayhemOff = new Vector2(3000, mayhemY);
                 Vector2 bfLocation = new Vector2(Main.screenWidth * 0.34f, bfY) + Main.rand.NextVector2Square(-10, 10);
                 Vector2 mayhemLocation = new Vector2(Main.screenWidth * 0.32f, mayhemY) + Main.rand.NextVector2Square(-10, 10);
-                float bfCompletion = Utils.GetLerpValue(CalamityUtils.SecondsToFrames(duration - 2), CalamityUtils.SecondsToFrames(duration - 4), CalRemixWorld.roachDuration, true);
-                float mayhemCompletion = Utils.GetLerpValue(CalamityUtils.SecondsToFrames(duration - 4), CalamityUtils.SecondsToFrames(duration - 6), CalRemixWorld.roachDuration, true);
-                float textOpacity = Utils.GetLerpValue(CalamityUtils.SecondsToFrames(duration - 12), CalamityUtils.SecondsToFrames(duration - 10), CalRemixWorld.roachDuration, true);
+                float bfCompletion = Utils.GetLerpValue(CalRemixHelper.SecondsToFrames(duration - 2), CalRemixHelper.SecondsToFrames(duration - 4), CalRemixWorld.roachDuration, true);
+                float mayhemCompletion = Utils.GetLerpValue(CalRemixHelper.SecondsToFrames(duration - 4), CalRemixHelper.SecondsToFrames(duration - 6), CalRemixWorld.roachDuration, true);
+                float textOpacity = Utils.GetLerpValue(CalRemixHelper.SecondsToFrames(duration - 12), CalRemixHelper.SecondsToFrames(duration - 10), CalRemixWorld.roachDuration, true);
                 Utils.DrawBorderString(Main.spriteBatch, bf, Vector2.Lerp(bfOff, bfLocation, bfCompletion), Color.Red * textOpacity, (Main.screenWidth / 2 / bfWidth) + 0.1f * (float)Math.Cos(Main.GlobalTimeWrappedHourly * 22));
                 Utils.DrawBorderString(Main.spriteBatch, mayhem, Vector2.Lerp(mayhemOff, mayhemLocation, mayhemCompletion), Color.Red * textOpacity, (Main.screenWidth / 2 / mayhemWidth) + 0.1f * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 22));
-                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Red * 0.22f * Utils.GetLerpValue(CalamityUtils.SecondsToFrames(CalRemixWorld.ROACHDURATIONSECONDS), CalamityUtils.SecondsToFrames(CalRemixWorld.ROACHDURATIONSECONDS - 3), CalRemixWorld.roachDuration, true), 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth * 4, Main.screenHeight * 4), null, Color.Red * 0.22f * Utils.GetLerpValue(CalRemixHelper.SecondsToFrames(CalRemixWorld.ROACHDURATIONSECONDS), CalRemixHelper.SecondsToFrames(CalRemixWorld.ROACHDURATIONSECONDS - 3), CalRemixWorld.roachDuration, true), 0f, TextureAssets.MagicPixel.Value.Size() * 0.5f, 0, 0f);
                 Texture2D explosion = Request<Texture2D>("CalRemix/Assets/ExtraTextures/RealisticExplosion").Value;
                 for (int i = 0; i < RoachScene.explosions.Count; i++)
                 {

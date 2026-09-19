@@ -82,7 +82,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (j > (int)(Main.maxTilesY * 0.9f))
                     {
-                        CalamityUtils.ParanoidTileRetrieval(i, j).ResetToType((ushort)grass);
+                        CalRemixHelper.ParanoidTileRetrieval(i, j).ResetToType((ushort)grass);
                     }
                 }
             }

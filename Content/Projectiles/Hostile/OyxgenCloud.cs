@@ -42,7 +42,7 @@ namespace CalRemix.Content.Projectiles.Hostile
         public override bool PreDraw(ref Color lightColor)
         {
             CalamityUtils.DrawProjectileWithBackglow(Projectile, Color.White * 0.4f, Color.White * 0.4f, 8, TextureAssets.Cloud[(int)Projectile.ai[0]].Value);
-            CalamityUtils.DrawAfterimagesCentered(Projectile, 1, lightColor, 4, TextureAssets.Cloud[(int)Projectile.ai[0]].Value);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, 1, lightColor, 4, TextureAssets.Cloud[(int)Projectile.ai[0]].Value);
             return false; 
         }
     }

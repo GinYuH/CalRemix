@@ -65,7 +65,7 @@ namespace CalRemix.Content.Items.Accessories
                         if (Main.projectile.IndexInRange(p))
                             Main.projectile[p].originalDamage = 20000;
                     }
-                    Main.LocalPlayer.AddCooldown(MagnaCoreCooldown.ID, CalamityUtils.SecondsToFrames(20));
+                    Main.LocalPlayer.AddCooldown(MagnaCoreCooldown.ID, CalRemixHelper.SecondsToFrames(20));
                 }
             }
         }

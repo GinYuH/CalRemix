@@ -35,11 +35,11 @@ namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix
         {
             RemixDowned.downedVernix = true;
 
-            CalamityUtils.SpawnOre(ModContent.TileType<PerennialOre>(), 12E-05, 0.65f, 0.85f, 5, 10, TileID.Dirt, TileID.Stone);
+            CalRemixHelper.SpawnOre(ModContent.TileType<PerennialOre>(), 12E-05, 0.65f, 0.85f, 5, 10, TileID.Dirt, TileID.Stone);
 
             string key = "Mods.CalamityMod.Status.Progression.PlantOreText";
             Color messageColor = Color.GreenYellow;
-            CalamityUtils.BroadcastLocalizedText(key, messageColor);
+            CalRemixHelper.BroadcastLocalizedText(key, messageColor);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

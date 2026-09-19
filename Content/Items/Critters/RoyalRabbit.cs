@@ -43,7 +43,7 @@ namespace CalRemix.Content.Items.Critters
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.RoyalRabbit.1", new Color(107, 137, 179));
+                        CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.RoyalRabbit.1", new Color(107, 137, 179));
                     }
 
                     SoundEngine.PlaySound(new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound"), player.Center);

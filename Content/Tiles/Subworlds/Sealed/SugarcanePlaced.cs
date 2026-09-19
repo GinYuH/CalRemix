@@ -44,14 +44,14 @@ namespace CalRemix.Content.Tiles.Subworlds.Sealed
 
         public override void RandomUpdate(int i, int j)
         {
-            if (CalamityUtils.ParanoidTileRetrieval(i, j - 1).HasTile)
+            if (CalRemixHelper.ParanoidTileRetrieval(i, j - 1).HasTile)
                 return;
             int maxHeight = 14;
             int curHeight = 1;
             bool dontGrow = true;
             for (int k = j + 1; k < j + maxHeight; k++)
             {
-                Tile t = CalamityUtils.ParanoidTileRetrieval(i, k);
+                Tile t = CalRemixHelper.ParanoidTileRetrieval(i, k);
                 if (t.TileType == Type)
                 {
                     curHeight++;

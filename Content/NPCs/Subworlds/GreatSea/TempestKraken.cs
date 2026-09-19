@@ -108,7 +108,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                 }
 
 
-                if (Main.rand.NextBool(CalamityUtils.SecondsToFrames(600)))
+                if (Main.rand.NextBool(CalRemixHelper.SecondsToFrames(600)))
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {

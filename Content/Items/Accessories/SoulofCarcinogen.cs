@@ -46,7 +46,7 @@ namespace CalRemix.Content.Items.Accessories
             player.GetDamage<GenericDamageClass>() += 0.07f;
             player.GetModPlayer<CalRemixPlayer>().carcinogenSoul = true;
             player.GetModPlayer<CalRemixPlayer>().timeSmoked++;
-            if (player.GetModPlayer<CalRemixPlayer>().timeSmoked > CalamityUtils.SecondsToFrames(MaxSmokeTime))
+            if (player.GetModPlayer<CalRemixPlayer>().timeSmoked > CalRemixHelper.SecondsToFrames(MaxSmokeTime))
             {
                 player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.CarcinogenSoul").Format(player.name))), 10142, 0);
                 player.GetModPlayer<CalRemixPlayer>().timeSmoked = 0;
@@ -56,7 +56,7 @@ namespace CalRemix.Content.Items.Accessories
 
             if (player.miscCounter % 12 == 0)
             {
-                int damage = (int)MathHelper.Lerp(12, 60, player.GetModPlayer<CalRemixPlayer>().timeSmoked / (float)CalamityUtils.SecondsToFrames(MaxSmokeTime));
+                int damage = (int)MathHelper.Lerp(12, 60, player.GetModPlayer<CalRemixPlayer>().timeSmoked / (float)CalRemixHelper.SecondsToFrames(MaxSmokeTime));
                 int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center + new Vector2(player.direction * 30, -10), Vector2.UnitY * -4 + new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)), ModContent.ProjectileType<CigarSmoke>(), (int)player.GetDamage<AverageDamageClass>().ApplyTo(damage), 0f, player.whoAmI);
             }
         }

@@ -25,7 +25,7 @@ namespace CalRemix.Content.Items.Potions
             Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
             Item.buffType = ModContent.BuffType<SharkRain>();
-            Item.buffTime = CalamityUtils.MinutesToFrames(5);
+            Item.buffTime = CalRemixHelper.MinutesToFrames(5);
         }
 
         public override void AddRecipes()

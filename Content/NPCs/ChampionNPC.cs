@@ -358,7 +358,7 @@ namespace CalRemix
                 // Leave behind blocks
                 case (int)ChampionID.Brown:
                     Point tilePos = npc.Bottom.ToTileCoordinates();
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(tilePos.X, tilePos.Y);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(tilePos.X, tilePos.Y);
                     if (t != null)
                     {
                         if (!t.HasTile)

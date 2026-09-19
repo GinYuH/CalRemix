@@ -56,7 +56,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                     {
                         if (Projectile.localAI[1] <= 0)
                         {
-                            if (Projectile.Center.Y > SPSky.SafeArea.Bottom || Projectile.Center.Y < SPSky.SafeArea.Top || CalamityUtils.ParanoidTileRetrieval((int)(Projectile.Center.X / 16), (int)(Projectile.Center.Y / 16)).HasTile)
+                            if (Projectile.Center.Y > SPSky.SafeArea.Bottom || Projectile.Center.Y < SPSky.SafeArea.Top || CalRemixHelper.ParanoidTileRetrieval((int)(Projectile.Center.X / 16), (int)(Projectile.Center.Y / 16)).HasTile)
                             {
                                 SoundEngine.PlaySound(AnomalyDisciple3.OrbuleSound with { Pitch = 0.5f }, Projectile.Center);
                                 Projectile.velocity.Y *= -1;

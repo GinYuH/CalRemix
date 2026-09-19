@@ -341,27 +341,27 @@ namespace CalRemix
                 }
                 if (item.type == ItemID.CopperWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalamityUtils.SecondsToFrames(300));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalRemixHelper.SecondsToFrames(300));
                 }
                 if (item.type == ItemID.TinWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalamityUtils.SecondsToFrames(420));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalRemixHelper.SecondsToFrames(420));
                 }
                 if (item.type == ItemID.SilverWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalamityUtils.SecondsToFrames(300));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalRemixHelper.SecondsToFrames(300));
                 }
                 if (item.type == ItemID.TungstenWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalamityUtils.SecondsToFrames(420));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalRemixHelper.SecondsToFrames(420));
                 }
                 if (item.type == ItemID.GoldWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalamityUtils.SecondsToFrames(300));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalRemixHelper.SecondsToFrames(300));
                 }
                 if (item.type == ItemID.PlatinumWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalamityUtils.SecondsToFrames(420));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalRemixHelper.SecondsToFrames(420));
                 }
             }
         }
@@ -1204,18 +1204,18 @@ namespace CalRemix
                 if (IsFruit(item))
                 {
                     player.Heal(player.statLifeMax2 / 3);
-                    player.AddBuff(BuffID.PotionSickness, CalamityUtils.SecondsToFrames(45));
+                    player.AddBuff(BuffID.PotionSickness, CalRemixHelper.SecondsToFrames(45));
                 }
             }
             if (item.type == ItemType<HadalStew>())
             {
-                player.AddBuff(BuffID.Wrath, CalamityUtils.SecondsToFrames(60));
-                player.AddBuff(BuffID.Rage, CalamityUtils.SecondsToFrames(60));
-                player.AddBuff(BuffID.Endurance, CalamityUtils.SecondsToFrames(60));
-                player.AddBuff(BuffID.Swiftness, CalamityUtils.SecondsToFrames(60));
-                player.AddBuff(BuffID.Ironskin, CalamityUtils.SecondsToFrames(60));
-                player.AddBuff(BuffID.Regeneration, CalamityUtils.SecondsToFrames(60));
-                player.AddBuff(BuffID.Titan, CalamityUtils.SecondsToFrames(60));
+                player.AddBuff(BuffID.Wrath, CalRemixHelper.SecondsToFrames(60));
+                player.AddBuff(BuffID.Rage, CalRemixHelper.SecondsToFrames(60));
+                player.AddBuff(BuffID.Endurance, CalRemixHelper.SecondsToFrames(60));
+                player.AddBuff(BuffID.Swiftness, CalRemixHelper.SecondsToFrames(60));
+                player.AddBuff(BuffID.Ironskin, CalRemixHelper.SecondsToFrames(60));
+                player.AddBuff(BuffID.Regeneration, CalRemixHelper.SecondsToFrames(60));
+                player.AddBuff(BuffID.Titan, CalRemixHelper.SecondsToFrames(60));
             }
         }
 

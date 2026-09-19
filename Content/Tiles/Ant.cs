@@ -52,7 +52,7 @@ namespace CalRemix.Content.Tiles
             {
                 SoundEngine.PlaySound(Sonar);
             }
-            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
             /*if (Main.mouseRightRelease && Main.mouseRight)
             {
                 SoundEngine.PlaySound(BetterSoundID.ItemBell);
@@ -126,25 +126,25 @@ namespace CalRemix.Content.Tiles
                 case AntDirectionType.Up:
                     {
                         WorldGen.PlaceTile(x, y - 1, ModContent.TileType<Ant>(), style: t.TileFrameX % 18, forced: true);
-                        CalamityUtils.ParanoidTileRetrieval(x, y - 1).TileFrameX = t.TileFrameX;
+                        CalRemixHelper.ParanoidTileRetrieval(x, y - 1).TileFrameX = t.TileFrameX;
                         break;
                     }
                 case AntDirectionType.Left:
                     {
                         WorldGen.PlaceTile(x - 1, y, ModContent.TileType<Ant>(), style: t.TileFrameX % 18, forced: true);
-                        CalamityUtils.ParanoidTileRetrieval(x - 1, y).TileFrameX = t.TileFrameX;
+                        CalRemixHelper.ParanoidTileRetrieval(x - 1, y).TileFrameX = t.TileFrameX;
                         break;
                     }
                 case AntDirectionType.Right:
                     {
                         WorldGen.PlaceTile(x + 1, y, ModContent.TileType<Ant>(), style: t.TileFrameX % 18, forced: true);
-                        CalamityUtils.ParanoidTileRetrieval(x + 1, y).TileFrameX = t.TileFrameX;
+                        CalRemixHelper.ParanoidTileRetrieval(x + 1, y).TileFrameX = t.TileFrameX;
                         break;
                     }
                 case AntDirectionType.Down:
                     {
                         WorldGen.PlaceTile(x, y + 1, ModContent.TileType<Ant>(), style: t.TileFrameX % 18, forced: true);
-                        CalamityUtils.ParanoidTileRetrieval(x, y + 1).TileFrameX = t.TileFrameX;
+                        CalRemixHelper.ParanoidTileRetrieval(x, y + 1).TileFrameX = t.TileFrameX;
                         break;
                     }
             }

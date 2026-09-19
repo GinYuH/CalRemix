@@ -45,7 +45,7 @@ namespace CalRemix.Content.Walls
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D tex = glow.Value;
-            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
             spriteBatch.Draw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset + new Vector2(-8, -8), new Rectangle(t.WallFrameX, t.WallFrameY, 32, 32), Color.White * 0.1f, 0, Vector2.Zero, 1, 0, 0);
         }
     }

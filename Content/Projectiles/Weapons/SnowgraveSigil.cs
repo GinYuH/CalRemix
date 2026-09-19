@@ -89,7 +89,7 @@ namespace CalRemix.Content.Projectiles.Weapons
 
         public override void OnKill(int timeLeft)
         {
-            Main.player[Projectile.owner].AddCooldown(SnowgraveCooldown.ID, CalamityUtils.SecondsToFrames(60));
+            Main.player[Projectile.owner].AddCooldown(SnowgraveCooldown.ID, CalRemixHelper.SecondsToFrames(60));
         }
     }
 }

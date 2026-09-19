@@ -410,7 +410,7 @@ namespace CalRemix
                 }
             }
 
-            if (!CalamityUtils.AnyProjectiles(ProjectileType<Claw>()))
+            if (!CalRemixHelper.AnyProjectiles(ProjectileType<Claw>()))
             {
                 clawed = 0;
             }
@@ -457,7 +457,7 @@ namespace CalRemix
                             break;
                         for (int j = y; j < y + height + 4; j++)
                         {
-                            Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                             if (t.IsTileSolidGround())
                             {
                                 npc.SimpleStrikeNPC((int)(Math.Abs(npc.velocity.Y)), 1, noPlayerInteraction: true);
@@ -508,7 +508,7 @@ namespace CalRemix
             {
                 if (!npc.dontTakeDamage && !npc.Calamity().unbreakableDR && !npc.friendly && npc.Distance(Main.LocalPlayer.Center) < Main.screenWidth)
                 {
-                    npc.life -= Math.Max((int)(npc.lifeMax / (float)CalamityUtils.SecondsToFrames(300)), 1);
+                    npc.life -= Math.Max((int)(npc.lifeMax / (float)CalRemixHelper.SecondsToFrames(300)), 1);
                     if (npc.life <= 0)
                     {
                         npc.StrikeInstantKill();
@@ -1150,7 +1150,7 @@ namespace CalRemix
             {
                 if (!NPCID.Sets.BossBestiaryPriority.Contains(npc.type) || npc.Calamity().CanHaveBossHealthBar)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval((int)npc.Bottom.X / 16, (int)npc.Bottom.Y / 16);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval((int)npc.Bottom.X / 16, (int)npc.Bottom.Y / 16);
                     if (t.TileType == TileType<GrimesandPlaced>())
                     {
                         npc.StrikeInstantKill();
@@ -1992,7 +1992,7 @@ namespace CalRemix
                 if (npc.type == NPCID.Wizard && npc.life <= 0 && CalRemixWorld.ionQuestLevel == IonCubeTE.dialogue.Count - 2)
                 {
                     CalRemixWorld.wizardDisabled = true;
-                    CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.StatusText.ByeWizard", Color.DarkBlue);
+                    CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.ByeWizard", Color.DarkBlue);
                     CalRemixWorld.UpdateWorldBool();
                 }
             }
@@ -2085,7 +2085,7 @@ namespace CalRemix
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.1", new Color(107, 137, 179));
+                        CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.1", new Color(107, 137, 179));
                     }
 
                     SoundEngine.PlaySound(new SoundStyle("CalRemix/Content/NPCs/Bosses/RajahBoss/RajahRoarSound"), npc.Center);
@@ -2115,7 +2115,7 @@ namespace CalRemix
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        CalamityUtils.BroadcastLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.3", new Color(107, 137, 179));
+                        CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.Dialog.RajahGlobalInfo.3", new Color(107, 137, 179));
                     }
                 }
             }
@@ -2185,10 +2185,10 @@ namespace CalRemix
             {
                 if (!DownedBossSystem.downedRavager && npc.type == NPCType<RavagerBody>())
                 {
-                    CalamityUtils.SpawnOre(TileType<LifeOreTile>(), 0.25E-05, 0.45f, 0.65f, 30, 40);
+                    CalRemixHelper.SpawnOre(TileType<LifeOreTile>(), 0.25E-05, 0.45f, 0.65f, 30, 40);
 
                     Color messageColor = Color.Lime;
-                    CalamityUtils.BroadcastLocalizedText("Vitality sprawls throughout the underground.", messageColor);
+                    CalRemixHelper.BroadcastLocalizedText("Vitality sprawls throughout the underground.", messageColor);
                 }
             }
             if (CalRemixWorld.shrinetoggle)
@@ -2223,7 +2223,7 @@ namespace CalRemix
                     Point qs = npc.Center.ToTileCoordinates();
                     for (int j = qs.Y; j < Main.maxTilesY; j++)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(qs.X, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(qs.X, j);
                         if (t.HasTile && (TileID.Sets.CanBeDugByShovel[t.TileType] || TileID.Sets.Stone[t.TileType]))
                         {
                             WorldGen.KillTile(qs.X, j);
@@ -2496,8 +2496,8 @@ namespace CalRemix
                         if (Math.Abs(playerCenterY - checkPosition.Y) < 40 && Math.Abs(playerCenterX - checkPosition.X) < 70)
                             return;
 
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(checkPositionX, checkPositionY);
-                        Tile aboveSpawnTile = CalamityUtils.ParanoidTileRetrieval(checkPositionX, checkPositionY - 1);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(checkPositionX, checkPositionY);
+                        Tile aboveSpawnTile = CalRemixHelper.ParanoidTileRetrieval(checkPositionX, checkPositionY - 1);
 
                         // If the place the NPC should spawn (a tile above) is a block, return
                         if (aboveSpawnTile.HasTile && Main.tileSolid[aboveSpawnTile.TileType])
@@ -3250,7 +3250,7 @@ namespace CalRemix
                 RajahType = ModContent.NPCType<SupremeRajah>();
             }
 
-            CalamityUtils.SpawnBossBetter(npcCenter, RajahType);
+            SpawnBossBetter(npcCenter, RajahType);
         }
 
         public bool IsBunny(NPC npc)

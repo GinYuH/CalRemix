@@ -91,7 +91,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (i == xMax - 1 && Main.rand.NextBool(22))
                         continue;
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     if (t.TileType != TileID.LeafBlock)
                         t.ResetToType(TileID.LivingWood);
 
@@ -111,7 +111,7 @@ namespace CalRemix.Core.Subworlds
                                     {
                                         if (CalRemixHelper.WithinElipse(k, l, i, j, width, height))
                                         {
-                                            Tile te = CalamityUtils.ParanoidTileRetrieval(k, l);
+                                            Tile te = CalRemixHelper.ParanoidTileRetrieval(k, l);
                                             te.ResetToType(TileID.LeafBlock);
                                         }
                                     }
@@ -130,14 +130,14 @@ namespace CalRemix.Core.Subworlds
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     bool hasblockAlready = false;
-                    if (CalamityUtils.ParanoidTileRetrieval(i - 1, j).HasTile)
+                    if (CalRemixHelper.ParanoidTileRetrieval(i - 1, j).HasTile)
                     {
                         hasblockAlready = true;
                     }
                     int chanceToFail = (int)MathHelper.Lerp(2, 5, j / (float)Main.maxTilesY);
                     if (!Main.rand.NextBool(chanceToFail) || hasblockAlready)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         t.ResetToType(TileID.Stone);
                     }
                 }
@@ -151,7 +151,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = top; j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                     int type = (j == top) ? TileID.Grass : TileID.Dirt;
                     t.ResetToType((ushort)type);
                 }

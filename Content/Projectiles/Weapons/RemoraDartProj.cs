@@ -43,7 +43,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
             Vector2 centered = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-            CalamityUtils.DrawAfterimagesCentered(Projectile, 1, lightColor);
+            CalRemixHelper.DrawAfterimagesCentered(Projectile, 1, lightColor);
             Main.EntitySpriteDraw(texture, centered, null, Projectile.GetAlpha(lightColor), Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 
             return false;

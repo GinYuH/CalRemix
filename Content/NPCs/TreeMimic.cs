@@ -52,7 +52,7 @@ namespace CalRemix.Content.NPCs
                 {
                     for (int j = bottom.Y - checkY; j < bottom.Y + 2; j++)
                     {
-                        Tile t = CalamityUtils.ParanoidTileRetrieval(i, j);
+                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
                         if ((t.TileType != TileID.Grass && t.TileType != TileID.Dirt && t.TileType != TileID.Plants && t.TileType != TileID.Plants2 && t.HasTile && j < bottom.Y + 1) || (j == bottom.Y + 1 && (!t.HasTile || t.Slope > 0)))
                         {
                             clearSpot = false;

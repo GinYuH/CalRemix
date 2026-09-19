@@ -49,7 +49,7 @@ namespace CalRemix.Content.Items.Weapons
                     player.HealEffect((int)(player.statLifeMax2 * 0.2f));
                     player.Heal((int)(player.statLifeMax2 * 0.2f));
                     SoundEngine.PlaySound(BetterSoundID.ItemManaCrystal with { Pitch = -0.7f }, player.Center);
-                    player.AddCooldown(ParadiseHealCooldown.ID, CalamityUtils.SecondsToFrames(60));
+                    player.AddCooldown(ParadiseHealCooldown.ID, CalRemixHelper.SecondsToFrames(60));
                 }
             }
             return true;

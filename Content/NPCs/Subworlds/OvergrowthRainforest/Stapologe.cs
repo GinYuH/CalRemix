@@ -68,7 +68,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                     NPC.Calamity().unbreakableDR = true;
                     NPC.chaseable = false;
                     NPC.defense = 999999;
-                    if (NPC.ai[2] > CalamityUtils.SecondsToFrames(30))
+                    if (NPC.ai[2] > CalRemixHelper.SecondsToFrames(30))
                     {
                         SoundEngine.PlaySound(SoundID.NPCHit31, NPC.Center);
                         NPC.ai[2] = 0;
@@ -85,7 +85,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                         NPC.Calamity().unbreakableDR = false;
                         NPC.chaseable = true;
                         NPC.defense = 20;
-                        int phaseTime = CalamityUtils.SecondsToFrames(10);
+                        int phaseTime = CalRemixHelper.SecondsToFrames(10);
                         int openTime = 15;
                         if (NPC.ai[2] <= openTime)
                         {

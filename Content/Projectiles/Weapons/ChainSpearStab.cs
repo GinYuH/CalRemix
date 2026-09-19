@@ -37,7 +37,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             foreach (NPC n in Main.npc)
             {
                 if (n != null && n.active && n.IsAnEnemy())
-                if (CalamityUtils.CountProjectiles(ModContent.ProjectileType<ChainSpearProj>()) > 0)
+                if (CalRemixHelper.CountProjectiles(ModContent.ProjectileType<ChainSpearProj>()) > 0)
                 {
                     Projectile.scale = 2;
                     break;

@@ -16,7 +16,7 @@ namespace CalRemix.Content.Projectiles.Hostile
     {
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/BallisticPoisonBomb";
 
-        public static int TickTime => CalamityUtils.SecondsToFrames(2.5f);
+        public static int TickTime => CalRemixHelper.SecondsToFrames(2.5f);
         public static int Telegraph => TickTime + 60;
 
         public override void SetDefaults()
