@@ -43,9 +43,7 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
 
                 return -1;
             }
-            int placedEntity = Place(i, j);
-
-            return placedEntity;
+            return Place(i, j);
         }
 
         public override void OnNetPlace()

@@ -1,4 +1,5 @@
 ﻿using CalamityMod;
+using CalamityMod.Projectiles.Melee;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest;
@@ -68,7 +69,6 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
     {
         public override string Name => enemyName + "EnemySpawnerPlaced";
         public override string Texture => "CalRemix/Content/Tiles/Subworlds/OvergrowthRainforest/Temple/EnemySpawnerPlaced";
-        public EnemySpawnerTE designatedTE = null;
         public string enemyName = "Chimp";
 
         public EnemySpawnerPlaced(string name)
@@ -97,19 +97,21 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (false)
-                return;
             spriteBatch.Draw(TextureAssets.Tile[Type].Value, new Vector2(i * 16, j * 16) - Main.screenPosition + CalamityUtils.TileDrawOffset, Main.DiscoColor);
             if (enemyName != "")
             {
-                    int nme = CalRemix.instance.Find<ModNPC>(enemyName).Type;
+                int nme = CalRemix.instance.Find<ModNPC>(enemyName).Type;
+                bool TExists = false;
                 if (TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity TE))
                 {
                     if (TE is EnemySpawnerTE eT)
                     {
-                        spriteBatch.Draw(TextureAssets.Npc[nme].Value, new Vector2(i * 16, j * 16) - Main.screenPosition + CalamityUtils.TileDrawOffset, Color.White * 0.5f);
+                        TExists = true;
                     }
                 }
+
+                Color col = TExists ? Main.DiscoColor : Color.Red;
+                spriteBatch.Draw(TextureAssets.Npc[nme].Value, new Vector2(i * 16, j * 16) - Main.screenPosition + CalamityUtils.TileDrawOffset, col * 0.5f);
             }
         }
     }
@@ -125,6 +127,7 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
 
         public override bool IsTileValidForEntity(int x, int y)
         {
+            return base.IsTileValidForEntity(x, y);
             return true;
         }
 
