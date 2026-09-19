@@ -6,6 +6,8 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.InteropServices.Marshalling;
 using Terraria;
 using Terraria.Audio;
@@ -17,28 +19,27 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using static AssGen.Assets;
 
 namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
 {
     public class EnemySpawnerLoader : ModSystem
     {
+        public static Dictionary<string, ModTileEntity> spawners = new();
+
         public override void Load()
         {
-            AddEnemy(ModContent.NPCType<Chimp>());
-            AddEnemy(ModContent.NPCType<LargeStinkbug>());
-            AddEnemy(ModContent.NPCType<GigamothLarva>());
+            AddEnemy("Chimp");
+            AddEnemy("GigamothLarva");
+            AddEnemy("LargeStinkbug");
         }
 
-        public void AddEnemy(int type)
+        public void AddEnemy(string enemyName)
         {
-            string enemyName = NPCLoader.GetNPC(type).Name;
             EnemySpawnerPlaced newTile = new EnemySpawnerPlaced(enemyName);
-            EnemySpawnerTE newTE = new EnemySpawnerTE(type);
             EnemySpawnerItem newItem = new EnemySpawnerItem(enemyName);
             Mod Remix = ModLoader.GetMod("CalRemix");
-            newTile.designatedTE = newTE;
             newItem.designatedTile = newTile;
-            Remix.AddContent(newTE);
             Remix.AddContent(newTile);
             Remix.AddContent(newItem);
         }
@@ -68,12 +69,13 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
         public override string Name => enemyName + "EnemySpawnerPlaced";
         public override string Texture => "CalRemix/Content/Tiles/Subworlds/OvergrowthRainforest/Temple/EnemySpawnerPlaced";
         public EnemySpawnerTE designatedTE = null;
-        public string enemyName = "";
+        public string enemyName = "Chimp";
 
         public EnemySpawnerPlaced(string name)
         {
             enemyName = name;
         }
+
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = false;
@@ -82,42 +84,67 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
             DustType = -1;
             Main.tileLavaDeath[Type] = false;
             Main.tileFrameImportant[Type] = true;
+            TileObjectData.newTile.CoordinateHeights = [16 ];
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.Origin = new Point16(0, 0);
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;
             TileObjectData.newTile.UsesCustomCanPlace = true;
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(designatedTE.Hook_AfterPlacement, -1, 0, false);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<EnemySpawnerTE>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.addTile(Type);
         }
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Type t = ModContent.GetInstance < typeof(designatedTE) > ();
+            if (false)
+                return;
             spriteBatch.Draw(TextureAssets.Tile[Type].Value, new Vector2(i * 16, j * 16) - Main.screenPosition + CalamityUtils.TileDrawOffset, Main.DiscoColor);
-            if (designatedTE != null)
-            if (designatedTE.type > 0)
+            if (enemyName != "")
             {
+                    int nme = CalRemix.instance.Find<ModNPC>(enemyName).Type;
                 if (TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity TE))
                 {
                     if (TE is EnemySpawnerTE eT)
                     {
-                        spriteBatch.Draw(TextureAssets.Npc[eT.enemyType].Value, new Vector2(i * 16, j * 16) - Main.screenPosition + CalamityUtils.TileDrawOffset, Color.White * 0.5f);
+                        spriteBatch.Draw(TextureAssets.Npc[nme].Value, new Vector2(i * 16, j * 16) - Main.screenPosition + CalamityUtils.TileDrawOffset, Color.White * 0.5f);
                     }
                 }
             }
         }
     }
 
-    [Autoload(false)]
     public class EnemySpawnerTE : TempleTE
     {
         public override string Name => NPCLoader.GetNPC(enemyType).Name + "EnemySpawnerTE";
-        public int enemyType = NPCID.DemonEye;
+        public string EnemyName = "Observer";
+
+        public int enemyType => ModLoader.GetMod("CalRemix").Find<ModNPC>(EnemyName)?.Type ?? NPCID.DemonEye;
 
         public int spawnTime = 0;
 
-        public EnemySpawnerTE(int enemyType)
+        public override bool IsTileValidForEntity(int x, int y)
         {
-            this.enemyType = enemyType;
+            return true;
+        }
+
+        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
+        {
+            TileObjectData tileData = TileObjectData.GetTileData(type, style, alternate);
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                //Sync the entire multitile's area. 
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, tileData.Width, tileData.Height);
+
+                //Sync the placement of the tile entity with other clients
+                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type);
+
+                return -1;
+            }
+            int placedEntity = Place(i, j);
+
+            return placedEntity;
         }
 
         public override void ObjectBehaviour()
@@ -135,9 +162,33 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
             }
         }
 
+        public override void Update()
+        {
+            if (EnemyName == "Observer")
+            {
+                if (TileLoader.GetTile(CalRemixHelper.ParanoidTileRetrieval(Position.X, Position.Y).TileType) is EnemySpawnerPlaced eP)
+                {
+                    EnemyName = eP.enemyName;
+                }
+            }
+            base.Update();
+        }
+
         public override void ResetObject()
         {
             spawnTime = 0;
+        }
+
+        public override void SaveData(TagCompound tag)
+        {
+            base.SaveData(tag);
+            tag.Add("enemyName", EnemyName);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            base.LoadData(tag);
+            EnemyName = tag.GetString("enemyName");
         }
     }
 }

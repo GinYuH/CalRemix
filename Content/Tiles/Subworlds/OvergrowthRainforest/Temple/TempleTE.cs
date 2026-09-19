@@ -2,6 +2,7 @@
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -30,7 +31,6 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
         }
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
-            Main.NewText(this.Name);
             TileObjectData tileData = TileObjectData.GetTileData(type, style, alternate);
 
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -43,7 +43,6 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
 
                 return -1;
             }
-
             int placedEntity = Place(i, j);
 
             return placedEntity;
@@ -58,14 +57,22 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
         {
             if (OvergrowthRainforestGeneration.Rooms == null)
                 return;
-
             if (DesignatedRoom == null)
             {
                 ResetObject();
                 return;
             }
 
-            ObjectBehaviour();
+            foreach (Player p in Main.ActivePlayers)
+            {
+                if (p.Remix().currentTempleRoom == DesignatedRoom)
+                {
+                    ObjectBehaviour();
+                    return;
+                }
+            }
+
+            ResetObject();
         }
 
         public virtual void ObjectBehaviour()

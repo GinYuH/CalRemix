@@ -81,6 +81,8 @@ namespace CalRemix.Core.Subworlds
 
         public override int Height => 1300;
         public override int Width => 4400;
+
+        public bool ranFrame = false;
         public override List<GenPass> Tasks =>
         [
             new OvergrowthRainforestGeneration()
@@ -117,24 +119,8 @@ namespace CalRemix.Core.Subworlds
 
         public override void OnEnter()
         {
+            ranFrame = false;
             base.OnEnter();
-            foreach (TempleRoom templeRoom in OvergrowthRainforestGeneration.Rooms)
-            {
-                if (templeRoom == null)
-                    continue;
-                Point roomPos = OvergrowthRainforestGeneration.RoomWorldPosition(templeRoom.position);
-                for (int k = roomPos.X; k < roomPos.X + 90; k++)
-                {
-                    for (int l = roomPos.Y; l < roomPos.Y + 40; l++)
-                    {
-                        Tile tS = CalRemixHelper.ParanoidTileRetrieval(k, l);
-                        if (TileEntity.ByPosition.TryGetValue(new Point16(k, l), out TileEntity te) && te is TempleTE eP)
-                        {
-                            eP.roomCoords = roomPos;
-                        }
-                    }
-                }
-            }
         }
 
         public override void Update()
@@ -193,6 +179,32 @@ namespace CalRemix.Core.Subworlds
                 if (!foundAnythin)
                 {
                     p.Remix().currentTempleRoom = null;
+                }
+            }
+            if (!ranFrame)
+            {
+                PopulateRoomTEs();
+                ranFrame = true;
+            }
+        }
+
+        public static void PopulateRoomTEs()
+        {
+            foreach (TempleRoom templeRoom in OvergrowthRainforestGeneration.Rooms)
+            {
+                if (templeRoom == null)
+                    continue;
+                Point roomPos = OvergrowthRainforestGeneration.RoomWorldPosition(templeRoom.position);
+                for (int k = roomPos.X; k < roomPos.X + 90; k++)
+                {
+                    for (int l = roomPos.Y; l < roomPos.Y + 40; l++)
+                    {
+                        Tile tS = CalRemixHelper.ParanoidTileRetrieval(k, l);
+                        if (TileEntity.ByPosition.TryGetValue(new Point16(k, l), out TileEntity te) && te is TempleTE eP)
+                        {
+                            eP.roomCoords = templeRoom.position;
+                        }
+                    }
                 }
             }
         }
@@ -1677,7 +1689,9 @@ namespace CalRemix.Core.Subworlds
             AddTempleRoom("LDR");
             AddTempleRoom("LUDR");
             AddTempleRoom("LUR");
+            AddTempleRoom("UDLR2");
             AddTempleRoom("LUD");
+            AddTempleRoom("LUD2");
             AddTempleRoom("L");
             AddTempleRoom("UDR");
             AddTempleRoom("UD");
