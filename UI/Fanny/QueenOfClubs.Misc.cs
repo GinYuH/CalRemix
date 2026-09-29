@@ -147,7 +147,7 @@ namespace CalRemix.UI
         /// <summary>
         /// Whether or not the Queen of Clubs is unlocked.
         /// </summary>
-        public bool isQoCUnlocked => Player.GetModPlayer<CalRemixPlayer>().fifteenMinutesSinceHardmode <= 0;
+        public bool isQoCUnlocked => false; // Player.GetModPlayer<CalRemixPlayer>().fifteenMinutesSinceHardmode <= 0;
         /// <summary>
         /// Whether or not the back of the card is facing the camera.
         /// </summary>
