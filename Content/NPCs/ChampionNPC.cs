@@ -276,7 +276,7 @@ namespace CalRemix
                     championTimer++;
                     if (championTimer % 60 == 0)
                     {
-                        if (npc.HasPlayerTarget)
+                        if (npc.HasPlayerTarget && npc.HasSight(Main.player[npc.target].Center) && npc.Distance(Main.player[npc.target].Center) < 600)
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.DirectionTo(Main.player[npc.target].Center) * 8, ProjectileID.BloodNautilusShot, (int)(npc.damage * 0.25f), 0);
                     }
                     break;
@@ -385,7 +385,7 @@ namespace CalRemix
                     championTimer++;
                     if (championTimer % 60 == 0)
                     {
-                        if (npc.HasPlayerTarget)
+                        if (npc.HasPlayerTarget && npc.HasSight(Main.player[npc.target].Center) && npc.Distance(Main.player[npc.target].Center) < 600)
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.DirectionTo(Main.player[npc.target].Center) * 8, ProjectileID.BloodNautilusShot, (int)(npc.damage * 0.25f), 0);
                     }
                     if (championTimer % 30 == 0)
