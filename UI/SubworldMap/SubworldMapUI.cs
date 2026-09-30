@@ -426,7 +426,7 @@ namespace CalRemix.UI.SubworldMap
             Items.Add("Nightline", new(ModContent.GetInstance<NightlineSubworld>(), ["Sealed", "GreatSea"], () => false, new Vector2(397, -394)));
             Items.Add("Glamour", new(ModContent.GetInstance<GlamourSubworld>(), ["OvergrowthJungle"], () => false, new Vector2(418, 375)));
             Items.Add("Bridge", new(ModContent.GetInstance<BridgeofLostHopeSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(108, -319)));
-            Items.Add("Savanna", new(ModContent.GetInstance<SavannaSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(660, -330)));
+            Items.Add("Savanna", new(ModContent.GetInstance<SavannaSubworld>(), ["GreatSea"], () => false, new Vector2(660, -330)));
             Items.Add("Horizon", new(ModContent.GetInstance<HorizonSubworld>(), ["Sealed"], () => false, new Vector2(-590, -363)));
             Items.Add("TheGray", new(ModContent.GetInstance<TheGraySubworld>(), ["Sealed"], () => false, new Vector2(-640, 33)));
             Items.Add("Nowhere", new(ModContent.GetInstance<NowhereSubworld>(), ["GreatSea", "OvergrowthJungle", "Virisite"], () => false, new Vector2(453, 107)));
