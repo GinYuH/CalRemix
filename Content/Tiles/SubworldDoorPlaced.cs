@@ -93,6 +93,7 @@ namespace CalRemix.Content.Tiles
                     subDoor.doorColor = data.Item3;
                 }
             }
+            CalRemixHelper.AddProtectedStructure(new Rectangle(i - 1, j - 2, 2, 4));
         }
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
@@ -115,6 +116,7 @@ namespace CalRemix.Content.Tiles
                 {
                     if (tE is SubworldDoorTE subDoor)
                     {
+                        SoundEngine.PlaySound(BetterSoundID.ItemTeleportMirror);
                         if (subDoor.boundSubworldName == "")
                         {
                             SubworldSystem.Exit();
@@ -125,7 +127,6 @@ namespace CalRemix.Content.Tiles
                         }
                     }
                 }
-                SoundEngine.PlaySound(BetterSoundID.ItemTeleportMirror);
             }
             else
             {
@@ -201,8 +202,6 @@ namespace CalRemix.Content.Tiles
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
             TileObjectData tileData = TileObjectData.GetTileData(type, style, alternate);
-            //int iMinus = i - 1;
-            //int jMinus = j - 2;
 
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {

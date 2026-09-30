@@ -1,4 +1,7 @@
-﻿using CalRemix.Content.Tiles.Subworlds.MoonGraveyard;
+﻿using CalamityMod;
+using CalRemix.Content.NPCs.Subworlds.MoonGraveyard;
+using CalRemix.Content.NPCs.Subworlds.Pinnacles;
+using CalRemix.Content.Tiles.Subworlds.MoonGraveyard;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System;
@@ -10,14 +13,26 @@ using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using static CalRemix.Core.Subworlds.SubworldHelpers;
 
 namespace CalRemix.Core.Subworlds
 {
     #region subworld and worldgen
-    public class MoonGraveyardSubworld : Subworld
+    public class MoonGraveyardSubworld : Subworld, IDisableOcean, ICustomSpawnSubworld
     {
+        public List<(int, float, Predicate<NPCSpawnInfo>)> Spawns()
+        {
+            List<(int, float, Predicate<NPCSpawnInfo>)> list = [];
+            list.Add(item: (ModContent.NPCType<MoonBunny>(), 10, n => Main.tile[n.SpawnTileX, n.SpawnTileY + 1].HasTile));
+            return list;
+        }
+
+        int ICustomSpawnSubworld.MaxSpawns { get => 8; }
+        float ICustomSpawnSubworld.SpawnMult { get => 0.3f; }
+
+        bool ICustomSpawnSubworld.OverrideVanilla { get => true; }
         public override int Height => 500;
         public override int Width => 1000;
         public override List<GenPass> Tasks => new List<GenPass>()
@@ -33,6 +48,8 @@ namespace CalRemix.Core.Subworlds
         public override void Update()
         {
             SkyManager.Instance["Ambience"].Deactivate();
+            Main.LocalPlayer.ManageSpecialBiomeVisuals("CalRemix:MoongraveSky", true);
+            SkyManager.Instance.Activate("CalRemix:MoongraveSky", Main.LocalPlayer.position);
             Main.LocalPlayer.ZoneBeach = false;
             // make it night. eternal torment... the torcher never stops...
             Main.dayTime = false;
@@ -56,6 +73,13 @@ namespace CalRemix.Core.Subworlds
                 str,
                 Main.ScreenSize.ToVector2() * 0.5f - size * 0.5f, Color.White, 2);
 
+        }
+
+        public override bool GetLight(Tile tile, int x, int y, ref FastRandom rand, ref Vector3 color)
+        {
+            if (!CalRemixHelper.ParanoidTileRetrieval(x, y).IsTileSolid())
+                color = Color.CornflowerBlue.ToVector3();
+            return false;
         }
     }
 
@@ -193,6 +217,17 @@ namespace CalRemix.Core.Subworlds
                     }
                 }
 
+            }
+
+            for (int x = 1; x < Main.maxTilesX; x++)
+            {
+                for (int y = 1; y < Main.maxTilesY; y++)
+                {
+                    if (CalRemixHelper.ParanoidTileRetrieval(x, y).TileType == TileID.Tombstones)
+                    {
+                        WorldGen.paintTile(x, y, PaintID.ShadowPaint);
+                    }
+                }
             }
         }
     }

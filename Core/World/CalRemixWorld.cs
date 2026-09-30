@@ -573,7 +573,7 @@ namespace CalRemix.Core.World
         {
             if (Main.mouseLeft)
             {
-                //PlaceSchematic("Hallow Shrine", Main.MouseWorld.ToTileCoordinates(), (SchematicAnchorType)Main.LocalPlayer.selectedItem);
+                //SubworldSystem.Enter<MoonGraveyardSubworld>();
             }
             if (worldLoadCounter < 180)
                 worldLoadCounter++;

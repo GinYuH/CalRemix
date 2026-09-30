@@ -58,6 +58,7 @@ namespace CalRemix
                 RegisterSky(new SealedSky(), "SealedSky");
                 RegisterSky(new DisilphiaSky(), "Disilphia");
                 RegisterSky(new HorizonSky(), "HorizonSky");
+                RegisterSky(new MoongraveSky(), "MoongraveSky");
                 RegisterSky(new PinnacleSky(), "PinnacleSky");
                 RegisterSky(new GlamourSky(), "GlamourSky");
                 RegisterSky(new SingleColorSky(), "SingleColor");

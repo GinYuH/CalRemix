@@ -161,8 +161,8 @@ SubworldMap: {
 		DisplayName: Wolf Forest
 		Description:
 			'''
-			A relatively normal Savanna.
-			As far as the eye can see.
+			A forest frozen in time.
+			Watch out for wolves!
 			'''
 	}
 
@@ -181,6 +181,16 @@ SubworldMap: {
 			'''
 			A titanic jungle full of titanic trees.
 			At its heart, a grand temple containing riches untold.
+			'''
+	}
+
+	MoonGrave: {
+		DisplayName: Moon Graveyard
+		Description:
+			'''
+			A lunar graveyard wreathed in the faint
+			light of a cerulean star. Take a moment of 
+			respite amongst the spirits who call this place home.
 			'''
 	}
 }
