@@ -22,7 +22,7 @@ namespace CalRemix.Core.Subworlds
     public class BridgeofLostHopeSubworld : Subworld, IDisableOcean, IDisableFlight, IDisableSpawnsSubworld, ISingleColorSky, IDisableItems
     {
         public override int Height => 200;
-        public override int Width => 2000;
+        public override int Width => 1000;
 
         public Color SkyColor => Color.Black;
 

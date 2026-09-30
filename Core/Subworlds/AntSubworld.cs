@@ -74,7 +74,7 @@ namespace CalRemix.Core.Subworlds
 
             for (int i = 0; i < 2; i++)
             {
-                WorldGen.PlaceTile(Main.spawnTileX + i, Main.spawnTileY + 1, (ushort)ModContent.TileType<AshenPlatform>());
+                WorldGen.PlaceTile(Main.spawnTileX + i, Main.spawnTileY + 1, TileID.Platforms);
             }
 
             SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Overworld, Main.spawnTileX, Main.spawnTileY + 1);
