@@ -477,7 +477,7 @@ namespace CalRemix.Core.Subworlds
 
             #endregion
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<PinnaclesDoor>());
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Screaming, Main.spawnTileX, Main.spawnTileY);
         }
 
         public static void CircularSpikes(int baseSize, int amount)

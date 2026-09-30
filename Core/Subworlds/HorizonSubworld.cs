@@ -1,21 +1,22 @@
-﻿using System.Collections.Generic;
-using Terraria;
+﻿using CalamityMod;
+using CalamityMod.Tiles.FurnitureAshen;
+using CalRemix.Content.NPCs.Bosses.Carcinogen;
+using CalRemix.Content.NPCs.Subworlds.Sealed;
+using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.Horizon;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
 using SubworldLibrary;
-using Terraria.WorldBuilding;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using Terraria.ID;
-using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
-using CalamityMod.Tiles.FurnitureAshen;
-using CalRemix.Content.Tiles.Subworlds.Horizon;
-using Terraria.Graphics.Effects;
-using Terraria.DataStructures;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
-using CalRemix.Content.NPCs.Bosses.Carcinogen;
-using CalamityMod;
+using Terraria.WorldBuilding;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -89,8 +90,6 @@ namespace CalRemix.Core.Subworlds
 
             Main.spawnTileX = (int)(Main.maxTilesX / 2f);
             Main.spawnTileY = (int)(Main.maxTilesY * 0.9f - 1);
-
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<HorizonDoor>());
         }
     }
 }

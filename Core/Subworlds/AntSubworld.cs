@@ -1,4 +1,5 @@
-﻿using CalamityMod.Tiles.FurnitureAshen;
+﻿using CalamityMod;
+using CalamityMod.Tiles.FurnitureAshen;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
@@ -60,23 +61,24 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
-                    WorldGen.PlaceWall(i, j, WallID.DiamondGemspark);
+                    CalRemixHelper.ParanoidTileRetrieval(i,j).WallType = WallID.DiamondGemspark;
 
                     if (j > (int)(Main.maxTilesY * 0.8f))
                     {
-                        WorldGen.PlaceTile(i, j, TileID.DiamondGemspark);
+                        CalRemixHelper.ParanoidTileRetrieval(i, j).ResetToType(TileID.DiamondGemspark);
                     }
                 }
             }
 
             WorldGen.PlaceTile(Main.spawnTileX, Main.spawnTileY - 22, (ushort)ModContent.TileType<Ant>());
 
-            for (int i = -1; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 WorldGen.PlaceTile(Main.spawnTileX + i, Main.spawnTileY + 1, (ushort)ModContent.TileType<AshenPlatform>());
             }
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<AntDoor>());
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Overworld, Main.spawnTileX, Main.spawnTileY + 1);
+            SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Sealed);   
         }
     }
 }

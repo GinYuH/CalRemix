@@ -1142,7 +1142,7 @@ namespace CalRemix.Core.Subworlds
                 toothAttempts++;
             }
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<OvergrowthRainforestDoor>());
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Pinnacles, Main.spawnTileX, Main.spawnTileY);
         }
 
         #region Trees

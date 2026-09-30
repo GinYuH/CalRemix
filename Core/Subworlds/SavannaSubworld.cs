@@ -95,8 +95,7 @@ namespace CalRemix.Core.Subworlds
             Main.spawnTileX = spawnX - 3;
             Main.spawnTileY = spawnY;
 
-            WorldGen.PlaceObject(spawnX, spawnY - 1, ModContent.TileType<BridgeDoor>());
-            WorldGen.PlaceObject(Main.maxTilesX - spawnX, spawnY - 1, ModContent.TileType<BridgeDoor>());
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.GreatSea, Main.spawnTileX, Main.spawnTileY);
         }
     }
 }

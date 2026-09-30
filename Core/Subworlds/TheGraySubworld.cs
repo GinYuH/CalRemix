@@ -175,7 +175,29 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<TheGrayDoor>());
+            bool sb = false;
+            for (int i = Main.spawnTileX; i < Main.maxTilesX; i++)
+            {
+                if (sb)
+                    break;
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                    if (t.IsTileSolidGround())
+                    {
+                        if (CalRemixHelper.ParanoidTileRetrieval(i + 1, j).IsTileSolidGround() && !CalRemixHelper.ParanoidTileRetrieval(i + 1, j - 1).HasTile)
+                        {
+                            sb = true;
+                            Main.spawnTileX = i;
+                            Main.spawnTileY = j - 1;
+                            break;
+                        }
+                        continue;
+                    }
+                }
+            }
+
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Sealed, Main.spawnTileX, Main.spawnTileY + 1);
         }
     }
 }

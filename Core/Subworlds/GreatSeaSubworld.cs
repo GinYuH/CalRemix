@@ -177,7 +177,7 @@ namespace CalRemix.Core.Subworlds
             progress.Value = 1f;
 
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<GrandSeaDoor>());
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Bridge, Main.spawnTileX, Main.spawnTileY + 2);
         }
 
         public static void GenerateBottom()

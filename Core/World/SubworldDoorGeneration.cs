@@ -3,26 +3,44 @@ using Terraria.ModLoader;
 using CalamityMod;
 using System.Collections.Generic;
 using CalRemix.Content.Tiles;
+using Microsoft.Xna.Framework;
 
 namespace CalRemix.Core.World
 {
-    public class RandomSubworldDoors : ModSystem
+    public class SubworldDoorGeneration : ModSystem
     {
-        public static List<int> doorTypes = new List<int>()
+        public static bool GenerateDoor(SubworldDoorPlaced.SubworldType type, int x, int y)
         {
-            ModContent.TileType<ExosphereDoor>(),
-            ModContent.TileType<BaronDoor>(),
-        };
-
-        public static void GenerateRandomSubworldDoors()
-        {
-            for (int d = 0; d < doorTypes.Count; d++)
+            Tile t = CalRemixHelper.ParanoidTileRetrieval(x, y);
+            Tile next = CalRemixHelper.ParanoidTileRetrieval(x + 1, y);
+            if (t != null && t.HasTile && t.IsTileSolidGround() && next != null && next.HasTile && next.IsTileSolidGround())
             {
-                GenerateDoorRandom(doorTypes[d]);
+                bool emptySpace = true;
+                for (int k = x; k < x + 2; k++)
+                {
+                    for (int l = y - 1; l > y - 4; l--)
+                    {
+                        Tile u = CalRemixHelper.ParanoidTileRetrieval(k, l);
+                        if (u == null || u.HasTile)
+                        {
+                            emptySpace = false;
+                            break;
+                        }
+                    }
+                }
+                if (emptySpace)
+                {
+                    t.ResetToType(t.TileType);
+                    next.ResetToType(next.TileType);
+                    WorldGen.PlaceTile(x + 1, y - 1, ModContent.TileType<SubworldDoorPlaced>(), true);
+                    SubworldDoorPlaced.PlaceSubworldDoor(x + 1, y - 1, type);
+                    return true;
+                }
             }
+            return false;
         }
 
-        public static void GenerateDoorRandom(int type)
+        public static void GenerateDoorRandom(SubworldDoorPlaced.SubworldType type)
         {
             bool shouldbreak = false;
             int boundX = 100;
@@ -69,8 +87,8 @@ namespace CalRemix.Core.World
                                 {
                                     t.ResetToType(t.TileType);
                                     next.ResetToType(next.TileType);
-                                    WorldGen.PlaceTile(i + 1, j - 1, type);
-                                    //Main.LocalPlayer.position = new Vector2(i, j - 3) * 16;
+                                    WorldGen.PlaceTile(i + 1, j - 1, ModContent.TileType<SubworldDoorPlaced>());
+                                    SubworldDoorPlaced.PlaceSubworldDoor(i + 1, j - 1, type);
                                     shouldbreak = true;
                                 }
                                 break;

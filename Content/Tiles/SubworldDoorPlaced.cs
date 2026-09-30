@@ -5,40 +5,60 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using SubworldLibrary;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace CalRemix.Content.Tiles
 {
-    public abstract class SubworldDoorPlaced : ModTile
+    public class SubworldDoorPlaced : ModTile
     {
-        public Asset<Texture2D> PreviewTex;
-
-        public virtual string PreviewTexName => null;
-        public virtual Subworld BoundSubworld => null;
-
-        public virtual Color DoorColor => Color.White;
-
-        public virtual int DoorStyle => -1;
-
-        public override void Load()
+        public enum SubworldType
         {
-            if (!Main.dedServ)
-            {
-                PreviewTex = ModContent.Request<Texture2D>(PreviewTexName);
-            }
+            Ant = 0,
+            Bridge = 1,
+            Glamour = 2,
+            GreatSea = 3,
+            Horizon = 4,
+            Nightline = 5,
+            Nowhere = 6,
+            Jungle = 7,
+            Forest = 7,
+            Overworld = 8,
+            Pinnacles = 9,
+            Savanna = 10,
+            Screaming = 11,
+            Sealed = 12,
+            Gray = 13,
+            Virisite = 14,
+            Wolf = 15
         }
 
-        public static void AddSubdoorItem(ModTile mt, int style = -1)
+        public static List<(string, string, Color)> subworldDoorData = new()
         {
-            ModItem doorItem = new SubworldDoor(mt, style);
-            ModContent.GetInstance<CalRemix>().AddContent(doorItem);
-        }
+            ("AntSubworld", "Ant", Color.DarkGray),
+            ("BridgeofLostHopeSubworld", "Bridge", Color.Firebrick),
+            ("GlamourSubworld", "Glamour", Color.HotPink),
+            ("GreatSeaSubworld", "GreatSea",Color.DeepSkyBlue),
+            ("HorizonSubworld", "Horizon", Color.Tan),
+            ("NightlineSubworld", "Nightline", Color.DarkBlue),
+            ("NowhereSubworld", "Nowhere", Color.White),
+            ("OvergrowthRainforestSubworld", "OvergrowthJungle", Color.ForestGreen),
+            ("", "Overworld", Color.LawnGreen),
+            ("PinnaclesSubworld", "Pinnacles", Color.Gray),
+            ("SavannaSubworld", "Savanna", Color.IndianRed),
+            ("ScreamingSubworld", "ScreamingFace", Color.DimGray),
+            ("SealedSubworld", "Sealed", Color.Purple),
+            ("TheGraySubworld", "TheGray", Color.Black),
+            ("SingularPointSubworld", "Virisite", Color.LightSeaGreen),
+            ("WolfForestSubworld", "Wolf", Color.LightBlue)
+        };
 
         public override void SetStaticDefaults()
         {
@@ -47,6 +67,8 @@ namespace CalRemix.Content.Tiles
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.Origin = new Point16(1, 2);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<SubworldDoorTE>().Hook_AfterPlacement, -1, 0, false);
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.PreventsTileReplaceIfOnTopOfIt[Type] = true;
@@ -57,6 +79,22 @@ namespace CalRemix.Content.Tiles
             AnimationFrameHeight = 54;
             TileID.Sets.DisableSmartCursor[Type] = true;
         }
+
+        public static void PlaceSubworldDoor(int i, int j, SubworldType key)
+        {
+            TileEntity.PlaceEntityNet(i - 1, j - 2, ModContent.TileEntityType<SubworldDoorTE>());
+            if (TileEntity.ByPosition.TryGetValue(new Point16(i - 1, j - 2), out TileEntity tE))
+            {
+                if (tE is SubworldDoorTE subDoor)
+                {
+                    (string, string, Color) data = subworldDoorData[(int)key];
+                    subDoor.boundSubworldName = "CalRemix/" + data.Item1;
+                    subDoor.texture = "CalRemix/UI/SubworldMap/" + data.Item2;
+                    subDoor.doorColor = data.Item3;
+                }
+            }
+        }
+
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
             return false;
@@ -69,9 +107,24 @@ namespace CalRemix.Content.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            if (Main.tile[i, j].TileFrameY >= AnimationFrameHeight)
+            Tile t = Main.tile[i, j];
+            Tile parent = CalRemixHelper.ParanoidTileRetrieval(i - t.TileFrameX / 18 % 2, j - t.TileFrameY / 18 % 3);
+            if (parent.TileFrameY >= AnimationFrameHeight)
             {
-                SubworldSystem.Enter(BoundSubworld.FullName);
+                if (TileEntity.ByPosition.TryGetValue(new Point16(parent.X(), parent.Y()), out TileEntity tE))
+                {
+                    if (tE is SubworldDoorTE subDoor)
+                    {
+                        if (subDoor.boundSubworldName == "")
+                        {
+                            SubworldSystem.Exit();
+                        }
+                        else
+                        { 
+                            SubworldSystem.Enter(subDoor.boundSubworldName);
+                        }
+                    }
+                }
                 SoundEngine.PlaySound(BetterSoundID.ItemTeleportMirror);
             }
             else
@@ -117,247 +170,78 @@ namespace CalRemix.Content.Tiles
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile t = Main.tile[i, j];
-            if (t.TileFrameX % 36 == 0 && t.TileFrameY == 54)
+            Tile parent = CalRemixHelper.ParanoidTileRetrieval(i - t.TileFrameX / 18 % 2, j - t.TileFrameY / 18 % 3);
+            Color c = Color.White;
+            if (TileEntity.ByPosition.TryGetValue(new Point16(parent.X(), parent.Y()), out TileEntity tE))
             {
-                if (PreviewTex != null)
+                if (tE is SubworldDoorTE subDoor)
                 {
-                    Texture2D tex = PreviewTex.Value;
-                    Vector2 tileSize = new Vector2(32, 54);
-                    Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Lighting.GetColor(i, j), 0, Vector2.Zero, tileSize / tex.Size(), 0);
+                    c = subDoor.doorColor;
+                    if (t.TileFrameX % 36 == 0 && t.TileFrameY == 54)
+                    {
+                        Texture2D tex = ModContent.Request<Texture2D>(subDoor.texture).Value;
+                        Vector2 tileSize = new Vector2(32, 54);
+                        Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Lighting.GetColor(i, j), 0, Vector2.Zero, tileSize / tex.Size(), 0); 
+                    }
                 }
             }
-            Main.EntitySpriteDraw(TextureAssets.Tile[Type].Value, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, new Rectangle(t.TileFrameX, t.TileFrameY, 16, 16), Lighting.GetColor(i, j, DoorColor), 0, Vector2.Zero, 1, 0);
+            Main.EntitySpriteDraw(TextureAssets.Tile[Type].Value, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, new Rectangle(t.TileFrameX, t.TileFrameY, 16, 16), Lighting.GetColor(i, j, c), 0, Vector2.Zero, 1, 0);
 
             return false;
         }
     }
 
-    public class ExosphereDoor : SubworldDoorPlaced
+    public class SubworldDoorTE : ModTileEntity
     {
-        public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/ExospherePreview";
-        public override Subworld BoundSubworld => ModContent.GetInstance<ExosphereSubworld>();
+        public string texture = "CalRemix/Assets/ExtraTextures/SludgeCannon";
 
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
+        public string boundSubworldName = "";
 
-        public override Color DoorColor => Color.DarkGray;
+        public Color doorColor = Color.White;
+        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
+        {
+            TileObjectData tileData = TileObjectData.GetTileData(type, style, alternate);
+            //int iMinus = i - 1;
+            //int jMinus = j - 2;
 
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                //Sync the entire multitile's area. 
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, 2, 3);
 
-    public class BaronDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/BaronPreview";
-        public override Subworld BoundSubworld => ModContent.GetInstance<BaronSubworld>();
+                //Sync the placement of the tile entity with other clients
+                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type);
 
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.DarkCyan;
-    }
+                return -1;
+            }
 
-    public class NormalDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/Items/Accessories/Baroclaw";
-        public override Subworld BoundSubworld => ModContent.GetInstance<NormalSubworld>();
+            int placedEntity = Place(i, j);
 
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.Brown;
-    }
+            return placedEntity;
+        }
 
-    public class ScreamDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/ScreamingFacePreview";
-        public override Subworld BoundSubworld => ModContent.GetInstance<ScreamingSubworld>();
+        public override void OnNetPlace()
+        {
+            NetMessage.SendData(MessageID.TileEntitySharing, -1, -1, null, ID, Position.X, Position.Y);
+        }
 
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.GhostWhite;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class GrandSeaDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/GrandSeaPreview";
-        public override Subworld BoundSubworld => ModContent.GetInstance<GreatSeaSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.RoyalBlue;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class AntDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Assets/ExtraTextures/SubworldPreviews/AntPreview";
-        public override Subworld BoundSubworld => ModContent.GetInstance<AntSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.WhiteSmoke;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class PiggyDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalamityMod/Items/Critters/PiggyItem";
-        public override Subworld BoundSubworld => ModContent.GetInstance<PiggySubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.LightPink;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class SealedDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/Items/Placeables/Subworlds/Sealed/SealedStone";
-        public override Subworld BoundSubworld => ModContent.GetInstance<SealedSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.Purple;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class HorizonDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/Tiles/Subworlds/Horizon/HorizonGrass";
-        public override Subworld BoundSubworld => ModContent.GetInstance<HorizonSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.PaleGoldenrod;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class DeformityDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "Terraria/Images/Item_" + ItemID.DarkCelestialBrick;
-        public override Subworld BoundSubworld => ModContent.GetInstance<DeformitySubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.CadetBlue;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class NowhereDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/Tiles/Subworlds/Nowhere/NowhereBlock";
-        public override Subworld BoundSubworld => ModContent.GetInstance<NowhereSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.Gray;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class SPDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/GreatSea/AnomalyDisciple3";
-        public override Subworld BoundSubworld => ModContent.GetInstance<SingularPointSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.DarkSeaGreen;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class TheGrayDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/TheGray/Underscore_Eye";
-        public override Subworld BoundSubworld => ModContent.GetInstance<TheGraySubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.Black;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-    public class NightlineDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/Car";
-        public override Subworld BoundSubworld => ModContent.GetInstance<NightlineSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.IndianRed;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-    public class GlamourDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/Walls/GlamorousGemWallPlaced";
-        public override Subworld BoundSubworld => ModContent.GetInstance<GlamourSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.Magenta;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-    public class PinnaclesDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalamityMod/Items/Weapons/Ranged/Onyxia";
-        public override Subworld BoundSubworld => ModContent.GetInstance<PinnaclesSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.LightSlateGray;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-    public class BridgeDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalamityMod/Items/Weapons/Rogue/Supernova";
-        public override Subworld BoundSubworld => ModContent.GetInstance<BridgeofLostHopeSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.Black;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-    public class SavannaDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalamityMod/Items/Weapons/Ranged/Spyker";
-        public override Subworld BoundSubworld => ModContent.GetInstance<SavannaSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.IndianRed;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-    public class WolfDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/DireWolf";
-        public override Subworld BoundSubworld => ModContent.GetInstance<WolfForestSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.DimGray;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-    public class OvergrowthRainforestDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/NPCs/Subworlds/OvergrowthRainforest/Starvathen";
-        public override Subworld BoundSubworld => ModContent.GetInstance<OvergrowthRainforestSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.ForestGreen;
-
-        public override void Load() { base.Load(); AddSubdoorItem(this); }
-    }
-
-    public class EdisDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/NPCs/CarrierHead";
-        public override Subworld BoundSubworld => ModContent.GetInstance<EdisSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.Gray;
-    }
-
-    // this is my special door for testing so it goes at the bottom always
-    public class TestDoor : SubworldDoorPlaced
-    {
-        public override string PreviewTexName => "CalRemix/Content/Items/Weapons/AergianTechnistaff";
-        public override Subworld BoundSubworld => ModContent.GetInstance<IllKillThisLaterSubworld>();
-
-        public override string Texture => "CalRemix/Content/Tiles/SubworldDoorPlaced";
-        public override Color DoorColor => Color.AliceBlue;
-    }
+        public override bool IsTileValidForEntity(int x, int y)
+        {
+            return Main.tile[x, y].HasTile && Main.tile[x, y].TileType == ModContent.TileType<SubworldDoorPlaced>();
+        }
+        public override void SaveData(TagCompound tag)
+        {
+            tag["texture"] = texture;
+            tag["boundSubworldName"] = boundSubworldName;
+            tag["colorR"] = doorColor.R;
+            tag["colorG"] = doorColor.G;
+            tag["colorB"] = doorColor.B;
+        }
+        public override void LoadData(TagCompound tag)
+        {
+            texture = tag.GetString("texture");
+            boundSubworldName = tag.GetString("boundSubworldName");
+            doorColor = new Color(tag.GetByte("colorR"), tag.GetByte("colorG"), tag.GetByte("colorB"));
+        }
+    }   
 }

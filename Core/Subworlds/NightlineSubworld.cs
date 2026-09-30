@@ -4,6 +4,7 @@ using CalRemix.Content.Tiles;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -98,7 +99,8 @@ namespace CalRemix.Core.Subworlds
             WorldGen.PlaceObject((int)Main.spawnTileX - 10, (int)Main.spawnTileY, TileID.Lampposts);
             WorldGen.PlaceObject((int)Main.spawnTileX - 6, (int)Main.spawnTileY, TileID.Benches);
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<NightlineDoor>());
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.GreatSea, Main.spawnTileX, Main.spawnTileY + 1);
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Sealed, Main.maxTilesX - Main.spawnTileX, Main.spawnTileY + 1);
         }
     }
 }

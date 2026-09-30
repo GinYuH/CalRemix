@@ -139,9 +139,10 @@ namespace CalRemix.Core.Subworlds
                     Main.spawnTileY = i;
                     break;
                 }
-            }            
+            }
 
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<WolfDoor>());
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Jungle, Main.spawnTileX, Main.spawnTileY);
+            SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Sealed);
         }
     }
 }

@@ -107,7 +107,7 @@ namespace CalRemix.Core.Subworlds
                             {
                                 if (CalRemixHelper.WithinTriangle(new Point(i, j), new Point(i - xOff, j), new Point(i + xOff * 2, -100), new Point(k, l)))
                                 {
-                                    Main.tile[k, l].WallType = bigWall;
+                                    CalRemixHelper.ParanoidTileRetrieval(k, l).WallType = bigWall;
                                 }
                             }
                         }
@@ -228,6 +228,8 @@ namespace CalRemix.Core.Subworlds
 
             Main.spawnTileX = spawnTile - 3;
             Main.spawnTileY = (int)Main.worldSurface - 1;
+
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Jungle, Main.spawnTileX, Main.spawnTileY + 1);
         }
     }
 }

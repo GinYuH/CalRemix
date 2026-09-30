@@ -10,6 +10,7 @@ using Terraria.ID;
 using CalRemix.Core.World;
 using CalRemix.Content.Tiles;
 using Terraria.Graphics.Effects;
+using CalamityMod;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -69,7 +70,18 @@ namespace CalRemix.Core.Subworlds
                     NetMessage.SendTileSquare(-1, i, j, 1);
                 }
             }
-            RandomSubworldDoors.GenerateDoorRandom(ModContent.TileType<ScreamDoor>());
+
+
+            for (int j = Main.maxTilesY / 2; j < Main.maxTilesY; j++)
+            {
+                if (CalRemixHelper.ParanoidTileRetrieval(Main.spawnTileX, j).IsTileSolidGround())
+                {
+                    Main.spawnTileY = j;
+                    break;
+                }
+            }
+            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Overworld, Main.spawnTileX, Main.spawnTileY);
+            SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Pinnacles);
         }
     }
 }
