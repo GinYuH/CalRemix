@@ -38,15 +38,13 @@ namespace CalRemix.Core.Subworlds
         {
             float value = MathHelper.Lerp(188 / 255f, 10 / 255f, Utils.GetLerpValue(Main.maxTilesY * 0.4f, Main.maxTilesY * 0.8f, Main.LocalPlayer.Center.Y / 16f, true));
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.screenWidth, (int)Main.screenHeight), new Color(value, value, value));
-            Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
+            Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomCircle").Value;
+            Texture2D bloom2 = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
 
             float sunY = MathHelper.Lerp(Main.screenHeight * 0.2f, (Main.maxTilesY * 16) * 0.3f - Main.screenPosition.Y - Main.screenHeight * 0.3f, Utils.GetLerpValue(0.3f, 0.301f, Main.LocalPlayer.Center.Y / (Main.maxTilesY * 16f), true));
 
-            spriteBatch.EnterShaderRegion(BlendState.Additive);
-            spriteBatch.Draw(bloom, new Vector2(Main.screenWidth / 2f, sunY), null, Color.White, 0, bloom.Size() / 2, 0.5f, 0, 0);
-            spriteBatch.EnterShaderRegion(BlendState.NonPremultiplied);
-            spriteBatch.Draw(bloom, new Vector2(Main.screenWidth / 2f, sunY), null, Color.Black, 0, bloom.Size() / 2, 0.3f, 0, 0);
-            spriteBatch.ExitShaderRegion();
+            spriteBatch.Draw(bloom, new Vector2(Main.screenWidth / 2f, sunY), null, Color.White with { A = 0 }, 0, bloom.Size() / 2, 1.3f, 0, 0);
+            spriteBatch.Draw(bloom2, new Vector2(Main.screenWidth / 2f, sunY), null, Color.Black, 0, bloom2.Size() / 2, 0.3f, 0, 0);
         }
 
         public override Color OnTileColor(Color inColor) => DrawColor;

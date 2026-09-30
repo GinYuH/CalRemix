@@ -2122,6 +2122,8 @@ namespace CalRemix
 
         public static void AddProtectedStructure(Rectangle area, int padding = 0)
         {
+            if (GenVars.structures == null)
+                return;
             GenVars.structures.AddProtectedStructure(area, padding);
             Rectangle rectangle = new Rectangle(area.X, area.Y, area.Width, area.Height);
             rectangle.Inflate(padding, padding);
