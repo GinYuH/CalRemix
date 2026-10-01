@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Input;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Sounds;
 using CalRemix.Content.Items.Misc;
+using CalamityMod;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
@@ -399,6 +400,26 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 {
                     if (!NPCDialogueUI.IsBeingTalkedTo(NPC))
                     {
+                        int atts = 0;
+                        while (atts < 10000)
+                        {
+                            int searchRad = 30;
+                            Point p = NPC.Center.ToTileCoordinates();
+                            Point newp = p + new Point(Main.rand.Next(-searchRad, searchRad), Main.rand.Next(0, searchRad));
+                            Tile t = CalRemixHelper.ParanoidTileRetrieval(newp.X, newp.Y);
+                            if (SubworldDoorGeneration.GenerateDoor(Tiles.SubworldDoorPlaced.SubworldType.Gray, newp.X, newp.Y))
+                            {
+                                if (atts > 1000)
+                                    searchRad = 50;
+                                if (atts > 5000)
+                                    searchRad = 100;
+                                for (int i = 0; i < 110; i++)
+                                {
+                                    VoidMetaball.SpawnParticle(newp.ToWorldCoordinates(), Main.rand.NextVector2Circular(1f, 1f) * Main.rand.NextFloat(16, 26) * 2, Main.rand.NextFloat(40, 80));
+                                }
+                                break;
+                            }
+                        }
                         NPC.active = false;
                     }
                 }

@@ -23,6 +23,7 @@ using CalRemix.Content.Items.Weapons.Stormbow;
 using CalamityMod.World;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Content.Tiles;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -474,6 +475,8 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                             }
                         }
                     }
+                    int syng = ModContent.TileType<SyringodiumPlaced>();
+                    int door = ModContent.TileType<SubworldDoorPlaced>();
                     if (Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && (CurrentPhase == 3 || CurrentPhase == 5 || CurrentPhase == 6))
                     {
                         for (int i = 0; i < (int)(NPC.width); i++)
@@ -482,7 +485,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                             {
                                 Point start = NPC.position.ToTileCoordinates();
                                 Tile t = CalRemixHelper.ParanoidTileRetrieval(start.X + i, start.Y + j);
-                                if (t.TileType == ModContent.TileType<SyringodiumPlaced>())
+                                if (t.TileType == syng && CalRemixHelper.ParanoidTileRetrieval(start.X + i, start.Y + j - 1).TileType != door)
                                 {
                                     WorldGen.KillTile(start.X + i, start.Y + j, noItem: true);
                                 }

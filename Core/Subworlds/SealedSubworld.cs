@@ -7,6 +7,7 @@ using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
+using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
 using CalRemix.Content.Walls;
@@ -154,7 +155,7 @@ namespace CalRemix.Core.Subworlds
                     if (!NPC.AnyNPCs(ModContent.NPCType<DreadonFriendly>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.tentPos.X, (int)SealedSubworldData.tentPos.Y, ModContent.NPCType<DreadonFriendly>());
                 }
-                if (RemixDowned.downedVoid)
+                if (RemixDowned.downedVoid && CalRemixWorld.shadeQuestLevel < 3)
                 {
                     if (!NPC.AnyNPCs(ModContent.NPCType<ShadeGreen>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.citadelPos.X, (int)SealedSubworldData.citadelPos.Y, ModContent.NPCType<ShadeGreen>());
@@ -338,10 +339,48 @@ namespace CalRemix.Core.Subworlds
             progress.Message = "Void";
             progress.Value = 0.95f;
             GenerateVoid();
-            progress.Value = 1f;            
+            progress.Value = 1f;
 
-            Main.spawnTileY = surfaceTile;
-            Main.spawnTileX = fieldPosition + (int)(Main.maxTilesX * fieldWidth * 0.3f);
+
+            bool placedSpawnDoor = false;
+            bool placedSwampDoor = false;
+            bool placedCarnDoor = false;
+            int atts = 0;
+            ushort carnelianGrass = (ushort)ModContent.TileType<CarnelianGrassPlaced>();
+            ushort darnedMud = (ushort)ModContent.TileType<RichMudPlaced>();
+            ushort sealedGrass = (ushort)ModContent.TileType<SealedGrassPlaced>();
+            while ((!placedSpawnDoor || !placedSwampDoor || !placedCarnDoor) && atts < 10000)
+            {
+                Rectangle box = new Rectangle(10, 0, Main.maxTilesX - 10, Main.maxTilesY);
+                int x = WorldGen.genRand.Next(box.Left, box.Right);
+                int y = WorldGen.genRand.Next(box.Top, box.Bottom);
+                Tile t = CalRemixHelper.ParanoidTileRetrieval(x, y);
+                if (t.TileType == carnelianGrass && !placedCarnDoor)
+                {
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nightline, x, y))
+                    {
+                        placedCarnDoor = true;
+                    }
+                }
+                if (t.TileType == darnedMud && t.WallType == WallID.None && !placedSwampDoor)
+                {
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Wolf, x, y))
+                    {
+                        placedSwampDoor = true;
+                    }
+                }
+                if (t.TileType == sealedGrass && !placedSpawnDoor && x < villagePosition - 20)
+                {
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Ant, x, y))
+                    {
+                        placedSpawnDoor = true;
+                        Main.spawnTileX = x;
+                        Main.spawnTileY = y - 1;
+                    }
+                }
+                if (placedSpawnDoor && placedCarnDoor && placedSwampDoor)
+                    break;
+            }
         }
 
         public static void GenerateBase(ref GenerationProgress prog)
@@ -800,7 +839,7 @@ namespace CalRemix.Core.Subworlds
                             }
                             PlaceSchematic(houseType, new Point(i, j + 1), SchematicAnchorType.BottomMiddle);
 
-                            hausCooldown = StructureHelper.API.Generator.GetStructureDimensions("Core/Schematics/" + houseType, CalRemix.instance).X;
+                            hausCooldown = 30;
                             housesGenerated++;
                         }
                         else if (WorldGen.genRand.NextBool(25))

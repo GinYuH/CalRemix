@@ -178,6 +178,47 @@ namespace CalRemix.Core.Subworlds
 
 
             SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Bridge, Main.spawnTileX, Main.spawnTileY + 2);
+
+            bool placedCaveDoor = false;
+            bool placedFloorDoor = false;
+            bool placedIslandDoor = false;
+            int atts = 0;
+            ushort grass = (ushort)ModContent.TileType<SyringodiumPlaced>();
+            ushort stone = (ushort)ModContent.TileType<SchistPlaced>();
+            ushort chert = (ushort)ModContent.TileType<ChertPlaced>();
+            ushort darkstone = (ushort)ModContent.TileType<DarkstonePlaced>();
+            while ((!placedCaveDoor || !placedFloorDoor || !placedIslandDoor) && atts < 10000)
+            {
+                Rectangle box = new Rectangle(100, Main.spawnTileY + 22, Main.maxTilesX - 100, Main.maxTilesY);
+                int x = WorldGen.genRand.Next(box.Left, box.Right);
+                int y = WorldGen.genRand.Next(box.Top, box.Bottom);
+                Tile t = CalRemixHelper.ParanoidTileRetrieval(x, y);
+                if (t.TileType == grass && !placedIslandDoor)
+                {
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nowhere, x, y))
+                    {
+                        placedIslandDoor = true;
+                    }
+                }
+                if (t.TileType == stone && !placedFloorDoor)
+                {
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Savanna, x, y))
+                    {
+                        placedFloorDoor = true;
+                    }
+                }
+                if (t.TileType == darkstone && !placedCaveDoor)
+                {
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nightline, x, y))
+                    {
+                        placedCaveDoor = true;
+                    }
+                }
+                if (placedCaveDoor && placedIslandDoor && placedFloorDoor)
+                    break;
+            }
+            if (!placedIslandDoor)
+                CalRemix.instance.Logger.Warn("Island Door failed to generate. Report this to the devs if you see this!");
         }
 
         public static void GenerateBottom()
