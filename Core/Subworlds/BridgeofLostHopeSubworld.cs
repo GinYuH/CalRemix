@@ -99,6 +99,9 @@ namespace CalRemix.Core.Subworlds
 
             SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Overworld, spawnX, spawnY);
             SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.GreatSea, Main.maxTilesX - spawnX, spawnY);
+
+            if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<GreatSeaSubworld>())
+                Main.spawnTileX = Main.maxTilesX - spawnX;
         }
     }
 }
