@@ -187,6 +187,7 @@ namespace CalRemix.Core.Subworlds
             ushort stone = (ushort)ModContent.TileType<SchistPlaced>();
             ushort chert = (ushort)ModContent.TileType<ChertPlaced>();
             ushort darkstone = (ushort)ModContent.TileType<DarkstonePlaced>();
+            Point newSpawn = new Point(Main.spawnTileX, Main.spawnTileY);
             while ((!placedCaveDoor || !placedFloorDoor || !placedIslandDoor) && atts < 10000)
             {
                 Rectangle box = new Rectangle(100, Main.spawnTileY + 22, Main.maxTilesX - 100, Main.maxTilesY);
@@ -198,6 +199,10 @@ namespace CalRemix.Core.Subworlds
                     if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nowhere, x, y))
                     {
                         placedIslandDoor = true;
+                        if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<SingularPointSubworld>())
+                        {
+                            newSpawn = new Point(x, y);
+                        }
                     }
                 }
                 if (t.TileType == stone && !placedFloorDoor)
@@ -205,6 +210,10 @@ namespace CalRemix.Core.Subworlds
                     if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Savanna, x, y))
                     {
                         placedFloorDoor = true;
+                        if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<SavannaSubworld>())
+                        {
+                            newSpawn = new Point(x, y);
+                        }
                     }
                 }
                 if (t.TileType == darkstone && !placedCaveDoor)
@@ -212,6 +221,10 @@ namespace CalRemix.Core.Subworlds
                     if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nightline, x, y))
                     {
                         placedCaveDoor = true;
+                        if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<NightlineSubworld>())
+                        {
+                            newSpawn = new Point(x, y);
+                        }
                     }
                 }
                 if (placedCaveDoor && placedIslandDoor && placedFloorDoor)
@@ -219,6 +232,9 @@ namespace CalRemix.Core.Subworlds
             }
             if (!placedIslandDoor)
                 CalRemix.instance.Logger.Warn("Island Door failed to generate. Report this to the devs if you see this!");
+
+            Main.spawnTileX = newSpawn.X;
+            Main.spawnTileY = newSpawn.Y;
         }
 
         public static void GenerateBottom()

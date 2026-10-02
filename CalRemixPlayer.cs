@@ -141,6 +141,8 @@ namespace CalRemix
         public bool submapUIUnlocked = false;
         public bool submapUIOpen = false;
 
+        public Subworld lastLoadedSubworld = null;
+
         public bool gottenCellPhone = false;
         public bool miracleUnlocked = false;
         public bool solynUnlocked = false;
@@ -811,6 +813,13 @@ namespace CalRemix
                 }
 
             }
+
+            Subworld subworld = SubworldSystem.Current;
+            if (subworld != lastLoadedSubworld)
+            {
+                lastLoadedSubworld = subworld;
+            }
+
             if (CalRemixWorld.permanenthealth)
                 SpawnPhantomHeart();
 

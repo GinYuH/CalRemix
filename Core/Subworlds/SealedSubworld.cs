@@ -148,7 +148,9 @@ namespace CalRemix.Core.Subworlds
                 if (p.Distance(SealedSubworldData.brightShrinePos) < 1000 && !NPC.AnyNPCs(ModContent.NPCType<MonorianWarrior>()))
                 {
                     if (!NPC.AnyNPCs(ModContent.NPCType<BrightMind>()))
-                        NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.brightShrinePos.X, (int)SealedSubworldData.brightShrinePos.Y, ModContent.NPCType<BrightMind>());
+                        if (!NPC.AnyNPCs(ModContent.NPCType<MonorianWarrior>()))
+                            if (!NPC.AnyNPCs(ModContent.NPCType<MonorianSoul>()))
+                                NPC.NewNPC(new EntitySource_WorldEvent(), (int)SealedSubworldData.brightShrinePos.X, (int)SealedSubworldData.brightShrinePos.Y, ModContent.NPCType<BrightMind>());
                 }
                 if (p.Distance(SealedSubworldData.tentPos) < 1000 && !RemixDowned.downedDraedon)
                 {
@@ -349,6 +351,7 @@ namespace CalRemix.Core.Subworlds
             ushort carnelianGrass = (ushort)ModContent.TileType<CarnelianGrassPlaced>();
             ushort darnedMud = (ushort)ModContent.TileType<RichMudPlaced>();
             ushort sealedGrass = (ushort)ModContent.TileType<SealedGrassPlaced>();
+            Point newSpawn = new Point(Main.spawnTileX, Main.spawnTileY);
             while ((!placedSpawnDoor || !placedSwampDoor || !placedCarnDoor) && atts < 10000)
             {
                 Rectangle box = new Rectangle(10, 0, Main.maxTilesX - 10, Main.maxTilesY);
@@ -360,6 +363,10 @@ namespace CalRemix.Core.Subworlds
                     if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nightline, x, y))
                     {
                         placedCarnDoor = true;
+                        if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<NightlineSubworld>())
+                        {
+                            newSpawn = new Point(x, y);
+                        }
                     }
                 }
                 if (t.TileType == darnedMud && t.WallType == WallID.None && !placedSwampDoor)
@@ -367,6 +374,10 @@ namespace CalRemix.Core.Subworlds
                     if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Wolf, x, y))
                     {
                         placedSwampDoor = true;
+                        if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<WolfForestSubworld>())
+                        {
+                            newSpawn = new Point(x, y);
+                        }
                     }
                 }
                 if (t.TileType == sealedGrass && !placedSpawnDoor && x < villagePosition - 20)
@@ -374,13 +385,18 @@ namespace CalRemix.Core.Subworlds
                     if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Ant, x, y))
                     {
                         placedSpawnDoor = true;
-                        Main.spawnTileX = x;
-                        Main.spawnTileY = y - 1;
+                        if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<AntSubworld>() || Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<TheGraySubworld>() || Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<HorizonSubworld>())
+                        {
+                            newSpawn = new Point(x, y);
+                        }
                     }
                 }
                 if (placedSpawnDoor && placedCarnDoor && placedSwampDoor)
                     break;
             }
+
+            Main.spawnTileX = newSpawn.X;
+            Main.spawnTileY = newSpawn.Y;
         }
 
         public static void GenerateBase(ref GenerationProgress prog)

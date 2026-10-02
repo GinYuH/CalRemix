@@ -168,6 +168,20 @@ namespace CalRemix.Core.Subworlds
 
             Main.spawnTileY = (int)(surfaceLevel * Main.maxTilesY);
             Main.spawnTileX = (int)(0.05f * Main.maxTilesX);
+
+            for (int i = 0; i < 2; i++)
+            {
+                int atts = 0;
+                while (atts < 10000)
+                {
+                    Tile door = CalRemixHelper.ParanoidTileRetrieval(WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 22), Main.spawnTileY);
+                    SubworldDoorPlaced.SubworldType subType = i == 0 ? SubworldDoorPlaced.SubworldType.Jungle : SubworldDoorPlaced.SubworldType.GreatSea;
+                    if (SubworldDoorGeneration.GenerateDoor(subType, door.X(), door.Y()))
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
 }

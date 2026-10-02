@@ -125,8 +125,7 @@ namespace CalRemix.Core.Subworlds
             Main.worldSurface = Main.maxTilesY - 142; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
             int concrete = 260;
-
-            Main.spawnTileX = concrete;
+            int defSpawnTile = concrete;
 
             ushort stone = (ushort)ModContent.TileType<RhyolitePlaced>();
             ushort ash = (ushort)ModContent.TileType<PowderedAshPlaced>();
@@ -477,7 +476,78 @@ namespace CalRemix.Core.Subworlds
 
             #endregion
 
-            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Screaming, Main.spawnTileX, Main.spawnTileY);
+            bool breake = false;
+            for (int i = 0; i < Main.maxTilesY / 2; i++)
+            {
+                if (breake)
+                    break;
+                for (int j = 100; j < 200; j++)
+                {
+                    if (breake)
+                        break;
+                    if (CalRemixHelper.ParanoidTileRetrieval(j, i).IsTileSolidGround())
+                    {
+                        if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Screaming, j, i))
+                        {
+                            if (Main.LocalPlayer.Remix().lastLoadedSubworld != ModContent.GetInstance<OvergrowthRainforestSubworld>())
+                            {
+                                Main.spawnTileX = j;
+                                Main.spawnTileY = i;
+                                breake = true;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            Point pinnacleAnchor = new Point((int)(Main.maxTilesX * 0.85f), (int)(Main.maxTilesY * 0.5f));
+
+            bool generated = false;
+            for (int j = pinnacleAnchor.Y; j < pinnacleAnchor.Y + 200; j++)
+            {
+                if (generated)
+                    break;
+                for (int i = pinnacleAnchor.X - 20; i < pinnacleAnchor.X + 20; i++)
+                {
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Jungle, i, j))
+                    {
+                        generated = true;
+                        if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<OvergrowthRainforestSubworld>())
+                        {
+                            Main.spawnTileX = i;
+                            Main.spawnTileY = j;
+                        }
+                        break;
+                    }
+                }
+            }
+            if (!generated)
+            {
+                CalRemix.instance.Logger.Warn("Jungle Door failed to generate! Attempting greater search range...");
+                for (int j = pinnacleAnchor.Y; j < pinnacleAnchor.Y + 300; j++)
+                {
+                    if (generated)
+                        break;
+                    for (int i = pinnacleAnchor.X - 100; i < pinnacleAnchor.X + 100; i++)
+                    {
+                        if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Jungle, i, j))
+                        {
+                            generated = true;
+                            if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<OvergrowthRainforestSubworld>())
+                            {
+                                Main.spawnTileX = i;
+                                Main.spawnTileY = j;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!generated)
+            {
+                CalRemix.instance.Logger.Warn("Jungle Door failed to generate properly. Placing door in random location...");
+                SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Jungle);
+            }
         }
 
         public static void CircularSpikes(int baseSize, int amount)

@@ -80,8 +80,12 @@ namespace CalRemix.Core.Subworlds
                     break;
                 }
             }
-            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Overworld, Main.spawnTileX, Main.spawnTileY);
-            SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Pinnacles);
+
+            SubworldDoorPlaced.SubworldType exitDoor = Main.LocalPlayer.Remix().lastLoadedSubworld != ModContent.GetInstance<PinnaclesSubworld>() ? SubworldDoorPlaced.SubworldType.Pinnacles : SubworldDoorPlaced.SubworldType.Overworld;
+            SubworldDoorPlaced.SubworldType entranceDoor = Main.LocalPlayer.Remix().lastLoadedSubworld != ModContent.GetInstance<PinnaclesSubworld>() ? SubworldDoorPlaced.SubworldType.Overworld : SubworldDoorPlaced.SubworldType.Pinnacles;
+
+            SubworldDoorGeneration.GenerateDoor(entranceDoor, Main.spawnTileX, Main.spawnTileY);
+            SubworldDoorGeneration.GenerateDoorRandom(exitDoor);
         }
     }
 }
