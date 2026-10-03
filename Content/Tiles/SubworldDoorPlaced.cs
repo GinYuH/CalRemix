@@ -1,6 +1,8 @@
 ﻿using CalamityMod;
+using CalamityMod.Graphics.Primitives;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Core.Subworlds;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -62,7 +64,9 @@ namespace CalRemix.Content.Tiles
 
         public override void SetStaticDefaults()
         {
+            Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
+            Main.tileOreFinderPriority[Type] = 2222;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.Origin = new Point16(1, 2);
@@ -74,10 +78,18 @@ namespace CalRemix.Content.Tiles
             TileID.Sets.PreventsTileReplaceIfOnTopOfIt[Type] = true;
             TileID.Sets.PreventsSandfall[Type] = true;
             TileObjectData.addTile(Type);
-            AddMapEntry(new Color(75, 139, 166));
+            AddMapEntry(new Color(75, 139, 166), CalRemixHelper.LocalText("Tiles.SubworldDoorPlaced"));
             DustType = DustID.Stone;
             AnimationFrameHeight = 54;
             TileID.Sets.DisableSmartCursor[Type] = true;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            Color final = Color.Lerp(Main.DiscoColor, Color.White, 0.9f) * 0.01f;
+            r = final.R;
+            g = final.G;
+            b = final.B;
         }
 
         public static void PlaceSubworldDoor(int i, int j, SubworldType key)
@@ -178,11 +190,38 @@ namespace CalRemix.Content.Tiles
                 if (tE is SubworldDoorTE subDoor)
                 {
                     c = subDoor.doorColor;
+                    if (t.TileFrameX % 36 == 0 && t.TileFrameY % 54 == 0)
+                    {
+                        float beamAmt = 15;
+                        for (int l = 0; l < beamAmt; l++)
+                        {
+                            float comp = l / (beamAmt - 1);
+                            Vector2 startPos = new Vector2(i, j) * 16 + CalamityUtils.TileDrawOffset - Main.screenPosition + new Vector2(16, 24);
+                            Vector2 endPos = startPos + Vector2.One.RotatedBy(Main.GlobalTimeWrappedHourly * (l % 2 == 0).ToDirectionInt() * MathHelper.Lerp(0.4f, 1.4f, comp) + l) * MathHelper.Lerp(30, 60, comp);
+                            List<Vector2> pts = new();
+                            for (int k = 0; k < 30; k++)
+                            {
+                                Vector2 ppos = Vector2.Lerp(startPos, endPos, k / 29f);
+                                int baseDist = 0;
+                                float baseRot = 0;
+                                if (k > 0)
+                                {
+                                    Vector2 prev = Vector2.Lerp(startPos, endPos, (k - 1) / 29f);
+                                    baseDist = (int)ppos.Distance(prev);
+                                    baseRot = ppos.DirectionTo(prev).ToRotation();
+                                }
+                                int widthMin = 4;
+                                int widthMax = 16;
+                                int curWith = (int)MathHelper.Lerp(widthMin, widthMax, k / 29f);
+                                spriteBatch.Draw(TextureAssets.MagicPixel.Value, ppos, new Rectangle(0, 0, baseDist + 1, curWith), Main.DiscoColor * MathHelper.Lerp(1, 0, k / 29f), baseRot, new Vector2((baseDist + 1) / 2f, curWith / 2), 1, SpriteEffects.None, 0);
+                            }
+                        }
+                    }
                     if (t.TileFrameX % 36 == 0 && t.TileFrameY == 54)
                     {
                         Texture2D tex = ModContent.Request<Texture2D>(subDoor.texture).Value;
                         Vector2 tileSize = new Vector2(32, 54);
-                        Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Lighting.GetColor(i, j), 0, Vector2.Zero, tileSize / tex.Size(), 0); 
+                        Main.EntitySpriteDraw(tex, new Vector2(i, j) * 16 - Main.screenPosition + CalamityUtils.TileDrawOffset, null, Lighting.GetColor(i, j), 0, Vector2.Zero, tileSize / tex.Size(), 0);
                     }
                 }
             }
