@@ -51,7 +51,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.screenWidth, (int)Main.screenHeight), Color.Black);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.screenWidth * 3, (int)Main.screenHeight * 3), Color.Black);
 
             var shader = GameShaders.Misc["CalRemix:AnomalyBorder"];
             Vector2 center = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8f - Main.screenPosition;
@@ -63,6 +63,12 @@ namespace CalRemix.Core.Subworlds
             shader.Shader.Parameters["opacity"].SetValue(SkyOpacity * 0.66f);
             shader.SetShaderTexture(ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/GreyscaleGradients/Perlin"));
             shader.Apply();
+            Main.spriteBatch.EnterShaderRegion(BlendState.AlphaBlend, shader.Shader);
+
+            Texture2D portalTexture = TextureAssets.Item[ModContent.ItemType<Baroclaw>()].Value;
+            Main.spriteBatch.Draw(portalTexture, center, new Rectangle(0, 0, (int)dimensions.X, (int)dimensions.Y), Color.White with { A = 0 }, 0, dimensions / 2, 1, 0, 0);
+
+            Main.spriteBatch.ExitShaderRegion();
         }
 
         public override Color OnTileColor(Color inColor) => DrawColor;
