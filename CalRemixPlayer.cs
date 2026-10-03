@@ -62,6 +62,7 @@ using CalRemix.UI.Anomaly109;
 using CalRemix.UI.SubworldMap;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -480,7 +481,10 @@ namespace CalRemix
             tag["DeliciousMeatPrestige"] = deliciousMeatPrestige;
             tag["DeliciousMeatNoLife"] = deliciousMeatNoLife;
 
-            foreach (string s in visitedSubworlds) tag["VisitedSubworlds" + s] = true;
+            foreach (string s in visitedSubworlds)
+            {
+                tag["VisitedSubworlds" + s] = true;
+            }
 
             foreach (var (name, value) in stocks) tag["Stock" + name] = value;
         }
@@ -505,8 +509,7 @@ namespace CalRemix
                 Subworld tryish = SubworldMapSystem.Items[key].boundSubworld;
                 if (tryish != null)
                 {
-                    string subworldName = key;
-                    if (tag.GetBool("VisitedSubworlds" + subworldName))
+                    if (tag.GetBool("VisitedSubworlds" + key))
                     {
                         visitedSubworlds.Add(key);
                     }
@@ -841,9 +844,13 @@ namespace CalRemix
 
             if (SubworldSystem.AnyActive())
             {
-                if (!visitedSubworlds.Contains(subworld?.FullName))
+                foreach (string key in SubworldMapSystem.Items.Keys)
                 {
-                    visitedSubworlds.Add(subworld?.FullName);
+                    if (SubworldMapSystem.Items[key].boundSubworld == SubworldSystem.Current)
+                    {
+                        if (!visitedSubworlds.Contains(key))
+                            visitedSubworlds.Add(key);
+                    }
                 }
             }
 

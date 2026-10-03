@@ -188,7 +188,7 @@ namespace CalRemix.UI.SubworldMap
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, hitbox.Center.ToVector2(), resizedHitbox, (SubworldMapSystem.HasVisitedSubworld(pair.Value.boundSubworld) || DEV_UNLOCKALL) ? Color.White : Color.Gray, rot, hitbox.Size() / 2, 1, 0, 0);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, portraitRect.Center.ToVector2(), portraitRect, Color.Black, rot, portraitRect.Size() / 2, 1, 0, 0);
 
-                if ((pair.Value.boundSubworld != null && Main.LocalPlayer.Remix().visitedSubworlds.Contains(pair.Value.boundSubworld.FullName)) || pair.Value.boundSubworld == null || DEV_UNLOCKALL)
+                if ((pair.Value.boundSubworld != null && Main.LocalPlayer.Remix().visitedSubworlds.Contains(pair.Key)) || pair.Value.boundSubworld == null || DEV_UNLOCKALL)
                 {
                     if (ModContent.RequestIfExists("CalRemix/UI/SubworldMap/" + pair.Key, out Asset<Texture2D> asset))
                     {
@@ -445,7 +445,16 @@ namespace CalRemix.UI.SubworldMap
         {
             if (subworld == null)
                 return true;
-            return Main.LocalPlayer.Remix().visitedSubworlds.Contains(subworld.FullName);
+            string realKey = "";
+            foreach (string key in Items.Keys)
+            {
+                if (Items[key].boundSubworld == subworld)
+                {
+                    realKey = key;
+                    break;
+                }
+            }
+            return Main.LocalPlayer.Remix().visitedSubworlds.Contains(realKey);
         }
     }
 
