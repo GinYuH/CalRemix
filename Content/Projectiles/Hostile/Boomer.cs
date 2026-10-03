@@ -14,8 +14,6 @@ namespace CalRemix.Content.Projectiles.Hostile
 {
     public class Boomer : ModProjectile
     {
-        public override string Texture => "CalamityMod/Items/Weapons/Rogue/BallisticPoisonBomb";
-
         public static int TickTime => CalRemixHelper.SecondsToFrames(2.5f);
         public static int Telegraph => TickTime + 60;
 
