@@ -20,8 +20,14 @@ namespace CalRemix.UI.SubworldMap
 {
     public class SubworldMapButtonUI : UIState
     {
+        public static string worldName = "";
+
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (!SubworldSystem.AnyActive())
+            {
+                worldName = Main.worldName;
+            }
             if (Main.LocalPlayer.TryGetModPlayer<CalRemixPlayer>(out var player))
             {
                 if (!NPC.downedGolemBoss)
@@ -105,7 +111,7 @@ namespace CalRemix.UI.SubworldMap
             }
             Main.blockMouse = true;
 
-            bool DEV_UNLOCKALL = true; // Public should be false
+            bool DEV_UNLOCKALL = false; // Public should be false
             bool DEV_CANTELEPORT = true; // Public should be false
             bool DEV_CANMOVE = false; // Public should be false
             bool DEV_DRAGENTIRE = true; // Public should be true
@@ -179,10 +185,10 @@ namespace CalRemix.UI.SubworldMap
                 Rectangle resizedHitbox =  hitbox with { Height = hitbox.Height + extraHeight };
                 Rectangle portraitRect = Utils.CenteredRectangle(iconPosition, iconSize);
                 float rot = MathF.Sin(Convert.ToInt32(pair.Key[0]) * 2f) * 0.05f;
-                spriteBatch.Draw(TextureAssets.MagicPixel.Value, hitbox.Center.ToVector2(), resizedHitbox, (item.unlockCondition.Invoke() || DEV_UNLOCKALL) ? Color.White : Color.Gray, rot, hitbox.Size() / 2, 1, 0, 0);
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, hitbox.Center.ToVector2(), resizedHitbox, (SubworldMapSystem.HasVisitedSubworld(pair.Value.boundSubworld) || DEV_UNLOCKALL) ? Color.White : Color.Gray, rot, hitbox.Size() / 2, 1, 0, 0);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, portraitRect.Center.ToVector2(), portraitRect, Color.Black, rot, portraitRect.Size() / 2, 1, 0, 0);
 
-                if (item.unlockCondition.Invoke() || DEV_UNLOCKALL)
+                if ((pair.Value.boundSubworld != null && Main.LocalPlayer.Remix().visitedSubworlds.Contains(pair.Value.boundSubworld.FullName)) || pair.Value.boundSubworld == null || DEV_UNLOCKALL)
                 {
                     if (ModContent.RequestIfExists("CalRemix/UI/SubworldMap/" + pair.Key, out Asset<Texture2D> asset))
                     {
@@ -199,7 +205,7 @@ namespace CalRemix.UI.SubworldMap
                         item.animCompletion = MathHelper.Min(item.animCompletion + 0.11f, 1);
                     }
                     hovered = pair.Key;
-                    if (DEV_UNLOCKALL && DEV_CANTELEPORT)
+                    if (DEV_CANTELEPORT)
                     {
                         if (Main.mouseLeft && Main.mouseLeftRelease)
                         {
@@ -253,17 +259,18 @@ namespace CalRemix.UI.SubworldMap
             {
                 SubworldMapItem item1 = SubworldMapSystem.Items[v.Item1];
                 SubworldMapItem item2 = SubworldMapSystem.Items[v.Item2];
-                if (!DEV_UNLOCKALL && (!item1.unlockCondition.Invoke() || !item2.unlockCondition.Invoke()))
-                    continue;
-                // If unlocked, draw connections
-                Vector2 basePosition = trueBasePos;
-                Vector2 iconPosition1 = basePosition + item1.position;
-                Vector2 iconPosition2 = basePosition + item2.position;
-                // If either icon is currently hovered on, make the connection a brighter red
-                Color color = (v.Item1 == hovered || v.Item2 == hovered) ? Color.Red : Color.DarkRed;
-                Vector2 heighOffset = -Vector2.UnitY * bgSize.Y * nailHeight;
-                // Draw the line
-                CalRemixHelper.DrawChain(ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/YarnSegment").Value, iconPosition1 + heighOffset, iconPosition2 + heighOffset, MathHelper.PiOver2, color);          
+                if (DEV_UNLOCKALL || (SubworldMapSystem.HasVisitedSubworld(item1.boundSubworld) || SubworldMapSystem.HasVisitedSubworld(item2.boundSubworld)))
+                {
+                    // If unlocked, draw connections
+                    Vector2 basePosition = trueBasePos;
+                    Vector2 iconPosition1 = basePosition + item1.position;
+                    Vector2 iconPosition2 = basePosition + item2.position;
+                    // If either icon is currently hovered on, make the connection a brighter red
+                    Color color = ((v.Item1 == hovered || v.Item2 == hovered) && (SubworldMapSystem.HasVisitedSubworld(item2.boundSubworld) && SubworldMapSystem.HasVisitedSubworld(item1.boundSubworld)) )? Color.Red : Color.DarkRed;
+                    Vector2 heighOffset = -Vector2.UnitY * bgSize.Y * nailHeight;
+                    // Draw the line
+                    CalRemixHelper.DrawChain(ModContent.Request<Texture2D>("CalRemix/UI/SubworldMap/YarnSegment").Value, iconPosition1 + heighOffset, iconPosition2 + heighOffset, MathHelper.PiOver2, color);
+                }
             }
 
             // Draw the connections
@@ -271,11 +278,11 @@ namespace CalRemix.UI.SubworldMap
             {
                 string key = pair.Key;
                 SubworldMapItem item = pair.Value;
-                bool unlocked = item.unlockCondition.Invoke() || DEV_UNLOCKALL;
+                bool unlocked = SubworldMapSystem.HasVisitedSubworld(pair.Value.boundSubworld) || DEV_UNLOCKALL;
                 string displayText = /*pair.Key == "Overworld" ? Main.worldName :*/ unlocked ? CalRemixHelper.LocalText("UI.SubworldMap." + key + ".DisplayName").Value : "???"; // The text to display
                 if (pair.Value.boundSubworld == null)
                 {
-                    displayText = Main.worldName;
+                    displayText = SubworldMapButtonUI.worldName;
                 }
                 Vector2 basePosition = trueBasePos;
                 Vector2 iconPosition = basePosition + item.position;
@@ -329,14 +336,17 @@ namespace CalRemix.UI.SubworldMap
                             displayText += " " + item.position;
                         }
 
-                        Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, (item.unlockCondition.Invoke() || DEV_UNLOCKALL) ? Color.White : Color.Gray, anchorx: 0.5f);
+                        Utils.DrawBorderString(spriteBatch, displayText, iconPosition + Vector2.UnitY * textOffset, (SubworldMapSystem.HasVisitedSubworld(pair.Value.boundSubworld) || DEV_UNLOCKALL) ? Color.White : Color.Gray, anchorx: 0.5f);
                         for (int i = 0; i < dialogue.Length; i++)
                         {
                             Utils.DrawBorderString(spriteBatch, dialogue[i], iconPosition + Vector2.UnitY * textOffset + (Vector2.UnitY * textSpacing + Vector2.UnitY * textSpacing * i) * item.animCompletion, Color.White * item.animCompletion, anchorx: 0.5f);
                         }
                     }
                 }
-                spriteBatch.Draw(screw, iconPosition - Vector2.UnitY * bgSize.Y * nailHeight, null, Color.White, rot, screw.Size() / 2, 1, 0, 0); // draw the icon
+                Color c = Color.White;
+                if (SubworldSystem.Current == pair.Value.boundSubworld)
+                    c = Main.DiscoColor;
+                spriteBatch.Draw(screw, iconPosition - Vector2.UnitY * bgSize.Y * nailHeight, null, c, rot, screw.Size() / 2, 1, 0, 0); // draw the icon
             }
 
             // Don't allow dragging if an icon is being dragged
@@ -374,10 +384,6 @@ namespace CalRemix.UI.SubworldMap
         /// </summary>
         public List<string> connections;
         /// <summary>
-        /// When should the icon display?
-        /// </summary>
-        public Func<bool> unlockCondition;
-        /// <summary>
         /// The position on the board
         /// </summary>
         public Vector2 position;
@@ -398,14 +404,12 @@ namespace CalRemix.UI.SubworldMap
         /// Creates a Subworld Map item for the map UI
         /// </summary>
         /// <param name="connections">A list of keys for connected subworlds</param>
-        /// <param name="unlockCondition">When should this icon start displaying?</param>
         /// <param name="position">Where is the icon relative to the center of the board?</param>
-        public SubworldMapItem(Subworld subworld, List<string> connections, Func<bool> unlockCondition, Vector2 position, bool hide = true)
+        public SubworldMapItem(Subworld subworld, List<string> connections, Vector2 position, bool hide = true)
         {
             if (subworld != null)
                 this.boundSubworld = subworld;
             this.connections = connections;
-            this.unlockCondition = unlockCondition;
             this.position = position;
             this.hide = hide;
         }
@@ -419,23 +423,29 @@ namespace CalRemix.UI.SubworldMap
         public static Dictionary<string, SubworldMapItem> Items = new();
         public override void Load()
         {
-            Items.Add("Overworld", new(null, ["ScreamingFace", "Ant", "Bridge", "MoonGrave"], () => true, new Vector2(-3, -38), false));
-            Items.Add("Pinnacles", new(ModContent.GetInstance<PinnaclesSubworld>(), ["OvergrowthJungle", "ScreamingFace"], () => false, new Vector2(200, 136)));
-            Items.Add("Nightline", new(ModContent.GetInstance<NightlineSubworld>(), ["Sealed", "GreatSea"], () => false, new Vector2(397, -394)));
-            Items.Add("Glamour", new(ModContent.GetInstance<GlamourSubworld>(), ["OvergrowthJungle"], () => false, new Vector2(418, 375)));
-            Items.Add("Bridge", new(ModContent.GetInstance<BridgeofLostHopeSubworld>(), ["Overworld", "GreatSea"], () => false, new Vector2(108, -319)));
-            Items.Add("Horizon", new(ModContent.GetInstance<HorizonSubworld>(), ["Sealed"], () => false, new Vector2(-590, -363)));
-            Items.Add("TheGray", new(ModContent.GetInstance<TheGraySubworld>(), ["Sealed"], () => false, new Vector2(-640, 33)));
-            Items.Add("Virisite", new(ModContent.GetInstance<SingularPointSubworld>(), ["Nowhere"], () => false, new Vector2(691, 266)));
-            Items.Add("Nowhere", new(ModContent.GetInstance<NowhereSubworld>(), ["GreatSea", "OvergrowthJungle", "Virisite"], () => false, new Vector2(453, 107)));
-            Items.Add("Wolf", new(ModContent.GetInstance<WolfForestSubworld>(), ["OvergrowthJungle","Sealed"], () => false, new Vector2(-503, 292)));
-            Items.Add("ScreamingFace", new(ModContent.GetInstance<ScreamingSubworld>(), ["Overworld", "Pinnacles"], () => false, new Vector2(288, -99)));
-            Items.Add("OvergrowthJungle", new(ModContent.GetInstance<OvergrowthRainforestSubworld>(), ["Pinnacles", "Nowhere", "Glamour", "Wolf"], () => false, new Vector2(-30, 363)));
-            Items.Add("GreatSea", new(ModContent.GetInstance<GreatSeaSubworld>(), ["Savanna", "Bridge", "Nightline", "Nowhere"], () => true, new Vector2(638, -93), false));
-            Items.Add("Savanna", new(ModContent.GetInstance<SavannaSubworld>(), ["GreatSea"], () => false, new Vector2(660, -330)));
-            Items.Add("MoonGrave", new(ModContent.GetInstance<MoonGraveyardSubworld>(), ["Overworld"], () => false, new Vector2(-242, 123)));
-            Items.Add("Sealed", new(ModContent.GetInstance<SealedSubworld>(), ["Ant", "Horizon", "TheGray", "Wolf", "Nightline"], () => false, new Vector2(-347, -121)));
-            Items.Add("Ant", new(ModContent.GetInstance<AntSubworld>(), ["Overworld", "Sealed"], () => true, new Vector2(-211, -352), false));
+            Items.Add("Overworld", new(null, ["ScreamingFace", "Ant", "Bridge", "MoonGrave"], new Vector2(-3, -38)));
+            Items.Add("Pinnacles", new(ModContent.GetInstance<PinnaclesSubworld>(), ["OvergrowthJungle", "ScreamingFace"], new Vector2(200, 136)));
+            Items.Add("Nightline", new(ModContent.GetInstance<NightlineSubworld>(), ["Sealed", "GreatSea"], new Vector2(397, -394)));
+            Items.Add("Glamour", new(ModContent.GetInstance<GlamourSubworld>(), ["OvergrowthJungle"], new Vector2(418, 375)));
+            Items.Add("Bridge", new(ModContent.GetInstance<BridgeofLostHopeSubworld>(), ["Overworld", "GreatSea"], new Vector2(108, -319)));
+            Items.Add("Horizon", new(ModContent.GetInstance<HorizonSubworld>(), ["Sealed"], new Vector2(-590, -363)));
+            Items.Add("TheGray", new(ModContent.GetInstance<TheGraySubworld>(), ["Sealed"], new Vector2(-640, 33)));
+            Items.Add("Virisite", new(ModContent.GetInstance<SingularPointSubworld>(), ["Nowhere"], new Vector2(691, 266), true));
+            Items.Add("Nowhere", new(ModContent.GetInstance<NowhereSubworld>(), ["GreatSea", "OvergrowthJungle", "Virisite"], new Vector2(453, 107)));
+            Items.Add("Wolf", new(ModContent.GetInstance<WolfForestSubworld>(), ["OvergrowthJungle","Sealed"], new Vector2(-503, 292)));
+            Items.Add("ScreamingFace", new(ModContent.GetInstance<ScreamingSubworld>(), ["Overworld", "Pinnacles"], new Vector2(288, -99)));
+            Items.Add("OvergrowthJungle", new(ModContent.GetInstance<OvergrowthRainforestSubworld>(), ["Pinnacles", "Nowhere", "Glamour", "Wolf"], new Vector2(-30, 363)));
+            Items.Add("GreatSea", new(ModContent.GetInstance<GreatSeaSubworld>(), ["Savanna", "Bridge", "Nightline", "Nowhere"], new Vector2(638, -93)));
+            Items.Add("Savanna", new(ModContent.GetInstance<SavannaSubworld>(), ["GreatSea"], new Vector2(660, -330)));
+            Items.Add("MoonGrave", new(ModContent.GetInstance<MoonGraveyardSubworld>(), ["Overworld"], new Vector2(-242, 123)));
+            Items.Add("Sealed", new(ModContent.GetInstance<SealedSubworld>(), ["Ant", "Horizon", "TheGray", "Wolf", "Nightline"], new Vector2(-347, -121)));
+            Items.Add("Ant", new(ModContent.GetInstance<AntSubworld>(), ["Overworld", "Sealed"], new Vector2(-211, -352)));
+        }
+        public static bool HasVisitedSubworld(Subworld subworld)
+        {
+            if (subworld == null)
+                return true;
+            return Main.LocalPlayer.Remix().visitedSubworlds.Contains(subworld.FullName);
         }
     }
 

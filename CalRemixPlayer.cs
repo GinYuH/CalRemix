@@ -59,6 +59,7 @@ using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using CalRemix.UI.Anomaly109;
+using CalRemix.UI.SubworldMap;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
@@ -142,6 +143,8 @@ namespace CalRemix
         public bool submapUIOpen = false;
 
         public Subworld lastLoadedSubworld = null;
+
+        public List<string> visitedSubworlds = new();
 
         public bool gottenCellPhone = false;
         public bool miracleUnlocked = false;
@@ -477,6 +480,8 @@ namespace CalRemix
             tag["DeliciousMeatPrestige"] = deliciousMeatPrestige;
             tag["DeliciousMeatNoLife"] = deliciousMeatNoLife;
 
+            foreach (string s in visitedSubworlds) tag["VisitedSubworlds" + s] = true;
+
             foreach (var (name, value) in stocks) tag["Stock" + name] = value;
         }
         public override void LoadData(TagCompound tag)
@@ -493,6 +498,20 @@ namespace CalRemix
             deliciousMeatRedeemed = tag.GetInt("DeliciousMeatRedeemed");
             deliciousMeatPrestige = tag.GetInt("DeliciousMeatPrestige");
             deliciousMeatNoLife = tag.GetBool("DeliciousMeatNoLife");
+
+            visitedSubworlds = new();
+            foreach (string key in SubworldMapSystem.Items.Keys)
+            {
+                Subworld tryish = SubworldMapSystem.Items[key].boundSubworld;
+                if (tryish != null)
+                {
+                    string subworldName = key;
+                    if (tag.GetBool("VisitedSubworlds" + subworldName))
+                    {
+                        visitedSubworlds.Add(key);
+                    }
+                }
+            }
 
             foreach (var stock in StockMarketSystem.StockList) stocks.Add(stock, tag.GetInt("Stock" + stock));
         }
@@ -818,6 +837,14 @@ namespace CalRemix
             if (subworld != lastLoadedSubworld)
             {
                 lastLoadedSubworld = subworld;
+            }
+
+            if (SubworldSystem.AnyActive())
+            {
+                if (!visitedSubworlds.Contains(subworld?.FullName))
+                {
+                    visitedSubworlds.Add(subworld?.FullName);
+                }
             }
 
             if (CalRemixWorld.permanenthealth)
