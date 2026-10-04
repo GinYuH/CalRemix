@@ -49,6 +49,8 @@ namespace CalRemix.Content.Tiles.Subworlds.Horizon
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
+            if (Lighting.GetColor(i, j).R < 6)
+                return false;
             DrawHorizonGrass(i, j, spriteBatch);
             return false;
         }
