@@ -87,15 +87,7 @@ namespace CalRemix.Core
             float depth,
             byte effects);
 
-        public static FieldInfo localField = typeof(LocalizationLoader).GetField("changedMods", BindingFlags.Static | BindingFlags.NonPublic);
-
-        public static MethodInfo schematicEntityMethod = typeof(CalamityMod.Schematics.SchematicManager).GetMethod("TryToPlaceTileEntities", BindingFlags.Static | BindingFlags.NonPublic);
-        public static Hook schematicEntityHook;
         public delegate void orig_TryToPlaceTileEntities(int x, int y, Tile t);
-
-        public static MethodInfo GetScreenAreaMethod = typeof(Terraria.GameContent.Drawing.TileDrawing).GetMethod("GetScreenDrawArea", BindingFlags.Instance | BindingFlags.NonPublic);
-
-        public static FieldInfo TileRender = typeof(Terraria.Main).GetField("TilesRenderer", BindingFlags.Instance | BindingFlags.NonPublic);
 
 
         public override void Load()
@@ -141,7 +133,6 @@ namespace CalRemix.Core
 
 
             loadStoneHook = new Hook(resizeMethod, ResizeArraysWithRocks);
-            schematicEntityHook = new Hook(schematicEntityMethod, RemixSchematicEntities);
             drawHook = new Hook(drawMethod, DrawRotated);
         }
 
@@ -397,21 +388,6 @@ namespace CalRemix.Core
             }
 
             Main.spriteBatch.End();
-        }
-
-
-        public static void RemixSchematicEntities(orig_TryToPlaceTileEntities orig, int x, int y, Tile t)
-        {
-            orig(x, y, t);
-            if (!t.HasTile)
-                return;
-
-            if (t.TileFrameX != 0 || t.TileFrameY != 0)
-                return;
-
-            int tileType = t.TileType;
-            if (tileType == TileType<MincerPlaced>())
-                TileEntity.PlaceEntityNet(x, y, TileEntityType<MincerTE>());
         }
 
         public static bool DisableOceanSubworld(On_WorldGen.orig_oceanDepths orig, int x, int y)
