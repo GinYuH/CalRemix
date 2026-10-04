@@ -66,7 +66,7 @@ namespace CalRemix.Core.World
                             {
                                 if (WorldGen.InWorld(x, y, 1))
                                 {
-                                    CalRemixHelper.PlaceSchematic("Crimson Heart", new Point(x, y), CalRemixHelper.SchematicAnchorType.Center);
+                                    CalRemixHelper.PlaceSchematic("Crimson Heart", new Point(x, y), SchematicAnchorType.Center);
                                     Point schematicSize = CalRemixHelper.SchematicSize("Crimson Heart");
                                     CalRemixHelper.AddProtectedStructure(new Rectangle(x, y, schematicSize.X, schematicSize.Y), 4);
                                     gennedMeld = true;

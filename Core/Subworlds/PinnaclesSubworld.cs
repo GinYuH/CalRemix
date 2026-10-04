@@ -487,7 +487,7 @@ namespace CalRemix.Core.Subworlds
                         break;
                     if (CalRemixHelper.ParanoidTileRetrieval(j, i).IsTileSolidGround())
                     {
-                        if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Screaming, j, i))
+                        if (SubworldDoorGeneration.GenerateDoor(SubworldType.Screaming, j, i))
                         {
                             if (Main.LocalPlayer.Remix().lastLoadedSubworld != ModContent.GetInstance<OvergrowthRainforestSubworld>())
                             {
@@ -509,7 +509,7 @@ namespace CalRemix.Core.Subworlds
                     break;
                 for (int i = pinnacleAnchor.X - 20; i < pinnacleAnchor.X + 20; i++)
                 {
-                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Jungle, i, j))
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldType.Jungle, i, j))
                     {
                         generated = true;
                         if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<OvergrowthRainforestSubworld>())
@@ -530,7 +530,7 @@ namespace CalRemix.Core.Subworlds
                         break;
                     for (int i = pinnacleAnchor.X - 100; i < pinnacleAnchor.X + 100; i++)
                     {
-                        if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Jungle, i, j))
+                        if (SubworldDoorGeneration.GenerateDoor(SubworldType.Jungle, i, j))
                         {
                             generated = true;
                             if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<OvergrowthRainforestSubworld>())
@@ -546,7 +546,7 @@ namespace CalRemix.Core.Subworlds
             if (!generated)
             {
                 CalRemix.instance.Logger.Warn("Jungle Door failed to generate properly. Placing door in random location...");
-                SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Jungle);
+                SubworldDoorGeneration.GenerateDoorRandom(SubworldType.Jungle);
             }
         }
 

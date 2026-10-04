@@ -1224,9 +1224,9 @@ namespace CalRemix.Core.World
                 {
 
                     progress.Message = Language.GetTextValue("Mods.CalRemix.UI.WorldGen.RandomDoors");
-                    SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Ant);
-                    SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Screaming);
-                    SubworldDoorGeneration.GenerateDoorRandom(SubworldDoorPlaced.SubworldType.Bridge);
+                    SubworldDoorGeneration.GenerateDoorRandom(SubworldType.Ant);
+                    SubworldDoorGeneration.GenerateDoorRandom(SubworldType.Screaming);
+                    SubworldDoorGeneration.GenerateDoorRandom(SubworldType.Bridge);
                 }));
                 tasks.Insert(tasks.FindIndex(x => x.Name.Equals("Planetoids")) + 1, new PassLegacy("ItGetsDeeper", (progress, config) =>
                 {

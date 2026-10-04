@@ -57,7 +57,7 @@ namespace CalRemix.Core.Subworlds
             Vector2 center = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8f - Main.screenPosition;
             Vector2 dimensions = new Vector2(ArenaWidth, ArenaHeight);   
             shader.UseColor(new Color(0, 255, 123));
-            shader.Shader.Parameters["rectangle"].SetValue(new Vector4(center.X - dimensions.X / 2, center.Y - dimensions.Y / 2, center.X + dimensions.X / 2, center.Y + dimensions.Y / 2));
+            shader.Shader.Parameters["rectangle"].SetValue(new Vector4(center.X - dimensions.X / 2 + 350, center.Y - dimensions.Y / 2 + 170, center.X + dimensions.X / 2, center.Y + dimensions.Y / 2));
             shader.Shader.Parameters["topLeft"].SetValue(dimensions / 3);
             shader.Shader.Parameters["bottomRight"].SetValue(dimensions * 0.66f);
             shader.Shader.Parameters["opacity"].SetValue(SkyOpacity * 0.66f);

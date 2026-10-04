@@ -47,7 +47,7 @@ namespace CalRemix.Core.World
                                 continue;
                             }
 
-                            CalRemixHelper.PlaceSchematic("Origen Workshop", new Point(i, j), CalRemixHelper.SchematicAnchorType.Center);
+                            CalRemixHelper.PlaceSchematic("Origen Workshop", new Point(i, j), SchematicAnchorType.Center);
                             Point schematicSize = CalRemixHelper.SchematicSize("Origen Workshop");
                             CalRemixHelper.AddProtectedStructure(new Rectangle(i, j, schematicSize.X, schematicSize.Y), 4);
                             generated = true;

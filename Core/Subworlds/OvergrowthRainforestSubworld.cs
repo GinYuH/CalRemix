@@ -1142,7 +1142,7 @@ namespace CalRemix.Core.Subworlds
                 toothAttempts++;
             }
 
-            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Pinnacles, Main.spawnTileX, Main.spawnTileY);
+            SubworldDoorGeneration.GenerateDoor(SubworldType.Pinnacles, Main.spawnTileX, Main.spawnTileY);
         }
 
         #region Trees
@@ -1633,7 +1633,7 @@ namespace CalRemix.Core.Subworlds
                     Tile above = CalRemixHelper.ParanoidTileRetrieval(x, j - 1);
                     if (t.HasTile && t.TileType == leafBlock && !above.HasTile)
                     {
-                        CalRemixHelper.PlaceSchematic("Tree House", new Point(x, j + 5), CalRemixHelper.SchematicAnchorType.BottomMiddle);
+                        CalRemixHelper.PlaceSchematic("Tree House", new Point(x, j + 5), SchematicAnchorType.BottomMiddle);
                         hausPlaced = true;
                         break;
                     }

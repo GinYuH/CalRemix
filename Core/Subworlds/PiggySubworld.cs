@@ -166,9 +166,9 @@ namespace CalRemix.Core.Subworlds
             int house1 = (int)(Main.maxTilesX * 0.33f);
             int house2 = (int)(Main.maxTilesX * 0.5f);
             int house3 = (int)(Main.maxTilesX * 0.65f);
-            CalRemixHelper.PlaceSchematic("Piggy Straw", new Point(house1, ground + 1), CalRemixHelper.SchematicAnchorType.BottomMiddle);
-            CalRemixHelper.PlaceSchematic("Piggy Stick", new Point(house1, ground + 1), CalRemixHelper.SchematicAnchorType.BottomMiddle);
-            CalRemixHelper.PlaceSchematic("Piggy Brick", new Point(house1, ground + 1), CalRemixHelper.SchematicAnchorType.BottomMiddle);
+            CalRemixHelper.PlaceSchematic("Piggy Straw", new Point(house1, ground + 1), SchematicAnchorType.BottomMiddle);
+            CalRemixHelper.PlaceSchematic("Piggy Stick", new Point(house1, ground + 1), SchematicAnchorType.BottomMiddle);
+            CalRemixHelper.PlaceSchematic("Piggy Brick", new Point(house1, ground + 1), SchematicAnchorType.BottomMiddle);
         }
     }
 }

@@ -148,7 +148,7 @@ namespace CalRemix.Core.Subworlds
                     spawnX++;
                 if (spawnY % 2 != 0)
                     spawnY--;
-                CalRemixHelper.PlaceSchematic("Gray Temple", new Point(spawnX, spawnY), CalRemixHelper.SchematicAnchorType.BottomMiddle);
+                CalRemixHelper.PlaceSchematic("Gray Temple", new Point(spawnX, spawnY), SchematicAnchorType.BottomMiddle);
             }
 
             int brick = ModContent.TileType<BlueMazeBrickPlaced>();
@@ -197,7 +197,7 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
-            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Sealed, Main.spawnTileX, Main.spawnTileY + 1);
+            SubworldDoorGeneration.GenerateDoor(SubworldType.Sealed, Main.spawnTileX, Main.spawnTileY + 1);
         }
     }
 }

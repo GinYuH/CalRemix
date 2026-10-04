@@ -95,7 +95,7 @@ namespace CalRemix.Core.Subworlds
             Main.spawnTileX = spawnX - 3;
             Main.spawnTileY = spawnY;
 
-            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.GreatSea, Main.spawnTileX, Main.spawnTileY);
+            SubworldDoorGeneration.GenerateDoor(SubworldType.GreatSea, Main.spawnTileX, Main.spawnTileY);
         }
     }
 }

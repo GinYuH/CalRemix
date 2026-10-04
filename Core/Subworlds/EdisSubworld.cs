@@ -61,7 +61,7 @@ namespace CalRemix.Core.Subworlds
             Main.worldSurface = Main.maxTilesY - 42; // Hides the underground layer just out of bounds
             Main.rockLayer = Main.maxTilesY; // Hides the cavern layer way out of bounds
 
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, 0, Main.maxTilesX, Main.maxTilesY), 0.6f, 0.1f, new Vector2(840, 150), ModContent.TileType<FunnyBalloonTile>(), 0, CalRemixHelper.PerlinEase.EaseAirTopSolidBottom, 0.3f, 0.2f);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, 0, Main.maxTilesX, Main.maxTilesY), 0.6f, 0.1f, new Vector2(840, 150), ModContent.TileType<FunnyBalloonTile>(), 0, PerlinEase.EaseAirTopSolidBottom, 0.3f, 0.2f);
         }
     }
 }

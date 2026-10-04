@@ -42,7 +42,7 @@ namespace CalRemix.Core.World
                                 {
                                     liquidCheck = above.LiquidAmount <= z * 5;
                                 }
-                                CalRemixHelper.PlaceSchematic("Ion Altar", new Point(x, i), CalRemixHelper.SchematicAnchorType.BottomMiddle);
+                                CalRemixHelper.PlaceSchematic("Ion Altar", new Point(x, i), SchematicAnchorType.BottomMiddle);
                                 Point schematicSize = CalRemixHelper.SchematicSize("Ion Altar");
                                 CalRemixHelper.AddProtectedStructure(new Rectangle(x, i, schematicSize.X, schematicSize.Y), 4);
                                 shouldBreak = true;

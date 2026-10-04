@@ -175,7 +175,7 @@ namespace CalRemix.Core.Subworlds
                 while (atts < 10000)
                 {
                     Tile door = CalRemixHelper.ParanoidTileRetrieval(WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 22), Main.spawnTileY);
-                    SubworldDoorPlaced.SubworldType subType = i == 0 ? SubworldDoorPlaced.SubworldType.Jungle : SubworldDoorPlaced.SubworldType.GreatSea;
+                    SubworldType subType = i == 0 ? SubworldType.Jungle : SubworldType.GreatSea;
                     if (SubworldDoorGeneration.GenerateDoor(subType, door.X(), door.Y()))
                     {
                         break;

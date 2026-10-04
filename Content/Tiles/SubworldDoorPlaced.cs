@@ -21,47 +21,6 @@ namespace CalRemix.Content.Tiles
 {
     public class SubworldDoorPlaced : ModTile
     {
-        public enum SubworldType
-        {
-            Ant = 0,
-            Bridge = 1,
-            Glamour = 2,
-            GreatSea = 3,
-            Horizon = 4,
-            Nightline = 5,
-            Nowhere = 6,
-            Jungle = 7,
-            Forest = 7,
-            Overworld = 8,
-            Pinnacles = 9,
-            Savanna = 10,
-            Screaming = 11,
-            Sealed = 12,
-            Gray = 13,
-            Virisite = 14,
-            Wolf = 15
-        }
-
-        public static List<(string, string, Color)> subworldDoorData = new()
-        {
-            ("AntSubworld", "Ant", Color.DarkGray),
-            ("BridgeofLostHopeSubworld", "Bridge", Color.Firebrick),
-            ("GlamourSubworld", "Glamour", Color.HotPink),
-            ("GreatSeaSubworld", "GreatSea",Color.DeepSkyBlue),
-            ("HorizonSubworld", "Horizon", Color.Tan),
-            ("NightlineSubworld", "Nightline", Color.DarkBlue),
-            ("NowhereSubworld", "Nowhere", Color.White),
-            ("OvergrowthRainforestSubworld", "OvergrowthJungle", Color.ForestGreen),
-            ("", "Overworld", Color.LawnGreen),
-            ("PinnaclesSubworld", "Pinnacles", Color.Gray),
-            ("SavannaSubworld", "Savanna", Color.IndianRed),
-            ("ScreamingSubworld", "ScreamingFace", Color.DimGray),
-            ("SealedSubworld", "Sealed", Color.Purple),
-            ("TheGraySubworld", "TheGray", Color.Black),
-            ("SingularPointSubworld", "Virisite", Color.LightSeaGreen),
-            ("WolfForestSubworld", "Wolf", Color.LightBlue)
-        };
-
         public override void SetStaticDefaults()
         {
             Main.tileLighted[Type] = true;
@@ -90,22 +49,6 @@ namespace CalRemix.Content.Tiles
             r = final.R;
             g = final.G;
             b = final.B;
-        }
-
-        public static void PlaceSubworldDoor(int i, int j, SubworldType key)
-        {
-            TileEntity.PlaceEntityNet(i - 1, j - 2, ModContent.TileEntityType<SubworldDoorTE>());
-            if (TileEntity.ByPosition.TryGetValue(new Point16(i - 1, j - 2), out TileEntity tE))
-            {
-                if (tE is SubworldDoorTE subDoor)
-                {
-                    (string, string, Color) data = subworldDoorData[(int)key];
-                    subDoor.boundSubworldName = "CalRemix/" + data.Item1;
-                    subDoor.texture = "CalRemix/UI/SubworldMap/" + data.Item2;
-                    subDoor.doorColor = data.Item3;
-                }
-            }
-            CalRemixHelper.AddProtectedStructure(new Rectangle(i - 1, j - 2, 2, 4));
         }
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
@@ -198,7 +141,6 @@ namespace CalRemix.Content.Tiles
                             float comp = l / (beamAmt - 1);
                             Vector2 startPos = new Vector2(i, j) * 16 + CalamityUtils.TileDrawOffset - Main.screenPosition + new Vector2(16, 24);
                             Vector2 endPos = startPos + Vector2.One.RotatedBy(Main.GlobalTimeWrappedHourly * (l % 2 == 0).ToDirectionInt() * MathHelper.Lerp(0.4f, 1.4f, comp) + l) * MathHelper.Lerp(30, 60, comp);
-                            List<Vector2> pts = new();
                             for (int k = 0; k < 30; k++)
                             {
                                 Vector2 ppos = Vector2.Lerp(startPos, endPos, k / 29f);
@@ -240,8 +182,6 @@ namespace CalRemix.Content.Tiles
         public Color doorColor = Color.White;
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
-            TileObjectData tileData = TileObjectData.GetTileData(type, style, alternate);
-
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 //Sync the entire multitile's area. 

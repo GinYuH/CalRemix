@@ -177,7 +177,7 @@ namespace CalRemix.Core.Subworlds
             progress.Value = 1f;
 
 
-            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Bridge, Main.spawnTileX, Main.spawnTileY + 2);
+            SubworldDoorGeneration.GenerateDoor(SubworldType.Bridge, Main.spawnTileX, Main.spawnTileY + 2);
 
             bool placedCaveDoor = false;
             bool placedFloorDoor = false;
@@ -196,7 +196,7 @@ namespace CalRemix.Core.Subworlds
                 Tile t = CalRemixHelper.ParanoidTileRetrieval(x, y);
                 if (t.TileType == grass && !placedIslandDoor)
                 {
-                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nowhere, x, y))
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldType.Nowhere, x, y))
                     {
                         placedIslandDoor = true;
                         if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<SingularPointSubworld>())
@@ -207,7 +207,7 @@ namespace CalRemix.Core.Subworlds
                 }
                 if (t.TileType == stone && !placedFloorDoor)
                 {
-                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Savanna, x, y))
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldType.Savanna, x, y))
                     {
                         placedFloorDoor = true;
                         if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<SavannaSubworld>())
@@ -218,7 +218,7 @@ namespace CalRemix.Core.Subworlds
                 }
                 if (t.TileType == darkstone && !placedCaveDoor)
                 {
-                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nightline, x, y))
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldType.Nightline, x, y))
                     {
                         placedCaveDoor = true;
                         if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<NightlineSubworld>())
@@ -258,13 +258,13 @@ namespace CalRemix.Core.Subworlds
         public static void GeneratePrimordialDepths()
         {
             int y = (int)(Main.maxTilesY * caveBottom);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, Main.maxTilesY - y), noiseThreshold: 0.3f, noiseSize: new Vector2(400, 200), tileType: ModContent.TileType<ChertPlaced>(), ease: CalRemixHelper.PerlinEase.EaseInTop, topStop: 0.2f);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, Main.maxTilesY - y), noiseThreshold: 0.3f, noiseSize: new Vector2(400, 200), tileType: ModContent.TileType<ChertPlaced>(), ease: PerlinEase.EaseInTop, topStop: 0.2f);
         }
 
         public static void GenerateCaves()
         {
             int y = (int)(Main.maxTilesY * groundBottom);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.3f, noiseStrength: 0.2f, noiseSize: new Vector2(240, 180), tileType: ModContent.TileType<SchistPlaced>(), ease: CalRemixHelper.PerlinEase.EaseInOut, bottomStop: 0.8f);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * caveBottom) - y), noiseThreshold: 0.3f, noiseStrength: 0.2f, noiseSize: new Vector2(240, 180), tileType: ModContent.TileType<SchistPlaced>(), ease: PerlinEase.EaseInOut, bottomStop: 0.8f);
             int padding = 10;
             CalRemixHelper.PerlinSurface(new Rectangle(0, (int)(Main.maxTilesY * caveBottom) - padding, Main.maxTilesX, padding * 2), ModContent.TileType<SchistPlaced>(), 5, 5, true);
         }
@@ -310,7 +310,7 @@ namespace CalRemix.Core.Subworlds
         public static void GenerateIslands()
         {
             int y = (int)(Main.maxTilesY * seaLevel);
-            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundTop) - y), noiseThreshold: 0.15f,  noiseSize: new Vector2(800, 800), tileType: ModContent.TileType<SyringodiumPlaced>(), ease: CalRemixHelper.PerlinEase.EaseOutTop, topStop: 0.025f);
+            CalRemixHelper.PerlinGeneration(new Rectangle(0, y, Main.maxTilesX, (int)(Main.maxTilesY * groundTop) - y), noiseThreshold: 0.15f,  noiseSize: new Vector2(800, 800), tileType: ModContent.TileType<SyringodiumPlaced>(), ease: PerlinEase.EaseOutTop, topStop: 0.025f);
 
             Main.spawnTileY = y - 2;
 

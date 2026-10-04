@@ -360,7 +360,7 @@ namespace CalRemix.Core.Subworlds
                 Tile t = CalRemixHelper.ParanoidTileRetrieval(x, y);
                 if (t.TileType == carnelianGrass && !placedCarnDoor)
                 {
-                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Nightline, x, y))
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldType.Nightline, x, y))
                     {
                         placedCarnDoor = true;
                         if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<NightlineSubworld>())
@@ -371,7 +371,7 @@ namespace CalRemix.Core.Subworlds
                 }
                 if (t.TileType == darnedMud && t.WallType == WallID.None && !placedSwampDoor)
                 {
-                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Wolf, x, y))
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldType.Wolf, x, y))
                     {
                         placedSwampDoor = true;
                         if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<WolfForestSubworld>())
@@ -382,7 +382,7 @@ namespace CalRemix.Core.Subworlds
                 }
                 if (t.TileType == sealedGrass && !placedSpawnDoor && x < villagePosition - 20)
                 {
-                    if (SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Ant, x, y))
+                    if (SubworldDoorGeneration.GenerateDoor(SubworldType.Ant, x, y))
                     {
                         placedSpawnDoor = true;
                         if (Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<AntSubworld>() || Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<TheGraySubworld>() || Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<HorizonSubworld>())
@@ -428,7 +428,7 @@ namespace CalRemix.Core.Subworlds
 
             prog.Value = 0.05f;
 
-            CalRemixHelper.PerlinGeneration(caveRect, noiseStrength: 0.45f, noiseThreshold: 0.8f, tileType: stone, wallType: stoneWall, ease: CalRemixHelper.PerlinEase.EaseInOut, topStop: 0.05f, bottomStop: 0.9f);
+            CalRemixHelper.PerlinGeneration(caveRect, noiseStrength: 0.45f, noiseThreshold: 0.8f, tileType: stone, wallType: stoneWall, ease: PerlinEase.EaseInOut, topStop: 0.05f, bottomStop: 0.9f);
 
             prog.Value = 0.1f;
             
@@ -897,7 +897,7 @@ namespace CalRemix.Core.Subworlds
 
             Rectangle heartRect = new Rectangle(origin.X - width, origin.Y - height * 2, width * 2, height * 3);
 
-            CalRemixHelper.PerlinGeneration(heartRect, noiseStrength: 0.3f, noiseThreshold: 0.9f, tileType: stone, wallType: stoneWall, ease: CalRemixHelper.PerlinEase.EaseInOut, topStop: 0.05f, bottomStop: 0.9f, tileCondition: (Point p) => CalRemixHelper.WithinHeart(origin, new Point(width, height * 2), p), overrideTiles: true, eraseWalls: false);
+            CalRemixHelper.PerlinGeneration(heartRect, noiseStrength: 0.3f, noiseThreshold: 0.9f, tileType: stone, wallType: stoneWall, ease: PerlinEase.EaseInOut, topStop: 0.05f, bottomStop: 0.9f, tileCondition: (Point p) => CalRemixHelper.WithinHeart(origin, new Point(width, height * 2), p), overrideTiles: true, eraseWalls: false);
 
             int roseAttempts = 0;
             for (int i = heartRect.X; i < heartRect.X + heartRect.Width + 1; i++)

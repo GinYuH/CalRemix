@@ -141,8 +141,8 @@ namespace CalRemix.Core.Subworlds
                 }
             }
 
-            SubworldDoorPlaced.SubworldType exitDoor = Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<OvergrowthRainforestSubworld>() ? SubworldDoorPlaced.SubworldType.Sealed : SubworldDoorPlaced.SubworldType.Jungle;
-            SubworldDoorPlaced.SubworldType entranceDoor = Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<OvergrowthRainforestSubworld>() ? SubworldDoorPlaced.SubworldType.Jungle : SubworldDoorPlaced.SubworldType.Sealed;
+            SubworldType exitDoor = Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<OvergrowthRainforestSubworld>() ? SubworldType.Sealed : SubworldType.Jungle;
+            SubworldType entranceDoor = Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<OvergrowthRainforestSubworld>() ? SubworldType.Jungle : SubworldType.Sealed;
 
             SubworldDoorGeneration.GenerateDoor(entranceDoor, Main.spawnTileX, Main.spawnTileY);
             SubworldDoorGeneration.GenerateDoorRandom(exitDoor);

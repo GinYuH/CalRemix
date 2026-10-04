@@ -77,8 +77,8 @@ namespace CalRemix.Core.Subworlds
                 WorldGen.PlaceTile(Main.spawnTileX + i, Main.spawnTileY + 1, TileID.Platforms);
             }
 
-            SubworldDoorPlaced.SubworldType exitDoor = Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<SealedSubworld>() ? SubworldDoorPlaced.SubworldType.Overworld : SubworldDoorPlaced.SubworldType.Sealed;
-            SubworldDoorPlaced.SubworldType entranceDoor = Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<SealedSubworld>() ? SubworldDoorPlaced.SubworldType.Sealed : SubworldDoorPlaced.SubworldType.Overworld;
+            SubworldType exitDoor = Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<SealedSubworld>() ? SubworldType.Overworld : SubworldType.Sealed;
+            SubworldType entranceDoor = Main.LocalPlayer.Remix().lastLoadedSubworld == ModContent.GetInstance<SealedSubworld>() ? SubworldType.Sealed : SubworldType.Overworld;
 
             SubworldDoorGeneration.GenerateDoor(entranceDoor, Main.spawnTileX, Main.spawnTileY + 1);
             SubworldDoorGeneration.GenerateDoorRandom(exitDoor);   

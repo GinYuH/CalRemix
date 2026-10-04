@@ -407,7 +407,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             Point p = NPC.Center.ToTileCoordinates();
                             Point newp = p + new Point(Main.rand.Next(-searchRad, searchRad), Main.rand.Next(0, searchRad));
                             Tile t = CalRemixHelper.ParanoidTileRetrieval(newp.X, newp.Y);
-                            if (SubworldDoorGeneration.GenerateDoor(Tiles.SubworldDoorPlaced.SubworldType.Gray, newp.X, newp.Y))
+                            if (SubworldDoorGeneration.GenerateDoor(SubworldType.Gray, newp.X, newp.Y))
                             {
                                 if (atts > 1000)
                                     searchRad = 50;

@@ -229,7 +229,7 @@ namespace CalRemix.Core.Subworlds
             Main.spawnTileX = spawnTile - 3;
             Main.spawnTileY = (int)Main.worldSurface - 1;
 
-            SubworldDoorGeneration.GenerateDoor(SubworldDoorPlaced.SubworldType.Jungle, Main.spawnTileX, Main.spawnTileY + 1);
+            SubworldDoorGeneration.GenerateDoor(SubworldType.Jungle, Main.spawnTileX, Main.spawnTileY + 1);
         }
     }
 }

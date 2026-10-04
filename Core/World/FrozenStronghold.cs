@@ -88,7 +88,7 @@ namespace CalRemix.Core.World
                         if (canGen)
                         {
                             int newj = j + 30;
-                            CalRemixHelper.PlaceSchematic("Frozen Stronghold", new Point(i, newj), CalRemixHelper.SchematicAnchorType.BottomMiddle);
+                            CalRemixHelper.PlaceSchematic("Frozen Stronghold", new Point(i, newj), SchematicAnchorType.BottomMiddle);
                             CalRemixHelper.AddProtectedStructure(new Rectangle(i - (int)(schematicSize.X / 2), newj - (int)schematicSize.Y, (int)schematicSize.X, (int)schematicSize.Y), 4);
                             shouldbreak = true;
                             break;
