@@ -45,7 +45,7 @@ namespace CalRemix.Core.Subworlds
             {
                 if (p.Distance(new Vector2(Main.spawnTileX, Main.spawnTileY) * 16) < 1000)
                 {
-                    if (!NPC.AnyNPCs(ModContent.NPCType<VigorCloak>()) && !NPC.AnyNPCs(ModContent.NPCType<Crevivence>()))
+                    if (!NPC.AnyNPCs(ModContent.NPCType<VigorCloak>()) && !NPC.AnyNPCs(ModContent.NPCType<Crevivience>()))
                         NPC.NewNPC(new EntitySource_WorldEvent(), Main.spawnTileX * 16, Main.spawnTileY * 16, ModContent.NPCType<VigorCloak>());
                 }
             }

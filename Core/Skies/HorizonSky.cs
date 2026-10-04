@@ -37,8 +37,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                 return;
             }
 
-            if (!NPC.AnyNPCs(ModContent.NPCType<Crevivence>()))
-                Crevivence.SunOpacity = 1;
+            if (!NPC.AnyNPCs(ModContent.NPCType<Crevivience>()))
+                Crevivience.SunOpacity = 1;
 
             BackgroundIntensity = MathHelper.Clamp(BackgroundIntensity + 0.01f, 0f, 1f);
 
@@ -58,8 +58,8 @@ namespace CalRemix.Content.NPCs.Bosses.Carcinogen
                 Vector2 sunPosition = new Vector2(Main.screenWidth * 0.02f, Main.screenHeight * 0.8f);
                 Vector2 sunEndPosition = new Vector2(Main.screenWidth * 0.02f,  Main.screenHeight * 1f);
                 sunPosition = Vector2.Lerp(sunPosition, sunEndPosition, 1 - yCompletion);
-                spriteBatch.Draw(sun, sunPosition, null, Color.Yellow with { A = 0 }, 0, sun.Size() / 2, 14 * Crevivence.SunOpacity, 0, 0);
-                spriteBatch.Draw(sun, sunPosition, null, Color.White with { A = 0 }, 0, sun.Size() / 2, 13.5f * Crevivence.SunOpacity, 0, 0);
+                spriteBatch.Draw(sun, sunPosition, null, Color.Yellow with { A = 0 }, 0, sun.Size() / 2, 14 * Crevivience.SunOpacity, 0, 0);
+                spriteBatch.Draw(sun, sunPosition, null, Color.White with { A = 0 }, 0, sun.Size() / 2, 13.5f * Crevivience.SunOpacity, 0, 0);
             }
         }
 

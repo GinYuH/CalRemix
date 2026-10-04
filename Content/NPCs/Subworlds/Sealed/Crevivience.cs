@@ -42,7 +42,7 @@ using ReLogic.Content;
 // So like, technically she's not in the Sealed Dimension, but Horizon is a mechanical extension of it so...
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {
-    public class Crevivence : ModNPC
+    public class Crevivience : ModNPC
     {
         public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
