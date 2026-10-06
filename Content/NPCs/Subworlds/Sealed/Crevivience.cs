@@ -415,23 +415,23 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public TextureMesh mesh = null;
 
-        public static Dictionary<int, List<Vector2>> idSlots = new();
         public static Dictionary<int, List<Vector3>> idSlots3 = new();
 
         public void DrawWing(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Asset<Texture2D> wingTex = ModContent.Request<Texture2D>(
-                "CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceWingUpper"
-            );
+            //Asset<Texture2D> wingTex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceWingUpper");
+            Asset<Texture2D> wingTex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Observer");
+
+            Main.blockMouse = false;
 
             Asset<Texture2D> testTex = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/GreyscaleGradients/TestTexture");
 
             Rectangle testFrame = wingTex.Frame(1, 1, 0, 0);
-            int x = 1;
-            int y = 1;
+            int x = 4;
+            int y = 3;
             if (mesh == null)
             {
-                mesh = TextureMesh.CreateRectangularMesh(Vector3.Zero, x, x, wingTex.Value.Width / x, wingTex.Value.Height / y, Color.White);
+                mesh = TextureMesh.CreateRectangularMesh(Vector3.Zero, x, y, wingTex.Value.Width / x, wingTex.Value.Height / y, Color.White);
                 for (int i = 0; i < mesh.vertices.Length; i++)
                 {
                     //mesh.vertices[i].Position.X = NPC.Center.X - screenPos.X;
@@ -451,7 +451,24 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 }
             }
 
-            if (Main.LocalPlayer.controlUseTile && !Main.LocalPlayer.controlUseItem)
+            if (mesh != null)
+            {
+
+                VertexPositionColorTexture[][] verticesByPosition = mesh.verticesByPosition();
+                for (int i = 0; i <= x; i++)
+                {
+                    verticesByPosition[i][0].Position.X -= 4 * MathF.Cos(Main.GlobalTimeWrappedHourly * 10 + (i % 9 + 1));
+                    verticesByPosition[i][y].Position.X += 4 * MathF.Cos(Main.GlobalTimeWrappedHourly * 10 + (i % 9 + 1));
+                }
+                for (int i = 0; i <= y; i++)
+                {
+                    verticesByPosition[0][i].Position.Y -= 4 * MathF.Sin(Main.GlobalTimeWrappedHourly * 10 + (i % 9 + 1));
+                    verticesByPosition[x][i].Position.Y += 4 * MathF.Sin(Main.GlobalTimeWrappedHourly * 10 + (i % 9 + 1));
+                }
+                mesh.SetVerticesByPosition(verticesByPosition);
+            }
+
+            /*if (Main.LocalPlayer.controlUseTile && !Main.LocalPlayer.controlUseItem)
             {
                 idSlots3[Main.LocalPlayer.selectedItem].Clear();
                 for (int i = 0; i < mesh.vertices.Length; i++)
@@ -470,13 +487,15 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     }
                     Main.NewText("Loaded slot " + Main.LocalPlayer.selectedItem);
                 }
-            }
+            }*/
 
             //mesh.ControlGrid(NPC.Center);
-            mesh.DrawMesh(spriteBatch, NPC.Center - screenPos, testTex);
+            //mesh.DrawMesh(spriteBatch, NPC.Center - screenPos, testTex);
             mesh.DrawMesh(spriteBatch, NPC.Center - screenPos, wingTex);
             if (Main.LocalPlayer.selectedItem < 5)
             mesh.DrawDebugGrid(NPC.Center - screenPos, spriteBatch);
+
+            Main.blockMouse = true;
         }
 
         public void DrawWingSimple(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

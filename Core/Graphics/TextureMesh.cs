@@ -21,6 +21,9 @@ namespace CalRemix.Core.Graphics
 
         public int pter = -1;
 
+        public int width = 0;
+        public int height = 0;
+
         /// <summary>
         /// Creates a rectangular mesh.
         /// </summary>
@@ -57,6 +60,8 @@ namespace CalRemix.Core.Graphics
             TextureMesh mesh = new();
             mesh.vertices = new VertexPositionColorTexture[vertexCount];
             mesh.indicies = new short[indexCount];
+            mesh.width = vertexCountX;
+            mesh.height = vertexCountY;
 
             int iter = 0;
             for (int j = 0; j < vertexCountY; j++)
@@ -254,6 +259,45 @@ namespace CalRemix.Core.Graphics
                 Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indicies.ToArray(), 0, indicies.Length / 3);
             }
             spriteBatch.ExitShaderRegion();
+        }
+
+        public VertexPositionColorTexture[][] verticesByPosition()
+        {
+            VertexPositionColorTexture[][] newArray = new VertexPositionColorTexture[width][];
+            for (int x = 0; x < width; x++)
+            {
+                newArray[x] = new VertexPositionColorTexture[height];
+            }
+
+            int curY = 0;
+            int iter = 0;
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                newArray[iter][curY] = vertices[i];
+                iter++;
+                if (iter == width)
+                {
+                    iter = 0;
+                    curY++;
+                }
+            }
+            return newArray;
+        }
+
+        public void SetVerticesByPosition(VertexPositionColorTexture[][] newArray)
+        {
+            int curY = 0;
+            int iter = 0;
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] = newArray[iter][curY];
+                iter++;
+                if (iter == width)
+                {
+                    iter = 0;
+                    curY++;
+                }
+            }
         }
     }
 }
