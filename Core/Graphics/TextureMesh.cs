@@ -163,9 +163,9 @@ namespace CalRemix.Core.Graphics
                     vertices[i3].Position.X,
                     vertices[i3].Position.Y);
 
-                Utils.DrawLine(spriteBatch, v1, v2, Color.Orange * 0.4f, Color.Orange * 0.4f, 1);
-                Utils.DrawLine(spriteBatch, v2, v3, Color.Orange * 0.4f, Color.Orange * 0.4f, 1);
-                Utils.DrawLine(spriteBatch, v3, v1, Color.Orange * 0.4f, Color.Orange * 0.4f, 1);
+                Utils.DrawLine(spriteBatch, v1 + Main.screenPosition, v2 + Main.screenPosition, Color.Orange * 0.4f, Color.Orange * 0.4f, 1);
+                Utils.DrawLine(spriteBatch, v2 + Main.screenPosition, v3 + Main.screenPosition, Color.Orange * 0.4f, Color.Orange * 0.4f, 1);
+                Utils.DrawLine(spriteBatch, v3 + Main.screenPosition, v1 + Main.screenPosition, Color.Orange * 0.4f, Color.Orange * 0.4f, 1);
             }
             for (int i = 0; i < vertices.Length; i++)
             {
