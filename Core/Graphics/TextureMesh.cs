@@ -21,8 +21,11 @@ namespace CalRemix.Core.Graphics
 
         public int pter = -1;
 
-        public int width = 0;
-        public int height = 0;
+        public int segmentsX = 0;
+        public int segmentsY = 0;
+
+        public int segmentWidth = 0;
+        public int segmentHeight = 0;
 
         /// <summary>
         /// Creates a rectangular mesh.
@@ -60,8 +63,10 @@ namespace CalRemix.Core.Graphics
             TextureMesh mesh = new();
             mesh.vertices = new VertexPositionColorTexture[vertexCount];
             mesh.indicies = new short[indexCount];
-            mesh.width = vertexCountX;
-            mesh.height = vertexCountY;
+            mesh.segmentsX = vertexCountX;
+            mesh.segmentsY = vertexCountY;
+            mesh.segmentWidth = segmentSizeX;
+            mesh.segmentHeight = segmentSizeY;
 
             int iter = 0;
             for (int j = 0; j < vertexCountY; j++)
@@ -267,10 +272,10 @@ namespace CalRemix.Core.Graphics
         {
             if (VerticiesByPosition != null)
                 return VerticiesByPosition;
-            VertexPositionColorTexture[][] newArray = new VertexPositionColorTexture[width][];
-            for (int x = 0; x < width; x++)
+            VertexPositionColorTexture[][] newArray = new VertexPositionColorTexture[segmentsX][];
+            for (int x = 0; x < segmentsX; x++)
             {
-                newArray[x] = new VertexPositionColorTexture[height];
+                newArray[x] = new VertexPositionColorTexture[segmentsY];
             }
 
             int curY = 0;
@@ -279,7 +284,7 @@ namespace CalRemix.Core.Graphics
             {
                 newArray[iter][curY] = vertices[i];
                 iter++;
-                if (iter == width)
+                if (iter == segmentsX)
                 {
                     iter = 0;
                     curY++;
@@ -297,7 +302,7 @@ namespace CalRemix.Core.Graphics
             {
                 vertices[i] = newArray[iter][curY];
                 iter++;
-                if (iter == width)
+                if (iter == segmentsX)
                 {
                     iter = 0;
                     curY++;
@@ -314,9 +319,7 @@ namespace CalRemix.Core.Graphics
         /// <param name="rotY">Like a can in a microwave</param>
         /// <param name="rotZ">Like a wheel on a car</param>
         /// <param name="origin">The point at which to rotate around. Center would be size / 2 * space</param>
-        /// <param name="spaceX">Spacing between segments horizontally</param>
-        /// <param name="spaceY">Spacing between segments vertically</param>
-        public static void RotateGrid(TextureMesh mesh, float rotX, float rotY, float rotZ, Vector2 origin, int spaceX, int spaceY)
+        public static void RotateGrid(TextureMesh mesh, float rotX, float rotY, float rotZ, Vector2 origin)
         {
             VertexPositionColorTexture[][] vertices = mesh.GetVerticesByPosition();
             float cosX = MathF.Cos(rotX);
@@ -328,12 +331,12 @@ namespace CalRemix.Core.Graphics
             float originX = origin.X;
             float originY = origin.Y;
 
-            for (int i = 0; i < mesh.width; i++)
+            for (int i = 0; i < mesh.segmentsX; i++)
             {
-                for (int j = 0; j < mesh.height; j++)
+                for (int j = 0; j < mesh.segmentsY; j++)
                 {
-                    float x = i * spaceX - originX;
-                    float y = j * spaceY - originY;
+                    float x = i * mesh.segmentWidth - originX;
+                    float y = j * mesh.segmentHeight - originY;
                     float z = 0;
 
                     float curY = y * cosX - z * sinX;
