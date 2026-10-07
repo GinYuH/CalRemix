@@ -261,8 +261,12 @@ namespace CalRemix.Core.Graphics
             spriteBatch.ExitShaderRegion();
         }
 
-        public VertexPositionColorTexture[][] verticesByPosition()
+        public VertexPositionColorTexture[][] VerticiesByPosition = null;
+
+        public VertexPositionColorTexture[][] GetVerticesByPosition()
         {
+            if (VerticiesByPosition != null)
+                return VerticiesByPosition;
             VertexPositionColorTexture[][] newArray = new VertexPositionColorTexture[width][];
             for (int x = 0; x < width; x++)
             {
@@ -281,6 +285,7 @@ namespace CalRemix.Core.Graphics
                     curY++;
                 }
             }
+            VerticiesByPosition = newArray;
             return newArray;
         }
 
@@ -298,6 +303,7 @@ namespace CalRemix.Core.Graphics
                     curY++;
                 }
             }
+            VerticiesByPosition = newArray;
         }
     }
 }

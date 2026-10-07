@@ -38,6 +38,7 @@ using CalamityMod.Physics;
 using System.Linq;
 using Steamworks;
 using ReLogic.Content;
+using Terraria.Social.Base;
 
 // So like, technically she's not in the Sealed Dimension, but Horizon is a mechanical extension of it so...
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
@@ -453,17 +454,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             if (mesh != null)
             {
-
-                VertexPositionColorTexture[][] verticesByPosition = mesh.verticesByPosition();
+                VertexPositionColorTexture[][] verticesByPosition = mesh.GetVerticesByPosition();
                 for (int i = 0; i <= x; i++)
                 {
-                    verticesByPosition[i][0].Position.X -= 4 * MathF.Cos(Main.GlobalTimeWrappedHourly * 10 + (i % 9 + 1));
-                    verticesByPosition[i][y].Position.X += 4 * MathF.Cos(Main.GlobalTimeWrappedHourly * 10 + (i % 9 + 1));
-                }
-                for (int i = 0; i <= y; i++)
-                {
-                    verticesByPosition[0][i].Position.Y -= 4 * MathF.Sin(Main.GlobalTimeWrappedHourly * 10 + (i % 9 + 1));
-                    verticesByPosition[x][i].Position.Y += 4 * MathF.Sin(Main.GlobalTimeWrappedHourly * 10 + (i % 9 + 1));
+                    for (int j = 0; j <= y; j++)
+                    {
+                        //Vector2 twodee = new Vector2(verticesByPosition[i][j].Position.X, verticesByPosition[i][j].Position.Y);
+                        Vector2 finale = new Vector2(i * 20, j * 40);
+                        Vector2 origin = new Vector2(x / 2f * 20, y / 2f * 40);
+                        Vector2 dirTo = origin - finale;
+                        Vector2 rotated = origin + dirTo.RotatedBy(0.6f * MathF.Sin(Main.GlobalTimeWrappedHourly * j + i* 0.01f));
+                        verticesByPosition[i][j].Position = new Vector3(rotated.X, rotated.Y, 0);
+                    }
                 }
                 mesh.SetVerticesByPosition(verticesByPosition);
             }
