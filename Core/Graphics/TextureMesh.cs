@@ -242,7 +242,7 @@ namespace CalRemix.Core.Graphics
 
             Matrix translation = Matrix.CreateTranslation(new Vector3(anchorPos.X, anchorPos.Y, 0));
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -220, 220);
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -420, 420);
             Matrix renderMatrix = translation * view * projection;
             Effect effect = Terraria.Graphics.Effects.Filters.Scene["CalRemix:NormalDraw"].GetShader().Shader;
 
@@ -304,6 +304,63 @@ namespace CalRemix.Core.Graphics
                 }
             }
             VerticiesByPosition = newArray;
+        }
+
+        /// <summary>
+        /// Rotates the mesh
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <param name="rotX">Like a treadmill ur on top of</param>
+        /// <param name="rotY">Like a can in a microwave</param>
+        /// <param name="rotZ">Like a wheel on a car</param>
+        /// <param name="origin">The point at which to rotate around. Center would be size / 2 * space</param>
+        /// <param name="spaceX">Spacing between segments horizontally</param>
+        /// <param name="spaceY">Spacing between segments vertically</param>
+        public static void RotateGrid(TextureMesh mesh, float rotX, float rotY, float rotZ, Vector2 origin, int spaceX, int spaceY)
+        {
+            VertexPositionColorTexture[][] vertices = mesh.GetVerticesByPosition();
+            float cosX = MathF.Cos(rotX);
+            float sinX = MathF.Sin(rotX);
+            float cosY = MathF.Cos(rotY);
+            float sinY = MathF.Sin(rotY);
+            float cosZ = MathF.Cos(rotZ);
+            float sinZ = MathF.Sin(rotZ);
+            float originX = origin.X;
+            float originY = origin.Y;
+
+            for (int i = 0; i < mesh.width; i++)
+            {
+                for (int j = 0; j < mesh.height; j++)
+                {
+                    float x = i * spaceX - originX;
+                    float y = j * spaceY - originY;
+                    float z = 0;
+
+                    float curY = y * cosX - z * sinX;
+                    float curZ = y * sinX + z * cosX;
+                    y = curY;
+                    z = curZ;
+
+                    float curX = x * cosY + z * sinY;
+                    curZ = -x * sinY + z * cosY;
+                    x = curX;
+                    z = curZ;
+
+                    curX = x * cosZ - y * sinZ;
+                    curY = x * sinZ + y * cosZ;
+                    x = curX;
+                    y = curY;
+
+                    float deep = 1f + z * 0.002f;
+                    x *= deep;
+                    y *= deep;
+                    x += originX;
+                    y += originY;
+
+                    vertices[i][j].Position = new Vector3(x, y, z);
+                }
+            }
+            mesh.SetVerticesByPosition(vertices);
         }
     }
 }
