@@ -360,7 +360,7 @@ namespace CalRemix.Core.Graphics
                     x += originX;
                     y += originY;
 
-                    vertices[i][j].Position = new Vector3(x, y, z);
+                    vertices[i][j].Position = new Vector3(x - origin.X, y - origin.Y, z);
                 }
             }
             mesh.SetVerticesByPosition(vertices);
