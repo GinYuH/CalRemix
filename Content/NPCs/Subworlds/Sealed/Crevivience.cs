@@ -1,44 +1,26 @@
-﻿using Terraria;
+﻿using CalamityMod;
+using CalamityMod.Graphics.Primitives;
+using CalamityMod.NPCs.Cryogen;
+using CalamityMod.NPCs.Providence;
+using CalamityMod.Physics;
+using CalRemix.Content.Items.Materials;
+using CalRemix.Core.Biomes;
+using CalRemix.Core.Graphics;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
-using Terraria.GameContent.Bestiary;
-using CalRemix.Core.Biomes;
-using CalRemix.Content.Items.Armor;
-using CalRemix.Content.Items.Potions;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Terraria.GameContent;
-using System;
-using CalamityMod.Graphics.Primitives;
-using CalRemix.UI;
-using Terraria.UI;
-using static Terraria.Graphics.Effects.Filters;
 using static Terraria.ModLoader.ModContent;
-using Terraria.ModLoader.IO;
-using CalamityMod.NPCs.Cryogen;
-using Terraria.Graphics.Shaders;
-using CalRemix.Core.World;
-using CalamityMod.Projectiles.Boss;
-using Terraria.Audio;
-using Microsoft.Build.Evaluation;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
-using CalRemix.Content.Projectiles.Hostile;
-using CalamityMod.Sounds;
-using CalamityMod.World;
-using CalamityMod.Items.Weapons.DraedonsArsenal;
-using CalRemix.Content.Items.Materials;
-using rail;
-using Terraria.Graphics.CameraModifiers;
-using CalRemix.Core.Graphics;
-using CalamityMod.NPCs.Providence;
-using CalRemix.Content.NPCs.Subworlds.GreatSea;
-using CalamityMod.Physics;
-using System.Linq;
-using Steamworks;
-using ReLogic.Content;
-using Terraria.Social.Base;
 
 // So like, technically she's not in the Sealed Dimension, but Horizon is a mechanical extension of it so...
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
@@ -103,9 +85,18 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public RopeHandle? LeftRibbon;
         public RopeHandle? RightRibbon;
 
-        public override string Texture => "CalamityMod/Projectiles/InvisibleProj";
-
         public CreviWingRotation[] creviWings = new CreviWingRotation[4];
+
+        public static Asset<Texture2D> wingTexUpper;
+        public static Asset<Texture2D> wingTexLower;
+        public static Asset<Texture2D> bodyTexture;
+
+        public override void Load()
+        {
+            wingTexUpper = Request<Texture2D>(Texture + "WingUpper");
+            wingTexLower = Request<Texture2D>(Texture + "WingLower");
+            bodyTexture = Request<Texture2D>(Texture + "BodyTest");
+        }
 
         public override void SetStaticDefaults()
         {
@@ -279,19 +270,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
         {
-            Texture2D tex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/Crevivience").Value;
-            Asset<Texture2D> test = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceBodyTest");
-            Texture2D sigils = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceBodySigils").Value;
+            Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D ring = Request<Texture2D>("CalamityMod/Particles/BloomRing").Value;
             Texture2D bloom = Request<Texture2D>("CalamityMod/Particles/Light").Value;
 
+            #region Wings
             bool anyNulls = false;
-            Asset<Texture2D> wingTex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceWingUpper");
-            Asset<Texture2D> wingTexLower = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceWingLower");
             int x = 6;
             int y = 6;
-            int spaceX = wingTex.Value.Width / x;
-            int spaceY = wingTex.Value.Height / y;
+            int spaceX = wingTexUpper.Value.Width / x;
+            int spaceY = wingTexUpper.Value.Height / y;
             int spaceXL = wingTexLower.Value.Width / x;
             int spaceYL = wingTexLower.Value.Height / y;
             for (int i = 0; i < 4; i++)
@@ -313,20 +301,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 DrawWing(spriteBatch, screenPos, creviWings[i].mesh, i % 2 == 0, i < 2);
                 creviWings[i].DoWingRotation();
             }
+            #endregion
 
-            float eyeScale = 0.8f;
-            Vector2 eyePos = NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * 20 - screenPos;
-
-            float correctedRotation = NPC.rotation;
-
-            Vector2 ribbonOffset = -Vector2.UnitY.RotatedBy(correctedRotation) * -44f;
-
-            float currentSegmentRotation = correctedRotation;
+            #region Body Drawing
+            Vector2 ribbonOffset = -Vector2.UnitY.RotatedBy(NPC.rotation) * -44f;
+            float currentSegmentRotation = NPC.rotation;
             List<Vector2> ribbonDrawPositions = new List<Vector2>();
             for (int i = 0; i < 12; i++)
             {
                 float ribbonCompletionRatio = i / 12f;
-                float wrappedAngularOffset = MathHelper.WrapAngle(NPC.oldRot[i + 1] - currentSegmentRotation) * 0.3f;
+                float wrappedAngularOffset = MathHelper.WrapAngle(NPC.oldRot[i + 1] - currentSegmentRotation) * 0.25f;
 
                 Vector2 ribbonSegmentOffset = Vector2.UnitY.RotatedBy(currentSegmentRotation) * ribbonCompletionRatio * 500;
                 ribbonDrawPositions.Add(NPC.Center + ribbonSegmentOffset + ribbonOffset);
@@ -334,40 +318,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 currentSegmentRotation += wrappedAngularOffset;
             }
 
-            float startWidth = 40;
-            float windWidth = 20;
-
-            Vector2 startPos = NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * 120;
-            Vector2 endPos = ribbonDrawPositions[^2];
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = -1; j <= 1; j += 2)
-                {
-                    List<Vector2> wingPoints = new();
-                    for (int k = 0; k < 20; k++)
-                    {
-                        Vector2 start = Vector2.Lerp(startPos, endPos, i / 2f) + Vector2.UnitX * j * MathHelper.Lerp(36, 4, i / 2f);
-                        Vector2 end = Vector2.Lerp(startPos, endPos, i / 2f) + Vector2.UnitX * j * MathHelper.Lerp(400, 100, i / 2f);
-                        Vector2 segPos = Vector2.Lerp(start, end, k / 19f) + Vector2.UnitY * MathF.Sin(0.2f * Main.GlobalTimeWrappedHourly * 22 + k * 0.2f) * MathHelper.Lerp(10, 60, k / 19f);
-                        segPos = segPos.RotatedBy(NPC.rotation, start);
-                        wingPoints.Add(segPos);
-
-
-                        int wingSize = (int)MathHelper.Lerp(100, 300, k / 19f);
-
-                        Rectangle wingSedRect = new Rectangle(0, 0, wingSize, wingSize);
-
-                        //spriteBatch.Draw(TextureAssets.MagicPixel.Value, segPos - screenPos, wingSedRect, Color.PaleGoldenrod * 0.1f * NPC.Opacity, 0, wingSedRect.Size() / 2, 1, 0, 0);
-                    }
-                    //PrimitiveRenderer.RenderTrail(wingPoints, new((float f, Vector2 v) => (1 - f) * windWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
-                    //PrimitiveRenderer.RenderTrail(wingPoints, new((float f, Vector2 v) => (1 - f) * windWidth, (float f, Vector2 v) => Color.PaleGoldenrod * NPC.Opacity));
-                }
-            }
-
-            //PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
-
-
-            // Set shader parameters.
             Vector2 segmentAreaTopLeft = Vector2.One * 999999f;
             Vector2 segmentAreaTopRight = Vector2.Zero;
             Vector2[] segmentPositions = ribbonDrawPositions.ToArray();
@@ -384,17 +334,16 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 if (segmentAreaTopRight.Y < segmentPositions[i].Y)
                     segmentAreaTopRight.Y = segmentPositions[i].Y;
             }
-            Vector2 primitiveArea = new Vector2(test.Value.Width, 0);
-            GameShaders.Misc["CalamityMod:PrimitiveTexture"].SetShaderTexture(test);
+            Vector2 primitiveArea = new Vector2(bodyTexture.Value.Width, 0);
+            GameShaders.Misc["CalamityMod:PrimitiveTexture"].SetShaderTexture(bodyTexture);
             GameShaders.Misc["CalamityMod:PrimitiveTexture"].Shader.Parameters["uPrimitiveSize"].SetValue(primitiveArea);
-            //GameShaders.Misc["CalamityMod:PrimitiveTexture"].Shader.Parameters["flipVertically"].SetValue(NPC.velocity.X > 0f);
             Main.instance.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((_, _) => 60, (_, _) => Color.White, pixelate: false, shader: GameShaders.Misc["CalamityMod:PrimitiveTexture"]), 80);
+            #endregion
 
-
-            //PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth + 4, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
-            //PrimitiveRenderer.RenderTrail(ribbonDrawPositions, new((float f, Vector2 v) => (1 - f) * startWidth, (float f, Vector2 v) => Color.PaleGoldenrod * NPC.Opacity));
-
+            #region Head
+            float eyeScale = 0.8f;
+            Vector2 eyePos = NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * 20 - screenPos;
             spriteBatch.Draw(tex, NPC.Center - screenPos, null, Color.White * NPC.Opacity, NPC.rotation, tex.Size() / 2, NPC.scale, 0, 0);
             spriteBatch.Draw(bloom, eyePos, null, new Color(194, 175, 189) * NPC.Opacity, NPC.rotation, bloom.Size() / 2, NPC.scale * 1.6f * eyeScale, 0, 0);
             spriteBatch.EnterShaderRegion(BlendState.Additive);
@@ -403,24 +352,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             spriteBatch.Draw(bloom, eyePos, null, new Color(233, 39, 89) * NPC.Opacity, NPC.rotation, bloom.Size() / 2, NPC.scale * 1f * eyeScale, 0, 0);
             spriteBatch.Draw(bloom, eyePos, null, Color.White * NPC.Opacity, NPC.rotation, bloom.Size() / 2, NPC.scale * 0.55f * eyeScale, 0, 0);
 
-            for (int i = 0; i < 7; i++)
-            {
-                Rectangle newR = i switch
-                {
-                    0 => new Rectangle(0, 0, 52, 54),
-                    1 => new Rectangle(6, 61, 45, 50),
-                    2 => new Rectangle(18, 120, 24, 21),
-                    3 => new Rectangle(11, 114, 31, 39),
-                    4 => new Rectangle(9, 188, 27, 21),
-                    5 => new Rectangle(8, 211, 20, 42),
-                    6 => new Rectangle(3, 259, 8, 18),
-                    _ => new Rectangle(0, 0, 1, 1)
-                };
-                Vector2 finalPos = Vector2.Lerp(startPos, endPos, i / 6f);
-                Vector2 upPos = Vector2.Lerp(startPos, endPos, i / 6f - 0.2f);
-                //spriteBatch.Draw(sigils, finalPos - screenPos, newR, Color.White * NPC.Opacity, finalPos.DirectionTo(upPos).ToRotation() + MathHelper.PiOver2, newR.Size() / 2, NPC.scale, 0, 0);
-            }
             spriteBatch.ExitShaderRegion();
+            #endregion
+
+            #region Tendrils
             if (NPC.Opacity > 0)
             {
                 for (int i = -1; i <= 1; i += 2)
@@ -433,12 +368,13 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         poses.Add(ribPos);
                         if (j == handle.SegmentCount - 1)
                         {
-                            //spriteBatch.Draw(bloom, ribPos - screenPos, null, new Color(254, 152, 232) * NPC.Opacity, 0, bloom.Size() / 2, NPC.scale * 0.8f, 0, 0);
+                            spriteBatch.Draw(bloom, ribPos - screenPos, null, new Color(254, 152, 232) * NPC.Opacity, 0, bloom.Size() / 2, NPC.scale * 0.8f, 0, 0);
                         }
                     }
-                    //PrimitiveRenderer.RenderTrail(poses, new((float f, Vector2 v) => 3, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
+                    PrimitiveRenderer.RenderTrail(poses, new((float f, Vector2 v) => 3, (float f, Vector2 v) => Color.DarkGoldenrod * NPC.Opacity));
                 }
             }
+            #endregion
 
             return false;
         }
@@ -447,21 +383,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public void DrawWing(SpriteBatch spriteBatch, Vector2 screenPos, TextureMesh which, bool left = false, bool lower = false)
         {
-            Asset<Texture2D> wingTex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceWingUpper");
-            Asset<Texture2D> wingTexLower = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/CrevivienceWingLower");
             if (idSlots3.Count == 0)
             {
                 for (int i = 0; i < 10; i++)
                 {
                     idSlots3.Add(i, new List<Vector3>());
                 }
-            }
-
-            if (which != null)
-            {
-                float rotBack = MathHelper.ToRadians(-70);
-                float rotFront = MathHelper.ToRadians(30);
-                //xtureMesh.RotateGrid(which, 0, Utils.Remap(MathF.Sin(Main.GlobalTimeWrappedHourly * 10), -1, 1, rotBack, rotFront) * left.ToDirectionInt() + (left ? MathHelper.Pi : 0), 0, new Vector2(0, (which.segmentsY - 2) * spaceY), spaceX, spaceY);
             }
 
             /*if (Main.LocalPlayer.controlUseTile && !Main.LocalPlayer.controlUseItem)
@@ -488,7 +415,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Vector2 realPos = new Vector2(50 * -left.ToDirectionInt(), 30 + (lower ? 150 : 0));
             Vector2 originPos = NPC.Center + realPos.RotatedBy(NPC.rotation) - screenPos;
             Vector2 drawPos = originPos;
-            which.DrawMesh(spriteBatch, drawPos, lower ? wingTexLower : wingTex);
+            which.DrawMesh(spriteBatch, drawPos, lower ? wingTexLower : wingTexUpper);
             if (Main.LocalPlayer.selectedItem < 5)
                 which.DrawDebugGrid(drawPos, spriteBatch);
 
