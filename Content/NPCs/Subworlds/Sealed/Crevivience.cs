@@ -153,14 +153,14 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 right.Start = ribbonR;
                 right.Gravity = Vector2.UnitY.RotatedBy(NPC.rotation) * 10;
             }
-            //NPC.velocity = Main.MouseWorld - NPC.Center;
+            NPC.velocity = Main.MouseWorld - NPC.Center;
             if (NPC.velocity.X > 0)
             {
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.ToRadians(45), 0.2f);
+                //NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.ToRadians(45), 0.2f);
             }
             else if (NPC.velocity.X < 0)
             {
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.ToRadians(45), 0.2f);
+                //NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.ToRadians(45), 0.2f);
             }
             else
             {
@@ -270,6 +270,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
         {
+            if (NPC.localAI[2] < 90)
+            {
+                NPC.localAI[3] = MathHelper.Lerp(0, 1, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(0, 30, NPC.localAI[2], true), 1));
+            }
+            else
+            {
+                NPC.localAI[3] = MathHelper.Lerp(1, 0, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(90, 150, NPC.localAI[2], true), 1));
+            }
+            if (NPC.localAI[2] > 150)
+                NPC.localAI[2] = 0;
+            NPC.localAI[2]++;
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D ring = Request<Texture2D>("CalamityMod/Particles/BloomRing").Value;
             Texture2D bloom = Request<Texture2D>("CalamityMod/Particles/Light").Value;
@@ -288,7 +299,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 {
                     int finalSpaceX = i >= 2 ? spaceX : spaceXL;
                     int finalSpaceY = i >= 2 ? spaceY : spaceYL;
-                    creviWings[i] = new CreviWingRotation(TextureMesh.CreateRectangularMesh(Vector3.Zero, x, y, finalSpaceX, finalSpaceY, Color.White));
+                    creviWings[i] = new CreviWingRotation(TextureMesh.CreateRectangularMesh(Vector3.Zero, x, y, finalSpaceX, finalSpaceY, Color.White), i);
                     if (i % 2 == 0)
                         creviWings[i].flipped = true;
                     anyNulls = true;
@@ -296,7 +307,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             if (anyNulls)
                 return false;
-            for (int i = 0; i < 4; i++)
+            for (int i = 1; i < 4; i += 2)
             {
                 DrawWing(spriteBatch, screenPos, creviWings[i].mesh, i % 2 == 0, i < 2);
                 creviWings[i].DoWingRotation();
@@ -366,6 +377,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             #endregion
 
+            for (int i = 0; i < 4; i += 2)
+            {
+                DrawWing(spriteBatch, screenPos, creviWings[i].mesh, i % 2 == 0, i < 2);
+                creviWings[i].DoWingRotation();
+            }
             return false;
         }
 
@@ -401,8 +417,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     Main.NewText("Loaded slot " + Main.LocalPlayer.selectedItem);
                 }
             }*/
-            NPC.rotation = NPC.DirectionTo(Main.MouseWorld).ToRotation() + MathHelper.PiOver2;
-            Vector2 realPos = new Vector2(50 * -left.ToDirectionInt(), 30 + (lower ? 150 : 0));
+            Vector2 realPos = new Vector2(50 * -left.ToDirectionInt(), 30 + (lower ? 80 : 0));
             Vector2 originPos = NPC.Center + realPos.RotatedBy(NPC.rotation) - screenPos;
             Vector2 drawPos = originPos;
             which.DrawMesh(spriteBatch, drawPos, lower ? wingTexLower : wingTexUpper);
@@ -413,8 +428,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         }
     }
 
-    public class CreviWingRotation(TextureMesh mesh)
+    public class CreviWingRotation(TextureMesh mesh, int wingType)
     {
+        public enum WingType
+        {
+            Left = 0,
+            Right = 1,
+            LowerLeft = 2,
+            LowerRight = 3,
+            UpperLeft = 0,
+            UpperRight = 1,
+        }
         public enum PositionType
         {
             IdleBack = 0,
@@ -423,15 +447,25 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             ExecuteAttack = 3
         }
 
+        public bool IsUpperWing => wingType <= WingType.Right;
+
+        public bool IsLowerWing => wingType >= WingType.LowerLeft;
+
+        public bool IsLeftWing => wingType == WingType.Left || wingType == WingType.LowerLeft;
+
+        public bool IsRightWing => wingType == WingType.Right || wingType == WingType.LowerRight;
+
+        // TREAD - CAN - TIRE
         public static Dictionary<PositionType, Vector3> PositionRotations => new()
         {
             { PositionType.IdleBack, new Vector3(0, MathHelper.ToRadians(-70), 0) },
             { PositionType.IdleFront, new Vector3(0, MathHelper.ToRadians(30), 0) },
-            { PositionType.ReadyAttack, new Vector3(0, MathHelper.ToRadians(-90), 0) },
-            { PositionType.ExecuteAttack, new Vector3(0, MathHelper.ToRadians(90), 0) }
+            { PositionType.ReadyAttack, new Vector3(MathHelper.ToRadians(10), 0, MathHelper.ToRadians(-100)) },
+            { PositionType.ExecuteAttack, new Vector3(MathHelper.ToRadians(-180), 0, MathHelper.ToRadians(30)) }
         };
 
         public TextureMesh mesh = mesh;
+        public WingType wingType = (WingType)wingType;
         public Vector3 newPos = PositionRotations[PositionType.IdleFront];
         public Vector3 oldPos = PositionRotations[PositionType.IdleBack];
 
@@ -455,8 +489,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     idxx = n.whoAmI;
                 }
             }
-            Vector3 finale = Vector3.Lerp(oldPos, newPos, MathF.Sin(Main.GlobalTimeWrappedHourly * 12) * 0.5f + 0.5f);
-            TextureMesh.RotateGrid(mesh, finale.X, finale.Y * flipped.ToDirectionInt() + (flipped ? MathHelper.Pi : 0), finale.Z + Main.npc[idxx].rotation, new Vector2(0, (mesh.segmentsY - 2) * mesh.segmentHeight));
+            Vector3 finale = Vector3.Lerp(PositionRotations[PositionType.ReadyAttack], PositionRotations[PositionType.ExecuteAttack], Main.npc[idxx].localAI[3]);
+            //Main.NewText(MathHelper.ToDegrees(finale.X) + " " + MathHelper.ToDegrees(finale.Y) + " " + MathHelper.ToDegrees(finale.Z));
+            float origin = IsLowerWing ? (mesh.segmentsY - 2) * mesh.segmentHeight : 2 * mesh.segmentHeight;
+            TextureMesh.RotateGrid(mesh, finale.X, finale.Y, finale.Z + Main.npc[idxx].rotation, new Vector2(0, origin));
         }
     }
 }
