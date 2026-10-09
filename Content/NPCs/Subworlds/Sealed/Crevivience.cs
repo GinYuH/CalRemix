@@ -85,7 +85,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public RopeHandle? LeftRibbon;
         public RopeHandle? RightRibbon;
 
-        public CreviWingRotation[] creviWings = new CreviWingRotation[4];
+        public CreviWing[] creviWings = new CreviWing[4];
 
         public static Asset<Texture2D> wingTexUpper;
         public static Asset<Texture2D> wingTexLower;
@@ -270,17 +270,6 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
         {
-            if (NPC.localAI[2] < 90)
-            {
-                NPC.localAI[3] = MathHelper.Lerp(0, 1, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(0, 30, NPC.localAI[2], true), 1));
-            }
-            else
-            {
-                NPC.localAI[3] = MathHelper.Lerp(1, 0, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(90, 150, NPC.localAI[2], true), 1));
-            }
-            if (NPC.localAI[2] > 150)
-                NPC.localAI[2] = 0;
-            NPC.localAI[2]++;
             Texture2D tex = TextureAssets.Npc[Type].Value;
             Texture2D ring = Request<Texture2D>("CalamityMod/Particles/BloomRing").Value;
             Texture2D bloom = Request<Texture2D>("CalamityMod/Particles/Light").Value;
@@ -299,18 +288,58 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 {
                     int finalSpaceX = i >= 2 ? spaceX : spaceXL;
                     int finalSpaceY = i >= 2 ? spaceY : spaceYL;
-                    creviWings[i] = new CreviWingRotation(TextureMesh.CreateRectangularMesh(Vector3.Zero, x, y, finalSpaceX, finalSpaceY, Color.White), i);
-                    if (i % 2 == 0)
+                    int wingType = i switch
+                    {
+                        2 => (int)CreviWing.WingType.Left,
+                        3 => (int)CreviWing.WingType.Right,
+                        0 => (int)CreviWing.WingType.LowerLeft,
+                        1 => (int)CreviWing.WingType.LowerRight,
+                        _ => 0
+                    };
+                    creviWings[i] = new CreviWing(TextureMesh.CreateRectangularMesh(Vector3.Zero, x, y, finalSpaceX, finalSpaceY, Color.White), wingType, NPC.whoAmI);
+                    if (wingType == (int)CreviWing.WingType.Left || wingType == (int)CreviWing.WingType.LowerLeft)
                         creviWings[i].flipped = true;
                     anyNulls = true;
                 }
             }
             if (anyNulls)
                 return false;
-            for (int i = 1; i < 4; i += 2)
+
+            int readyLength = 30;
+            int wait = readyLength + 30;
+            int execute = wait + 20;
+            int end = execute + 60;
+            float init = NPC.localAI[3];
+            if (NPC.localAI[2] < wait)
             {
-                DrawWing(spriteBatch, screenPos, creviWings[i].mesh, i % 2 == 0, i < 2);
-                creviWings[i].DoWingRotation();
+                foreach (CreviWing wing in creviWings)
+                {
+                    wing.PlayAnimationSingular(CreviWing.PositionType.ReadyAttack);
+                }
+                //Main.NewText("Pulling back!");
+                NPC.localAI[3] = MathHelper.Lerp(0, 1, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(0, readyLength, NPC.localAI[2], true), 1));
+            }
+            else
+            {
+                //Main.NewText("ONWARDS!");
+                foreach (CreviWing wing in creviWings)
+                {
+                    wing.PlayAnimationSingular(CreviWing.PositionType.ExecuteAttack);
+                }
+                NPC.localAI[3] = MathHelper.Lerp(0, 1, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(wait, execute, NPC.localAI[2], true), 1));
+            }
+            if (NPC.localAI[2] > end)
+                NPC.localAI[2] = 0;
+            NPC.localAI[2]++;
+
+            for (int i = 0; i < 4; i ++)
+            {
+                if (!creviWings[i].renderAboveCrevi)
+                {
+                    DrawWing(spriteBatch, screenPos, creviWings[i]);
+                    creviWings[i].flipped = false;
+                    creviWings[i].DoWingRotation();
+                }
             }
             #endregion
 
@@ -377,59 +406,34 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             #endregion
 
-            for (int i = 0; i < 4; i += 2)
+            for (int i = 0; i < 4; i++)
             {
-                DrawWing(spriteBatch, screenPos, creviWings[i].mesh, i % 2 == 0, i < 2);
-                creviWings[i].DoWingRotation();
+                if (creviWings[i].renderAboveCrevi)
+                {
+                    DrawWing(spriteBatch, screenPos, creviWings[i]);
+                    creviWings[i].DoWingRotation();
+                }
             }
             return false;
         }
 
-        public static Dictionary<int, List<Vector3>> idSlots3 = new();
-
-        public void DrawWing(SpriteBatch spriteBatch, Vector2 screenPos, TextureMesh which, bool left = false, bool lower = false)
+        public void DrawWing(SpriteBatch spriteBatch, Vector2 screenPos, CreviWing wing)
         {
-            if (idSlots3.Count == 0)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    idSlots3.Add(i, new List<Vector3>());
-                }
-            }
-
-            /*if (Main.LocalPlayer.controlUseTile && !Main.LocalPlayer.controlUseItem)
-            {
-                idSlots3[Main.LocalPlayer.selectedItem].Clear();
-                for (int i = 0; i < which.vertices.Length; i++)
-                {
-                    idSlots3[Main.LocalPlayer.selectedItem].Add(which.vertices[i].Position);
-                }
-                Main.NewText("Saved slot " + Main.LocalPlayer.selectedItem);
-            }
-            else if (Main.LocalPlayer.controlUseTile && Main.LocalPlayer.controlUseItem)
-            {
-                if (idSlots3[Main.LocalPlayer.selectedItem].Count > 0)
-                {
-                    for (int i = 0; i < which.vertices.Length; i++)
-                    {
-                        which.vertices[i].Position = Vector3.Lerp(which.vertices[i].Position, idSlots3[Main.LocalPlayer.selectedItem][i], 0.06f);
-                    }
-                    Main.NewText("Loaded slot " + Main.LocalPlayer.selectedItem);
-                }
-            }*/
-            Vector2 realPos = new Vector2(50 * -left.ToDirectionInt(), 30 + (lower ? 80 : 0));
-            Vector2 originPos = NPC.Center + realPos.RotatedBy(NPC.rotation) - screenPos;
-            Vector2 drawPos = originPos;
-            which.DrawMesh(spriteBatch, drawPos, lower ? wingTexLower : wingTexUpper);
+            Vector2 realPos = new Vector2(50 * -wing.IsLeftWing.ToDirectionInt(), 30 + (wing.IsLowerWing ? 80 : 0));
+            Vector2 drawPos = NPC.Center + realPos.RotatedBy(NPC.rotation) - screenPos;
+            wing.mesh.DrawMesh(spriteBatch, drawPos, wing.IsLowerWing ? wingTexLower : wingTexUpper);
             if (Main.LocalPlayer.selectedItem < 5)
-                which.DrawDebugGrid(drawPos, spriteBatch);
+                wing.mesh.DrawDebugGrid(drawPos, spriteBatch);
 
-            //spriteBatch.Draw(TextureAssets.MagicPixel.Value, originPos, new Rectangle(0, 0, 20, 20), Color.Red, 0, new Vector2(10, 10), 1, 0, 0);
+            //spriteBatch.Draw(TextureAssets.MagicPixel.Value, drawPos, new Rectangle(0, 0, 70, 70), wing.IsLeftWing ? Color.Indigo : Color.Red, 0, new Vector2(35, 35), 1, 0, 0);
         }
     }
 
-    public class CreviWingRotation(TextureMesh mesh, int wingType)
+    public class CreviWing(TextureMesh mesh, int wingType, int creviIndex)
     {
+        /// <summary>
+        /// Used for identifying individual wings
+        /// </summary>
         public enum WingType
         {
             Left = 0,
@@ -439,13 +443,33 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             UpperLeft = 0,
             UpperRight = 1,
         }
+        /// <summary>
+        /// Used to identify which wings should be affected by the given animation
+        /// </summary>
+        public enum AnimType
+        {
+            UpperLeft = 0,
+            UpperRight = 1,
+            LowerLeft = 2,
+            LowerRight = 3,
+            BothLeft = 4,
+            BothRight = 5,
+            BothLower = 6,
+            BothUpper = 7,
+            All = 8
+        }
         public enum PositionType
         {
+            None = -1,
             IdleBack = 0,
             IdleFront = 1,
             ReadyAttack = 2,
             ExecuteAttack = 3
         }
+
+        public int creviIndex = creviIndex;
+
+        public NPC Crevi => Main.npc[creviIndex];
 
         public bool IsUpperWing => wingType <= WingType.Right;
 
@@ -455,44 +479,82 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public bool IsRightWing => wingType == WingType.Right || wingType == WingType.LowerRight;
 
+        /// <summary>
+        /// Should this wing draw above Crevi's body?
+        /// </summary>
+        public bool renderAboveCrevi = false;
+
         // TREAD - CAN - TIRE
-        public static Dictionary<PositionType, Vector3> PositionRotations => new()
+        public static Dictionary<PositionType, CreviWingAnim> PositionRotations => new()
         {
-            { PositionType.IdleBack, new Vector3(0, MathHelper.ToRadians(-70), 0) },
-            { PositionType.IdleFront, new Vector3(0, MathHelper.ToRadians(30), 0) },
-            { PositionType.ReadyAttack, new Vector3(MathHelper.ToRadians(10), 0, MathHelper.ToRadians(-100)) },
-            { PositionType.ExecuteAttack, new Vector3(MathHelper.ToRadians(-180), 0, MathHelper.ToRadians(30)) }
+            { PositionType.IdleBack, new CreviWingAnim(AnimType.All, new Vector3(0, MathHelper.ToRadians(-70), 0)) },
+            { PositionType.IdleFront, new CreviWingAnim(AnimType.All, new Vector3(0, MathHelper.ToRadians(30), 0)) },
+            { PositionType.ReadyAttack, new CreviWingAnim(AnimType.All, new Vector3(MathHelper.ToRadians(10), 0, MathHelper.ToRadians(-100))) },
+            { PositionType.ExecuteAttack, new CreviWingAnim(AnimType.All, new Vector3(MathHelper.ToRadians(-180), 0, MathHelper.ToRadians(30))) }
         };
 
         public TextureMesh mesh = mesh;
         public WingType wingType = (WingType)wingType;
-        public Vector3 newPos = PositionRotations[PositionType.IdleFront];
-        public Vector3 oldPos = PositionRotations[PositionType.IdleBack];
+        public Vector3 newPos = PositionRotations[PositionType.IdleFront].desiredPosition;
+        public Vector3 oldPos = PositionRotations[PositionType.IdleBack].desiredPosition;
+        public PositionType currentAnimation = PositionType.None;
 
         public float wingCompletion = 0;
 
+        /// <summary>
+        /// Is this wing currently drawing flipped?
+        /// </summary>
         public bool flipped = false;
 
-        public void UpdateRotations(PositionType oldPos, PositionType newPos)
+        public bool IsAnimating()
         {
-            this.oldPos = PositionRotations[oldPos];
-            this.newPos = PositionRotations[newPos];
+            if (currentAnimation == PositionType.None)
+                return false;
+            CreviWingAnim currentAnimType = PositionRotations[currentAnimation];
+            AnimType animType = currentAnimType.whichWings2Anim;
+            if (animType == AnimType.All)
+                return true;
+            if (IsLeftWing && (animType == AnimType.BothLeft || animType == AnimType.LowerLeft || animType == AnimType.UpperLeft))
+                return true;
+            if (IsRightWing && (animType == AnimType.BothRight || animType == AnimType.LowerRight || animType == AnimType.UpperRight))
+                return true;
+            if (IsUpperWing && (animType == AnimType.BothUpper || animType == AnimType.UpperRight || animType == AnimType.UpperLeft))
+                return true;
+            if (IsLowerWing && (animType == AnimType.BothLower || animType == AnimType.LowerLeft || animType == AnimType.LowerRight))
+                return true;
+            return false;
+        }
+
+        public void PlayAnimationSingular(PositionType animationPosition)
+        {
+            if (newPos != PositionRotations[animationPosition].desiredPosition)
+            {
+                oldPos = newPos;
+                newPos = PositionRotations[animationPosition].desiredPosition;
+                currentAnimation = animationPosition;
+            }
         }
 
         public void DoWingRotation()
         {
-            int idxx = 0;
-            foreach (NPC n in Main.ActiveNPCs)
+            if (IsAnimating())
             {
-                if (n.type == ModContent.NPCType<Crevivience>())
-                {
-                    idxx = n.whoAmI;
-                }
+                //Vector3 finale = Vector3.Lerp(PositionRotations[PositionType.IdleBack].desiredPosition, PositionRotations[PositionType.IdleFront].desiredPosition, MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.5f + 0.5f);
+                //Main.NewText(MathHelper.ToDegrees(finale.X) + " " + MathHelper.ToDegrees(finale.Y) + " " + MathHelper.ToDegrees(finale.Z));
+                Vector3 finale = Vector3.Lerp(oldPos, newPos, Crevi.localAI[3]);
+                float origin = IsUpperWing ? (mesh.segmentsY - 2) * mesh.segmentHeight : 2 * mesh.segmentHeight;
+                TextureMesh.RotateGrid(mesh, finale.X, finale.Y * flipped.ToDirectionInt() + (flipped ? MathHelper.Pi : 0), finale.Z + Crevi.rotation, new Vector2(0, origin));
             }
-            Vector3 finale = Vector3.Lerp(PositionRotations[PositionType.ReadyAttack], PositionRotations[PositionType.ExecuteAttack], Main.npc[idxx].localAI[3]);
-            //Main.NewText(MathHelper.ToDegrees(finale.X) + " " + MathHelper.ToDegrees(finale.Y) + " " + MathHelper.ToDegrees(finale.Z));
-            float origin = IsLowerWing ? (mesh.segmentsY - 2) * mesh.segmentHeight : 2 * mesh.segmentHeight;
-            TextureMesh.RotateGrid(mesh, finale.X, finale.Y, finale.Z + Main.npc[idxx].rotation, new Vector2(0, origin));
         }
+    }
+
+    public class CreviWingAnim(CreviWing.AnimType wingType, Vector3 desiredPosition)
+    {
+        public CreviWing.AnimType whichWings2Anim = wingType;
+
+        public Vector3 desiredPosition = desiredPosition;
+
+        public List<CreviWing.AnimType> wingsToFlip = new();
+
     }
 }
