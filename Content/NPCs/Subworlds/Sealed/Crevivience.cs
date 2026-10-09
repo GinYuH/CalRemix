@@ -342,17 +342,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             #endregion
 
             #region Head
-            float eyeScale = 0.8f;
-            Vector2 eyePos = NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * 20 - screenPos;
             spriteBatch.Draw(tex, NPC.Center - screenPos, null, Color.White * NPC.Opacity, NPC.rotation, tex.Size() / 2, NPC.scale, 0, 0);
-            spriteBatch.Draw(bloom, eyePos, null, new Color(194, 175, 189) * NPC.Opacity, NPC.rotation, bloom.Size() / 2, NPC.scale * 1.6f * eyeScale, 0, 0);
-            spriteBatch.EnterShaderRegion(BlendState.Additive);
-            spriteBatch.Draw(ring, eyePos, null, Color.HotPink * NPC.Opacity, NPC.rotation, ring.Size() / 2, NPC.scale * 0.4f * eyeScale, 0, 0);
-            spriteBatch.ExitShaderRegion();
-            spriteBatch.Draw(bloom, eyePos, null, new Color(233, 39, 89) * NPC.Opacity, NPC.rotation, bloom.Size() / 2, NPC.scale * 1f * eyeScale, 0, 0);
-            spriteBatch.Draw(bloom, eyePos, null, Color.White * NPC.Opacity, NPC.rotation, bloom.Size() / 2, NPC.scale * 0.55f * eyeScale, 0, 0);
-
-            spriteBatch.ExitShaderRegion();
             #endregion
 
             #region Tendrils
