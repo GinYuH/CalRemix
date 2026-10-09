@@ -22,7 +22,7 @@ namespace CalRemix.UI
                 .ChainAfter(delay: 4f, startTimerOnMessageSpoken: true).SpokenByEvilFanny();
 
 
-            HelperMessage.New("ML3", "A priority you should take care of immediately is harvesting Unholy Essence from some new, fearsome creatures that have appeared in the Underworld and Hallow. You can then use the essence to make the Rune of Kos and summon the Rune of Kos bosses.",
+            HelperMessage.New("ML3", "A priority you should take care of immediately is harvesting Unholy Essence from some new, fearsome creatures that have appeared in the Underworld and Hallow. You can then use the essence to make the Mark of Providence and summon the Mark of Providence bosses.",
                 "FannyIdle", HelperMessage.AlwaysShow, 6).AddItemDisplay(ModContent.ItemType<MarkofProvidence>()).ChainAfter(startMessage);
 
 

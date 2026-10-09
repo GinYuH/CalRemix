@@ -60,7 +60,7 @@ namespace CalRemix.UI
             HelperMessage sentinels1 = HelperMessage.New("Sentinels1", "Watch out, my darest chap! It's one of the devourer's DASTARDLY sentinels! If you want to have any hope of defeating them, you'll need to use 100%-no, 110% of your miraculous skills! Remember, no amount of preparation is too much! Even if you've consumed all the potions you were able to find, there are many other options for boosts! Remember, alcohol is your best friend! I sure know it's mine!",
                 "MiracleBoyRead", (ScreenHelperSceneMetrics metrics) => metrics.onscreenNPCs.Any((NPC n) => n.type == ModContent.NPCType<StormWeaverHead>() || n.type == ModContent.NPCType<Signus>() || n.type == ModContent.NPCType<CeaselessVoid>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).InitiateConversation(15);
-            HelperMessage sentinels2 = HelperMessage.New("Sentinels2", "Sorry to barge in, but the correct name for them is the \"Rune of Kos bosses\". They also aren't related to the Devourer anymore.",
+            HelperMessage sentinels2 = HelperMessage.New("Sentinels2", "Sorry to barge in, but the correct name for them is the \"Mark of Providence bosses\". They also aren't related to the Devourer anymore.",
                 "FannyDisturbed", HelperMessage.AlwaysShow, 5)
                 .ChainAfter(sentinels1, delay: 3f);
             HelperMessage sentinels3 = HelperMessage.New("Sentinels3", "Not a single person has ever called them that. You should learn when to shut up, Fanny.",
