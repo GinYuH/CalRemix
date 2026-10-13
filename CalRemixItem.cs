@@ -46,13 +46,11 @@ using CalRemix.Content.Prefixes;
 using CalRemix.Content.Projectiles.Accessories;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Tiles;
-using CalRemix.Core.Retheme;
 using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -335,33 +333,33 @@ namespace CalRemix
             }
             if (CalRemixWorld.itemChanges)
             {
-                if (item.type == ModContent.ItemType<DeathWhistle>())
+                if (item.type == ItemType<DeathWhistle>())
                 {
                     item.UseSound = new SoundStyle("CalRemix/Assets/Sounds/DeathWhistle") { Volume = 0.6f };
                 }
                 if (item.type == ItemID.CopperWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalRemixHelper.SecondsToFrames(300));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, SecondsToFrames(300));
                 }
                 if (item.type == ItemID.TinWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, CalRemixHelper.SecondsToFrames(420));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed, SecondsToFrames(420));
                 }
                 if (item.type == ItemID.SilverWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalRemixHelper.SecondsToFrames(300));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, SecondsToFrames(300));
                 }
                 if (item.type == ItemID.TungstenWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, CalRemixHelper.SecondsToFrames(420));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed2, SecondsToFrames(420));
                 }
                 if (item.type == ItemID.GoldWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalRemixHelper.SecondsToFrames(300));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, SecondsToFrames(300));
                 }
                 if (item.type == ItemID.PlatinumWatch)
                 {
-                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, CalRemixHelper.SecondsToFrames(420));
+                    item.DefaultToFood(item.width, item.height, BuffID.WellFed3, SecondsToFrames(420));
                 }
             }
         }
@@ -492,7 +490,7 @@ namespace CalRemix
                     return false;
                 }
             }
-            if (SubworldSystem.IsActive<PiggySubworld>() && item.type != ModContent.ItemType<Slingshot>())
+            if (SubworldSystem.IsActive<PiggySubworld>() && item.type != ItemType<Slingshot>())
             {
                 return false;
             }
@@ -532,11 +530,11 @@ namespace CalRemix
                 if (player.Distance(16 * (new Vector2((player.SpawnX == -1 ? Main.spawnTileX : player.SpawnX), (player.SpawnY == -1 ? Main.spawnTileY : player.SpawnY)))) > 2000)
                 {
                     if (Main.rand.NextBool(50 /* ContentSamples.ItemsByType[item.type].useAnimation*/))
-                        if (!NPC.AnyNPCs(ModContent.NPCType<CarrierHead>()))
+                        if (!NPC.AnyNPCs(NPCType<CarrierHead>()))
                         {
                             SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/Gortok"), player.Center);
                             Vector2 spawnPos = player.Center + new Vector2(Main.rand.NextBool().ToDirectionInt() * Main.rand.Next(2000, 3000), Main.rand.Next(-300, 300));
-                            NPC.NewNPC(player.GetSource_FromThis(), (int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<CarrierHead>(), ai0: player.whoAmI);
+                            NPC.NewNPC(player.GetSource_FromThis(), (int)spawnPos.X, (int)spawnPos.Y, NPCType<CarrierHead>(), ai0: player.whoAmI);
                         }
                 }
             }
@@ -765,8 +763,8 @@ namespace CalRemix
         {
             if (item.type == ItemID.FloatingIslandFishingCrate || item.type == ItemID.FloatingIslandFishingCrateHard)
             {
-                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().sStrawberry && CalRemixWorld.permanenthealth, ItemType<SacredStrawberry>(), 1);
-                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && CalamityMod.DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().sStrawberry && CalRemixWorld.permanenthealth, ItemType<SacredStrawberry>(), 20);
+                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && DownedBossSystem.downedYharon && !Main.LocalPlayer.Calamity().sStrawberry && CalRemixWorld.permanenthealth, ItemType<SacredStrawberry>(), 1);
+                itemLoot.AddIf(() => NPC.AnyNPCs(NPCID.WyvernHead) && DownedBossSystem.downedYharon && Main.LocalPlayer.Calamity().sStrawberry && CalRemixWorld.permanenthealth, ItemType<SacredStrawberry>(), 20);
             }
             else if (item.type == ItemID.DungeonFishingCrate || item.type == ItemID.DungeonFishingCrateHard && Main.rand.NextBool(4))
             {
@@ -1204,18 +1202,18 @@ namespace CalRemix
                 if (IsFruit(item))
                 {
                     player.Heal(player.statLifeMax2 / 3);
-                    player.AddBuff(BuffID.PotionSickness, CalRemixHelper.SecondsToFrames(45));
+                    player.AddBuff(BuffID.PotionSickness, SecondsToFrames(45));
                 }
             }
             if (item.type == ItemType<HadalStew>())
             {
-                player.AddBuff(BuffID.Wrath, CalRemixHelper.SecondsToFrames(60));
-                player.AddBuff(BuffID.Rage, CalRemixHelper.SecondsToFrames(60));
-                player.AddBuff(BuffID.Endurance, CalRemixHelper.SecondsToFrames(60));
-                player.AddBuff(BuffID.Swiftness, CalRemixHelper.SecondsToFrames(60));
-                player.AddBuff(BuffID.Ironskin, CalRemixHelper.SecondsToFrames(60));
-                player.AddBuff(BuffID.Regeneration, CalRemixHelper.SecondsToFrames(60));
-                player.AddBuff(BuffID.Titan, CalRemixHelper.SecondsToFrames(60));
+                player.AddBuff(BuffID.Wrath, SecondsToFrames(60));
+                player.AddBuff(BuffID.Rage, SecondsToFrames(60));
+                player.AddBuff(BuffID.Endurance, SecondsToFrames(60));
+                player.AddBuff(BuffID.Swiftness, SecondsToFrames(60));
+                player.AddBuff(BuffID.Ironskin, SecondsToFrames(60));
+                player.AddBuff(BuffID.Regeneration, SecondsToFrames(60));
+                player.AddBuff(BuffID.Titan, SecondsToFrames(60));
             }
         }
 

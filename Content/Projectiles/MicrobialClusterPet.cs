@@ -1,7 +1,6 @@
 using Terraria;
 using CalamityMod.Dusts;
 using Terraria.ModLoader;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 namespace CalRemix.Content.Projectiles
 {

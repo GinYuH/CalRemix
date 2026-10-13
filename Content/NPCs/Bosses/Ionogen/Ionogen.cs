@@ -98,7 +98,7 @@ namespace CalRemix.Content.NPCs.Bosses.Ionogen
         {
             NPC.TargetClosest();
             // Start a thunderstorm
-            if (!CalamityMod.CalamityServerConfig.Instance.BossesStopWeather)
+            if (!CalamityServerConfig.Instance.BossesStopWeather)
             {
                 Main.raining = true;
                 Main.cloudBGActive = 1f;

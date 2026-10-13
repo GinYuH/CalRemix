@@ -1,16 +1,10 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod;
-using System;
-using CalRemix.Content.Items.Placeables;
-using Terraria.ID;
-using CalamityMod.Items.Potions;
 using System.Collections.Generic;
 using CalamityMod.Tiles.Astral;
 using CalamityMod.Tiles.AstralDesert;
 using CalamityMod.Tiles.AstralSnow;
-using CalamityMod.Items.Materials;
 using CalamityMod.Tiles.FurnitureMonolith;
 
 namespace CalRemix.Core.World

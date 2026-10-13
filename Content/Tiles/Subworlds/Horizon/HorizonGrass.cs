@@ -6,7 +6,6 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static CalRemix.Content.NPCs.Bosses.SealedOne.OrbitingOrb;
 
 namespace CalRemix.Content.Tiles.Subworlds.Horizon
 {

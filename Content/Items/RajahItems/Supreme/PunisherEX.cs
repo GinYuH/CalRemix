@@ -23,7 +23,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
             Item.width = 30;
             Item.height = 10;
             Item.damage = 500;
-            Item.shoot = Terraria.ModLoader.ModContent.ProjectileType<Projectiles.Hostile.RajahProjectiles.Supreme.PunisherEX>();
+            Item.shoot = ModContent.ProjectileType<Projectiles.Hostile.RajahProjectiles.Supreme.PunisherEX>();
             Item.shootSpeed = 15f;
             Item.UseSound = SoundID.Item1;
             Item.rare = ItemRarityID.Cyan;

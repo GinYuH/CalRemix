@@ -4,14 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.GameContent.ItemDropRules;
-using CalRemix.Content.Items.Materials;
 using Terraria.ModLoader.Utilities;
 using CalRemix.Content.Items.Weapons;
-using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
-using System.Collections.Generic;
-using Terraria.Localization;
 using CalRemix.Content.Items.Placeables.Banners;
 
 namespace CalRemix.Content.NPCs

@@ -1,23 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.Tiles.Ores;
-using CalRemix.Content.Items.Accessories;
-using CalRemix.Content.Items.Bags;
-using CalRemix.Content.Items.Lore;
-using CalRemix.Content.Items.Misc;
-using CalRemix.Content.Items.Placeables.Relics;
-using CalRemix.Content.Items.Placeables.Trophies;
-using CalRemix.Content.Items.Weapons;
-using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
-using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes;
-using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 

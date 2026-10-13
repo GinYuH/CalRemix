@@ -41,7 +41,7 @@ namespace CalRemix.Content.Items.RajahItems.Supreme
 
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(Terraria.ModLoader.ModContent.BuffType<InfinityOverload>(), 120);
+            target.AddBuff(ModContent.BuffType<InfinityOverload>(), 120);
         }
     }
 }

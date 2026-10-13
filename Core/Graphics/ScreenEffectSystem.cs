@@ -112,13 +112,13 @@ namespace CalRemix.Core.Graphics
         public override void OnModLoad()
         {
             Main.OnResolutionChanged += ResizeRenderTarget;
-            Terraria.Graphics.Effects.On_FilterManager.EndCapture += EndCaptureManager;
+            On_FilterManager.EndCapture += EndCaptureManager;
         }
 
         public override void OnModUnload()
         {
             Main.OnResolutionChanged -= ResizeRenderTarget;
-            Terraria.Graphics.Effects.On_FilterManager.EndCapture -= EndCaptureManager;
+            On_FilterManager.EndCapture -= EndCaptureManager;
             Main.QueueMainThreadAction(() =>
             {
                 FlashRenderTarget?.Dispose();

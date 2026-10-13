@@ -2,9 +2,6 @@
 using Terraria.ModLoader;
 using Terraria;
 using CalamityMod.Items;
-using CalRemix.Content.Items.Materials;
-using CalamityMod;
-using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using CalRemix.Core.World;
 

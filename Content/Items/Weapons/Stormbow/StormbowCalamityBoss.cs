@@ -1,5 +1,4 @@
-﻿using CalamityMod.Items.Materials;
-using CalamityMod.Projectiles.Boss;
+﻿using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Melee;
 using CalamityMod.Projectiles.Ranged;

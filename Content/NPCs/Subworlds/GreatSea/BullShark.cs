@@ -45,7 +45,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
         {
             for (int i = 0; i < Main.rand.Next(0, 5); i++)
             {
-                int n = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Remora>(), 0, ai2: NPC.whoAmI + 1);
+                int n = NPC.NewNPC(Terraria.Entity.GetSource_NaturalSpawn(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Remora>(), 0, ai2: NPC.whoAmI + 1);
                 Main.npc[n].rotation = Main.rand.NextFloat(MathHelper.TwoPi);
             }
         }

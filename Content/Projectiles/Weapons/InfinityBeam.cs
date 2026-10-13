@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Events;
-using CalamityMod.NPCs.ExoMechs.Ares;
-using CalamityMod.NPCs.Other;
+﻿using System.IO;
 using CalamityMod.Projectiles.BaseProjectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

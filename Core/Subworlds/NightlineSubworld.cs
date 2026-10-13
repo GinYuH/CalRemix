@@ -1,10 +1,7 @@
-﻿using CalamityMod.Tiles.FurnitureAshen;
-using CalRemix.Content.NPCs.Subworlds;
-using CalRemix.Content.Tiles;
+﻿using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;

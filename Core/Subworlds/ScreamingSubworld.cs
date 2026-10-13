@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.ID;
 using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
 using Terraria.Graphics.Effects;
 using CalamityMod;
 

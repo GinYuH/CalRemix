@@ -1,13 +1,10 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
-using CalamityMod.CalPlayer;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items;
-using CalamityMod.Items.Weapons.Rogue;
 
 namespace CalRemix.Content.Items.Weapons
 {

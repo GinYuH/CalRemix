@@ -1,13 +1,11 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Graphics.Primitives;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 

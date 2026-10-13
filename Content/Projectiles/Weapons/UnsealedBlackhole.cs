@@ -1,6 +1,5 @@
 using CalamityMod;
 using CalamityMod.Projectiles.Ranged;
-using CalamityMod.Projectiles.Rogue;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;

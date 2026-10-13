@@ -1,6 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.Content.Projectiles;
-using Microsoft.Xna.Framework;
+﻿using CalRemix.Content.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

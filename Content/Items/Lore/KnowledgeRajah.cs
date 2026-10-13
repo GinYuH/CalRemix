@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.Items.Placeables.Trophies;
-using CalRemix.Content.Items.RajahItems;
+﻿using CalRemix.Content.Items.RajahItems;
 using Terraria;
 using Terraria.ID;
 

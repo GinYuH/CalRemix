@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.Content.Buffs;
+﻿using CalRemix.Content.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

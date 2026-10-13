@@ -255,7 +255,7 @@ namespace CalRemix.Content.Projectiles.Hostile
                     else
                         rot = Projectile.rotation;
                     if (i > 0)
-                        Main.EntitySpriteDraw(chainTexture, seg.position - Main.screenPosition, null, Projectile.GetAlpha(Main.zenithWorld ? Color.Cyan : Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, chainTexture.Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                        Main.EntitySpriteDraw(chainTexture, seg.position - Main.screenPosition, null, Projectile.GetAlpha(Main.zenithWorld ? Color.Cyan : Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, chainTexture.Size() / 2, 1f, SpriteEffects.None, 0);
                     else
                         Main.EntitySpriteDraw(endTexture, seg.position - Main.screenPosition, null, color, rot, new Vector2(endTexture.Width / 2, endTexture.Height), Projectile.scale, SpriteEffects.None, 0);
                 }

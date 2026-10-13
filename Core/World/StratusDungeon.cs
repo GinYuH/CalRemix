@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using CalamityMod;
 using CalamityMod.Tiles.FurnitureStratus;
 using CalRemix.Content.Walls;
 

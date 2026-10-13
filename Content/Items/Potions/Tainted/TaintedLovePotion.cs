@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.Content.Buffs.Tainted;
+﻿using CalRemix.Content.Buffs.Tainted;
 using Terraria.ID;
 using Terraria.ModLoader;
 

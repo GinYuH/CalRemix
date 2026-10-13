@@ -1,7 +1,5 @@
 using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
 using CalRemix.Content.Cooldowns;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;

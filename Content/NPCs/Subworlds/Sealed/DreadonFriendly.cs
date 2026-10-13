@@ -11,7 +11,6 @@ using CalRemix.Core.Biomes;
 using CalRemix.Core.Subworlds;
 using CalRemix.UI;
 using Terraria.Audio;
-using CalamityMod.Items.Placeables.Ores;
 using CalRemix.Core.World;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed

@@ -1,4 +1,3 @@
-using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Crags;
 using CalRemix.Content.Buffs;
 using CalRemix.Content.Items.Materials;

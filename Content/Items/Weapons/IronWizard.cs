@@ -1,14 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Items;
-using CalRemix.Content.Projectiles.Weapons;
-using CalamityMod.Rarities;
-using CalamityMod.Items.Materials;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamityMod.NPCs.SupremeCalamitas;
-using Terraria.Audio;
-using CalRemix.Core.World;
 
 namespace CalRemix.Content.Items.Weapons
 {

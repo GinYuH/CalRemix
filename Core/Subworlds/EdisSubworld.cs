@@ -1,13 +1,10 @@
-﻿using CalRemix.Content.Tiles;
-using CalRemix.Content.Tiles.Subworlds.ClownWorld;
-using CalRemix.Core.World;
+﻿using CalRemix.Content.Tiles.Subworlds.ClownWorld;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
-using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;

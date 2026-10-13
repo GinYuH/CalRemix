@@ -1,5 +1,4 @@
 ﻿using CalRemix.Content.NPCs.Subworlds.Sealed;
-using CalRemix.Core.World;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;

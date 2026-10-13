@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
 using CalamityMod.Items;
 
 namespace CalRemix.Content.Items.Weapons

@@ -10,7 +10,6 @@ using CalRemix.Core.Biomes;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using CalRemix.Content.Items.Weapons;
-using CalamityMod.Sounds;
 using CalamityMod.NPCs.DevourerofGods;
 using Terraria.DataStructures;
 using CalRemix.Content.Items.Placeables;

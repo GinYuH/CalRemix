@@ -89,7 +89,7 @@ public class MaserDeathray : BaseLaserbeamProjectile
             {
                 float collisionPoint = 0f;
                 Rectangle targetHitbox = n.getRect();
-                if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), base.Projectile.Center, base.Projectile.Center + base.Projectile.velocity * LaserLength, base.Projectile.Size.Length() * base.Projectile.scale, ref collisionPoint))
+                if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + Projectile.velocity * LaserLength, Projectile.Size.Length() * Projectile.scale, ref collisionPoint))
                 {
                     n.SimpleStrikeNPC(Projectile.damage * (Main.expertMode ? 2 : 4), n.direction, false);
                     n.GetGlobalNPC<PandemicPanicNPC>().hitCooldown = 20;

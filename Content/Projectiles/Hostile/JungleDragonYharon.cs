@@ -51,7 +51,7 @@ namespace CalRemix.Content.Projectiles.Hostile
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.zenithWorld) CalRemixHelper.SpawnNewNPC(base.Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<Yharon>());
+            if (Main.zenithWorld) CalRemixHelper.SpawnNewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<Yharon>());
         }
     }
 }

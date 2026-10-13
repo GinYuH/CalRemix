@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

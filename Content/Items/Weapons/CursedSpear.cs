@@ -26,7 +26,7 @@ namespace CalRemix.Content.Items.Weapons
 			Item.useAnimation = 19;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.autoReuse = true;
-            Item.UseSound = CalamityMod.Items.Weapons.Rogue.IchorSpear.ThrowSound;
+            Item.UseSound = IchorSpear.ThrowSound;
 			Item.DamageType = ModContent.GetInstance<RogueDamageClass>();
 			Item.damage = 76;
 			Item.knockBack = 6f; 

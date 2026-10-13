@@ -1,5 +1,4 @@
 ﻿using System;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
@@ -36,15 +35,15 @@ namespace CalRemix.Core.Subworlds
         }
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            float value = MathHelper.Lerp(188 / 255f, 10 / 255f, Utils.GetLerpValue(Main.maxTilesY * 0.4f, Main.maxTilesY * 0.8f, Main.LocalPlayer.Center.Y / 16f, true));
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.screenWidth, (int)Main.screenHeight), new Color(value, value, value));
+            float value = MathHelper.Lerp(188 / 255f, 10 / 255f, Utils.GetLerpValue(maxTilesY * 0.4f, maxTilesY * 0.8f, LocalPlayer.Center.Y / 16f, true));
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), new Color(value, value, value));
             Texture2D bloom = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomCircle").Value;
             Texture2D bloom2 = ModContent.Request<Texture2D>("CalamityMod/Particles/LargeBloom").Value;
 
-            float sunY = MathHelper.Lerp(Main.screenHeight * 0.2f, (Main.maxTilesY * 16) * 0.3f - Main.screenPosition.Y - Main.screenHeight * 0.3f, Utils.GetLerpValue(0.3f, 0.301f, Main.LocalPlayer.Center.Y / (Main.maxTilesY * 16f), true));
+            float sunY = MathHelper.Lerp(screenHeight * 0.2f, (maxTilesY * 16) * 0.3f - screenPosition.Y - screenHeight * 0.3f, Utils.GetLerpValue(0.3f, 0.301f, LocalPlayer.Center.Y / (maxTilesY * 16f), true));
 
-            spriteBatch.Draw(bloom, new Vector2(Main.screenWidth / 2f, sunY), null, Color.White with { A = 0 }, 0, bloom.Size() / 2, 1.3f, 0, 0);
-            spriteBatch.Draw(bloom2, new Vector2(Main.screenWidth / 2f, sunY), null, Color.Black, 0, bloom2.Size() / 2, 0.3f, 0, 0);
+            spriteBatch.Draw(bloom, new Vector2(screenWidth / 2f, sunY), null, Color.White with { A = 0 }, 0, bloom.Size() / 2, 1.3f, 0, 0);
+            spriteBatch.Draw(bloom2, new Vector2(screenWidth / 2f, sunY), null, Color.Black, 0, bloom2.Size() / 2, 0.3f, 0, 0);
         }
 
         public override Color OnTileColor(Color inColor) => DrawColor;
@@ -57,6 +56,6 @@ namespace CalRemix.Core.Subworlds
 
         public override void Deactivate(params object[] args) { }
 
-        public override bool IsActive() => CanSkyBeActive && !Main.gameMenu;
+        public override bool IsActive() => CanSkyBeActive && !gameMenu;
     }
 }

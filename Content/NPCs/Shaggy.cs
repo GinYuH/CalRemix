@@ -4,8 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalRemix.Content.Items.Potions;
-using System.Drawing;
 using Microsoft.Xna.Framework;
 
 namespace CalRemix.Content.NPCs

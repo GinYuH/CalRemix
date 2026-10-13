@@ -1,15 +1,11 @@
 using CalamityMod;
-using CalamityMod.CalPlayer;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Pets;
-using CalamityMod.Items.Placeables.Ores;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.Perforator;
 using CalamityMod.Sounds;
 using CalRemix.Content.Items.Lore;
-using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables;
 using CalRemix.Content.Items.SummonItems;
 using CalRemix.Content.NPCs;
@@ -45,12 +41,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 using static Terraria.ModLoader.ModContent;
@@ -223,8 +217,8 @@ namespace CalRemix
             };
             bc.Call("LogBoss", Mod, "RajahRabbit", 13.99f, () => RemixDowned.downedRajah, NPCType<Rajah>(), new Dictionary<string, object>()
             {
-                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Rajah.BossChecklistIntegration.SpawnInfo").WithFormatArgs("[i: " + ModContent.ItemType<GoldenCarrot>() + "]"),
-                ["spawnItems"] = ModContent.ItemType<GoldenCarrot>(),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.Rajah.BossChecklistIntegration.SpawnInfo").WithFormatArgs("[i: " + ItemType<GoldenCarrot>() + "]"),
+                ["spawnItems"] = ItemType<GoldenCarrot>(),
                 ["customPortrait"] = rajahPortrait
             });
 
@@ -320,7 +314,7 @@ namespace CalRemix
             {
                 ["spawnItems"] = ItemType<DiamondCarrot>(),
                 ["customPortrait"] = sRajahPortrait,
-                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.SupremeRajah.BossChecklistIntegration.SpawnInfo").WithFormatArgs("[i: " + ModContent.ItemType<GoldenCarrot>() + "]"),
+                ["spawnInfo"] = CalRemixHelper.LocalText("NPCs.SupremeRajah.BossChecklistIntegration.SpawnInfo").WithFormatArgs("[i: " + ItemType<GoldenCarrot>() + "]"),
             });
 
             Action<SpriteBatch, Rectangle, Color> noxPort = (SpriteBatch sb, Rectangle rect, Color color) => {
@@ -426,7 +420,7 @@ namespace CalRemix
             MakeCard(NPCType<MonorianWarrior>(), (horz, anim) => Color.Lerp(Color.Red, Color.Red, anim), "MonorianWarrior", BetterSoundID.ItemAerialBane, SoundID.NPCDeath1);
             MakeCard(NPCType<MonorianSoul>(), (horz, anim) => Color.Lerp(Color.Cyan, Color.Red, anim), "MonorianSoul", BetterSoundID.ItemAerialBane, SoundID.NPCDeath1);
             MakeCard(NPCType<Pyrogen>(), (horz, anim) => Color.Lerp(Color.Magenta, Color.Red, anim), "Pyrogen", Cryogen.HitSound, Cryogen.DeathSound);
-            MakeCard(() => NPC.FindFirstNPC(NPCType<Hydrogen>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] < 300, (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Hydrogen", SoundID.Item14, CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound);
+            MakeCard(() => NPC.FindFirstNPC(NPCType<Hydrogen>()) != -1 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Hydrogen>())].Calamity().newAI[2] < 300, (horz, anim) => Color.Lerp(Color.Blue, Color.Yellow, anim), "Hydrogen", SoundID.Item14, AresGaussNuke.NukeExplosionSound);
             MakeCard(NPCType<WulfwyrmHead>(), (horz, anim) => Color.Lerp(Color.LightGreen, Color.LightBlue, horz), "WulfrumExcavator", SoundID.NPCHit4, BetterSoundID.ItemThisStupidFuckingLaser);
             MakeCard(NPCType<Livyatan>(), (horz, anim) => Color.Lerp(Color.Turquoise, Color.SeaGreen, horz), "Livyatan", Livyatan.HitSound, Livyatan.RoarSound);
             MakeCard(NPCType<AcidEye>(), (horz, anim) => Color.Lerp(Color.LimeGreen, Color.Lime, anim), "Acidsighter", SoundID.Roar, SoundID.NPCDeath1);

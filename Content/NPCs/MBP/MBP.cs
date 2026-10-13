@@ -312,7 +312,7 @@ namespace CalRemix.Content.NPCs.MBP
                 int size = 6;
                 int length = i == 0 ? size : (int)seg.position.Distance(segments[i - 1].position);
 
-                sb.Draw(TextureAssets.MagicPixel.Value, NPC.Center + seg.position - screenPos, new Rectangle(0, 0, size, length + 2), Color.Black * NPC.Opacity, rot, new Vector2(4, 4), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                sb.Draw(TextureAssets.MagicPixel.Value, NPC.Center + seg.position - screenPos, new Rectangle(0, 0, size, length + 2), Color.Black * NPC.Opacity, rot, new Vector2(4, 4), 1f, SpriteEffects.None, 0);
 
                 if (i == segments.Count - 1)
                 {
@@ -325,7 +325,7 @@ namespace CalRemix.Content.NPCs.MBP
                            // return;
                     }
 
-                    sb.Draw(item, NPC.Center + seg.position - screenPos, null, Color.White * NPC.Opacity, snap ? rot - MathHelper.Pi : 0, new Vector2(item.Width / 2, item.Height / 2), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                    sb.Draw(item, NPC.Center + seg.position - screenPos, null, Color.White * NPC.Opacity, snap ? rot - MathHelper.Pi : 0, new Vector2(item.Width / 2, item.Height / 2), 1f, SpriteEffects.None, 0);
                 }
             }
         }
@@ -486,7 +486,7 @@ namespace CalRemix.Content.NPCs.MBP
                 else
                     rot = NPC.rotation;
 
-                sb.Draw(perfTail, seg.position - screenPos, frame, NPC.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, new Vector2(frame.Width / 2, frame.Y), 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0); ;
+                sb.Draw(perfTail, seg.position - screenPos, frame, NPC.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, new Vector2(frame.Width / 2, frame.Y), 1f, SpriteEffects.None, 0); ;
             }
         }
         #endregion
@@ -511,10 +511,10 @@ namespace CalRemix.Content.NPCs.MBP
 
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 2; j++)
-                    sb.Draw(table, tablePos + new Vector2(i, j) * blockSize * tableScale , new Rectangle(graniteTableCoord + i * blockSize18, j * blockSize18, blockSize, blockSize), drawColor, 0, Vector2.Zero, tableScale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                    sb.Draw(table, tablePos + new Vector2(i, j) * blockSize * tableScale , new Rectangle(graniteTableCoord + i * blockSize18, j * blockSize18, blockSize, blockSize), drawColor, 0, Vector2.Zero, tableScale, SpriteEffects.None, 0);
 
             for (int i = 0; i < 2; i++)
-                sb.Draw(bench, benchPos + Vector2.UnitX * blockSize * i * benchScale.X, new Rectangle(graniteBenchCoord + i * blockSize18, 0, blockSize, blockSize), drawColor, 0, Vector2.Zero, benchScale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                sb.Draw(bench, benchPos + Vector2.UnitX * blockSize * i * benchScale.X, new Rectangle(graniteBenchCoord + i * blockSize18, 0, blockSize, blockSize), drawColor, 0, Vector2.Zero, benchScale, SpriteEffects.None, 0);
 
         }
 

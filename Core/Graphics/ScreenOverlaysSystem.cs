@@ -64,7 +64,7 @@ namespace CalRemix.Core.Graphics
         {
             Main.QueueMainThreadAction(() =>
             {
-                Terraria.IL_Main.DoDraw += DrawOverBlackNPCCache;
+                IL_Main.DoDraw += DrawOverBlackNPCCache;
             });
         }
 
@@ -72,7 +72,7 @@ namespace CalRemix.Core.Graphics
         {
             Main.QueueMainThreadAction(() =>
             {
-                Terraria.IL_Main.DoDraw -= DrawOverBlackNPCCache;
+                IL_Main.DoDraw -= DrawOverBlackNPCCache;
             });
         }
     }

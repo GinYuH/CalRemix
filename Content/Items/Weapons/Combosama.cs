@@ -1,11 +1,8 @@
 ﻿using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Weapons.Melee;
-using CalRemix.Content.Items.Materials;
 using CalamityMod;
-using CalRemix.Content.Cooldowns;
 using Terraria.Audio;
 using CalamityMod.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
@@ -20,7 +17,7 @@ namespace CalRemix.Content.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(base.Item.type, new DrawAnimationVertical(6, 8));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 8));
         }
 
         public override void SetDefaults()
@@ -38,7 +35,7 @@ namespace CalRemix.Content.Items.Weapons
         }
         public override bool CanUseItem(Player player)
         {
-            if (player.altFunctionUse != 2 && player.ownedProjectileCounts[base.Item.shoot] > 0)
+            if (player.altFunctionUse != 2 && player.ownedProjectileCounts[Item.shoot] > 0)
             {
                 return false;
             }

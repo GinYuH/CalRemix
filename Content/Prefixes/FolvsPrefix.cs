@@ -1,7 +1,6 @@
 ﻿using CalamityMod;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Prefixes

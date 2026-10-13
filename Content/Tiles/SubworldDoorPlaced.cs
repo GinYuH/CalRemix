@@ -1,13 +1,7 @@
 ﻿using CalamityMod;
-using CalamityMod.Graphics.Primitives;
-using CalRemix.Content.Items.Placeables;
-using CalRemix.Core.Subworlds;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using SubworldLibrary;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

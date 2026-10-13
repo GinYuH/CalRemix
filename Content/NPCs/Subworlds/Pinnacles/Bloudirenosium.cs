@@ -1,7 +1,5 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.Placeables.Subworlds.Pinnacles;
-using CalRemix.Content.Items.Potions;
-using CalRemix.Core.Biomes;
 using CalRemix.Core.Biomes.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -37,7 +35,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToCold = false;
             NPC.Calamity().VulnerableToWater = true;
-            SpawnModBiomes = [ModContent.GetInstance<PinnaclesBiome>().Type];
+            SpawnModBiomes = [GetInstance<PinnaclesBiome>().Type];
         }
 
         public override void AI()
@@ -89,9 +87,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D tex = TextureAssets.Npc[Type].Value;
-            Texture2D legs = ModContent.Request<Texture2D>(Texture + "_Legs").Value;
-            Texture2D head = ModContent.Request<Texture2D>(Texture + "_Head").Value;
-            Texture2D tail = ModContent.Request<Texture2D>(Texture + "_Tail").Value;
+            Texture2D legs = Request<Texture2D>(Texture + "_Legs").Value;
+            Texture2D head = Request<Texture2D>(Texture + "_Head").Value;
+            Texture2D tail = Request<Texture2D>(Texture + "_Tail").Value;
 
             int legBaseY = 40;
 

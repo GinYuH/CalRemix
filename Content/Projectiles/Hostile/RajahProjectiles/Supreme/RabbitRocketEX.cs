@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ModLoader;
-using CalRemix.Content.Projectiles.Hostile.RajahProjectiles;
 
 namespace CalRemix.Content.Projectiles.Hostile.RajahProjectiles.Supreme
 
@@ -24,7 +23,7 @@ namespace CalRemix.Content.Projectiles.Hostile.RajahProjectiles.Supreme
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-            int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(0, 0), Terraria.ModLoader.ModContent.ProjectileType<RabbitBoomEX>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(0, 0), ModContent.ProjectileType<RabbitBoomEX>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             Main.projectile[p].DamageType = DamageClass.Ranged;
             Main.projectile[p].Center = Projectile.Center;
             float spread = 12f * 0.0174f;

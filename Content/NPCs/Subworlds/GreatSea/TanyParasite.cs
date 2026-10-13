@@ -112,7 +112,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
                     {
                         rot = NPC.rotation;
                     }
-                    Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, 4, dist), Color.Black, rot, new Rectangle(0, 0, 4, dist).Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                    Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, 4, dist), Color.Black, rot, new Rectangle(0, 0, 4, dist).Size() / 2, 1f, SpriteEffects.None, 0);
                 }
 
                 Texture2D tex = TextureAssets.Npc[Type].Value;

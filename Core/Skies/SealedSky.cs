@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
-using CalamityMod;
-using CalamityMod.Projectiles.Melee;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Subworlds;

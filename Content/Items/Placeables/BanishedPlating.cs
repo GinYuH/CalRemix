@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles;
 using CalamityMod.Items;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
 

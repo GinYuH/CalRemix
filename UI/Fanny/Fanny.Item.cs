@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Items;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Dyes;
 using CalamityMod.Items.Materials;
@@ -26,7 +25,6 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Items.Potions;
 
 namespace CalRemix.UI
 {

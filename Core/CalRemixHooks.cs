@@ -13,7 +13,6 @@ using CalRemix.Content.NPCs.Bosses.Hydrogen;
 using CalRemix.Content.NPCs.Eclipse;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Prefixes;
-using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.Subworlds.Horizon;
 using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using CalRemix.Core.Scenes;
@@ -298,7 +297,7 @@ namespace CalRemix.Core
 
         public static void PreventFoveanatorDefeatMessageIfNotKilledLast(On_NPC.orig_DoDeathEvents_BeforeLoot orig, NPC self, Player closestPlayer)
         {
-            if (CalRemixWorld.bossAdditions && self.type == ModContent.NPCType<Foveanator>() && (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)))
+            if (CalRemixWorld.bossAdditions && self.type == NPCType<Foveanator>() && (NPC.AnyNPCs(NPCID.Spazmatism) || NPC.AnyNPCs(NPCID.Retinazer)))
             {
                 self.value = 0f;
                 self.boss = false;
@@ -312,7 +311,7 @@ namespace CalRemix.Core
 
         public static void TripletsDefeatTextOverride(On_NPC.orig_DoDeathEvents_CelebrateBossDeath orig, NPC self, string typeName)
         {
-            bool correctNPCType = self.type == NPCID.Retinazer || self.type == NPCID.Spazmatism || self.type == ModContent.NPCType<Foveanator>();
+            bool correctNPCType = self.type == NPCID.Retinazer || self.type == NPCID.Spazmatism || self.type == NPCType<Foveanator>();
             if (CalRemixWorld.bossAdditions && correctNPCType)
             {
                 if (Main.netMode == NetmodeID.SinglePlayer)
@@ -333,7 +332,7 @@ namespace CalRemix.Core
             orig(self);
             if (SubworldSystem.IsActive<PinnaclesSubworld>())
             {
-                Texture2D starr = ModContent.Request<Texture2D>("CalRemix/Content/Particles/AshFlake").Value;
+                Texture2D starr = Request<Texture2D>("CalRemix/Content/Particles/AshFlake").Value;
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
                 List<PinnacleAsh> ashes = PinnacleSky.ashes;
                 foreach (PinnacleAsh speck in ashes)
@@ -908,7 +907,7 @@ namespace CalRemix.Core
             Dictionary<int, int> modsList = (Dictionary<int, int>)leftMapping.GetValue(null);
             if (modsList.TryGetValue(i, out var value))
             {
-                flag = Terraria.IngameOptions.category == value;
+                flag = IngameOptions.category == value;
             }
             Color color = Color.Lerp(Color.Gray, Color.White, (scales[i] - minscale) / (maxscale - minscale));
             if (flag)
@@ -936,8 +935,8 @@ namespace CalRemix.Core
                 {
                     if (Main.mouseLeft)
                     {
-                        SubworldLibrary.SubworldSystem.Enter<FannySubworld>();
-                        Terraria.IngameOptions.Close();
+                        SubworldSystem.Enter<FannySubworld>();
+                        IngameOptions.Close();
                     }
                 }
                 else
@@ -1041,7 +1040,7 @@ namespace CalRemix.Core
         private static SlotId PlayInerr(in SoundStyle style, Vector2? position, SoundUpdateCallback c)
         {
             FieldInfo tracc = typeof(SoundPlayer).GetField("_trackedSounds", BindingFlags.NonPublic | BindingFlags.Instance);
-            SlotVector<ActiveSound> consumeHover = (SlotVector<ActiveSound>)tracc.GetValue(Terraria.Audio.SoundEngine.SoundPlayer);
+            SlotVector<ActiveSound> consumeHover = (SlotVector<ActiveSound>)tracc.GetValue(SoundEngine.SoundPlayer);
 
             //ReLogic.Utilities.SlotVector<ActiveSound>
             int maxInstances = style.MaxInstances;
@@ -1184,13 +1183,13 @@ namespace CalRemix.Core
                                 else
                                     rot = 0;
                                 float scalee = (1 - (u / cables.Segments.Count));
-                                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, (int)dist, 2), Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.SaddleBrown), rot, TextureAssets.BlackTile.Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, (int)dist, 2), Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.SaddleBrown), rot, TextureAssets.BlackTile.Size() / 2, scalee, SpriteEffects.None, 0);
 
                                 if (cables.missingIndices.Contains(u))
                                     continue;
                                 if (u % 2 == 0)
                                 {
-                                    Main.EntitySpriteDraw(TextureAssets.Tile[bridgeTile].Value, seg.position - Main.screenPosition + Vector2.UnitY * 8, null, Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.White), 0f, TextureAssets.Tile[bridgeTile].Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                                    Main.EntitySpriteDraw(TextureAssets.Tile[bridgeTile].Value, seg.position - Main.screenPosition + Vector2.UnitY * 8, null, Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.White), 0f, TextureAssets.Tile[bridgeTile].Size() / 2, scalee, SpriteEffects.None, 0);
                                 }
                             }
                             Main.spriteBatch.End();

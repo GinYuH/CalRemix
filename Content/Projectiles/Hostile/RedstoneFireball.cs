@@ -28,7 +28,7 @@ namespace CalRemix.Content.Projectiles.Hostile
             {
                 if (Main.rand.NextBool(20))
                 {
-                    Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, (int)CalamityMod.Dusts.CalamityDusts.Brimstone, 0f, 0f);
+                    Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, (int)CalamityDusts.Brimstone, 0f, 0f);
                     d.noGravity = true;
                     d.velocity = d.position.DirectionFrom(Projectile.Center) * 4;
                 }

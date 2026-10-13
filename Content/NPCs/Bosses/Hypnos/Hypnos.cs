@@ -11,7 +11,6 @@ using CalamityMod.Particles;
 using Microsoft.Xna.Framework.Graphics;
 using CalamityMod;
 using static CalamityMod.World.CalamityWorld;
-using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Vanity;
 using CalamityMod.Items.LoreItems;
 using CalamityMod.Items.Materials;
@@ -81,7 +80,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             NPC.damage = 1;
             NPC.defense = 90;
             NPC.alpha = 255;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<ExosphereBiome>().Type };
+            SpawnModBiomes = new int[1] { GetInstance<ExosphereBiome>().Type };
             // SpawnModBiomes = new int[1] { ModContent.GetInstance<ExosphereBiome>().Type }; This is buggy for some reason
             if (!Main.dedServ)
                 Music = CalRemixMusic.Hypnos;
@@ -98,9 +97,9 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         {
             //Boss zen
             Main.player[Main.myPlayer].Calamity().isNearbyBoss = true;
-            Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<CalamityMod.Buffs.StatBuffs.BossEffects>(), 10, true);
+            Main.player[Main.myPlayer].AddBuff(BuffType<CalamityMod.Buffs.StatBuffs.BossEffects>(), 10, true);
             //Handle transitioning to phase 2
-            if (NPC.CountNPCS(ModContent.NPCType<HypnosPlug>()) <= 0 && NPC.ai[0] > 1)
+            if (NPC.CountNPCS(NPCType<HypnosPlug>()) <= 0 && NPC.ai[0] > 1)
             {
                 NPC.dontTakeDamage = false;
                 if (!p2 && Main.netMode != NetmodeID.Server)
@@ -164,7 +163,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             {
                 if (!enraged && NPC.ai[1] == 0)
                 {
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar with { Pitch = SoundID.Roar.Pitch + 0.2f}, NPC.Center);
+                    SoundEngine.PlaySound(SoundID.Roar with { Pitch = SoundID.Roar.Pitch + 0.2f}, NPC.Center);
                     enraged = true;
                 }
             }
@@ -260,7 +259,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                                 GeneralParticleHandler.SpawnParticle(p);
                             }*/
                             ExoMechsSky.CreateLightningBolt(22, true);
-                            Terraria.Audio.SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.FlareSound, NPC.Center);
+                            SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.FlareSound, NPC.Center);
                             assemblagePieces.Clear();
                             Main.NewText(CalRemixHelper.LocalText($"NPCs.{Name}.DisplayName").Value + " has awoken!", new Color(175, 75, 255));
                             ChangePhase(1);
@@ -281,9 +280,9 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                         CalamityUtils.SmoothMovement(NPC, 100, distanceFromDestination, 30, 1, true);
                         if (NPC.ai[1] == 1)
                         {
-                            Terraria.Audio.SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ELRFireSound, NPC.Center);
+                            SoundEngine.PlaySound(CalamityMod.Sounds.CommonCalamitySounds.ELRFireSound, NPC.Center);
                             int tesladamage = Main.expertMode ? 175 : 250;
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<LargeTeslaSphere>(), tesladamage, 0, 255, NPC.target, NPC.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ProjectileType<LargeTeslaSphere>(), tesladamage, 0, 255, NPC.target, NPC.whoAmI);
                         }
                         if (NPC.ai[1] >= 120)
                         {
@@ -374,10 +373,10 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                         }
                         if (NPC.ai[1] % chargetime == 0 && NPC.ai[1] >= chargestart && NPC.ai[1] < 340)
                         {
-                            Terraria.Audio.SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Artemis.Artemis.ChargeSound, NPC.Center);
+                            SoundEngine.PlaySound(Artemis.ChargeSound, NPC.Center);
                             if (NPC.ai[1] % (chargetime * predictamt) == 0)
                             {
-                                Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, position);
+                                SoundEngine.PlaySound(SoundID.Roar, position);
                                 Vector2 pos = targetPosition + target.velocity * 20f - position;
                                 NPC.velocity = Vector2.Normalize(pos) * chargespeed;
                                 if (Main.netMode != NetmodeID.Server)
@@ -481,7 +480,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             {
                                 ring?.Kill();
                             }
-                            Terraria.Audio.SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Artemis.Artemis.ChargeSound, NPC.Center);
+                            SoundEngine.PlaySound(Artemis.ChargeSound, NPC.Center);
                             NPC.velocity = direction * chargespeed;
                             NPC.damage = hostdamage;
                             NPC.Calamity().canBreakPlayerDefense = true;
@@ -542,7 +541,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
 
                         if (NPC.ai[1] == 0)
                         {
-                            Terraria.Audio.SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Artemis.Artemis.ChargeSound, NPC.Center);
+                            SoundEngine.PlaySound(Artemis.ChargeSound, NPC.Center);
                         }
                         if (NPC.ai[1] < phasetime - 90)
                         {
@@ -559,7 +558,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             Vector2 targetPosition = target.Center;
                             Vector2 direction = targetPosition - position;
                             direction.Normalize();
-                            Terraria.Audio.SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Artemis.Artemis.ChargeSound, NPC.Center);
+                            SoundEngine.PlaySound(Artemis.ChargeSound, NPC.Center);
                             NPC.velocity = direction * 20;
                             NPC.damage = hostdamage;
                             NPC.Calamity().canBreakPlayerDefense = true;
@@ -597,7 +596,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                         NPC.Calamity().canBreakPlayerDefense = true;
                         if (NPC.ai[1] % chargetime == 0)
                         {
-                            Terraria.Audio.SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Artemis.Artemis.ChargeSound, NPC.Center);
+                            SoundEngine.PlaySound(Artemis.ChargeSound, NPC.Center);
                             Vector2 pos = targetPosition + target.velocity * 20f - position;
                             NPC.velocity = Vector2.Normalize(pos) * chargespeed;
                             if (Main.netMode != NetmodeID.Server)
@@ -676,7 +675,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC neuron = Main.npc[i];
-                            if (neuron.type == ModContent.NPCType<AergiaNeuron>() && neuron.active && neuroncharge != 0 && neuron.ai[1] == neuroncharge && neuron.ai[2] <= 0)
+                            if (neuron.type == NPCType<AergiaNeuron>() && neuron.active && neuroncharge != 0 && neuron.ai[1] == neuroncharge && neuron.ai[2] <= 0)
                             {
                                 neuron.ai[2] = 1;
                                 neuroncharge = 0;
@@ -833,7 +832,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             }
             else if (NPC.ai[0] == 0)
             {
-                Texture2D brian = ModContent.Request<Texture2D>("Terraria/Images/NPC_266").Value;
+                Texture2D brian = Request<Texture2D>("Terraria/Images/NPC_266").Value;
                 Vector2 origin = new Vector2((float)(brian.Width / 2), (float)(brian.Height / 8));
                 Vector2 npcOffset = NPC.Center - screenPos;
                 npcOffset -= new Vector2((float)brian.Width, (float)(brian.Height / 4)) * NPC.scale / 2f;
@@ -877,7 +876,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                 if (assemblagePieces != null && assemblagePieces.Count > 0) 
                 foreach (HypnosAssemblagePiece piece in assemblagePieces)
                 {
-                    Texture2D tex = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/Assemblage" + piece.texture).Value;
+                    Texture2D tex = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/Assemblage" + piece.texture).Value;
                     spriteBatch.Draw(tex, piece.position - screenPos + Vector2.UnitY * 40, null, NPC.GetAlpha(drawColor) * (0.00392156863f * piece.opacity), 0, tex.Size() / 2, NPC.scale, piece.leftSide ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1);
                 }
                 if (NPC.ai[1] > 240)
@@ -904,32 +903,32 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             npcLoot.Add(normalOnly);
 
             // Trophies
-            npcLoot.Add(ModContent.ItemType<HypnosTrophy>());
+            npcLoot.Add(ItemType<HypnosTrophy>());
 
             // Relic
-            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || revenge), ModContent.ItemType<HypnosRelic>()));
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => Main.masterMode || revenge), ItemType<HypnosRelic>()));
 
             // Lore item
-            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => !RemixDowned.downedHypnos), ModContent.ItemType<LoreExoMechs>()));
+            npcLoot.Add(ItemDropRule.ByCondition(DropHelper.If(() => !RemixDowned.downedHypnos), ItemType<LoreExoMechs>()));
 
             // Treasure bag
-            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<DraedonBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ItemType<DraedonBag>()));
 
             // All other drops are contained in the bag, so they only drop directly on Normal
             if (!Main.expertMode)
             {
                 // Materials
-                normalOnly.Add(ModContent.ItemType<ExoPrism>(), 1, 24, 32);
+                normalOnly.Add(ItemType<ExoPrism>(), 1, 24, 32);
 
                 // Equipment
-                normalOnly.Add(ModContent.ItemType<ExoThrone>());
-                normalOnly.Add(ModContent.ItemType<AergianTechnistaff>());
-                normalOnly.Add(ModContent.ItemType<Neuraze>());
-                normalOnly.Add(ModContent.ItemType<HypnosMask>(), new Fraction(2, 7));
+                normalOnly.Add(ItemType<ExoThrone>());
+                normalOnly.Add(ItemType<AergianTechnistaff>());
+                normalOnly.Add(ItemType<Neuraze>());
+                normalOnly.Add(ItemType<HypnosMask>(), new Fraction(2, 7));
 
                 // Vanity
                 // Higher chance due to how the drops work
-                normalOnly.Add(ModContent.ItemType<DraedonMask>(), 3);
+                normalOnly.Add(ItemType<DraedonMask>(), 3);
             }
             RemixDowned.downedHypnos = true;
         }

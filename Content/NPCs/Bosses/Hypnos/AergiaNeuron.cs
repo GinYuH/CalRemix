@@ -76,7 +76,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
         public override void AI()
         {
             NPCID.Sets.MustAlwaysDraw[NPC.type] = true;
-            int laserproj = p2 ? ModContent.ProjectileType<RedExoPulseLaser>() : ModContent.ProjectileType<BlueExoPulseLaser>();
+            int laserproj = p2 ? ProjectileType<RedExoPulseLaser>() : ProjectileType<BlueExoPulseLaser>();
             int laserdamage = 160;
             if (Main.expertMode)
             {
@@ -105,7 +105,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
 			//NPC.ai[0] = hypnos.ai[0];
             enraged = hypnos.ModNPC<Hypnos>().enraged;
             Player target = Main.player[hypnos.target];
-            if (!plug.active && plug.type == ModContent.NPCType<HypnosPlug>())
+            if (!plug.active && plug.type == NPCType<HypnosPlug>())
             {
                 p2 = true;
             }
@@ -411,7 +411,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {
                                 NPC nextneuron = Main.npc[i];
-                                if (nextneuron.type == ModContent.NPCType<AergiaNeuron>() && nextneuron.ai[1] == NPC.ai[1] + 1 && nextneuron.active)
+                                if (nextneuron.type == NPCType<AergiaNeuron>() && nextneuron.ai[1] == NPC.ai[1] + 1 && nextneuron.active)
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
@@ -428,14 +428,14 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {
                                 NPC nextneuron = Main.npc[i];
-                                if (nextneuron.type == ModContent.NPCType<AergiaNeuron>() && nextneuron.ai[1] == NPC.ai[1] + 1 && NPC.ai[1] < 3 && nextneuron.active)
+                                if (nextneuron.type == NPCType<AergiaNeuron>() && nextneuron.ai[1] == NPC.ai[1] + 1 && NPC.ai[1] < 3 && nextneuron.active)
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
                                         target.Hurt(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LightningGate").Format(target.name))), 600, 0);
                                     }
                                 }
-                                if (nextneuron.type == ModContent.NPCType<AergiaNeuron>() && NPC.ai[1] == 3 && nextneuron.ai[1] == 0 && nextneuron.active)
+                                if (nextneuron.type == NPCType<AergiaNeuron>() && NPC.ai[1] == 3 && nextneuron.ai[1] == 0 && nextneuron.active)
                                 {
                                     if (Collision.CheckAABBvLineCollision(target.getRect().TopLeft(), target.Size, NPC.Center, nextneuron.Center, 3f, ref nothing))
                                     {
@@ -688,7 +688,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                             bool bottom = NPC.ai[1] <= 10 && NPC.ai[1] >= 8;
                             int laseramt = 7;
                             int freq = 65;
-                            if (CalamityMod.World.CalamityWorld.death)
+                            if (CalamityWorld.death)
                             {
                                 laseramt++;
                                 freq -= 5;
@@ -761,7 +761,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
                                 Terraria.Audio.SoundEngine.PlaySound(CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound with { Volume = CalamityMod.NPCs.ExoMechs.Ares.AresGaussNuke.NukeExplosionSound.Volume, Pitch = CalamityMod.Sounds.CommonCalamitySounds.ExoLaserShootSound.Pitch - 0.2f });
                                 for (int i = 0; i < 3; i++)
                                 {
-                                    Projectile explosion = Main.projectile[Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AresGaussNukeProjectileBoom>(), laserdamage * 2, 0)];
+                                    Projectile explosion = Main.projectile[Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ProjectileType<AresGaussNukeProjectileBoom>(), laserdamage * 2, 0)];
                                     if (explosion.whoAmI.WithinBounds(Main.maxProjectiles))
                                     {
                                         explosion.ai[1] = 560f + i * 90f;
@@ -1040,7 +1040,7 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC nextneuron = Main.npc[i];
-                if (nextneuron.active && nextneuron.type == ModContent.NPCType<AergiaNeuron>())
+                if (nextneuron.active && nextneuron.type == NPCType<AergiaNeuron>())
                 {
                     if (hypnos.ai[0] == 6 && hypnos.ai[2] >= 40 + NPC.ai[1] * 6 && NPC.ai[1] < 11)
                     {
@@ -1102,10 +1102,10 @@ namespace CalRemix.Content.NPCs.Bosses.Hypnos
             Color glowcolor = hypnos.ModNPC<Hypnos>().ragetimer > 0 ? Color.Red : Color.White;
 
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowmask = p2 ? ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/AergiaNeuron2_Glow").Value : ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/AergiaNeuron_Glow").Value;
+            Texture2D glowmask = p2 ? Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/AergiaNeuron2_Glow").Value : Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/AergiaNeuron_Glow").Value;
             if (p2)
             {
-                texture = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/AergiaNeuron2").Value;
+                texture = Request<Texture2D>("CalRemix/Content/NPCs/Bosses/Hypnos/AergiaNeuron2").Value;
             }
 
             Vector2 origin = new Vector2((float)(texture.Width / 2), (float)(texture.Height / Main.npcFrameCount[NPC.type] / 2));

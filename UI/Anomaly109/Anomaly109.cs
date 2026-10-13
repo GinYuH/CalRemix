@@ -1,12 +1,10 @@
-﻿using CalamityMod.Items.Fishing.SulphurCatches;
-using CalamityMod.Items.Materials;
+﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.DevourerofGods;
 using CalRemix.Core.Retheme;
 using CalRemix.Core.World;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

@@ -2,12 +2,6 @@
 using CalamityMod.BiomeManagers;
 using CalamityMod.CalPlayer;
 using CalamityMod.Events;
-using CalRemix.Content.NPCs.Minibosses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

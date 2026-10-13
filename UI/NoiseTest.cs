@@ -9,7 +9,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static CalRemix.CalRemixHelper;
 
 namespace CalRemix.UI.SubworldMap
 {

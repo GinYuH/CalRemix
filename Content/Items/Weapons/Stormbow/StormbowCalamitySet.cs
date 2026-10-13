@@ -1,16 +1,13 @@
 ﻿using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.FurnitureAcidwood;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Placeables.SunkenSea;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Rogue;
 using CalamityMod.Projectiles.Summon;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Content.Items.Materials;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;

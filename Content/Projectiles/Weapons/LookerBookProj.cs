@@ -1,12 +1,6 @@
 using System;
-using System.Security.Cryptography.X509Certificates;
-using CalamityMod;
-using CalRemix.Content.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
-using ReLogic.Utilities;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

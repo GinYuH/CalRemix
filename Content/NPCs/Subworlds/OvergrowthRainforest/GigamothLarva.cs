@@ -2,27 +2,17 @@
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.BiomeManagers;
-using CalRemix.Content.Items.Placeables.Banners;
 using Microsoft.Xna.Framework;
 using System;
-using Terraria.Enums;
-using CalamityMod.NPCs.NormalNPCs;
 using Microsoft.Xna.Framework.Graphics;
-using CalRemix.Content.Items.Placeables.Subworlds.Wolf;
 using Terraria.GameContent;
-using CalamityMod.Items.Materials;
 using CalRemix.Core.Biomes.Subworlds;
 using CalamityMod.Items.Weapons.Rogue;
-using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
 using CalRemix.Content.Projectiles.Hostile;
-using CalamityMod.Projectiles.Typeless;
 using Terraria.Audio;
-using CalamityMod.NPCs.Ravager;
 using Terraria.DataStructures;
 using System.IO;
 

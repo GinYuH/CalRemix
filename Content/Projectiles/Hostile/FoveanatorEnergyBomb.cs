@@ -1,8 +1,5 @@
 ﻿using System;
 using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Events;
-using CalamityMod.NPCs;
 using CalamityMod.Projectiles.Boss;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

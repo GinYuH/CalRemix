@@ -1,8 +1,5 @@
 ﻿using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.Schematics;
-using CalamityMod;
-using System;
 using Terraria;
 using Terraria.ID;
 

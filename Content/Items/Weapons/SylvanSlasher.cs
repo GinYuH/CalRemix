@@ -6,7 +6,6 @@ using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using CalamityMod.Items.Weapons.Rogue;
 using CalRemix.Content.Items.Materials;
-using CalamityMod.Items.Placeables;
 using CalamityMod;
 using CalamityMod.Items.Placeables.SunkenSea;
 

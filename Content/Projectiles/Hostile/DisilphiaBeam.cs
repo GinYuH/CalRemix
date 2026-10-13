@@ -1,18 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
 using Terraria.ModLoader;
 using CalamityMod;
-using Terraria.Audio;
 using System.Collections.Generic;
 using Terraria.Graphics.Shaders;
 using CalamityMod.Graphics.Primitives;
 using ReLogic.Utilities;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Buffs.DamageOverTime;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 
 namespace CalRemix.Content.Projectiles.Hostile

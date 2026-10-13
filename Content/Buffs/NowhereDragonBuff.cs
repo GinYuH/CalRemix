@@ -1,6 +1,4 @@
-﻿using CalamityMod.CalPlayer;
-using CalamityMod.Projectiles.Summon;
-using CalRemix.Content.Projectiles.Weapons;
+﻿using CalRemix.Content.Projectiles.Weapons;
 using Terraria;
 using Terraria.ModLoader;
 

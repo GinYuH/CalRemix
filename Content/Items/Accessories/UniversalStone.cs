@@ -32,7 +32,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.width = 42;
             Item.height = 36;
             Item.value = CalamityGlobalItem.RarityDarkBlueBuyPrice;
-            Item.rare = ModContent.RarityType<CosmicPurple>();
+            Item.rare = RarityType<CosmicPurple>();
             Item.accessory = true;
         }
 
@@ -76,7 +76,7 @@ namespace CalRemix.Content.Items.Accessories
                 {
                     if (groundTile.TileType == TileID.Stone || groundTile.TileType == TileID.Grass)
                     {
-                        WorldGen.PlaceObject(x, y, (ushort)ModContent.TileType<Tiles.CosmichidPlant>());
+                        WorldGen.PlaceObject(x, y, (ushort)TileType<Tiles.CosmichidPlant>());
                     }
                 }
             }

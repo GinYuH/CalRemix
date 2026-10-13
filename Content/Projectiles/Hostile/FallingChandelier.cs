@@ -1,15 +1,10 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria.ModLoader;
-using System.IO;
-using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using CalamityMod.Graphics.Primitives;
 using Terraria.Audio;
-using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod;
 

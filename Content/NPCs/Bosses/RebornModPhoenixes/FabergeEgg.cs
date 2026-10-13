@@ -5,7 +5,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using Terraria.GameContent.ItemDropRules;
 
 namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
 {

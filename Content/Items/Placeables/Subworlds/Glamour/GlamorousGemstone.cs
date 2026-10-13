@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles.Subworlds.Piggy;
-using CalamityMod.Items.Critters;
 using CalRemix.Content.Tiles.Subworlds.Glamour;
 using CalRemix.Content.Items.Weapons.Stormbow;
 

@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
-using CalamityMod.Particles;
 using Terraria.DataStructures;
 
 namespace CalRemix.Content.Projectiles.Weapons

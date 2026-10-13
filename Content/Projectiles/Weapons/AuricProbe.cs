@@ -1,9 +1,7 @@
-﻿using CalamityMod;
-using CalamityMod.Dusts;
+﻿using CalamityMod.Dusts;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.Particles;
 using CalamityMod.Sounds;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

@@ -1,4 +1,3 @@
-using CalamityMod;
 using CalamityMod.Projectiles.DraedonsArsenal;
 using Microsoft.Xna.Framework;
 using System.IO;

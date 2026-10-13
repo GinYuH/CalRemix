@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.Projectiles.Weapons;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Buffs

@@ -35,17 +35,17 @@ namespace CalRemix.Core.Subworlds
 
             Opacity = 1;
             offset++;
-            if (offset > Main.screenWidth / 10)
+            if (offset > screenWidth / 10)
                 offset = 0;
 
         }
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
             Texture2D face = ModContent.Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/ScreamingMummifiedFace").Value;
-            int screenHeight5 = Main.screenHeight / 5;
+            int screenHeight5 = screenHeight / 5;
             //if (maxDepth >= float.MaxValue)
             {
-                spriteBatch.Draw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, Vector2.Zero, new Rectangle(0, 0, screenWidth, screenHeight), Color.Black, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
                 bool flip = false;
                 int height = 0;
                 int xPos = 0;
@@ -60,7 +60,7 @@ namespace CalRemix.Core.Subworlds
                             spriteBatch.Draw(face, dp, null, Color.White * 0.1f, 0, face.Size() / 2, 1, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
                         }
                     }
-                    xPos += Main.screenWidth / 10;
+                    xPos += screenWidth / 10;
                     if (i % 15 == 0 && i > 0)
                     {
                         flip = !flip;
@@ -81,6 +81,6 @@ namespace CalRemix.Core.Subworlds
 
         public override void Deactivate(params object[] args) { }
 
-        public override bool IsActive() => CanSkyBeActive && !Main.gameMenu;
+        public override bool IsActive() => CanSkyBeActive && !gameMenu;
     }
 }

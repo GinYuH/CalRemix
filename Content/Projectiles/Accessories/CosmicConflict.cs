@@ -96,7 +96,7 @@ namespace CalRemix.Content.Projectiles.Accessories
                     Vector2 vector40 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
                     float num415 = npc.position.X + (float)(npc.width / 2) + (float)(num412 * distanceX) - vector40.X;
                     float num416 = npc.position.Y + (float)(npc.height / 2) + yoffset - vector40.Y;
-                    float num417 = (float)System.Math.Sqrt(num415 * num415 + num416 * num416);
+                    float num417 = (float)Math.Sqrt(num415 * num415 + num416 * num416);
                     num417 = num413 / num417;
                     num415 *= num417;
                     num416 *= num417;
@@ -208,7 +208,7 @@ namespace CalRemix.Content.Projectiles.Accessories
                     Vector2 vector40 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
                     float num415 = npc.position.X + (float)(npc.width / 2) + (float)(num412 * distanceX) - vector40.X;
                     float num416 = npc.position.Y + (float)(npc.height / 2) + yoffset - vector40.Y;
-                    float num417 = (float)System.Math.Sqrt(num415 * num415 + num416 * num416);
+                    float num417 = (float)Math.Sqrt(num415 * num415 + num416 * num416);
                     num417 = num413 / num417;
                     num415 *= num417;
                     num416 *= num417;

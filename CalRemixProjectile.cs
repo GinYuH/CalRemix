@@ -1,6 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Events;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Magic;
@@ -31,7 +30,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 using static CalRemix.CalRemixHelper;
 using static Terraria.ModLoader.ModContent;
 
@@ -381,11 +379,11 @@ namespace CalRemix
 
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             var source = projectile.GetSource_FromThis();
-            if (modPlayer.tvo && CalRemixHelper.CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
+            if (modPlayer.tvo && CountProjectiles(ProjectileType<PlagueSeeker>()) > 3 && projectile.type == ProjectileType<PlagueSeeker>())
             {
                 projectile.active = false;
             }
-            if (modPlayer.arcanumHands && projectile.type != ProjectileType<ArmofAgony>() && CalRemixHelper.CountProjectiles(ProjectileType<ArmofAgony>()) < 8)
+            if (modPlayer.arcanumHands && projectile.type != ProjectileType<ArmofAgony>() && CountProjectiles(ProjectileType<ArmofAgony>()) < 8)
             {
                 target.AddBuff(BuffType<BrimstoneFlames>(), 180);
                 int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(260);
@@ -400,7 +398,7 @@ namespace CalRemix
             {
                 target.AddBuff(BuffType<BrimstoneFlames>(), 180);
                 int apparatusDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(1060);
-                if (CalRemixHelper.CountProjectiles(ProjectileType<JewelSpike>()) < 3)
+                if (CountProjectiles(ProjectileType<JewelSpike>()) < 3)
                 {
                     int proj = Projectile.NewProjectile(source, projectile.Center, Vector2.Zero, ProjectileType<JewelSpike>(), apparatusDamage, 4f, projectile.owner);
                     if (proj.WithinBounds(Main.maxProjectiles))
@@ -422,7 +420,7 @@ namespace CalRemix
             if (modPlayer.tvo && projectile.type != ProjectileType<DarksunTornado>() && projectile.type != ProjectileType<NanoFlare>())
             {
                 int dam = (int)(projectile.damage * 0.2f);
-                if (CalRemixHelper.CountProjectiles(ProjectileType<DarksunTornado>()) < 3)
+                if (CountProjectiles(ProjectileType<DarksunTornado>()) < 3)
                 {
                     int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), new Vector2(projectile.Center.X - 10, projectile.Center.Y), Vector2.Zero, ProjectileType<DarksunTornado>(), dam, 0, projectile.owner);
                     if (p.WithinBounds(Main.maxProjectiles))
@@ -430,7 +428,7 @@ namespace CalRemix
                         Main.projectile[p].originalDamage = dam;
                     }
                 }
-                if (CalRemixHelper.CountProjectiles(ProjectileType<DarksunTornado>()) < 2)
+                if (CountProjectiles(ProjectileType<DarksunTornado>()) < 2)
                     CalamityUtils.ProjectileRain(projectile.GetSource_FromAI(), target.Center, 300, 20, -500, -800, 10, ProjectileType<NanoFlare>(), dam, 0, projectile.owner);
             }
             if (modPlayer.godfather && projectile.type == ProjectileType<CosmicBlast>())
@@ -459,7 +457,7 @@ namespace CalRemix
             // should use a flag set on shot proj instead of this, but i am lazy and nobody will notice
             if (player.HeldItem.type == ItemType<TheEnforcerGun>())
             {
-                target.AddBuff(ModContent.BuffType<BurningBlood>(), 480);
+                target.AddBuff(BuffType<BurningBlood>(), 480);
             }
         }
 
@@ -653,7 +651,7 @@ namespace CalRemix
                 Main.EntitySpriteDraw(texture, drawPosition, frame, projectile.GetAlpha(lightColor), drawRotation, origin, projectile.scale, effects, 0);
                 return false;
             }
-            if (projectile.type == ModContent.ProjectileType<SigilSet>())
+            if (projectile.type == ProjectileType<SigilSet>())
             {
 
                 Texture2D main = TextureAssets.Projectile[projectile.type].Value;

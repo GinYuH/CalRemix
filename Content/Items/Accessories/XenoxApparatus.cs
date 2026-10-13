@@ -1,7 +1,5 @@
 ﻿using CalamityMod.Rarities;
-using CalRemix.Content.Items.Placeables;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.Items.Accessories

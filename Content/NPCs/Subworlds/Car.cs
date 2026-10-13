@@ -1,20 +1,15 @@
 ﻿using CalamityMod;
 using CalamityMod.Graphics.Primitives;
 using CalamityMod.Sounds;
-using CalRemix.Content.Items.Accessories;
 using CalRemix.Core.Subworlds;
-using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalRemix.Content.NPCs.Subworlds

@@ -11,7 +11,6 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Events;
 using CalamityMod.BiomeManagers;
 using System;
-using CalamityMod.Items.Placeables;
 using CalRemix.Content.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;

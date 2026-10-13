@@ -1,10 +1,5 @@
-﻿using CalamityMod.CalPlayer;
-using CalamityMod.Items.Accessories;
-using CalRemix.Content.Items.Tools;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;

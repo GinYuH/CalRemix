@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.GameContent.Bestiary;
-using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Core.Biomes;
 using Microsoft.Xna.Framework.Graphics;

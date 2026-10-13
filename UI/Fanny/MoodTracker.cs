@@ -87,18 +87,18 @@ namespace CalRemix.UI
 
             DisplayID = Type;
 
-            HelperMessage.New("MoodDisplayUnlock",
+            New("MoodDisplayUnlock",
                 "I feel like we've became such good pals, but I don't know if you truly understand how i feel sometimes... Fret not, for i've upgraded your interface with a new indicator that should inform you about my mood at anytime! Be sure to keep an eye out for any \"special\" moods that indicate rare loot!",
                 "FannyIdle", CanUnlockMoodTracker).
                 AddStartEvent(() => Main.LocalPlayer.GetModPlayer<ScreenHelperSavePlayer>().unlockedMoodTracker = true);
 
-            firstBlockDisableMessage = HelperMessage.New("MoodDisplayBlockDisable",
+            firstBlockDisableMessage = New("MoodDisplayBlockDisable",
                 "I'm sorry my friend, but I can't let you do that! Bonds are forged through mutual understanding, and this moodtracker is vital to taking our friendship to the next level! Always remember the three big rules of healthy communication: Wear your heart on your sleeve, communicate problems, and don't try disabling the mood tracker!",
                 "FannyNuhuh", PlayerHidTracker).AddDelay().
                 SetHoverTextOverride("Ohhmigosh, that was a mislick! I appreciate you correcting that for me, Fanny!").
                 AddStartEvent(UnhideTrackerForTheFirstTime);
 
-            secondBlockDisableMessage = HelperMessage.New("MoodDisplayBlockDisableTwo",
+            secondBlockDisableMessage = New("MoodDisplayBlockDisableTwo",
                 "Okay buddy, come on. Fuck you. I'm trying to be a good friend and you keep kicking me down. Is that who you really are inside? You are a deeply sick individual.",
                 "FannyCryptid", null, 15, cantBeClickedOff:true).NeedsActivation().AddStartEvent(() => secondBlockMood.Activate());
             secondBlockDisableMessage.alreadySeen = true;
@@ -295,7 +295,7 @@ namespace CalRemix.UI
         private FannyMood(string text, ScreenHelperMessageCondition condition, float priority, float lingeringTime, bool canBeOverridenByLingeringMood , Color textColor, Color outlineColor)
         {
             moodText = text;
-            this.condition = condition ?? HelperMessage.AlwaysShow;
+            this.condition = condition ?? AlwaysShow;
             this.priority = priority;
             this.lingerTime = lingeringTime;
             this.canBeOverridenByLingeringMood = canBeOverridenByLingeringMood;

@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Security.Policy;
-using CalamityMod;
-using CalamityMod.Projectiles.Melee;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
-using CalRemix.Core.Biomes;
-using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SubworldLibrary;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;

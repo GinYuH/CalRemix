@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.Content.Walls;
+﻿using CalRemix.Content.Walls;
 using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;

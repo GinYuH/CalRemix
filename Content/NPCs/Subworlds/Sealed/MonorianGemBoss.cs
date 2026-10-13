@@ -4,22 +4,14 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
-using CalRemix.Content.Items.Armor;
-using CalRemix.Content.Items.Potions;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.GameContent;
 using System;
-using CalamityMod.Graphics.Primitives;
-using CalRemix.UI;
-using Terraria.UI;
 using static Terraria.Graphics.Effects.Filters;
 using static Terraria.ModLoader.ModContent;
-using Terraria.ModLoader.IO;
 using CalamityMod.NPCs.Cryogen;
-using CalRemix.Content.NPCs.Bosses.Noxus;
-using rail;
 using CalRemix.Content.Projectiles.Hostile;
 using Terraria.Audio;
 using CalamityMod.Sounds;
@@ -116,7 +108,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = true;
             NPC.boss = true;
             NPC.Calamity().canBreakPlayerDefense = true;
-            SpawnModBiomes = new int[] { ModContent.GetInstance<BadlandsBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
+            SpawnModBiomes = new int[] { GetInstance<BadlandsBiome>().Type, GetInstance<SealedDimensionBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
         }
         public override void AI()
@@ -313,7 +305,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<MonorianSoul>()], quickUnlock: true);
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCType<MonorianSoul>()], quickUnlock: true);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
         new FlavorTextBestiaryInfoElement(CalRemixHelper.LocalText($"Bestiary.{Name}").Value)
             });

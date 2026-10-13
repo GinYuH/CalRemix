@@ -1,13 +1,10 @@
-﻿using System;
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework;
 using CalamityMod.Tiles.DraedonStructures;
 using CalamityMod.Tiles.SunkenSea;
-using CalamityMod.Schematics;
-using CalamityMod;
 
 namespace CalRemix.Core.World
 {

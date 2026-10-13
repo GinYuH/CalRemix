@@ -7,7 +7,6 @@ using CalRemix.Content.Items.Materials;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
-using CalRemix.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using CalamityMod;
 
@@ -36,7 +35,7 @@ namespace CalRemix.Content.Items.Weapons
         }
         public override bool CanUseItem(Player player)
         {
-            if (player.altFunctionUse !=2 && player.ownedProjectileCounts[base.Item.shoot] > 0)
+            if (player.altFunctionUse !=2 && player.ownedProjectileCounts[Item.shoot] > 0)
             {
                 return false;
             }

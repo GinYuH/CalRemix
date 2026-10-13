@@ -1,5 +1,3 @@
-using CalamityMod.Items.Materials;
-using CalamityMod.Rarities;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

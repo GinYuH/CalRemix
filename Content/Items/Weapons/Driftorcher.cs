@@ -2,7 +2,6 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Dusts;
 using CalamityMod.Items.Placeables.Furniture;
-using CalamityMod.Items.Placeables.FurnitureAbyss;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;

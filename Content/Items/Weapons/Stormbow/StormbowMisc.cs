@@ -1,13 +1,8 @@
 ﻿using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Sounds;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Placeables.Astral;
-using CalamityMod.Projectiles.Rogue;
-using CalamityMod.Rarities;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalRemix.Content.DamageClasses;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;

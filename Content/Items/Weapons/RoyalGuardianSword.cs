@@ -1,11 +1,7 @@
-﻿using CalamityMod;
-using CalamityMod.Items;
-using CalamityMod.Particles;
-using CalamityMod.Projectiles.Typeless;
+﻿using CalamityMod.Items;
 using CalamityMod.Rarities;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -78,7 +78,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.MPAllowedEnemies[Type] = true;
 
-            Terraria.On_NPC.DoDeathEvents_DropBossPotionsAndHearts += DisableNoxusEggBossDeathEffects;
+            On_NPC.DoDeathEvents_DropBossPotionsAndHearts += DisableNoxusEggBossDeathEffects;
         }
 
         private void DisableNoxusEggBossDeathEffects(On_NPC.orig_DoDeathEvents_DropBossPotionsAndHearts orig, NPC self, ref string typeName)
@@ -535,7 +535,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
                 for (int i = 0; i < NPC.width; i += Main.rand.Next(2, 6))
                 {
                     Point p = new((int)(NPC.BottomLeft.X + i) / 16, (int)(NPC.BottomLeft.Y / 16f) - 1);
-                    Tile t = CalRemixHelper.ParanoidTileRetrieval(p.X, p.Y);
+                    Tile t = ParanoidTileRetrieval(p.X, p.Y);
                     if (t.HasUnactuatedTile)
                     {
                         for (int j = 0; j < 3; j++)

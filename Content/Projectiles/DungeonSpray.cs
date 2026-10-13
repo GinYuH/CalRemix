@@ -63,7 +63,7 @@ namespace CalRemix.Content.Projectiles
         {
             Lighting.AddLight(Projectile.Center, new Vector3(100 / 255f, 10 / 255f, 20 / 255f));
             if (Projectile.owner == Main.myPlayer)
-                DungeonSpray.Convert((ushort)TileID.PinkDungeonBrick, (ushort)WallID.PinkDungeonUnsafe, (int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
+                Convert((ushort)TileID.PinkDungeonBrick, (ushort)WallID.PinkDungeonUnsafe, (int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
             if (Projectile.timeLeft > 133)
                 Projectile.timeLeft = 133;
 
@@ -102,7 +102,7 @@ namespace CalRemix.Content.Projectiles
         {
             Lighting.AddLight(Projectile.Center, new Vector3(10 / 255f, 100 / 255f, 10 / 255f));
             if (Projectile.owner == Main.myPlayer)
-                DungeonSpray.Convert((ushort)TileID.GreenDungeonBrick, (ushort)WallID.GreenDungeonUnsafe, (int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
+                Convert((ushort)TileID.GreenDungeonBrick, (ushort)WallID.GreenDungeonUnsafe, (int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
             if (Projectile.timeLeft > 133)
                 Projectile.timeLeft = 133;
 
@@ -141,7 +141,7 @@ namespace CalRemix.Content.Projectiles
         {
             Lighting.AddLight(Projectile.Center, new Vector3(10 /  255f, 10 / 255f, 100 / 255f));
             if (Projectile.owner == Main.myPlayer)
-                DungeonSpray.Convert((ushort)TileID.BlueDungeonBrick, (ushort)WallID.BlueDungeonUnsafe, (int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
+                Convert((ushort)TileID.BlueDungeonBrick, (ushort)WallID.BlueDungeonUnsafe, (int)(Projectile.position.X + Projectile.width / 2) / 16, (int)(Projectile.position.Y + Projectile.height / 2) / 16, 2);
             if (Projectile.timeLeft > 133)
                 Projectile.timeLeft = 133;
 

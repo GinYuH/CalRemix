@@ -32,7 +32,7 @@ public class ExodimusPROJ : ModProjectile
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 10;
         Projectile.aiStyle = 0;
-        Projectile.DamageType = RogueDamageClass.Default;
+        Projectile.DamageType = DamageClass.Default;
     }
 
   
@@ -86,7 +86,7 @@ public class ExodimusPROJ : ModProjectile
                     launchVelocity = launchVelocity.RotatedBy(MathHelper.PiOver4);
 
                     // Spawn a new projectile with the newly rotated velocity, belonging to the original projectile owner. The new projectile will inherit the spawning source of this projectile.
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<dimusBEAM>(), (int)(Projectile.damage * 0.50f), Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<dimusBEAM>(), (int)(Projectile.damage * 0.50f), Projectile.knockBack, Projectile.owner);
                 }
             }
 
@@ -99,7 +99,7 @@ public class ExodimusPROJ : ModProjectile
                     launchVelocity = launchVelocity.RotatedBy(MathHelper.PiOver2);
 
                     // Spawn a new projectile with the newly rotated velocity, belonging to the original projectile owner. The new projectile will inherit the spawning source of this projectile.
-                  int a =  Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<dimusBEAM>(), (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner);
+                  int a =  Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<dimusBEAM>(), (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner);
                     Main.projectile[a].localNPCHitCooldown = 10;
                 }
             }

@@ -1,26 +1,14 @@
 ﻿using CalamityMod;
-using CalamityMod.Projectiles.Melee;
-using CalRemix.Content.Items.Armor;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.InteropServices.Marshalling;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using static AssGen.Assets;
 
 namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest.Temple
 {

@@ -1,6 +1,5 @@
 ﻿using CalamityMod;
 using CalRemix.Content.NPCs.Subworlds.MoonGraveyard;
-using CalRemix.Content.NPCs.Subworlds.Pinnacles;
 using CalRemix.Content.Tiles.Subworlds.MoonGraveyard;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;

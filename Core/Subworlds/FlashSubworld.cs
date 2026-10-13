@@ -2,15 +2,9 @@
 using Terraria;
 using SubworldLibrary;
 using Terraria.WorldBuilding;
-using Terraria.IO;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using Terraria.ID;
-using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
 using Terraria.Graphics.Effects;
-using CalamityMod;
 
 namespace CalRemix.Core.Subworlds
 {

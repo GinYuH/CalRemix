@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Items.Critters;
-using CalRemix.Content.Tiles.Subworlds.Piggy;
 using CalRemix.Content.Tiles.Subworlds.Wolf;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Wolf

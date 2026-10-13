@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Accessories;
-using CalamityMod.Items.Placeables;
 using CalRemix.Content.Items.Armor;
 using CalamityMod.Items.Placeables.SunkenSea;
 

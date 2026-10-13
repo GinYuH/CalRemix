@@ -148,11 +148,11 @@ namespace CalRemix.UI
         private static void ProviSkip()
         {
 
-            for (int q = 0; q < Terraria.Main.npc.Length - 1; q++)
+            for (int q = 0; q < Main.npc.Length - 1; q++)
             {
-                if (Terraria.Main.npc[q].type == ModContent.NPCType<Providence>())
+                if (Main.npc[q].type == ModContent.NPCType<Providence>())
                 {
-                    Terraria.Main.npc[q].active = false;
+                    Main.npc[q].active = false;
                 }
             }
             CalRemixHelper.BroadcastLocalizedText("Providence, the Profaned Goddess has been defeated!", new Color(175, 75, 255));

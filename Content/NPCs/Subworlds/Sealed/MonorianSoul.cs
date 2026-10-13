@@ -4,26 +4,15 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
-using CalRemix.Content.Items.Armor;
-using CalRemix.Content.Items.Potions;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria.GameContent;
 using System;
-using CalamityMod.Graphics.Primitives;
-using CalRemix.UI;
-using Terraria.UI;
-using static Terraria.Graphics.Effects.Filters;
 using static Terraria.ModLoader.ModContent;
-using Terraria.ModLoader.IO;
 using CalamityMod.NPCs.Cryogen;
 using Terraria.Graphics.Shaders;
 using CalRemix.Core.World;
-using CalamityMod.Projectiles.Boss;
 using Terraria.Audio;
-using Microsoft.Build.Evaluation;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Sounds;
 using CalamityMod.World;
@@ -100,7 +89,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.noTileCollide = true;
             NPC.boss = true;
             NPC.Calamity().canBreakPlayerDefense = true;
-            SpawnModBiomes = new int[] { ModContent.GetInstance<BadlandsBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type };
+            SpawnModBiomes = new int[] { GetInstance<BadlandsBiome>().Type, GetInstance<SealedDimensionBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
         }
         public override void AI()
@@ -124,7 +113,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.TargetClosest(false);
             if (!NPC.HasValidTarget)
             {
-                if (Gem.active && Gem.type == ModContent.NPCType<MonorianGemBoss>())
+                if (Gem.active && Gem.type == NPCType<MonorianGemBoss>())
                 {
                     Gem.active = false;
                 }
@@ -462,7 +451,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Microsoft.Xna.Framework.Color drawColor)
         {
             spriteBatch.ExitShaderRegion();
-            Texture2D radians = TextureAssets.Npc[ModContent.NPCType<WalkingBird>()].Value;
+            Texture2D radians = TextureAssets.Npc[NPCType<WalkingBird>()].Value;
             Texture2D star = Request<Texture2D>("CalamityMod/Particles/Sparkle").Value;
             Texture2D sigil = Request<Texture2D>("CalRemix/Content/NPCs/Subworlds/Sealed/MonorianSigil").Value;
 

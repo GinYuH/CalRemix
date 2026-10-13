@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using CalRemix.Content.Tiles;
-using CalamityMod;
 using CalRemix.Content.Tiles.Subworlds.Glamour;
 using CalRemix.Content.Items.Weapons.Stormbow;
 

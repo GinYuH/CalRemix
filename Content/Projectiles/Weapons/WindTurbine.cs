@@ -10,7 +10,7 @@ public class WindTurbine : BaseSpearProjectile
     {
         Projectile.width = 12;  //The width of the .png file in pixels divided by 2.
         Projectile.height = 12;  //The height of the .png file in pixels divided by 2.
-        Projectile.DamageType = Terraria.ModLoader.DamageClass.Melee;
+        Projectile.DamageType = DamageClass.Melee;
         Projectile.timeLeft = 10;
         Projectile.friendly = true;
         Projectile.hostile = false;

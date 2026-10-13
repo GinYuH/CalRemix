@@ -48,8 +48,8 @@ namespace CalRemix.Content.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             GetModItem(ItemType<Nucleogenesis>()).UpdateAccessory(player, hideVisual);
-            ModContent.GetModItem(ModContent.ItemType<GladiatorsLocket>()).UpdateAccessory(player, hideVisual);
-            ModContent.GetModItem(ModContent.ItemType<DarkSunRing>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<GladiatorsLocket>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<DarkSunRing>()).UpdateAccessory(player, hideVisual);
             player.GetDamage<SummonDamageClass>() += 0.2f;
             player.statDefense *= 1.2f;
             player.pickSpeed = (int)(1.15 * player.pickSpeed);

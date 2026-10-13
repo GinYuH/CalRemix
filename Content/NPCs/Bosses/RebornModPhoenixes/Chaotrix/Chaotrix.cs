@@ -1,14 +1,6 @@
 ﻿using CalamityMod;
-using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
-using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes;
-using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ID;
 using Terraria.ModLoader;
 

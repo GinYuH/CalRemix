@@ -1,9 +1,5 @@
 ﻿using CalamityMod;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.NPCs.Subworlds.Nowhere;
 using CalRemix.Content.NPCs.Subworlds.SingularPoint;
-using CalRemix.Content.Tiles;
-using CalRemix.Content.Tiles.Subworlds.Nowhere;
 using CalRemix.Content.Tiles.Subworlds.SingularPoint;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;

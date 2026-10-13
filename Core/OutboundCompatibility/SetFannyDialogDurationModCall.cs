@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.UI;
+﻿using CalRemix.UI;
 using System;
 using System.Collections.Generic;
 

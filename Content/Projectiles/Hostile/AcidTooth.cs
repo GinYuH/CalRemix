@@ -1,4 +1,3 @@
-using CalamityMod;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Dusts;
 using Microsoft.Xna.Framework;

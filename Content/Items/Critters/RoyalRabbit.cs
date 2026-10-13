@@ -1,5 +1,3 @@
-using CalamityMod;
-using CalRemix;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

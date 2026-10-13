@@ -1,12 +1,6 @@
-﻿using CalamityMod;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using static CalRemix.Content.NPCs.Bosses.SealedOne.OrbitingOrb;
 
 namespace CalRemix.Content.Tiles.Subworlds.Horizon
 {

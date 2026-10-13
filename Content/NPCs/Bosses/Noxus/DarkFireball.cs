@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Particles;
+﻿using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -105,7 +104,7 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
 
             Color drawColor = Color.White;
             drawColor.A = (byte)(drawColor.A * alphaFactor);
-            CalRemixHelper.DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], drawColor);
+            DrawAfterimagesCentered(Projectile, ProjectileID.Sets.TrailingMode[Projectile.type], drawColor);
             return false;
         }
     }

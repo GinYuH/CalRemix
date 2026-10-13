@@ -18,7 +18,7 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override void SetDefaults()
         {
             Projectile.width = 50;  //The width of the .png file in pixels divided by 2.
-            Projectile.DamageType = Terraria.ModLoader.DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 90;
             Projectile.height = 50;  //The height of the .png file in pixels divided by 2.
             Projectile.friendly = true;

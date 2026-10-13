@@ -1,7 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Potions;
 using CalamityMod.Particles;
-using CalamityMod.Projectiles.Summon;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Relics;
@@ -14,7 +13,6 @@ using CalRemix.Core.Subworlds;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Stubble.Core.Tokens;
 using System;
 using System.IO;
 using Terraria;

@@ -29,8 +29,6 @@ using CalRemix.Content.NPCs.Minibosses;
 using CalRemix.Content.NPCs.PandemicPanic;
 using CalRemix.Core.OutboundCompatibility;
 using CalRemix.Core.World;
-using CalRemix.UI;
-using CalRemix.UI.Anomaly109;
 using CalRemix.UI.Title;
 using System;
 using System.Collections.Generic;
@@ -42,8 +40,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using CalRemix.Content.Items.Weapons;
-using CalRemix.Content.Buffs;
 
 namespace CalRemix
 {

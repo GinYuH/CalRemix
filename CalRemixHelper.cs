@@ -696,7 +696,7 @@ namespace CalRemix
         {
             for (int y = start; y < Main.maxTilesY; y++)
             {
-                Tile t = CalRemixHelper.ParanoidTileRetrieval(i, y);
+                Tile t = ParanoidTileRetrieval(i, y);
                 if (t.HasTile && t.IsTileSolid() && (tileType == -1 || t.TileType == tileType))
                 {
                     j = y;
@@ -704,7 +704,7 @@ namespace CalRemix
                 }
             }
             j = 0;
-            return CalRemixHelper.ParanoidTileRetrieval(i, 0);
+            return ParanoidTileRetrieval(i, 0);
         }
 
         //UGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH

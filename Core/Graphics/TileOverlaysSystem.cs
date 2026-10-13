@@ -22,7 +22,7 @@ namespace CalRemix.Core.Graphics
 
             Main.QueueMainThreadAction(() => OverlayableTarget = new(true, RenderTargetManager.CreateScreenSizedTarget));
             Main.OnPreDraw += PrepareOverlayTarget;
-            Terraria.On_Main.DrawProjectiles += DrawOverlayTarget;
+            On_Main.DrawProjectiles += DrawOverlayTarget;
         }
 
         public override void OnModUnload()

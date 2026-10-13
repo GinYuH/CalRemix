@@ -9,8 +9,6 @@ using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.UI;
-using CalRemix.Content.Items.Misc;
-using CalamityMod;
 using Terraria.ID;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed

@@ -51,7 +51,7 @@ namespace CalRemix.Content.NPCs
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
             NPC.Calamity().VulnerableToWater = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<BaronStraitBiome>().Type };
+            SpawnModBiomes = new int[1] { GetInstance<BaronStraitBiome>().Type };
         }
         public override bool? CanBeHitByItem(Player player, Item item) => null;
 

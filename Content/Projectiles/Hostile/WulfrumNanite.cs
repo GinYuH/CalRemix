@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using CalamityMod.Buffs.StatDebuffs;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

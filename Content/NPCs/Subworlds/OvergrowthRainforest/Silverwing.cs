@@ -2,10 +2,7 @@
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Core.Biomes;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent;
 using System;
 using CalRemix.Core.Biomes.Subworlds;
 using CalamityMod;

@@ -1,11 +1,8 @@
 ﻿using CalamityMod;
 using CalRemix.Content.Items.Placeables.Subworlds.Pinnacles;
-using CalRemix.Content.Items.Potions;
-using CalRemix.Core.Biomes;
 using CalRemix.Core.Biomes.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -34,7 +31,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
             NPC.Calamity().VulnerableToSickness = true;
             NPC.Calamity().VulnerableToCold = false;
             NPC.Calamity().VulnerableToWater = true;
-            SpawnModBiomes = [ModContent.GetInstance<PinnaclesBiome>().Type];
+            SpawnModBiomes = [GetInstance<PinnaclesBiome>().Type];
             NPC.noGravity = true;
         }
 

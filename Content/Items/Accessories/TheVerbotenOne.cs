@@ -14,7 +14,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Projectiles;
 using CalRemix.Content.Cooldowns;
 
 namespace CalRemix.Content.Items.Accessories
@@ -39,7 +38,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.height = 20;
             Item.value = CalamityGlobalItem.RarityHotPinkBuyPrice;
             Item.accessory = true;
-            Item.rare = ModContent.RarityType<HotPink>();
+            Item.rare = RarityType<HotPink>();
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -74,7 +73,7 @@ namespace CalRemix.Content.Items.Accessories
             GetModItem(ItemType<AmbrosialAmpoule>()).UpdateAccessory(player, hideVisual);
             GetModItem(ItemType<CalamitousSoulArtifact>()).UpdateAccessory(player, hideVisual);
             GetModItem(ItemType<Radiance>()).UpdateAccessory(player, hideVisual);
-            ModContent.GetModItem(ModContent.ItemType<CalamityMod.Items.Accessories.Nanotech>()).UpdateAccessory(player, hideVisual);
+            GetModItem(ItemType<Nanotech>()).UpdateAccessory(player, hideVisual);
 
             var source = player.GetSource_Accessory(Item);
             modPlayer.tvo = true;
@@ -148,7 +147,7 @@ namespace CalRemix.Content.Items.Accessories
                     {
                         Vector2 velocitye = new Vector2(0f, 10f);
                         velocitye = velocitye.RotatedBy(variance * i);
-                        int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, velocitye, ModContent.ProjectileType<RainbowComet>(), 20000, 0, player.whoAmI);
+                        int p = Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, velocitye, ProjectileType<RainbowComet>(), 20000, 0, player.whoAmI);
                         if (Main.projectile.IndexInRange(p))
                             Main.projectile[p].originalDamage = 20000;
                         Main.projectile[p].GetGlobalProjectile<CalRemixProjectile>().tvoproj = true;

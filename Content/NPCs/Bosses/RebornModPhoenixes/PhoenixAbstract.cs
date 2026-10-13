@@ -1,20 +1,12 @@
-﻿using CalamityMod;
-using CalamityMod.Items.Placeables.Ores;
-using CalRemix.Content.Items.Ammo;
-using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
-using CalRemix.UI;
+﻿using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 using Microsoft.Xna.Framework;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
-using tModPorter;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes
 {

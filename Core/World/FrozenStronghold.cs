@@ -2,10 +2,8 @@
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using CalamityMod;
-using System;
 using CalRemix.Content.Items.Placeables;
 using Terraria.ID;
-using CalamityMod.Items.Potions;
 using Terraria.WorldBuilding;
 using CalamityMod.Tiles.AstralSnow;
 using Terraria.Utilities;

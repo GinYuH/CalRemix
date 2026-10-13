@@ -10,18 +10,13 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using System.Collections.Generic;
 using CalamityMod.DataStructures;
-using Terraria.GameContent.ObjectInteractions;
 using System;
 using Terraria.Audio;
-using CalamityMod.NPCs.Abyss;
 using CalRemix.Core.Graphics;
 using CalRemix.Core.Subworlds;
 using CalRemix.Content.Projectiles.Hostile;
-using CalamityMod.Items.Weapons.Ranged;
-using CalRemix.Content.NPCs.Bosses.Noxus;
 using CalamityMod.Particles;
 using CalRemix.Content.Particles;
-using MonoMod.Logs;
 using CalamityMod.Items.Potions;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint

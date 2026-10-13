@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using CalamityMod.Items.Weapons.Melee;
 using Terraria.WorldBuilding;
 using CalamityMod.BiomeManagers;
-using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Placeables.Banners;
 using CalamityMod.Items.Placeables.Crags;
 

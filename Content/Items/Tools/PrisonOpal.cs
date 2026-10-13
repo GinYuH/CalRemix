@@ -1,13 +1,8 @@
-﻿using CalamityMod;
-using CalamityMod.Items.Materials;
-using CalamityMod.NPCs.Yharon;
-using CalRemix.Content.Items.Materials;
+﻿using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Projectiles;
-using CalRemix.Content.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;

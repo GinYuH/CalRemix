@@ -1,15 +1,12 @@
 ﻿using Terraria;
 using Terraria.GameContent.Bestiary;
-using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Core.Biomes;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using System;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod;
-using Terraria.Audio;
 using CalRemix.Content.Items.Weapons;
 
 namespace CalRemix.Content.NPCs.Subworlds.Nowhere

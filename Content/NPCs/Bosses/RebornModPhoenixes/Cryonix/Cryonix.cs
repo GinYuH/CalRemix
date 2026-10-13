@@ -1,16 +1,8 @@
 ﻿using CalamityMod;
 using CalamityMod.Tiles.AstralSnow;
 using CalamityMod.Tiles.Ores;
-using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
-using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes;
-using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

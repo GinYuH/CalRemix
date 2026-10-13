@@ -1,7 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables.Ores;
-using CalamityMod.Rarities;
+﻿using CalamityMod.Items.Materials;
 using CalRemix.Content.Buffs;
 using Terraria;
 using Terraria.ID;

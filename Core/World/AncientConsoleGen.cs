@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using CalamityMod;
 using System.Collections.Generic;
 using CalamityMod.Tiles.Crags;
 using CalamityMod.Tiles.Furniture.CraftingStations;

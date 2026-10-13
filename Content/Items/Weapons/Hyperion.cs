@@ -18,7 +18,7 @@ public class Hyperion : ModItem
     {
         // DisplayName.SetDefault("Hyperion");
         // Tooltip.SetDefault("skie blok");
-        Main.RegisterItemAnimation(base.Item.type, new DrawAnimationVertical(6, 15));
+        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 15));
         Item.staff[Type] = true;
     }
     public override void SetDefaults()

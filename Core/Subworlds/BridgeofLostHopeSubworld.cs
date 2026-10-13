@@ -1,8 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Tiles.FurnitureAshen;
-using CalRemix.Content.NPCs.Subworlds;
-using CalRemix.Content.Projectiles.Hostile;
-using CalRemix.Content.Tiles;
+﻿using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;

@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Rogue;
-using CalamityMod.Items.Weapons.Ranged;
 using Terraria.Audio;
 
 namespace CalRemix.Content.Items.Weapons

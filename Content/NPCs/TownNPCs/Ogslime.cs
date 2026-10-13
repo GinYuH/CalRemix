@@ -21,7 +21,7 @@ namespace CalRemix.Content.NPCs.TownNPCs
         public static double spawnTime = double.MaxValue;
         public override void Load()
         {
-            Terraria.On_Player.ItemCheck_ApplyHoldStyle_Inner += PetSlime;
+            On_Player.ItemCheck_ApplyHoldStyle_Inner += PetSlime;
         }
         public static void PetSlime(On_Player.orig_ItemCheck_ApplyHoldStyle_Inner orig, Player p, float mountOffset, Item sItem, Rectangle heldItemFrame)
         {

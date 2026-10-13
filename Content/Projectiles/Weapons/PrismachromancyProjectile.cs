@@ -17,12 +17,12 @@ namespace CalRemix.Content.Projectiles.Weapons
         public override void SetDefaults()
         {
             Projectile.width = 26;
-            base.Projectile.height = 26;
-            base.Projectile.friendly = true;
-            base.Projectile.penetrate = 1;
-            base.Projectile.tileCollide = true;
-            base.Projectile.ownerHitCheck = true;
-            base.Projectile.DamageType = DamageClass.Summon;
+            Projectile.height = 26;
+            Projectile.friendly = true;
+            Projectile.penetrate = 1;
+            Projectile.tileCollide = true;
+            Projectile.ownerHitCheck = true;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.timeLeft = 10;
         }
         private bool channelled = true;

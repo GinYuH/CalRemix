@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Projectiles.Summon;
-using CalamityMod;
 
 namespace CalRemix.Content.Projectiles.Weapons
 {

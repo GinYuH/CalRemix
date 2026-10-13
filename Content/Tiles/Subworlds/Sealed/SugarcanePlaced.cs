@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.Content.Items.Materials;
+﻿using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;

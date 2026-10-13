@@ -2,7 +2,6 @@
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;

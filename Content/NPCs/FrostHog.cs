@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.Potions.Food;
 
 namespace CalRemix.Content.NPCs

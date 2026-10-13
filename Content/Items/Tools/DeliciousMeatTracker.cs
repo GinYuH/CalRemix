@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Items;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.Potions.Food;
 
 namespace CalRemix.Content.Items.Tools

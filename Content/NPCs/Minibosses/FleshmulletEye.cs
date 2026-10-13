@@ -1,12 +1,9 @@
 ﻿using CalamityMod;
-using CalRemix.Content.Items.Bags;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CalRemix.Content.NPCs.Minibosses
 {

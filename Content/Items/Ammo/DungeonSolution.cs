@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
 using CalRemix.Content.Projectiles;
 
 namespace CalRemix.Content.Items.Ammo

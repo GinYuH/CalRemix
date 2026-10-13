@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Accessories
 
         public override void SetDefaults()
         {
-            base.Item.accessory = true;
+            Item.accessory = true;
             Item.rare = ItemRarityID.Yellow;
             Item.defense = 8;
         }

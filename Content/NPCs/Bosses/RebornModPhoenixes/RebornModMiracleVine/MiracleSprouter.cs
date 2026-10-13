@@ -3,7 +3,6 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using tModPorter;
 
 namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine
 {

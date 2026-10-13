@@ -21,7 +21,6 @@ using CalRemix.Content.Items.Placeables.Trophies;
 using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Weapons.Stormbow;
 using CalamityMod.World;
-using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Tiles;
 

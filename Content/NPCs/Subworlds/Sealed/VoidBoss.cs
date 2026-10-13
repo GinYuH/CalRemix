@@ -14,7 +14,6 @@ using Terraria.Audio;
 using CalamityMod.CalPlayer;
 using System;
 using CalRemix.Content.Projectiles.Hostile;
-using CalamityMod.Tiles;
 using CalamityMod.World;
 using CalamityMod.Sounds;
 using Terraria.GameContent.Bestiary;

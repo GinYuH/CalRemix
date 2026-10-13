@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalamityMod;
 using CalamityMod.NPCs.ExoMechs;
 using CalRemix.Content.NPCs;
 using Terraria.DataStructures;

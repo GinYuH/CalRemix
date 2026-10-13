@@ -1,20 +1,13 @@
-﻿using CalamityMod;
-using CalamityMod.Graphics.Primitives;
-using CalRemix.Core.Biomes;
-using CalRemix.Core.Biomes.Subworlds;
+﻿using CalRemix.Core.Biomes.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {
@@ -45,7 +38,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 
         public override void AI()
         {
-            NPC.direction = System.Math.Sign(NPC.velocity.X);
+            NPC.direction = Math.Sign(NPC.velocity.X);
             NPC.spriteDirection = NPC.direction;
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget)
@@ -76,7 +69,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
             {
                 NPC.velocity *= 0.98f;
             }
-            NPC.velocity.Y -= 3 + (float)System.Math.Sin(Main.GlobalTimeWrappedHourly) * 1;
+            NPC.velocity.Y -= 3 + (float)Math.Sin(Main.GlobalTimeWrappedHourly) * 1;
         }
 
         public override void HitEffect(NPC.HitInfo hit)

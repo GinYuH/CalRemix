@@ -62,7 +62,7 @@ namespace CalRemix.Content.Projectiles.Weapons
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Projectile p = Projectile.NewProjectileDirect(Projectile.GetSource_None(), Projectile.Center, -Projectile.velocity.RotatedByRandom(MathHelper.PiOver2), Type, (int)(Projectile.damage * 0.4f), 0);
+                    Projectile p = Projectile.NewProjectileDirect(Terraria.Entity.GetSource_None(), Projectile.Center, -Projectile.velocity.RotatedByRandom(MathHelper.PiOver2), Type, (int)(Projectile.damage * 0.4f), 0);
                     p.Calamity().stealthStrike = true;
                     p.scale = 0.75f;
                     p.ai[1] = 1;

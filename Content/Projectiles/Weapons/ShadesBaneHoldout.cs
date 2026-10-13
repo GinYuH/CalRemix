@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Particles;

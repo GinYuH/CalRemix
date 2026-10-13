@@ -1,11 +1,8 @@
-﻿using CalamityMod.Items.Materials;
-using CalamityMod.NPCs.Yharon;
-using CalamityMod.Rarities;
+﻿using CalamityMod.Rarities;
 using CalRemix.Content.NPCs;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 

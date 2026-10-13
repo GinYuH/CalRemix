@@ -51,7 +51,7 @@ namespace CalRemix.Core.Graphics
         {
             ManagedTargets = new();
             Main.OnPreDraw += HandleTargetUpdateLoop;
-            Terraria.On_Main.SetDisplayMode += ResetTargetSizes;
+            On_Main.SetDisplayMode += ResetTargetSizes;
         }
 
         public override void OnModUnload()

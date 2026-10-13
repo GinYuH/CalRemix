@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using CalamityMod;
 using CalamityMod.Items;
-using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Projectiles.Ranged;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;

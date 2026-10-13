@@ -137,10 +137,10 @@ namespace CalRemix.Content.Projectiles.Accessories
                 Vector2 vector34 = spinningpoint2.RotatedBy((double)num238, default);
                 Vector2 value35 = new Vector2(0f, num237 + 1f);
                 value35.X = value35.Y * num232;
-                Color color39 = Microsoft.Xna.Framework.Color.Lerp(Microsoft.Xna.Framework.Color.Transparent, value34, num237 * 2f);
+                Color color39 = Color.Lerp(Color.Transparent, value34, num237 * 2f);
                 if (num237 > 0.5f)
                 {
-                    color39 = Microsoft.Xna.Framework.Color.Lerp(Microsoft.Xna.Framework.Color.Transparent, value34, 2f - num237 * 2f);
+                    color39 = Color.Lerp(Color.Transparent, value34, 2f - num237 * 2f);
                 }
                 color39.A = (byte)((float)color39.A * 0.5f);
                 color39 *= scale5;

@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityMod;
 using System;
 using Terraria.DataStructures;
 using Terraria.Enums;

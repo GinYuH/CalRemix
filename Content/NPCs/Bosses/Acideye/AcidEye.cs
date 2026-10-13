@@ -18,7 +18,6 @@ using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.Particles;
 using CalRemix.Content.Items.Weapons;
 using Terraria.GameContent.ItemDropRules;
-using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Core.World;
 using CalRemix.Content.Items.Bags;

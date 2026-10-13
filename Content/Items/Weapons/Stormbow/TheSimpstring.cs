@@ -8,7 +8,6 @@ using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
-using CalamityMod.Projectiles.Magic;
 using Terraria.DataStructures;
 using CalamityMod.Projectiles.Summon;
 

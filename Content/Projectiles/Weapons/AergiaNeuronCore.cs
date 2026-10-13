@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Graphics.Primitives;
+﻿using CalamityMod.Graphics.Primitives;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Sounds;
 using CalRemix.Content.Buffs;

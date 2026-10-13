@@ -29,8 +29,8 @@ namespace CalRemix.Core.Graphics
                 }
             }
 
-            Terraria.On_Main.DrawProjectiles += DrawMetaballsAfterProjectiles;
-            Terraria.On_Main.DrawNPCs += DrawMetaballsBeforeNPCs;
+            On_Main.DrawProjectiles += DrawMetaballsAfterProjectiles;
+            On_Main.DrawNPCs += DrawMetaballsBeforeNPCs;
         }
 
         public override void OnModUnload()

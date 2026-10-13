@@ -20,7 +20,7 @@ namespace CalRemix.Content.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
-            Terraria.ID.TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             Main.tileObsidianKill[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.Width = 1;

@@ -46,7 +46,7 @@ namespace CalRemix.Content.Items.Accessories
             Item.height = 34;
             Item.accessory = true;
             Item.value = CalamityGlobalItem.RarityVioletBuyPrice;
-            Item.rare = ModContent.RarityType<BurnishedAuric>();
+            Item.rare = RarityType<BurnishedAuric>();
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

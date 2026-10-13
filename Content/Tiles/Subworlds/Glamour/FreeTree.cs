@@ -8,14 +8,12 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent;
 using SubworldLibrary;
 using CalRemix.Core.Subworlds;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CalRemix.Content.Tiles.Subworlds.Glamour
 {

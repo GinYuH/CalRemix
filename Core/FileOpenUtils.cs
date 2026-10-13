@@ -2,7 +2,6 @@
 using Terraria.Utilities.FileBrowser;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-using System;
 using Terraria;
 
 namespace CalRemix

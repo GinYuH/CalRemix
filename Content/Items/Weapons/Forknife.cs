@@ -1,5 +1,4 @@
 ﻿using CalamityMod.Items;
-using CalamityMod.Rarities;
 using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;

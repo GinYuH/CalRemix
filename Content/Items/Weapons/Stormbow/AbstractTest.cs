@@ -142,7 +142,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                             if (Math.Abs((double)j - num) + Math.Abs((double)k - num2) < num5 * (1.0 + (double)Main.rand.Next(-10, 11) * 0.005) && j >= 0 && j < Main.maxTilesX && k >= 0 && k < Main.maxTilesY)
                             {
                                 //Main.tile[j, k].active(active: false);
-                                WorldGen.PlaceTile(j, k, Type);
+                                PlaceTile(j, k, Type);
                             }
                         }
                     }
@@ -828,7 +828,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 // tops can have stuff placed on them
                 // this is a nonissue for us as any spots involving those will fail
                 // maybe ill fix it later. probably not though
-                if (WorldGen.PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
+                if (PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
                     decorAmount--;
             }
             #endregion
@@ -1725,7 +1725,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                         break;
                 }
 
-                if (WorldGen.PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
+                if (PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
                     decorAmount--;
             }
             // and finally the bridge
@@ -1743,7 +1743,7 @@ namespace CalRemix.Content.Items.Weapons.Stormbow
                 int randomStyleMax = 36;
                 int horizRow = 0;
 
-                if (WorldGen.PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
+                if (PlaceSmallPile(randomPoint.X, randomPoint.Y, Main.rand.Next(randomStyleMin, randomStyleMax), horizRow, 185))
                     decorAmount--;
             }
             #endregion

@@ -1,6 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Projectiles.BaseProjectiles;
-using CalamityMod.Projectiles.DraedonsArsenal;
 using CalamityMod.Projectiles.Rogue;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

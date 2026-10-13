@@ -1,28 +1,12 @@
 ﻿using CalamityMod;
-using CalamityMod.BiomeManagers;
-using CalamityMod.DataStructures;
-using CalamityMod.Graphics.Primitives;
-using CalamityMod.Items.Materials;
-using CalamityMod.NPCs.Abyss;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.Sounds;
-using CalRemix.Content.Items.Placeables.Banners;
-using CalRemix.Content.Items.Placeables.Subworlds.Wolf;
 using CalRemix.Core.Biomes.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
-using XPT.Core.Audio.MP3Sharp.Decoding;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {

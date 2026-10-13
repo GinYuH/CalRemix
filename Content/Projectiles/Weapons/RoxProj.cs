@@ -1,4 +1,3 @@
-using CalamityMod;
 using CalamityMod.Projectiles.Melee;
 using Microsoft.Xna.Framework;
 using System;

@@ -1,11 +1,8 @@
 ﻿using CalamityMod;
-using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Rarities;
 using CalRemix.Content.Items.Accessories;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.SingularPoint;
-using CalRemix.Content.Items.Weapons;
-using CalRemix.Content.Items.Weapons.Stormbow;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

@@ -6,11 +6,8 @@ using Terraria.DataStructures;
 using CalamityMod.Items;
 using CalRemix.Content.Projectiles.Weapons;
 using Terraria.Audio;
-using CalamityMod.Sounds;
 using CalRemix.Content.Items.Materials;
-using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalamityMod.Rarities;
 
 namespace CalRemix.Content.Items.Weapons

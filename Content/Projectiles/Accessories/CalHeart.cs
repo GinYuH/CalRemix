@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
 using CalamityMod.Projectiles.Damageable;
 
 namespace CalRemix.Content.Projectiles.Accessories

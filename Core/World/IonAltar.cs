@@ -1,10 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using CalamityMod.Schematics;
-using CalamityMod;
 using CalamityMod.Tiles.Abyss;
-using System;
 using CalRemix.Content.Tiles;
 using Terraria.DataStructures;
 

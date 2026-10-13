@@ -1,8 +1,6 @@
 ﻿using CalamityMod;
-using CalamityMod.Items;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Mounts;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Furniture;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Items.Bags;
@@ -13,8 +11,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.World;
-using System.Reflection;
-using System;
 using CalamityMod.Items.Tools;
 using CalamityMod.Items.Placeables.FurnitureMonolith;
 using CalRemix.Content.Items.Potions;

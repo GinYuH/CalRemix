@@ -1,6 +1,5 @@
 using CalamityMod;
 using CalRemix.Content.Items.Armor;
-using CalRemix.Content.NPCs.Bosses.RajahBoss;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

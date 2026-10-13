@@ -10,30 +10,30 @@ public class NystagmusProjectileBlue : ModProjectile
     public override void SetDefaults()
     {
         Projectile.width = 26;
-        base.Projectile.height = 26;
-        base.Projectile.friendly = true;
+        Projectile.height = 26;
+        Projectile.friendly = true;
         if (Projectile.ai[1] == 2)
         {
-            base.Projectile.penetrate = 3;
+            Projectile.penetrate = 3;
         }
         else
         {
-            base.Projectile.penetrate = 1;
+            Projectile.penetrate = 1;
         }
-           
-        base.Projectile.tileCollide = false;
-        base.Projectile.ownerHitCheck = true;
+
+        Projectile.tileCollide = false;
+        Projectile.ownerHitCheck = true;
         if (Projectile.ai[0] == 0)
         {
-            base.Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Magic;
         }
         if (Projectile.ai[0] == 1)
         {
-            base.Projectile.DamageType = DamageClass.Summon;
+            Projectile.DamageType = DamageClass.Summon;
         }
         if (Projectile.ai[0] == 2)
         {
-            base.Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Melee;
         }
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
@@ -91,30 +91,30 @@ public class NystagmusProjectileRed : ModProjectile
     public override void SetDefaults()
     {
         Projectile.width = 26;
-        base.Projectile.height = 26;
-        base.Projectile.friendly = true;
+        Projectile.height = 26;
+        Projectile.friendly = true;
         if (Projectile.ai[1] == 2)
         {
-            base.Projectile.penetrate = 3;
+            Projectile.penetrate = 3;
         }
         else
         {
-            base.Projectile.penetrate = 1;
+            Projectile.penetrate = 1;
         }
 
-        base.Projectile.tileCollide = false;
-        base.Projectile.ownerHitCheck = true;
+        Projectile.tileCollide = false;
+        Projectile.ownerHitCheck = true;
         if (Projectile.ai[0] == 0)
         {
-            base.Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Magic;
         }
         if (Projectile.ai[0] == 1)
         {
-            base.Projectile.DamageType = DamageClass.Summon;
+            Projectile.DamageType = DamageClass.Summon;
         }
         if (Projectile.ai[0] == 2)
         {
-            base.Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Melee;
         }
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
@@ -174,30 +174,30 @@ public class NystagmusProjectileGreen : ModProjectile
     public override void SetDefaults()
     {
         Projectile.width = 26;
-        base.Projectile.height = 26;
-        base.Projectile.friendly = true;
+        Projectile.height = 26;
+        Projectile.friendly = true;
         if (Projectile.ai[1] == 2)
         {
-            base.Projectile.penetrate = 3;
+            Projectile.penetrate = 3;
         }
         else
         {
-            base.Projectile.penetrate = 1;
+            Projectile.penetrate = 1;
         }
 
-        base.Projectile.tileCollide = false;
-        base.Projectile.ownerHitCheck = true;
+        Projectile.tileCollide = false;
+        Projectile.ownerHitCheck = true;
         if (Projectile.ai[0] == 0)
         {
-            base.Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Magic;
         }
         if (Projectile.ai[0] == 1)
         {
-            base.Projectile.DamageType = DamageClass.Summon;
+            Projectile.DamageType = DamageClass.Summon;
         }
         if (Projectile.ai[0] == 2)
         {
-            base.Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Melee;
         }
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
@@ -257,30 +257,30 @@ public class NystagmusProjectileGray : ModProjectile
     public override void SetDefaults()
     {
         Projectile.width = 26;
-        base.Projectile.height = 26;
-        base.Projectile.friendly = true;
+        Projectile.height = 26;
+        Projectile.friendly = true;
         if (Projectile.ai[1] == 2)
         {
-            base.Projectile.penetrate = 3;
+            Projectile.penetrate = 3;
         }
         else
         {
-            base.Projectile.penetrate = 1;
+            Projectile.penetrate = 1;
         }
 
-        base.Projectile.tileCollide = false;
-        base.Projectile.ownerHitCheck = true;
+        Projectile.tileCollide = false;
+        Projectile.ownerHitCheck = true;
         if (Projectile.ai[0] == 0)
         {
-            base.Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Magic;
         }
         if (Projectile.ai[0] == 1)
         {
-            base.Projectile.DamageType = DamageClass.Summon;
+            Projectile.DamageType = DamageClass.Summon;
         }
         if (Projectile.ai[0] == 2)
         {
-            base.Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Melee;
         }
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;

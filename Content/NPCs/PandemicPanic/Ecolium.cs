@@ -206,7 +206,7 @@ namespace CalRemix.Content.NPCs.PandemicPanic
                     else
                         rot = NPC.rotation;
                     float scalee = (1 - (i / Segments.Count)) * 0.8f;
-                    Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, (int)dist, 2), Color.SaddleBrown, rot, TextureAssets.BlackTile.Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                    Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, (int)dist, 2), Color.SaddleBrown, rot, TextureAssets.BlackTile.Size() / 2, scalee, SpriteEffects.None, 0);
                 }
             }
             return false;

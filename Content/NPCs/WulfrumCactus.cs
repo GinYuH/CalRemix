@@ -5,10 +5,8 @@ using CalamityMod;
 using CalamityMod.Items.Materials;
 using CalamityMod.Sounds;
 using CalRemix.Content.Items.Placeables.Banners;
-using Terraria.ModLoader.Utilities;
 using CalRemix.Content.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
-using CalRemix.Content.Projectiles;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 

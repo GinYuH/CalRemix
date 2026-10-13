@@ -1,26 +1,15 @@
 ﻿using CalamityMod;
-using CalamityMod.BiomeManagers;
-using CalamityMod.Graphics.Primitives;
-using CalRemix.Content.Items.Potions;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Core.Biomes.Subworlds;
-using CalRemix.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.Graphics;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
-using Terraria.UI;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {

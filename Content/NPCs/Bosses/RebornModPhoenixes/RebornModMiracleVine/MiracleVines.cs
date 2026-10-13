@@ -1,11 +1,9 @@
 ﻿using CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.Vernix;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using tModPorter;
 
 namespace CalRemix.Content.NPCs.Bosses.RebornModPhoenixes.RebornModMiracleVine
 {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CalamityMod;
 using CalamityMod.BiomeManagers;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.SunkenSea;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;

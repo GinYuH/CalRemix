@@ -6,11 +6,9 @@ using CalRemix.Content.Particles;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Graphics;
-using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.ComponentModel;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -18,7 +16,6 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 {

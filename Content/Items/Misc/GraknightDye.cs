@@ -1,12 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Items.Dyes;
-using CalamityMod.Items.Weapons.Melee;
-using CalRemix.Content.Items.Weapons;
 using CalamityMod.Items;
 
 namespace CalRemix.Content.Items.Misc

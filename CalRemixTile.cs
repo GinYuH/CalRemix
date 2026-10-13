@@ -55,12 +55,12 @@ namespace CalRemix
 
         public override void SetStaticDefaults()
         {
-            IonCubePlaced = ModContent.TileType<IonCubePlaced>();
-            RoxTile = ModContent.TileType<RoxTile>();
-            OnyxExcavatorTile = ModContent.TileType<OnyxExcavatorTile>();
-            GrimesandPlaced = ModContent.TileType<GrimesandPlaced>();
-            UelibloomOre = ModContent.TileType<UelibloomOre>();
-            RustedPipes = ModContent.TileType<RustedPipes>();
+            IonCubePlaced = TileType<IonCubePlaced>();
+            RoxTile = TileType<RoxTile>();
+            OnyxExcavatorTile = TileType<OnyxExcavatorTile>();
+            GrimesandPlaced = TileType<GrimesandPlaced>();
+            UelibloomOre = TileType<UelibloomOre>();
+            RustedPipes = TileType<RustedPipes>();
             if (Main.dedServ)
                 return;
             roxm = HelperMessage.New("Roxcalibur", "That's a Roxcalibur! You could shimmer it and try and get things earlier to make lategame easier!", "FannyAwooga")
@@ -112,7 +112,7 @@ namespace CalRemix
             }
             if (type == TileType<WulfrumLure>() && player.HeldItem.type == ItemType<DraedonPowerCell>())
             {
-                CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
+                BroadcastLocalizedText("Mods.CalRemix.StatusText.FuckFandom", Color.SeaGreen);
             }
             bool e = player.HasItem(ItemType<EyeoftheStorm>()) || player.HasItem(ItemType<ElementalinaBottle>()) || player.HasItem(ItemType<OasisElementalinaBottle>()) || player.HasItem(ItemType<RoseStone>()) || player.HasItem(ItemType<PearlofEnthrallment>()) || player.HasItem(ItemType<InfectedRemote>());
             if (type == TileType<OnyxExcavatorTile>() && e && RemixDowned.downedEarthElemental)
@@ -304,7 +304,7 @@ namespace CalRemix
                         {
                             if (TileID.Sets.ConveyorDirection[Main.tile[l, j + 1].TileType] != 0)
                             {
-                                int p = Item.NewItem(new EntitySource_TileUpdate(i, j), new Vector2(l, j) * 16, ModContent.ItemType<BabySealedPuppet>());
+                                int p = Item.NewItem(new EntitySource_TileUpdate(i, j), new Vector2(l, j) * 16, ItemType<BabySealedPuppet>());
                                 Main.item[p].velocity = Vector2.Zero;
                                 conveyor = true;
                                 break;
@@ -315,7 +315,7 @@ namespace CalRemix
                             Tile above = Main.tile[i, j - 1];
                             if (!above.HasTile && tile2.HasTile)
                             {
-                                WorldGen.PlaceTile(i, j - 1, ModContent.TileType<BabySealedPuppetPlaced>(), true);
+                                WorldGen.PlaceTile(i, j - 1, TileType<BabySealedPuppetPlaced>(), true);
                             }
                         }
                     }
@@ -339,7 +339,7 @@ namespace CalRemix
             Tile t = Main.tile[i, j];
             if (type == IonCubePlaced && t.TileFrameX == 0 && t.TileFrameY == 0)
             {
-                IonCubeTE cube = CalRemixHelper.FindTileEntity<IonCubeTE>(i, j, 1, 1);
+                IonCubeTE cube = FindTileEntity<IonCubeTE>(i, j, 1, 1);
                 if (cube == null)
                 {
                     TileEntity.PlaceEntityNet(i, j, TileEntityType<IonCubeTE>());
@@ -467,9 +467,9 @@ namespace CalRemix
                 {
                     if (type == TileID.ShadowOrbs)
                     {
-                        CalRemixHelper.SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 20, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
+                        SpawnOre(TileType<GrimesandPlaced>(), 6E-04, 0, 0.05f + WorldGen.GetWorldSize() * 0.05f, 5, 20, TileID.Dirt, TileID.Mud, TileID.Cloud, TileID.RainCloud);
 
-                        CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
+                        BroadcastLocalizedText("Mods.CalRemix.StatusText.GrimeTheSkies", Color.Brown);
                         CalRemixWorld.generatedGrime = true;
                         CalRemixWorld.UpdateWorldBool();
                     }

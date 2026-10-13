@@ -122,11 +122,11 @@ namespace CalRemix.UI
 
         private static void Dementia()
         {
-            for (int q = 0; q < Terraria.Main.npc.Length - 1; q++)
+            for (int q = 0; q < Main.npc.Length - 1; q++)
             {
-                if (Terraria.Main.npc[q].boss)
+                if (Main.npc[q].boss)
                 {
-                    Terraria.Main.npc[q].active = false;
+                    Main.npc[q].active = false;
                 }
             }
         }

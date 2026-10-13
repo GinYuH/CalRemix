@@ -5,7 +5,6 @@ using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using CalamityMod.Projectiles.Rogue;
 using CalRemix.Core.World;
-using CalamityMod.NPCs.Providence;
 using Terraria;
 using CalamityMod.Systems;
 using static Terraria.ModLoader.ModContent;

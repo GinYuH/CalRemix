@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CalamityMod;
+﻿using CalamityMod;
 using CalamityMod.Items;
 using Microsoft.Xna.Framework;
 using Terraria;

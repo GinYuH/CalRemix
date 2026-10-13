@@ -1,15 +1,10 @@
-﻿using CalamityMod;
-using CalRemix.Content.Items.ZAccessories;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameInput;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 

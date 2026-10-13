@@ -1,14 +1,10 @@
-﻿using CalamityMod;
-using CalRemix.Content.NPCs.Subworlds;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
-using CalRemix.Core.Backgrounds;
+﻿using CalRemix.Content.NPCs.Subworlds;
 using CalRemix.Core.Backgrounds.Plague;
 using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using SubworldLibrary;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;

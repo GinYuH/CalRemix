@@ -2,7 +2,6 @@
 using Terraria.ModLoader;
 using Terraria.Audio;
 using Terraria.ID;
-using CalRemix.Content.Walls;
 using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest

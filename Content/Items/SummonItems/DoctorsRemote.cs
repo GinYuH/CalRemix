@@ -3,11 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using CalRemix.Content.Items.Materials;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using CalamityMod;
-using SubworldLibrary;
-using CalRemix.Core.Subworlds;
 
 namespace CalRemix.Content.Items.SummonItems
 {

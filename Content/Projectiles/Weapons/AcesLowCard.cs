@@ -1,4 +1,3 @@
-using CalamityMod;
 using CalamityMod.Projectiles.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;

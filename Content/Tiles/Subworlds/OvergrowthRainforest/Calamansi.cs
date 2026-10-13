@@ -9,7 +9,6 @@ using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Animations;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -97,7 +96,7 @@ namespace CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest
                         else
                             rot = 0;
                         float scalee = (1 - (u / cables.Segments.Count));
-                        Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition + CalamityUtils.TileDrawOffset + Vector2.UnitX * 16, new Rectangle(0, 0, (int)dist, 2), Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.ForestGreen), rot, TextureAssets.BlackTile.Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                        Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition + CalamityUtils.TileDrawOffset + Vector2.UnitX * 16, new Rectangle(0, 0, (int)dist, 2), Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.ForestGreen), rot, TextureAssets.BlackTile.Size() / 2, scalee, SpriteEffects.None, 0);
                     }
 
                     float fruitRot = (cables.Segments[^1].position.DirectionTo(cables.Segments[^2].position)).ToRotation() + MathHelper.PiOver2;

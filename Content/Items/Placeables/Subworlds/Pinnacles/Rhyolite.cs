@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalRemix.Content.Tiles.Subworlds.GreatSea;
 using CalRemix.Content.Tiles.Subworlds.Pinnacles;
 
 namespace CalRemix.Content.Items.Placeables.Subworlds.Pinnacles

@@ -6,8 +6,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.Rarities;
 using CalamityMod.Items;
-using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
 using CalRemix.Content.Items.Materials;
 namespace CalRemix.Content.Items.Weapons

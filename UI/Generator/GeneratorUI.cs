@@ -1,6 +1,5 @@
 ﻿using static Terraria.ModLoader.ModContent;
 using static CalRemix.Core.CustomGen;
-using CalamityMod;
 using CalRemix.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

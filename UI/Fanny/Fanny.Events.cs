@@ -73,7 +73,7 @@ namespace CalRemix.UI
             HelperMessage pandemic3 = HelperMessage.New("CrimsonPandemic2", "Ooiii, Crim Soooon~!!! You do realize that these virulent critters are no good for our body, nya~! >m< These lil goobers protect our bodies like millions of microscopic magical girls, desu~! OwO I learned that from my club's biology studies~!",
                 "TrapperHappy", (ScreenHelperSceneMetrics scene) => PandemicPanic.IsActive).SpokenByAnotherHelper(ScreenHelpersUIState.TrapperBulbChan).ChainAfter(pandemic2, startTimerOnMessageSpoken: true, delay: 4).EndConversation();
 
-            HelperMessage.New("MeteorStarboard", "Wow! You sure are getting lots of stars tonight! You must have said something really funny to get all those. After all, every star you get is a community contribution!", "FannyAwooga", (ScreenHelperSceneMetrics metrics) => Terraria.Star.starfallBoost >= 3);
+            HelperMessage.New("MeteorStarboard", "Wow! You sure are getting lots of stars tonight! You must have said something really funny to get all those. After all, every star you get is a community contribution!", "FannyAwooga", (ScreenHelperSceneMetrics metrics) => Star.starfallBoost >= 3);
         }
     }
 }

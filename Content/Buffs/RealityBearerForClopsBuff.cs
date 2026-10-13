@@ -1,5 +1,4 @@
 ﻿using CalamityMod.NPCs;
-using CalRemix.Content.Projectiles.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

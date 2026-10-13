@@ -7,10 +7,8 @@ using System;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
-using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.UI;
 using CalRemix.Content.Items.Misc;
-using CalamityMod;
 using Terraria.ID;
 using CalRemix.Core.World;
 

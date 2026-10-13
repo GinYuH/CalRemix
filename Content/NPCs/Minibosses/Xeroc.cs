@@ -382,7 +382,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                             }
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + vector26, vector28, ModContent.ProjectileType<XerocBloodShot>(), num78, 0f, Main.myPlayer, NPC.target);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + vector26, vector28, ProjectileType<XerocBloodShot>(), num78, 0f, Main.myPlayer, NPC.target);
                             }
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
@@ -391,7 +391,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                                 {
                                     if (NPC.Boss_CanShootExtraAt(num92, num91 % 3, 3, 2400f))
                                     {
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + vector26, vector28, ModContent.ProjectileType<XerocBloodShot>(), num78, 0f, Main.myPlayer, NPC.target);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + vector26, vector28, ProjectileType<XerocBloodShot>(), num78, 0f, Main.myPlayer, NPC.target);
                                     }
                                 }
                             }
@@ -523,7 +523,7 @@ namespace CalRemix.Content.NPCs.Minibosses
                                         vector23 = center4 - Vector2.Normalize(vector25) * num84;
                                     }
                                     v3 = vector38 - vector23;
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), vector23, Vector2.Zero, ModContent.ProjectileType<XerocBloodShot>(), num56, 0f, Main.myPlayer, ai2: 1);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), vector23, Vector2.Zero, ProjectileType<XerocBloodShot>(), num56, 0f, Main.myPlayer, ai2: 1);
                                 }
                             }
                         }

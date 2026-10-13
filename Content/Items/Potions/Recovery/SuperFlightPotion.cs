@@ -1,4 +1,3 @@
-using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Materials;
 using Microsoft.Xna.Framework;
 using System;

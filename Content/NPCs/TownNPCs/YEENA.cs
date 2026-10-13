@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Items.Potions;
 using CalamityMod.Items.Potions.Food;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.AstrumDeus;

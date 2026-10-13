@@ -29,12 +29,10 @@ using CalRemix.Content.Tiles;
 using CalRemix.Content.Tiles.PlaguedJungle;
 using CalRemix.Content.Tiles.Plates;
 using CalRemix.Content.Tiles.Subworlds.Sealed;
-using CalRemix.Content.Walls;
 using CalRemix.Core.Backgrounds.Plague;
 using CalRemix.Core.Scenes;
 using CalRemix.Core.Subworlds;
 using CalRemix.UI;
-using CalRemix.UI.Anomaly109;
 using CalRemix.UI.Title;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
@@ -634,7 +632,7 @@ namespace CalRemix.Core.World
             {
                 if (NPC.downedBoss3 && Main.time == 1 && oxydayTime <= 0 && Main.rand.NextBool(4))
                 {
-                    int oxTime = Main.rand.Next(CalRemixHelper.SecondsToFrames(60 * 12), CalRemixHelper.SecondsToFrames(60 * 16));
+                    int oxTime = Main.rand.Next(SecondsToFrames(60 * 12), SecondsToFrames(60 * 16));
                     if (Main.netMode != NetmodeID.Server)
                     {
                         oxydayTime = oxTime;
@@ -646,7 +644,7 @@ namespace CalRemix.Core.World
                         packet.Write(oxTime);
                         packet.Send();
                     }
-                    CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.SkyBlue);
+                    BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceBegin", Color.SkyBlue);
                 }
             }
             if (oxydayTime > 0)
@@ -658,7 +656,7 @@ namespace CalRemix.Core.World
                 // roughly once per 6 minutes
                 if (Main.rand.NextBool(22222))
                 {
-                    CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.BiomassMigration", Color.DeepSkyBlue);
+                    BroadcastLocalizedText("Mods.CalRemix.StatusText.BiomassMigration", Color.DeepSkyBlue);
                     int amt = 22;
                     for (int i = 0; i < amt; i++)
                     {
@@ -680,7 +678,7 @@ namespace CalRemix.Core.World
                         packet.Write(0);
                         packet.Send();
                     }
-                    CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
+                    BroadcastLocalizedText("Mods.CalRemix.StatusText.GaleforceEnd", Color.LightBlue);
                     RemixDowned.downedGale = true;
                     UpdateWorldBool();
                 }
@@ -698,16 +696,16 @@ namespace CalRemix.Core.World
             {
                 if (eaterTimer <= 0)
                 {
-                    if (Main.rand.NextBool(CalRemixHelper.SecondsToFrames(600)))
+                    if (Main.rand.NextBool(SecondsToFrames(600)))
                     {
-                        eaterTimer = CalRemixHelper.SecondsToFrames(22);
+                        eaterTimer = SecondsToFrames(22);
                     }
                 }
             }
             eaterTimer--;
             if (postGenUpdate && Main.dayTime && NPC.downedBoss3 && !NPC.AnyNPCs(NPCType<Coffargus>()) && !RemixDowned.downedCarcinogen)
             {
-                int num41 = NPC.NewNPC(NPC.GetSource_TownSpawn(), Main.dungeonX * 16 + 8, Main.dungeonY * 16, NPCType<Coffargus>());
+                int num41 = NPC.NewNPC(Entity.GetSource_TownSpawn(), Main.dungeonX * 16 + 8, Main.dungeonY * 16, NPCType<Coffargus>());
                 Main.npc[num41].homeless = false;
                 Main.npc[num41].homeTileX = Main.dungeonX;
                 Main.npc[num41].homeTileY = Main.dungeonY;
@@ -786,7 +784,7 @@ namespace CalRemix.Core.World
                         AstralShrine.GenerateAstralShrine();
 
                         Color messageColor = Color.Magenta;
-                        CalRemixHelper.BroadcastLocalizedText("Shrines appear within the newly spread infections!", messageColor);
+                        BroadcastLocalizedText("Shrines appear within the newly spread infections!", messageColor);
                         if (CalRemixAddon.CalVal != null && astralBlight)
                         {
                             ThreadPool.QueueUserWorkItem(_ => AstralBlightBiome.GenerateBlight(), this);
@@ -840,7 +838,7 @@ namespace CalRemix.Core.World
                     {
                         for (int j = -hydrogenRadius; j < hydrogenRadius; j++)
                         {
-                            Tile t = CalRemixHelper.ParanoidTileRetrieval((int)center.X + i, (int)center.Y + j);
+                            Tile t = ParanoidTileRetrieval((int)center.X + i, (int)center.Y + j);
                             Vector2 pos = new Vector2(center.X + i, center.Y + j);
                             if (pos.Distance(center) < hydrogenRadius - borderAmt)
                             {
@@ -862,7 +860,7 @@ namespace CalRemix.Core.World
             }
             if (!NPC.AnyNPCs(NPCType<AquaticScourgeHead>()))
             {
-                if (CalRemixHelper.CountProjectiles(ProjectileID.ChumBucket) > 21 && Main.LocalPlayer.Calamity().ZoneSulphur)
+                if (CountProjectiles(ProjectileID.ChumBucket) > 21 && Main.LocalPlayer.Calamity().ZoneSulphur)
                 {
                     foreach (Projectile p in Main.projectile)
                     {
@@ -902,16 +900,16 @@ namespace CalRemix.Core.World
                 RoachCountdown++;
             }
             // After 5 minutes, set the timer to -1 and start Roach Mayhem
-            if (RoachCountdown > CalRemixHelper.SecondsToFrames(300))
+            if (RoachCountdown > SecondsToFrames(300))
             {
                 UnleashRoaches();
             }
             // Spawn three explosions
             int expDelay = 40;
             int startFire = ROACHDURATIONSECONDS - 6;
-            bool firstExp = roachDuration == CalRemixHelper.SecondsToFrames(startFire);
-            bool secondExp = roachDuration == CalRemixHelper.SecondsToFrames(startFire) - expDelay;
-            bool thirdExp = roachDuration == CalRemixHelper.SecondsToFrames(startFire) - expDelay * 2;
+            bool firstExp = roachDuration == SecondsToFrames(startFire);
+            bool secondExp = roachDuration == SecondsToFrames(startFire) - expDelay;
+            bool thirdExp = roachDuration == SecondsToFrames(startFire) - expDelay * 2;
             if (firstExp || secondExp || thirdExp)
             {
                 Vector2 pos = firstExp ? new Vector2(Main.screenWidth * 0.05f, Main.screenHeight) : secondExp ? new Vector2(Main.screenWidth * 0.35f, Main.screenHeight) : new Vector2(Main.screenWidth * 0.7f, Main.screenHeight);
@@ -962,7 +960,7 @@ namespace CalRemix.Core.World
         {
             RoachCountdown = -1;
             SoundEngine.PlaySound(new SoundStyle("CalRemix/Assets/Sounds/BlackFriday"));
-            roachDuration = CalRemixHelper.SecondsToFrames(ROACHDURATIONSECONDS);
+            roachDuration = SecondsToFrames(ROACHDURATIONSECONDS);
             UpdateWorldBool();
         }
 
@@ -1180,13 +1178,13 @@ namespace CalRemix.Core.World
                         progress.Message = "Remodeling the Dungeon";
                         StratusDungeon.ReplaceDungeon();
                         StratusDungeon.AddOriginalDungeonHoles();
-                        CalRemixHelper.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
+                        SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                     }));
                 }
                 tasks.Insert(FinalIndex, new PassLegacy("Arsenic", (progress, config) =>
                 {
                     progress.Message = "Arsenic Ore";
-                    CalRemixHelper.SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
+                    SpawnOre(TileType<ArsenicOrePlaced>(), 15E-01, 0.4f, 1f, 3, 8, new int[3] { TileID.BlueDungeonBrick, TileID.PinkDungeonBrick, TileID.GreenDungeonBrick });
                 }));
                 tasks.Insert(FinalIndex, new PassLegacy("Ion Altar", (progress, config) => { IonAltar.GenerateIonAltar(); }));
                 tasks.Insert(FinalIndex, new PassLegacy("Crimson Heart", (progress, config) => { CrimsonHeart.GenerateCrimsonHeart(); }));
@@ -1202,7 +1200,7 @@ namespace CalRemix.Core.World
                     {
                         for (int j = -hydrogenRadius; j < hydrogenRadius; j++)
                         {
-                            Tile t = CalRemixHelper.ParanoidTileRetrieval((int)center.X + i, (int)center.Y + j);
+                            Tile t = ParanoidTileRetrieval((int)center.X + i, (int)center.Y + j);
                             Vector2 pos = new Vector2(center.X + i, center.Y + j);
                             if (pos.Distance(center) < hydrogenRadius - borderAmt)
                             {
@@ -1237,7 +1235,7 @@ namespace CalRemix.Core.World
                         for (var y = 0; y < 200; y++)
                         {
                             // replace iron with granite and lead marble
-                            var tile = CalRemixHelper.ParanoidTileRetrieval(x, y);
+                            var tile = ParanoidTileRetrieval(x, y);
                             if (!tile.HasTile)
                             {
                                 continue;
@@ -1253,14 +1251,14 @@ namespace CalRemix.Core.World
                     for (var i = 0; i < Main.maxTilesX; i++)
                         for (var j = 0; j < Main.maxTilesY; j++)
                         {
-                            var tile = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                            var tile = ParanoidTileRetrieval(i, j);
 
                             if (tile is { HasTile: true, TileType: TileID.Amethyst })
                             {
                                 for (var x = -1; x <= 1; x++)
                                     for (var y = -1; y <= 1; y++)
                                     {
-                                        var surroundingTile = CalRemixHelper.ParanoidTileRetrieval(i + x, j + y);
+                                        var surroundingTile = ParanoidTileRetrieval(i + x, j + y);
 
                                         if (surroundingTile is { HasTile: true, TileType: TileID.Stone or TileID.Dirt })
                                         {
@@ -1280,7 +1278,7 @@ namespace CalRemix.Core.World
 
                         for (var j = fluctuatingHeight; j < Main.maxTilesY; j++)
                         {
-                            var tile = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                            var tile = ParanoidTileRetrieval(i, j);
 
                             if (tile is { HasTile: true, TileType: TileID.Stone })
                             {
@@ -1300,8 +1298,8 @@ namespace CalRemix.Core.World
                     {
                         for (int j = 0; j < Main.worldSurface + 200; j++)
                         {
-                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
-                            Tile tA = CalRemixHelper.ParanoidTileRetrieval(i, j - 1);
+                            Tile t = ParanoidTileRetrieval(i, j);
+                            Tile tA = ParanoidTileRetrieval(i, j - 1);
                             if (t.HasTile && Main.tileSolid[t.TileType] && !tA.HasTile)
                             {
                                 if ((WorldGen.genRand.NextBool(200) || (i == half && !oneGenerated)) && tA.LiquidAmount <= 0)
@@ -1360,7 +1358,7 @@ namespace CalRemix.Core.World
                     backgroundColor.B = 40;
                 }
             }
-            if (CalRemixWorld.oxydayTime > 0 && player.position.Y < Main.worldSurface * 16)
+            if (oxydayTime > 0 && player.position.Y < Main.worldSurface * 16)
             {
                 backgroundColor = Color.Lerp(backgroundColor, Color.LightSkyBlue, 0.2f);
                 backgroundColor = Color.Lerp(backgroundColor, Color.Cyan, 0.2f);
@@ -1492,7 +1490,7 @@ namespace CalRemix.Core.World
                 {
                     if (new Vector2(i, j).Distance(center) > rad)
                         continue;
-                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                    Tile t = ParanoidTileRetrieval(i, j);
                     if (t.LiquidAmount > 0)
                     {
                         t.LiquidAmount = 0;
@@ -1523,7 +1521,7 @@ namespace CalRemix.Core.World
             {
                 for (int j = 100; j < Main.maxTilesY - 100; j++)
                 {
-                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                    Tile t = ParanoidTileRetrieval(i, j);
                     if (t.TileType == TileType<Navystone>())
                     {
                         if (sunkenX == 0)
@@ -1537,7 +1535,7 @@ namespace CalRemix.Core.World
             {
                 for (int j = 100; j < Main.maxTilesX - 100; j++)
                 {
-                    Tile t = CalRemixHelper.ParanoidTileRetrieval(j, i);
+                    Tile t = ParanoidTileRetrieval(j, i);
                     if (t.TileType == TileType<Navystone>())
                     {
                         if (sunkenY == 0)

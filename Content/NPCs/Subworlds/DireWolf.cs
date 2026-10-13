@@ -2,13 +2,8 @@
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using CalamityMod;
-using CalamityMod.BiomeManagers;
-using CalRemix.Content.Items.Placeables.Banners;
 using Microsoft.Xna.Framework;
-using System;
-using Terraria.Enums;
 using CalamityMod.NPCs.NormalNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using CalRemix.Content.Items.Placeables.Subworlds.Wolf;

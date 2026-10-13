@@ -7,7 +7,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Items.Materials;
 using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.Items.Placeables;
 using Terraria.Audio;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Items.Placeables.Abyss;

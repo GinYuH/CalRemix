@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalamityMod.Rarities;
 using Steamworks;
-using CalamityMod;
 
 namespace CalRemix.Content.Items.Misc
 {

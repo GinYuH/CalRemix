@@ -1,8 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
-using CalamityMod.NPCs.Abyss;
-using CalamityMod.Projectiles.Boss;
-using CalRemix.Content.Items.Potions;
 using CalRemix.Core.Biomes.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,12 +8,10 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {
@@ -204,7 +199,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
                 else
                     rot = 0;
                 float scalee = (1 - (u / segments.Count));
-                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition + Vector2.UnitX * 8, new Rectangle(0, 0, (int)dist, 2), Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.ForestGreen), rot, TextureAssets.BlackTile.Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition + Vector2.UnitX * 8, new Rectangle(0, 0, (int)dist, 2), Lighting.GetColor(seg.position.ToTileCoordinates()).MultiplyRGB(Color.ForestGreen), rot, TextureAssets.BlackTile.Size() / 2, scalee, SpriteEffects.None, 0);
             }
             Texture2D tex = TextureAssets.Npc[Type].Value;
             float bloomSize = 0.3f;

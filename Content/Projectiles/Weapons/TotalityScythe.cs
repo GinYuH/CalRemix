@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod;
 using System;
 
 namespace CalRemix.Content.Projectiles.Weapons

@@ -1,10 +1,8 @@
-﻿using CalamityMod;
-using CalamityMod.DataStructures;
+﻿using CalamityMod.DataStructures;
 using CalamityMod.Items.Fishing.SunkenSeaCatches;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.NPCs.Bosses.Ionogen;
-using CalRemix.Content.NPCs.Bosses.Phytogen;
 using CalRemix.Core.World;
 using CalRemix.UI;
 using Microsoft.Xna.Framework;
@@ -13,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -32,7 +29,7 @@ namespace CalRemix.Content.Tiles
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = false;
-            Terraria.ID.TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             Main.tileLavaDeath[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileID.Sets.HasOutlines[Type] = true;

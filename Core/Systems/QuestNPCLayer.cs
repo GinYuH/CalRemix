@@ -5,10 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.Map;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace CalRemix.Core
 {

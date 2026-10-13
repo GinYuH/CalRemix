@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using CalamityMod;
 using Terraria.ModLoader.Utilities;
 using System.IO;
-using CalamityMod.NPCs;
 using CalamityMod.NPCs.NormalNPCs;
 
 namespace CalRemix.Content.NPCs

@@ -1,7 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatBuffs;
-using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.CalPlayer;
 using CalamityMod.DataStructures;
 using CalamityMod.Events;
@@ -62,7 +61,6 @@ using CalRemix.UI.Anomaly109;
 using CalRemix.UI.SubworldMap;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -73,7 +71,6 @@ using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Animations;
 using Terraria.GameInput;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -527,7 +524,7 @@ namespace CalRemix
 					Player.GetModPlayer<CalRemixPlayer>().eclipseaura = 300;
 				}
 			}
-            if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CalRemixHelper.CountProjectiles(ProjectileType<Claw>()) <= 0)
+            if (CalRemixKeybinds.BaroClawHotKey.JustPressed && baroclaw && CountProjectiles(ProjectileType<Claw>()) <= 0)
             {
                 if (!Player.HasCooldown(BaroclawCooldown.ID))
                 {
@@ -729,7 +726,7 @@ namespace CalRemix
                 if (SubworldSystem.Current is IDisableItems)
                 {
                     Player.noItems = true;
-                    Player.AddBuff(ModContent.BuffType<Pacifism>(), 60);
+                    Player.AddBuff(BuffType<Pacifism>(), 60);
                 }
             }
 
@@ -763,7 +760,7 @@ namespace CalRemix
                 Player.GetDamage(DamageClass.Generic) *= 1f + 0.05f * grabCount;
             }
 
-            if (ChampionMe && CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(ModContent.BuffType<RageCool>()))
+            if (ChampionMe && CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(BuffType<RageCool>()))
             {
                 int BuffLength = 240;
                 if (Player.statLife < (int)(Player.statLifeMax2 * .75f))
@@ -778,18 +775,18 @@ namespace CalRemix
                 {
                     BuffLength = 600;
                 }
-                Player.AddBuff(ModContent.BuffType<RageBuff>(), BuffLength);
+                Player.AddBuff(BuffType<RageBuff>(), BuffLength);
                 int RageCooldown = BuffLength * 4;
-                Player.AddBuff(ModContent.BuffType<RageCool>(), RageCooldown);
+                Player.AddBuff(BuffType<RageCool>(), RageCooldown);
             }
 
-            if (Player.HasBuff(ModContent.BuffType<RageBuff>()))
+            if (Player.HasBuff(BuffType<RageBuff>()))
             {
                 Player.armorEffectDrawShadowLokis = true;
             }
 
             if (ChampionRa && CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && !Player.HasBuff(BuffType<DroneCool>()) &&
-                !CalRemixHelper.AnyProjectiles(ProjectileType<RajahDrone>()))
+                !AnyProjectiles(ProjectileType<RajahDrone>()))
             {
                 Vector2 vector2;
                 vector2.X = Main.mouseX + Main.screenPosition.X;
@@ -1137,7 +1134,7 @@ namespace CalRemix
                 }
             }
 
-            if (Player.webbed && NPC.AnyNPCs(ModContent.NPCType<GigamothLarva>()))
+            if (Player.webbed && NPC.AnyNPCs(NPCType<GigamothLarva>()))
             {
                 Player.velocity.Y = 12;
             }
@@ -1419,7 +1416,7 @@ namespace CalRemix
             if (eclipseaura == 0)
             {
                 int duration = tvo ? 30 : 20;
-                Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, CalRemixHelper.SecondsToFrames(duration));
+                Main.LocalPlayer.AddCooldown(EclipseAuraCooldown.ID, SecondsToFrames(duration));
             }
             #endregion
             if (halEffigy)
@@ -1623,13 +1620,13 @@ namespace CalRemix
 
             if (taintedObsidian)
                 if (Player.lavaWet)
-                    Player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(CalRemixHelper.LocalText("DeathReasons.LethalLava").Format(Player.name))), Player.statLifeMax, 0);
+                    Player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromLiteral(LocalText("DeathReasons.LethalLava").Format(Player.name))), Player.statLifeMax, 0);
 
             if (salvageSuit)
             {
                 if (Player.wet || Main.raining)
                 {
-                    Player.AddBuff(BuffType<Springlocked>(), CalRemixHelper.SecondsToFrames(60));
+                    Player.AddBuff(BuffType<Springlocked>(), SecondsToFrames(60));
                 }
             }
 
@@ -1654,7 +1651,7 @@ namespace CalRemix
                     Player.ClearBuff(BuffType<Springlocked>());
             }
 
-            if (Player.HasBuff(ModContent.BuffType<DepthGliderBuff>()))
+            if (Player.HasBuff(BuffType<DepthGliderBuff>()))
             {
                 if (Math.Abs(Player.velocity.X) >= 5)
                 {
@@ -1824,7 +1821,7 @@ namespace CalRemix
                 calamitizedHitCooldown = 0;
                 calamitizedCounter = 0;
             }
-            if (!CalRemixHelper.AnyProjectiles(ProjectileType<Fridge>()))
+            if (!AnyProjectiles(ProjectileType<Fridge>()))
             {
                 fridge = false;
             }
@@ -1847,9 +1844,9 @@ namespace CalRemix
         }
         public override void GetDyeTraderReward(List<int> rewardPool)
         {
-            if (CalamityMod.DownedBossSystem.downedProvidence && CalRemixWorld.permanenthealth)
+            if (DownedBossSystem.downedProvidence && CalRemixWorld.permanenthealth)
             {
-                if (CalamityMod.DownedBossSystem.downedProvidence && !Player.Calamity().tCloudberry)
+                if (DownedBossSystem.downedProvidence && !Player.Calamity().tCloudberry)
                 {
                     rewardPool.Clear();
                 }
@@ -2000,7 +1997,7 @@ namespace CalRemix
         {
             if (salvageSuit && info.Damage >= 100)
             {
-                Player.AddBuff(BuffType<Springlocked>(), CalRemixHelper.SecondsToFrames(60));
+                Player.AddBuff(BuffType<Springlocked>(), SecondsToFrames(60));
             }
             if (sealedArmor)
             {
@@ -2018,9 +2015,9 @@ namespace CalRemix
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
             CalamityPlayer calplayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
-            if (Player.HasBuff(ModContent.BuffType<DepthGliderBuff>()))
+            if (Player.HasBuff(BuffType<DepthGliderBuff>()))
             {
-                if (npc.type == ModContent.NPCType<TempestKraken>())
+                if (npc.type == NPCType<TempestKraken>())
                 {
                     npc.knockBackResist = 1;
                     npc.ai[2] = 2;
@@ -2397,7 +2394,7 @@ namespace CalRemix
             if (invGar)
             {
                 anomaly109UI = false;
-                SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
+                SoundEngine.PlaySound(ScornEater.HitSound, Player.Center);
                 Player.AddBuff(BuffType<GarBoost>(), 60);
             }
             if (taintedIron && npc.Calamity().canBreakPlayerDefense)
@@ -2411,7 +2408,7 @@ namespace CalRemix
             if (invGar)
             {
                 anomaly109UI = false;
-                SoundEngine.PlaySound(CalamityMod.NPCs.NormalNPCs.ScornEater.HitSound, Player.Center);
+                SoundEngine.PlaySound(ScornEater.HitSound, Player.Center);
                 Player.AddBuff(BuffType<GarBoost>(), 60);
             }
         }
@@ -2458,10 +2455,10 @@ namespace CalRemix
                     Console.WriteLine(e);
                 }
                 if (npc is null)
-                    CalRemixHelper.BroadcastLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
+                    BroadcastLocalizedText("Mods.CalRemix.StatusText.InfaredNoData");
                 else
                 {
-                    string f = CalRemixHelper.LocalText("StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);
+                    string f = LocalText("StatusText.InfaredData").Format(npc.TypeName, npc.damage, npc.defDamage);
 
                     if (Main.netMode == NetmodeID.SinglePlayer)
                     {
@@ -2659,19 +2656,19 @@ namespace CalRemix
             {
                 Item item = (h.type == ItemType<FiberBaby>()) ? h : m;
                 if (player.ownedProjectileCounts[ProjectileType<FiberBabyHoldout>()] < 1)
-                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<FiberBabyHoldout>(), item.damage, 0, player.whoAmI);
+                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ProjectileType<FiberBabyHoldout>(), item.damage, 0, player.whoAmI);
             }
             if (Held(player, ItemType<KetchupSqueezie>()))
             {
                 Item item = (h.type == ItemType<KetchupSqueezie>()) ? h : m;
                 if (player.ownedProjectileCounts[ProjectileType<KetchupSqueezieProj>()] < 1)
-                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<KetchupSqueezieProj>(), 0, 0, player.whoAmI);
+                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ProjectileType<KetchupSqueezieProj>(), 0, 0, player.whoAmI);
             }
             if (Held(player, ItemType<TheSimpstring>()))
             {
                 Item item = (h.type == ItemType<TheSimpstring>()) ? h : m;
                 if (player.ownedProjectileCounts[ProjectileType<TheSimpstringHoldout>()] < 1)
-                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ModContent.ProjectileType<TheSimpstringHoldout>(), item.damage, 0, player.whoAmI);
+                    Projectile.NewProjectile(player.GetSource_FromThis(), player.Center + player.DirectionTo(Main.MouseWorld) * 16f, Vector2.Zero, ProjectileType<TheSimpstringHoldout>(), item.damage, 0, player.whoAmI);
             }
             if (!player.channel)
                 c = 0;

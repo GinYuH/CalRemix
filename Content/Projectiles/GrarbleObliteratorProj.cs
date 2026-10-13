@@ -20,7 +20,7 @@ namespace CalRemix.Content.Projectiles
             Projectile.tileCollide = false;
             Projectile.hide = true;
             Projectile.ownerHitCheck = true;
-            Projectile.DamageType = Terraria.ModLoader.DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Melee;
         }
     }
 }

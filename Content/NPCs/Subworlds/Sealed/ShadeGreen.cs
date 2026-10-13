@@ -3,23 +3,17 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
-using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.UI;
 using CalRemix.Content.Particles;
 using Terraria.ID;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CalRemix.Content.Items.Weapons;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Core.World;
-using Microsoft.Xna.Framework.Input;
-using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Sounds;
 using CalRemix.Content.Items.Misc;
-using CalamityMod;
 
 namespace CalRemix.Content.NPCs.Subworlds.Sealed
 {

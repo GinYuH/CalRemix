@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Items.Materials;
 using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Rarities;
 using CalRemix.Content.Items.Materials;

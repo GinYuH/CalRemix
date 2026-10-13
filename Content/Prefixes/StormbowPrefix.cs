@@ -1,8 +1,5 @@
-﻿using CalamityMod;
-using CalRemix.Content.DamageClasses;
+﻿using CalRemix.Content.DamageClasses;
 using CalRemix.Content.Items.Weapons.Stormbow;
-using Microsoft.CodeAnalysis;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;

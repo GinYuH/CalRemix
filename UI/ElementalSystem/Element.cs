@@ -1,4 +1,3 @@
-using CalamityMod;
 using CalRemix.Content.Buffs;
 using Microsoft.Xna.Framework;
 using System;

@@ -121,7 +121,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.boss = true;
             NPC.alpha = 255;
             NPC.Calamity().canBreakPlayerDefense = true;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<VoidForestBiome>().Type };
+            SpawnModBiomes = new int[1] { GetInstance<VoidForestBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
         }
         public override void AI()

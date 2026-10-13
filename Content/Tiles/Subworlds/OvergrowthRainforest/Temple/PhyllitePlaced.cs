@@ -1,8 +1,5 @@
-﻿using CalamityMod;
-using CalRemix.Content.NPCs.Subworlds.GreatSea;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

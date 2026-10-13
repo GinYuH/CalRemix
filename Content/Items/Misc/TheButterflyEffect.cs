@@ -1,5 +1,4 @@
-﻿using CalamityMod.Items;
-using CalamityMod.Items.Placeables;
+﻿using CalamityMod.Items.Placeables;
 using CalamityMod.Rarities;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using CalRemix.Content.Items.Weapons;

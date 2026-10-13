@@ -9,8 +9,6 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.ID;
 using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
-using CalamityMod;
 using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.Core.Biomes;
 using CalRemix.Content.Tiles.Subworlds.GreatSea;

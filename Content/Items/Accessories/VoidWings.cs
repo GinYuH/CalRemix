@@ -1,5 +1,4 @@
-﻿using CalamityMod.Rarities;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using CalamityMod.Items;

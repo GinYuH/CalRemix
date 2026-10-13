@@ -1,11 +1,7 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.DataStructures;
 using CalamityMod.Events;
 using CalamityMod.NPCs;
 using CalamityMod.NPCs.AstrumDeus;
-using CalamityMod.Projectiles.Boss;
 using CalamityMod.World;
 using CalRemix.Content.Projectiles.Hostile;
 using Microsoft.Xna.Framework;
@@ -16,14 +12,9 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.GameContent;
-using Terraria.GameContent.Achievements;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.Social.Base;
 
 namespace CalRemix.Content.NPCs.Bosses.BossChanges.Twins
 {

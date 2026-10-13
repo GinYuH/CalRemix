@@ -1,5 +1,4 @@
-﻿using CalRemix.Content.Items.Placeables.Subworlds.TheGray;
-using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
+﻿using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

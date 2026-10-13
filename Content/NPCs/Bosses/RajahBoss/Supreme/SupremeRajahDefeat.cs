@@ -1,4 +1,3 @@
-using CalamityMod;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Terraria;

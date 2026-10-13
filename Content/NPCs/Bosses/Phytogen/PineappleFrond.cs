@@ -237,7 +237,7 @@ namespace CalRemix.Content.NPCs.Bosses.Phytogen
                     rot = seg.position.DirectionTo(Segments[i - 1].position).ToRotation() + MathHelper.PiOver2;
                 else
                     rot = NPC.rotation;
-                Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, seg.position - Main.screenPosition, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, TextureAssets.Npc[Type].Value.Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, seg.position - Main.screenPosition, null, NPC.GetAlpha(Lighting.GetColor(new Point((int)seg.position.X / 16, (int)seg.position.Y / 16))), rot, TextureAssets.Npc[Type].Value.Size() / 2, 1f, SpriteEffects.None, 0);
             }
             return false;
         }

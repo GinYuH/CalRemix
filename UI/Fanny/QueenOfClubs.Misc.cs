@@ -354,9 +354,9 @@ namespace CalRemix.UI
             Rectangle dimensionsRect = dimensions.ToRectangle();
             //Utils.DrawInvBG(spriteBatch, dimensionsRect);
 
-            Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubs" + Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentFace.ToString()).Value;
+            Texture2D testSprite = Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubs" + Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentFace.ToString()).Value;
             if (Main.LocalPlayer.GetModPlayer<QoCPlayer>().cardFacingBack)
-                testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsBack").Value;
+                testSprite = Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsBack").Value;
             Rectangle testFrame = testSprite.Frame(1, 1, 0, 0);
 
             Matrix rotation = Matrix.CreateRotationY(Main.LocalPlayer.GetModPlayer<QoCPlayer>().currentSpinRadians) * Matrix.CreateRotationZ((float)Math.Sin(Main.GlobalTimeWrappedHourly * 0.5f) * 0.1f);
@@ -406,7 +406,7 @@ namespace CalRemix.UI
             if (!Main.dedServ)
             {
                 //TODO: rn this and the translation matrix use duped values. centralize them
-                Texture2D testSprite = ModContent.Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle", AssetRequestMode.ImmediateLoad).Value;
+                Texture2D testSprite = Request<Texture2D>("CalRemix/UI/Fanny/HelperQueenOfClubsIdle", AssetRequestMode.ImmediateLoad).Value;
                 QueenOfClubs = new QueenOfClubsCard();
                 QueenOfClubs.Width.Pixels = testSprite.Width;
                 QueenOfClubs.Height.Pixels = testSprite.Height;

@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Tiles;
+﻿using CalamityMod.Tiles;
 using CalRemix.Content.Tiles;
 using CalRemix.Core.World;
 using Microsoft.Xna.Framework;

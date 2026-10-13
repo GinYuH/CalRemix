@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.Rarities;
 using CalRemix.Core.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

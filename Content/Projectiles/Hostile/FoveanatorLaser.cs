@@ -1,8 +1,4 @@
-﻿using System;
-using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime;
-using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

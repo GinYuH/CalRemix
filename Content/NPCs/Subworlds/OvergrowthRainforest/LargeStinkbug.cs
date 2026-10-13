@@ -1,14 +1,11 @@
 ﻿using CalamityMod;
-using CalamityMod.NPCs.Abyss;
 using CalamityMod.Projectiles.Boss;
-using CalRemix.Content.Items.Potions;
 using CalRemix.Core.Biomes.Subworlds;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
@@ -74,7 +71,7 @@ namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
         {
             for (int i = 0; i < 16; i++)
             {
-                Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(0.1f, 0.3f), ModContent.ProjectileType<SandPoisonCloud>(), CalRemixHelper.ProjectileDamage(200, 320), 1);
+                Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(0.1f, 0.3f), ProjectileType<SandPoisonCloud>(), CalRemixHelper.ProjectileDamage(200, 320), 1);
             }
         }
     }

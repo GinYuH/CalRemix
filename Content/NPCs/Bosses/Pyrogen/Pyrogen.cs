@@ -125,7 +125,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public static int cryoIconIndex;
         public static int pyroIconIndex;
         public float lifeRatio => NPC.life / (float)NPC.lifeMax;
-        public static float BaseDifficultyScale => MathHelper.Clamp((CalamityMod.Events.BossRushEvent.BossRushActive.ToInt() * 3 + CalamityWorld.revenge.ToInt() + Main.expertMode.ToInt()) * 0.5f, 0f, 1f);
+        public static float BaseDifficultyScale => MathHelper.Clamp((BossRushEvent.BossRushActive.ToInt() * 3 + revenge.ToInt() + Main.expertMode.ToInt()) * 0.5f, 0f, 1f);
 
         public bool phase2 = false;
         public bool phase3 = false;
@@ -282,7 +282,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
         public override void AI()
         {
             NPC.TargetClosest();
-            bool rev = CalamityWorld.revenge || BossRushEvent.BossRushActive;
+            bool rev = revenge || BossRushEvent.BossRushActive;
             bool death = CalamityWorld.death || BossRushEvent.BossRushActive;
             bool master = Main.masterMode || BossRushEvent.BossRushActive;
             bool expert = Main.expertMode || BossRushEvent.BossRushActive;
@@ -366,7 +366,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                         float playerYDist = player.Center.Y - pyrogenCenter.Y;
                         float playerDistance = (float)Math.Sqrt(playerXDist * playerXDist + playerYDist * playerYDist);
 
-                        float pyrogenSpeed = CalamityWorld.revenge ? 10f : 7f;
+                        float pyrogenSpeed = revenge ? 10f : 7f;
                         pyrogenSpeed += 4f;
 
                         playerDistance = pyrogenSpeed / playerDistance;
@@ -452,7 +452,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             if (AttackTimer >= 3 && AttackTimer < chargeDelaySub)
                             {
                                 int chargeType = Main.rand.Next(10); // > 5 = non predictive
-                                if (CalamityWorld.revenge) chargeType = Main.rand.Next(8);
+                                if (revenge) chargeType = Main.rand.Next(8);
                                 if (CalamityWorld.death) chargeType = Main.rand.Next(6); //JUST often enough to screw you occasionally
                                 switch (chargeType)
                                 {
@@ -856,7 +856,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
                             float playerYDist = player.Center.Y - pyrogenCenter.Y;
                             float playerDistance = (float)Math.Sqrt(playerXDist * playerXDist + playerYDist * playerYDist);
 
-                            float pyrogenSpeed = CalamityWorld.revenge ? 10f : 7f;
+                            float pyrogenSpeed = revenge ? 10f : 7f;
                             pyrogenSpeed += Main.getGoodWorld ? 8f : 6f;
 
                             playerDistance = pyrogenSpeed / playerDistance;
@@ -1456,7 +1456,7 @@ namespace CalRemix.Content.NPCs.Bosses.Pyrogen
 
             npcLoot.AddConditionalPerPlayer(() => Main.expertMode, ModContent.ItemType<PyrogenBag>());
             npcLoot.Add(ModContent.ItemType<PyrogenTrophy>(), 10);
-            npcLoot.AddIf(() => Main.masterMode || CalamityWorld.revenge, ModContent.ItemType<PyrogenRelic>());
+            npcLoot.AddIf(() => Main.masterMode || revenge, ModContent.ItemType<PyrogenRelic>());
             npcLoot.AddIf(() => Main.zenithWorld, ModContent.ItemType<DeliciousMeat>(), 1, 2200, 6600);
 
             npcLoot.AddNormalOnly(ModContent.ItemType<PyrogenMask>(), 7);

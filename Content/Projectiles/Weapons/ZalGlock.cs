@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using CalamityMod.Projectiles;
 using Terraria.Audio;
 using CalamityMod.Systems.Collections;
 

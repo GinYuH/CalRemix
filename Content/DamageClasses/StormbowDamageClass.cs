@@ -6,7 +6,7 @@ namespace CalRemix.Content.DamageClasses
     {
         public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
         {
-            if (damageClass == DamageClass.Generic)
+            if (damageClass == Generic)
                 return StatInheritanceData.Full;
 
             return StatInheritanceData.None;

@@ -5,9 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalRemix.Content.Buffs;
 using Terraria.Audio;
-using System;
-using CalamityMod.Projectiles.Summon;
-using CalamityMod.Projectiles.Magic;
 using CalamityMod.Projectiles.Ranged;
 
 namespace CalRemix.Content.Projectiles.Weapons

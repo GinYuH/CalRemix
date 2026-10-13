@@ -1,9 +1,7 @@
 ﻿using CalamityMod;
-using CalamityMod.Items.Weapons.Melee;
 using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Xml;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

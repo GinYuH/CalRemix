@@ -53,7 +53,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.Calamity().VulnerableToHeat = true;
             NPC.Calamity().VulnerableToSickness = false;
             NPC.Calamity().VulnerableToCold = true;
-            SpawnModBiomes = [GetInstance<SealedFieldsBiome>().Type, ModContent.GetInstance<SealedDimensionBiome>().Type];
+            SpawnModBiomes = [GetInstance<SealedFieldsBiome>().Type, GetInstance<SealedDimensionBiome>().Type];
         }
 
         public override void AI()
@@ -143,7 +143,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             if (Main.rand.NextBool(1200))
             {
-                SoundStyle top = NPC.type == ModContent.NPCType<TemporalAbomination>() ? TemporalAbomination.musiq : SealedSound;
+                SoundStyle top = NPC.type == NPCType<TemporalAbomination>() ? TemporalAbomination.musiq : SealedSound;
                 SoundEngine.PlaySound(top, NPC.Center);
             }
             NPC.spriteDirection = NPC.direction;

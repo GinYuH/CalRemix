@@ -83,7 +83,7 @@ public class ExoPike : ModProjectile
 
             offsetAngle = startAngle + deltaAngle * i;
 
-            int a = Terraria.Projectile.NewProjectile(spawnSource: null, Projectile.Center.X, Projectile.Center.Y, 20 * (float)Math.Sin(offsetAngle), 20 * (float)Math.Cos(offsetAngle), Mod.Find<ModProjectile>("ExoPikePhantom").Type, Projectile.damage *= 1, 0, Projectile.owner);
+            int a = Projectile.NewProjectile(spawnSource: null, Projectile.Center.X, Projectile.Center.Y, 20 * (float)Math.Sin(offsetAngle), 20 * (float)Math.Cos(offsetAngle), Mod.Find<ModProjectile>("ExoPikePhantom").Type, Projectile.damage *= 1, 0, Projectile.owner);
 
         }
 
@@ -127,7 +127,7 @@ public class ExoPike : ModProjectile
                         //Get the shoot trajectory from the projectile and target
                         float shootToX = target.position.X + (float)target.width * 0.5f - Projectile.Center.X;
                         float shootToY = target.position.Y - Projectile.Center.Y;
-                        float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+                        float distance = (float)Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
                         //If the distance between the live targeted npc and the projectile is less than 480 pixels
                         Mod calamityMod = CalRemix.CalMod;

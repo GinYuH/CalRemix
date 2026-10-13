@@ -1,4 +1,3 @@
-using CalamityMod.Items;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Tools;

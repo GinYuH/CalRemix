@@ -59,9 +59,9 @@ namespace CalRemix.Core.Subworlds
             TerrainFeatureType terrainFeatureType = TerrainFeatureType.Plateau;
             int num7 = 0;
             double num8 = (double)Main.maxTilesY * 0.3;
-            num8 *= (double)WorldGen.genRand.Next(90, 110) * 0.005;
+            num8 *= (double)genRand.Next(90, 110) * 0.005;
             double num9 = num8 + (double)Main.maxTilesY * 0.2;
-            num9 *= (double)WorldGen.genRand.Next(90, 110) * 0.01;
+            num9 *= (double)genRand.Next(90, 110) * 0.01;
             double num10 = num8;
             double num11 = num8;
             double num12 = num9;
@@ -77,17 +77,17 @@ namespace CalRemix.Core.Subworlds
                 num13 = Math.Max(num9, num13);
                 if (num7 <= 0)
                 {
-                    terrainFeatureType = (TerrainFeatureType)WorldGen.genRand.Next(0, 5);
-                    num7 = WorldGen.genRand.Next(5, 40);
+                    terrainFeatureType = (TerrainFeatureType)genRand.Next(0, 5);
+                    num7 = genRand.Next(5, 40);
                     if (terrainFeatureType == TerrainFeatureType.Plateau)
                     {
-                        num7 *= (int)((double)WorldGen.genRand.Next(5, 30) * 0.2);
+                        num7 *= (int)((double)genRand.Next(5, 30) * 0.2);
                     }
                 }
                 num7--;
                 if ((double)i > (double)Main.maxTilesX * 0.45 && (double)i < (double)Main.maxTilesX * 0.55 && (terrainFeatureType == TerrainFeatureType.Mountain || terrainFeatureType == TerrainFeatureType.Valley))
                 {
-                    terrainFeatureType = (TerrainFeatureType)WorldGen.genRand.Next(3);
+                    terrainFeatureType = (TerrainFeatureType)genRand.Next(3);
                 }
                 if ((double)i > (double)Main.maxTilesX * 0.48 && (double)i < (double)Main.maxTilesX * 0.52)
                 {
@@ -113,9 +113,9 @@ namespace CalRemix.Core.Subworlds
                     num8 = (double)Main.maxTilesY * num3;
                     num7 = 0;
                 }
-                while (WorldGen.genRand.NextBool(0, 3))
+                while (genRand.NextBool(0, 3))
                 {
-                    num9 += (double)WorldGen.genRand.Next(-2, 3);
+                    num9 += (double)genRand.Next(-2, 3);
                 }
                 if (num9 < num8 + (double)Main.maxTilesY * 0.06)
                 {
@@ -141,8 +141,8 @@ namespace CalRemix.Core.Subworlds
             Main.rockLayer = num13;
             double num4 = (int)((Main.rockLayer - Main.worldSurface) / 6.0) * 6;
             Main.rockLayer = (int)(Main.worldSurface + num4);
-            int num15 = (int)(Main.rockLayer + (double)Main.maxTilesY) / 2 + WorldGen.genRand.Next(-100, 20);
-            int lavaLine = num15 + WorldGen.genRand.Next(50, 80);
+            int num15 = (int)(Main.rockLayer + (double)Main.maxTilesY) / 2 + genRand.Next(-100, 20);
+            int lavaLine = num15 + genRand.Next(50, 80);
             int num5 = 20;
             if (num12 < num11 + (double)num5)
             {
@@ -171,9 +171,9 @@ namespace CalRemix.Core.Subworlds
 
             // making a bunch of vassal variables to contain temp stuff and be modified
             double surfaceVassal = (double)Main.maxTilesY * 0.3;
-            surfaceVassal *= (double)WorldGen.genRand.Next(90, 110) * 0.005;
+            surfaceVassal *= (double)genRand.Next(90, 110) * 0.005;
             double rockVassal = surfaceVassal + (double)Main.maxTilesY * 0.2;
-            rockVassal *= (double)WorldGen.genRand.Next(90, 110) * 0.01;
+            rockVassal *= (double)genRand.Next(90, 110) * 0.01;
             double surfaceLowVassal = surfaceVassal;
             double surfaceHighVassal = surfaceVassal;
             double rockLowVassal = rockVassal;
@@ -191,11 +191,11 @@ namespace CalRemix.Core.Subworlds
                 // change terrain feature type if the timer for it runs out
                 if (terrainFeatureChangeTimer <= 0)
                 {
-                    terrainFeatureType = (TerrainFeatureType)WorldGen.genRand.Next(0, 5);
-                    terrainFeatureChangeTimer = WorldGen.genRand.Next(5, 40);
+                    terrainFeatureType = (TerrainFeatureType)genRand.Next(0, 5);
+                    terrainFeatureChangeTimer = genRand.Next(5, 40);
                     if (terrainFeatureType == TerrainFeatureType.Plateau)
                     {
-                        terrainFeatureChangeTimer *= (int)((double)WorldGen.genRand.Next(5, 30) * 0.2);
+                        terrainFeatureChangeTimer *= (int)((double)genRand.Next(5, 30) * 0.2);
                     }
                 }
                 terrainFeatureChangeTimer--;
@@ -204,7 +204,7 @@ namespace CalRemix.Core.Subworlds
                 // if in the middle of the world, be a plateau 100% of the time
                 if ((double)i > (double)Main.maxTilesX * 0.45 && (double)i < (double)Main.maxTilesX * 0.55 && (terrainFeatureType == TerrainFeatureType.Mountain || terrainFeatureType == TerrainFeatureType.Valley))
                 {
-                    terrainFeatureType = (TerrainFeatureType)WorldGen.genRand.Next(3);
+                    terrainFeatureType = (TerrainFeatureType)genRand.Next(3);
                 }
                 if ((double)i > (double)Main.maxTilesX * 0.48 && (double)i < (double)Main.maxTilesX * 0.52)
                 {
@@ -231,9 +231,9 @@ namespace CalRemix.Core.Subworlds
                 }
 
                 // more noise?
-                while (WorldGen.genRand.NextBool(0, 3))
+                while (genRand.NextBool(0, 3))
                 {
-                    rockVassal += (double)WorldGen.genRand.Next(-2, 3);
+                    rockVassal += (double)genRand.Next(-2, 3);
                 }
                 if (rockVassal < surfaceVassal + (double)Main.maxTilesY * 0.06)
                 {
@@ -255,8 +255,8 @@ namespace CalRemix.Core.Subworlds
             Main.rockLayer = rockHighVassal;
             double num4 = (int)((Main.rockLayer - Main.worldSurface) / 6.0) * 6;
             Main.rockLayer = (int)(Main.worldSurface + num4);
-            int waterLine = (int)(Main.rockLayer + (double)Main.maxTilesY) / 2 + WorldGen.genRand.Next(-100, 20);
-            int lavaLine = waterLine + WorldGen.genRand.Next(50, 80);
+            int waterLine = (int)(Main.rockLayer + (double)Main.maxTilesY) / 2 + genRand.Next(-100, 20);
+            int lavaLine = waterLine + genRand.Next(50, 80);
             int num5 = 20;
             if (rockLowVassal < surfaceHighVassal + (double)num5)
             {
@@ -357,47 +357,47 @@ namespace CalRemix.Core.Subworlds
             switch (featureType)
             {
                 case TerrainFeatureType.Plateau:
-                    while (WorldGen.genRand.Next(0, 7) == 0)
+                    while (genRand.Next(0, 7) == 0)
                     {
-                        num += (double)WorldGen.genRand.Next(-1, 2);
+                        num += (double)genRand.Next(-1, 2);
                     }
                     break;
                 case TerrainFeatureType.Hill:
-                    while (WorldGen.genRand.Next(0, 4) == 0)
+                    while (genRand.Next(0, 4) == 0)
                     {
                         num -= 1.0;
                     }
-                    while (WorldGen.genRand.Next(0, 10) == 0)
+                    while (genRand.Next(0, 10) == 0)
                     {
                         num += 1.0;
                     }
                     break;
                 case TerrainFeatureType.Dale:
-                    while (WorldGen.genRand.Next(0, 4) == 0)
+                    while (genRand.Next(0, 4) == 0)
                     {
                         num += 1.0;
                     }
-                    while (WorldGen.genRand.Next(0, 10) == 0)
+                    while (genRand.Next(0, 10) == 0)
                     {
                         num -= 1.0;
                     }
                     break;
                 case TerrainFeatureType.Mountain:
-                    while (WorldGen.genRand.Next(0, 2) == 0)
+                    while (genRand.Next(0, 2) == 0)
                     {
                         num -= 1.0;
                     }
-                    while (WorldGen.genRand.Next(0, 6) == 0)
+                    while (genRand.Next(0, 6) == 0)
                     {
                         num += 1.0;
                     }
                     break;
                 case TerrainFeatureType.Valley:
-                    while (WorldGen.genRand.Next(0, 2) == 0)
+                    while (genRand.Next(0, 2) == 0)
                     {
                         num += 1.0;
                     }
-                    while (WorldGen.genRand.Next(0, 5) == 0)
+                    while (genRand.Next(0, 5) == 0)
                     {
                         num -= 1.0;
                     }
@@ -442,7 +442,7 @@ namespace CalRemix.Core.Subworlds
                 }
                 int[] array = new int[10];
                 int[] array2 = new int[10];
-                int num1038 = WorldGen.genRand.Next(450, Main.maxTilesX - 450);
+                int num1038 = genRand.Next(450, Main.maxTilesX - 450);
                 int num1039 = 0;
                 bool flag61;
                 do
@@ -458,8 +458,8 @@ namespace CalRemix.Core.Subworlds
                             flag61 = true;
                         }
                         array[num1040] = num1038;
-                        array2[num1040] = num1039 - WorldGen.genRand.Next(11, 16);
-                        num1038 += WorldGen.genRand.Next(5, 11);
+                        array2[num1040] = num1039 - genRand.Next(11, 16);
+                        num1038 += genRand.Next(5, 11);
                     }
                 }
                 while (flag61);
@@ -467,8 +467,8 @@ namespace CalRemix.Core.Subworlds
                 GenVars.numTunnels++;
                 for (int num1041 = 0; num1041 < 10; num1041++)
                 {
-                    WorldGen.TileRunner(array[num1041], array2[num1041], WorldGen.genRand.Next(5, 8), WorldGen.genRand.Next(6, 9), dirt, addTile: true, -2.0, -0.3);
-                    WorldGen.TileRunner(array[num1041], array2[num1041], WorldGen.genRand.Next(5, 8), WorldGen.genRand.Next(6, 9), dirt, addTile: true, 2.0, -0.3);
+                    TileRunner(array[num1041], array2[num1041], genRand.Next(5, 8), genRand.Next(6, 9), dirt, addTile: true, -2.0, -0.3);
+                    TileRunner(array[num1041], array2[num1041], genRand.Next(5, 8), genRand.Next(6, 9), dirt, addTile: true, 2.0, -0.3);
                 }
             }
         }
@@ -481,7 +481,7 @@ namespace CalRemix.Core.Subworlds
                 ushort num1026 = WallID.DirtUnsafe;
                 double value20 = (double)num1025 / (double)Main.maxTilesX;
                 bool flag58 = false;
-                num1024 += WorldGen.genRand.Next(-1, 2);
+                num1024 += genRand.Next(-1, 2);
                 if (num1024 < 0)
                 {
                     num1024 = 0;
@@ -541,23 +541,23 @@ namespace CalRemix.Core.Subworlds
             double num1018 = (double)(Main.maxTilesX * Main.maxTilesY) * 0.00015;
             for (int num1019 = 0; (double)num1019 < num1018; num1019++)
             {
-                WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(0, (int)GenVars.worldSurfaceLow + 1), WorldGen.genRand.Next(4, 15), WorldGen.genRand.Next(5, 40), 1);
+                TileRunner(genRand.Next(0, Main.maxTilesX), genRand.Next(0, (int)GenVars.worldSurfaceLow + 1), genRand.Next(4, 15), genRand.Next(5, 40), 1);
             }
             num1018 = (double)(Main.maxTilesX * Main.maxTilesY) * 0.0002;
             for (int num1020 = 0; (double)num1020 < num1018; num1020++)
             {
-                int num1021 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                int num1022 = WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh + 1);
+                int num1021 = genRand.Next(0, Main.maxTilesX);
+                int num1022 = genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh + 1);
                 if (!Main.tile[num1021, num1022 - 10].HasTile)
                 {
-                    num1022 = WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh + 1);
+                    num1022 = genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh + 1);
                 }
-                WorldGen.TileRunner(num1021, num1022, WorldGen.genRand.Next(4, 10), WorldGen.genRand.Next(5, 30), 1);
+                TileRunner(num1021, num1022, genRand.Next(4, 10), genRand.Next(5, 30), 1);
             }
             num1018 = (double)(Main.maxTilesX * Main.maxTilesY) * 0.0045;
             for (int num1023 = 0; (double)num1023 < num1018; num1023++)
             {
-                WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh + 1), WorldGen.genRand.Next(2, 7), WorldGen.genRand.Next(2, 23), 1);
+                TileRunner(genRand.Next(0, Main.maxTilesX), genRand.Next((int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh + 1), genRand.Next(2, 7), genRand.Next(2, 23), 1);
             }
         }
 
@@ -566,7 +566,7 @@ namespace CalRemix.Core.Subworlds
             double num1014 = (double)(Main.maxTilesX * Main.maxTilesY) * 0.005;
             for (int num1015 = 0; (double)num1015 < num1014; num1015++)
             {
-                WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.rockLayerLow, Main.maxTilesY), WorldGen.genRand.Next(2, 6), WorldGen.genRand.Next(2, 40), 0);
+                TileRunner(genRand.Next(0, Main.maxTilesX), genRand.Next((int)GenVars.rockLayerLow, Main.maxTilesY), genRand.Next(2, 6), genRand.Next(2, 40), 0);
             }
         }
 
@@ -574,24 +574,24 @@ namespace CalRemix.Core.Subworlds
         {
             for (int num1007 = 0; num1007 < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 2E-05); num1007++)
             {
-                WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(0, (int)GenVars.worldSurfaceLow), WorldGen.genRand.Next(4, 14), WorldGen.genRand.Next(10, 50), 40);
+                TileRunner(genRand.Next(0, Main.maxTilesX), genRand.Next(0, (int)GenVars.worldSurfaceLow), genRand.Next(4, 14), genRand.Next(10, 50), 40);
             }
-            if (WorldGen.remixWorldGen)
+            if (remixWorldGen)
             {
                 for (int num1008 = 0; num1008 < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 7E-05); num1008++)
                 {
-                    WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.rockLayer - 25, Main.maxTilesY - 350), WorldGen.genRand.Next(8, 15), WorldGen.genRand.Next(5, 50), 40);
+                    TileRunner(genRand.Next(0, Main.maxTilesX), genRand.Next((int)GenVars.rockLayer - 25, Main.maxTilesY - 350), genRand.Next(8, 15), genRand.Next(5, 50), 40);
                 }
             }
             else
             {
                 for (int num1009 = 0; num1009 < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 5E-05); num1009++)
                 {
-                    WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh + 1), WorldGen.genRand.Next(8, 14), WorldGen.genRand.Next(15, 45), 40);
+                    TileRunner(genRand.Next(0, Main.maxTilesX), genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh + 1), genRand.Next(8, 14), genRand.Next(15, 45), 40);
                 }
                 for (int num1010 = 0; num1010 < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 2E-05); num1010++)
                 {
-                    WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh + 1), WorldGen.genRand.Next(8, 15), WorldGen.genRand.Next(5, 50), 40);
+                    TileRunner(genRand.Next(0, Main.maxTilesX), genRand.Next((int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh + 1), genRand.Next(8, 15), genRand.Next(5, 50), 40);
                 }
             }
             for (int num1011 = 5; num1011 < Main.maxTilesX - 5; num1011++)
@@ -623,51 +623,51 @@ namespace CalRemix.Core.Subworlds
             {
                 double value19 = (double)num1002 / ((double)(Main.maxTilesX * Main.maxTilesY) * 0.0015);
                 int type13 = -1;
-                if (WorldGen.genRand.NextBool(5))
+                if (genRand.NextBool(5))
                 {
                     type13 = -2;
                 }
-                int num1003 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                int num1004 = WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
-                if (!WorldGen.remixWorldGen && WorldGen.tenthAnniversaryWorldGen)
+                int num1003 = genRand.Next(0, Main.maxTilesX);
+                int num1004 = genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
+                if (!remixWorldGen && tenthAnniversaryWorldGen)
                 {
                     while ((double)num1003 < (double)Main.maxTilesX * 0.2 && (double)num1003 > (double)Main.maxTilesX * 0.8 && (double)num1004 < GenVars.worldSurface)
                     {
-                        num1003 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        num1004 = WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
+                        num1003 = genRand.Next(0, Main.maxTilesX);
+                        num1004 = genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
                     }
                 }
                 else
                 {
                     while (((num1003 < GenVars.smallHolesBeachAvoidance || num1003 > Main.maxTilesX - GenVars.smallHolesBeachAvoidance) && (double)num1004 < worldSurfaceHigh2) || ((double)num1003 > (double)Main.maxTilesX * 0.45 && (double)num1003 < (double)Main.maxTilesX * 0.55 && (double)num1004 < GenVars.worldSurface))
                     {
-                        num1003 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        num1004 = WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
+                        num1003 = genRand.Next(0, Main.maxTilesX);
+                        num1004 = genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
                     }
                 }
-                int num1005 = WorldGen.genRand.Next(2, 5);
-                int num1006 = WorldGen.genRand.Next(2, 20);
-                if (WorldGen.remixWorldGen && (double)num1004 > Main.rockLayer)
+                int num1005 = genRand.Next(2, 5);
+                int num1006 = genRand.Next(2, 20);
+                if (remixWorldGen && (double)num1004 > Main.rockLayer)
                 {
                     num1005 = (int)((double)num1005 * 0.8);
                     num1006 = (int)((double)num1006 * 0.9);
                 }
-                WorldGen.TileRunner(num1003, num1004, num1005, num1006, type13);
-                num1003 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                num1004 = WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
+                TileRunner(num1003, num1004, num1005, num1006, type13);
+                num1003 = genRand.Next(0, Main.maxTilesX);
+                num1004 = genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
                 while (((num1003 < GenVars.smallHolesBeachAvoidance || num1003 > Main.maxTilesX - GenVars.smallHolesBeachAvoidance) && (double)num1004 < worldSurfaceHigh2) || ((double)num1003 > (double)Main.maxTilesX * 0.45 && (double)num1003 < (double)Main.maxTilesX * 0.55 && (double)num1004 < GenVars.worldSurface))
                 {
-                    num1003 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                    num1004 = WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
+                    num1003 = genRand.Next(0, Main.maxTilesX);
+                    num1004 = genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY);
                 }
-                num1005 = WorldGen.genRand.Next(8, 15);
-                num1006 = WorldGen.genRand.Next(7, 30);
-                if (WorldGen.remixWorldGen && (double)num1004 > Main.rockLayer)
+                num1005 = genRand.Next(8, 15);
+                num1006 = genRand.Next(7, 30);
+                if (remixWorldGen && (double)num1004 > Main.rockLayer)
                 {
                     num1005 = (int)((double)num1005 * 0.7);
                     num1006 = (int)((double)num1006 * 0.9);
                 }
-                WorldGen.TileRunner(num1003, num1004, num1005, num1006, type13);
+                TileRunner(num1003, num1004, num1005, num1006, type13);
             }
         }
 
@@ -681,25 +681,25 @@ namespace CalRemix.Core.Subworlds
                 if (GenVars.rockLayerHigh <= (double)Main.maxTilesY)
                 {
                     int type12 = -1;
-                    if (WorldGen.genRand.NextBool(6))
+                    if (genRand.NextBool(6))
                     {
                         type12 = -2;
                     }
-                    int num998 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                    int num999 = WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.rockLayerHigh + 1);
+                    int num998 = genRand.Next(0, Main.maxTilesX);
+                    int num999 = genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.rockLayerHigh + 1);
                     while (((num998 < GenVars.smallHolesBeachAvoidance || num998 > Main.maxTilesX - GenVars.smallHolesBeachAvoidance) && (double)num999 < worldSurfaceHigh) || ((double)num998 >= (double)Main.maxTilesX * 0.45 && (double)num998 <= (double)Main.maxTilesX * 0.55 && (double)num999 < Main.worldSurface))
                     {
-                        num998 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        num999 = WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.rockLayerHigh + 1);
+                        num998 = genRand.Next(0, Main.maxTilesX);
+                        num999 = genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.rockLayerHigh + 1);
                     }
-                    int num1000 = WorldGen.genRand.Next(5, 15);
-                    int num1001 = WorldGen.genRand.Next(30, 200);
-                    if (WorldGen.remixWorldGen)
+                    int num1000 = genRand.Next(5, 15);
+                    int num1001 = genRand.Next(30, 200);
+                    if (remixWorldGen)
                     {
                         num1000 = (int)((double)num1000 * 1.1);
                         num1001 = (int)((double)num1001 * 1.9);
                     }
-                    WorldGen.TileRunner(num998, num999, num1000, num1001, type12);
+                    TileRunner(num998, num999, num1000, num1001, type12);
                 }
             }
         }
@@ -713,16 +713,16 @@ namespace CalRemix.Core.Subworlds
                 if (GenVars.rockLayerHigh <= (double)Main.maxTilesY)
                 {
                     int type10 = -1;
-                    if (WorldGen.genRand.NextBool(10))
+                    if (genRand.NextBool(10))
                     {
                         type10 = -2;
                     }
-                    int num990 = WorldGen.genRand.Next(6, 20);
-                    int num991 = WorldGen.genRand.Next(50, 300);
-                    WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)GenVars.rockLayerHigh, Main.maxTilesY), num990, num991, type10);
+                    int num990 = genRand.Next(6, 20);
+                    int num991 = genRand.Next(50, 300);
+                    TileRunner(genRand.Next(0, Main.maxTilesX), genRand.Next((int)GenVars.rockLayerHigh, Main.maxTilesY), num990, num991, type10);
                 }
             }
-            if (WorldGen.remixWorldGen)
+            if (remixWorldGen)
             {
                 num988 = (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.00013 * 0.4);
                 for (int num992 = 0; num992 < num988; num992++)
@@ -730,18 +730,18 @@ namespace CalRemix.Core.Subworlds
                     if (GenVars.rockLayerHigh <= (double)Main.maxTilesY)
                     {
                         int type11 = -1;
-                        if (WorldGen.genRand.NextBool(10))
+                        if (genRand.NextBool(10))
                         {
                             type11 = -2;
                         }
-                        int num993 = WorldGen.genRand.Next(7, 26);
-                        int steps = WorldGen.genRand.Next(50, 200);
-                        double num994 = (double)WorldGen.genRand.Next(100, 221) * 0.1;
-                        double num995 = (double)WorldGen.genRand.Next(-10, 11) * 0.02;
-                        int i7 = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        int j9 = WorldGen.genRand.Next((int)GenVars.rockLayerHigh, Main.maxTilesY);
-                        WorldGen.TileRunner(i7, j9, num993, steps, type11, addTile: false, num994, num995, noYChange: true);
-                        WorldGen.TileRunner(i7, j9, num993, steps, type11, addTile: false, 0.0 - num994, 0.0 - num995, noYChange: true);
+                        int num993 = genRand.Next(7, 26);
+                        int steps = genRand.Next(50, 200);
+                        double num994 = (double)genRand.Next(100, 221) * 0.1;
+                        double num995 = (double)genRand.Next(-10, 11) * 0.02;
+                        int i7 = genRand.Next(0, Main.maxTilesX);
+                        int j9 = genRand.Next((int)GenVars.rockLayerHigh, Main.maxTilesY);
+                        TileRunner(i7, j9, num993, steps, type11, addTile: false, num994, num995, noYChange: true);
+                        TileRunner(i7, j9, num993, steps, type11, addTile: false, 0.0 - num994, 0.0 - num995, noYChange: true);
                     }
                 }
             }
@@ -752,7 +752,7 @@ namespace CalRemix.Core.Subworlds
             int num969 = (int)((double)Main.maxTilesX * 0.002);
             int num970 = (int)((double)Main.maxTilesX * 0.0007);
             int num971 = (int)((double)Main.maxTilesX * 0.0003);
-            if (WorldGen.remixWorldGen)
+            if (remixWorldGen)
             {
                 num969 *= 3;
                 num970 *= 3;
@@ -760,66 +760,66 @@ namespace CalRemix.Core.Subworlds
             }
             for (int num972 = 0; num972 < num969; num972++)
             {
-                int num973 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                int num973 = genRand.Next(0, Main.maxTilesX);
                 while (((double)num973 > (double)Main.maxTilesX * 0.45 && (double)num973 < (double)Main.maxTilesX * 0.55) || num973 < GenVars.leftBeachEnd + 20 || num973 > GenVars.rightBeachStart - 20)
                 {
-                    num973 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                    num973 = genRand.Next(0, Main.maxTilesX);
                 }
                 for (int num974 = 0; (double)num974 < GenVars.worldSurfaceHigh; num974++)
                 {
                     if (Main.tile[num973, num974].HasTile)
                     {
-                        WorldGen.TileRunner(num973, num974, WorldGen.genRand.Next(3, 6), WorldGen.genRand.Next(5, 50), -1, addTile: false, (double)WorldGen.genRand.Next(-10, 11) * 0.1, 1.0);
+                        TileRunner(num973, num974, genRand.Next(3, 6), genRand.Next(5, 50), -1, addTile: false, (double)genRand.Next(-10, 11) * 0.1, 1.0);
                         break;
                     }
                 }
             }
             for (int num975 = 0; num975 < num970; num975++)
             {
-                int num976 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                int num976 = genRand.Next(0, Main.maxTilesX);
                 while (((double)num976 > (double)Main.maxTilesX * 0.43 && (double)num976 < (double)Main.maxTilesX * 0.57000000000000006) || num976 < GenVars.leftBeachEnd + 20 || num976 > GenVars.rightBeachStart - 20)
                 {
-                    num976 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                    num976 = genRand.Next(0, Main.maxTilesX);
                 }
                 for (int num977 = 0; (double)num977 < GenVars.worldSurfaceHigh; num977++)
                 {
                     if (Main.tile[num976, num977].HasTile)
                     {
-                        WorldGen.TileRunner(num976, num977, WorldGen.genRand.Next(10, 15), WorldGen.genRand.Next(50, 130), -1, addTile: false, (double)WorldGen.genRand.Next(-10, 11) * 0.1, 2.0);
+                        TileRunner(num976, num977, genRand.Next(10, 15), genRand.Next(50, 130), -1, addTile: false, (double)genRand.Next(-10, 11) * 0.1, 2.0);
                         break;
                     }
                 }
             }
             for (int num978 = 0; num978 < num971; num978++)
             {
-                int num979 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                int num979 = genRand.Next(0, Main.maxTilesX);
                 while (((double)num979 > (double)Main.maxTilesX * 0.4 && (double)num979 < (double)Main.maxTilesX * 0.6) || num979 < GenVars.leftBeachEnd + 20 || num979 > GenVars.rightBeachStart - 20)
                 {
-                    num979 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                    num979 = genRand.Next(0, Main.maxTilesX);
                 }
                 for (int num980 = 0; (double)num980 < GenVars.worldSurfaceHigh; num980++)
                 {
                     if (Main.tile[num979, num980].HasTile)
                     {
-                        WorldGen.TileRunner(num979, num980, WorldGen.genRand.Next(12, 25), WorldGen.genRand.Next(150, 500), -1, addTile: false, (double)WorldGen.genRand.Next(-10, 11) * 0.1, 4.0);
-                        WorldGen.TileRunner(num979, num980, WorldGen.genRand.Next(8, 17), WorldGen.genRand.Next(60, 200), -1, addTile: false, (double)WorldGen.genRand.Next(-10, 11) * 0.1, 2.0);
-                        WorldGen.TileRunner(num979, num980, WorldGen.genRand.Next(5, 13), WorldGen.genRand.Next(40, 170), -1, addTile: false, (double)WorldGen.genRand.Next(-10, 11) * 0.1, 2.0);
+                        TileRunner(num979, num980, genRand.Next(12, 25), genRand.Next(150, 500), -1, addTile: false, (double)genRand.Next(-10, 11) * 0.1, 4.0);
+                        TileRunner(num979, num980, genRand.Next(8, 17), genRand.Next(60, 200), -1, addTile: false, (double)genRand.Next(-10, 11) * 0.1, 2.0);
+                        TileRunner(num979, num980, genRand.Next(5, 13), genRand.Next(40, 170), -1, addTile: false, (double)genRand.Next(-10, 11) * 0.1, 2.0);
                         break;
                     }
                 }
             }
             for (int num981 = 0; num981 < (int)((double)Main.maxTilesX * 0.0004); num981++)
             {
-                int num982 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                int num982 = genRand.Next(0, Main.maxTilesX);
                 while (((double)num982 > (double)Main.maxTilesX * 0.4 && (double)num982 < (double)Main.maxTilesX * 0.6) || num982 < GenVars.leftBeachEnd + 20 || num982 > GenVars.rightBeachStart - 20)
                 {
-                    num982 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                    num982 = genRand.Next(0, Main.maxTilesX);
                 }
                 for (int num983 = 0; (double)num983 < GenVars.worldSurfaceHigh; num983++)
                 {
                     if (Main.tile[num982, num983].HasTile)
                     {
-                        WorldGen.TileRunner(num982, num983, WorldGen.genRand.Next(7, 12), WorldGen.genRand.Next(150, 250), -1, addTile: false, 0.0, 1.0, noYChange: true);
+                        TileRunner(num982, num983, genRand.Next(7, 12), genRand.Next(150, 250), -1, addTile: false, 0.0, 1.0, noYChange: true);
                         break;
                     }
                 }
@@ -835,7 +835,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         num986 = num987 - 1;
                     }
-                    WorldGen.Caverer(WorldGen.genRand.Next(GenVars.surfaceCavesBeachAvoidance2, Main.maxTilesX - GenVars.surfaceCavesBeachAvoidance2), WorldGen.genRand.Next(num986, num987));
+                    Caverer(genRand.Next(GenVars.surfaceCavesBeachAvoidance2, Main.maxTilesX - GenVars.surfaceCavesBeachAvoidance2), genRand.Next(num986, num987));
                 }
                 catch
                 {
@@ -857,7 +857,7 @@ namespace CalRemix.Core.Subworlds
             for (int num964 = 0; num964 < num961; num964++)
             {
                 double num965 = (double)num964 / (double)(num961 - 1);
-                int num966 = WorldGen.genRand.Next((int)Main.worldSurface + 100, Main.UnderworldLayer - 100);
+                int num966 = genRand.Next((int)Main.worldSurface + 100, Main.UnderworldLayer - 100);
                 int num967 = 0;
                 while (Math.Abs(num966 - num962) < num963)
                 {
@@ -866,14 +866,14 @@ namespace CalRemix.Core.Subworlds
                     {
                         break;
                     }
-                    num966 = WorldGen.genRand.Next((int)Main.worldSurface + 100, Main.UnderworldLayer - 100);
+                    num966 = genRand.Next((int)Main.worldSurface + 100, Main.UnderworldLayer - 100);
                 }
                 num962 = num966;
                 int num968 = 80;
                 int startX = num968 + (int)((double)(Main.maxTilesX - num968 * 2) * num965);
                 try
                 {
-                    WorldGen.WavyCaverer(startX, num966, 12 + WorldGen.genRand.Next(3, 6), 0.25 + WorldGen.genRand.NextDouble(), WorldGen.genRand.Next(300, 500), -1);
+                    WavyCaverer(startX, num966, 12 + genRand.Next(3, 6), 0.25 + genRand.NextDouble(), genRand.Next(300, 500), -1);
                 }
                 catch
                 {
@@ -886,8 +886,8 @@ namespace CalRemix.Core.Subworlds
             double num948 = (double)(Main.maxTilesX * Main.maxTilesY) * 0.002;
             for (int num949 = 0; (double)num949 < num948; num949++)
             {
-                int num950 = WorldGen.genRand.Next(1, Main.maxTilesX - 1);
-                int num951 = WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh);
+                int num950 = genRand.Next(1, Main.maxTilesX - 1);
+                int num951 = genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh);
                 if (num951 >= Main.maxTilesY)
                 {
                     num951 = Main.maxTilesY - 2;
@@ -928,8 +928,8 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                 }
-                num950 = WorldGen.genRand.Next(1, Main.maxTilesX - 1);
-                num951 = WorldGen.genRand.Next(0, (int)GenVars.worldSurfaceLow);
+                num950 = genRand.Next(1, Main.maxTilesX - 1);
+                num951 = genRand.Next(0, (int)GenVars.worldSurfaceLow);
                 if (num951 >= Main.maxTilesY)
                 {
                     num951 = Main.maxTilesY - 2;
@@ -988,10 +988,10 @@ namespace CalRemix.Core.Subworlds
                 while (--num929 > 0)
                 {
                     bool flag57 = true;
-                    int num930 = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.1), (int)((double)Main.maxTilesX * 0.9));
+                    int num930 = genRand.Next((int)((double)Main.maxTilesX * 0.1), (int)((double)Main.maxTilesX * 0.9));
                     while (num930 > Main.maxTilesX / 2 - 150 && num930 < Main.maxTilesX / 2 + 150)
                     {
-                        num930 = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.1), (int)((double)Main.maxTilesX * 0.9));
+                        num930 = genRand.Next((int)((double)Main.maxTilesX * 0.1), (int)((double)Main.maxTilesX * 0.9));
                     }
                     for (int num931 = 0; num931 < GenVars.numIslandHouses; num931++)
                     {
@@ -1018,32 +1018,32 @@ namespace CalRemix.Core.Subworlds
                         {
                             int num934 = 0;
                             num929 = -1;
-                            int val = WorldGen.genRand.Next(90, num932 - 100);
+                            int val = genRand.Next(90, num932 - 100);
                             val = Math.Min(val, (int)GenVars.worldSurfaceLow - 50);
                             if (num926 >= num925 && doLakes)
                             {
                                 GenVars.skyLake[GenVars.numIslandHouses] = true;
-                                WorldGen.CloudLake(num930, val);
+                                CloudLake(num930, val);
                             }
                             else
                             {
                                 GenVars.skyLake[GenVars.numIslandHouses] = false;
                                 if (doDrunkWorldIslands)
                                 {
-                                    if (WorldGen.genRand.NextBool(2))
+                                    if (genRand.NextBool(2))
                                     {
                                         num934 = 3;
-                                        WorldGen.SnowCloudIsland(num930, val);
+                                        SnowCloudIsland(num930, val);
                                     }
                                     else
                                     {
                                         num934 = 1;
-                                        WorldGen.DesertCloudIsland(num930, val);
+                                        DesertCloudIsland(num930, val);
                                     }
                                 }
                                 else
                                 {
-                                    WorldGen.CloudIsland(num930, val);
+                                    CloudIsland(num930, val);
                                 }
                             }
                             GenVars.floatingIslandHouseX[GenVars.numIslandHouses] = num930;
@@ -1060,7 +1060,7 @@ namespace CalRemix.Core.Subworlds
         public static void Lakes(int? amtOfLakes = null)
         {
             double num740 = (double)Main.maxTilesX / 4200.0;
-            int num741 = WorldGen.genRand.Next((int)(num740 * 3.0), (int)(num740 * 6.0));
+            int num741 = genRand.Next((int)(num740 * 3.0), (int)(num740 * 6.0));
             if (amtOfLakes != null)
                 num741 = (int)amtOfLakes;
             for (int num742 = 0; num742 < num741; num742++)
@@ -1075,10 +1075,10 @@ namespace CalRemix.Core.Subworlds
                 {
                     bool flag48 = false;
                     num743--;
-                    int num744 = WorldGen.genRand.Next(GenVars.lakesBeachAvoidance, Main.maxTilesX - GenVars.lakesBeachAvoidance);
+                    int num744 = genRand.Next(GenVars.lakesBeachAvoidance, Main.maxTilesX - GenVars.lakesBeachAvoidance);
                     while ((double)num744 > (double)Main.maxTilesX * 0.45 && (double)num744 < (double)Main.maxTilesX * 0.55)
                     {
-                        num744 = WorldGen.genRand.Next(GenVars.lakesBeachAvoidance, Main.maxTilesX - GenVars.lakesBeachAvoidance);
+                        num744 = genRand.Next(GenVars.lakesBeachAvoidance, Main.maxTilesX - GenVars.lakesBeachAvoidance);
                     }
                     for (int num745 = 0; num745 < GenVars.numLakes; num745++)
                     {
@@ -1138,7 +1138,7 @@ namespace CalRemix.Core.Subworlds
                             {
                                 int num752 = num748;
                                 num749 = 20;
-                                while (!WorldGen.SolidTile(num744 - num749, num748) || !WorldGen.SolidTile(num744 + num749, num748))
+                                while (!SolidTile(num744 - num749, num748) || !SolidTile(num744 + num749, num748))
                                 {
                                     num748++;
                                     if ((double)num748 > Main.worldSurface - 50.0)
@@ -1164,7 +1164,7 @@ namespace CalRemix.Core.Subworlds
                                         {
                                             for (int num756 = num748; num756 <= num748 + num749 * 2; num756++)
                                             {
-                                                if (WorldGen.SolidTile(num755, num756))
+                                                if (SolidTile(num755, num756))
                                                 {
                                                     num754++;
                                                 }
@@ -1173,7 +1173,7 @@ namespace CalRemix.Core.Subworlds
                                         int num757 = (num749 * 2 + 1) * (num749 * 2 + 1);
                                         if (!((double)num754 < (double)num757 * 0.8) && !GenVars.UndergroundDesertLocation.Intersects(new Rectangle(num744 - 8, num748 - 8, 16, 16)))
                                         {
-                                            WorldGen.SonOfLakinater(num744, num748);
+                                            SonOfLakinater(num744, num748);
                                             GenVars.LakeX[GenVars.numLakes] = num744;
                                             GenVars.numLakes++;
                                             break;
@@ -1287,7 +1287,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2))
+                    if (genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num678 + 3, num680];
                         tile25.WallType = WallID.None;
@@ -1307,7 +1307,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2))
+                    if (genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num678 - 3, num680];
                         tile25.WallType = WallID.None;
@@ -1327,7 +1327,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2))
+                    if (genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num678 - 2, num680];
                         tile25.WallType = WallID.None;
@@ -1354,7 +1354,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2))
+                    if (genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num678 + 2, num680];
                         tile25.WallType = WallID.None;
@@ -1504,7 +1504,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2))
+                    if (genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num681 + 2, num683];
                         tile25.WallType = WallID.None;
@@ -1524,7 +1524,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2))
+                    if (genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num681 - 3, num683];
                         tile25.WallType = WallID.None;
@@ -1561,7 +1561,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2))
+                    if (genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num681 - 2, num683];
                         tile25.WallType = WallID.None;
@@ -1610,7 +1610,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.genRand.NextBool(2))
+                    if (genRand.NextBool(2))
                     {
                         tile25 = Main.tile[num681 + 3, num683];
                         tile25.WallType = WallID.None;
@@ -1624,11 +1624,11 @@ namespace CalRemix.Core.Subworlds
         {
             for (int num668 = 0; num668 < Main.maxTilesX; num668++)
             {
-                int num669 = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
-                int num670 = WorldGen.genRand.Next(10, (int)Main.worldSurface);
+                int num669 = genRand.Next(10, Main.maxTilesX - 10);
+                int num670 = genRand.Next(10, (int)Main.worldSurface);
                 if (Main.tile[num669, num670].WallType == WallID.DirtUnsafe)
                 {
-                    WorldGen.DirtyRockRunner(num669, num670);
+                    DirtyRockRunner(num669, num670);
                 }
             }
         }
@@ -1645,137 +1645,137 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (!Main.tile[num565, num566 - 1].HasTile && Main.tile[num565 - 1, num566].TileType != TileID.Switches && Main.tile[num565 + 1, num566].TileType != TileID.Switches)
                         {
-                            if (WorldGen.SolidTile(num565, num566) && TileID.Sets.CanBeClearedDuringGeneration[Main.tile[num565, num566].TileType])
+                            if (SolidTile(num565, num566) && TileID.Sets.CanBeClearedDuringGeneration[Main.tile[num565, num566].TileType])
                             {
                                 if (!Main.tile[num565 - 1, num566].IsHalfBlock && !Main.tile[num565 + 1, num566].IsHalfBlock && Main.tile[num565 - 1, num566].Slope == 0 && Main.tile[num565 + 1, num566].Slope == 0)
                                 {
-                                    if (WorldGen.SolidTile(num565, num566 + 1))
+                                    if (SolidTile(num565, num566 + 1))
                                     {
-                                        if (!WorldGen.SolidTile(num565 - 1, num566) && !Main.tile[num565 - 1, num566 + 1].IsHalfBlock && WorldGen.SolidTile(num565 - 1, num566 + 1) && WorldGen.SolidTile(num565 + 1, num566) && !Main.tile[num565 + 1, num566 - 1].HasTile)
+                                        if (!SolidTile(num565 - 1, num566) && !Main.tile[num565 - 1, num566 + 1].IsHalfBlock && SolidTile(num565 - 1, num566 + 1) && SolidTile(num565 + 1, num566) && !Main.tile[num565 + 1, num566 - 1].HasTile)
                                         {
-                                            if (WorldGen.genRand.NextBool(2))
+                                            if (genRand.NextBool(2))
                                             {
-                                                WorldGen.SlopeTile(num565, num566, 2);
+                                                SlopeTile(num565, num566, 2);
                                             }
                                             else
                                             {
-                                                WorldGen.PoundTile(num565, num566);
+                                                PoundTile(num565, num566);
                                             }
                                         }
-                                        else if (!WorldGen.SolidTile(num565 + 1, num566) && !Main.tile[num565 + 1, num566 + 1].IsHalfBlock && WorldGen.SolidTile(num565 + 1, num566 + 1) && WorldGen.SolidTile(num565 - 1, num566) && !Main.tile[num565 - 1, num566 - 1].HasTile)
+                                        else if (!SolidTile(num565 + 1, num566) && !Main.tile[num565 + 1, num566 + 1].IsHalfBlock && SolidTile(num565 + 1, num566 + 1) && SolidTile(num565 - 1, num566) && !Main.tile[num565 - 1, num566 - 1].HasTile)
                                         {
-                                            if (WorldGen.genRand.NextBool(2))
+                                            if (genRand.NextBool(2))
                                             {
-                                                WorldGen.SlopeTile(num565, num566, 1);
+                                                SlopeTile(num565, num566, 1);
                                             }
                                             else
                                             {
-                                                WorldGen.PoundTile(num565, num566);
+                                                PoundTile(num565, num566);
                                             }
                                         }
-                                        else if (WorldGen.SolidTile(num565 + 1, num566 + 1) && WorldGen.SolidTile(num565 - 1, num566 + 1) && !Main.tile[num565 + 1, num566].HasTile && !Main.tile[num565 - 1, num566].HasTile)
+                                        else if (SolidTile(num565 + 1, num566 + 1) && SolidTile(num565 - 1, num566 + 1) && !Main.tile[num565 + 1, num566].HasTile && !Main.tile[num565 - 1, num566].HasTile)
                                         {
-                                            WorldGen.PoundTile(num565, num566);
+                                            PoundTile(num565, num566);
                                         }
-                                        if (WorldGen.SolidTile(num565, num566))
+                                        if (SolidTile(num565, num566))
                                         {
-                                            if (WorldGen.SolidTile(num565 - 1, num566) && WorldGen.SolidTile(num565 + 1, num566 + 2) && !Main.tile[num565 + 1, num566].HasTile && !Main.tile[num565 + 1, num566 + 1].HasTile && !Main.tile[num565 - 1, num566 - 1].HasTile)
+                                            if (SolidTile(num565 - 1, num566) && SolidTile(num565 + 1, num566 + 2) && !Main.tile[num565 + 1, num566].HasTile && !Main.tile[num565 + 1, num566 + 1].HasTile && !Main.tile[num565 - 1, num566 - 1].HasTile)
                                             {
-                                                WorldGen.KillTile(num565, num566);
+                                                KillTile(num565, num566);
                                             }
-                                            else if (WorldGen.SolidTile(num565 + 1, num566) && WorldGen.SolidTile(num565 - 1, num566 + 2) && !Main.tile[num565 - 1, num566].HasTile && !Main.tile[num565 - 1, num566 + 1].HasTile && !Main.tile[num565 + 1, num566 - 1].HasTile)
+                                            else if (SolidTile(num565 + 1, num566) && SolidTile(num565 - 1, num566 + 2) && !Main.tile[num565 - 1, num566].HasTile && !Main.tile[num565 - 1, num566 + 1].HasTile && !Main.tile[num565 + 1, num566 - 1].HasTile)
                                             {
-                                                WorldGen.KillTile(num565, num566);
+                                                KillTile(num565, num566);
                                             }
-                                            else if (!Main.tile[num565 - 1, num566 + 1].HasTile && !Main.tile[num565 - 1, num566].HasTile && WorldGen.SolidTile(num565 + 1, num566) && WorldGen.SolidTile(num565, num566 + 2))
+                                            else if (!Main.tile[num565 - 1, num566 + 1].HasTile && !Main.tile[num565 - 1, num566].HasTile && SolidTile(num565 + 1, num566) && SolidTile(num565, num566 + 2))
                                             {
-                                                if (WorldGen.genRand.NextBool(5))
+                                                if (genRand.NextBool(5))
                                                 {
-                                                    WorldGen.KillTile(num565, num566);
+                                                    KillTile(num565, num566);
                                                 }
-                                                else if (WorldGen.genRand.NextBool(5))
+                                                else if (genRand.NextBool(5))
                                                 {
-                                                    WorldGen.PoundTile(num565, num566);
+                                                    PoundTile(num565, num566);
                                                 }
                                                 else
                                                 {
-                                                    WorldGen.SlopeTile(num565, num566, 2);
+                                                    SlopeTile(num565, num566, 2);
                                                 }
                                             }
-                                            else if (!Main.tile[num565 + 1, num566 + 1].HasTile && !Main.tile[num565 + 1, num566].HasTile && WorldGen.SolidTile(num565 - 1, num566) && WorldGen.SolidTile(num565, num566 + 2))
+                                            else if (!Main.tile[num565 + 1, num566 + 1].HasTile && !Main.tile[num565 + 1, num566].HasTile && SolidTile(num565 - 1, num566) && SolidTile(num565, num566 + 2))
                                             {
-                                                if (WorldGen.genRand.NextBool(5))
+                                                if (genRand.NextBool(5))
                                                 {
-                                                    WorldGen.KillTile(num565, num566);
+                                                    KillTile(num565, num566);
                                                 }
-                                                else if (WorldGen.genRand.NextBool(5))
+                                                else if (genRand.NextBool(5))
                                                 {
-                                                    WorldGen.PoundTile(num565, num566);
+                                                    PoundTile(num565, num566);
                                                 }
                                                 else
                                                 {
-                                                    WorldGen.SlopeTile(num565, num566, 1);
+                                                    SlopeTile(num565, num566, 1);
                                                 }
                                             }
                                         }
                                     }
-                                    if (WorldGen.SolidTile(num565, num566) && !Main.tile[num565 - 1, num566].HasTile && !Main.tile[num565 + 1, num566].HasTile)
+                                    if (SolidTile(num565, num566) && !Main.tile[num565 - 1, num566].HasTile && !Main.tile[num565 + 1, num566].HasTile)
                                     {
-                                        WorldGen.KillTile(num565, num566);
+                                        KillTile(num565, num566);
                                     }
                                 }
                             }
                             else if (!Main.tile[num565, num566].HasTile && Main.tile[num565, num566 + 1].TileType != TileID.SandstoneBrick && Main.tile[num565, num566 + 1].TileType != TileID.SandStoneSlab)
                             {
-                                if (Main.tile[num565 + 1, num566].TileType != TileID.MushroomBlock && Main.tile[num565 + 1, num566].TileType != TileID.Spikes && Main.tile[num565 + 1, num566].TileType != TileID.WoodenSpikes && WorldGen.SolidTile(num565 - 1, num566 + 1) && WorldGen.SolidTile(num565 + 1, num566) && !Main.tile[num565 - 1, num566].HasTile && !Main.tile[num565 + 1, num566 - 1].HasTile)
+                                if (Main.tile[num565 + 1, num566].TileType != TileID.MushroomBlock && Main.tile[num565 + 1, num566].TileType != TileID.Spikes && Main.tile[num565 + 1, num566].TileType != TileID.WoodenSpikes && SolidTile(num565 - 1, num566 + 1) && SolidTile(num565 + 1, num566) && !Main.tile[num565 - 1, num566].HasTile && !Main.tile[num565 + 1, num566 - 1].HasTile)
                                 {
                                     if (Main.tile[num565 + 1, num566].TileType == TileID.ShellPile)
                                     {
-                                        WorldGen.PlaceTile(num565, num566, Main.tile[num565 + 1, num566].TileType);
+                                        PlaceTile(num565, num566, Main.tile[num565 + 1, num566].TileType);
                                     }
                                     else
                                     {
-                                        WorldGen.PlaceTile(num565, num566, Main.tile[num565, num566 + 1].TileType);
+                                        PlaceTile(num565, num566, Main.tile[num565, num566 + 1].TileType);
                                     }
-                                    if (WorldGen.genRand.NextBool(2))
+                                    if (genRand.NextBool(2))
                                     {
-                                        WorldGen.SlopeTile(num565, num566, 2);
+                                        SlopeTile(num565, num566, 2);
                                     }
                                     else
                                     {
-                                        WorldGen.PoundTile(num565, num566);
+                                        PoundTile(num565, num566);
                                     }
                                 }
-                                if (Main.tile[num565 - 1, num566].TileType != TileID.MushroomBlock && Main.tile[num565 - 1, num566].TileType != TileID.Spikes && Main.tile[num565 - 1, num566].TileType != TileID.WoodenSpikes && WorldGen.SolidTile(num565 + 1, num566 + 1) && WorldGen.SolidTile(num565 - 1, num566) && !Main.tile[num565 + 1, num566].HasTile && !Main.tile[num565 - 1, num566 - 1].HasTile)
+                                if (Main.tile[num565 - 1, num566].TileType != TileID.MushroomBlock && Main.tile[num565 - 1, num566].TileType != TileID.Spikes && Main.tile[num565 - 1, num566].TileType != TileID.WoodenSpikes && SolidTile(num565 + 1, num566 + 1) && SolidTile(num565 - 1, num566) && !Main.tile[num565 + 1, num566].HasTile && !Main.tile[num565 - 1, num566 - 1].HasTile)
                                 {
                                     if (Main.tile[num565 - 1, num566].TileType == TileID.ShellPile)
                                     {
-                                        WorldGen.PlaceTile(num565, num566, Main.tile[num565 - 1, num566].TileType);
+                                        PlaceTile(num565, num566, Main.tile[num565 - 1, num566].TileType);
                                     }
                                     else
                                     {
-                                        WorldGen.PlaceTile(num565, num566, Main.tile[num565, num566 + 1].TileType);
+                                        PlaceTile(num565, num566, Main.tile[num565, num566 + 1].TileType);
                                     }
-                                    if (WorldGen.genRand.NextBool(2))
+                                    if (genRand.NextBool(2))
                                     {
-                                        WorldGen.SlopeTile(num565, num566, 1);
+                                        SlopeTile(num565, num566, 1);
                                     }
                                     else
                                     {
-                                        WorldGen.PoundTile(num565, num566);
+                                        PoundTile(num565, num566);
                                     }
                                 }
                             }
                         }
-                        else if (!Main.tile[num565, num566 + 1].HasTile && WorldGen.genRand.NextBool(2) && WorldGen.SolidTile(num565, num566) && !Main.tile[num565 - 1, num566].IsHalfBlock && !Main.tile[num565 + 1, num566].IsHalfBlock && Main.tile[num565 - 1, num566].Slope == 0 && Main.tile[num565 + 1, num566].Slope == 0 && WorldGen.SolidTile(num565, num566 - 1))
+                        else if (!Main.tile[num565, num566 + 1].HasTile && genRand.NextBool(2) && SolidTile(num565, num566) && !Main.tile[num565 - 1, num566].IsHalfBlock && !Main.tile[num565 + 1, num566].IsHalfBlock && Main.tile[num565 - 1, num566].Slope == 0 && Main.tile[num565 + 1, num566].Slope == 0 && SolidTile(num565, num566 - 1))
                         {
-                            if (WorldGen.SolidTile(num565 - 1, num566) && !WorldGen.SolidTile(num565 + 1, num566) && WorldGen.SolidTile(num565 - 1, num566 - 1))
+                            if (SolidTile(num565 - 1, num566) && !SolidTile(num565 + 1, num566) && SolidTile(num565 - 1, num566 - 1))
                             {
-                                WorldGen.SlopeTile(num565, num566, 3);
+                                SlopeTile(num565, num566, 3);
                             }
-                            else if (WorldGen.SolidTile(num565 + 1, num566) && !WorldGen.SolidTile(num565 - 1, num566) && WorldGen.SolidTile(num565 + 1, num566 - 1))
+                            else if (SolidTile(num565 + 1, num566) && !SolidTile(num565 - 1, num566) && SolidTile(num565 + 1, num566 - 1))
                             {
-                                WorldGen.SlopeTile(num565, num566, 4);
+                                SlopeTile(num565, num566, 4);
                             }
                         }
                         if (TileID.Sets.Conversion.Sand[Main.tile[num565, num566].TileType])
@@ -1789,26 +1789,26 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int num568 = 20; num568 < Main.maxTilesY - 20; num568++)
                 {
-                    if (WorldGen.genRand.NextBool(2) && !Main.tile[num567, num568 - 1].HasTile && Main.tile[num567, num568].TileType != TileID.Traps && Main.tile[num567, num568].TileType != TileID.Spikes && Main.tile[num567, num568].TileType != TileID.WoodenSpikes && Main.tile[num567, num568].TileType != TileID.LivingWood && Main.tile[num567, num568].TileType != TileID.SandstoneBrick && Main.tile[num567, num568].TileType != TileID.SandStoneSlab && Main.tile[num567, num568].TileType != TileID.ObsidianBrick && Main.tile[num567, num568].TileType != TileID.HellstoneBrick && WorldGen.SolidTile(num567, num568) && Main.tile[num567 - 1, num568].TileType != TileID.Traps && Main.tile[num567 + 1, num568].TileType != TileID.Traps)
+                    if (genRand.NextBool(2) && !Main.tile[num567, num568 - 1].HasTile && Main.tile[num567, num568].TileType != TileID.Traps && Main.tile[num567, num568].TileType != TileID.Spikes && Main.tile[num567, num568].TileType != TileID.WoodenSpikes && Main.tile[num567, num568].TileType != TileID.LivingWood && Main.tile[num567, num568].TileType != TileID.SandstoneBrick && Main.tile[num567, num568].TileType != TileID.SandStoneSlab && Main.tile[num567, num568].TileType != TileID.ObsidianBrick && Main.tile[num567, num568].TileType != TileID.HellstoneBrick && SolidTile(num567, num568) && Main.tile[num567 - 1, num568].TileType != TileID.Traps && Main.tile[num567 + 1, num568].TileType != TileID.Traps)
                     {
-                        if (WorldGen.SolidTile(num567, num568 + 1) && WorldGen.SolidTile(num567 + 1, num568) && !Main.tile[num567 - 1, num568].HasTile)
+                        if (SolidTile(num567, num568 + 1) && SolidTile(num567 + 1, num568) && !Main.tile[num567 - 1, num568].HasTile)
                         {
-                            WorldGen.SlopeTile(num567, num568, 2);
+                            SlopeTile(num567, num568, 2);
                         }
-                        if (WorldGen.SolidTile(num567, num568 + 1) && WorldGen.SolidTile(num567 - 1, num568) && !Main.tile[num567 + 1, num568].HasTile)
+                        if (SolidTile(num567, num568 + 1) && SolidTile(num567 - 1, num568) && !Main.tile[num567 + 1, num568].HasTile)
                         {
-                            WorldGen.SlopeTile(num567, num568, 1);
+                            SlopeTile(num567, num568, 1);
                         }
                     }
-                    if (Main.tile[num567, num568].Slope == SlopeType.SlopeDownLeft && !WorldGen.SolidTile(num567 - 1, num568))
+                    if (Main.tile[num567, num568].Slope == SlopeType.SlopeDownLeft && !SolidTile(num567 - 1, num568))
                     {
-                        WorldGen.SlopeTile(num567, num568);
-                        WorldGen.PoundTile(num567, num568);
+                        SlopeTile(num567, num568);
+                        PoundTile(num567, num568);
                     }
-                    if (Main.tile[num567, num568].Slope == SlopeType.SlopeDownRight && !WorldGen.SolidTile(num567 + 1, num568))
+                    if (Main.tile[num567, num568].Slope == SlopeType.SlopeDownRight && !SolidTile(num567 + 1, num568))
                     {
-                        WorldGen.SlopeTile(num567, num568);
-                        WorldGen.PoundTile(num567, num568);
+                        SlopeTile(num567, num568);
+                        PoundTile(num567, num568);
                     }
                 }
             }
@@ -1822,7 +1822,7 @@ namespace CalRemix.Core.Subworlds
         {
             Liquid.worldGenTilesIgnoreWater(ignoreSolids: true);
             Liquid.QuickWater(3);
-            WorldGen.WaterCheck();
+            WaterCheck();
             int num588 = 0;
             Liquid.quickSettle = true;
             int num589 = 10;
@@ -1859,7 +1859,7 @@ namespace CalRemix.Core.Subworlds
                     }
                     Liquid.UpdateLiquid();
                 }
-                WorldGen.WaterCheck();
+                WaterCheck();
             }
             Liquid.quickSettle = false;
             Liquid.worldGenTilesIgnoreWater(ignoreSolids: false);
@@ -1874,11 +1874,11 @@ namespace CalRemix.Core.Subworlds
                 double num557 = (double)num556 / (double)Main.maxTilesX;
                 for (int num558 = 20; num558 < Main.maxTilesY - 20; num558++)
                 {
-                    if (WorldGen.SolidTile(num556, num558) && !Main.tile[num556 - 1, num558].HasTile && WorldGen.SolidTile(num556, num558 + 1) && !Main.tile[num556 + 1, num558].HasTile && (Main.tile[num556 - 1, num558].LiquidAmount > 0 || Main.tile[num556 + 1, num558].LiquidAmount > 0))
+                    if (SolidTile(num556, num558) && !Main.tile[num556 - 1, num558].HasTile && SolidTile(num556, num558 + 1) && !Main.tile[num556 + 1, num558].HasTile && (Main.tile[num556 - 1, num558].LiquidAmount > 0 || Main.tile[num556 + 1, num558].LiquidAmount > 0))
                     {
                         bool flag35 = true;
-                        int num559 = WorldGen.genRand.Next(8, 20);
-                        int num560 = WorldGen.genRand.Next(8, 20);
+                        int num559 = genRand.Next(8, 20);
+                        int num560 = genRand.Next(8, 20);
                         num559 = num558 - num559;
                         num560 += num558;
                         for (int num561 = num559; num561 <= num560; num561++)
@@ -1888,13 +1888,13 @@ namespace CalRemix.Core.Subworlds
                                 flag35 = false;
                             }
                         }
-                        if ((Main.tile[num556, num558].TileType == TileID.ObsidianBrick || Main.tile[num556, num558].TileType == TileID.HellstoneBrick) && !WorldGen.genRand.NextBool(10))
+                        if ((Main.tile[num556, num558].TileType == TileID.ObsidianBrick || Main.tile[num556, num558].TileType == TileID.HellstoneBrick) && !genRand.NextBool(10))
                         {
                             flag35 = false;
                         }
                         if (flag35)
                         {
-                            WorldGen.PoundTile(num556, num558);
+                            PoundTile(num556, num558);
                         }
                     }
                 }
@@ -1904,15 +1904,15 @@ namespace CalRemix.Core.Subworlds
                 double num563 = (double)num562 / (double)Main.maxTilesX;
                 for (int num564 = 20; num564 < Main.maxTilesY - 20; num564++)
                 {
-                    if (Main.tile[num562, num564].TileType != TileID.Spikes && Main.tile[num562, num564].TileType != TileID.WoodenSpikes && WorldGen.SolidTile(num562, num564) && WorldGen.SolidTile(num562, num564 + 1))
+                    if (Main.tile[num562, num564].TileType != TileID.Spikes && Main.tile[num562, num564].TileType != TileID.WoodenSpikes && SolidTile(num562, num564) && SolidTile(num562, num564 + 1))
                     {
-                        if (!WorldGen.SolidTile(num562 + 1, num564) && Main.tile[num562 - 1, num564].IsHalfBlock && Main.tile[num562 - 2, num564].LiquidAmount > 0)
+                        if (!SolidTile(num562 + 1, num564) && Main.tile[num562 - 1, num564].IsHalfBlock && Main.tile[num562 - 2, num564].LiquidAmount > 0)
                         {
-                            WorldGen.PoundTile(num562, num564);
+                            PoundTile(num562, num564);
                         }
-                        if (!WorldGen.SolidTile(num562 - 1, num564) && Main.tile[num562 + 1, num564].IsHalfBlock && Main.tile[num562 + 2, num564].LiquidAmount > 0)
+                        if (!SolidTile(num562 - 1, num564) && Main.tile[num562 + 1, num564].IsHalfBlock && Main.tile[num562 + 2, num564].LiquidAmount > 0)
                         {
-                            WorldGen.PoundTile(num562, num564);
+                            PoundTile(num562, num564);
                         }
                     }
                 }
@@ -1963,21 +1963,21 @@ namespace CalRemix.Core.Subworlds
             bool foundInvalidTile = default(bool);
             while (num551 > 0)
             {
-                Point point2 = WorldGen.RandomWorldPoint((int)GenVars.worldSurface, 2, 190, 2);
-                while (Vector2D.Distance(new Vector2D((double)point2.X, (double)point2.Y), GenVars.shimmerPosition) < (double)WorldGen.shimmerSafetyDistance)
+                Point point2 = RandomWorldPoint((int)GenVars.worldSurface, 2, 190, 2);
+                while (Vector2D.Distance(new Vector2D((double)point2.X, (double)point2.Y), GenVars.shimmerPosition) < (double)shimmerSafetyDistance)
                 {
-                    point2 = WorldGen.RandomWorldPoint((int)GenVars.worldSurface, 2, 190, 2);
+                    point2 = RandomWorldPoint((int)GenVars.worldSurface, 2, 190, 2);
                 }
                 Tile tile19 = Main.tile[point2.X, point2.Y];
                 Tile tile20 = Main.tile[point2.X, point2.Y - 1];
                 ushort num553 = 0;
                 if (tile19.TileType == TileID.JungleGrass)
                 {
-                    num553 = (ushort)(204 + WorldGen.genRand.Next(4));
+                    num553 = (ushort)(204 + genRand.Next(4));
                 }
                 else if (tile19.TileType == TileID.Stone && tile20.WallType == WallID.None)
                 {
-                    num553 = ((!WorldGen.remixWorldGen) ? (((double)point2.Y < GenVars.rockLayer) ? ((ushort)(196 + WorldGen.genRand.Next(4))) : ((point2.Y >= GenVars.lavaLine) ? ((ushort)(208 + WorldGen.genRand.Next(4))) : ((ushort)(212 + WorldGen.genRand.Next(4))))) : (((double)point2.Y > GenVars.rockLayer) ? ((ushort)(196 + WorldGen.genRand.Next(4))) : ((point2.Y <= GenVars.lavaLine || !WorldGen.genRand.NextBool(2)) ? ((ushort)(212 + WorldGen.genRand.Next(4))) : ((ushort)(208 + WorldGen.genRand.Next(4))))));
+                    num553 = ((!remixWorldGen) ? (((double)point2.Y < GenVars.rockLayer) ? ((ushort)(196 + genRand.Next(4))) : ((point2.Y >= GenVars.lavaLine) ? ((ushort)(208 + genRand.Next(4))) : ((ushort)(212 + genRand.Next(4))))) : (((double)point2.Y > GenVars.rockLayer) ? ((ushort)(196 + genRand.Next(4))) : ((point2.Y <= GenVars.lavaLine || !genRand.NextBool(2)) ? ((ushort)(212 + genRand.Next(4))) : ((ushort)(208 + genRand.Next(4))))));
                 }
                 if (tile19.HasTile && num553 != 0 && !tile20.HasTile)
                 {
@@ -2010,7 +2010,7 @@ namespace CalRemix.Core.Subworlds
                 for (int num438 = 20; num438 < Main.maxTilesY - 20; num438++)
                 {
                     Tile tile17;
-                    if ((double)num438 < Main.worldSurface && WorldGen.oceanDepths(num437, num438))
+                    if ((double)num438 < Main.worldSurface && oceanDepths(num437, num438))
                     {
                         tile17 = Main.tile[num437, num438];
                         if (tile17.TileType == TileID.Sand)
@@ -2024,7 +2024,7 @@ namespace CalRemix.Core.Subworlds
                                     tile17 = Main.tile[num437, num438];
                                     tile17.Slope = 0;
                                 }
-                                for (int num439 = num438 + 1; num439 < num438 + WorldGen.genRand.Next(4, 7); num439++)
+                                for (int num439 = num438 + 1; num439 < num438 + genRand.Next(4, 7); num439++)
                                 {
                                     tile17 = Main.tile[num437, num439];
                                     if (tile17.HasTile)
@@ -2138,7 +2138,7 @@ namespace CalRemix.Core.Subworlds
                             if (tile17.TileType == TileID.Sand)
                             {
                                 tile17 = Main.tile[num437, num438 + 1];
-                                if (tile17.WallType == WallID.None && !WorldGen.SolidTile(num437, num438 + 1))
+                                if (tile17.WallType == WallID.None && !SolidTile(num437, num438 + 1))
                                 {
                                     ushort num440 = 0;
                                     int num441 = 3;
@@ -2186,7 +2186,7 @@ namespace CalRemix.Core.Subworlds
                                     tile17 = Main.tile[num437, num438];
                                     if (tile17.BottomSlope)
                                     {
-                                        if (!WorldGen.SolidTile(num437, num438 - 1))
+                                        if (!SolidTile(num437, num438 - 1))
                                         {
                                             tile17 = Main.tile[num437, num438];
                                             tile17.HasTile = false;
@@ -2215,7 +2215,7 @@ namespace CalRemix.Core.Subworlds
                                     continue;
                                 }
                             }
-                            if (!WorldGen.SolidTile(num437, num438 + 1))
+                            if (!SolidTile(num437, num438 + 1))
                             {
                                 tile17 = Main.tile[num437, num438];
                                 tile17.HasTile = false;
@@ -2258,7 +2258,7 @@ namespace CalRemix.Core.Subworlds
 
         public static void SpreadingGrass()
         {
-            if (!WorldGen.notTheBees || WorldGen.remixWorldGen)
+            if (!notTheBees || remixWorldGen)
             {
                 Tile tile16;
                 for (int num399 = 50; num399 < Main.maxTilesX - 50; num399++)
@@ -2400,13 +2400,13 @@ namespace CalRemix.Core.Subworlds
                                 {
                                     try
                                     {
-                                        WorldGen.grassSpread = 0;
-                                        WorldGen.SpreadGrass(num407, num408);
+                                        grassSpread = 0;
+                                        SpreadGrass(num407, num408);
                                     }
                                     catch
                                     {
-                                        WorldGen.grassSpread = 0;
-                                        WorldGen.SpreadGrass(num407, num408, 0, 2, repeat: false);
+                                        grassSpread = 0;
+                                        SpreadGrass(num407, num408, 0, 2, repeat: false);
                                     }
                                 }
                             }
@@ -2426,11 +2426,11 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                 }
-                if (WorldGen.remixWorldGen)
+                if (remixWorldGen)
                 {
                     for (int num409 = 5; num409 < Main.maxTilesX - 5; num409++)
                     {
-                        for (int num410 = (int)GenVars.rockLayerLow + WorldGen.genRand.Next(-1, 2); num410 < Main.maxTilesY - 200; num410++)
+                        for (int num410 = (int)GenVars.rockLayerLow + genRand.Next(-1, 2); num410 < Main.maxTilesY - 200; num410++)
                         {
                             tile16 = Main.tile[num409, num410];
                             if (tile16.TileType == TileID.Dirt)
@@ -2479,21 +2479,21 @@ namespace CalRemix.Core.Subworlds
                     }
                     for (int num411 = 5; num411 < Main.maxTilesX - 5; num411++)
                     {
-                        for (int num412 = (int)GenVars.rockLayerLow + WorldGen.genRand.Next(-1, 2); num412 < Main.maxTilesY - 200; num412++)
+                        for (int num412 = (int)GenVars.rockLayerLow + genRand.Next(-1, 2); num412 < Main.maxTilesY - 200; num412++)
                         {
                             tile16 = Main.tile[num411, num412];
                             if (tile16.TileType == TileID.Grass)
                             {
                                 tile16 = Main.tile[num411, num412 - 1];
-                                if (!tile16.HasTile && WorldGen.genRand.NextBool(20))
+                                if (!tile16.HasTile && genRand.NextBool(20))
                                 {
-                                    WorldGen.PlaceTile(num411, num412 - 1, 27, mute: true);
+                                    PlaceTile(num411, num412 - 1, 27, mute: true);
                                 }
                             }
                         }
                     }
                     int conversionType = 1;
-                    if (WorldGen.crimson)
+                    if (crimson)
                     {
                         conversionType = 4;
                     }
@@ -2502,33 +2502,33 @@ namespace CalRemix.Core.Subworlds
                     {
                         for (int num415 = 10; num415 < Main.maxTilesY - 10; num415++)
                         {
-                            if ((double)num415 < Main.worldSurface + (double)WorldGen.genRand.Next(3) || num414 < num413 + WorldGen.genRand.Next(3) || num414 >= Main.maxTilesX - num413 - WorldGen.genRand.Next(3))
+                            if ((double)num415 < Main.worldSurface + (double)genRand.Next(3) || num414 < num413 + genRand.Next(3) || num414 >= Main.maxTilesX - num413 - genRand.Next(3))
                             {
-                                if (WorldGen.drunkWorldGen)
+                                if (drunkWorldGen)
                                 {
                                     if (GenVars.crimsonLeft)
                                     {
-                                        if (num414 < Main.maxTilesX / 2 + WorldGen.genRand.Next(-2, 3))
+                                        if (num414 < Main.maxTilesX / 2 + genRand.Next(-2, 3))
                                         {
-                                            WorldGen.Convert(num414, num415, 4, 1, true, true);
+                                            Convert(num414, num415, 4, 1, true, true);
                                         }
                                         else
                                         {
-                                            WorldGen.Convert(num414, num415, 1, 1, true, true);
+                                            Convert(num414, num415, 1, 1, true, true);
                                         }
                                     }
-                                    else if (num414 < Main.maxTilesX / 2 + WorldGen.genRand.Next(-2, 3))
+                                    else if (num414 < Main.maxTilesX / 2 + genRand.Next(-2, 3))
                                     {
-                                        WorldGen.Convert(num414, num415, 1, 1, true, true);
+                                        Convert(num414, num415, 1, 1, true, true);
                                     }
                                     else
                                     {
-                                        WorldGen.Convert(num414, num415, 4, 1, true, true);
+                                        Convert(num414, num415, 4, 1, true, true);
                                     }
                                 }
                                 else
                                 {
-                                    WorldGen.Convert(num414, num415, conversionType, 1, true, true);
+                                    Convert(num414, num415, conversionType, 1, true, true);
                                 }
                                 tile16 = Main.tile[num414, num415];
                                 tile16.TileColor = PaintID.None;
@@ -2537,7 +2537,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (WorldGen.remixWorldGen)
+                    if (remixWorldGen)
                     {
                         Main.tileSolid[225] = true;
                         int num416 = (int)((double)Main.maxTilesX * 0.31);
@@ -2577,12 +2577,12 @@ namespace CalRemix.Core.Subworlds
                 while (!flag11 && num305 > 0)
                 {
                     num305--;
-                    int num306 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                    int num307 = WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 300);
-                    while (WorldGen.oceanDepths(num306, num307))
+                    int num306 = genRand.Next(25, Main.maxTilesX - 25);
+                    int num307 = genRand.Next((int)Main.worldSurface, Main.maxTilesY - 300);
+                    while (oceanDepths(num306, num307))
                     {
-                        num306 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                        num307 = WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 300);
+                        num306 = genRand.Next(25, Main.maxTilesX - 25);
+                        num307 = genRand.Next((int)Main.worldSurface, Main.maxTilesY - 300);
                     }
                     if (!Main.tile[num306, num307].HasTile)
                     {
@@ -2590,67 +2590,67 @@ namespace CalRemix.Core.Subworlds
                         for (; !Main.tile[num306, num307 + 1].HasTile && num307 < Main.maxTilesY - 5; num307++)
                         {
                         }
-                        int num309 = WorldGen.genRand.Next(22);
+                        int num309 = genRand.Next(22);
                         if (num309 >= 16 && num309 <= 22)
                         {
-                            num309 = WorldGen.genRand.Next(22);
+                            num309 = genRand.Next(22);
                         }
-                        if ((Main.tile[num306, num307 + 1].TileType == TileID.Dirt || Main.tile[num306, num307 + 1].TileType == TileID.Stone || Main.tileMoss[Main.tile[num306, num307 + 1].TileType]) && WorldGen.genRand.NextBool(5))
+                        if ((Main.tile[num306, num307 + 1].TileType == TileID.Dirt || Main.tile[num306, num307 + 1].TileType == TileID.Stone || Main.tileMoss[Main.tile[num306, num307 + 1].TileType]) && genRand.NextBool(5))
                         {
-                            num309 = WorldGen.genRand.Next(23, 29);
+                            num309 = genRand.Next(23, 29);
                             num308 = 187;
                         }
                         if (num307 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num306, num307].WallType] || Main.tile[num306, num307 + 1].TileType == TileID.WoodBlock || Main.tile[num306, num307 + 1].TileType == TileID.Platforms || Main.tile[num306, num307 + 1].TileType == TileID.Ebonstone || Main.tile[num306, num307 + 1].TileType == TileID.Crimstone)
                         {
-                            num309 = WorldGen.genRand.Next(7);
+                            num309 = genRand.Next(7);
                             num308 = 186;
                         }
                         if (Main.tile[num306, num307 + 1].TileType == TileID.SnowBlock || Main.tile[num306, num307 + 1].TileType == TileID.IceBlock || Main.tile[num306, num307 + 1].TileType == TileID.BreakableIce)
                         {
-                            num309 = WorldGen.genRand.Next(26, 32);
+                            num309 = genRand.Next(26, 32);
                             num308 = 186;
                         }
                         if (Main.tile[num306, num307 + 1].TileType == TileID.JungleGrass)
                         {
                             num308 = 187;
-                            num309 = WorldGen.genRand.Next(6);
+                            num309 = genRand.Next(6);
                         }
-                        if ((Main.tile[num306, num307 + 1].TileType == TileID.Ash || Main.tile[num306, num307 + 1].TileType == TileID.Hellstone) && WorldGen.genRand.Next(3) < 2)
+                        if ((Main.tile[num306, num307 + 1].TileType == TileID.Ash || Main.tile[num306, num307 + 1].TileType == TileID.Hellstone) && genRand.Next(3) < 2)
                         {
                             num308 = 187;
-                            num309 = WorldGen.genRand.Next(6, 9);
+                            num309 = genRand.Next(6, 9);
                         }
                         if (Main.tile[num306, num307 + 1].TileType == TileID.LihzahrdBrick)
                         {
                             num308 = 187;
-                            num309 = WorldGen.genRand.Next(18, 23);
+                            num309 = genRand.Next(18, 23);
                         }
                         if (Main.tile[num306, num307 + 1].TileType == TileID.MushroomGrass)
                         {
-                            num309 = WorldGen.genRand.Next(32, 35);
+                            num309 = genRand.Next(32, 35);
                             num308 = 186;
                         }
                         if (Main.tile[num306, num307 + 1].TileType == TileID.Sandstone || Main.tile[num306, num307 + 1].TileType == TileID.HardenedSand || Main.tile[num306, num307 + 1].TileType == TileID.DesertFossil)
                         {
-                            num309 = WorldGen.genRand.Next(29, 35);
+                            num309 = genRand.Next(29, 35);
                             num308 = 187;
                         }
                         if (Main.tile[num306, num307 + 1].TileType == TileID.Granite)
                         {
-                            num309 = WorldGen.genRand.Next(35, 41);
+                            num309 = genRand.Next(35, 41);
                             num308 = 187;
                         }
                         if (Main.tile[num306, num307 + 1].TileType == TileID.Marble)
                         {
-                            num309 = WorldGen.genRand.Next(41, 47);
+                            num309 = genRand.Next(41, 47);
                             num308 = 187;
                         }
-                        if (num308 == 186 && num309 >= 7 && num309 <= 15 && WorldGen.genRand.NextBool(75))
+                        if (num308 == 186 && num309 >= 7 && num309 <= 15 && genRand.NextBool(75))
                         {
                             num308 = 187;
                             num309 = 17;
                         }
-                        if (Main.wallDungeon[Main.tile[num306, num307].WallType] && !WorldGen.genRand.NextBool(3))
+                        if (Main.wallDungeon[Main.tile[num306, num307].WallType] && !genRand.NextBool(3))
                         {
                             flag11 = true;
                         }
@@ -2658,7 +2658,7 @@ namespace CalRemix.Core.Subworlds
                         {
                             if (Main.tile[num306, num307].LiquidType != LiquidID.Shimmer)
                             {
-                                WorldGen.PlaceTile(num306, num307, num308, mute: true, forced: false, -1, num309);
+                                PlaceTile(num306, num307, num308, mute: true, forced: false, -1, num309);
                             }
                             if (Main.tile[num306, num307].TileType == TileID.LargePiles || Main.tile[num306, num307].TileType == TileID.LargePiles2)
                             {
@@ -2666,18 +2666,18 @@ namespace CalRemix.Core.Subworlds
                             }
                             if (flag11 && num308 == 186 && num309 <= 7)
                             {
-                                int num310 = WorldGen.genRand.Next(1, 5);
+                                int num310 = genRand.Next(1, 5);
                                 for (int num311 = 0; num311 < num310; num311++)
                                 {
-                                    int num312 = num306 + WorldGen.genRand.Next(-10, 11);
-                                    int num313 = num307 - WorldGen.genRand.Next(5);
+                                    int num312 = num306 + genRand.Next(-10, 11);
+                                    int num313 = num307 - genRand.Next(5);
                                     if (!Main.tile[num312, num313].HasTile)
                                     {
                                         for (; !Main.tile[num312, num313 + 1].HasTile && num313 < Main.maxTilesY - 5; num313++)
                                         {
                                         }
-                                        int x12 = WorldGen.genRand.Next(12, 36);
-                                        WorldGen.PlaceSmallPile(num312, num313, x12, 0, 185);
+                                        int x12 = genRand.Next(12, 36);
+                                        PlaceSmallPile(num312, num313, x12, 0, 185);
                                     }
                                 }
                             }
@@ -2692,51 +2692,51 @@ namespace CalRemix.Core.Subworlds
                 while (!flag12 && num315 > 0)
                 {
                     num315--;
-                    int num316 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                    int num317 = WorldGen.genRand.Next(Main.maxTilesY - 300, Main.maxTilesY - 10);
+                    int num316 = genRand.Next(25, Main.maxTilesX - 25);
+                    int num317 = genRand.Next(Main.maxTilesY - 300, Main.maxTilesY - 10);
                     if (!Main.tile[num316, num317].HasTile)
                     {
                         int num318 = 186;
                         for (; !Main.tile[num316, num317 + 1].HasTile && num317 < Main.maxTilesY - 5; num317++)
                         {
                         }
-                        int num319 = WorldGen.genRand.Next(22);
+                        int num319 = genRand.Next(22);
                         if (num319 >= 16 && num319 <= 22)
                         {
-                            num319 = WorldGen.genRand.Next(22);
+                            num319 = genRand.Next(22);
                         }
                         if (num317 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num316, num317].WallType] || Main.tile[num316, num317 + 1].TileType == TileID.WoodBlock || Main.tile[num316, num317 + 1].TileType == TileID.Platforms)
                         {
-                            num319 = WorldGen.genRand.Next(7);
+                            num319 = genRand.Next(7);
                         }
-                        if ((Main.tile[num316, num317 + 1].TileType == TileID.Ash || Main.tile[num316, num317 + 1].TileType == TileID.Hellstone) && WorldGen.genRand.Next(3) < 2)
+                        if ((Main.tile[num316, num317 + 1].TileType == TileID.Ash || Main.tile[num316, num317 + 1].TileType == TileID.Hellstone) && genRand.Next(3) < 2)
                         {
                             num318 = 187;
-                            num319 = WorldGen.genRand.Next(6, 9);
+                            num319 = genRand.Next(6, 9);
                         }
                         if (Main.tile[num316, num317 + 1].TileType == TileID.SnowBlock || Main.tile[num316, num317 + 1].TileType == TileID.IceBlock || Main.tile[num316, num317 + 1].TileType == TileID.BreakableIce)
                         {
-                            num319 = WorldGen.genRand.Next(26, 32);
+                            num319 = genRand.Next(26, 32);
                         }
-                        WorldGen.PlaceTile(num316, num317, num318, mute: true, forced: false, -1, num319);
+                        PlaceTile(num316, num317, num318, mute: true, forced: false, -1, num319);
                         if (Main.tile[num316, num317].TileType == TileID.LargePiles || Main.tile[num316, num317].TileType == TileID.LargePiles2)
                         {
                             flag12 = true;
                         }
                         if (flag12 && num318 == 186 && num319 <= 7)
                         {
-                            int num320 = WorldGen.genRand.Next(1, 5);
+                            int num320 = genRand.Next(1, 5);
                             for (int num321 = 0; num321 < num320; num321++)
                             {
-                                int num322 = num316 + WorldGen.genRand.Next(-10, 11);
-                                int num323 = num317 - WorldGen.genRand.Next(5);
+                                int num322 = num316 + genRand.Next(-10, 11);
+                                int num323 = num317 - genRand.Next(5);
                                 if (!Main.tile[num322, num323].HasTile)
                                 {
                                     for (; !Main.tile[num322, num323 + 1].HasTile && num323 < Main.maxTilesY - 5; num323++)
                                     {
                                     }
-                                    int x13 = WorldGen.genRand.Next(12, 36);
-                                    WorldGen.PlaceSmallPile(num322, num323, x13, 0, 185);
+                                    int x13 = genRand.Next(12, 36);
+                                    PlaceSmallPile(num322, num323, x13, 0, 185);
                                 }
                             }
                         }
@@ -2751,45 +2751,45 @@ namespace CalRemix.Core.Subworlds
                 {
                     num325--;
                     int num326 = 186;
-                    int num327 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                    int num328 = WorldGen.genRand.Next(10, (int)Main.worldSurface);
-                    while (WorldGen.oceanDepths(num327, num328))
+                    int num327 = genRand.Next(25, Main.maxTilesX - 25);
+                    int num328 = genRand.Next(10, (int)Main.worldSurface);
+                    while (oceanDepths(num327, num328))
                     {
-                        num327 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                        num328 = WorldGen.genRand.Next(10, (int)Main.worldSurface);
+                        num327 = genRand.Next(25, Main.maxTilesX - 25);
+                        num328 = genRand.Next(10, (int)Main.worldSurface);
                     }
                     if (!Main.tile[num327, num328].HasTile)
                     {
                         for (; !Main.tile[num327, num328 + 1].HasTile && num328 < Main.maxTilesY - 5; num328++)
                         {
                         }
-                        int num329 = WorldGen.genRand.Next(7, 13);
+                        int num329 = genRand.Next(7, 13);
                         if (num328 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num327, num328].WallType] || Main.tile[num327, num328 + 1].TileType == TileID.WoodBlock || Main.tile[num327, num328 + 1].TileType == TileID.Platforms || Main.tile[num327, num328 + 1].TileType == TileID.Ebonstone || Main.tile[num327, num328 + 1].TileType == TileID.Crimstone || Main.tile[num327, num328 + 1].TileType == TileID.Crimsand || Main.tile[num327, num328 + 1].TileType == TileID.Ebonsand)
                         {
                             num329 = -1;
                         }
                         if (Main.tile[num327, num328 + 1].TileType == TileID.SnowBlock || Main.tile[num327, num328 + 1].TileType == TileID.IceBlock || Main.tile[num327, num328 + 1].TileType == TileID.BreakableIce)
                         {
-                            num329 = WorldGen.genRand.Next(26, 32);
+                            num329 = genRand.Next(26, 32);
                         }
                         if (Main.tile[num327, num328 + 1].TileType == TileID.Sand)
                         {
                             num326 = 187;
-                            num329 = WorldGen.genRand.Next(52, 55);
+                            num329 = genRand.Next(52, 55);
                         }
                         if (Main.tile[num327, num328 + 1].TileType == TileID.Grass || Main.tile[num327 - 1, num328 + 1].TileType == TileID.Grass || Main.tile[num327 + 1, num328 + 1].TileType == TileID.Grass)
                         {
                             num326 = 187;
-                            num329 = WorldGen.genRand.Next(14, 17);
+                            num329 = genRand.Next(14, 17);
                         }
                         if (Main.tile[num327, num328 + 1].TileType == TileID.SandstoneBrick || Main.tile[num327, num328 + 1].TileType == TileID.SandStoneSlab)
                         {
                             num326 = 186;
-                            num329 = WorldGen.genRand.Next(7);
+                            num329 = genRand.Next(7);
                         }
                         if (num329 >= 0)
                         {
-                            WorldGen.PlaceTile(num327, num328, num326, mute: true, forced: false, -1, num329);
+                            PlaceTile(num327, num328, num326, mute: true, forced: false, -1, num329);
                         }
                         if (Main.tile[num327, num328].TileType == num326)
                         {
@@ -2805,40 +2805,40 @@ namespace CalRemix.Core.Subworlds
                 while (!flag14 && num331 > 0)
                 {
                     num331--;
-                    int num332 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                    int num333 = WorldGen.genRand.Next(10, (int)Main.worldSurface);
+                    int num332 = genRand.Next(25, Main.maxTilesX - 25);
+                    int num333 = genRand.Next(10, (int)Main.worldSurface);
                     if (!Main.tile[num332, num333].HasTile && Main.tile[num332, num333].WallType > WallID.None)
                     {
                         int num334 = 186;
                         for (; !Main.tile[num332, num333 + 1].HasTile && num333 < Main.maxTilesY - 5; num333++)
                         {
                         }
-                        int num335 = WorldGen.genRand.Next(7, 13);
+                        int num335 = genRand.Next(7, 13);
                         if (num333 > Main.maxTilesY - 300 || Main.wallDungeon[Main.tile[num332, num333].WallType] || Main.tile[num332, num333 + 1].TileType == TileID.WoodBlock || Main.tile[num332, num333 + 1].TileType == TileID.Platforms)
                         {
                             num335 = -1;
                         }
                         if (Main.tile[num332, num333 + 1].TileType == TileID.Ebonstone)
                         {
-                            num335 = WorldGen.genRand.Next(7);
+                            num335 = genRand.Next(7);
                         }
                         if (Main.tile[num332, num333 + 1].TileType == TileID.SnowBlock || Main.tile[num332, num333 + 1].TileType == TileID.IceBlock || Main.tile[num332, num333 + 1].TileType == TileID.BreakableIce)
                         {
-                            num335 = WorldGen.genRand.Next(26, 32);
+                            num335 = genRand.Next(26, 32);
                         }
                         if (Main.tile[num332, num333 + 1].TileType == TileID.Grass || Main.tile[num332 - 1, num333 + 1].TileType == TileID.Grass || Main.tile[num332 + 1, num333 + 1].TileType == TileID.Grass)
                         {
                             num334 = 187;
-                            num335 = WorldGen.genRand.Next(14, 17);
+                            num335 = genRand.Next(14, 17);
                         }
                         if (Main.tile[num332, num333 + 1].TileType == TileID.SandstoneBrick || Main.tile[num332, num333 + 1].TileType == TileID.SandStoneSlab)
                         {
                             num334 = 186;
-                            num335 = WorldGen.genRand.Next(7);
+                            num335 = genRand.Next(7);
                         }
                         if (num335 >= 0)
                         {
-                            WorldGen.PlaceTile(num332, num333, num334, mute: true, forced: false, -1, num335);
+                            PlaceTile(num332, num333, num334, mute: true, forced: false, -1, num335);
                         }
                         if (Main.tile[num332, num333].TileType == num334)
                         {
@@ -2846,18 +2846,18 @@ namespace CalRemix.Core.Subworlds
                         }
                         if (flag14 && num335 <= 7)
                         {
-                            int num336 = WorldGen.genRand.Next(1, 5);
+                            int num336 = genRand.Next(1, 5);
                             for (int num337 = 0; num337 < num336; num337++)
                             {
-                                int num338 = num332 + WorldGen.genRand.Next(-10, 11);
-                                int num339 = num333 - WorldGen.genRand.Next(5);
+                                int num338 = num332 + genRand.Next(-10, 11);
+                                int num339 = num333 - genRand.Next(5);
                                 if (!Main.tile[num338, num339].HasTile)
                                 {
                                     for (; !Main.tile[num338, num339 + 1].HasTile && num339 < Main.maxTilesY - 5; num339++)
                                     {
                                     }
-                                    int x14 = WorldGen.genRand.Next(12, 36);
-                                    WorldGen.PlaceSmallPile(num338, num339, x14, 0, 185);
+                                    int x14 = genRand.Next(12, 36);
+                                    PlaceSmallPile(num338, num339, x14, 0, 185);
                                 }
                             }
                         }
@@ -2871,46 +2871,46 @@ namespace CalRemix.Core.Subworlds
                 while (!flag15 && num341 > 0)
                 {
                     num341--;
-                    int num342 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                    int num343 = WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20);
-                    if (Main.tile[num342, num343].WallType == WallID.LihzahrdBrickUnsafe && WorldGen.genRand.NextBool(2))
+                    int num342 = genRand.Next(25, Main.maxTilesX - 25);
+                    int num343 = genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20);
+                    if (Main.tile[num342, num343].WallType == WallID.LihzahrdBrickUnsafe && genRand.NextBool(2))
                     {
-                        num342 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                        num343 = WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20);
+                        num342 = genRand.Next(25, Main.maxTilesX - 25);
+                        num343 = genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20);
                     }
-                    while (WorldGen.oceanDepths(num342, num343))
+                    while (oceanDepths(num342, num343))
                     {
-                        num342 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                        num343 = WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20);
+                        num342 = genRand.Next(25, Main.maxTilesX - 25);
+                        num343 = genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20);
                     }
                     if (!Main.tile[num342, num343].HasTile)
                     {
                         for (; !Main.tile[num342, num343 + 1].HasTile && num343 < Main.maxTilesY - 5; num343++)
                         {
                         }
-                        int num344 = WorldGen.genRand.Next(2);
-                        int num345 = WorldGen.genRand.Next(36);
+                        int num344 = genRand.Next(2);
+                        int num345 = genRand.Next(36);
                         if (num345 >= 28 && num345 <= 35)
                         {
-                            num345 = WorldGen.genRand.Next(36);
+                            num345 = genRand.Next(36);
                         }
                         if (num344 == 1)
                         {
-                            num345 = WorldGen.genRand.Next(25);
+                            num345 = genRand.Next(25);
                             if (num345 >= 16 && num345 <= 24)
                             {
-                                num345 = WorldGen.genRand.Next(25);
+                                num345 = genRand.Next(25);
                             }
                         }
                         if (num343 > Main.maxTilesY - 300)
                         {
                             if (num344 == 0)
                             {
-                                num345 = WorldGen.genRand.Next(12, 28);
+                                num345 = genRand.Next(12, 28);
                             }
                             if (num344 == 1)
                             {
-                                num345 = WorldGen.genRand.Next(6, 16);
+                                num345 = genRand.Next(6, 16);
                             }
                         }
                         if (Main.wallDungeon[Main.tile[num342, num343].WallType] || Main.tile[num342, num343 + 1].TileType == TileID.WoodBlock || Main.tile[num342, num343 + 1].TileType == TileID.Platforms || Main.tile[num342, num343 + 1].TileType == TileID.Ebonstone || Main.tile[num342, num343 + 1].TileType == TileID.Crimstone || Main.tile[num342, num343].WallType == WallID.LihzahrdBrickUnsafe)
@@ -2947,57 +2947,57 @@ namespace CalRemix.Core.Subworlds
                         {
                             if (num344 == 0)
                             {
-                                num345 = WorldGen.genRand.Next(12, 28);
+                                num345 = genRand.Next(12, 28);
                             }
                             if (num344 == 1)
                             {
-                                num345 = WorldGen.genRand.Next(12, 19);
+                                num345 = genRand.Next(12, 19);
                             }
                         }
                         if (Main.tile[num342, num343 + 1].TileType == TileID.Granite)
                         {
                             if (num344 == 0)
                             {
-                                num345 = WorldGen.genRand.Next(60, 66);
+                                num345 = genRand.Next(60, 66);
                             }
                             if (num344 == 1)
                             {
-                                num345 = WorldGen.genRand.Next(47, 53);
+                                num345 = genRand.Next(47, 53);
                             }
                         }
                         if (Main.tile[num342, num343 + 1].TileType == TileID.Marble)
                         {
                             if (num344 == 0)
                             {
-                                num345 = WorldGen.genRand.Next(66, 72);
+                                num345 = genRand.Next(66, 72);
                             }
                             if (num344 == 1)
                             {
-                                num345 = WorldGen.genRand.Next(53, 59);
+                                num345 = genRand.Next(53, 59);
                             }
                         }
-                        if (Main.wallDungeon[Main.tile[num342, num343].WallType] && !WorldGen.genRand.NextBool(3))
+                        if (Main.wallDungeon[Main.tile[num342, num343].WallType] && !genRand.NextBool(3))
                         {
                             flag15 = true;
                         }
                         else if (Main.tile[num342, num343].LiquidType != LiquidID.Shimmer)
                         {
-                            flag15 = WorldGen.PlaceSmallPile(num342, num343, num345, num344, 185);
+                            flag15 = PlaceSmallPile(num342, num343, num345, num344, 185);
                         }
                         if (flag15 && num344 == 1 && num345 >= 6 && num345 <= 15)
                         {
-                            int num346 = WorldGen.genRand.Next(1, 5);
+                            int num346 = genRand.Next(1, 5);
                             for (int num347 = 0; num347 < num346; num347++)
                             {
-                                int num348 = num342 + WorldGen.genRand.Next(-10, 11);
-                                int num349 = num343 - WorldGen.genRand.Next(5);
+                                int num348 = num342 + genRand.Next(-10, 11);
+                                int num349 = num343 - genRand.Next(5);
                                 if (!Main.tile[num348, num349].HasTile)
                                 {
                                     for (; !Main.tile[num348, num349 + 1].HasTile && num349 < Main.maxTilesY - 5; num349++)
                                     {
                                     }
-                                    int x15 = WorldGen.genRand.Next(12, 36);
-                                    WorldGen.PlaceSmallPile(num348, num349, x15, 0, 185);
+                                    int x15 = genRand.Next(12, 36);
+                                    PlaceSmallPile(num348, num349, x15, 0, 185);
                                 }
                             }
                         }
@@ -3011,23 +3011,23 @@ namespace CalRemix.Core.Subworlds
                 while (!flag16 && num351 > 0)
                 {
                     num351--;
-                    int num352 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                    int num353 = WorldGen.genRand.Next(15, (int)Main.worldSurface);
-                    while (WorldGen.oceanDepths(num352, num353))
+                    int num352 = genRand.Next(25, Main.maxTilesX - 25);
+                    int num353 = genRand.Next(15, (int)Main.worldSurface);
+                    while (oceanDepths(num352, num353))
                     {
-                        num352 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                        num353 = WorldGen.genRand.Next(15, (int)Main.worldSurface);
+                        num352 = genRand.Next(25, Main.maxTilesX - 25);
+                        num353 = genRand.Next(15, (int)Main.worldSurface);
                     }
                     if (!Main.tile[num352, num353].HasTile)
                     {
                         for (; !Main.tile[num352, num353 + 1].HasTile && num353 < Main.maxTilesY - 5; num353++)
                         {
                         }
-                        int num354 = WorldGen.genRand.Next(2);
-                        int num355 = WorldGen.genRand.Next(11);
+                        int num354 = genRand.Next(2);
+                        int num355 = genRand.Next(11);
                         if (num354 == 1)
                         {
-                            num355 = WorldGen.genRand.Next(5);
+                            num355 = genRand.Next(5);
                         }
                         if (Main.tile[num352, num353 + 1].TileType == TileID.SnowBlock || Main.tile[num352, num353 + 1].TileType == TileID.IceBlock || Main.tile[num352, num353 + 1].TileType == TileID.BreakableIce)
                         {
@@ -3046,22 +3046,22 @@ namespace CalRemix.Core.Subworlds
                         }
                         if (Main.tile[num352, num353 + 1].TileType == TileID.Grass && num354 == 1)
                         {
-                            num355 = WorldGen.genRand.Next(38, 41);
+                            num355 = genRand.Next(38, 41);
                         }
                         if (Main.tile[num352, num353 + 1].TileType == TileID.SandstoneBrick || Main.tile[num352, num353 + 1].TileType == TileID.SandStoneSlab)
                         {
                             if (num354 == 0)
                             {
-                                num355 = WorldGen.genRand.Next(12, 28);
+                                num355 = genRand.Next(12, 28);
                             }
                             if (num354 == 1)
                             {
-                                num355 = WorldGen.genRand.Next(12, 19);
+                                num355 = genRand.Next(12, 19);
                             }
                         }
                         if (!Main.wallDungeon[Main.tile[num352, num353].WallType] && Main.tile[num352, num353 + 1].TileType != TileID.WoodBlock && Main.tile[num352, num353 + 1].TileType != TileID.Platforms && Main.tile[num352, num353 + 1].TileType != TileID.BlueDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.GreenDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.PinkDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.CrackedBlueDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.CrackedGreenDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.CrackedPinkDungeonBrick && Main.tile[num352, num353 + 1].TileType != TileID.GoldBrick && Main.tile[num352, num353 + 1].TileType != TileID.SilverBrick && Main.tile[num352, num353 + 1].TileType != TileID.CopperBrick && Main.tile[num352, num353 + 1].TileType != TileID.TinBrick && Main.tile[num352, num353 + 1].TileType != TileID.TungstenBrick && Main.tile[num352, num353 + 1].TileType != TileID.PlatinumBrick && Main.tile[num352, num353 + 1].TileType != TileID.Sand && Main.tile[num352, num353 + 1].TileType != TileID.Ebonstone && Main.tile[num352, num353 + 1].TileType != TileID.Crimstone)
                         {
-                            flag16 = WorldGen.PlaceSmallPile(num352, num353, num355, num354, 185);
+                            flag16 = PlaceSmallPile(num352, num353, num355, num354, 185);
                         }
                     }
                 }
@@ -3073,18 +3073,18 @@ namespace CalRemix.Core.Subworlds
                 while (!flag17 && num357 > 0)
                 {
                     num357--;
-                    int num358 = WorldGen.genRand.Next(25, Main.maxTilesX - 25);
-                    int num359 = WorldGen.genRand.Next(15, (int)Main.worldSurface);
+                    int num358 = genRand.Next(25, Main.maxTilesX - 25);
+                    int num359 = genRand.Next(15, (int)Main.worldSurface);
                     if (!Main.tile[num358, num359].HasTile && (Main.tile[num358, num359].WallType == WallID.DirtUnsafe || Main.tile[num358, num359].WallType == WallID.SnowWallUnsafe))
                     {
                         for (; !Main.tile[num358, num359 + 1].HasTile && num359 < Main.maxTilesY - 5; num359++)
                         {
                         }
-                        int num360 = WorldGen.genRand.Next(2);
-                        int num361 = WorldGen.genRand.Next(11);
+                        int num360 = genRand.Next(2);
+                        int num361 = genRand.Next(11);
                         if (num360 == 1)
                         {
-                            num361 = WorldGen.genRand.Next(5);
+                            num361 = genRand.Next(5);
                         }
                         if (Main.tile[num358, num359 + 1].TileType == TileID.SnowBlock || Main.tile[num358, num359 + 1].TileType == TileID.IceBlock || Main.tile[num358, num359 + 1].TileType == TileID.BreakableIce)
                         {
@@ -3103,22 +3103,22 @@ namespace CalRemix.Core.Subworlds
                         }
                         if (Main.tile[num358, num359 + 1].TileType == TileID.Grass && num360 == 1)
                         {
-                            num361 = WorldGen.genRand.Next(38, 41);
+                            num361 = genRand.Next(38, 41);
                         }
                         if (Main.tile[num358, num359 + 1].TileType == TileID.SandstoneBrick || Main.tile[num358, num359 + 1].TileType == TileID.SandStoneSlab)
                         {
                             if (num360 == 0)
                             {
-                                num361 = WorldGen.genRand.Next(12, 28);
+                                num361 = genRand.Next(12, 28);
                             }
                             if (num360 == 1)
                             {
-                                num361 = WorldGen.genRand.Next(12, 19);
+                                num361 = genRand.Next(12, 19);
                             }
                         }
                         if ((Main.tile[num358, num359].LiquidAmount != byte.MaxValue || Main.tile[num358, num359 + 1].TileType != TileID.Sand || Main.tile[num358, num359].WallType != WallID.None) && !Main.wallDungeon[Main.tile[num358, num359].WallType] && Main.tile[num358, num359 + 1].TileType != TileID.WoodBlock && Main.tile[num358, num359 + 1].TileType != TileID.Platforms && Main.tile[num358, num359 + 1].TileType != TileID.BlueDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.GreenDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.PinkDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.CrackedBlueDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.CrackedGreenDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.CrackedPinkDungeonBrick && Main.tile[num358, num359 + 1].TileType != TileID.GoldBrick && Main.tile[num358, num359 + 1].TileType != TileID.SilverBrick && Main.tile[num358, num359 + 1].TileType != TileID.CopperBrick && Main.tile[num358, num359 + 1].TileType != TileID.TinBrick && Main.tile[num358, num359 + 1].TileType != TileID.TungstenBrick && Main.tile[num358, num359 + 1].TileType != TileID.PlatinumBrick && Main.tile[num358, num359 + 1].TileType != TileID.Ebonstone && Main.tile[num358, num359 + 1].TileType != TileID.Crimstone)
                         {
-                            flag17 = WorldGen.PlaceSmallPile(num358, num359, num361, num360, 185);
+                            flag17 = PlaceSmallPile(num358, num359, num361, num360, 185);
                         }
                     }
                 }
@@ -3138,14 +3138,14 @@ namespace CalRemix.Core.Subworlds
             int num295 = 5;
             bool flag10 = true;
             int num296 = Main.maxTilesX / 2;
-            if (Main.tenthAnniversaryWorld && !WorldGen.remixWorldGen)
+            if (Main.tenthAnniversaryWorld && !remixWorldGen)
             {
                 int num297 = GenVars.beachBordersWidth + 15;
-                num296 = ((!WorldGen.genRand.NextBool(2)) ? (Main.maxTilesX - num297) : num297);
+                num296 = ((!genRand.NextBool(2)) ? (Main.maxTilesX - num297) : num297);
             }
             while (flag10)
             {
-                int num298 = num296 + WorldGen.genRand.Next(-num295, num295 + 1);
+                int num298 = num296 + genRand.Next(-num295, num295 + 1);
                 for (int num299 = 0; num299 < Main.maxTilesY; num299++)
                 {
                     if (Main.tile[num298, num299].HasTile)
@@ -3169,7 +3169,7 @@ namespace CalRemix.Core.Subworlds
             int num300 = 10;
             while ((double)Main.spawnTileY > Main.worldSurface)
             {
-                int num301 = WorldGen.genRand.Next(num296 - num300, num296 + num300);
+                int num301 = genRand.Next(num296 - num300, num296 + num300);
                 for (int num302 = 0; num302 < Main.maxTilesY; num302++)
                 {
                     if (Main.tile[num301, num302].HasTile)
@@ -3181,10 +3181,10 @@ namespace CalRemix.Core.Subworlds
                 }
                 num300++;
             }
-            if (WorldGen.remixWorldGen)
+            if (remixWorldGen)
             {
                 int num303 = Main.maxTilesY - 10;
-                while (WorldGen.SolidTile(Main.spawnTileX, num303))
+                while (SolidTile(Main.spawnTileX, num303))
                 {
                     num303--;
                 }
@@ -3194,13 +3194,13 @@ namespace CalRemix.Core.Subworlds
 
         public static void GrassWall()
         {
-            WorldGen.maxTileCount = 3500;
+            maxTileCount = 3500;
             Tile tile15;
             for (int num283 = 50; num283 < Main.maxTilesX - 50; num283++)
             {
                 for (int num284 = 0; (double)num284 < Main.worldSurface - 10.0; num284++)
                 {
-                    if (!WorldGen.genRand.NextBool(4))
+                    if (!genRand.NextBool(4))
                     {
                         continue;
                     }
@@ -3227,7 +3227,7 @@ namespace CalRemix.Core.Subworlds
                                 for (int num288 = num284 - 1; num288 <= num284 + 1; num288++)
                                 {
                                     tile15 = Main.tile[num287, num288];
-                                    if (tile15.WallType == WallID.None && !WorldGen.SolidTile(num287, num288))
+                                    if (tile15.WallType == WallID.None && !SolidTile(num287, num288))
                                     {
                                         flag8 = true;
                                     }
@@ -3248,7 +3248,7 @@ namespace CalRemix.Core.Subworlds
                                                 continue;
                                             }
                                         }
-                                        if (!WorldGen.SolidTile(num289, num290))
+                                        if (!SolidTile(num289, num290))
                                         {
                                             num285 = num289;
                                             num286 = num290;
@@ -3260,12 +3260,12 @@ namespace CalRemix.Core.Subworlds
                     }
                     goto IL_0170;
                 IL_0170:
-                    if (flag8 && num285 > -1 && num286 > -1 && WorldGen.countDirtTiles(num285, num286) < WorldGen.maxTileCount)
+                    if (flag8 && num285 > -1 && num286 > -1 && countDirtTiles(num285, num286) < maxTileCount)
                     {
                         try
                         {
                             ushort wallType = 63;
-                            if (WorldGen.dontStarveWorldGen && !WorldGen.genRand.NextBool(3))
+                            if (dontStarveWorldGen && !genRand.NextBool(3))
                             {
                                 wallType = 62;
                             }
@@ -3282,7 +3282,7 @@ namespace CalRemix.Core.Subworlds
                 for (int num292 = 10; (double)num292 < Main.worldSurface - 1.0; num292++)
                 {
                     tile15 = Main.tile[num291, num292];
-                    if (tile15.WallType == WallID.GrassUnsafe && WorldGen.genRand.NextBool(10))
+                    if (tile15.WallType == WallID.GrassUnsafe && genRand.NextBool(10))
                     {
                         tile15 = Main.tile[num291, num292];
                         tile15.WallType = WallID.FlowerUnsafe;
@@ -3315,7 +3315,7 @@ namespace CalRemix.Core.Subworlds
                             }
                             if (flag9)
                             {
-                                WorldGen.SpreadGrass(num291, num292);
+                                SpreadGrass(num291, num292);
                             }
                         }
                     }
@@ -3331,9 +3331,9 @@ namespace CalRemix.Core.Subworlds
                 int num270 = 0;
                 int num271 = 0;
                 _ = Main.maxTilesX / 2;
-                int num272 = WorldGen.genRand.Next(Main.maxTilesX);
-                num270 = num272 - WorldGen.genRand.Next(10) - 7;
-                num271 = num272 + WorldGen.genRand.Next(10) + 7;
+                int num272 = genRand.Next(Main.maxTilesX);
+                num270 = num272 - genRand.Next(10) - 7;
+                num271 = num272 + genRand.Next(10) + 7;
                 if (num270 < 0)
                 {
                     num270 = 0;
@@ -3350,7 +3350,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (Main.tile[num275, num276].TileType == TileID.Grass && Main.tile[num275, num276].HasTile && !Main.tile[num275, num276 - 1].HasTile)
                         {
-                            WorldGen.PlaceTile(num275, num276 - 1, 27, mute: true);
+                            PlaceTile(num275, num276 - 1, 27, mute: true);
                         }
                         if (Main.tile[num275, num276].HasTile)
                         {
@@ -3365,17 +3365,17 @@ namespace CalRemix.Core.Subworlds
         {
             for (int num263 = 0; (double)num263 < (double)Main.maxTilesX * 0.003; num263++)
             {
-                int num264 = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
-                int num265 = WorldGen.genRand.Next(25, 50);
+                int num264 = genRand.Next(50, Main.maxTilesX - 50);
+                int num265 = genRand.Next(25, 50);
                 for (int num266 = num264 - num265; num266 < num264 + num265; num266++)
                 {
                     for (int num267 = 20; (double)num267 < Main.worldSurface; num267++)
                     {
-                        WorldGen.GrowEpicTree(num266, num267);
+                        GrowEpicTree(num266, num267);
                     }
                 }
             }
-            WorldGen.AddTrees();
+            AddTrees();
         }
 
         public static void Weeds()
@@ -3388,7 +3388,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (!Main.tile[num248, num249 - 1].HasTile)
                         {
-                            WorldGen.PlaceTile(num248, num249 - 1, 3, mute: true);
+                            PlaceTile(num248, num249 - 1, 3, mute: true);
                             Main.tile[num248, num249 - 1].CopyPaintAndCoating(Main.tile[num248, num249]);
                         }
                     }
@@ -3396,19 +3396,19 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (!Main.tile[num248, num249 - 1].HasTile)
                         {
-                            WorldGen.PlaceTile(num248, num249 - 1, 24, mute: true);
+                            PlaceTile(num248, num249 - 1, 24, mute: true);
                         }
                     }
                     else if (Main.tile[num248, num249].TileType == TileID.CrimsonGrass && Main.tile[num248, num249].HasUnactuatedTile)
                     {
                         if (!Main.tile[num248, num249 - 1].HasTile)
                         {
-                            WorldGen.PlaceTile(num248, num249 - 1, 201, mute: true);
+                            PlaceTile(num248, num249 - 1, 201, mute: true);
                         }
                     }
                     else if (Main.tile[num248, num249].TileType == TileID.AshGrass && Main.tile[num248, num249].HasUnactuatedTile && !Main.tile[num248, num249 - 1].HasTile)
                     {
-                        WorldGen.PlaceTile(num248, num249 - 1, 637, mute: true);
+                        PlaceTile(num248, num249 - 1, 637, mute: true);
                     }
                 }
             }
@@ -3421,7 +3421,7 @@ namespace CalRemix.Core.Subworlds
                 int num218 = 0;
                 ushort num219 = 52;
                 int num220 = (int)Main.worldSurface;
-                if (WorldGen.remixWorldGen)
+                if (remixWorldGen)
                 {
                     num220 = Main.maxTilesY - 200;
                 }
@@ -3460,12 +3460,12 @@ namespace CalRemix.Core.Subworlds
                     if (tile13.TileType != TileID.Grass)
                     {
                         tile13 = Main.tile[num217, num221];
-                        if (tile13.TileType != TileID.LeafBlock || !WorldGen.genRand.NextBool(4))
+                        if (tile13.TileType != TileID.LeafBlock || !genRand.NextBool(4))
                         {
                             continue;
                         }
                     }
-                    if (!WorldGen.GrowMoreVines(num217, num221))
+                    if (!GrowMoreVines(num217, num221))
                     {
                         continue;
                     }
@@ -3508,13 +3508,13 @@ namespace CalRemix.Core.Subworlds
                     num219 = 382;
                     goto IL_0247;
                 IL_0247:
-                    if (WorldGen.remixWorldGen && WorldGen.genRand.NextBool(5))
+                    if (remixWorldGen && genRand.NextBool(5))
                     {
                         num219 = 382;
                     }
-                    if (WorldGen.genRand.Next(5) < 3)
+                    if (genRand.Next(5) < 3)
                     {
-                        num218 = WorldGen.genRand.Next(1, 10);
+                        num218 = genRand.Next(1, 10);
                     }
                 }
                 num218 = 0;
@@ -3547,11 +3547,11 @@ namespace CalRemix.Core.Subworlds
                         continue;
                     }
                     tile13 = Main.tile[num217, num222];
-                    if (tile13.BottomSlope || !WorldGen.GrowMoreVines(num217, num222))
+                    if (tile13.BottomSlope || !GrowMoreVines(num217, num222))
                     {
                         continue;
                     }
-                    if (WorldGen.notTheBees && num222 < Main.maxTilesY - 10)
+                    if (notTheBees && num222 < Main.maxTilesY - 10)
                     {
                         tile13 = Main.tile[num217, num222 - 1];
                         if (tile13.HasTile)
@@ -3621,7 +3621,7 @@ namespace CalRemix.Core.Subworlds
                                                 break;
                                             }
                                         }
-                                        if (flag5 && WorldGen.CountNearBlocksTypes(num217, num222, WorldGen.genRand.Next(3, 10), 1, 444) > 0)
+                                        if (flag5 && CountNearBlocksTypes(num217, num222, genRand.Next(3, 10), 1, 444) > 0)
                                         {
                                             flag5 = false;
                                         }
@@ -3631,7 +3631,7 @@ namespace CalRemix.Core.Subworlds
                                             {
                                                 for (int num226 = num222 + 1; num226 < num222 + 3; num226++)
                                                 {
-                                                    WorldGen.KillTile(num225, num226);
+                                                    KillTile(num225, num226);
                                                 }
                                             }
                                             for (int num227 = num217; num227 < num217 + 2; num227++)
@@ -3667,7 +3667,7 @@ namespace CalRemix.Core.Subworlds
                             if (tile13.TileType == TileID.JungleGrass)
                             {
                                 tile13 = Main.tile[num217 + 1, num222];
-                                if (!tile13.BottomSlope && WorldGen.genRand.NextBool(40))
+                                if (!tile13.BottomSlope && genRand.NextBool(40))
                                 {
                                     bool flag6 = true;
                                     for (int num229 = num217; num229 < num217 + 2; num229++)
@@ -3712,7 +3712,7 @@ namespace CalRemix.Core.Subworlds
                                             break;
                                         }
                                     }
-                                    if (flag6 && WorldGen.CountNearBlocksTypes(num217, num222, 20, 1, 444) > 0)
+                                    if (flag6 && CountNearBlocksTypes(num217, num222, 20, 1, 444) > 0)
                                     {
                                         flag6 = false;
                                     }
@@ -3722,7 +3722,7 @@ namespace CalRemix.Core.Subworlds
                                         {
                                             for (int num232 = num222 + 1; num232 < num222 + 3; num232++)
                                             {
-                                                WorldGen.KillTile(num231, num232);
+                                                KillTile(num231, num232);
                                             }
                                         }
                                         for (int num233 = num217; num233 < num217 + 2; num233++)
@@ -3747,9 +3747,9 @@ namespace CalRemix.Core.Subworlds
                     }
                     goto IL_0891;
                 IL_0891:
-                    if (WorldGen.genRand.Next(5) < 3)
+                    if (genRand.Next(5) < 3)
                     {
-                        num218 = WorldGen.genRand.Next(1, 10);
+                        num218 = genRand.Next(1, 10);
                     }
                 }
                 num218 = 0;
@@ -3775,12 +3775,12 @@ namespace CalRemix.Core.Subworlds
                     if (tile13.HasTile)
                     {
                         tile13 = Main.tile[num217, num235];
-                        if (tile13.TileType == TileID.MushroomGrass && WorldGen.genRand.NextBool(5))
+                        if (tile13.TileType == TileID.MushroomGrass && genRand.NextBool(5))
                         {
                             tile13 = Main.tile[num217, num235];
-                            if (!tile13.BottomSlope && WorldGen.GrowMoreVines(num217, num235) && WorldGen.genRand.Next(5) < 3)
+                            if (!tile13.BottomSlope && GrowMoreVines(num217, num235) && genRand.Next(5) < 3)
                             {
-                                num218 = WorldGen.genRand.Next(1, 10);
+                                num218 = genRand.Next(1, 10);
                             }
                         }
                     }
@@ -3811,9 +3811,9 @@ namespace CalRemix.Core.Subworlds
                         if (!tile13.BottomSlope)
                         {
                             tile13 = Main.tile[num217, num236];
-                            if (tile13.TileType == TileID.CorruptGrass && WorldGen.GrowMoreVines(num217, num236) && WorldGen.genRand.Next(5) < 3)
+                            if (tile13.TileType == TileID.CorruptGrass && GrowMoreVines(num217, num236) && genRand.Next(5) < 3)
                             {
-                                num218 = WorldGen.genRand.Next(1, 10);
+                                num218 = genRand.Next(1, 10);
                             }
                         }
                     }
@@ -3844,9 +3844,9 @@ namespace CalRemix.Core.Subworlds
                         if (!tile13.BottomSlope)
                         {
                             tile13 = Main.tile[num217, num237];
-                            if (tile13.TileType == TileID.CrimsonGrass && WorldGen.GrowMoreVines(num217, num237) && WorldGen.genRand.Next(5) < 3)
+                            if (tile13.TileType == TileID.CrimsonGrass && GrowMoreVines(num217, num237) && genRand.Next(5) < 3)
                             {
-                                num218 = WorldGen.genRand.Next(1, 10);
+                                num218 = genRand.Next(1, 10);
                             }
                         }
                     }
@@ -3877,9 +3877,9 @@ namespace CalRemix.Core.Subworlds
                         if (!tile13.BottomSlope)
                         {
                             tile13 = Main.tile[num217, num238];
-                            if (tile13.TileType == TileID.AshGrass && WorldGen.GrowMoreVines(num217, num238) && WorldGen.genRand.Next(5) < 3)
+                            if (tile13.TileType == TileID.AshGrass && GrowMoreVines(num217, num238) && genRand.Next(5) < 3)
                             {
-                                num218 = WorldGen.genRand.Next(1, 10);
+                                num218 = genRand.Next(1, 10);
                             }
                         }
                     }
@@ -3892,22 +3892,22 @@ namespace CalRemix.Core.Subworlds
             int num204 = (int)((double)Main.maxTilesX * 0.004);
             for (int num205 = 0; num205 < num204; num205++)
             {
-                int num206 = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
-                int num207 = WorldGen.genRand.Next(15, 30);
-                int num208 = WorldGen.genRand.Next(15, 30);
+                int num206 = genRand.Next(100, Main.maxTilesX - 100);
+                int num207 = genRand.Next(15, 30);
+                int num208 = genRand.Next(15, 30);
                 Tile tile12;
-                if (WorldGen.remixWorldGen)
+                if (remixWorldGen)
                 {
-                    num207 = WorldGen.genRand.Next(15, 45);
-                    num208 = WorldGen.genRand.Next(15, 45);
-                    int num209 = WorldGen.genRand.Next((int)Main.rockLayer, Main.maxTilesY - 350);
+                    num207 = genRand.Next(15, 45);
+                    num208 = genRand.Next(15, 45);
+                    int num209 = genRand.Next((int)Main.rockLayer, Main.maxTilesY - 350);
                     if (GenVars.logX >= 0)
                     {
                         num206 = GenVars.logX;
                         num209 = GenVars.logY;
                         GenVars.logX = -1;
                     }
-                    int num210 = WorldGen.genRand.NextFromList(21, 24, 27, 30, 33, 36, 39, 42);
+                    int num210 = genRand.NextFromList(21, 24, 27, 30, 33, 36, 39, 42);
                     for (int num211 = num206 - num207; num211 < num206 + num207; num211++)
                     {
                         for (int num212 = num209 - num208; num212 < num209 + num208; num212++)
@@ -3927,8 +3927,8 @@ namespace CalRemix.Core.Subworlds
                             if (tile12.TileType == TileID.Plants)
                             {
                                 tile12 = Main.tile[num211, num212];
-                                tile12.TileFrameX = (short)((num210 + WorldGen.genRand.Next(3)) * 18);
-                                if (!WorldGen.genRand.NextBool(3))
+                                tile12.TileFrameX = (short)((num210 + genRand.Next(3)) * 18);
+                                if (!genRand.NextBool(3))
                                 {
                                     tile12 = Main.tile[num211, num212];
                                     tile12.TileType = TileID.Plants2;
@@ -4018,15 +4018,15 @@ namespace CalRemix.Core.Subworlds
                             tile12.TileType = TileID.Grass;
                             goto IL_0432;
                         IL_0432:
-                            WorldGen.KillTile(num211, num212);
-                            if (WorldGen.genRand.NextBool(2))
+                            KillTile(num211, num212);
+                            if (genRand.NextBool(2))
                             {
                                 tile12 = Main.tile[num211, num212 + 1];
                                 tile12.Slope = 0;
                                 tile12 = Main.tile[num211, num212 + 1];
                                 tile12.IsHalfBlock = false;
                             }
-                            WorldGen.PlaceTile(num211, num212, 3);
+                            PlaceTile(num211, num212, 3);
                             tile12 = Main.tile[num211, num212];
                             if (tile12.HasTile)
                             {
@@ -4034,8 +4034,8 @@ namespace CalRemix.Core.Subworlds
                                 if (tile12.TileType == TileID.Plants)
                                 {
                                     tile12 = Main.tile[num211, num212];
-                                    tile12.TileFrameX = (short)((num210 + WorldGen.genRand.Next(3)) * 18);
-                                    if (!WorldGen.genRand.NextBool(3))
+                                    tile12.TileFrameX = (short)((num210 + genRand.Next(3)) * 18);
+                                    if (!genRand.NextBool(3))
                                     {
                                         tile12 = Main.tile[num211, num212];
                                         tile12.TileType = TileID.Plants2;
@@ -4074,7 +4074,7 @@ namespace CalRemix.Core.Subworlds
                                 num213 = GenVars.logY;
                                 GenVars.logX = -1;
                             }
-                            int num214 = WorldGen.genRand.NextFromList(21, 24, 27, 30, 33, 36, 39, 42);
+                            int num214 = genRand.NextFromList(21, 24, 27, 30, 33, 36, 39, 42);
                             for (int num215 = num206 - num207; num215 < num206 + num207; num215++)
                             {
                                 for (int num216 = num213 - num208; num216 < num213 + num208; num216++)
@@ -4094,8 +4094,8 @@ namespace CalRemix.Core.Subworlds
                                     if (tile12.TileType == TileID.Plants)
                                     {
                                         tile12 = Main.tile[num215, num216];
-                                        tile12.TileFrameX = (short)((num214 + WorldGen.genRand.Next(3)) * 18);
-                                        if (!WorldGen.genRand.NextBool(3))
+                                        tile12.TileFrameX = (short)((num214 + genRand.Next(3)) * 18);
+                                        if (!genRand.NextBool(3))
                                         {
                                             tile12 = Main.tile[num215, num216];
                                             tile12.TileType = TileID.Plants2;
@@ -4185,15 +4185,15 @@ namespace CalRemix.Core.Subworlds
                                     tile12.TileType = TileID.Grass;
                                     goto IL_094c;
                                 IL_094c:
-                                    WorldGen.KillTile(num215, num216);
-                                    if (WorldGen.genRand.NextBool(2))
+                                    KillTile(num215, num216);
+                                    if (genRand.NextBool(2))
                                     {
                                         tile12 = Main.tile[num215, num216 + 1];
                                         tile12.Slope = 0;
                                         tile12 = Main.tile[num215, num216 + 1];
                                         tile12.IsHalfBlock = false;
                                     }
-                                    WorldGen.PlaceTile(num215, num216, 3);
+                                    PlaceTile(num215, num216, 3);
                                     tile12 = Main.tile[num215, num216];
                                     if (tile12.HasTile)
                                     {
@@ -4201,8 +4201,8 @@ namespace CalRemix.Core.Subworlds
                                         if (tile12.TileType == TileID.Plants)
                                         {
                                             tile12 = Main.tile[num215, num216];
-                                            tile12.TileFrameX = (short)((num214 + WorldGen.genRand.Next(3)) * 18);
-                                            if (!WorldGen.genRand.NextBool(3))
+                                            tile12.TileFrameX = (short)((num214 + genRand.Next(3)) * 18);
+                                            if (!genRand.NextBool(3))
                                             {
                                                 tile12 = Main.tile[num215, num216];
                                                 tile12.TileType = TileID.Plants2;
@@ -4239,9 +4239,9 @@ namespace CalRemix.Core.Subworlds
             int num193 = (int)((double)Main.maxTilesX * 0.002);
             for (int num194 = 0; num194 < num193; num194++)
             {
-                int num195 = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
-                int num196 = WorldGen.genRand.Next(4, 10);
-                int num197 = WorldGen.genRand.Next(15, 30);
+                int num195 = genRand.Next(20, Main.maxTilesX - 20);
+                int num196 = genRand.Next(4, 10);
+                int num197 = genRand.Next(15, 30);
                 Tile tile11;
                 for (int num201 = 1; (double)num201 < Main.worldSurface - 1.0; num201++)
                 {
@@ -4283,9 +4283,9 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int num20 = (int)Main.worldSurface; num20 < Main.maxTilesY - 20; num20++)
                 {
-                    if ((Main.tenthAnniversaryWorld || WorldGen.drunkWorldGen || WorldGen.genRand.NextBool(5)) && Main.tile[num19, num20 - 1].LiquidAmount == 0)
+                    if ((Main.tenthAnniversaryWorld || drunkWorldGen || genRand.NextBool(5)) && Main.tile[num19, num20 - 1].LiquidAmount == 0)
                     {
-                        int num21 = WorldGen.genRand.Next(7);
+                        int num21 = genRand.Next(7);
                         int treeTileType = 0;
                         switch (num21)
                         {
@@ -4311,51 +4311,51 @@ namespace CalRemix.Core.Subworlds
                                 treeTileType = 589;
                                 break;
                         }
-                        WorldGen.TryGrowingTreeByType(treeTileType, num19, num20);
+                        TryGrowingTreeByType(treeTileType, num19, num20);
                     }
-                    if (!WorldGen.oceanDepths(num19, num20) && !Main.tile[num19, num20].HasTile && WorldGen.genRand.NextBool(5))
+                    if (!oceanDepths(num19, num20) && !Main.tile[num19, num20].HasTile && genRand.NextBool(5))
                     {
                         if ((Main.tile[num19, num20 - 1].TileType == TileID.Stone || Main.tile[num19, num20 - 1].TileType == TileID.SnowBlock || Main.tile[num19, num20 - 1].TileType == TileID.IceBlock || Main.tile[num19, num20 - 1].TileType == TileID.Ebonstone || Main.tile[num19, num20 - 1].TileType == TileID.Crimstone || Main.tileStone[Main.tile[num19, num20 - 1].TileType] || Main.tileMoss[Main.tile[num19, num20 - 1].TileType]) && !Main.tile[num19, num20].HasTile && !Main.tile[num19, num20 + 1].HasTile)
                         {
                             //Main.tile[num19, num20 - 1].Slope = 0;
-                            WorldGen.SlopeTile(num19, num20 - 1, 0);
+                            SlopeTile(num19, num20 - 1, 0);
                         }
                         if ((Main.tile[num19, num20 + 1].TileType == TileID.Stone || Main.tile[num19, num20 + 1].TileType == TileID.SnowBlock || Main.tile[num19, num20 + 1].TileType == TileID.IceBlock || Main.tile[num19, num20 + 1].TileType == TileID.Ebonstone || Main.tile[num19, num20 + 1].TileType == TileID.Crimstone || Main.tileStone[Main.tile[num19, num20 + 1].TileType] || Main.tileMoss[Main.tile[num19, num20 + 1].TileType]) && !Main.tile[num19, num20].HasTile && !Main.tile[num19, num20 - 1].HasTile)
                         {
                             //Main.tile[num19, num20 + 1].Slope = 0;
-                            WorldGen.SlopeTile(num19, num20 + 1, 0);
+                            SlopeTile(num19, num20 + 1, 0);
                         }
-                        WorldGen.PlaceTight(num19, num20);
+                        PlaceTight(num19, num20);
                     }
                 }
                 for (int num22 = 5; num22 < (int)Main.worldSurface; num22++)
                 {
-                    if ((Main.tile[num19, num22 - 1].TileType == TileID.SnowBlock || Main.tile[num19, num22 - 1].TileType == TileID.IceBlock) && WorldGen.genRand.NextBool(5))
+                    if ((Main.tile[num19, num22 - 1].TileType == TileID.SnowBlock || Main.tile[num19, num22 - 1].TileType == TileID.IceBlock) && genRand.NextBool(5))
                     {
                         if (!Main.tile[num19, num22].HasTile && !Main.tile[num19, num22 + 1].HasTile)
                         {
                             //Main.tile[num19, num22 - 1].Slope = 0;
-                            WorldGen.SlopeTile(num19, num22 - 1, 0);
+                            SlopeTile(num19, num22 - 1, 0);
                         }
-                        WorldGen.PlaceTight(num19, num22);
+                        PlaceTight(num19, num22);
                     }
-                    if ((Main.tile[num19, num22 - 1].TileType == TileID.Ebonstone || Main.tile[num19, num22 - 1].TileType == TileID.Crimstone) && WorldGen.genRand.NextBool(5))
+                    if ((Main.tile[num19, num22 - 1].TileType == TileID.Ebonstone || Main.tile[num19, num22 - 1].TileType == TileID.Crimstone) && genRand.NextBool(5))
                     {
                         if (!Main.tile[num19, num22].HasTile && !Main.tile[num19, num22 + 1].HasTile)
                         {
                             //Main.tile[num19, num22 - 1].Slope = 0;
-                            WorldGen.SlopeTile(num19, num22 - 1, 0);
+                            SlopeTile(num19, num22 - 1, 0);
                         }
-                        WorldGen.PlaceTight(num19, num22);
+                        PlaceTight(num19, num22);
                     }
-                    if ((Main.tile[num19, num22 + 1].TileType == TileID.Ebonstone || Main.tile[num19, num22 + 1].TileType == TileID.Crimstone) && WorldGen.genRand.NextBool(5))
+                    if ((Main.tile[num19, num22 + 1].TileType == TileID.Ebonstone || Main.tile[num19, num22 + 1].TileType == TileID.Crimstone) && genRand.NextBool(5))
                     {
                         if (!Main.tile[num19, num22].HasTile && !Main.tile[num19, num22 - 1].HasTile)
                         {
                             //Main.tile[num19, num22 + 1].Slope = 0;
-                            WorldGen.SlopeTile(num19, num22 + 1, 0);
+                            SlopeTile(num19, num22 + 1, 0);
                         }
-                        WorldGen.PlaceTight(num19, num22);
+                        PlaceTight(num19, num22);
                     }
                 }
             }
@@ -4365,7 +4365,7 @@ namespace CalRemix.Core.Subworlds
         {
             Liquid.worldGenTilesIgnoreWater(ignoreSolids: true);
             Liquid.QuickWater(3);
-            WorldGen.WaterCheck();
+            WaterCheck();
             int num144 = 0;
             Liquid.quickSettle = true;
             int num145 = 10;
@@ -4397,7 +4397,7 @@ namespace CalRemix.Core.Subworlds
                     }
                     Liquid.UpdateLiquid();
                 }
-                WorldGen.WaterCheck();
+                WaterCheck();
             }
             Liquid.quickSettle = false;
             Liquid.worldGenTilesIgnoreWater(ignoreSolids: false);
@@ -4449,7 +4449,7 @@ namespace CalRemix.Core.Subworlds
                             tile5 = Main.tile[num57, num58];
                             if (slowlyDiesInWater[tile5.TileType])
                             {
-                                WorldGen.KillTile(num57, num58);
+                                KillTile(num57, num58);
                             }
                         }
                     }
@@ -4457,9 +4457,9 @@ namespace CalRemix.Core.Subworlds
                     if (!tile5.HasTile)
                     {
                         tile5 = Main.tile[num57, num58];
-                        if (tile5.LiquidAmount == 0 && !WorldGen.genRand.NextBool(3) && WorldGen.SolidTile(num57, num58 - 1))
+                        if (tile5.LiquidAmount == 0 && !genRand.NextBool(3) && SolidTile(num57, num58 - 1))
                         {
-                            int num59 = WorldGen.genRand.Next(15, 21);
+                            int num59 = genRand.Next(15, 21);
                             for (int num60 = num58 - 2; num60 >= num58 - num59; num60--)
                             {
                                 tile5 = Main.tile[num57, num60];
@@ -4483,7 +4483,7 @@ namespace CalRemix.Core.Subworlds
                                             }
                                         }
                                         int maxValue3 = num58 - num60;
-                                        if (WorldGen.genRand.Next(maxValue3) <= 1)
+                                        if (genRand.Next(maxValue3) <= 1)
                                         {
                                             tile5 = Main.tile[num57, num58];
                                             if (tile5.WallType == WallID.HiveUnsafe)
@@ -4506,7 +4506,7 @@ namespace CalRemix.Core.Subworlds
                             tile5 = Main.tile[num57, num58];
                             if (!tile5.HasTile)
                             {
-                                num59 = WorldGen.genRand.Next(3, 11);
+                                num59 = genRand.Next(3, 11);
                                 for (int num62 = num58 + 1; num62 <= num58 + num59; num62++)
                                 {
                                     tile5 = Main.tile[num57, num62];
@@ -4530,7 +4530,7 @@ namespace CalRemix.Core.Subworlds
                                                 }
                                             }
                                             int num64 = num62 - num58;
-                                            if (WorldGen.genRand.Next(num64 * 3) <= 1)
+                                            if (genRand.Next(num64 * 3) <= 1)
                                             {
                                                 tile5 = Main.tile[num57, num58];
                                                 tile5.TileType = (ushort)num63;
@@ -4547,7 +4547,7 @@ namespace CalRemix.Core.Subworlds
                                 }
                             }
                             tile5 = Main.tile[num57, num58];
-                            if (!tile5.HasTile && WorldGen.genRand.NextBool(4))
+                            if (!tile5.HasTile && genRand.NextBool(4))
                             {
                                 Tile tile6 = Main.tile[num57, num58 - 1];
                                 if (TileID.Sets.Conversion.Sandstone[tile6.TileType] || TileID.Sets.Conversion.HardenedSand[tile6.TileType])
@@ -4596,7 +4596,7 @@ namespace CalRemix.Core.Subworlds
                         if (tile5.TileType == TileID.BreakableIce)
                         {
                             tile5 = Main.tile[num57, num58 + 1];
-                            if (tile5.LiquidAmount == 0 && WorldGen.CanKillTile(num57, num58))
+                            if (tile5.LiquidAmount == 0 && CanKillTile(num57, num58))
                             {
                                 tile5 = Main.tile[num57, num58];
                                 tile5.HasTile = false;
@@ -4614,9 +4614,9 @@ namespace CalRemix.Core.Subworlds
                         int num69 = num57;
                         num68 += num67 / 2;
                         int num70;
-                        if (!WorldGen.drunkWorldGen)
+                        if (!drunkWorldGen)
                         {
-                            num70 = (WorldGen.crimson ? 1 : 0);
+                            num70 = (crimson ? 1 : 0);
                         }
                         else
                         {
@@ -4940,9 +4940,9 @@ namespace CalRemix.Core.Subworlds
                         }
                         num111 -= num109;
                         int num114;
-                        if (!WorldGen.drunkWorldGen)
+                        if (!drunkWorldGen)
                         {
-                            num114 = (WorldGen.crimson ? 1 : 0);
+                            num114 = (crimson ? 1 : 0);
                         }
                         else
                         {
@@ -5129,14 +5129,14 @@ namespace CalRemix.Core.Subworlds
         public static void FinalCleanup()
         {
             Main.tileSolid[484] = false;
-            WorldGen.FillWallHolesInArea(new Rectangle(0, 0, Main.maxTilesX, (int)Main.worldSurface));
+            FillWallHolesInArea(new Rectangle(0, 0, Main.maxTilesX, (int)Main.worldSurface));
             for (int i = 0; i < Main.maxTilesX; i++)
             {
                 int num = 0;
                 while (num < Main.maxTilesY)
                 {
                     Tile tile = Main.tile[i, num];
-                    if (tile.HasTile && !WorldGen.SolidTile(i, num + 1))
+                    if (tile.HasTile && !SolidTile(i, num + 1))
                     {
                         tile = Main.tile[i, num];
                         if (tile.TileType != TileID.Sand)
@@ -5165,7 +5165,7 @@ namespace CalRemix.Core.Subworlds
                             if (!tile.HasTile)
                             {
                                 tile = Main.tile[i, num + 1];
-                                if (tile.WallType != WallID.CorruptionUnsafe4 && !WorldGen.oceanDepths(i, num))
+                                if (tile.WallType != WallID.CorruptionUnsafe4 && !oceanDepths(i, num))
                                 {
                                     int num2 = 10;
                                     int num3 = num + 1;
@@ -5337,13 +5337,13 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    WorldGen.TileFrame(i, num);
+                    TileFrame(i, num);
                     goto IL_07bb;
                 IL_0825:
                     tile = Main.tile[i, num];
                     if (tile.TileType == TileID.DemonAltar)
                     {
-                        WorldGen.TileFrame(i, num);
+                        TileFrame(i, num);
                     }
                     bool[] isATreeTrunk = TileID.Sets.IsATreeTrunk;
                     tile = Main.tile[i, num];
@@ -5355,20 +5355,20 @@ namespace CalRemix.Core.Subworlds
                             goto IL_0896;
                         }
                     }
-                    WorldGen.TileFrame(i, num);
+                    TileFrame(i, num);
                     goto IL_0896;
                 IL_0690:
                     tile = Main.tile[i, num - 1];
                     if (tile.TileType == TileID.PalmTree)
                     {
-                        WorldGen.TileFrame(i, num - 1);
+                        TileFrame(i, num - 1);
                     }
                     goto IL_06be;
                 IL_07bb:
                     tile = Main.tile[i, num];
                     if (tile.TileType == TileID.Pots)
                     {
-                        WorldGen.TileFrame(i, num);
+                        TileFrame(i, num);
                     }
                     tile = Main.tile[i, num];
                     if (tile.TileType != TileID.ClosedDoor)
@@ -5379,7 +5379,7 @@ namespace CalRemix.Core.Subworlds
                             goto IL_0825;
                         }
                     }
-                    WorldGen.TileFrame(i, num);
+                    TileFrame(i, num);
                     goto IL_0825;
                 IL_0896:
                     tile = Main.tile[i, num];
@@ -5471,7 +5471,7 @@ namespace CalRemix.Core.Subworlds
                         tile = Main.tile[i, num];
                         if (tile.LiquidAmount > 0)
                         {
-                            WorldGen.KillTile(i, num);
+                            KillTile(i, num);
                         }
                     }
                     bool[] wallDungeon = Main.wallDungeon;
@@ -5486,7 +5486,7 @@ namespace CalRemix.Core.Subworlds
                             tile = Main.tile[i, num];
                             if (tile.TileType == TileID.Obsidian)
                             {
-                                WorldGen.KillTile(i, num);
+                                KillTile(i, num);
                                 tile = Main.tile[i, num];
                                 //tile.lava/* tModPorter Suggestion: LiquidType = ... */(lava: false);
                                 tile = Main.tile[i, num];
@@ -5534,7 +5534,7 @@ namespace CalRemix.Core.Subworlds
                             }
                         }
                     }
-                    if (i > WorldGen.beachDistance && i < Main.maxTilesX - WorldGen.beachDistance && (double)num < Main.worldSurface)
+                    if (i > beachDistance && i < Main.maxTilesX - beachDistance && (double)num < Main.worldSurface)
                     {
                         tile = Main.tile[i, num];
                         if (tile.LiquidAmount > 0)
@@ -5587,7 +5587,7 @@ namespace CalRemix.Core.Subworlds
                         }
                     }
                     tile = Main.tile[i, num];
-                    if (tile.LiquidAmount > 0 && !WorldGen.remixWorldGen)
+                    if (tile.LiquidAmount > 0 && !remixWorldGen)
                     {
                         tile = Main.tile[i, num];
                         tile.LiquidAmount = byte.MaxValue;
@@ -5599,13 +5599,13 @@ namespace CalRemix.Core.Subworlds
             }
             int num12 = 0;
             int num13 = 3;
-            num13 = WorldGen.GetWorldSize() switch
+            num13 = GetWorldSize() switch
             {
                 1 => 6,
                 2 => 9,
                 _ => 3,
             };
-            if (WorldGen.tenthAnniversaryWorldGen)
+            if (tenthAnniversaryWorldGen)
             {
                 num13 *= 5;
             }
@@ -5622,13 +5622,13 @@ namespace CalRemix.Core.Subworlds
                 {
                     break;
                 }
-                int x3 = WorldGen.genRand.Next(minValue, maxValue);
-                int y3 = WorldGen.genRand.Next(minValue2, maxValue2);
+                int x3 = genRand.Next(minValue, maxValue);
+                int y3 = genRand.Next(minValue2, maxValue2);
                 Tile tile3 = Main.tile[x3, y3];
                 if (tile3.HasTile && tile3.TileType >= TileID.Dirt)
                 {
                     bool flag2 = TileID.Sets.Dirt[tile3.TileType];
-                    if (WorldGen.notTheBees)
+                    if (notTheBees)
                     {
                         flag2 = flag2 || TileID.Sets.Mud[tile3.TileType];
                     }

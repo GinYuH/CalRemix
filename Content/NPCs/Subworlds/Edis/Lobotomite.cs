@@ -3,15 +3,10 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 using System;
-using System.Linq;
 using Terraria;
 using CalamityMod;
-using CalamityMod.Events;
-using CalamityMod.NPCs;
 using CalamityMod.NPCs.SupremeCalamitas;
-using MonoMod.Cil;
 using Terraria.Audio;
 using CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas;
 
@@ -54,8 +49,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Edis
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.HitSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherHit;
-            NPC.DeathSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherDeath;
+            NPC.HitSound = SupremeCalamitas.BrotherHit;
+            NPC.DeathSound = SupremeCalamitas.BrotherDeath;
             for (int k = 0; k < NPC.buffImmune.Length; k++)
             {
                 NPC.buffImmune[k] = true;

@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework;
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
-using CalamityMod.Projectiles.Melee;
 using Terraria.Audio;
 using CalamityMod.Projectiles.Typeless;
 

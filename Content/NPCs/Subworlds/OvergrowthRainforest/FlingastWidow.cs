@@ -1,12 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.DataStructures;
 using CalamityMod.Graphics.Primitives;
-using CalamityMod.NPCs.Abyss;
-using CalamityMod.NPCs.VanillaNPCAIOverrides.Bosses;
-using CalamityMod.Projectiles.Boss;
-using CalamityMod.Projectiles.Rogue;
-using CalRemix.Content.Items.Potions;
-using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.Core.Biomes.Subworlds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,12 +8,10 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace CalRemix.Content.NPCs.Subworlds.OvergrowthRainforest
 {

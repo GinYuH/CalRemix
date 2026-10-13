@@ -16,7 +16,7 @@ namespace CalRemix.Content.Items.Materials
 		public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Lime;
-            base.Item.value = Item.buyPrice(0, 4, 50);
+            Item.value = Item.buyPrice(0, 4, 50);
             Item.maxStack = Item.CommonMaxStack;
         }
     }

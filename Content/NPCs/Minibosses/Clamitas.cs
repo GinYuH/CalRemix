@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Ranged;

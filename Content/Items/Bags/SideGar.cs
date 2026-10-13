@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
-using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Materials;
 
 namespace CalRemix.Content.Items.Bags

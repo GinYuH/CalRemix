@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.Dusts;
+﻿using CalamityMod.Dusts;
 using CalRemix.Content.Buffs;
 using Microsoft.Xna.Framework;
 using System;

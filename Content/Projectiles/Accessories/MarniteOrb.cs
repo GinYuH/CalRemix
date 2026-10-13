@@ -45,7 +45,7 @@ namespace CalRemix.Content.Projectiles.Accessories
             {
                 if (Projectile.ai[0] >= 30)
                 {
-                    CalamityMod.CalamityUtils.HomeInOnNPC(Projectile, false, 1200, 20, 1);
+                    CalamityUtils.HomeInOnNPC(Projectile, false, 1200, 20, 1);
                 }
             }
         }

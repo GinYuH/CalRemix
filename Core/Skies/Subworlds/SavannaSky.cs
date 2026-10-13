@@ -1,11 +1,9 @@
 ﻿using System;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using SubworldLibrary;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 using static Terraria.Main;
@@ -18,7 +16,7 @@ namespace CalRemix.Core.Subworlds
 
         public override void OnLoad()
         {
-            if (!Main.dedServ)
+            if (!dedServ)
                 bg = ModContent.Request<Texture2D>("CalRemix/Core/Backgrounds/Subworlds/Savanna");
         }
 
@@ -58,6 +56,6 @@ namespace CalRemix.Core.Subworlds
 
         public override void Deactivate(params object[] args) { }
 
-        public override bool IsActive() => CanSkyBeActive && !Main.gameMenu;
+        public override bool IsActive() => CanSkyBeActive && !gameMenu;
     }
 }

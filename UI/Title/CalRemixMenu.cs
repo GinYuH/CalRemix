@@ -1,5 +1,4 @@
 ﻿using CalamityMod;
-using CalamityMod.NPCs.Cryogen;
 using CalamityMod.Sounds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

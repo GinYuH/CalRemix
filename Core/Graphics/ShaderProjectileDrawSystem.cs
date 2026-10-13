@@ -12,7 +12,7 @@ namespace CalRemix.Core.Graphics
             if (Main.netMode == NetmodeID.Server)
                 return;
 
-            Terraria.On_Main.DrawProjectiles += DrawShaderProjectiles;
+            On_Main.DrawProjectiles += DrawShaderProjectiles;
         }
 
         private void DrawShaderProjectiles(On_Main.orig_DrawProjectiles orig, Main self)

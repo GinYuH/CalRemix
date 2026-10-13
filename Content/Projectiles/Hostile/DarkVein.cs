@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.Content.NPCs.Bosses.BossScule;
+﻿using CalRemix.Content.NPCs.Bosses.BossScule;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

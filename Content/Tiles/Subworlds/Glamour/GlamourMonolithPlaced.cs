@@ -1,9 +1,6 @@
-﻿using CalamityMod.Items.Placeables.Furniture.Monoliths;
-using CalamityMod.Tiles.BaseTiles;
-using CalRemix.Content.Items.Placeables;
+﻿using CalamityMod.Tiles.BaseTiles;
 using CalRemix.Content.Items.Placeables.Subworlds.Glamour;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

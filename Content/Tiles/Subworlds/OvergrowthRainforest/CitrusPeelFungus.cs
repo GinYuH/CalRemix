@@ -1,9 +1,7 @@
 ﻿using CalRemix.Content.Items.Placeables.Subworlds.OvergrowthRainforest;
-using CalRemix.Content.Items.Weapons.Stormbow;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 

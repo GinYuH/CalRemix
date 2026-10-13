@@ -1,12 +1,9 @@
 ﻿using System;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
-using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 using static Terraria.Main;
 
 namespace CalRemix.Core.Subworlds
@@ -42,7 +39,7 @@ namespace CalRemix.Core.Subworlds
                     c = sk.SkyColor;
                 }
             }
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.screenWidth, (int)Main.screenHeight), c);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), c);
         }
 
         public override Color OnTileColor(Color inColor) => inColor;
@@ -55,6 +52,6 @@ namespace CalRemix.Core.Subworlds
 
         public override void Deactivate(params object[] args) { }
 
-        public override bool IsActive() => CanSkyBeActive && !Main.gameMenu;
+        public override bool IsActive() => CanSkyBeActive && !gameMenu;
     }
 }

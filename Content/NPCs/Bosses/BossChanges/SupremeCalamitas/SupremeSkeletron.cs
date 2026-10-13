@@ -136,8 +136,8 @@ namespace CalRemix.Content.NPCs.Bosses.BossChanges.SupremeCalamitas
             NPC.noGravity = true;
             NPC.boss = true;
             NPC.noTileCollide = true;
-            NPC.HitSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherHit;
-            NPC.DeathSound = CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas.BrotherDeath;
+            NPC.HitSound = SCal.BrotherHit;
+            NPC.DeathSound = SCal.BrotherDeath;
             for (int k = 0; k < NPC.buffImmune.Length; k++)
             {
                 NPC.buffImmune[k] = true;

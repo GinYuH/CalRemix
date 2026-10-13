@@ -1,24 +1,16 @@
-﻿using CalamityMod;
-using CalamityMod.Tiles.FurnitureAshen;
-using CalRemix.Content.NPCs.Subworlds;
-using CalRemix.Content.Tiles;
-using CalRemix.Content.Tiles.Subworlds.Glamour;
-using CalRemix.Content.Tiles.Subworlds.GreatSea;
+﻿using CalRemix.Content.Tiles.Subworlds.Glamour;
 using CalRemix.Content.Walls;
 using CalRemix.Core.World;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 

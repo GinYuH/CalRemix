@@ -1,6 +1,5 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Projectiles.Summon;
 using CalRemix.Content.NPCs.Subworlds.SingularPoint;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -51,10 +50,10 @@ namespace CalRemix.Core.Subworlds
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)Main.screenWidth * 3, (int)Main.screenHeight * 3), Color.Black);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)screenWidth * 3, (int)screenHeight * 3), Color.Black);
 
             var shader = GameShaders.Misc["CalRemix:AnomalyBorder"];
-            Vector2 center = new Vector2(Main.maxTilesX, Main.maxTilesY) * 8f - Main.screenPosition;
+            Vector2 center = new Vector2(maxTilesX, maxTilesY) * 8f - screenPosition;
             Vector2 dimensions = new Vector2(ArenaWidth, ArenaHeight);   
             shader.UseColor(new Color(0, 255, 123));
             shader.Shader.Parameters["rectangle"].SetValue(new Vector4(center.X - dimensions.X / 2 + 350, center.Y - dimensions.Y / 2 + 170, center.X + dimensions.X / 2, center.Y + dimensions.Y / 2));
@@ -81,6 +80,6 @@ namespace CalRemix.Core.Subworlds
 
         public override void Deactivate(params object[] args) { }
 
-        public override bool IsActive() => CanSkyBeActive && !Main.gameMenu;
+        public override bool IsActive() => CanSkyBeActive && !gameMenu;
     }
 }

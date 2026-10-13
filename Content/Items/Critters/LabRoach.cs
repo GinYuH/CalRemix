@@ -22,7 +22,7 @@ namespace CalRemix.Content.Items.Critters
             Item.useAnimation = 15;
             Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<DarkOrange>();
-            Item.value = Terraria.Item.sellPrice(copper: 6);
+            Item.value = Item.sellPrice(copper: 6);
             Item.bait = 90;
             Item.makeNPC = (short)ModContent.NPCType<NPCs.LabRoach>();
         }

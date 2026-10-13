@@ -76,12 +76,12 @@ namespace CalRemix.Core.World
             {
                 return false;
             }
-            return !GenBase._tiles[origin.X, origin.Y].HasTile;
+            return !_tiles[origin.X, origin.Y].HasTile;
         }
 
         public override bool Place(Point origin, StructureMap structures)
         {
-            if (GenBase._tiles[origin.X, origin.Y].HasTile)
+            if (_tiles[origin.X, origin.Y].HasTile)
             {
                 return false;
             }
@@ -203,9 +203,9 @@ namespace CalRemix.Core.World
             {
                 for (int j = -50; j < 50; j++)
                 {
-                    if (GenBase._tiles[tileOrigin.X + num + i, tileOrigin.Y + num2 + j].HasTile)
+                    if (_tiles[tileOrigin.X + num + i, tileOrigin.Y + num2 + j].HasTile)
                     {
-                        ushort type = GenBase._tiles[tileOrigin.X + num + i, tileOrigin.Y + num2 + j].TileType;
+                        ushort type = _tiles[tileOrigin.X + num + i, tileOrigin.Y + num2 + j].TileType;
                         if (type == 147 || (uint)(type - 161) <= 2u || type == 200)
                         {
                             return false;
@@ -230,7 +230,7 @@ namespace CalRemix.Core.World
                     {
                         continue;
                     }
-                    Tile tile = GenBase._tiles[tileOrigin.X + i, tileOrigin.Y + j];
+                    Tile tile = _tiles[tileOrigin.X + i, tileOrigin.Y + j];
                     double num = Math.Sin((double)(tileOrigin.Y + j) * 0.4) * 0.2 + 4;
                     double num2 = 0.2 + 0.5 / Math.Sqrt(Math.Max(0.0, magma.Pressure - magma.Resistance));
                     if (Math.Max(1.0 - Math.Max(0.0, num * num2), magma.Pressure / 15.0) > 0.35 + (WorldGen.SolidTile(tileOrigin.X + i, tileOrigin.Y + j) ? 0.0 : 0.5))
@@ -298,7 +298,7 @@ namespace CalRemix.Core.World
                 int x = item.X;
                 int y = item.Y;
                 WorldUtils.ClearTile(x, y, frameNeighbors: true);
-                GenBase._tiles[x, y].WallType = wall;
+                _tiles[x, y].WallType = wall;
             }
             list.Clear();
         }
@@ -320,13 +320,13 @@ namespace CalRemix.Core.World
                     WorldUtils.TileFrame(num, num2);
                     WorldGen.SquareWallFrame(num, num2);
                     FastRandom fastRandom2 = fastRandom.WithModifier(num, num2);
-                    if (fastRandom2.Next(8) == 0 && GenBase._tiles[num, num2].HasTile)
+                    if (fastRandom2.Next(8) == 0 && _tiles[num, num2].HasTile)
                     {
-                        if (!GenBase._tiles[num, num2 + 1].HasTile)
+                        if (!_tiles[num, num2 + 1].HasTile)
                         {
                             WorldGen.PlaceUncheckedStalactite(num, num2 + 1, fastRandom2.Next(2) == 0, fastRandom2.Next(3), spiders: false);
                         }
-                        if (!GenBase._tiles[num, num2 - 1].HasTile)
+                        if (!_tiles[num, num2 - 1].HasTile)
                         {
                             WorldGen.PlaceUncheckedStalactite(num, num2 - 1, fastRandom2.Next(2) == 0, fastRandom2.Next(3), spiders: false);
                         }

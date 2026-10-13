@@ -42,7 +42,7 @@ namespace CalRemix.Content.Projectiles.Weapons
                         continue;
                     if (p.TryGetGlobalProjectile(out CalRemixProjectile crp))
                     {
-                        if (Terraria.ID.ProjectileID.Sets.IsAWhip[p.type])
+                        if (ProjectileID.Sets.IsAWhip[p.type])
                         {
                             if (!crp.whipGonged)
                             {

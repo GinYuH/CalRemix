@@ -1,24 +1,17 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using CalRemix.Core.Biomes;
-using CalRemix.Content.Projectiles.Weapons;
 using CalRemix.UI;
-using CalRemix.Content.Items.Misc;
 using CalamityMod;
-using Terraria.ID;
-using CalRemix.Core.World;
 using CalRemix.Core.Biomes.Subworlds;
 using CalamityMod.DataStructures;
 using System.Collections.Generic;
 using System.IO;
 using CalamityMod.Graphics.Primitives;
-using rail;
 
 namespace CalRemix.Content.NPCs.Subworlds.Pinnacles
 {

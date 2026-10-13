@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod;
-using Terraria.Localization;
 using CalRemix.Core.World;
 using CalRemix.Content.Projectiles.Hostile;
 using CalamityMod.World;
-using CalamityMod.InverseKinematics;
 using Terraria.GameContent.Bestiary;
 using CalRemix.Core.Biomes;
 using CalRemix.UI;
@@ -89,7 +83,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 			}
 			if (Phase2 && Main.rand.NextBool(5))
 			{
-				Dust dust = Main.dust[Terraria.Dust.NewDust(NPC.Center, 30, 30, DustID.TintableDustLighted, 0f, 0f, 0, new Color(0, 177, 255), 3.5f)];
+				Dust dust = Main.dust[Dust.NewDust(NPC.Center, 30, 30, DustID.TintableDustLighted, 0f, 0f, 0, new Color(0, 177, 255), 3.5f)];
 				dust.noGravity = true;
 				dust.noLight = false;
 			}
@@ -197,7 +191,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 							NPC.direction = -NPC.DirectionTo(Main.player[NPC.target].Center).X.DirectionalSign();
 						}
 						int extraboost = Phase2 ? 2 : 0;
-						float speed = CalamityMod.World.CalamityWorld.revenge ? (6f + extraboost + (Timer / 50)) : (4f + extraboost + (Timer / 50));
+						float speed = CalamityWorld.revenge ? (6f + extraboost + (Timer / 50)) : (4f + extraboost + (Timer / 50));
 						if (Timer >= 1)
 							NPC.velocity.X = NPC.direction * speed;
 						int num858 = 80;
@@ -311,7 +305,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						{
 							NPC.velocity.X = -6f + (playerPos.X * 0.001f);
 						}
-						if (CalamityMod.World.CalamityWorld.death)
+						if (CalamityWorld.death)
 						{
 							Timer++;
 						}
@@ -373,11 +367,11 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						NPC.damage = 0;
 						NPC.position.X = Main.player[NPC.target].Center.X - 120;
 						NPC.position.Y = Main.player[NPC.target].Center.Y - 16;
-						if ((Timer == 67 | Timer == 157) && (CalamityMod.World.CalamityWorld.revenge || (Main.expertMode && Phase2)))
+						if ((Timer == 67 | Timer == 157) && (CalamityWorld.revenge || (Main.expertMode && Phase2)))
 						{
 							SoundEngine.PlaySound(SoundID.Item43, Main.player[NPC.target].Center);
 						}
-						if (!NPC.AnyNPCs(ModContent.NPCType<MonorianGastropodMini>()) || CalamityMod.World.CalamityWorld.death ? Timer >= 240 : Timer >= 300)
+						if (!NPC.AnyNPCs(ModContent.NPCType<MonorianGastropodMini>()) || CalamityWorld.death ? Timer >= 240 : Timer >= 300)
 						{
 							NPC.alpha -= 2;
 							if (NPC.alpha <= 0)
@@ -390,7 +384,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 									Dust dust;
 									Vector2 position = NPC.Center;
 									position.X = NPC.Center.X - 4;
-									dust = Terraria.Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), 0, new Color(0, 177, 255), 1.718605f);
+									dust = Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), 0, new Color(0, 177, 255), 1.718605f);
 									dust.noGravity = true;
 								}
 							}
@@ -427,7 +421,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						NPC.TargetClosest();
 						NPC.noGravity = false;
 						NPC.noTileCollide = false;
-						int ranshotspeed = (CalamityMod.World.CalamityWorld.revenge ? 68 : 85);
+						int ranshotspeed = (CalamityWorld.revenge ? 68 : 85);
 						if (Timer % ranshotspeed == 0)
 						{
 							SoundEngine.PlaySound(CommonCalamitySounds.SwiftSliceSound, NPC.position);
@@ -436,10 +430,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 							Vector2 direction = targetPosition - position;
 							direction.Normalize();
 							int type = ModContent.ProjectileType<ArkhalisProj>();
-							int spacer = CalamityMod.World.CalamityWorld.revenge || Phase2 ? Main.rand.Next(3, 10) * NPC.direction : 5 * NPC.direction;
+							int spacer = CalamityWorld.revenge || Phase2 ? Main.rand.Next(3, 10) * NPC.direction : 5 * NPC.direction;
 							for (int spacing = 0; spacing < 10; spacing++)
 							{
-								Projectile.NewProjectile(NPC.GetSource_FromAI(), position.X, position.Y, (NPC.direction * spacing * (CalamityMod.World.CalamityWorld.revenge ? 2.5f : 3)) - spacer, -9, type, CalRemixHelper.ProjectileDamage(170, 310), 0f, Main.myPlayer);
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), position.X, position.Y, (NPC.direction * spacing * (CalamityWorld.revenge ? 2.5f : 3)) - spacer, -9, type, CalRemixHelper.ProjectileDamage(170, 310), 0f, Main.myPlayer);
 							}
 						}
 						if (Timer >= 300)
@@ -490,7 +484,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 							if (localTimer % projRate == 0)
 							{
 								SoundEngine.PlaySound(SoundID.Item43, NPC.position);
-								int projCount = ((Main.expertMode && Main.rand.Next(4) == 0) || CalamityMod.World.CalamityWorld.revenge || Phase2) ? 5 : 3;
+								int projCount = ((Main.expertMode && Main.rand.Next(4) == 0) || CalamityWorld.revenge || Phase2) ? 5 : 3;
 
 								for (int i = 0; i < projCount; i++)
 								{
@@ -580,7 +574,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 						if (Timer == 1)
 						{
 							SoundEngine.PlaySound(SoundID.Item23, NPC.position);
-							float speed = CalamityMod.World.CalamityWorld.revenge ? 16f : 12f;
+							float speed = CalamityWorld.revenge ? 16f : 12f;
 							NPC.velocity = NPC.DirectionTo(targetPosition) * speed;
 						}
 						if (playerX > 1600 || playerY < -360 || playerX < -1600 || Timer >= 70)
@@ -610,7 +604,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 										Dust dust;
 										Vector2 position = NPC.Center;
 										position.X = NPC.Center.X - 4;
-										dust = Terraria.Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
+										dust = Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
 										dust.noGravity = true;
 									}
 								}
@@ -625,7 +619,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 										Dust dust;
 										Vector2 position = NPC.Center;
 										position.X = NPC.Center.X - 4;
-										dust = Terraria.Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
+										dust = Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-30, 30), Main.rand.Next(-30, 30)), 0, new Color(0, 177, 255), 1.718605f);
 										dust.noGravity = true;
 									}
 								}
@@ -640,7 +634,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 									position.X = NPC.Center.X - 4;
 									for (int i = 0; i < 8; i++)
 									{
-										dust = Terraria.Dust.NewDustPerfect(position, DustID.GemRuby, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 8f)) * 2.5f, 0, new Color(255, 255, 255), 1f);
+										dust = Dust.NewDustPerfect(position, DustID.GemRuby, Vector2.UnitY.RotatedBy(MathHelper.Lerp(0, MathHelper.TwoPi, i / 8f)) * 2.5f, 0, new Color(255, 255, 255), 1f);
 										dust.noGravity = true;
 									}
 								}
@@ -653,7 +647,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 								Dust dust;
 								Vector2 position = NPC.Center;
 								position.X = NPC.Center.X - 4;
-								dust = Terraria.Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), 0, new Color(0, 177, 255), 4.718605f);
+								dust = Dust.NewDustPerfect(position, DustID.TintableDustLighted, new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), 0, new Color(0, 177, 255), 4.718605f);
 								dust.noGravity = true;
 							}
 							SoundEngine.PlaySound(SoundID.Item117, NPC.position);

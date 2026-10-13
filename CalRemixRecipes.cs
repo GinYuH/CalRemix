@@ -168,7 +168,7 @@ namespace CalRemix
             if (CalRemixAddon.CalVal != null)
             {
                 Recipe.Create(CalRemixAddon.CalVal.Find<ModItem>("AstralPearlBlock").Type)
-                    .AddIngredient(ModContent.ItemType<AstralPearl>(), 9)
+                    .AddIngredient(ItemType<AstralPearl>(), 9)
                     .Register();
             }
 
@@ -288,7 +288,7 @@ namespace CalRemix
         public static string LockedRecipe(string s) => CalRemixHelper.LocalText("Condition.Locked").Format(CalRemixHelper.LocalText($"Condition.{s}"));
         public override void PostAddRecipes()
         {
-            int arsRarity = ModContent.RarityType<DarkOrange>();
+            int arsRarity = RarityType<DarkOrange>();
             List<Recipe> harderRecipes = new();
             for (int i = 0; i < Recipe.numRecipes; i++)
             {
@@ -574,7 +574,7 @@ namespace CalRemix
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("DesertMedallion"), () => false));
                 }
-                if (recipe.HasResult(ItemType<CryoKey>()) && !recipe.HasIngredient(ModContent.ItemType<CryoKeyMold>()))
+                if (recipe.HasResult(ItemType<CryoKey>()) && !recipe.HasIngredient(ItemType<CryoKeyMold>()))
                 {
                     recipe.AddCondition(new Condition(LockedRecipe("CryoKey"), () => !CalRemixWorld.aspids));
                 }
@@ -657,7 +657,7 @@ namespace CalRemix
                 {
                     recipe.AddIngredient<ArchaicPowder>();
                     recipe.AddIngredient<HoneyDew>();
-                    recipe.AddRecipeGroup(new RecipeGroup(() => "Any Evil Tonic", ModContent.ItemType<UnholyTonic>(), ModContent.ItemType<ViciousTonic>()));
+                    recipe.AddRecipeGroup(new RecipeGroup(() => "Any Evil Tonic", ItemType<UnholyTonic>(), ItemType<ViciousTonic>()));
                 }
                 if (recipe.HasResult(ItemType<Nanotech>()))
                 {

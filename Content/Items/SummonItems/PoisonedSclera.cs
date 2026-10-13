@@ -5,7 +5,6 @@ using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using CalRemix.Content.NPCs.Bosses.Acideye;
 using CalamityMod;
-using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.Abyss;
 using CalamityMod.Items.Placeables.FurnitureAcidwood;
 

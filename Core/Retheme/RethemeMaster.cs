@@ -21,7 +21,6 @@ using CalRemix.Core.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Stubble.Core.Classes;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -31,7 +30,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static CalRemix.World.ProfanedDesert;
 using static Terraria.ModLoader.ModContent;
 
 namespace CalRemix.Core.Retheme

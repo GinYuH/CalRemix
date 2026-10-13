@@ -179,7 +179,7 @@ namespace CalRemix.Content.NPCs.TheGoodStuff
                 {
                     rot = NPC.rotation;
                 }
-                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, 2, dist), Color.White.MultiplyRGBA(Lighting.GetColor(seg.position.ToTileCoordinates())), rot, new Rectangle(0, 0, 4, dist).Size() / 2, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, seg.position - Main.screenPosition, new Rectangle(0, 0, 2, dist), Color.White.MultiplyRGBA(Lighting.GetColor(seg.position.ToTileCoordinates())), rot, new Rectangle(0, 0, 4, dist).Size() / 2, 1f, SpriteEffects.None, 0);
             }
 
             string ext = NPC.ai[3] switch

@@ -1,8 +1,5 @@
-﻿using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
+﻿using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.NPCs.ExoMechs.Ares;
-using CalRemix.Content.Items.Placeables.Subworlds.TheGray;
-using CalRemix.Content.Tiles.Subworlds.OvergrowthRainforest;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

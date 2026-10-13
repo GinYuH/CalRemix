@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalamityMod.NPCs.SupremeCalamitas;
+﻿using CalamityMod.NPCs.SupremeCalamitas;
 using CalRemix.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;

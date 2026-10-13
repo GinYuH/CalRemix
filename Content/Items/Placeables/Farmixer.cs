@@ -3,7 +3,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using CalRemix.Content.Tiles;
 using CalamityMod.Items.Materials;
-using CalamityMod.Items.Potions;
 using CalRemix.Content.Items.Materials;
 using CalamityMod.Items.Potions.Food;
 

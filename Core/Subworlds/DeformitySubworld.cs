@@ -3,33 +3,11 @@ using Terraria;
 using SubworldLibrary;
 using Terraria.WorldBuilding;
 using Terraria.IO;
-using Terraria.ModLoader;
 using System;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.ID;
-using CalRemix.Core.World;
-using Terraria.Graphics.Effects;
-using CalamityMod;
-using CalRemix.Core.Biomes;
-using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using CalRemix.Content.Tiles.Subworlds.Sealed;
-using CalRemix.Content.Walls;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
-using Terraria.ModLoader.IO;
-using Terraria.DataStructures;
-using CalRemix.Content.Items.Placeables.Subworlds.Sealed;
-using CalRemix.Content.Items.SummonItems;
-using CalRemix.Content.Items.Materials;
-using CalRemix.Content.Items.Potions;
-using CalamityMod.World;
 using static CalRemix.CalRemixHelper;
-using CalRemix.Content.NPCs;
-using CalRemix.Content.Items.Weapons;
-using Microsoft.Build.Tasks;
-using System.Security.Cryptography.X509Certificates;
-using Steamworks;
-using CalRemix.Content.NPCs.Bosses.Origen;
 
 namespace CalRemix.Core.Subworlds
 {
@@ -138,12 +116,12 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                    Tile t = ParanoidTileRetrieval(i, j);
                     if (j < lavaHeight - ditherAmt)
                     {
-                        Tile left = CalRemixHelper.ParanoidTileRetrieval(i - 1, j);
-                        Tile right = CalRemixHelper.ParanoidTileRetrieval(i + 1, j);
-                        Tile top = CalRemixHelper.ParanoidTileRetrieval(i, j - 1);
+                        Tile left = ParanoidTileRetrieval(i - 1, j);
+                        Tile right = ParanoidTileRetrieval(i + 1, j);
+                        Tile top = ParanoidTileRetrieval(i, j - 1);
                         if (placeGrass && t.HasTile)
                         {
                             t.TileType = TileID.LunarRustBrick;
@@ -183,7 +161,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     for (int j = surfaceTile; j < biomeHeight; j++)
                     {
-                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                        Tile t = ParanoidTileRetrieval(i, j);
                         if (t.TileType == TileID.LunarRustBrick)
                         {
                             t.TileType = TileID.CryocoreBrick;
@@ -207,7 +185,7 @@ namespace CalRemix.Core.Subworlds
                                 {
                                     if (WithinRhombus(spikeOrigin, new Point(spikeWidth, spikeHeight * 2), new Point(k, l)))
                                     {
-                                        Tile t = CalRemixHelper.ParanoidTileRetrieval(k, l);
+                                        Tile t = ParanoidTileRetrieval(k, l);
                                         t.ResetToType(TileID.CryocoreBrick);
                                     }
                                 }
@@ -221,7 +199,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (WithinTriangle(point1, point2, point3, new Point(i, j)))
                         {
-                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                            Tile t = ParanoidTileRetrieval(i, j);
                             if (t.TileType == TileID.LunarRustBrick)
                             {
                                 t.TileType = TileID.CryocoreBrick;
@@ -249,7 +227,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     if (WithinElipse(i, j, anchor.X, anchor.Y, area.Width / 2, area.Height / 2))
                     {
-                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                        Tile t = ParanoidTileRetrieval(i, j);
                         if (t.TileType == TileID.LunarRustBrick)
                         {
                             t.TileType = TileID.AstraBrick;
@@ -275,7 +253,7 @@ namespace CalRemix.Core.Subworlds
                     Point cur = new Point(i, j);
                     if (cur.ToVector2().Distance(anchor.ToVector2()) < radius)
                     {
-                        CalRemixHelper.ParanoidTileRetrieval(i, j).ResetToType(TileID.HeavenforgeBrick);
+                        ParanoidTileRetrieval(i, j).ResetToType(TileID.HeavenforgeBrick);
 
                     }
                 }
@@ -289,12 +267,12 @@ namespace CalRemix.Core.Subworlds
                 {
                     for (int j = pos.Y - smallRadius; j < pos.Y + smallRadius; j++)
                     {
-                        if (CalRemixHelper.ParanoidTileRetrieval(i, j).HasTile)
+                        if (ParanoidTileRetrieval(i, j).HasTile)
                             continue;
                         Point cur = new Point(i, j);
                         if (cur.ToVector2().Distance(pos.ToVector2()) < smallRadius)
                         {
-                            CalRemixHelper.ParanoidTileRetrieval(i, j).ResetToType(TileID.HeavenforgeBrick);
+                            ParanoidTileRetrieval(i, j).ResetToType(TileID.HeavenforgeBrick);
                         }
                     }
                 }
@@ -308,7 +286,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = surfaceTile; j < caveTile + 30; j++)
                 {
-                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                    Tile t = ParanoidTileRetrieval(i, j);
                     if (t.HasTile && t.TileType != TileID.CryocoreBrick)
                     {
                         t.TileType = TileID.DarkCelestialBrick;
@@ -335,7 +313,7 @@ namespace CalRemix.Core.Subworlds
                 {
                     for (int j = mercRect.Y; j < mercRect.Bottom; j++)
                     {
-                        Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                        Tile t = ParanoidTileRetrieval(i, j);
                         if (WithinElipse(i, j, mercX, mercY, primeMercRad, primeMercRad))
                         {
                             t.TileType = TileID.MercuryBrick;
@@ -385,7 +363,7 @@ namespace CalRemix.Core.Subworlds
                     {
                         if (WithinTriangle(top, left, right, new Point(i, j)))
                         {
-                            Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                            Tile t = ParanoidTileRetrieval(i, j);
                             t.ResetToType(TileID.CosmicEmberBrick);
                         }
                     }
@@ -395,7 +373,7 @@ namespace CalRemix.Core.Subworlds
             {
                 for (int j = cut + 2; j < Main.maxTilesY; j++)
                 {
-                    Tile t = CalRemixHelper.ParanoidTileRetrieval(i, j);
+                    Tile t = ParanoidTileRetrieval(i, j);
                     t.LiquidAmount = 255;
                     t.LiquidType = LiquidID.Lava;
                 }

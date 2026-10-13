@@ -1,5 +1,4 @@
-﻿using CalamityMod;
-using CalRemix.Content.NPCs.Subworlds.Sealed;
+﻿using CalRemix.Content.NPCs.Subworlds.Sealed;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

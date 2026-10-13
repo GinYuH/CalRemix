@@ -6,8 +6,6 @@ using Terraria.IO;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using CalRemix.Core.World;
-using CalRemix.Content.Tiles;
 using Terraria.Graphics.Effects;
 using CalRemix.Content.Tiles.Subworlds.Nowhere;
 using System;

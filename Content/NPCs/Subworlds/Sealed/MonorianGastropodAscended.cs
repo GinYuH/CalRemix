@@ -232,7 +232,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             rot = NPC.rotation;
                         float scalee = (1 - (i / Segments.Count)) * 0.8f;
                         Color c = i < 18 ? Color.Black : Color.Pink;
-                        Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, truePos - Main.screenPosition, new Rectangle(0, 0, (int)dist, 2), c, rot, TextureAssets.BlackTile.Size() / 2, scalee, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                        Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, truePos - Main.screenPosition, new Rectangle(0, 0, (int)dist, 2), c, rot, TextureAssets.BlackTile.Size() / 2, scalee, SpriteEffects.None, 0);
                     }
                 }
             float animSpeed = State == 1 ? 50 : 7;

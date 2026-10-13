@@ -5,7 +5,6 @@ using CalamityMod;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using CalRemix.Content.Items.Accessories;
-using CalamityMod.Items.Materials;
 using CalRemix.Content.Items.Armor;
 using CalRemix.Content.Items.Weapons;
 

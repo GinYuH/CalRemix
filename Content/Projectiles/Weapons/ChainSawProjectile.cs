@@ -19,13 +19,13 @@ namespace CalRemix.Content.Projectiles.Weapons
 		public override void SetDefaults()
 		{
 			Projectile.width = 26;
-			base.Projectile.height = 26;
-			base.Projectile.friendly = true;
-			base.Projectile.penetrate = -1;
-			base.Projectile.tileCollide = false;
-			base.Projectile.hide = true;
-			base.Projectile.ownerHitCheck = true;
-			base.Projectile.DamageType = DamageClass.Melee;
+            Projectile.height = 26;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.hide = true;
+            Projectile.ownerHitCheck = true;
+            Projectile.DamageType = DamageClass.Melee;
 			Projectile.aiStyle = ProjAIStyleID.Drill;
             Projectile.usesLocalNPCImmunity= true;
             Projectile.localNPCHitCooldown = 5;
@@ -39,14 +39,14 @@ namespace CalRemix.Content.Projectiles.Weapons
         }
         public override void AI()
         {
-            
-            base.Projectile.frameCounter++;
-            if ((float)base.Projectile.frameCounter % 4f == 3f)
+
+            Projectile.frameCounter++;
+            if ((float)Projectile.frameCounter % 4f == 3f)
             {
-                base.Projectile.frame++;
-                if (base.Projectile.frame >= Main.projFrames[base.Projectile.type])
+                Projectile.frame++;
+                if (Projectile.frame >= Main.projFrames[Projectile.type])
                 {
-                    base.Projectile.frame = 0;
+                    Projectile.frame = 0;
                 }
             }
         }
