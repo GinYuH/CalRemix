@@ -571,9 +571,9 @@ namespace CalRemix.Core.World
 
         public override void PreUpdateWorld()
         {
-            if (Main.mouseLeft)
+            if (Main.mouseLeft && Main.mouseLeftRelease && Main.LocalPlayer.selectedItem == 2)
             {
-                //SubworldSystem.Enter<MoonGraveyardSubworld>();
+                //SubworldSystem.Enter<FlashSubworld>();
             }
             if (worldLoadCounter < 180)
                 worldLoadCounter++;
