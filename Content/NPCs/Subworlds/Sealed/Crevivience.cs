@@ -20,6 +20,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 // So like, technically she's not in the Sealed Dimension, but Horizon is a mechanical extension of it so...
@@ -63,15 +64,17 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
         {
             SpawnAnimation = 0,
             Idle = 1,
-            AttackOne = 2,
-            AttackTwo = 3,
-            AttackThree = 4,
-            AttackFour = 5,
-            AttackFive = 6,
-            AttackSix = 7,
-            AttackSeven = 8,
-            AttackEight = 9,
-            DeathAnimation = 10
+            Melee_Sprouts = 2,
+            Melee_CrystalDash = 3,
+            Melee_Three = 4,
+            Melee_Four = 5,
+            Proj_Smite = 6,
+            Proj_Debris = 7,
+            Proj_Clones = 8,
+            Proj_Crystals = 9,
+            Special_Aura = 10,
+            Special_Smite = 11,
+            DeathAnimation = 12
         }
 
         public PhaseType CurrentPhase
@@ -82,10 +85,10 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public static float SunOpacity = 1f;
 
-        public RopeHandle? LeftRibbon;
-        public RopeHandle? RightRibbon;
+        public static RopeHandle? LeftRibbon;
+        public static RopeHandle? RightRibbon;
 
-        public CreviWing[] creviWings = new CreviWing[4];
+        public static CreviWing[] creviWings = new CreviWing[4];
 
         public static Asset<Texture2D> wingTexUpper;
         public static Asset<Texture2D> wingTexLower;
@@ -119,7 +122,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             NPC.knockBackResist = 0f;
             NPC.noTileCollide = true;
             NPC.boss = true;
-            NPC.alpha = 255;
+            //NPC.alpha = 255;
             NPC.Calamity().canBreakPlayerDefense = true;
             SpawnModBiomes = new int[1] { GetInstance<VoidForestBiome>().Type };
             Music = CalRemixMusic.TheCalamity;
@@ -153,18 +156,9 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 right.Start = ribbonR;
                 right.Gravity = Vector2.UnitY.RotatedBy(NPC.rotation) * 10;
             }
-            NPC.velocity = Main.MouseWorld - NPC.Center;
-            if (NPC.velocity.X > 0)
+            if (!IsMeleePhase)
             {
-                //NPC.rotation = Utils.AngleLerp(NPC.rotation, MathHelper.ToRadians(45), 0.2f);
-            }
-            else if (NPC.velocity.X < 0)
-            {
-                //NPC.rotation = Utils.AngleLerp(NPC.rotation, -MathHelper.ToRadians(45), 0.2f);
-            }
-            else
-            {
-                NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.2f);
+                ChangePhase();
             }
             NPC.TargetClosest(false);
             switch (CurrentPhase)
@@ -224,13 +218,218 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                     }
                     break;
+                case PhaseType.Idle:
+                    {
+                        NPC.velocity = NPC.SafeDirectionTo(Target.Center, Vector2.UnitY) * 1;
+                        if (Timer > 30)
+                        {
+                            ChangePhase();
+                        }
+                    }
+                    break;
+                case PhaseType.Melee_CrystalDash:
+                    {
+                        int anticipation = 40;
+                        int dash = anticipation + 40;
+                        int waitingWhileBeams = dash + 60;
+                        int laserEnd = waitingWhileBeams + 40;
+                        int attackEnd = laserEnd + 30;
+
+                        if (Timer > 0 && Timer < 1)
+                        {
+                            if (creviWings[0] != null)
+                                foreach (CreviWing wing in creviWings)
+                            {
+                                wing.PlayAnimationSingular(CreviWing.PositionType.Shrimp);
+                                NPC.localAI[3] = MathHelper.Lerp(0, 1, Utils.GetLerpValue(anticipation, dash, Timer, true));
+                            }
+                        }
+                        else
+                        {
+                            if (creviWings[0] != null)
+                            foreach (CreviWing wing in creviWings)
+                            {
+                                wing.oldPos = CreviWing.PositionRotations[CreviWing.PositionType.IdleBack].desiredPosition;
+                                wing.PlayAnimationSingular(CreviWing.PositionType.IdleFront);
+                            }
+                            NPC.localAI[3] = MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.5f + 0.5f;
+                        }
+
+                        if (Timer < anticipation)
+                        {
+                            if (Timer == 0)
+                            {
+                                NPC.Center = Target.Center + new Vector2(800 * Main.rand.NextBool().ToDirectionInt(), -400);
+                                NPC.direction = Math.Sign(NPC.DirectionTo(Target.Center).X);
+                            }
+                            else
+                            {
+                                OldPosition = NPC.Center;
+                                SavePosition = new Vector2(NPC.Center.X + NPC.direction * 1600, NPC.Center.Y);
+                            }
+                        }
+                        else if (Timer < dash)
+                        {
+                            Vector2 targetPos = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineOutEasing(Utils.GetLerpValue(anticipation, dash, Timer, true), 1));
+                            NPC.velocity = targetPos - NPC.Center;
+                            if (Timer % 5 == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.QueenSlimeGelAttack, CalRemixHelper.ProjectileDamage(260, 350), 1);
+                                }
+                            }
+                            NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2 + MathF.Sin(Timer * 0.5f) * MathHelper.ToRadians(22);
+                        }
+                        else if (Timer < waitingWhileBeams)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
+                            Vector2 targetPos = Vector2.Lerp(NPC.Center, new Vector2(Target.Center.X + NPC.direction * 700, Target.Center.Y), 0.1f);
+                            NPC.velocity = targetPos - NPC.Center;
+                        }
+                        else if (Timer < laserEnd)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                        }
+                        else if (Timer <= attackEnd)
+                        {
+                            if (Timer == attackEnd)
+                            {
+                                ChangePhase();
+                            }
+                        }
+
+                    }
+                    break;
+                case PhaseType.Melee_Sprouts:
+                    {
+                        int reelBack = 30;
+                        int pauseAfterReel = reelBack + 20;
+                        int mainDuration = pauseAfterReel + 270;
+                        int wait = mainDuration + 60;
+
+                        if (Timer < reelBack)
+                        {
+                            if (Timer == 0)
+                            {
+                                OldPosition = NPC.Center;
+                                SavePosition = NPC.Center - NPC.SafeDirectionTo(Target.Center) * 400;
+                            }
+                            else
+                            {
+                                Vector2 targetPos = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(0, reelBack, Timer, true), 1));
+                                NPC.Center = targetPos;
+                            }
+                        }
+                        else if (Timer < pauseAfterReel)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                        }
+                        else if (Timer < mainDuration)
+                        {
+                            float scaleFactor = 10;
+                            float inertia = 20f;
+                            Vector2 speed = NPC.DirectionTo(Target.Center).SafeNormalize(Vector2.UnitY) * scaleFactor;
+                            NPC.velocity = (NPC.velocity * inertia + speed) / (inertia + 1f);
+                            NPC.velocity.Normalize();
+                            NPC.velocity *= scaleFactor;
+                            if (Timer % 30 == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.QueenSlimeGelAttack, CalRemixHelper.ProjectileDamage(260, 350), 1);
+                                }
+                            }
+                            NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2 + MathF.Sin(Timer * 0.2f) * MathHelper.ToRadians(22);
+                        }
+                        else if (Timer <= wait)
+                        {
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
+                            NPC.velocity = Vector2.Zero;
+                            if (Timer == wait)
+                            {
+                                ChangePhase();
+                            }
+                        }
+                    }
+                    break;
+                case PhaseType.Melee_Three:
+                    {
+
+                    }
+                    break;
+                case PhaseType.Melee_Four:
+                    {
+
+                    }
+                    break;
+                case PhaseType.Proj_Clones:
+                    {
+
+                    }
+                    break;
+                case PhaseType.Proj_Crystals:
+                    {
+
+                    }
+                    break;
+                case PhaseType.Proj_Debris:
+                    {
+
+                    }
+                    break;
+                case PhaseType.Proj_Smite:
+                    {
+
+                    }
+                    break;
+                case PhaseType.Special_Aura:
+                    {
+
+                    }
+                    break;
+                case PhaseType.Special_Smite:
+                    {
+
+                    }
+                    break;
+                case PhaseType.DeathAnimation:
+                    {
+
+                    }
+                    break;
             }
             Timer++;
         }
 
-        public void ChangePhase(PhaseType newPhase)
+        public bool IsMeleePhase => CurrentPhase <= PhaseType.Melee_Four && CurrentPhase >= PhaseType.Melee_Sprouts;
+        public bool IsProjPhase => CurrentPhase <= PhaseType.Proj_Crystals && CurrentPhase >= PhaseType.Proj_Smite;
+
+        public float LifeRatio => NPC.life / (float)NPC.lifeMax;
+
+        public void ChangePhase(PhaseType newPhase = PhaseType.SpawnAnimation)
         {
-            CurrentPhase = newPhase;
+            WeightedRandom<PhaseType> phaseChoices = new();
+            if (!IsMeleePhase)
+            {
+                //phaseChoices.Add(PhaseType.Melee_Three);
+                phaseChoices.Add(PhaseType.Melee_CrystalDash);
+                //if (LifeRatio <= 0.75f)
+                    //phaseChoices.Add(PhaseType.Melee_Four);
+                //if (LifeRatio <= 0.5f)
+                    phaseChoices.Add(PhaseType.Melee_Sprouts);
+            }
+            else if (!IsProjPhase)
+            {
+                phaseChoices.Add(PhaseType.Proj_Smite);
+                phaseChoices.Add(PhaseType.Proj_Debris);
+                if (LifeRatio <= 0.75f)
+                    phaseChoices.Add(PhaseType.Proj_Crystals);
+                if (LifeRatio <= 0.5f)
+                    phaseChoices.Add(PhaseType.Proj_Clones);
+
+            }
+            CurrentPhase = (newPhase == PhaseType.SpawnAnimation) ? phaseChoices.Get() : newPhase;
             //CurrentPhase = PhaseType.Metagross;
             Timer = 0;
             ExtraVar = 0;
@@ -305,7 +504,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             if (anyNulls)
                 return false;
 
-            int readyLength = 30;
+            /*int readyLength = 30;
             int wait = readyLength + 30;
             int execute = wait + 20;
             int end = execute + 60;
@@ -330,7 +529,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             if (NPC.localAI[2] > end)
                 NPC.localAI[2] = 0;
-            NPC.localAI[2]++;
+            NPC.localAI[2]++;*/
 
             for (int i = 0; i < 4; i ++)
             {
@@ -422,8 +621,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             Vector2 realPos = new Vector2(50 * -wing.IsLeftWing.ToDirectionInt(), 30 + (wing.IsLowerWing ? 80 : 0));
             Vector2 drawPos = NPC.Center + realPos.RotatedBy(NPC.rotation) - screenPos;
             wing.mesh.DrawMesh(spriteBatch, drawPos, wing.IsLowerWing ? wingTexLower : wingTexUpper);
-            if (Main.LocalPlayer.selectedItem < 5)
-                wing.mesh.DrawDebugGrid(drawPos, spriteBatch);
+            //if (Main.LocalPlayer.selectedItem < 5)
+                //wing.mesh.DrawDebugGrid(drawPos, spriteBatch);
 
             //spriteBatch.Draw(TextureAssets.MagicPixel.Value, drawPos, new Rectangle(0, 0, 70, 70), wing.IsLeftWing ? Color.Indigo : Color.Red, 0, new Vector2(35, 35), 1, 0, 0);
         }
@@ -464,7 +663,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             IdleBack = 0,
             IdleFront = 1,
             ReadyAttack = 2,
-            ExecuteAttack = 3
+            ExecuteAttack = 3,
+            Shrimp = 4,
         }
 
         public int creviIndex = creviIndex;
@@ -490,7 +690,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             { PositionType.IdleBack, new CreviWingAnim(AnimType.All, new Vector3(0, MathHelper.ToRadians(-70), 0)) },
             { PositionType.IdleFront, new CreviWingAnim(AnimType.All, new Vector3(0, MathHelper.ToRadians(30), 0)) },
             { PositionType.ReadyAttack, new CreviWingAnim(AnimType.All, new Vector3(MathHelper.ToRadians(10), 0, MathHelper.ToRadians(-100))) },
-            { PositionType.ExecuteAttack, new CreviWingAnim(AnimType.All, new Vector3(MathHelper.ToRadians(-180), 0, MathHelper.ToRadians(30))) }
+            { PositionType.ExecuteAttack, new CreviWingAnim(AnimType.All, new Vector3(MathHelper.ToRadians(-180), 0, MathHelper.ToRadians(30))) },
+            { PositionType.Shrimp, new CreviWingAnim(AnimType.All, new Vector3(0, 0, MathHelper.ToRadians(80))) },
         };
 
         public TextureMesh mesh = mesh;
