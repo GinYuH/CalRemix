@@ -158,7 +158,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
             }
             if (!IsMeleePhase)
             {
-                ChangePhase();
+                //ChangePhase();
             }
             NPC.TargetClosest(false);
             switch (CurrentPhase)
@@ -270,8 +270,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         }
                         else if (Timer < dash)
                         {
-                            Vector2 targetPos = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineOutEasing(Utils.GetLerpValue(anticipation, dash, Timer, true), 1));
-                            NPC.velocity = targetPos - NPC.Center;
+                            NPC.LerpMovement(OldPosition, SavePosition, anticipation, dash, Timer, EaseType.SineOut);
                             if (Timer % 5 == 0)
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -284,8 +283,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         else if (Timer < waitingWhileBeams)
                         {
                             NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.1f);
-                            Vector2 targetPos = Vector2.Lerp(NPC.Center, new Vector2(Target.Center.X + NPC.direction * 700, Target.Center.Y), 0.1f);
-                            NPC.velocity = targetPos - NPC.Center;
+                            NPC.LerpMovement(NPC.Center, new Vector2(Target.Center.X + NPC.direction * 700, Target.Center.Y), 0.1f);
                         }
                         else if (Timer < laserEnd)
                         {
@@ -317,8 +315,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                             }
                             else
                             {
-                                Vector2 targetPos = Vector2.Lerp(OldPosition, SavePosition, CalamityUtils.SineInOutEasing(Utils.GetLerpValue(0, reelBack, Timer, true), 1));
-                                NPC.Center = targetPos;
+                                NPC.LerpMovement(OldPosition, SavePosition, 0, reelBack, Timer, EaseType.SineInOut);
                             }
                         }
                         else if (Timer < pauseAfterReel)
@@ -365,7 +362,50 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case PhaseType.Proj_Clones:
                     {
+                        int wait = 40;
+                        int spawnTime = 10;
+                        int fullSpawnTime = wait + spawnTime * 2;
+                        int waitAfterSpawn = fullSpawnTime + 20;
+                        int attackTime = waitAfterSpawn + 300;
+                        int startFiring = attackTime + 20;
+                        int finishAttack = startFiring + 30;
+                        float dist = SavePosition.Distance(OldPosition);
 
+                        if (Timer <= wait)
+                        {
+                            NPC.Center = Target.Center - Vector2.UnitY * 400;
+                            NPC.velocity = Vector2.Zero;
+                        }
+                        else if (Timer <= fullSpawnTime)
+                        {
+                            if (Timer % spawnTime == 0)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.QueenSlimeGelAttack, CalRemixHelper.ProjectileDamage(200, 320), 1, ai0: NPC.whoAmI, ai1: (Timer - wait) % spawnTime);
+                                }
+                            }
+                        }
+                        else if (Timer <= waitAfterSpawn)
+                        {
+                            SavePosition = Target.Center;
+                            OldPosition = NPC.Center;
+                        }
+                        else if (Timer <= startFiring)
+                        {
+                            NPC.LerpMovement(NPC.Center, SavePosition - Vector2.UnitY.RotatedBy(ExtraVar) * dist, 1);
+                            ExtraVar += MathHelper.Lerp(0, 0.04f, Utils.GetLerpValue(waitAfterSpawn, waitAfterSpawn + 22, Timer, true));
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, NPC.velocity.ToRotation() + MathHelper.PiOver2 + MathF.Sin(ExtraVar * 10) * MathHelper.ToRadians(20), 0.4f);
+                        }
+                        else if (Timer < finishAttack)
+                        {
+                            NPC.velocity *= 0.97f;
+                            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 0.2f);
+                        }
+                        else if (Timer == finishAttack)
+                        {
+                            ChangePhase();
+                        }
                     }
                     break;
                 case PhaseType.Proj_Crystals:
@@ -375,7 +415,42 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case PhaseType.Proj_Debris:
                     {
+                        float wait = 50;
+                        float stopDebris = wait + 100;
+                        float pling = stopDebris + 30;
+                        float endSpin = pling + 300;
+                        float endAttack = endSpin + 60;
 
+                        if (Timer <= wait)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            if (Timer <= 1)
+                            {
+                                NPC.Center = Target.Center - Vector2.UnitY * 400;
+                            }
+                        }
+                        else if (Timer <= stopDebris)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(6, 10), ProjectileID.QueenSlimeGelAttack, CalRemixHelper.ProjectileDamage(240, 310), 1);
+                            }
+                        }
+                        else if (Timer <= pling)
+                        {
+                            if (Timer == pling)
+                            {
+                                SoundEngine.PlaySound(BetterSoundID.DeathPixie, NPC.Center);
+                            }
+                        }
+                        else if (Timer <= endSpin)
+                        {
+
+                        }
+                        else if (Timer <= endAttack)
+                        {
+                            ChangePhase();
+                        }
                     }
                     break;
                 case PhaseType.Proj_Smite:
@@ -430,7 +505,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             }
             CurrentPhase = (newPhase == PhaseType.SpawnAnimation) ? phaseChoices.Get() : newPhase;
-            //CurrentPhase = PhaseType.Metagross;
+            CurrentPhase = PhaseType.Proj_Debris;
             Timer = 0;
             ExtraVar = 0;
             OldPosition = Vector2.Zero;

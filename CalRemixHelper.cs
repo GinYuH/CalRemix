@@ -2101,6 +2101,29 @@ namespace CalRemix
             return new Point(dimensions.X, dimensions.Y);
         }
 
+        public static void LerpMovement(this Entity entity, Vector2 start, Vector2 end, float timeStart, float timeEnd, float time, EaseType easeType = EaseType.Linear)
+        {
+            float comp = Utils.GetLerpValue(timeStart, timeEnd, time, true);
+            float finalComp = easeType switch
+            {
+                EaseType.SineIn => CalamityUtils.SineInEasing(comp, 1),
+                EaseType.SineOut => CalamityUtils.SineOutEasing(comp, 1),
+                EaseType.SineInOut => CalamityUtils.SineInOutEasing(comp, 1),
+                EaseType.ExpIn => CalamityUtils.ExpInEasing(comp, 1),
+                EaseType.ExpOut => CalamityUtils.ExpOutEasing(comp, 1),
+                EaseType.ExpInOut => CalamityUtils.ExpInOutEasing(comp, 1),
+                _ => comp
+            };
+            Vector2 targetPos = Vector2.Lerp(start, end, finalComp);
+            entity.velocity = targetPos - entity.Center;
+        }
+
+        public static void LerpMovement(this Entity entity, Vector2 start, Vector2 end, float completion)
+        {
+            Vector2 targetPos = Vector2.Lerp(start, end, completion);
+            entity.velocity = targetPos - entity.Center;
+        }
+
         #region CalamityUtils refugees
         public static Tile ParanoidTileRetrieval(int x, int y)
         {
