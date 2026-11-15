@@ -168,6 +168,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                         if (true)
                         {
                             NPC.Opacity = 1;
+                            ChangePhase();
                             return;
                         }
                         float startAction = 60;
@@ -455,7 +456,89 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                     break;
                 case PhaseType.Proj_Smite:
                     {
+                        int wait = 40;
+                        int reel = wait + 20;
+                        int waitAfterReel = reel + 20;
+                        int bop = waitAfterReel + 5;
+                        int reelBack = bop + 20;
+                        int push = reelBack + 5;
+                        int waitAgain = push + 50;
 
+                        if (Timer < wait)
+                        {
+                            if (Timer == 1)
+                            {
+                                NPC.Center = Target.Center + new Vector2(-300/* * Main.rand.NextBool().ToDirectionInt()*/, -200);
+                                NPC.direction = Math.Sign(NPC.DirectionTo(Target.Center).X);
+                                OldPosition = NPC.Center;
+                                SavePosition = NPC.Center + new Vector2(-NPC.direction * 300, -100);
+                            }
+                        }
+                        else if (Timer <= reel)
+                        {
+                            NPC.LerpMovement(OldPosition, SavePosition, wait, reel, Timer, EaseType.SineIn);
+                            if (Timer == reel)
+                            {
+                                OldPosition = NPC.Center;
+                                SavePosition = NPC.Center + new Vector2(NPC.direction * 40, 40);
+                            }
+                        }
+                        else if (Timer <= waitAfterReel)
+                        {
+                            NPC.LerpMovement(OldPosition, SavePosition, reel, waitAfterReel, Timer, EaseType.ExpIn);
+
+                            for (int i = 0; i < creviWings.Length; i++)
+                            {
+                                CreviWing wing = creviWings[i];
+                                wing.PlayAnimationSingular(CreviWing.PositionType.ReadyAttack);
+                            }
+                            NPC.localAI[3] = MathHelper.Lerp(0, 1, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(reel, waitAfterReel, Timer, true), 1));
+                        }
+                        else if (Timer <= bop)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            if (Timer == bop)
+                            {
+                                SoundEngine.PlaySound(BetterSoundID.ItemMagicMount, NPC.Center);
+                                OldPosition = NPC.Center;
+                                SavePosition = NPC.Center + new Vector2(-NPC.direction * 200, -100);
+                            }
+                        }
+                        else if (Timer <= reelBack)
+                        {
+                            NPC.LerpMovement(OldPosition, SavePosition, bop, reelBack, Timer, EaseType.SineOut);
+                            if (Timer == reelBack)
+                            {
+                                OldPosition = NPC.Center;
+                                SavePosition = NPC.Center + new Vector2(NPC.direction * 10, 10);
+                            }
+                            for (int i = 0; i < creviWings.Length; i++)
+                            {
+                                CreviWing wing = creviWings[i];
+                                wing.PlayAnimationSingular(CreviWing.PositionType.ExecuteAttack);
+                            }
+                            NPC.localAI[3] = MathHelper.Lerp(0, 1, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(bop, reelBack, Timer, true), 1));
+                        }
+                        else if (Timer <= push)
+                        {
+                            NPC.LerpMovement(OldPosition, SavePosition, reelBack, push, Timer);
+
+                            for (int i = 0; i < creviWings.Length; i++)
+                            {
+                                CreviWing wing = creviWings[i];
+                                wing.PlayAnimationSingular(CreviWing.PositionType.ReadyAttack);
+                            }
+                            NPC.localAI[3] = MathHelper.Lerp(0, 1, CalamityUtils.ExpOutEasing(Utils.GetLerpValue(reelBack, push, Timer, true), 1));
+                        }
+                        else if (Timer <= waitAgain)
+                        {
+                            NPC.velocity *= 0.9f;
+                            if (Timer == waitAgain)
+                            {
+                                NPC.localAI[3] = 0;
+                                ChangePhase();
+                            }
+                        }
                     }
                     break;
                 case PhaseType.Special_Aura:
@@ -505,11 +588,12 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
             }
             CurrentPhase = (newPhase == PhaseType.SpawnAnimation) ? phaseChoices.Get() : newPhase;
-            CurrentPhase = PhaseType.Proj_Debris;
+            CurrentPhase = PhaseType.Proj_Smite;
             Timer = 0;
             ExtraVar = 0;
             OldPosition = Vector2.Zero;
             SavePosition = Vector2.Zero;
+            NPC.velocity = Vector2.Zero;
             NPC.netUpdate = true;
         }
 
