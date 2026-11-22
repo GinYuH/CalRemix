@@ -5,6 +5,8 @@ using CalamityMod.NPCs;
 using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Signus;
 using CalamityMod.NPCs.StormWeaver;
+using CalRemix.Content.Buffs;
+using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.NPCs.Bosses.Hypnos;
 using System.Linq;
 using Terraria;
@@ -111,11 +113,15 @@ namespace CalRemix.UI
                 "MiracleBoyIdle", (ScreenHelperSceneMetrics metrics) => Main.mouseRight && Main.mouseRightRelease && Main.rand.NextBool(100)).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).SetHoverTextOverride("May God save us all");
 
             HelperMessage.New("Loser", "Loser",
-                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => Main.LocalPlayer.HasBuff(BuffID.PotionSickness), cooldown: 45, onlyPlayOnce: false, cantBeClickedOff: true, duration: 55).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+                "MiracleBoyIdle", (ScreenHelperSceneMetrics scene) => !Main.LocalPlayer.HasBuff(ModContent.BuffType<MiracleSickness>()) && Main.LocalPlayer.HasBuff(BuffID.PotionSickness), cooldown: 45, onlyPlayOnce: false, cantBeClickedOff: true, duration: 55).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
 
             HelperMessage.New("CosmicWorm", "he has a name though",
                 "MiracleBoySob", (ScreenHelperSceneMetrics metrics) => Main.LocalPlayer.HasItem(ModContent.ItemType<CosmicWorm>()))
                 .SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy);
+
+            HelperMessage root = HelperMessage.New("MiracleRoot1", "This is a Miracle Root! A vegan-free alternative to Healing Potions! Eat it to restore health without being judged!", "FannyIdle", (ScreenHelperSceneMetrics metrics) => NPC.downedMoonlord && Main.LocalPlayer.HasItem(ModContent.ItemType<MiracleRoot>()));
+
+            HelperMessage.New("MiracleRoot2", "NO NO, DON'T LISTEN TO HIM!", "MiracleBoyUpset", HelperMessage.AlwaysShow).SpokenByAnotherHelper(ScreenHelpersUIState.MiracleBoy).ChainAfter(root, delay: 3f);
         }
 
         private static void GivePlayerChaosState()

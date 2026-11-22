@@ -5,6 +5,7 @@ using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Placeables.Relics;
 using CalRemix.Content.Items.Placeables.Subworlds.SingularPoint;
+using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Particles;
 using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Core.Biomes;
@@ -576,7 +577,7 @@ namespace CalRemix.Content.NPCs.Subworlds.SingularPoint
 
         public override void BossLoot(ref int potionType)
         {
-            potionType = ModContent.ItemType<SupremeHealingPotion>();
+            potionType = ModContent.ItemType<MiracleRoot>();
         }
     }
 }

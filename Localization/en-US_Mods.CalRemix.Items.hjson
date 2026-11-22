@@ -6760,3 +6760,14 @@ GigamothLarvaEnemySpawnerItem: {
 	DisplayName: Gigamoth Larva Enemy Spawner Item
 	Tooltip: ""
 }
+
+MiracleRoot: {
+	DisplayName: Miracle Root
+	Tooltip:
+		'''
+		Restores up to a third of your max life, floored at 200
+		-3% damage
+		Cannot be used with Quick Heal
+		'A root a day keeps The Boy away'
+		'''
+}

@@ -532,3 +532,8 @@ Pacifism: {
 	DisplayName: Inner Peace
 	Description: Your hands refuse to use items
 }
+
+MiracleSickness: {
+	DisplayName: Miracle Sickness
+	Description: Cannot consume more miracle roots...
+}

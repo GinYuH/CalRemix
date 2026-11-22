@@ -101,7 +101,7 @@ namespace CalRemix.Core.Retheme
                 for (int i = 0; i < 64; i++)
                 {
                     ulong position = (ulong)(1 << i);
-                    if (Main.rand.NextBool())
+                    if (Main.rand.NextBool(4))
                         toggles |= position;
                 }
                 SynonymToggles = toggles;

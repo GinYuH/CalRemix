@@ -448,7 +448,8 @@ namespace CalRemix.Core.Retheme
                 item.SetNameOverride(item.Name.Replace("Skeletron", CalRemixHelper.LocalText("Rename.NPCs.Skeletron").Value));
             }
 
-            SynonymSwap.ProcessSynonyms(item);
+            //This is broked rn 
+            //SynonymSwap.ProcessSynonyms(item);
         }
 
         public override void SetMatch(int armorSlot, int type, bool male, ref int equipSlot, ref bool robes)

@@ -1,28 +1,29 @@
-﻿using Terraria;
-using Terraria.GameContent.Bestiary;
-using Terraria.ID;
-using Terraria.ModLoader;
-using CalamityMod;
-using CalRemix.Core.Biomes;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
-using Terraria.GameContent;
-using System;
-using CalRemix.Content.Projectiles.Hostile;
+﻿using CalamityMod;
 using CalamityMod.InverseKinematics;
 using CalamityMod.Items.Accessories;
-using CalRemix.Content.Tiles.Subworlds.GreatSea;
-using CalRemix.Core.World;
 using CalamityMod.Items.Potions;
-using CalRemix.Content.Items.Weapons;
-using Terraria.GameContent.ItemDropRules;
-using CalRemix.Content.Items.Placeables.Trophies;
-using CalRemix.Content.Items.Bags;
-using CalRemix.Content.Items.Weapons.Stormbow;
 using CalamityMod.World;
+using CalRemix.Content.Items.Bags;
 using CalRemix.Content.Items.Placeables.Relics;
+using CalRemix.Content.Items.Placeables.Trophies;
+using CalRemix.Content.Items.Potions.Recovery;
+using CalRemix.Content.Items.Weapons;
+using CalRemix.Content.Items.Weapons.Stormbow;
+using CalRemix.Content.Projectiles.Hostile;
 using CalRemix.Content.Tiles;
+using CalRemix.Content.Tiles.Subworlds.GreatSea;
+using CalRemix.Core.Biomes;
+using CalRemix.Core.World;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 {
@@ -687,7 +688,7 @@ namespace CalRemix.Content.NPCs.Subworlds.GreatSea
 
         public override void BossLoot(ref int potionType)
         {
-            potionType = ModContent.ItemType<SupremeHealingPotion>();
+            potionType = ModContent.ItemType<MiracleRoot>();
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

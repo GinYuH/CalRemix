@@ -4,6 +4,7 @@ using CalamityMod.NPCs.Cryogen;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.Physics;
 using CalRemix.Content.Items.Materials;
+using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Core.Biomes;
 using CalRemix.Core.Graphics;
 using CalRemix.Core.World;
@@ -457,8 +458,8 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
                 case PhaseType.Proj_Smite:
                     {
                         int wait = 40;
-                        int reel = wait + 20;
-                        int waitAfterReel = reel + 20;
+                        int reel = wait + 40;
+                        int waitAfterReel = reel + 40;
                         int bop = waitAfterReel + 5;
                         int reelBack = bop + 20;
                         int push = reelBack + 5;
@@ -612,7 +613,7 @@ namespace CalRemix.Content.NPCs.Subworlds.Sealed
 
         public override void BossLoot(ref int potionType)
         {
-            potionType = ItemID.SuperHealingPotion;
+            potionType = ItemType<MiracleRoot>();
         }
 
         public override void OnKill()
